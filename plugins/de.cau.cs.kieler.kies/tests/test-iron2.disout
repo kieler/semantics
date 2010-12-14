@@ -1,0 +1,54 @@
+module IRON:
+input SWITCH_ON;
+input SWITCH_OFF;
+input SECOND;
+input COTTON;
+input WOOL;
+input SILK;
+output HEAT_ON;
+output HEAT_OFF;
+relation COTTON # WOOL # SILK;
+
+var total_time : integer in
+  total_time := 2;
+  loop
+    abort
+      abort
+        loop
+          pause
+        end loop
+      when SWITCH_ON;
+      abort
+        loop
+          pause;
+          if (COTTON) {
+            total_time := 5
+          };
+          if (WOOL) {
+            total_time := 4
+          };
+          if (SILK) {
+            total_time := 3
+          };
+          abort
+            loop
+              emit HEAT_ON;
+              pause
+            end loop
+          when total_time SECOND;
+          abort
+            loop
+              emit HEAT_OFF;
+              pause
+            end loop
+          when total_time SECOND
+        end loop
+      when SWITCH_OFF;
+      loop
+        pause
+      end loop
+    when SWITCH_OFF
+  end loop
+end var
+
+end module

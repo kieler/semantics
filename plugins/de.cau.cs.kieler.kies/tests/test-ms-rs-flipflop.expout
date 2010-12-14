@@ -1,0 +1,323 @@
+module MSRSFlipFlop:
+function calc_or(boolean, boolean) : boolean;
+function calc_not(boolean) : boolean;
+function calc_and(boolean, boolean) : boolean;
+procedure dump()(boolean, boolean);
+input SET : boolean;
+input RESET : boolean;
+input TAKT : boolean;
+output Q : boolean;
+output NQ : boolean;
+output ITERATE;
+
+signal S_AND11 := false : boolean,
+       S_AND12 := false : boolean,
+       S_AND21 := false : boolean,
+       S_AND22 := false : boolean,
+       S_NOT := false : boolean,
+       S_RS1_Q := false : boolean,
+       S_RS1_NQ := false : boolean,
+       S_RS2_Q := false : boolean,
+       S_RS2_NQ := false : boolean,
+       ITERATE_RS1,
+       ITERATE_RS2 in
+    var init := false : boolean in
+      signal I_SET : boolean,
+             I_RESET : boolean,
+             I_ITERATE in
+          signal O_OR1 := false : boolean,
+                 O_OR2 := false : boolean,
+                 O_NOT1 := false : boolean,
+                 O_NOT2 := false : boolean,
+                 O_PORT12 := false : boolean,
+                 ITERATE12 in
+              loop
+                await 
+                  case I_SET
+                  case O_NOT2
+                end await;
+                var rv : boolean in
+                  rv := calc_or(?I_SET, ?O_NOT2);
+                  emit O_OR1(rv)
+                end var
+              end loop
+            ||
+              loop
+                await 
+                  case O_PORT12
+                  case I_RESET
+                end await;
+                var rv : boolean in
+                  rv := calc_or(?O_PORT12, ?I_RESET);
+                  emit O_OR2(rv)
+                end var
+              end loop
+            ||
+              loop
+                await O_OR1;
+                var rv : boolean in
+                  rv := calc_not(?O_OR1);
+                  emit O_NOT1(rv)
+                end var
+              end loop
+            ||
+              loop
+                await O_OR2;
+                var rv : boolean in
+                  rv := calc_not(?O_OR2);
+                  emit O_NOT2(rv)
+                end var
+              end loop
+            ||
+              var old := false : boolean,
+                  value := false : boolean in
+                emit O_PORT12(false);
+                await O_NOT1;
+                old := ?O_NOT1;
+                emit ITERATE12;
+                pause;
+                emit O_PORT12(old);
+                loop
+                  await O_NOT1;
+                  value := ?O_NOT1;
+                  call dump()(old, value);
+                  if value <> old then
+                    emit ITERATE12;
+                    pause;
+                    emit O_PORT12(value);
+                    old := value
+                  end if
+                end loop
+              end var
+            ||
+              every O_NOT1 do
+                emit S_RS1_NQ(?O_NOT1)
+              end every
+            ||
+              every O_NOT2 do
+                emit S_RS1_Q(?O_NOT2)
+              end every
+            ||
+              loop
+                await ITERATE12;
+                emit I_ITERATE
+              end loop
+          end signal
+        ||
+          trap init_rs in
+            [
+              loop
+                emit I_SET(false);
+                emit I_RESET(true);
+                emit ITERATE_RS1;
+                pause
+              end loop
+            ||
+              await I_ITERATE;
+              await [not I_ITERATE];
+              exit init_rs
+            ]
+          end trap;
+          pause;
+          [
+            every immediate S_AND11 do
+              emit I_SET(?S_AND11)
+            end every
+          ||
+            every immediate S_AND21 do
+              emit I_RESET(?S_AND21)
+            end every
+          ||
+            every immediate I_ITERATE do
+              emit ITERATE_RS1
+            end every
+          ]
+      end signal
+    end var
+  ||
+    var init := false : boolean in
+      signal I_SET : boolean,
+             I_RESET : boolean,
+             I_ITERATE in
+          signal O_OR1 := false : boolean,
+                 O_OR2 := false : boolean,
+                 O_NOT1 := false : boolean,
+                 O_NOT2 := false : boolean,
+                 O_PORT12 := false : boolean,
+                 ITERATE12 in
+              loop
+                await 
+                  case I_SET
+                  case O_NOT2
+                end await;
+                var rv : boolean in
+                  rv := calc_or(?I_SET, ?O_NOT2);
+                  emit O_OR1(rv)
+                end var
+              end loop
+            ||
+              loop
+                await 
+                  case O_PORT12
+                  case I_RESET
+                end await;
+                var rv : boolean in
+                  rv := calc_or(?O_PORT12, ?I_RESET);
+                  emit O_OR2(rv)
+                end var
+              end loop
+            ||
+              loop
+                await O_OR1;
+                var rv : boolean in
+                  rv := calc_not(?O_OR1);
+                  emit O_NOT1(rv)
+                end var
+              end loop
+            ||
+              loop
+                await O_OR2;
+                var rv : boolean in
+                  rv := calc_not(?O_OR2);
+                  emit O_NOT2(rv)
+                end var
+              end loop
+            ||
+              var old := false : boolean,
+                  value := false : boolean in
+                emit O_PORT12(false);
+                await O_NOT1;
+                old := ?O_NOT1;
+                emit ITERATE12;
+                pause;
+                emit O_PORT12(old);
+                loop
+                  await O_NOT1;
+                  value := ?O_NOT1;
+                  call dump()(old, value);
+                  if value <> old then
+                    emit ITERATE12;
+                    pause;
+                    emit O_PORT12(value);
+                    old := value
+                  end if
+                end loop
+              end var
+            ||
+              every O_NOT1 do
+                emit S_RS2_NQ(?O_NOT1)
+              end every
+            ||
+              every O_NOT2 do
+                emit S_RS2_Q(?O_NOT2)
+              end every
+            ||
+              loop
+                await ITERATE12;
+                emit I_ITERATE
+              end loop
+          end signal
+        ||
+          trap init_rs in
+            [
+              loop
+                emit I_SET(false);
+                emit I_RESET(true);
+                emit ITERATE_RS2;
+                pause
+              end loop
+            ||
+              await I_ITERATE;
+              await [not I_ITERATE];
+              exit init_rs
+            ]
+          end trap;
+          pause;
+          [
+            every immediate S_AND12 do
+              emit I_SET(?S_AND12)
+            end every
+          ||
+            every immediate S_AND22 do
+              emit I_RESET(?S_AND22)
+            end every
+          ||
+            every immediate I_ITERATE do
+              emit ITERATE_RS2
+            end every
+          ]
+      end signal
+    end var
+  ||
+    loop
+      await 
+        case SET
+        case TAKT
+      end await;
+      var rv : boolean in
+        rv := calc_and(?SET, ?TAKT);
+        emit S_AND11(rv)
+      end var
+    end loop
+  ||
+    loop
+      await 
+        case RESET
+        case TAKT
+      end await;
+      var rv : boolean in
+        rv := calc_and(?RESET, ?TAKT);
+        emit S_AND21(rv)
+      end var
+    end loop
+  ||
+    loop
+      await 
+        case S_RS1_Q
+        case S_NOT
+      end await;
+      var rv : boolean in
+        rv := calc_and(?S_RS1_Q, ?S_NOT);
+        emit S_AND12(rv)
+      end var
+    end loop
+  ||
+    loop
+      await 
+        case S_RS1_NQ
+        case S_NOT
+      end await;
+      var rv : boolean in
+        rv := calc_and(?S_RS1_NQ, ?S_NOT);
+        emit S_AND22(rv)
+      end var
+    end loop
+  ||
+    loop
+      await TAKT;
+      var rv : boolean in
+        rv := calc_not(?TAKT);
+        emit S_NOT(rv)
+      end var
+    end loop
+  ||
+      loop
+        await S_RS2_Q;
+        emit Q(?S_RS2_Q)
+      end loop
+    ||
+      loop
+        await S_RS2_NQ;
+        emit NQ(?S_RS2_NQ)
+      end loop
+  ||
+    loop
+      await 
+        case ITERATE_RS1
+        case ITERATE_RS2
+      end await;
+      emit ITERATE
+    end loop
+end signal
+
+end module

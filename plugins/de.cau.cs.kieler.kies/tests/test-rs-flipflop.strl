@@ -1,0 +1,181 @@
+%
+% Implementation eines RS FlipFlops auf Basis von
+% or und not. Kommunikation zwischen den Modulen
+% erfolgt �ber "Port-Automaten"
+%
+%
+
+module RSFlipFlop:
+
+input SET   : boolean;	% Eingangs Werte
+input RESET : boolean;  
+
+output ITERATE;
+output ITERATE12;
+
+output Q	 : boolean; % Ausg�nge
+output NQ    : boolean;
+
+
+signal	O_OR1 := false : boolean,
+		O_OR2 := false  : boolean, 
+		O_NOT1:= false  : boolean, 
+		O_NOT2:= false : boolean,
+		O_PORT12 := false  : boolean
+in
+	[
+		run OR
+		[
+			signal SET/a, O_NOT2/b, 
+				   O_OR1/out
+		];
+	||
+		run OR
+		[
+			signal RESET/b, O_PORT12/a, 
+				   O_OR2/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR1/v, 
+			       O_NOT1/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR2/v, 
+			       O_NOT2/out
+		];
+	||
+		run BOOLPORT
+		[
+			signal	O_NOT1/IN,
+					O_PORT12/OUT, ITERATE12/ITERATE
+		];
+	||
+		% Stub: Ausgaben auf Modulausgaben mappen
+		every O_NOT1 do
+			emit NQ ( ?O_NOT1 );
+		end
+	||
+		every O_NOT2 do
+			emit Q ( ?O_NOT2 );
+		end
+	||
+		% Stub: Change weiterleiten
+		loop
+			await ITERATE12;
+			
+			emit ITERATE
+		end
+	]
+
+end 
+
+.
+module OR:
+
+input 	a   : boolean;	% Eingangswerte
+input   b   : boolean;
+
+output  out : boolean;
+
+function calc_or (boolean, boolean) :boolean;
+
+loop
+
+	% Sensitive auf Eingaben warten (a oder b)
+	await
+		case a
+		case b
+	end;
+	
+	% Ausgabe senden
+	var rv : boolean in
+		rv:=calc_or (?a,?b);
+		emit out (rv);
+	end;
+%	emit out ( ?a or ?b );
+
+end
+
+.
+module NOT:
+
+input 	v    : boolean;	% Eingangswert
+output 	out  : boolean;	% Ausgabe
+
+function calc_not ( boolean ) : boolean;
+
+loop
+
+	% Sensitive auf Input warten
+	await v;
+	
+	var rv : boolean in
+		
+		rv:=calc_not ( ?v );
+		emit out (rv);
+	end
+	
+	% Ausf�hren
+%	emit out ( not ?v );
+
+end
+
+.
+%
+% Port f�r den Datentyp Boolean
+%
+% Ausgang wird nur gesetzt, wenn Eingang
+% anders als der alte Wert
+%
+
+module BOOLPORT:
+
+input	IN   : boolean;
+output  OUT  : boolean;
+output  ITERATE;
+
+procedure dump ()(boolean,boolean);
+
+var	old   := false : boolean, 
+	value := false : boolean
+in
+
+	%% Initiale Phase
+	emit OUT (false);
+	
+	await IN;
+	old:=?IN;
+	emit ITERATE;
+	pause;
+
+	emit OUT (old);
+	
+	%% Hauptschleife		
+		loop
+			
+			% Auf Wert warten und entgegennehmen
+			await IN;	
+			value:=?IN;
+			
+			call dump ()(old,value);
+			
+			% Senden, wenn Werte unterschiedlich
+			if ( value <> old ) then
+
+				% Takt warten
+				emit ITERATE;
+				pause;
+			
+				emit OUT (value);
+				old:=value;
+			end;
+
+		end 
+	
+end
+
+.

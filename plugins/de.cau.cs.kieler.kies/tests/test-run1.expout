@@ -1,0 +1,10 @@
+module Top:
+input A;
+output B;
+
+present A then
+  emit B
+end present;
+pause
+
+end module

@@ -1,0 +1,14 @@
+module foo:
+type externalType;
+type myType;
+
+
+
+end module
+
+module bar:
+type anotherExternal;
+
+
+
+end module

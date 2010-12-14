@@ -1,0 +1,219 @@
+module stest:
+input A;
+input B;
+input C;
+input D;
+input E;
+input F;
+input G;
+output X;
+output Y;
+output Z;
+output W;
+output M;
+output N;
+output P;
+
+loop
+  abort
+    [
+      abort
+        loop
+          [
+            emit X;
+            pause;
+            abort
+              pause;
+              abort
+                loop
+                  pause
+                end loop
+              when B;
+              pause;
+              pause;
+              abort
+                loop
+                  pause
+                end loop
+              when C;
+              pause
+            when D;
+            emit Y;
+            pause;
+            emit M
+          ||
+            abort
+              pause;
+              abort
+                loop
+                  pause
+                end loop
+              when D;
+              pause;
+              pause;
+              if (M) {
+                emit N
+              };
+              pause
+            when C;
+            abort
+              loop
+                pause
+              end loop
+            when C;
+            pause;
+            pause;
+            abort
+              loop
+                pause
+              end loop
+            when D;
+            pause;
+            abort
+              loop
+                pause
+              end loop
+            when D;
+            pause;
+            pause;
+            abort
+              pause;
+              if (N) {
+                emit P
+              };
+              abort
+                loop
+                  pause
+                end loop
+              when C;
+              pause;
+              pause
+            when E;
+            emit X;
+            pause
+          ||
+            pause;
+            emit Y;
+            pause;
+            pause;
+            emit X
+          ]
+        end loop
+      when A;
+      emit Y;
+      pause
+    ||
+      abort
+        loop
+          pause;
+          if (Y) {
+            emit Z
+          };
+          pause;
+          if (X) {
+            emit Y
+          };
+          pause;
+          pause;
+          emit N;
+          abort
+            loop
+              pause
+            end loop
+          when C;
+          if (X) {
+            emit Y;
+            emit Z
+          };
+          if (M) {
+            emit N
+          };
+          pause;
+          pause;
+          if (X and Y) {
+            emit Z
+          };
+          pause;
+          pause;
+          if (N) {
+            emit P
+          };
+          abort
+            loop
+              pause
+            end loop
+          when C;
+          abort
+            loop
+              pause
+            end loop
+          when C;
+          pause;
+          emit M;
+          pause
+        end loop
+      when B;
+      emit Z;
+      pause;
+      pause;
+      abort
+        loop
+          pause
+        end loop
+      when A
+    ||
+      abort
+        loop
+          pause;
+          pause;
+          if (X) {
+            emit Z
+          };
+          abort
+            loop
+              pause
+            end loop
+          when Y;
+          if (M) {
+            emit N
+          };
+          pause;
+          pause;
+          if (M) {
+            emit P
+          };
+          pause;
+          if (X) {
+            emit N
+          };
+          pause;
+          pause;
+          abort
+            loop
+              pause
+            end loop
+          when Z;
+          if (M) {
+            emit P
+          };
+          pause;
+          pause;
+          abort
+            loop
+              pause
+            end loop
+          when C;
+          if (X) {
+            emit Z
+          }
+        end loop
+      when C;
+      emit M;
+      pause;
+      pause
+    ]
+  when E;
+  emit W
+end loop
+
+end module

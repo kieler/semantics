@@ -1,0 +1,14 @@
+module test_repeat1:
+input A;
+output B;
+
+repeat 5 times
+  emit B;
+  abort
+    loop
+      pause
+    end loop
+  when A
+end repeat
+
+end module

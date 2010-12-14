@@ -1,0 +1,12 @@
+module test_counter1:
+input A;
+output B;
+
+abort
+  loop
+    pause
+  end loop
+when 5 A;
+emit B
+
+end module

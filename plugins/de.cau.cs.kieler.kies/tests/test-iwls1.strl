@@ -1,0 +1,26 @@
+module test_iwls1:
+input CAR;
+input SHORT;
+input LONG;
+output HG;
+output HY;
+output FG;
+output FY;
+output RESTART;
+
+loop
+  emit HG;
+  emit RESTART;
+  await [CAR and LONG];
+  emit HY;
+  emit RESTART;
+  await SHORT;
+  emit FG;
+  emit RESTART;
+  await [not CAR or LONG];
+  emit FY;
+  emit RESTART;
+  await SHORT
+end loop
+
+end module

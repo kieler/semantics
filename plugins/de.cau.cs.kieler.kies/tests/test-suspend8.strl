@@ -1,0 +1,9 @@
+module test_suspend8:
+input A;
+output B;
+
+suspend
+  sustain B
+when immediate [not A]
+
+end module

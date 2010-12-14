@@ -1,0 +1,355 @@
+module tcint:
+input SEL;
+input WRITE;
+input ACK;
+input ERR;
+input RESET;
+input ADB22;
+input ADB23;
+input ADB24;
+output RDY;
+output RREQ;
+output WREQ;
+output CONFLICT;
+input Fi_FF;
+input Fi_PAF;
+input Fi_HF;
+input Fo_EF;
+input Fo_PAE;
+input Fo_HF;
+input PomIoDone;
+output WPomAdCyc;
+output RPomAdCyc;
+output WFifo;
+output PopRFifo;
+output pOEnRFifo;
+output TagFlag;
+output TCRegInOE;
+output TCRegInCkE;
+output TCRegOutOE;
+output TCRegOutCkDis;
+output ExtBufDir;
+output ExtBufOE;
+output RomAD;
+output RomCE;
+output RomOE;
+output LcaOE;
+input SetDMAReadAddressReady;
+input DMAReadOver;
+input SetDMAWriteAddressReady;
+input DMAWriteOver;
+
+signal pHostDrives,
+       pRomDrives,
+       pPamDrives,
+       pLcaDrives,
+       pDriveTBC,
+       pRREQ,
+       pWREQ,
+       DMAReadAddressReady,
+       DMAWriteAddressReady,
+       ConflictOnSEL,
+       AcceptSEL in
+    loop
+      present pRREQ then
+        await tick;
+        emit RREQ
+      else
+        await tick
+      end present
+    end loop
+  ||
+    loop
+      present pWREQ then
+        await tick;
+        emit WREQ
+      else
+        await tick
+      end present
+    end loop
+  ||
+      sustain TCRegInCkE
+    ||
+      sustain RomCE
+    ||
+      loop
+        present pDriveTBC then
+          await tick;
+          emit TCRegOutOE
+        else
+          await tick
+        end present
+      end loop
+    ||
+      loop
+        trap EndOfHostDrives in
+          [
+            await tick;
+            [
+              sustain TCRegInOE
+            ||
+              sustain ExtBufDir
+            ||
+              sustain ExtBufOE
+            ]
+          ||
+            await [pPamDrives or pRomDrives or pLcaDrives] do
+              exit EndOfHostDrives
+            end await
+          ]
+        end trap;
+        present pPamDrives then
+          trap EndOfPamDrives in
+            [
+              await tick;
+              sustain ExtBufOE
+            ||
+              await pHostDrives do
+                exit EndOfPamDrives
+              end await
+            ]
+          end trap
+        else
+          present pRomDrives then
+            trap EndOfRomDrives in
+              [
+                await tick;
+                sustain RomOE
+              ||
+                await pHostDrives do
+                  exit EndOfRomDrives
+                end await
+              ]
+            end trap
+          else
+            present pLcaDrives then
+              trap EndOfLcaDrives in
+                [
+                  await tick;
+                  sustain LcaOE
+                ||
+                  await pHostDrives do
+                    exit EndOfLcaDrives
+                  end await
+                ]
+              end trap
+            end present
+          end present
+        end present
+      end loop
+  ||
+      loop
+        await SetDMAReadAddressReady;
+        do
+          sustain DMAReadAddressReady
+        watching DMAReadOver
+      end loop
+    ||
+      loop
+        await SetDMAWriteAddressReady;
+        do
+          sustain DMAWriteAddressReady
+        watching DMAWriteOver
+      end loop
+  ||
+    signal RejectSEL in
+        loop
+          await ConflictOnSEL;
+          do
+            every immediate SEL do
+              emit RejectSEL
+            end every
+          watching AcceptSEL
+        end loop
+      ||
+        loop
+          present RejectSEL then
+            await tick;
+            emit RDY;
+            emit CONFLICT
+          else
+            await tick
+          end present
+        end loop
+    end signal
+  ||
+    await tick;
+    loop
+      await 
+        case immediate [Fo_HF and DMAWriteAddressReady] do
+          emit ConflictOnSEL;
+          trap AlmostEndOfDmaWrite in
+            [
+              sustain pWREQ
+            ||
+              emit pLcaDrives;
+              await tick;
+              emit pPamDrives;
+              [
+                sustain pOEnRFifo
+              ||
+                emit PopRFifo;
+                trap AckReceived in
+                  [
+                    await tick;
+                    sustain TCRegOutCkDis
+                  ||
+                    await immediate ACK do
+                      exit AckReceived
+                    end await
+                  ]
+                end trap;
+                emit AcceptSEL;
+                emit pDriveTBC;
+                await tick;
+                emit PopRFifo;
+                emit pDriveTBC;
+                exit AlmostEndOfDmaWrite
+              ]
+            ]
+          end trap;
+          emit pHostDrives;
+          await tick;
+          emit pDriveTBC;
+          await tick
+        case immediate [not Fi_HF and DMAReadAddressReady] do
+          emit ConflictOnSEL;
+          trap EndOfDmaRead in
+            [
+              trap WordCount in
+                  sustain pRREQ
+                ||
+                  await ACK;
+                  await tick;
+                  await tick;
+                  await tick;
+                  exit WordCount
+              end trap
+            ||
+              emit pLcaDrives;
+              await tick;
+              emit pHostDrives;
+              trap AckReceived in
+                [
+                  await tick;
+                  sustain TCRegOutCkDis
+                ||
+                  await immediate ACK do
+                    exit AckReceived
+                  end await
+                ]
+              end trap;
+              emit AcceptSEL;
+              emit pDriveTBC;
+              await ACK;
+              trap NotAck in
+                [
+                  await tick;
+                  sustain WFifo
+                ||
+                  await [not ACK] do
+                    exit NotAck
+                  end await
+                ]
+              end trap;
+              exit EndOfDmaRead
+            ]
+          end trap
+        case immediate SEL do
+          emit TagFlag;
+          trap ReadSharedEnd,
+               WriteSharedEnd in
+            present [SEL and WRITE and not ADB24 and ADB23 and not ADB22] then
+              await tick;
+              emit WPomAdCyc;
+              await PomIoDone;
+              await tick;
+              await tick;
+              emit RDY;
+              await tick
+            else
+              present [SEL and not WRITE and not ADB24 and ADB23 and not ADB22] then
+                await tick;
+                emit pPamDrives;
+                emit RPomAdCyc;
+                await PomIoDone;
+                await tick;
+                exit ReadSharedEnd
+              else
+                present [SEL and WRITE and ADB24] then
+                  await tick;
+                  emit RDY;
+                  emit WFifo;
+                  await tick;
+                  emit WFifo;
+                  await tick
+                else
+                  present [SEL and not WRITE and ADB24] then
+                    await tick;
+                    emit pPamDrives;
+                    emit pOEnRFifo;
+                    emit PopRFifo;
+                    emit WFifo;
+                    await tick;
+                    exit ReadSharedEnd
+                  else
+                    present [SEL and WRITE and not ADB24 and ADB23 and ADB22] then
+                      await tick;
+                      emit RDY;
+                      await tick;
+                      emit WFifo;
+                      await tick
+                    else
+                      present [SEL and not WRITE and not ADB24 and ADB23 and ADB22] then
+                        await tick;
+                        emit pPamDrives;
+                        emit pOEnRFifo;
+                        emit PopRFifo;
+                        await tick;
+                        exit ReadSharedEnd
+                      else
+                        present [SEL and not WRITE and not ADB24 and not ADB23 and not ADB22] then
+                          await tick;
+                          emit pRomDrives;
+                          emit RomAD;
+                          await tick;
+                          do
+                            sustain RomOE
+                          watching tick;
+                          emit RomOE;
+                          exit ReadSharedEnd
+                        else
+                          present [SEL and WRITE and not ADB24 and not ADB23 and ADB22] then
+                            await tick;
+                            emit RDY;
+                            await tick
+                          else
+                            present [SEL and not WRITE and not ADB24 and not ADB23 and ADB22] then
+                              await tick;
+                              emit pLcaDrives;
+                              await tick;
+                              await tick;
+                              exit ReadSharedEnd
+                            else
+                              halt
+                            end present
+                          end present
+                        end present
+                      end present
+                    end present
+                  end present
+                end present
+              end present
+            end present
+          handle ReadSharedEnd do
+            emit pDriveTBC;
+            await tick;
+            emit RDY;
+            emit pHostDrives;
+            await tick
+          end trap
+      end await
+    end loop
+end signal
+
+end module

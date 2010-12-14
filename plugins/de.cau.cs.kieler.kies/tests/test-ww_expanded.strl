@@ -1,0 +1,361 @@
+module WRISTWATCH:
+type MAIN_DISPLAY_TYPE;
+type MINI_DISPLAY_TYPE;
+type DISPLAY_POSITION;
+type WATCH_TIME_TYPE;
+type WATCH_TIME_POSITION;
+type STOPWATCH_TIME_TYPE;
+type ALARM_TIME_TYPE;
+type ALARM_TIME_POSITION;
+constant INITIAL_WATCH_TIME : WATCH_TIME_TYPE;
+constant INITIAL_WATCH_TIME_POSITION : WATCH_TIME_POSITION;
+constant ZERO_STOPWATCH_TIME : STOPWATCH_TIME_TYPE;
+constant INITIAL_ALARM_TIME : ALARM_TIME_TYPE;
+constant INITIAL_ALARM_TIME_POSITION : ALARM_TIME_POSITION;
+constant ALARM_DURATION : integer;
+function NEXT_WATCH_TIME_POSITION(WATCH_TIME_POSITION) : WATCH_TIME_POSITION;
+function NEXT_ALARM_TIME_POSITION(ALARM_TIME_POSITION) : ALARM_TIME_POSITION;
+function COMPARE_ALARM_TIME_TO_WATCH_TIME(ALARM_TIME_TYPE, WATCH_TIME_TYPE) : boolean;
+function WATCH_TIME_TO_MAIN_DISPLAY(WATCH_TIME_TYPE) : MAIN_DISPLAY_TYPE;
+function WATCH_TIME_TO_MINI_DISPLAY(WATCH_TIME_TYPE) : MINI_DISPLAY_TYPE;
+function WATCH_DATE_TO_MINI_DISPLAY(WATCH_TIME_TYPE) : MINI_DISPLAY_TYPE;
+function WATCH_DAY_TO_ALPHABETIC_DISPLAY(WATCH_TIME_TYPE) : string;
+function WATCH_DISPLAY_POSITION(WATCH_TIME_POSITION) : DISPLAY_POSITION;
+function STOPWATCH_TIME_TO_MAIN_DISPLAY(STOPWATCH_TIME_TYPE) : MAIN_DISPLAY_TYPE;
+function ALARM_TIME_TO_MAIN_DISPLAY(ALARM_TIME_TYPE) : MAIN_DISPLAY_TYPE;
+function ALARM_DISPLAY_POSITION(ALARM_TIME_POSITION) : DISPLAY_POSITION;
+input UL;
+input UR;
+input LL;
+input LR;
+input HS;
+input S;
+output MAIN_DISPLAY : MAIN_DISPLAY_TYPE;
+output MINI_DISPLAY : MINI_DISPLAY_TYPE;
+output ALPHABETIC_DISPLAY : integer;
+output START_ENHANCING : DISPLAY_POSITION;
+output STOP_ENHANCING : DISPLAY_POSITION;
+output CHIME_STATUS : boolean;
+output STOPWATCH_RUN_STATUS : boolean;
+output STOPWATCH_LAP_STATUS : boolean;
+output ALARM_STATUS : boolean;
+output BEEP;
+relation UL # UR # LL # LR # HS;
+relation S => HS;
+
+signal WATCH_MODE_COMMAND,
+       STOPWATCH_MODE_COMMAND,
+       ALARM_MODE_COMMAND,
+       TOGGLE_24H_MODE_COMMAND,
+       TOGGLE_CHIME_COMMAND,
+       ENTER_SET_WATCH_MODE_COMMAND,
+       SET_WATCH_COMMAND,
+       NEXT_WATCH_TIME_POSITION_COMMAND,
+       EXIT_SET_WATCH_MODE_COMMAND,
+       WATCH_TIME : WATCH_TIME_TYPE,
+       WATCH_BEING_SET,
+       WATCH_START_ENHANCING : WATCH_TIME_POSITION,
+       WATCH_STOP_ENHANCING : WATCH_TIME_POSITION,
+       START_STOP_COMMAND,
+       LAP_COMMAND,
+       STOPWATCH_TIME : STOPWATCH_TIME_TYPE,
+       TOGGLE_ALARM_COMMAND,
+       ENTER_SET_ALARM_MODE_COMMAND,
+       NEXT_ALARM_TIME_POSITION_COMMAND,
+       EXIT_SET_ALARM_MODE_COMMAND,
+       SET_ALARM_COMMAND,
+       STOP_ALARM_BEEP_COMMAND,
+       ALARM_TIME : ALARM_TIME_TYPE,
+       ALARM_START_ENHANCING : ALARM_TIME_POSITION,
+       ALARM_STOP_ENHANCING : ALARM_TIME_POSITION in
+      loop
+        emit WATCH_MODE_COMMAND;
+        trap WATCH_AND_SET_WATCH_MODE in
+          loop
+            do
+              [
+                await LL do
+                  exit WATCH_AND_SET_WATCH_MODE
+                end await
+              ||
+                every LR do
+                  emit TOGGLE_24H_MODE_COMMAND
+                end every
+              ]
+            upto UL;
+            emit ENTER_SET_WATCH_MODE_COMMAND;
+            do
+              [
+                every LL do
+                  emit NEXT_WATCH_TIME_POSITION_COMMAND
+                end every
+              ||
+                every LR do
+                  emit SET_WATCH_COMMAND
+                end every
+              ]
+            upto UL;
+            emit EXIT_SET_WATCH_MODE_COMMAND
+          end loop
+        end trap;
+        emit STOPWATCH_MODE_COMMAND;
+        do
+          [
+            every LR do
+              emit START_STOP_COMMAND
+            end every
+          ||
+            every UR do
+              emit LAP_COMMAND
+            end every
+          ]
+        upto LL;
+        trap ALARM_AND_SET_ALARM_MODE in
+          emit ALARM_MODE_COMMAND;
+          loop
+            do
+              [
+                await LL do
+                  exit ALARM_AND_SET_ALARM_MODE
+                end await
+              ||
+                every LR do
+                  emit TOGGLE_CHIME_COMMAND
+                end every
+              ||
+                every UR do
+                  emit TOGGLE_ALARM_COMMAND
+                end every
+              ]
+            upto UL;
+            emit ENTER_SET_ALARM_MODE_COMMAND;
+            do
+              [
+                every LL do
+                  emit NEXT_ALARM_TIME_POSITION_COMMAND
+                end every
+              ||
+                every LR do
+                  emit SET_ALARM_COMMAND
+                end every
+              ]
+            upto UL;
+            emit EXIT_SET_ALARM_MODE_COMMAND
+          end loop
+        end trap
+      end loop
+    ||
+      every UR do
+        emit STOP_ALARM_BEEP_COMMAND
+      end every
+  ||
+    var WATCH_TIME := INITIAL_WATCH_TIME : WATCH_TIME_TYPE,
+        CHIME_STATUS := false : boolean in
+      emit WATCH_TIME(WATCH_TIME);  
+      emit CHIME_STATUS(CHIME_STATUS);
+      loop
+        do
+          loop
+            await 
+              case S do
+                emit WATCH_TIME(WATCH_TIME);
+                emit BEEP
+              case TOGGLE_24H_MODE_COMMAND do
+                emit WATCH_TIME(WATCH_TIME)
+              case TOGGLE_CHIME_COMMAND do
+                CHIME_STATUS := not CHIME_STATUS;
+                emit CHIME_STATUS(CHIME_STATUS)
+            end await
+          end loop 
+        upto ENTER_SET_WATCH_MODE_COMMAND;
+        var WATCH_TIME_POSITION : WATCH_TIME_POSITION in
+          do
+            WATCH_TIME_POSITION := INITIAL_WATCH_TIME_POSITION;
+            emit WATCH_START_ENHANCING(WATCH_TIME_POSITION);
+            loop
+              await 
+                case S do 
+                  emit WATCH_TIME(WATCH_TIME);
+                  emit WATCH_BEING_SET
+                case SET_WATCH_COMMAND do
+                  emit WATCH_TIME(WATCH_TIME);
+                  emit WATCH_BEING_SET 
+                case NEXT_WATCH_TIME_POSITION_COMMAND do
+                  emit WATCH_STOP_ENHANCING(WATCH_TIME_POSITION);
+                  WATCH_TIME_POSITION := NEXT_WATCH_TIME_POSITION(WATCH_TIME_POSITION);
+                  emit WATCH_START_ENHANCING(WATCH_TIME_POSITION)
+              end await
+            end loop
+          upto EXIT_SET_WATCH_MODE_COMMAND;
+          emit WATCH_STOP_ENHANCING(WATCH_TIME_POSITION)
+        end var
+      end loop
+    end var
+  ||
+    signal RESET_STOPWATCH_COMMAND,
+           BASIC_STOPWATCH_TIME : STOPWATCH_TIME_TYPE in
+        loop
+            var STOPWATCH_TIME := ZERO_STOPWATCH_TIME : STOPWATCH_TIME_TYPE in
+              loop
+                emit STOPWATCH_RUN_STATUS(false);
+                emit BASIC_STOPWATCH_TIME(STOPWATCH_TIME);
+                await START_STOP_COMMAND;
+                emit STOPWATCH_RUN_STATUS(true);
+                emit BEEP;
+                do
+                  every HS do
+                    emit BASIC_STOPWATCH_TIME(STOPWATCH_TIME);
+                    emit BEEP
+                  end every
+                upto START_STOP_COMMAND;
+                emit BEEP
+              end loop
+            end var
+          ||
+            loop
+              emit STOPWATCH_LAP_STATUS(false);
+              do
+                loop
+                  emit STOPWATCH_TIME(?BASIC_STOPWATCH_TIME)
+                each BASIC_STOPWATCH_TIME
+              upto LAP_COMMAND;
+              emit STOPWATCH_LAP_STATUS(true);
+              await LAP_COMMAND
+            end loop
+        each RESET_STOPWATCH_COMMAND
+      ||
+        loop
+          trap RESET in
+            signal STOPWATCH_STOPPED in
+              [
+                loop
+                  do
+                    sustain STOPWATCH_STOPPED
+                  upto START_STOP_COMMAND;
+                  await START_STOP_COMMAND
+                end loop
+              ||
+                loop
+                  await LAP_COMMAND do
+                    present STOPWATCH_STOPPED then
+                      exit RESET
+                    end present
+                  end await;
+                  await LAP_COMMAND
+                end loop
+              ]
+            end signal
+          end trap;
+          emit RESET_STOPWATCH_COMMAND
+        end loop
+    end signal
+  ||
+    signal START_BEEPING in
+        var ALARM_TIME := INITIAL_ALARM_TIME : ALARM_TIME_TYPE,
+            ALARM_STATUS := false : boolean in
+          emit ALARM_TIME(ALARM_TIME);
+          emit ALARM_STATUS(ALARM_STATUS);
+          loop
+            do
+              loop
+                await 
+                  case TOGGLE_24H_MODE_COMMAND do
+                    emit ALARM_TIME(ALARM_TIME)
+                  case TOGGLE_ALARM_COMMAND do
+                    ALARM_STATUS := not ALARM_STATUS;
+                    emit ALARM_STATUS(ALARM_STATUS)
+                  case WATCH_TIME do
+                    present WATCH_BEING_SET else
+                    nothing
+                     %{ if (COMPARE_ALARM_TIME_TO_WATCH_TIME(ALARM_TIME, ?WATCH_TIME) and ALARM_STATUS) then
+                        emit START_BEEPING
+                      end if }%
+                    end present
+                end await
+              end loop
+            upto ENTER_SET_ALARM_MODE_COMMAND;
+            var ALARM_TIME_POSITION : ALARM_TIME_POSITION in
+              do
+                ALARM_TIME_POSITION := INITIAL_ALARM_TIME_POSITION;
+                emit ALARM_START_ENHANCING(ALARM_TIME_POSITION);
+                loop
+                  await   
+                    case SET_ALARM_COMMAND do   
+                      emit ALARM_TIME(ALARM_TIME)
+                    case NEXT_ALARM_TIME_POSITION_COMMAND do
+                      emit ALARM_STOP_ENHANCING(ALARM_TIME_POSITION);
+                      ALARM_TIME_POSITION := NEXT_ALARM_TIME_POSITION(ALARM_TIME_POSITION);
+                      emit ALARM_START_ENHANCING(ALARM_TIME_POSITION)
+                  end await
+                end loop
+              upto EXIT_SET_ALARM_MODE_COMMAND;
+              emit ALARM_STOP_ENHANCING(ALARM_TIME_POSITION);
+              ALARM_STATUS := true;
+              emit ALARM_STATUS(ALARM_STATUS)
+            end var
+          end loop
+        end var
+      ||
+        every START_BEEPING do
+          do
+            do
+              loop
+                emit BEEP
+              each S
+            upto STOP_ALARM_BEEP_COMMAND
+          watching ALARM_DURATION S
+        end every
+    end signal
+  ||
+    loop
+      do
+        [
+          loop
+            emit MAIN_DISPLAY(WATCH_TIME_TO_MAIN_DISPLAY(?WATCH_TIME));
+            emit MINI_DISPLAY(WATCH_DATE_TO_MINI_DISPLAY(?WATCH_TIME));
+            emit ALPHABETIC_DISPLAY(2)
+          each WATCH_TIME
+        ||
+          every WATCH_START_ENHANCING do
+            emit START_ENHANCING(WATCH_DISPLAY_POSITION(?WATCH_START_ENHANCING))
+          end every
+        ||
+          every WATCH_STOP_ENHANCING do
+            emit STOP_ENHANCING(WATCH_DISPLAY_POSITION(?WATCH_STOP_ENHANCING))
+          end every
+        ]
+      upto STOPWATCH_MODE_COMMAND;
+      do
+        [
+          loop
+            emit MINI_DISPLAY(WATCH_TIME_TO_MINI_DISPLAY(?WATCH_TIME))
+          each WATCH_TIME
+        ||
+          do
+            emit ALPHABETIC_DISPLAY(0);
+            loop
+              emit MAIN_DISPLAY(STOPWATCH_TIME_TO_MAIN_DISPLAY(?STOPWATCH_TIME))
+            each STOPWATCH_TIME
+          upto ALARM_MODE_COMMAND;
+          do
+            [
+              emit ALPHABETIC_DISPLAY(1);
+              loop
+                emit MAIN_DISPLAY(ALARM_TIME_TO_MAIN_DISPLAY(?ALARM_TIME))
+              each ALARM_TIME
+            ||
+              every ALARM_START_ENHANCING do
+                emit START_ENHANCING(ALARM_DISPLAY_POSITION(?ALARM_START_ENHANCING))
+              end every
+            ||
+              every ALARM_STOP_ENHANCING do
+                emit STOP_ENHANCING(ALARM_DISPLAY_POSITION(?ALARM_STOP_ENHANCING))
+              end every
+            ]
+          upto WATCH_MODE_COMMAND
+        ]
+      upto WATCH_MODE_COMMAND
+    end loop
+end signal
+
+end module

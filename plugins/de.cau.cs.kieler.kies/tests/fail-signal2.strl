@@ -1,0 +1,30 @@
+module test_signal4:
+output A;
+output B : integer;
+output C : boolean;
+output D : float;
+output E : double;
+output F : string;
+
+var b := 1 : integer,
+    c := false : boolean,
+    d := 3.14f : float, 
+    e := 2.67 : double,
+    f := "Hello" : string in
+  loop
+    emit A;
+    emit B(b);
+    emit C(c);
+    emit D(d);
+    emit E(e);
+    emit F(f);
+    b := b + 1;
+    c := not c;
+    d := d + 1.0;
+    e := e + 2.0;
+    f := "Goodbye";
+    pause
+  end loop
+end var
+
+end module

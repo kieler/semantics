@@ -1,0 +1,7 @@
+module test_trap3:
+
+trap T := 5 : integer in
+  exit T(10)
+end trap
+
+end module

@@ -1,0 +1,39 @@
+module test_scfg2:
+input A;
+input B;
+input C;
+input D;
+output X;
+output Y;
+output Z;
+
+abort
+  loop
+    trap U in
+        loop
+          trap T in
+            [
+              pause;
+              sustain Y
+            ||
+              emit D
+            ]
+          end trap;
+          emit X;
+          pause
+        end loop
+      ||
+        loop
+          abort
+            pause;
+            emit Z;
+            present C then
+              exit U
+            end present
+          when X
+        end loop
+    end trap
+  end loop
+when B
+
+end module

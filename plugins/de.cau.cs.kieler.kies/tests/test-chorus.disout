@@ -1,0 +1,5339 @@
+module Chorus:
+type TimeVal;
+type pointer;
+constant TIMER_8254 : integer;
+constant nullTimeVal : TimeVal;
+constant deltaT : TimeVal;
+constant dummyThread : integer;
+constant K_ETIMEOUT : integer;
+constant K_EABORT : integer;
+constant K_OK : integer;
+constant actif : integer;
+constant bloque : integer;
+constant libre : integer;
+function runningThread() : integer;
+function diffTimeVal(TimeVal, TimeVal) : integer;
+function TimeInc(TimeVal) : TimeVal;
+function createThread(integer) : integer;
+function Ad_Awaken() : pointer;
+function Ad_SetTimer() : pointer;
+function Ad_DelTimer() : pointer;
+function Ad_ThreadState() : pointer;
+procedure save_thCtx()();
+procedure restore_thCtx()();
+procedure push_ItCtx()();
+procedure pop_ItCtx()();
+procedure enqueueTimers(TimeVal, boolean)();
+procedure dequeueTimers(TimeVal, boolean, boolean)();
+procedure dequeueTimersAt(TimeVal, boolean)(TimeVal);
+procedure initCurrentTime()();
+procedure schedulerInit()();
+procedure scheduleChoose(boolean, integer)();
+procedure demultiplexage(boolean)(integer);
+procedure multiplexage()(pointer, integer, integer);
+input Interrupt : integer;
+input Trap;
+input TrapRet;
+input Exception;
+input ExceptionRet;
+input MaskSuspend;
+input UnMaskSuspend;
+input MaskStop;
+input UnMaskStop;
+input MaskAbort;
+input UnMaskAbort;
+input MaskDelete;
+input UnMaskDelete;
+input CreateThread : integer;
+input DeleteThread : integer;
+input Suspend : integer;
+input Stop : integer;
+input Abort : integer;
+input Awake : integer;
+input Resume : integer;
+input Start : integer;
+input Sleep1 : integer;
+input Sleep2 : integer;
+input Sleep3 : integer;
+input Sleep4 : integer;
+input Sleep5 : integer;
+input Sleep6 : integer;
+input Sleep7 : integer;
+input Sleep8 : integer;
+input Sleep9 : integer;
+input Sleep10 : integer;
+input EndInterrupt;
+output Awaken;
+output AsyncInterrupt : integer;
+output Run : integer;
+output ThreadDeleted;
+output EnterSystemMode;
+output ExitSystemMode;
+
+signal SetTimer,
+       DelTimer,
+       ClockTick,
+       EnterInterrupt,
+       TimerOut,
+       ExitInterrupt,
+       TestSchedule,
+       ThreadCreated : integer,
+       ThreadTrap : integer,
+       ThreadTrapRet : integer,
+       ThreadException : integer,
+       ThreadExceptionRet : integer in
+    abort
+      loop
+        pause
+      end loop
+    when tick;
+    [
+      var itLevel : integer,
+          first_time : boolean in
+        first_time := true;
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when [Interrupt or EndInterrupt];
+          if (Interrupt) {
+            if (?Interrupt = TIMER_8254) {
+              emit ClockTick
+            } else {
+              emit AsyncInterrupt(?Interrupt)
+            }
+          };
+          if (first_time) {
+            if (AsyncInterrupt and Interrupt) {
+              first_time := false;
+              call save_thCtx()();
+              emit EnterInterrupt;
+              itLevel := 1
+            }
+          } else {
+            if (AsyncInterrupt) {
+              if (not EndInterrupt) {
+                call push_ItCtx()();
+                itLevel := itLevel + 1
+              }
+            } else {
+              if (EndInterrupt) {
+                itLevel := itLevel - 1;
+                if (itLevel = 0) {
+                  call restore_thCtx()();
+                  emit ExitInterrupt;
+                  first_time := true
+                } else {
+                  call pop_ItCtx()()
+                }
+              }
+            }
+          }
+        end loop
+      end var
+    ||
+      loop
+        trap ThreadMode in
+          [
+            loop
+              abort
+                loop
+                  pause
+                end loop
+              when
+                case Trap do
+                  emit ThreadTrap(runningThread())
+                case Exception do
+                  emit ThreadException(runningThread())
+                case TrapRet do
+                  emit ThreadTrapRet(runningThread())
+                case ExceptionRet do
+                  emit ThreadExceptionRet(runningThread())
+              end abort
+            end loop
+          ||
+            abort
+              loop
+                pause
+              end loop
+            when immediate EnterInterrupt;
+            exit ThreadMode
+          ]
+        end trap;
+        abort
+          loop
+            pause
+          end loop
+        when ExitInterrupt
+      end loop
+    ]
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when tick;
+    signal NextTimeOutDelay : TimeVal,
+           NoTimerDelay,
+           NextTimeOut : TimeVal,
+           NoTimer in
+      [
+        var next1 : TimeVal,
+            next2 : TimeVal,
+            isNext : boolean,
+            wasNext : boolean,
+            noMore : boolean in
+          next1 := nullTimeVal;
+          next2 := nullTimeVal;
+          noMore := true;
+          [
+            loop
+              abort
+                loop
+                  pause
+                end loop
+              when SetTimer;
+              call enqueueTimers(next1, isNext)();
+              if (isNext) {
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit NextTimeOut(next1)
+              }
+            end loop
+          ||
+            loop
+              abort
+                loop
+                  pause
+                end loop
+              when DelTimer;
+              call dequeueTimers(next2, noMore, wasNext)();
+              if (wasNext) {
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit NextTimeOut(next2)
+              };
+              if (noMore) {
+                abort
+                  loop
+                    pause
+                  end loop
+                when tick;
+                emit NoTimer
+              }
+            end loop
+          ]
+        end var
+      ||
+        signal ClockVal : TimeVal in
+            call initCurrentTime()();
+            every ClockTick do
+              emit ClockVal(TimeInc(deltaT))
+            end every
+          ||
+            var nextTimer : TimeVal,
+                delay : integer,
+                noMore : boolean in
+              noMore := true;
+              loop
+                abort
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when immediate NextTimeOut;
+                  nextTimer := ?NextTimeOut;
+                  trap Waiting in
+                    loop
+                      delay := diffTimeVal(nextTimer, ?ClockVal);
+                      if (delay > 0) {
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when delay ClockTick;
+                        call dequeueTimersAt(nextTimer, noMore)(nextTimer);
+                        emit TimerOut;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when ClockTick
+                      } else {
+                        call dequeueTimersAt(nextTimer, noMore)(nextTimer);
+                        emit TimerOut;
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when ClockTick
+                      };
+                      if (noMore) {
+                        exit Waiting
+                      }
+                    end loop
+                  end trap
+                when [NoTimer or NextTimeOut]
+              end loop
+            end var
+        end signal
+      ]
+    end signal
+  ||
+    abort
+      loop
+        pause
+      end loop
+    when tick;
+    [
+      call schedulerInit()();
+      if (not TestSchedule) {
+        emit Run(dummyThread)
+      };
+      loop
+        abort
+          loop
+            pause
+          end loop
+        when CreateThread;
+        emit ThreadCreated(createThread(?CreateThread))
+      end loop
+    ||
+      var running : integer,
+          change : boolean in
+        running := dummyThread;
+        loop
+          abort
+            abort
+              loop
+                pause
+              end loop
+            when immediate TestSchedule;
+            loop
+              pause;
+              call scheduleChoose(change, running)();
+              if (change) {
+                emit Run(running)
+              };
+              abort
+                loop
+                  pause
+                end loop
+              when TestSchedule
+            end loop
+          when EnterInterrupt;
+          trap InterruptMode in
+            [
+              abort
+                loop
+                  pause
+                end loop
+              when immediate TestSchedule;
+              abort
+                loop
+                  pause
+                end loop
+              when ExitInterrupt;
+              emit TestSchedule
+            ||
+              abort
+                loop
+                  pause
+                end loop
+              when immediate ExitInterrupt;
+              exit InterruptMode
+            ]
+          end trap
+        end loop
+      end var
+    ]
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 1) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_1 in
+              trap weak_trap_0 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(1);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (1 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (1 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (1 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (1 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (1 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (1 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (1 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (1 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (1 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (1 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (1 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_0
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_1
+                  end abort
+              end trap
+            handle weak_trap_1 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep1 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep1) {
+                    if (?Sleep1 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 1, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep1;
+                        call multiplexage()(Ad_SetTimer(), 1, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 1, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 1, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 1, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 1, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 1, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 1, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 1, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 1, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 1, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 1, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 1, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 1, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 2) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_3 in
+              trap weak_trap_2 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(2);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (2 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (2 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (2 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (2 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (2 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (2 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (2 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (2 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (2 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (2 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (2 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_2
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_3
+                  end abort
+              end trap
+            handle weak_trap_3 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep2 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep2) {
+                    if (?Sleep2 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 2, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep2;
+                        call multiplexage()(Ad_SetTimer(), 2, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 2, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 2, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 2, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 2, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 2, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 2, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 2, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 2, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 2, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 2, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 2, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 2, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 3) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_5 in
+              trap weak_trap_4 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(3);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (3 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (3 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (3 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (3 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (3 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (3 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (3 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (3 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (3 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (3 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (3 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_4
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_5
+                  end abort
+              end trap
+            handle weak_trap_5 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep3 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep3) {
+                    if (?Sleep3 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 3, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep3;
+                        call multiplexage()(Ad_SetTimer(), 3, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 3, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 3, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 3, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 3, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 3, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 3, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 3, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 3, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 3, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 3, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 3, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 3, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 4) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_7 in
+              trap weak_trap_6 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(4);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (4 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (4 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (4 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (4 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (4 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (4 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (4 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (4 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (4 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (4 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (4 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_6
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_7
+                  end abort
+              end trap
+            handle weak_trap_7 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep3 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep3) {
+                    if (?Sleep3 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 4, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep3;
+                        call multiplexage()(Ad_SetTimer(), 4, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 4, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 4, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 4, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 4, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 4, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 4, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 4, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 4, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 4, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 4, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 4, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 4, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 5) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_9 in
+              trap weak_trap_8 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(5);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (5 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (5 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (5 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (5 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (5 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (5 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (5 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (5 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (5 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (5 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (5 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_8
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_9
+                  end abort
+              end trap
+            handle weak_trap_9 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep5 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep5) {
+                    if (?Sleep5 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 5, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep5;
+                        call multiplexage()(Ad_SetTimer(), 5, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 5, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 5, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 5, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 5, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 5, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 5, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 5, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 5, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 5, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 5, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 5, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 5, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 6) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_11 in
+              trap weak_trap_10 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(6);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (6 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (6 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (6 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (6 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (6 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (6 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (6 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (6 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (6 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (6 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (6 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_10
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_11
+                  end abort
+              end trap
+            handle weak_trap_11 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep6 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep6) {
+                    if (?Sleep6 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 6, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep6;
+                        call multiplexage()(Ad_SetTimer(), 6, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 6, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 6, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 6, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 6, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 6, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 6, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 6, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 6, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 6, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 6, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 6, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 6, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 7) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_13 in
+              trap weak_trap_12 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(7);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (7 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (7 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (7 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (7 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (7 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (7 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (7 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (7 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (7 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (7 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (7 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_12
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_13
+                  end abort
+              end trap
+            handle weak_trap_13 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep7 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep7) {
+                    if (?Sleep7 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 7, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep7;
+                        call multiplexage()(Ad_SetTimer(), 7, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 7, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 7, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 7, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 7, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 7, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 7, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 7, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 7, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 7, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 7, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 7, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 7, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 8) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_15 in
+              trap weak_trap_14 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(8);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (8 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (8 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (8 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (8 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (8 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (8 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (8 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (8 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (8 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (8 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (8 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_14
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_15
+                  end abort
+              end trap
+            handle weak_trap_15 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep8 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep8) {
+                    if (?Sleep8 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 8, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep8;
+                        call multiplexage()(Ad_SetTimer(), 8, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 8, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 8, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 8, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 8, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 8, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 8, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 8, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 8, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 8, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 8, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 8, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 8, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 9) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_17 in
+              trap weak_trap_16 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(9);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (9 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (9 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (9 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (9 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (9 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (9 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (9 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (9 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (9 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (9 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (9 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_16
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_17
+                  end abort
+              end trap
+            handle weak_trap_17 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep9 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep9) {
+                    if (?Sleep9 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 9, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep9;
+                        call multiplexage()(Ad_SetTimer(), 9, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 9, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 9, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 9, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 9, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 9, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 9, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 9, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 9, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 9, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 9, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 9, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 9, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+  ||
+    loop
+      abort
+        loop
+          pause
+        end loop
+      when ThreadCreated;
+      if (?ThreadCreated = 10) {
+        abort
+          loop
+            pause
+          end loop
+        when tick;
+        signal BeReadySuspend,
+               BeUnReadySuspend,
+               BeReadySleep,
+               BeUnReadySleep,
+               BeReadyStop,
+               BeUnReadyStop,
+               TimerOut_DMUX,
+               Trap,
+               TrapRet,
+               Exception,
+               ExceptionRet,
+               StopPur,
+               StartPur,
+               SuspendPur,
+               AwakePur,
+               AbortPur,
+               ResumePur,
+               DeleteThreadPur in
+          [
+            trap weak_trap_19 in
+              trap weak_trap_18 in
+                  [
+                    signal maskedSuspend,
+                           initSuspend,
+                           shouldSuspend,
+                           shouldResume in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskSuspend and not UnMaskSuspend];
+                          abort
+                            loop
+                              emit maskedSuspend;
+                              pause
+                            end loop
+                          when [UnMaskSuspend and not MaskSuspend]
+                        end loop
+                      ||
+                        var suspCnt : integer in
+                          suspCnt := 0;
+                          if (not true) {
+                            suspCnt := suspCnt - 1;
+                            emit shouldSuspend;
+                            emit initSuspend
+                          };
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [SuspendPur or ResumePur];
+                            if (SuspendPur) {
+                              if (not ResumePur) {
+                                suspCnt := suspCnt - 1;
+                                if (suspCnt = - 1) {
+                                  emit shouldSuspend
+                                }
+                              }
+                            } else {
+                              if (ResumePur) {
+                                suspCnt := suspCnt + 1;
+                                if (suspCnt = 0) {
+                                  emit shouldResume
+                                }
+                              }
+                            }
+                          end loop
+                        end var
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when immediate shouldSuspend;
+                          var var_BeReadySuspend : boolean in
+                            var_BeReadySuspend := false;
+                            abort
+                              if (maskedSuspend) {
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskSuspend and not MaskSuspend];
+                                var_BeReadySuspend := true;
+                                emit BeUnReadySuspend
+                              } else {
+                                var_BeReadySuspend := true;
+                                if (not initSuspend) {
+                                  emit BeUnReadySuspend
+                                }
+                              };
+                              loop
+                                pause
+                              end loop
+                            when shouldResume do
+                              if (var_BeReadySuspend) {
+                                emit BeReadySuspend
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    signal maskedStop in
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [MaskStop and not UnMaskStop];
+                          abort
+                            loop
+                              emit maskedStop;
+                              pause
+                            end loop
+                          when [UnMaskStop and not MaskStop]
+                        end loop
+                      ||
+                        loop
+                          abort
+                            loop
+                              pause
+                            end loop
+                          when [StopPur and not StartPur];
+                          var stop_is_masked : boolean in
+                            abort
+                              if (maskedStop) {
+                                stop_is_masked := true;
+                                abort
+                                  loop
+                                    pause
+                                  end loop
+                                when [UnMaskStop and not MaskStop];
+                                emit BeUnReadyStop
+                              } else {
+                                stop_is_masked := false;
+                                emit BeUnReadyStop
+                              };
+                              loop
+                                pause
+                              end loop
+                            when [StartPur and not StopPur] do
+                              if (not stop_is_masked) {
+                                emit BeReadyStop
+                              }
+                            end abort
+                          end var
+                        end loop
+                    end signal
+                  ||
+                    var sysLevel : integer,
+                        etat_init : boolean in
+                      etat_init := true;
+                      if (false) {
+                        emit EnterSystemMode;
+                        loop
+                          pause
+                        end loop
+                      };
+                      every [Trap or Exception] do
+                        if (etat_init) {
+                          sysLevel := 1;
+                          emit EnterSystemMode;
+                          etat_init := false
+                        } else {
+                          sysLevel := sysLevel + 1
+                        };
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [TrapRet or ExceptionRet];
+                        sysLevel := sysLevel - 1;
+                        if (sysLevel = 0) {
+                          emit ExitSystemMode;
+                          etat_init := true
+                        }
+                      end every
+                    end var
+                  ||
+                    every tick do
+                      var presence : boolean in
+                        if (TimerOut) {
+                          call demultiplexage(presence)(10);
+                          if (presence) {
+                            emit TimerOut_DMUX
+                          }
+                        }
+                      end var;
+                      if (DeleteThread) {
+                        if (10 = ?DeleteThread) {
+                          emit DeleteThreadPur
+                        }
+                      };
+                      if (ThreadTrap) {
+                        if (10 = ?ThreadTrap) {
+                          emit Trap
+                        }
+                      };
+                      if (ThreadTrapRet) {
+                        if (10 = ?ThreadTrapRet) {
+                          emit TrapRet
+                        }
+                      };
+                      if (ThreadException) {
+                        if (10 = ?ThreadException) {
+                          emit Exception
+                        }
+                      };
+                      if (ThreadExceptionRet) {
+                        if (10 = ?ThreadExceptionRet) {
+                          emit Exception
+                        }
+                      };
+                      if (Stop) {
+                        if (10 = ?Stop) {
+                          emit StopPur
+                        }
+                      };
+                      if (Start) {
+                        if (10 = ?Start) {
+                          emit StartPur
+                        }
+                      };
+                      if (Suspend) {
+                        if (10 = ?Suspend) {
+                          emit SuspendPur
+                        }
+                      };
+                      if (Awake) {
+                        if (10 = ?Awake) {
+                          emit AwakePur
+                        }
+                      };
+                      if (Abort) {
+                        if (10 = ?Abort) {
+                          emit AbortPur
+                        }
+                      };
+                      if (Resume) {
+                        if (10 = ?Resume) {
+                          emit ResumePur
+                        }
+                      }
+                    end every
+                  ];
+                  exit weak_trap_18
+                ||
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when DeleteThreadPur do
+                    exit weak_trap_19
+                  end abort
+              end trap
+            handle weak_trap_19 do
+              emit BeReadyStop;
+              emit BeReadySuspend
+            end trap
+          ||
+            var aborting : integer,
+                maskedAbort : boolean,
+                delay : integer in
+              aborting := 0;
+              maskedAbort := false;
+              delay := 0;
+              abort
+                loop
+                  abort
+                    loop
+                      pause
+                    end loop
+                  when [AbortPur or Sleep9 or MaskAbort or UnMaskAbort];
+                  if (MaskAbort and not UnMaskAbort) {
+                    maskedAbort := true
+                  } else {
+                    if (UnMaskAbort) {
+                      maskedAbort := false
+                    }
+                  };
+                  if (Sleep9) {
+                    if (?Sleep9 <> 0) {
+                      if (aborting > 0 and not maskedAbort) {
+                        aborting := aborting - 1;
+                        call multiplexage()(Ad_Awaken(), 10, K_EABORT);
+                        emit Awaken
+                      } else {
+                        delay := ?Sleep9;
+                        call multiplexage()(Ad_SetTimer(), 10, delay);
+                        emit SetTimer;
+                        emit BeUnReadySleep;
+                        trap sleeping in
+                          loop
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when [MaskAbort or UnMaskAbort or AwakePur or TimerOut_DMUX or AbortPur];
+                            if (MaskAbort and not UnMaskAbort) {
+                              maskedAbort := true
+                            } else {
+                              if (UnMaskAbort) {
+                                maskedAbort := false
+                              }
+                            };
+                            if (AwakePur) {
+                              call multiplexage()(Ad_DelTimer(), 10, delay);
+                              emit DelTimer;
+                              call multiplexage()(Ad_Awaken(), 10, K_OK);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (TimerOut_DMUX) {
+                              call multiplexage()(Ad_Awaken(), 10, K_ETIMEOUT);
+                              emit Awaken;
+                              exit sleeping
+                            };
+                            if (AbortPur) {
+                              if (not maskedAbort) {
+                                call multiplexage()(Ad_DelTimer(), 10, delay);
+                                emit DelTimer;
+                                call multiplexage()(Ad_Awaken(), 10, K_EABORT);
+                                emit Awaken;
+                                exit sleeping
+                              } else {
+                                aborting := aborting + 1
+                              }
+                            }
+                          end loop
+                        end trap;
+                        emit BeReadySleep
+                      }
+                    } else {
+                      call multiplexage()(Ad_Awaken(), 10, K_ETIMEOUT);
+                      emit Awaken
+                    }
+                  } else {
+                    if (AbortPur) {
+                      aborting := aborting + 1
+                    }
+                  }
+                end loop
+              when DeleteThreadPur do
+                call multiplexage()(Ad_DelTimer(), 10, delay);
+                emit DelTimer;
+                call multiplexage()(Ad_Awaken(), 10, K_EABORT);
+                emit Awaken;
+                emit BeReadySleep
+              end abort
+            end var
+          ||
+            signal readyStop,
+                   readySleep,
+                   readySuspend in
+              if (true) {
+                call multiplexage()(Ad_ThreadState(), 10, actif);
+                emit TestSchedule
+              };
+              trap EXIT in
+                [
+                  if (not true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  };
+                  loop
+                    abort
+                      loop
+                        emit readySuspend;
+                        pause
+                      end loop
+                    when BeUnReadySuspend;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySuspend
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readyStop;
+                        pause
+                      end loop
+                    when BeUnReadyStop;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadyStop
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        emit readySleep;
+                        pause
+                      end loop
+                    when BeUnReadySleep;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when BeReadySleep
+                  end loop
+                ||
+                  if (true) {
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  };
+                  loop
+                    trap blocked in
+                      call multiplexage()(Ad_ThreadState(), 10, bloque);
+                      emit TestSchedule;
+                      loop
+                        abort
+                          loop
+                            pause
+                          end loop
+                        when [BeReadyStop or BeReadySuspend or BeReadySleep];
+                        if (readyStop and readySuspend and readySleep) {
+                          exit blocked
+                        }
+                      end loop
+                    end trap;
+                    call multiplexage()(Ad_ThreadState(), 10, actif);
+                    emit TestSchedule;
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+                  end loop
+                ||
+                  loop
+                    abort
+                      loop
+                        pause
+                      end loop
+                    when
+                      case MaskDelete do
+                        trap maskedDelete in
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate DeleteThreadPur;
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit EXIT
+                          ||
+                            abort
+                              loop
+                                pause
+                              end loop
+                            when immediate UnMaskDelete;
+                            exit maskedDelete
+                        end trap
+                      case DeleteThreadPur do
+                        exit EXIT
+                    end abort
+                  end loop
+                ]
+              end trap;
+              call multiplexage()(Ad_ThreadState(), 10, libre);
+              emit TestSchedule;
+              emit ThreadDeleted
+            end signal
+          ]
+        end signal
+      }
+    end loop
+end signal
+
+end module

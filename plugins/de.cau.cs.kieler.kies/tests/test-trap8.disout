@@ -1,0 +1,23 @@
+module test_trap8:
+output A;
+output B;
+
+trap T1,
+     T2 in
+    pause;
+    emit A;
+    exit T2
+  ||
+    pause;
+    exit T1
+handle T1 or T2 do
+    if (T1) {
+      emit A
+    }
+  ||
+    if (T2) {
+      emit B
+    }
+end trap
+
+end module

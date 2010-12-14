@@ -1,0 +1,43 @@
+module test_jacky1:
+input I1;
+input I2;
+output O;
+
+suspend
+  trap T in
+    signal S1,
+           S2 in
+      [
+        loop
+          abort
+            loop
+              pause
+            end loop
+          when S1;
+          abort
+            loop
+              pause
+            end loop
+          when I1;
+          emit S2
+        end loop
+      ||
+        abort
+          loop
+            pause
+          end loop
+        when I1;
+        emit S1;
+        abort
+          loop
+            pause
+          end loop
+        when S2;
+        exit T
+      ]
+    end signal
+  end trap
+when I2;
+emit O
+
+end module

@@ -1,0 +1,10 @@
+module test_var2:
+constant c4 = 3 : integer;
+
+var v1 : integer in
+  var v2 : integer in
+    v1 := c4
+  end var
+end var
+
+end module

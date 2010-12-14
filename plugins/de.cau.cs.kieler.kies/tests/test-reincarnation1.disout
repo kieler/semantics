@@ -1,0 +1,31 @@
+module test_reincarnation1:
+output S;
+
+var v : integer in
+  v := 0;
+  loop
+    trap T2 in
+      [
+        pause;
+        exit T2
+      ||
+        loop
+          trap T3 in
+              pause;
+              exit T3
+            ||
+              loop
+                v := v + 1;
+                if (v = 3) {
+                  emit S
+                };
+                pause
+              end loop
+          end trap
+        end loop
+      ]
+    end trap
+  end loop
+end var
+
+end module

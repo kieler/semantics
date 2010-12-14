@@ -1,0 +1,25 @@
+module test_3vsim3:
+input A,B,C,D;
+output E,F,G;
+
+trap T in
+present A then
+  present B else
+    emit E;
+  end
+  ||
+  present C else
+    present D else
+      exit T
+    end;
+    emit G
+  end;
+  emit E
+  ||
+  present E else
+    emit F
+  end
+end
+end trap
+
+end module

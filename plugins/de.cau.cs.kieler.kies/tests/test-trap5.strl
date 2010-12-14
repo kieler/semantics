@@ -1,0 +1,14 @@
+module test_trap5:
+output A;
+output B;
+
+trap T in
+  pause;
+  exit T
+handle T do
+  emit A
+handle T do
+  emit B
+end trap
+
+end module

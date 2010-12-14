@@ -1,0 +1,9 @@
+module test_signal10:
+output A : boolean;
+
+signal XYZZY := true : boolean in
+  pause;
+  emit A(?XYZZY)
+end signal
+
+end module

@@ -1,0 +1,70 @@
+% Annex I : The Reflex Game Program (First Version) 
+module REFLEX_GAME : 
+constant LIMIT_TIME, MEASURE_NUMBER, PAUSE_LENGTH : integer; 
+function RANDOM():integer; 
+input MS, COIN, READY, STOP; 
+relation MS # COIN # READY, COIN # STOP, READY # STOP; 
+output DISPLAY(integer), 
+       GO_ON, GO_OFF, 
+       GAME_OVER_ON, GAME_OVER_OFF, 
+       TILT_ON, TILT_OFF, 
+       RING_BELL; 
+% overall initializations 
+emit DISPLAY(0); 
+emit GO_OFF; 
+emit GAME_OVER_ON; 
+emit TILT_OFF; 
+% loop over a single game 
+every COIN do 
+      % initializations 
+      emit DISPLAY(0); 
+      emit GO_OFF; 
+      emit GAME_OVER_OFF; 
+      emit TILT_OFF; 
+      % exception handling 
+      trap ERROR in 
+          var TOTAL_TIME:=0 : integer in 
+	      repeat MEASURE_NUMBER times 
+	          % phase 1 
+		  do 
+		    do 
+		      every STOP do emit RING_BELL end 
+		    upto READY 
+		  watching LIMIT_TIME MS timeout exit ERROR end; 
+		  % phases 2 and 3 
+		  trap END_MEASURE in 
+		     [
+		        every READY do emit RING_BELL end 
+		      ||
+		        % phase 2 
+			do 
+			  await RANDOM() MS 
+			watching STOP timeout exit ERROR end; 
+			emit GO_ON; 
+			% phase 3 
+			do 
+			  var TIME:=0:integer in 
+			     do 
+			        every MS do TIME:=TIME+1 end 
+			     upto STOP; 
+			     emit DISPLAY(TIME); 
+			     TOTAL_TIME := TOTAL_TIME + TIME 
+			     end 
+			watching LIMIT_TIME MS timeout exit ERROR end; 
+			emit GO_OFF; 
+			exit END_MEASURE 
+		]
+	      end
+	   end;
+	   % final display 
+	   await PAUSE_LENGTH MS do 
+	       emit DISPLAY(TOTAL_TIME / MEASURE_NUMBER) 
+	       end 
+	   end 
+    handle ERROR do 
+    emit TILT_ON; 
+    emit GO_OFF 
+    end; 
+    % end of the game 
+    emit GAME_OVER_ON 
+end.

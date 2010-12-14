@@ -1,0 +1,20 @@
+module test_trap4:
+output A;
+output B;
+
+trap T1,
+     T2 in
+  ;
+  pause;
+  exit T2
+handle T1 or T2 do
+    if (T1) {
+      emit A
+    }
+  ||
+    if (T2) {
+      emit B
+    }
+end trap
+
+end module

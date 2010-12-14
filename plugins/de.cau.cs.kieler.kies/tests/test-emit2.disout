@@ -1,0 +1,10 @@
+module test_emit2:
+output a;
+output b : integer;
+output c : float;
+
+emit a;
+emit b(10);
+emit c(5.0f)
+
+end module

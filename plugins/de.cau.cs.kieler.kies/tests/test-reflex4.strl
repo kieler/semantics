@@ -1,0 +1,260 @@
+% The Reflex Game Program
+
+%{
+  To illustrate the RTOS like behavior of Esterel, we use an auxiliary module 
+  AVERAGE to compute the average reflex time.
+
+  The AVERAGE module's purpose is to receive integers and to broadcast the average of 
+  the integers received so far. The communication with AVERAGE involves two signals: 
+
+  * INCREMENTAVERAGE(integer): input of the AVERAGE module; provokes the 
+    incrementation of the current average value by the conveyed integer 
+
+  * AVERAGE_VALUE(integer): output of the AVERAGE module; broadcasts the cur- 
+    rent average value. 
+
+    The new average value is emitted synchronously with any input. 
+
+    You must realize that the signal AVERAGE_VALUE is undefined up to the first 
+    reception of INCREMENT_AVERAGE. Reading an undefined signal is flagged as
+    an error by the simulator, but not by the compiler. 
+
+    Note that you have played the game enough when the AVERAGE module crashes
+    with a division by zero error.  This happens if MEASURE_NUMBER is set high
+    enough (unlikely) to cause the value of a integer to wrap around to zero.
+    TOTAL is also likely to wrap around giving wrong results.
+
+    We don't try to trap those here for the sake of clarity in this simple example.
+    This shows that Esterel can produce code that crashes if you get complacent
+    in your requirements and specifications.  No programming language yet has
+    over come the human ability to code things that are wrong.
+
+    Esterel's strength is its robust signal manipulation, not its numerical
+    manipulation.
+}%
+
+module AVERAGE:
+
+input INCREMENT_AVERAGE : integer;
+
+output AVERAGE_VALUE : integer;
+
+var TOTAL := 0 : integer,
+  NUMBER := 0 : integer in
+  every immediate INCREMENT_AVERAGE do
+    TOTAL := TOTAL + ?INCREMENT_AVERAGE;
+    NUMBER := NUMBER + 1;
+    emit AVERAGE_VALUE(TOTAL / NUMBER)
+  end every
+end var
+
+end module
+
+% AUTOMATON ENGINE:
+module REFLEX_GAME:
+
+% CONSTANTS:
+constant LIMIT_TIME : integer;
+constant MEASURE_NUMBER : integer;
+constant PAUSE_LENGTH : integer;
+
+%{
+  We need to wait for a random time. To determine the delay length, we call an external 
+  function RANDOM.
+
+  Notice that such a "function" is somewhat improper in Esterel, since functions 
+  should be deterministic. To be perfectly clean, we could send a signal START_TIMER 
+  to an external random timer and wait for a TIME_EXPIRED reply. However such a use 
+  of some random number generator is obviously standard practice even in deterministic 
+  languages. 
+}%
+
+function RANDOM() : integer;
+
+% INPUT FUNCTIONS:
+input MS;
+input COIN;
+input READY;
+input STOP;
+
+% OUTPUT ACTIONS:
+output DISPLAY : integer;
+output GO_ON;
+output GO_OFF;
+output GAME_OVER_ON;
+output GAME_OVER_OFF;
+output TILT_ON;
+output TILT_OFF;
+output RING_BELL;
+
+%{
+  Although it is not strictly necessary, we shall assume the following incompatibility 
+  relations between input signals:
+}%
+relation MS # COIN # READY;
+relation COIN # STOP;
+relation READY # STOP;
+
+% REFLEX_GAME proper starts at this point.
+
+% Overall initializations, such as setting up hardware at power up: 
+
+emit DISPLAY(0);
+emit GO_OFF;
+emit GAME_OVER_ON;
+emit TILT_OFF;
+
+% Loop over a single game:
+
+every COIN do
+
+% Initializations, done every time we insert a coin for a new game:
+
+  emit DISPLAY(0);
+  emit GO_OFF;
+  emit GAME_OVER_OFF;
+  emit TILT_OFF;
+
+  % Exception handling:
+
+  trap END_GAME,
+       ERROR in
+     signal INCREMENT_AVERAGE : integer,
+     AVERAGE_VALUE : integer in
+      [
+
+	%{
+	  We use the AVERAGE module via a 'run' instruction, putting it in parallel with 
+	  the body of the END_GAME trap construct.
+
+	  Since AVERAGE is effectively copied inside the body of the main "every
+	  COIN" loop via 'run', it is restarted afresh whenever a new coin is inserted.
+	}%
+
+       run AVERAGE
+
+       % Parallelize 'Average' module and rest of game:
+
+       ||
+
+        repeat MEASURE_NUMBER times
+
+          % Phase-1: waiting for the READY button: 
+          %{
+            During phase 1, we wait for the player to press READY, watching the time limit of 
+            LIMIT_TIME milliseconds and ringing the bell whenever STOP is pressed. If the timeout 
+            elapses, we exit the ERROR trap: 
+          }%
+
+          do
+           do
+            every STOP do
+                emit RING_BELL
+              end every
+            upto READY
+          watching LIMIT_TIME MS timeout
+            exit ERROR
+          end timeout;
+
+	  % Phases 2 and 3: 
+
+          trap END_MEASURE in
+            [
+
+               %{
+                  There is something in common between phases 2 and 3: pressing
+                  the  READY  button rings  the  bell. This  is  conveniently  expressed using  a
+                  parallel construct, putting the following statement in parallel with the phase2
+                  phase3 sequence:
+               }%
+
+              every READY do
+                emit RING_BELL
+              end every
+            ||
+
+              % Phase-2: waiting for RANDOM MS 
+
+              %{ 
+                During phase 2, we wait for a random number of milliseconds, raising ERROR if STOP 
+                is pressed before the end of the delay. In other words we wait for a random delay 
+                watching STOP and exit ERROR in case of timeout: 
+              }%
+
+              do
+                await RANDOM() MS
+              watching STOP timeout
+                exit ERROR
+              end timeout;
+
+              %{ 
+                Notice that the Phase-2 code is the "dual" of the Phase-1 code: the pairs READY-MS 
+                of Phase-1 and MS-STOP of Phase-2 play the same role. This illustrates the advantage 
+                of defining temporal units for all signals, and not just some predefined physical time 
+                clock. 
+
+                Notice also that ERROR is exited if the player presses STOP simultaneously with the 
+                end of the delay, according to the semantics of the watching statement. 
+              }%
+
+              emit GO_ON;
+
+              % Phase-3: waiting for the STOP button 
+
+              %{ 
+                We wait for STOP with a time limit of LIMIT_TIME milliseconds, counting the
+                milliseconds. The structure is similar to that of Phase-1, except that we must declare a 
+                variable to hold the time: 
+              }%
+
+              do
+                var TIME := 0 : integer in
+
+                  do
+                    every MS do
+                      TIME := TIME + 1
+                    end every
+                  upto STOP;
+
+                  emit DISPLAY(TIME);
+
+		  % Send the AVERAGE module the time via a integer signal:
+                  emit INCREMENT_AVERAGE(TIME)
+
+                end var
+
+              watching LIMIT_TIME MS timeout
+                exit ERROR
+              end timeout;
+
+              emit GO_OFF;
+              exit END_MEASURE
+
+            ]
+          end trap
+        end repeat;
+
+	% Final display:
+
+        await PAUSE_LENGTH MS do
+
+	  %{
+            Display the results of the average value that came from the AVERAGE
+	    module via its output signal:
+          }%
+
+          emit DISPLAY(?AVERAGE_VALUE)
+
+        end await;
+
+        exit END_GAME
+      ]
+    end signal
+  handle ERROR do
+    emit TILT_ON;
+    emit GO_OFF
+  end trap;
+  emit GAME_OVER_ON
+end every
+
+end module

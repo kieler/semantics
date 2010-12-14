@@ -1,0 +1,374 @@
+%
+%
+% Master/Slave RS FlipFlop 
+%
+%
+%
+
+module MSRSFlipFlop:
+
+input SET 	: boolean;
+input RESET : boolean;
+input TAKT  : boolean;
+
+output Q	: boolean;
+output NQ   : boolean;
+output ITERATE;
+
+signal	S_AND11 := false : boolean,
+		S_AND12 := false : boolean,
+		S_AND21 := false : boolean,
+		S_AND22 := false : boolean,
+		S_NOT   := false : boolean,
+		S_RS1_Q  := false : boolean,
+		S_RS1_NQ := false : boolean,
+		S_RS2_Q  := false : boolean,
+		S_RS2_NQ := false : boolean,
+		ITERATE_RS1, ITERATE_RS2
+		
+in
+	[
+		% RS FlipFlop 1
+		run SRSFlipFlop 
+		[
+			signal	S_AND11/SET, S_AND21/RESET,
+					S_RS1_Q/Q , S_RS1_NQ/NQ,
+					ITERATE_RS1/ITERATE
+		]
+	||
+		% RS FlipFlop 2
+		run SRSFlipFlop 
+		[
+			signal	S_AND12/SET, S_AND22/RESET,
+					S_RS2_Q/Q , S_RS2_NQ/NQ,
+					ITERATE_RS2/ITERATE
+		]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+		
+	||
+		% AND (SET&TAKT)
+		run AND [ signal SET/a, TAKT/b, S_AND11/out ]
+	||
+		% AND (RESET&TAKT)
+		run AND [ signal	RESET/a, TAKT/b, S_AND21/out ]
+	||
+		% AND (! TAKT und RS1 Q)
+		run AND [ signal S_RS1_Q/a, S_NOT/b, S_AND12/out ]
+	||
+		% AND (! TAKT und RS1 NQ)
+		run AND [ signal	S_RS1_NQ/a, S_NOT/b, S_AND22/out ]
+	||
+		% Negation des Taktes
+		run NOT [ signal TAKT/v, S_NOT/out ]
+		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	||
+		% Stub : Ausgaben herausschreiben
+		[ 
+			loop
+				await S_RS2_Q;
+				emit Q (?S_RS2_Q);
+			end
+		||
+			loop 
+				await S_RS2_NQ;
+				emit NQ (?S_RS2_NQ);
+			end
+		]
+	||
+		% Stub ITERATE ausgeben
+		loop
+			await
+				case ITERATE_RS1
+				case ITERATE_RS2
+			end;
+			
+			emit ITERATE;			
+		
+		end
+	]
+end
+.
+module AND:
+
+input 	a   : boolean;	% Eingangswerte
+input   b   : boolean;
+
+output  out : boolean;
+
+function calc_and (boolean, boolean) :boolean;
+
+loop
+
+	% Sensitive auf Eingaben warten (a oder b)
+	await
+		case a
+		case b
+	end;
+	
+	% Ausgabe senden
+	var rv : boolean in
+		rv:=calc_and (?a, ?b);
+		emit out (rv);
+	end;
+%	emit out ( ?a and ?b );
+
+end
+
+.
+module OR:
+
+input 	a   : boolean;	% Eingangswerte
+input   b   : boolean;
+
+output  out : boolean;
+
+function calc_or (boolean, boolean) :boolean;
+
+loop
+
+	% Sensitive auf Eingaben warten (a oder b)
+	await
+		case a
+		case b
+	end;
+	
+	% Ausgabe senden
+	var rv : boolean in
+		rv:=calc_or (?a,?b);
+		emit out (rv);
+	end;
+%	emit out ( ?a or ?b );
+
+end
+
+.
+module NOT:
+
+input 	v    : boolean;	% Eingangswert
+output 	out  : boolean;	% Ausgabe
+
+function calc_not ( boolean ) : boolean;
+
+loop
+
+	% Sensitive auf Input warten
+	await v;
+	
+	var rv : boolean in
+		
+		rv:=calc_not ( ?v );
+		emit out (rv);
+	end
+	
+	% Ausführen
+%	emit out ( not ?v );
+
+end
+
+.
+%
+%	Stabile Version des RS-FlipFlops
+%
+%	Initial werden Standardwerte an das unterliegende
+%   Flipflop gesendet
+%
+
+module SRSFlipFlop:
+
+input SET    : boolean;
+input RESET  : boolean;
+
+output Q   : boolean;
+output NQ  : boolean;
+
+output ITERATE;
+
+var init := false : boolean in
+
+	signal 	I_SET     : boolean, 
+			I_RESET   : boolean,
+			I_ITERATE
+	in
+
+	[
+		run RSFlipFlop
+		[
+			signal 	I_SET/SET, I_RESET/RESET,
+					Q/Q, NQ/NQ, I_ITERATE/ITERATE
+		];
+	||
+		% Initialisieren
+		trap init_rs in
+		[
+			loop
+				emit I_SET   (false);
+				emit I_RESET (true);
+				emit ITERATE;
+				pause;
+			end			
+		||
+			await I_ITERATE;
+			await [not I_ITERATE];
+			exit init_rs;
+		]
+
+		end trap;
+		
+		pause;
+		
+		% Forwarden der Daten 
+		[ 
+			every immediate SET do
+				emit I_SET (?SET);
+			end
+		||
+			every immediate RESET do
+				emit I_RESET (?RESET);
+			end
+		||
+			every immediate I_ITERATE do
+				emit ITERATE;
+			end
+		]	
+	]
+	
+	end
+
+end
+
+.
+%
+% Implementation eines RS FlipFlops auf Basis von
+% or und not. Kommunikation zwischen den Modulen
+% erfolgt über "Port-Automaten"
+%
+%
+
+module RSFlipFlop:
+
+input SET   : boolean;	% Eingangs Werte
+input RESET : boolean;  
+
+output ITERATE;
+
+output Q	 : boolean; % Ausgänge
+output NQ    : boolean;
+
+
+signal	O_OR1 := false : boolean,
+		O_OR2 := false  : boolean, 
+		O_NOT1:= false  : boolean, 
+		O_NOT2:= false : boolean,
+		O_PORT12 := false  : boolean,
+		ITERATE12
+in
+	[
+		run OR
+		[
+			signal SET/a, O_NOT2/b, 
+				   O_OR1/out
+		];
+	||
+		run OR
+		[
+			signal RESET/b, O_PORT12/a, 
+				   O_OR2/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR1/v, 
+			       O_NOT1/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR2/v, 
+			       O_NOT2/out
+		];
+	||
+		run BOOLPORT
+		[
+			signal	O_NOT1/IN,
+					O_PORT12/OUT, ITERATE12/ITERATE
+		];
+	||
+		% Stub: Ausgaben auf Modulausgaben mappen
+		every O_NOT1 do
+			emit NQ ( ?O_NOT1 );
+		end
+	||
+		every O_NOT2 do
+			emit Q ( ?O_NOT2 );
+		end
+	||
+		% Stub: Change weiterleiten
+		loop
+			await ITERATE12;
+			
+			emit ITERATE
+		end
+	]
+
+end 
+
+.
+%
+% Port für den Datentyp Boolean
+%
+% Ausgang wird nur gesetzt, wenn Eingang
+% anders als der alte Wert
+%
+
+module BOOLPORT:
+
+input	IN   : boolean;
+output  OUT  : boolean;
+output  ITERATE;
+
+procedure dump ()(boolean,boolean);
+
+var	old   := false : boolean, 
+	value := false : boolean
+in
+
+	%% Initiale Phase
+	emit OUT (false);
+	
+	await IN;
+	old:=?IN;
+	emit ITERATE;
+	pause;
+
+	emit OUT (old);
+	
+	%% Hauptschleife		
+		loop
+			
+			% Auf Wert warten und entgegennehmen
+			await IN;	
+			value:=?IN;
+			
+			call dump ()(old,value);
+			
+			% Senden, wenn Werte unterschiedlich
+			if ( value <> old ) then
+
+				% Takt warten
+				emit ITERATE;
+				pause;
+			
+				emit OUT (value);
+				old:=value;
+			end;
+
+		end 
+	
+end
+
+.

@@ -1,0 +1,60 @@
+# A three-bit binary counter driving some outputs to test some gates
+
+.model various
+.outputs c4 c2 c1 zero one and or xor xnor or2 nor2
+
+.latch c4q c4 0
+.latch c2q c2 0
+.latch c1q c1 0
+
+.names c1 c1q
+0 1
+
+.names c1 c2inv
+1 1
+
+.names c2inv c2 c2q
+01 1
+10 1
+
+.names c1 c2 c4inv
+11 1
+
+.names c4inv c4 c4q
+00 0
+11 0
+
+.names zero
+
+.names one
+1
+
+.names c4 c2 c1 and
+111 1
+
+.names c4 c2 c1 or
+000 0
+
+.names c4 c2 c1 xor
+001 1
+010 1
+100 1
+111 1
+
+.names c4 c2 c1 xnor
+000 1
+011 1
+101 1
+110 1
+
+.names c4 c2 c1 or2
+1-- 1
+-1- 1
+--1 1
+
+.names c4 c2 c1 nor2
+1-- 0
+-1- 0
+--1 0
+
+.end

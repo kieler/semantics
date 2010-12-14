@@ -1,0 +1,44 @@
+module P18:
+output S1_and_S2;
+output S1_and_not_S2;
+output not_S1_and_S2;
+output not_S1_and_not_S2;
+
+loop
+  trap T1 in
+    signal S1 in
+        pause;
+        emit S1;
+        exit T1
+      ||
+        loop
+          trap T2 in
+            signal S2 in
+                pause;
+                emit S2;
+                exit T2
+              ||
+                loop
+                  if (S1) {
+                    if (S2) {
+                      emit S1_and_S2
+                    } else {
+                      emit S1_and_not_S2
+                    }
+                  } else {
+                    if (S2) {
+                      emit not_S1_and_S2
+                    } else {
+                      emit not_S1_and_not_S2
+                    }
+                  };
+                  pause
+                end loop
+            end signal
+          end trap
+        end loop
+    end signal
+  end trap
+end loop
+
+end module

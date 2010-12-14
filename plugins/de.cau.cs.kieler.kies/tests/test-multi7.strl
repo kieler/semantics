@@ -1,0 +1,107 @@
+module stest:
+input A;
+input AA;
+input AB;
+input AC;
+input AD;
+input AE;
+input AF;
+input AG;
+input AH;
+input B;
+input C;
+input D;
+input E;
+input F;
+input G;
+input H;
+output X;
+output Y;
+output Z;
+
+  loop
+    await A;
+    pause;
+    present [not AA and AB and AC and AE and AF and AG and AH or AA and not AB and AC and not AD and AE and not AF and AH or AB and not AC and AD and not AE and not AG and not AH or AC and AD and AE and not AF and not AG and not AH or AC and not AE and AD or not AF and not AH and AC and AD and AE] then
+      emit X
+    end present
+  end loop
+||
+  abort
+    loop
+      await AA;
+      pause;
+      present B then
+        emit Y
+      end present;
+      pause
+    end loop
+  when X
+||
+  abort
+    loop
+      await AB;
+      pause;
+      present C then
+        emit Z
+      end present;
+      pause
+    end loop
+  when Y
+||
+  loop
+    pause;
+    emit AA;
+    emit AB;
+    pause;
+    emit AC;
+    pause;
+    emit AD;
+    pause;
+    emit AE;
+    emit AF;
+    pause;
+    emit AG;
+    pause;
+    emit AH
+  end loop
+||
+  loop
+    emit AB;
+    pause;
+    emit AE;
+    emit AF;
+    pause;
+    emit AF;
+    pause;
+    emit AH;
+    emit AC;
+    pause;
+    emit AB;
+    pause;
+    emit Z;
+    emit AC;
+    pause;
+    emit AA;
+    emit AD;
+    pause;
+    emit AA;
+    emit AE
+  end loop
+||
+  loop
+    await D;
+    emit Y;
+    pause;
+    pause;
+    emit Y
+  end loop
+||
+  loop
+    await E;
+    emit C;
+    pause;
+    emit C
+  end loop
+
+end module

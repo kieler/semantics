@@ -1,0 +1,361 @@
+% Part of a case study for testing an API that allows database access within Esterel
+% by David White
+
+module warehouse_pc:
+
+%%% API declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	type MYSQL_RES_ptr;
+	type MYSQL_ROW;
+
+	procedure appstr() (string, string);
+	procedure appint() (string, integer);
+
+	function check_result(MYSQL_RES_ptr) : boolean;
+	function get_next_row(MYSQL_RES_ptr) : MYSQL_ROW;
+	function num_affected_rows(MYSQL_RES_ptr) : integer;
+	function num_rows(MYSQL_RES_ptr) : integer;
+	procedure clear_results() (MYSQL_RES_ptr);
+
+	function getint(MYSQL_ROW, integer) : integer;
+	function getstr(MYSQL_ROW, integer, string) : string;
+
+%%% Application specific declarations
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	input orders_results : MYSQL_RES_ptr;
+	output orders_query_out : string;  
+
+	input stock_results : MYSQL_RES_ptr;
+	output stock_query_out : string;  
+
+	
+	output print : string;
+	output intout : integer;
+	
+	constant SPEED = 500 : integer;
+
+	function generate_route_to_pickup_item(integer, integer, integer) : string;
+	function generate_route_to_drop_item(integer, integer) : string;
+	
+	output execute_route(string);
+	input route_complete;
+
+signal bin : integer,
+			 bin_x : integer,
+			 bin_y : integer,
+			 order_id : integer,
+			 customer_id : integer,
+			 customer_name : string,
+			 customer_address : string,
+			 item_id : integer,
+			 item_quantity : integer,
+			 item_name : string,
+			 item_stock_level : integer,
+			 shelf_height : integer,
+			 item_x : integer,
+			 item_y : integer,
+			 num_items_in_bin : integer,
+			 
+			 move_and_get_item,
+			 move_and_drop_item,
+			 robot_high_level_op_complete in
+	[
+		loop
+			trap bad_query, 
+					 no_free_bins, 
+					 less_lines_than_num_rows_reports,
+					 no_waiting_orders,
+					 order_status_update_failed,
+					 stock_update_failed,
+					 bin_update_failed,
+					 item_quantity_exceeds_stock in
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Get order details (or no more orders to process currently
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				emit orders_query_out("select order_id, customer.customer_id, name, address from customer, orders where customer.customer_id = orders.customer_id and orders.status = 'AWAITING_PICKING' order by order_id");
+				await orders_results;
+
+				if (check_result(?orders_results)) then
+					if (num_rows(?orders_results) > 0) then
+						var row : MYSQL_ROW,
+								buf : string in  
+  	    			row := get_next_row(?orders_results);
+							emit order_id(getint(row,0));
+							emit customer_id(getint(row,1));
+							emit customer_name(getstr(row,2,buf));
+							emit customer_address(getstr(row,3,buf));
+						end var;
+
+						var comp_str : string in
+							comp_str := "Processing order ";
+							call appint() (comp_str, ?order_id);
+							call appstr() (comp_str, " for customer ");
+							call appstr() (comp_str, ?customer_name);				
+							call appstr() (comp_str, " (");				
+							call appint() (comp_str, ?customer_id);
+							call appstr() (comp_str, "), ");
+							call appstr() (comp_str, ?customer_address);			
+							emit print(comp_str);
+						end var;
+
+					else
+						call clear_results()(?orders_results);
+						exit no_waiting_orders;
+					end if;
+				else
+					exit bad_query;
+				end if;		
+
+				call clear_results()(?orders_results);
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Get location of a free bin
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				emit orders_query_out("select bin_id, pos_x, pos_y from dropoff_points where order_id is NULL");
+				await orders_results;
+
+				if (check_result(?orders_results)) then
+					if (num_rows(?orders_results) > 0) then
+						var row : MYSQL_ROW in  
+  	    			row := get_next_row(?orders_results);
+							emit bin(getint(row,0));
+							emit bin_x(getint(row,1));								
+							emit bin_y(getint(row,2));	
+						end var;			
+						
+						var comp_str : string in
+							comp_str := "Using bin ";
+							call appint() (comp_str, ?bin);
+							call appstr() (comp_str, " at pos (");
+							call appint() (comp_str, ?bin_x);				
+							call appstr() (comp_str, ", ");				
+							call appint() (comp_str, ?bin_y);
+							call appstr() (comp_str, ")");
+							emit print(comp_str);
+						end var;										
+					else
+						exit no_free_bins;
+					end if;
+				else
+					exit bad_query;
+				end if;
+
+				call clear_results()(?orders_results);
+				
+				emit num_items_in_bin(0);
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Update order status to PICKING
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				var query_str : string in
+					query_str := "update orders set status = 'PICKING' where order_id = ";
+					call appint() (query_str, ?order_id);						
+					emit orders_query_out(query_str);
+					await orders_results;
+				end var;
+
+				if (check_result(?orders_results)) then
+					if (num_affected_rows(?orders_results) <> 1) then
+						exit order_status_update_failed;				
+					end if;			
+				else			
+					exit bad_query;
+				end if;
+
+				call clear_results()(?orders_results);	
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Get order lines & get goods
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				var query_str : string in
+					query_str := "SELECT item.item_id, quantity, name, stock_level, shelf_height, pos_x, pos_y FROM order_lines, item WHERE order_lines.item_id = item.item_id AND order_lines.order_id = ";
+					call appint() (query_str, ?order_id);
+					emit orders_query_out(query_str);		
+					await orders_results;
+				end var;
+
+				if (check_result(?orders_results)) then
+					var num_order_lines : integer in
+						num_order_lines := num_rows(?orders_results);
+
+						%iterate through each order line
+						repeat num_order_lines times
+
+							var row : MYSQL_ROW,
+									buf : string in
+								row := get_next_row(?orders_results);
+								emit item_id(getint(row,0));
+								emit item_quantity(getint(row,1));
+								emit item_name(getstr(row,2,buf));														
+								emit item_stock_level(getint(row,3));	
+								emit shelf_height(getint(row,4));						
+								emit item_x(getint(row,5));
+								emit item_y(getint(row,6));
+
+								var comp_str : string in
+									comp_str := "Getting ";
+									call appint() (comp_str, ?item_quantity);
+									call appstr() (comp_str, " ");
+									call appstr() (comp_str, ?item_name);
+									call appstr() (comp_str, " (ID: ");
+									call appint() (comp_str, ?item_id);
+									call appstr() (comp_str, ") from stock of ");																		
+									call appint() (comp_str, ?item_stock_level);
+									call appstr() (comp_str, " at pos (");
+									call appint() (comp_str, ?item_x);
+									call appstr() (comp_str, ",");
+									call appint() (comp_str, ?item_y);						
+									call appstr() (comp_str, "), shelf height: ");						
+									call appint() (comp_str, ?shelf_height);						
+									
+									emit print(comp_str);
+								end var;
+
+								var route_string : string,
+										item_height : integer in
+										
+									item_height := ?item_stock_level - ?item_quantity + 1 + ?shelf_height;								
+									route_string := generate_route_to_pickup_item(?item_x, ?item_y, item_height); 
+								
+									emit execute_route(route_string);
+									await route_complete;
+									
+									item_height := ?num_items_in_bin+1;
+									route_string := generate_route_to_drop_item(?bin_y, item_height); 
+									
+									emit execute_route(route_string);
+									await route_complete;
+								end var;
+
+								emit num_items_in_bin(pre(?num_items_in_bin)+?item_quantity);
+
+								%% Update stock level
+								%%%%%%%%%%%%%%%%%%%%%%
+
+								var query_str : string in
+									query_str := "update item set stock_level = ";
+									call appint() (query_str, ?item_stock_level - ?item_quantity);
+									call appstr() (query_str, " where item_id = ");
+									call appint() (query_str, ?item_id);
+									emit stock_query_out(query_str);
+									await stock_results;
+								end var;
+
+								if (check_result(?stock_results)) then
+									if (num_affected_rows(?stock_results) <> 1) then
+										exit stock_update_failed;
+									end if;
+								else
+									exit bad_query;
+								end if;
+
+								call clear_results()(?stock_results);			
+
+							end var;
+						end repeat;
+					end var;
+				else
+					exit bad_query;
+				end if;				
+
+				call clear_results()(?orders_results);		
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Update order status to STORED
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				var query_str : string in
+					query_str := "update orders set status = 'STORED' where order_id = ";
+					call appint() (query_str, ?order_id);
+					emit orders_query_out(query_str);
+					await orders_results;
+				end var;
+
+				if (check_result(?orders_results)) then
+					if (num_affected_rows(?orders_results) <> 1) then
+						exit order_status_update_failed;
+					end if;
+				else
+					exit bad_query;
+				end if;
+
+				call clear_results()(?orders_results);		
+
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+				%%% Update order location (update drop off bin)
+				%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+				var query_str : string in
+					query_str := "update dropoff_points set order_id = ";
+					call appint() (query_str, ?order_id);
+					call appstr() (query_str, " where bin_id = ");
+					call appint() (query_str, ?bin);			
+					emit orders_query_out(query_str);
+					await orders_results;
+				end var;
+
+				if (check_result(?orders_results)) then
+					if (num_affected_rows(?orders_results) <> 1) then
+						exit bin_update_failed;
+					end if;
+				else
+					exit bad_query;
+				end if;
+
+				call clear_results()(?orders_results);			
+
+				%%%% Done - repeat for next order
+				%%%%%%%%%%%%%%%
+
+			handle bad_query do
+				emit print("Bad query");
+				await SPEED tick;
+
+			handle no_free_bins do
+				emit print("no free bins");
+				await SPEED tick;
+
+			handle no_waiting_orders do
+				emit print("no waiting orders");
+				await SPEED tick;		
+
+			handle item_quantity_exceeds_stock do
+				%Because of loacl vars the msg is already emitted here
+				await SPEED tick;		
+
+			handle order_status_update_failed do
+				emit print("status update failed");
+				await SPEED tick;			
+
+			handle stock_update_failed do
+				emit print("stock update failed");
+				await SPEED tick;			
+
+			handle bin_update_failed do
+				emit print("bin update failed");
+				await SPEED tick;			
+
+			handle less_lines_than_num_rows_reports do
+				emit print("less_lines_than_num_rows_reports");
+				await SPEED tick;
+
+			end trap
+		end loop
+	||
+		loop
+			await			
+				case route_complete do 
+					emit print("route complete");				
+			end await;
+			pause;
+		end loop;
+	]
+end signal;
+end module

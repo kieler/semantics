@@ -1,0 +1,14 @@
+module test_constant2:
+type a;
+type b;
+constant aa : boolean;
+constant bb : integer;
+constant c : float;
+constant d : double;
+constant e : string;
+constant f : a;
+constant g : b;
+
+nothing
+
+end module

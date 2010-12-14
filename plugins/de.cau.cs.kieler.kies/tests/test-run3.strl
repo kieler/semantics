@@ -1,0 +1,19 @@
+module Test_Run3:
+input A;
+output B;
+
+run Foo;
+signal C,
+       D,
+       E in
+  pause;
+  pause
+end signal
+
+end module
+
+module Foo:
+
+nothing
+
+end module

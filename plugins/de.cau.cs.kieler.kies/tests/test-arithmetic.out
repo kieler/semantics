@@ -1,0 +1,26 @@
+module test_arithmetic:
+output A;
+output B : integer;
+output C : integer;
+output D : boolean;
+output E : integer;
+
+var b := 1 : integer,
+    c := 2 : integer,
+    d := 3 : integer,
+    e := 4 : integer,
+    f := true : boolean in
+  loop
+    emit A;
+    emit B(b);
+    emit C(c);
+    emit E(e);
+    b := b + 1;
+    c := (6 - - 2 * 4) / 7 mod 6;
+    f := not b = c;
+    emit D(f);
+    pause
+  end loop
+end var
+
+end module

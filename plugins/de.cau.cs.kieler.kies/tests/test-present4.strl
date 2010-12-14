@@ -1,0 +1,13 @@
+module test_present4:
+input A;
+output B;
+output C;
+
+present A then
+  emit B
+else
+  emit C
+end present;
+emit C
+
+end module

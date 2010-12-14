@@ -1,0 +1,10 @@
+module Test_Run7:
+type t1;
+type t2;
+type t4;
+
+var c : t2 in
+  nothing
+end var
+
+end module

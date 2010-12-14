@@ -1,0 +1,21 @@
+module testlego1:
+constant MOTOR_FWD : integer;
+constant MOTOR_REV : integer;
+input TOUCH_1;
+input TOUCH_2;
+output CPUTS : integer;
+output MOTOR_A_DIR : integer;
+output MOTOR_A_SPEED : integer;
+
+loop
+  await TOUCH_1;
+  emit CPUTS(1);
+  emit MOTOR_A_DIR(MOTOR_FWD);
+  emit MOTOR_A_SPEED(100);
+  await TOUCH_2;
+  emit CPUTS(2);
+  emit MOTOR_A_DIR(MOTOR_REV);
+  emit MOTOR_A_SPEED(20)
+end loop
+
+end module

@@ -1,0 +1,27 @@
+module test_compexample:
+input A;
+output B;
+output C;
+output D;
+
+  loop
+    abort
+      loop
+        pause
+      end loop
+    when A;
+    emit B;
+    if (C) {
+      emit D
+    };
+    pause
+  end loop
+||
+  loop
+    if (B) {
+      emit C
+    };
+    pause
+  end loop
+
+end module

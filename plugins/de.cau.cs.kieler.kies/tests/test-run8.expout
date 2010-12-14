@@ -1,0 +1,9 @@
+module Test_Run8:
+constant c1 : integer;
+constant c2 : integer;
+
+var a := 34 : integer in
+  nothing
+end var
+
+end module

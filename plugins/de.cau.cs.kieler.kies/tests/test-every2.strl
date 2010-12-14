@@ -1,0 +1,23 @@
+module test_every2:
+input A;
+input B;
+output D;
+output E;
+output F;
+output G;
+output H;
+
+every A do
+  emit D;
+  pause;
+  emit D;
+  emit E;
+  every B do
+    emit F;
+    pause;
+    pause;
+    emit G
+  end every
+end every
+
+end module

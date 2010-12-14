@@ -1,0 +1,16 @@
+module P17:
+output O;
+
+loop
+  signal S in
+    if (S) {
+      emit O
+    } else {
+      
+    };
+    pause;
+    emit S
+  end signal
+end loop
+
+end module

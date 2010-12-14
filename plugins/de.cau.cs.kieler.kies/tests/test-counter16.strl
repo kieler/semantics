@@ -1,0 +1,797 @@
+%
+% A 16-bit counter modeled in a gate-level discrete-event style.
+%  Even the state-holding elements (RS latches) are modeled as gates.
+%
+% Written by Henning Zabel and Wolfgang Mueller
+%
+%	16 Bit Zähler auf Basis von Master-Slave JK FlipFlops
+%
+%
+
+module COUNTER:
+
+input TAKT		: boolean;
+
+output bit0     : boolean;
+output bit1     : boolean;
+output bit2     : boolean;
+output bit3     : boolean;
+output bit4     : boolean;
+output bit5     : boolean;
+output bit6     : boolean;
+output bit7     : boolean;
+output bit8     : boolean;
+output bit9     : boolean;
+output bit10    : boolean;
+output bit11    : boolean;
+output bit12    : boolean;
+output bit13    : boolean;
+output bit14    : boolean;
+output bit15    : boolean;
+
+output ITERATE;
+
+signal	S_FF_0 := false : boolean,
+		S_FF_1 := false : boolean,
+		S_FF_2 := false : boolean,
+		S_FF_3 := false : boolean,
+		S_FF_4 := false : boolean,
+		S_FF_5 := false : boolean,
+		S_FF_6 := false : boolean,
+		S_FF_7 := false : boolean,
+		S_FF_8 := false : boolean,
+		S_FF_9 := false : boolean,
+		S_FF_10 := false : boolean,
+		S_FF_11 := false : boolean,
+		S_FF_12 := false : boolean,
+		S_FF_13 := false : boolean,
+		S_FF_14 := false : boolean,
+		S_FF_15 := false : boolean,
+		S_FF_NQ_0 := false : boolean,
+		S_FF_NQ_1 := false : boolean,
+		S_FF_NQ_2 := false : boolean,
+		S_FF_NQ_3 := false : boolean,
+		S_FF_NQ_4 := false : boolean,
+		S_FF_NQ_5 := false : boolean,
+		S_FF_NQ_6 := false : boolean,
+		S_FF_NQ_7 := false : boolean,
+		S_FF_NQ_8 := false : boolean,
+		S_FF_NQ_9 := false : boolean,
+		S_FF_NQ_10 := false : boolean,
+		S_FF_NQ_11 := false : boolean,
+		S_FF_NQ_12 := false : boolean,
+		S_FF_NQ_13 := false : boolean,
+		S_FF_NQ_14 := false : boolean,
+		S_FF_NQ_15 := false : boolean,
+		S_ONE   := true  : boolean,
+		ITERATE_FF_0, 
+		ITERATE_FF_1, 
+		ITERATE_FF_2, 
+		ITERATE_FF_3, 
+		ITERATE_FF_4, 
+		ITERATE_FF_5, 
+		ITERATE_FF_6, 
+		ITERATE_FF_7, 
+		ITERATE_FF_8, 
+		ITERATE_FF_9, 
+		ITERATE_FF_10, 
+		ITERATE_FF_11, 
+		ITERATE_FF_12, 
+		ITERATE_FF_13, 
+		ITERATE_FF_14, 
+		ITERATE_FF_15, 
+		S_AND_0 := false : boolean,
+		S_AND_1 := false : boolean,
+		S_AND_2 := false : boolean,
+		S_AND_3 := false : boolean,
+		S_AND_4 := false : boolean,
+		S_AND_5 := false : boolean,
+		S_AND_6 := false : boolean,
+		S_AND_7 := false : boolean,
+		S_AND_8 := false : boolean,
+		S_AND_9 := false : boolean,
+		S_AND_10 := false : boolean,
+		S_AND_11 := false : boolean,
+		S_AND_12 := false : boolean,
+		S_AND_13 := false : boolean,
+		S_AND_14 := false : boolean,
+		S_AND_15 := false : boolean
+in
+		
+[
+	%%%%%% FlipFLop 0 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_ONE/JUMP, S_ONE/KILL, TAKT/TAKT, S_FF_0/Q, S_FF_NQ_0/NQ, ITERATE_FF_0/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_FF_0/JUMP, S_FF_0/KILL, TAKT/TAKT, S_FF_1/Q, S_FF_NQ_1/NQ, ITERATE_FF_1/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_1/JUMP, S_AND_1/KILL, TAKT/TAKT, S_FF_2/Q, S_FF_NQ_2/NQ, ITERATE_FF_2/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_2/JUMP, S_AND_2/KILL, TAKT/TAKT, S_FF_3/Q, S_FF_NQ_3/NQ, ITERATE_FF_3/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_3/JUMP, S_AND_3/KILL, TAKT/TAKT, S_FF_4/Q, S_FF_NQ_4/NQ, ITERATE_FF_4/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_4/JUMP, S_AND_4/KILL, TAKT/TAKT, S_FF_5/Q, S_FF_NQ_5/NQ, ITERATE_FF_5/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_5/JUMP, S_AND_5/KILL, TAKT/TAKT, S_FF_6/Q, S_FF_NQ_6/NQ, ITERATE_FF_6/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_6/JUMP, S_AND_6/KILL, TAKT/TAKT, S_FF_7/Q, S_FF_NQ_7/NQ,  ITERATE_FF_7/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_7/JUMP, S_AND_7/KILL, TAKT/TAKT, S_FF_8/Q, S_FF_NQ_8/NQ,  ITERATE_FF_8/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_8/JUMP, S_AND_8/KILL, TAKT/TAKT, S_FF_9/Q, S_FF_NQ_9/NQ, ITERATE_FF_9/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 10 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_9/JUMP, S_AND_9/KILL, TAKT/TAKT, S_FF_10/Q, S_FF_NQ_10/NQ, ITERATE_FF_10/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_10/JUMP, S_AND_10/KILL, TAKT/TAKT, S_FF_11/Q, S_FF_NQ_11/NQ, ITERATE_FF_11/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 12 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_11/JUMP, S_AND_11/KILL, TAKT/TAKT, S_FF_12/Q, S_FF_NQ_12/NQ, ITERATE_FF_12/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 13 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_12/JUMP, S_AND_12/KILL, TAKT/TAKT, S_FF_13/Q,S_FF_NQ_13/NQ,  ITERATE_FF_13/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_13/JUMP, S_AND_13/KILL, TAKT/TAKT, S_FF_14/Q, S_FF_NQ_14/NQ, ITERATE_FF_14/ITERATE ];
+||		
+
+	%%%%%% FlipFLop 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	run MSJKFlipFlop [ signal S_AND_14/JUMP, S_AND_14/KILL, TAKT/TAKT, S_FF_15/Q, S_FF_NQ_15/NQ, ITERATE_FF_15/ITERATE ];
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+
+||
+
+	%%%%% AND 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_FF_0/a, S_FF_1/b, S_AND_1/out ];
+	
+||
+	%%%%% AND 2 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_1/a, S_FF_2/b, S_AND_2/out ];
+
+||
+	%%%%% AND 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_2/a, S_FF_3/b, S_AND_3/out ];
+
+||
+	%%%%% AND 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_3/a, S_FF_4/b, S_AND_4/out ];
+
+||
+	%%%%% AND 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_4/a, S_FF_5/b, S_AND_5/out ];
+
+||
+	%%%%% AND 6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_5/a, S_FF_6/b, S_AND_6/out ];
+
+||
+	%%%%% AND 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_6/a, S_FF_7/b, S_AND_7/out ];
+
+||
+	%%%%% AND 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_7/a, S_FF_8/b, S_AND_8/out ];
+
+||
+	%%%%% AND 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_8/a, S_FF_9/b, S_AND_9/out ];
+
+||
+	%%%%% AND 10 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_9/a, S_FF_10/b, S_AND_10/out ];
+
+||
+	%%%%% AND 11 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_10/a, S_FF_11/b, S_AND_11/out ];
+||
+	%%%%% AND 12 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_11/a, S_FF_12/b, S_AND_12/out ];
+||
+	%%%%% AND 13 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_12/a, S_FF_13/b, S_AND_13/out ];
+||
+	%%%%% AND 14 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_13/a, S_FF_14/b, S_AND_14/out ];
+||
+	%%%%% AND 15 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	run AND [ signal S_AND_14/a, S_FF_15/b, S_AND_15/out ];
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+||
+	every S_FF_0 do
+		emit bit0 (?S_FF_0);
+	end;
+||
+	every S_FF_1 do
+		emit bit1 (?S_FF_1);
+	end;
+||
+	every S_FF_2 do
+		emit bit2 (?S_FF_2);
+	end;
+||
+	every S_FF_3 do
+		emit bit3 (?S_FF_3);
+	end;
+||
+	every S_FF_4 do
+		emit bit4 (?S_FF_4);
+	end;
+||
+	every S_FF_5 do
+		emit bit5 (?S_FF_5);
+	end;
+||
+	every S_FF_6 do
+		emit bit6 (?S_FF_6);
+	end;
+||
+	every S_FF_7 do
+		emit bit7 (?S_FF_7);
+	end;
+||
+	every S_FF_8 do
+		emit bit8 (?S_FF_8);
+	end;
+||
+	every S_FF_9 do
+		emit bit9 (?S_FF_9);
+	end;
+||
+	every S_FF_10 do
+		emit bit10 (?S_FF_10);
+	end;
+||
+	every S_FF_11 do
+		emit bit11 (?S_FF_11);
+	end;
+||
+	every S_FF_12 do
+		emit bit12 (?S_FF_12);
+	end;
+||
+	every S_FF_13 do
+		emit bit13 (?S_FF_13);
+	end;
+||
+	every S_FF_14 do
+		emit bit14 (?S_FF_14);
+	end;
+||
+	every S_FF_15 do
+		emit bit15 (?S_FF_15);
+	end;
+	
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+||
+	% Stub: Iterate
+	loop
+		await
+			case ITERATE_FF_0
+			case ITERATE_FF_1
+			case ITERATE_FF_2
+			case ITERATE_FF_3
+			case ITERATE_FF_4
+			case ITERATE_FF_5
+			case ITERATE_FF_6
+			case ITERATE_FF_7
+			case ITERATE_FF_8
+			case ITERATE_FF_9
+			case ITERATE_FF_10
+			case ITERATE_FF_11
+			case ITERATE_FF_12
+			case ITERATE_FF_13
+			case ITERATE_FF_14
+			case ITERATE_FF_15
+		end;
+		
+		emit ITERATE
+	end
+]
+
+end
+.
+module AND:
+
+input 	a   : boolean;	% Eingangswerte
+input   b   : boolean;
+
+output  out : boolean;
+
+function calc_and (boolean, boolean) :boolean;
+
+loop
+
+	% Sensitive auf Eingaben warten (a oder b)
+	await
+		case a
+		case b
+	end;
+	
+	% Ausgabe senden
+	var rv : boolean in
+		rv:=calc_and (?a, ?b);
+		emit out (rv);
+	end;
+%	emit out ( ?a and ?b );
+
+end
+
+.
+module OR:
+
+input 	a   : boolean;	% Eingangswerte
+input   b   : boolean;
+
+output  out : boolean;
+
+function calc_or (boolean, boolean) :boolean;
+
+loop
+
+	% Sensitive auf Eingaben warten (a oder b)
+	await
+		case a
+		case b
+	end;
+	
+	% Ausgabe senden
+	var rv : boolean in
+		rv:=calc_or (?a,?b);
+		emit out (rv);
+	end;
+%	emit out ( ?a or ?b );
+
+end
+
+.
+module NOT:
+
+input 	v    : boolean;	% Eingangswert
+output 	out  : boolean;	% Ausgabe
+
+function calc_not ( boolean ) : boolean;
+
+loop
+
+	% Sensitive auf Input warten
+	await v;
+	
+	var rv : boolean in
+		
+		rv:=calc_not ( ?v );
+		emit out (rv);
+	end
+	
+	% Ausführen
+%	emit out ( not ?v );
+
+end
+
+.
+%
+% Implementation eines RS FlipFlops auf Basis von
+% or und not. Kommunikation zwischen den Modulen
+% erfolgt über "Port-Automaten"
+%
+%
+
+module RSFlipFlop:
+
+input SET   : boolean;	% Eingangs Werte
+input RESET : boolean;  
+
+output ITERATE;
+
+output Q	 : boolean; % Ausgänge
+output NQ    : boolean;
+
+
+signal	O_OR1 := false : boolean,
+		O_OR2 := false  : boolean, 
+		O_NOT1:= false  : boolean, 
+		O_NOT2:= false : boolean,
+		O_PORT12 := false  : boolean,
+		ITERATE12
+in
+	[
+		run OR
+		[
+			signal SET/a, O_NOT2/b, 
+				   O_OR1/out
+		];
+	||
+		run OR
+		[
+			signal RESET/b, O_PORT12/a, 
+				   O_OR2/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR1/v, 
+			       O_NOT1/out
+		];
+	||
+		run NOT
+		[
+			signal O_OR2/v, 
+			       O_NOT2/out
+		];
+	||
+		run BOOLPORT
+		[
+			signal	O_NOT1/IN,
+					O_PORT12/OUT, ITERATE12/ITERATE
+		];
+	||
+		% Stub: Ausgaben auf Modulausgaben mappen
+		every O_NOT1 do
+			emit NQ ( ?O_NOT1 );
+		end
+	||
+		every O_NOT2 do
+			emit Q ( ?O_NOT2 );
+		end
+	||
+		% Stub: Change weiterleiten
+		loop
+			await ITERATE12;
+			
+			emit ITERATE
+		end
+	]
+
+end 
+
+.
+%
+%	Stabile Version des RS-FlipFlops
+%
+%	Initial werden Standardwerte an das unterliegende
+%   Flipflop gesendet
+%
+
+module SRSFlipFlop:
+
+input SET    : boolean;
+input RESET  : boolean;
+
+output Q   : boolean;
+output NQ  : boolean;
+
+output ITERATE;
+
+var init := false : boolean in
+
+	signal 	I_SET     : boolean, 
+			I_RESET   : boolean,
+			I_ITERATE
+	in
+
+	[
+		run RSFlipFlop
+		[
+			signal 	I_SET/SET, I_RESET/RESET,
+					Q/Q, NQ/NQ, I_ITERATE/ITERATE
+		];
+	||
+		% Initialisieren
+		trap init_rs in
+		[
+			loop
+				emit I_SET   (false);
+				emit I_RESET (true);
+				emit ITERATE;
+				pause;
+			end			
+		||
+			await I_ITERATE;
+			await [not I_ITERATE];
+			exit init_rs;
+		]
+
+		end trap;
+		
+		pause;
+		
+		% Forwarden der Daten 
+		[ 
+			every immediate SET do
+				emit I_SET (?SET);
+			end
+		||
+			every immediate RESET do
+				emit I_RESET (?RESET);
+			end
+		||
+			every immediate I_ITERATE do
+				emit ITERATE;
+			end
+		]	
+	]
+	
+	end
+
+end
+
+.
+%
+%
+% Master/Slave RS FlipFlop 
+%
+%
+%
+
+module MSRSFlipFlop:
+
+input SET 	: boolean;
+input RESET : boolean;
+input TAKT  : boolean;
+
+output Q	: boolean;
+output NQ   : boolean;
+output ITERATE;
+
+signal	S_AND11 := false : boolean,
+		S_AND12 := false : boolean,
+		S_AND21 := false : boolean,
+		S_AND22 := false : boolean,
+		S_NOT   := false : boolean,
+		S_RS1_Q  := false : boolean,
+		S_RS1_NQ := false : boolean,
+		S_RS2_Q  := false : boolean,
+		S_RS2_NQ := false : boolean,
+		ITERATE_RS1, ITERATE_RS2
+		
+in
+	[
+		% RS FlipFlop 1
+		run SRSFlipFlop 
+		[
+			signal	S_AND11/SET, S_AND21/RESET,
+					S_RS1_Q/Q , S_RS1_NQ/NQ,
+					ITERATE_RS1/ITERATE
+		]
+	||
+		% RS FlipFlop 2
+		run SRSFlipFlop 
+		[
+			signal	S_AND12/SET, S_AND22/RESET,
+					S_RS2_Q/Q , S_RS2_NQ/NQ,
+					ITERATE_RS2/ITERATE
+		]
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+		
+	||
+		% AND (SET&TAKT)
+		run AND [ signal SET/a, TAKT/b, S_AND11/out ]
+	||
+		% AND (RESET&TAKT)
+		run AND [ signal	RESET/a, TAKT/b, S_AND21/out ]
+	||
+		% AND (! TAKT und RS1 Q)
+		run AND [ signal S_RS1_Q/a, S_NOT/b, S_AND12/out ]
+	||
+		% AND (! TAKT und RS1 NQ)
+		run AND [ signal	S_RS1_NQ/a, S_NOT/b, S_AND22/out ]
+	||
+		% Negation des Taktes
+		run NOT [ signal TAKT/v, S_NOT/out ]
+		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+	||
+		% Stub : Ausgaben herausschreiben
+		[ 
+			loop
+				await S_RS2_Q;
+				emit Q (?S_RS2_Q);
+			end
+		||
+			loop 
+				await S_RS2_NQ;
+				emit NQ (?S_RS2_NQ);
+			end
+		]
+	||
+		% Stub ITERATE ausgeben
+		loop
+			await
+				case ITERATE_RS1
+				case ITERATE_RS2
+			end;
+			
+			emit ITERATE;			
+		
+		end
+	]
+end
+.
+%
+%	MasterSlave JK FlipFlop
+%
+%
+%
+
+module MSJKFlipFlop:
+
+input JUMP    : boolean;
+input KILL    : boolean;
+input TAKT    : boolean;
+
+output Q  : boolean;
+output NQ : boolean;
+output ITERATE;
+
+signal	S_AND1 := false : boolean,
+		S_AND2 := false : boolean,
+		S_PORT12 := false : boolean ,
+		S_PORT22 := false : boolean ,
+		S_Q      := false : boolean ,
+		S_NQ     := false : boolean ,
+		ITERATE_P12, 
+		ITERATE_P22,
+		ITERATE_FF
+in
+
+[
+	run MSRSFlipFlop
+	[
+		signal 	S_AND1/SET, S_AND2/RESET, TAKT/TAKT,
+				S_Q/Q, S_NQ/NQ, ITERATE_FF/ITERATE
+	]
+||
+	run AND [ signal  JUMP/a, S_PORT22/b, S_AND1/out ];
+||
+	run AND [ signal  KILL/a, S_PORT12/b, S_AND2/out ];
+|| 
+	run BOOLPORT [ signal  S_Q/IN,  S_PORT12/OUT, ITERATE_P12/ITERATE ];	
+|| 
+	run BOOLPORT [ signal  S_NQ/IN, S_PORT22/OUT, ITERATE_P22/ITERATE ];	
+||
+	% Stub: Ausgaben schreiben
+	[
+		loop
+			await S_Q;
+			emit Q (?S_Q);
+		end
+	||
+		loop
+			await S_NQ;
+			emit NQ (? S_NQ );
+		end 
+	]
+||
+	% Stub : iterate
+	loop
+		await
+			case ITERATE_P12
+			case ITERATE_P22
+			case ITERATE_FF
+		end;
+		
+		emit ITERATE
+	end
+]
+
+end
+.
+%
+% Port für den Datentyp Boolean
+%
+% Ausgang wird nur gesetzt, wenn Eingang
+% anders als der alte Wert
+%
+
+module BOOLPORT:
+
+input	IN   : boolean;
+output  OUT  : boolean;
+output  ITERATE;
+
+procedure dump ()(boolean,boolean);
+
+var	old   := false : boolean, 
+	value := false : boolean
+in
+
+	%% Initiale Phase
+	emit OUT (false);
+	
+	await IN;
+	old:=?IN;
+	emit ITERATE;
+	pause;
+
+	emit OUT (old);
+	
+	%% Hauptschleife		
+		loop
+			
+			% Auf Wert warten und entgegennehmen
+			await IN;	
+			value:=?IN;
+			
+			call dump ()(old,value);
+			
+			% Senden, wenn Werte unterschiedlich
+			if ( value <> old ) then
+
+				% Takt warten
+				emit ITERATE;
+				pause;
+			
+				emit OUT (value);
+				old:=value;
+			end;
+
+		end 
+	
+end
+
+.

@@ -1,0 +1,16 @@
+module test_p132:
+output O;
+
+loop
+  signal S in
+    present S then
+      emit O
+    else
+      nothing
+    end present;
+    pause;
+    emit S
+  end signal
+end loop
+
+end module

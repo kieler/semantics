@@ -1,0 +1,10 @@
+module Top:
+input A;
+output B;
+
+if (A) {
+  emit B
+};
+pause
+
+end module

@@ -1,0 +1,10 @@
+module test_constant1:
+type a;
+type b;
+constant aa : a;
+constant bb : a;
+constant c : b;
+
+nothing
+
+end module

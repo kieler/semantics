@@ -1,0 +1,18 @@
+module A:
+
+type A;
+function A() : integer;
+procedure A(integer)(boolean);
+task A(integer)(integer);
+constant A : integer;
+input A;
+
+trap A in
+  signal A in
+    var A : integer in
+      nothing
+    end var
+  end signal
+end trap
+
+end module

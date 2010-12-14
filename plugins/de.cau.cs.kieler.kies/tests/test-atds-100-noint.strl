@@ -1,0 +1,936 @@
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module C:
+
+input dem_in,
+         data_in,
+         data_vme,
+         add_vme,
+         modeC,
+         sout,
+         stop,
+         egal;
+
+output raz_reg,
+           raz_stop,
+           it_data_C,
+           it_add,
+           it_dem,
+           it_adem,
+           paren,
+           mem_clk,
+           sclk,
+           sin,
+           data_out,
+           data_clk_out,
+           add_out,
+           add_clk_out,
+           ld1,
+           L1,
+           L2;
+
+trap MODE in
+   loop
+       signal IS_DATA in
+           trap ADVDEM in
+                await
+                    case immediate data_in do
+                        sustain IS_DATA
+                    case immediate [ not modeC ] do
+                        exit MODE
+                end await
+           ||
+                await immediate dem_in;
+                await tick;await tick;await tick;
+                present  IS_DATA
+                   then run em_C
+                   else run rec_C
+                end present;
+                exit ADVDEM
+           end trap
+       end signal
+    end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module E:
+
+input dem_in,
+         modeE,
+         stop,
+         data_in,
+         data_clk,
+         add_in,
+         add_clk,
+         err;
+
+
+output raz_stop,
+           it_data_T,
+           it_add,
+           it_dem,
+           it_adem,
+           paren,
+           mem_clk,
+           sclk,
+           sin,
+           it_err;
+
+trap MODE in
+    loop
+        signal IS_DATA in
+            trap ADVDEM in
+                await
+                    case immediate data_in do
+                        sustain IS_DATA
+                    case immediate [ not modeE ] do
+                        exit MODE
+                end await
+            ||
+                await immediate dem_in;
+                await tick;await tick;await tick;
+                present IS_DATA
+                    then run em_E
+                    else run rec_E
+                end present;
+            end trap
+        end signal
+    end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 10:44:38 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module T:
+
+input modeT,
+         cmd_vme,
+         adem_vme,
+         dem_vme,
+         stop,
+         add_in,
+         data_in,
+         add_clk,
+         data_clk,
+         err,
+         sout;
+
+output raz_reg,
+           raz_bit,
+           raz_stop,
+           it_data_T,
+           it_add,
+           it_err,
+           sin,
+           sclk,
+           ld1,
+           ld2,
+           mem_clk,
+           paren,
+           dem,
+           data_out;
+
+trap MODE in
+    loop
+        await
+            case immediate cmd_vme do
+                run rec_T [ signal raz_reg / raz_vme ]
+            case immediate adem_vme do
+                run em_T [ signal raz_bit / raz_vme ]
+            case  immediate [ not modeT ] do
+                exit MODE
+        end await
+    end loop
+end trap
+    
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Wed Dec   2 92 09:47:32 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module acqadd:
+
+input add_clk,
+         add_in;
+
+output sin,
+           sclk,
+           paren,
+           mem_clk,
+           it_add;
+
+trap EndAddress in
+    run clkdata [ signal add_clk/iclk, add_in/idata,
+                         sin/data_val, sclk/data_ready ]
+||
+   await 7 sclk;
+   exit EndAddress
+end trap;
+signal NULL in
+    run lec_vme [signal NULL / ldcomp ]
+end signal;
+emit it_add
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Wed Dec   2 92 09:47:32 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module acqdata:
+
+input data_clk,
+         data_in;
+
+output sin,
+           sclk,
+           paren,
+           mem_clk,
+           it_data_T;
+
+trap EndData in
+    run clkdata [ signal data_clk/iclk, data_in/idata,
+                              sin/data_val , sclk/data_ready ]
+||
+   await sclk; 
+   exit EndData
+end trap;
+signal NULL in
+    run lec_vme [ signal NULL / ldcomp ]
+end signal;
+emit it_data_T
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 10:44:38 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module atds:
+
+input modeT,
+         modeC,
+         modeE,
+         add_vme,
+         data_vme,
+         cmd_vme,
+         adem_vme,
+         dem_vme,
+         stop,
+         add_in,
+         dem_in,
+         data_in,
+         add_clk,
+         data_clk,
+         err,
+         egal,
+         sout;
+
+output raz_reg,
+           raz_bit,
+           raz_stop,
+           it_data_T,
+           it_data_C,
+           it_add,
+           it_err,
+           it_adem,
+           it_dem,
+           sin,
+           sclk,
+           ld1,
+           ld2,
+           mem_clk,
+           paren,
+           dem,
+           data_out,
+           data_clk_out,
+           add_out,
+           add_clk_out,
+           L1,
+           L2;
+
+relation modeT # modeC # modeE;
+relation cmd_vme # adem_vme # dem_vme # stop;
+relation add_in # data_in;
+relation add_clk # data_clk;
+relation add_in # data_clk;
+relation data_in # add_clk;
+relation add_vme # data_vme # adem_vme # dem_vme # cmd_vme # stop;
+
+loop
+    await
+        case modeT do
+            run T
+        case modeC do
+            run C
+        case modeE do
+            run E
+    end await
+end loop
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: berry
+% Created on system: sun4
+% Creation date : Mon Nov  30 92 15:56:12 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module clkdata:
+
+input iclk;
+input idata;
+output data_ready,
+           data_val;
+
+loop
+   trap DATA in
+       signal IS_DATA in
+            [  await immediate iclk;
+               await tick;
+               present  IS_DATA then
+                   emit data_val;await tick;emit data_val
+               end present;
+               exit DATA
+           ||
+               await immediate idata;
+               sustain IS_DATA
+           ]
+         end signal
+   end trap;   
+   emit data_ready;
+   await immediate [ not iclk ];
+end loop
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module em_C:
+
+input dem_in,
+         data_in,
+         data_vme,
+         add_vme,
+         modeC,
+         sout,
+         stop,
+         egal;
+
+output raz_reg,
+           raz_stop,
+           it_data_C,
+           it_dem,
+           it_adem,
+           paren,
+           mem_clk,
+           sclk,
+           sin,
+           data_out,
+           data_clk_out,
+           add_out,
+           add_clk_out,
+           ld1,
+           L2;
+
+emit  it_adem ;
+trap STOP in
+    loop
+        await 
+            case add_vme do
+                 emit raz_reg;
+                 trap ADRESSE in
+                     run emdata_C [ signal  add_clk_out / clk_out , add_out / out ]
+                  ||
+                     await add_clk_out;
+                     await tick;
+                     exit ADRESSE
+                 end trap 
+            case dem_in do
+                 emit it_dem;
+                 await data_vme;
+                 emit raz_reg;
+                 trap DONNEES  in
+                     run emdata_C [ signal  data_clk_out / clk_out , data_out / out ]
+                 ||
+                     await data_clk_out;
+                     await tick;
+                     exit DONNEES
+                 end trap;
+                 await tick;
+                 run recdata;
+                 run lec_vme [ signal L2 / ldcomp ];
+                 await tick;
+                 present egal else
+                     run pulse_C [ signal data_out / S ];
+                     exit STOP
+                 end present               
+            case stop do
+                 emit raz_stop;
+                 exit STOP
+            case [ not modeC ] do
+                 exit STOP
+        end await
+    end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Tue Dec   1 92 16:40:48 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module em_E:
+
+input dem_in,
+         modeE,
+         stop,
+         add_in,
+         data_in,
+         add_clk,
+         data_clk,
+         err;
+
+output raz_stop,
+           sin,
+           sclk,
+           mem_clk,
+           paren,
+           it_adem,
+           it_dem,
+           it_err,
+           it_data_T,
+           it_add;
+           
+
+emit it_adem;
+trap ACQADD, DEM_VME in
+   await immediate add_clk;
+   exit ACQADD
+|| 
+   await immediate add_in;
+   exit ACQADD
+||
+   await immediate dem_in;
+   exit DEM_VME
+handle ACQADD do
+   run acqadd;
+end trap;
+trap ACQDATA in
+   loop
+      await
+         case immediate dem_in do
+            emit it_dem;
+            run acqdata;
+         case stop do
+            emit raz_stop; 
+            exit ACQDATA
+         case err do
+            emit it_err;
+            exit ACQDATA
+      end await
+   end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Tue Dec   1 92 16:40:48 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module em_T:
+
+input modeT,
+         stop,
+         cmd_vme,
+         adem_vme,
+         dem_vme,
+         add_in,
+         data_in,
+         add_clk,
+         data_clk,
+         sout,
+         err;
+
+output dem,
+           raz_vme,
+           raz_stop,
+           sin,
+           sclk,
+           mem_clk,
+           paren,
+           it_err,
+           it_data_T,
+           it_add,
+           data_out,
+           ld2;
+           
+
+
+await immediate adem_vme do
+   run pulse_T [ signal dem / S ]
+   ||
+   run pulse_T [ signal data_out / S ]
+end await;
+trap ACQADD, DEM_VME in
+   await immediate add_clk;
+   exit ACQADD
+|| 
+   await immediate add_in;
+   exit ACQADD
+||
+   await immediate dem_vme;
+   exit DEM_VME
+handle ACQADD do
+   run acqadd;
+end trap;
+trap ACQDATA in
+   loop
+      await
+         case immediate dem_vme do
+            run pulse_T [signal dem / S ];
+            emit raz_vme;
+            run acqdata;
+            run load_vme [ signal ld2 / load ];
+            run emdata;
+         case stop do
+            emit raz_stop; 
+            exit ACQDATA
+         case err do
+            emit it_err;
+            exit ACQDATA
+         case cmd_vme do
+            exit ACQDATA
+         case [not modeT] do
+            exit ACQDATA
+      end await
+   end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Wed Dec   2 92 10:06:21 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module emdata:
+
+input data_clk,
+         sout;
+
+output sclk,
+           data_out;
+
+    await data_clk;
+    present sout then
+        run pulse_T [ signal data_out / S ]
+    end present;
+    emit sclk;
+    await immediate [ not data_clk ]
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module emdata_C:
+
+input sout;
+
+output mem_clk,
+           sclk,
+           out,
+           clk_out,
+           ld1;
+
+run load_vme [signal ld1 /load ];
+await tick;
+loop
+    await tick;
+    present sout then                     
+         run pulse_C [ signal clk_out / S ]
+         ||
+         run pulse_C [ signal out / S ]
+    else
+         run pulse_C [ signal clk_out / S ]
+    end present;
+    emit sclk;
+    await 31 tick;
+end loop
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Fri Dec   4 92 10:33:03 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module lec_vme:
+
+output paren,
+           mem_clk,
+           ldcomp;
+
+emit paren;
+await tick;
+emit paren;
+emit mem_clk;
+emit ldcomp
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Fri Dec   4 92 10:26:14 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module load_vme:
+
+output load,
+           sclk,
+           mem_clk;
+
+emit load;
+await tick;
+emit load;
+emit sclk
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 19:15:53 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module pulse_C:
+
+output S;
+
+emit S;await tick
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Tue Dec   1 92 13:41:42 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module pulse_T:
+
+output S;
+
+    emit S;await tick
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module rec_C:
+
+input dem_in,
+         data_in,
+         data_vme,
+         add_vme,
+         modeC,
+         sout,
+         stop,
+         egal;
+
+output raz_reg,
+           it_data_C,
+           it_add,
+           it_dem,
+           it_adem,
+           paren,
+           mem_clk,
+           sclk,
+           sin,
+           data_out,
+           data_clk_out,
+           add_out,
+           add_clk_out,
+           L1,
+           L2;
+
+trap RECDATA in
+    signal fin_1, first in
+            run recdata;
+            emit fin_1;
+            present first then
+                run lec_vme [ signal L1 / ldcomp ];
+                emit it_data_C;
+                await tick;
+            else
+                run lec_vme [ signal L2 / ldcomp ];
+                exit RECDATA
+            end present;
+        ||
+        await fin_1 do
+            emit first
+        end await
+    end signal
+end trap;
+await tick;
+present egal else
+    run pulse_C [ signal data_out / S ]
+end present;
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Tue Dec   1 92 16:40:48 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module rec_E:
+
+input dem_in,
+         modeE,
+         stop,
+         data_in,
+         data_clk,
+         err;
+
+output  raz_stop,
+            sin,
+            sclk,
+            mem_clk,
+            paren,
+            it_err,
+            it_data_T;
+           
+
+trap ACQDATA in
+   loop
+      await
+         case immediate dem_in do
+            run acqdata;
+         case stop do
+            emit raz_stop; 
+            exit ACQDATA
+         case err do
+            emit it_err;
+            exit ACQDATA
+      end await
+   end loop
+end trap
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Tue Dec   1 92 13:24:42 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module rec_T:
+
+input cmd_vme,
+         adem_vme,
+         modeT,
+         err,
+         data_clk,
+         sout;
+
+output raz_vme,
+           ld1,
+           mem_clk,
+           sclk,
+           dem,
+           it_err,
+           data_out;
+
+run pulse_T [signal dem / S];
+emit raz_vme;
+    run load_vme [signal ld1 / load ];
+    run emdata;
+await 
+    case err do
+        emit it_err;
+    case cmd_vme
+    case adem_vme
+    case [ not modeT] 
+end await
+
+end module
+%
+% This is an AGEL Reactive Component
+% 
+% Author: petit
+% Created on system: sun4
+% Creation date : Thu Dec   3 92 11:58:41 
+% AGEL version : 1.9504
+% 
+% Description: 
+% 
+%
+
+module recdata:
+
+input data_in;
+
+output sclk,
+           sin,
+           data_clk_out;
+
+    await tick;
+    run pulse_C [ signal data_clk_out / S ];
+    signal IS_DATA in
+       trap DATA in
+            await immediate data_in do
+                sustain IS_DATA
+            end await
+       ||
+            await tick;
+            present IS_DATA then
+                emit sin;await tick;emit sin
+            end present;
+            exit DATA
+       end trap;
+    end signal;
+    emit sclk;
+    await tick;
+await tick;
+
+end module

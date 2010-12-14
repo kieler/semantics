@@ -1,0 +1,1093 @@
+module Chorus:
+type TimeVal;
+input Interrupt : integer;
+input Trap;
+input TrapRet;
+input Exception;
+input ExceptionRet;
+input MaskSuspend;
+input UnMaskSuspend;
+input MaskStop;
+input UnMaskStop;
+input MaskAbort;
+input UnMaskAbort;
+input MaskDelete;
+input UnMaskDelete;
+input CreateThread : integer;
+input DeleteThread : integer;
+input Suspend : integer;
+input Stop : integer;
+input Abort : integer;
+input Awake : integer;
+input Resume : integer;
+input Start : integer;
+input Sleep1 : integer;
+input Sleep2 : integer;
+input Sleep3 : integer;
+input Sleep4 : integer;
+input Sleep5 : integer;
+input Sleep6 : integer;
+input Sleep7 : integer;
+input Sleep8 : integer;
+input Sleep9 : integer;
+input Sleep10 : integer;
+input EndInterrupt;
+output Awaken;
+output AsyncInterrupt : integer;
+output Run : integer;
+output ThreadDeleted;
+output EnterSystemMode;
+output ExitSystemMode;
+
+signal SetTimer,
+       DelTimer,
+       ClockTick,
+       EnterInterrupt,
+       TimerOut,
+       ExitInterrupt,
+       TestSchedule,
+       ThreadCreated : integer,
+       ThreadTrap : integer,
+       ThreadTrapRet : integer,
+       ThreadException : integer,
+       ThreadExceptionRet : integer in
+    await tick;
+    run Interrupt
+  ||
+    await tick;
+    run Time
+  ||
+    run Scheduler
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 1 then
+        await tick;
+        run Thread1 / Thread [
+          constant 1 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep1 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 2 then
+        await tick;
+        run Thread2 / Thread [
+          constant 2 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep2 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 3 then
+        await tick;
+        run Thread3 / Thread [
+          constant 3 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep3 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 4 then
+        await tick;
+        run Thread4 / Thread [
+          constant 4 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep3 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 5 then
+        await tick;
+        run Thread5 / Thread [
+          constant 5 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep5 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 6 then
+        await tick;
+        run Thread6 / Thread [
+          constant 6 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep6 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 7 then
+        await tick;
+        run Thread7 / Thread [
+          constant 7 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep7 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 8 then
+        await tick;
+        run Thread8 / Thread [
+          constant 8 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep8 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 9 then
+        await tick;
+        run Thread9 / Thread [
+          constant 9 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep9 / Sleep ]
+      end if
+    end loop
+  ||
+    loop
+      await ThreadCreated;
+      if ?ThreadCreated = 10 then
+        await tick;
+        run Thread10 / Thread [
+          constant 10 / Num_Thread,
+                   false / supervisorThread,
+                   true / ActiveInit;
+          signal Sleep9 / Sleep ]
+      end if
+    end loop
+end signal
+
+end module
+
+module Interface:
+constant Num_Thread : integer;
+input TimerOut;
+input ThreadTrap : integer;
+input ThreadTrapRet : integer;
+input ThreadException : integer;
+input ThreadExceptionRet : integer;
+input DeleteThread : integer;
+input Stop : integer;
+input Start : integer;
+input Suspend : integer;
+input Awake : integer;
+input Abort : integer;
+input Resume : integer;
+output TimerOut_DMUX;
+output Trap;
+output TrapRet;
+output Exception;
+output ExceptionRet;
+output StopPur;
+output StartPur;
+output SuspendPur;
+output AwakePur;
+output AbortPur;
+output ResumePur;
+output DeleteThreadPur;
+
+every tick do
+  run Dmux [
+    constant Num_Thread / Num_Thread;
+    signal TimerOut / Signal_MUX,
+           TimerOut_DMUX / Signal ];
+  run FiltrerDeleteThread / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal DeleteThread / Entree,
+           DeleteThreadPur / Sortie ];
+  run FiltrerThreadTrap / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal ThreadTrap / Entree,
+           Trap / Sortie ];
+  run FiltrerThreadTrapRet / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal ThreadTrapRet / Entree,
+           TrapRet / Sortie ];
+  run FiltrerThreadException / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal ThreadException / Entree,
+           Exception / Sortie ];
+  run FiltrerThreadExceptionRet / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal ThreadExceptionRet / Entree,
+           Exception / Sortie ];
+  run FiltrerStop / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Stop / Entree,
+           StopPur / Sortie ];
+  run FiltrerStart / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Start / Entree,
+           StartPur / Sortie ];
+  run FiltrerSuspend / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Suspend / Entree,
+           SuspendPur / Sortie ];
+  run FiltrerAwake / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Awake / Entree,
+           AwakePur / Sortie ];
+  run FiltrerAbort / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Abort / Entree,
+           AbortPur / Sortie ];
+  run FiltrerResume / Filtrer [
+    constant Num_Thread / Num_Thread;
+    signal Resume / Entree,
+           ResumePur / Sortie ]
+end every
+
+end module
+
+module Dmux:
+constant Num_Thread : integer;
+procedure demultiplexage(boolean)(integer);
+input Signal_MUX;
+output Signal;
+
+var presence : boolean in
+  present Signal_MUX then
+    call demultiplexage(presence)(Num_Thread);
+    if presence then
+      emit Signal
+    end if
+  end present
+end var
+
+end module
+
+module Filtrer:
+constant Num_Thread : integer;
+input Entree : integer;
+output Sortie;
+
+present Entree then
+  if Num_Thread = ?Entree then
+    emit Sortie
+  end if
+end present
+
+end module
+
+module InterruptHandlers:
+constant TIMER_8254 : integer;
+input Interrupt : integer;
+output ClockTick;
+output AsyncInterrupt : integer;
+
+if ?Interrupt = TIMER_8254 then
+  emit ClockTick
+else
+  emit AsyncInterrupt(?Interrupt)
+end if
+
+end module
+
+module InterruptMgr:
+procedure save_thCtx()();
+procedure restore_thCtx()();
+procedure push_ItCtx()();
+procedure pop_ItCtx()();
+input Interrupt : integer;
+input EndInterrupt;
+output ClockTick;
+output EnterInterrupt;
+output ExitInterrupt;
+output AsyncInterrupt : integer;
+
+var itLevel : integer,
+    first_time := true : boolean in
+  loop
+    await [Interrupt or EndInterrupt];
+    present Interrupt then
+      run InterruptHandlers [
+        signal Interrupt / Interrupt,
+               ClockTick / ClockTick,
+               AsyncInterrupt / AsyncInterrupt ]
+    end present;
+    if first_time then
+      present [AsyncInterrupt and Interrupt] then
+        first_time := false;
+        call save_thCtx()();
+        emit EnterInterrupt;
+        itLevel := 1
+      end present
+    else
+      present AsyncInterrupt then
+        present [not EndInterrupt] then
+          call push_ItCtx()();
+          itLevel := itLevel + 1
+        end present
+      else
+        present EndInterrupt then
+          itLevel := itLevel - 1;
+          if itLevel = 0 then
+            call restore_thCtx()();
+            emit ExitInterrupt;
+            first_time := true
+          else
+            call pop_ItCtx()()
+          end if
+        end present
+      end present
+    end if
+  end loop
+end var
+
+end module
+
+module Interrupt:
+input Interrupt : integer;
+input Trap;
+input TrapRet;
+input Exception;
+input ExceptionRet;
+input EndInterrupt;
+output ClockTick;
+output AsyncInterrupt : integer;
+output ThreadTrap : integer;
+output ThreadTrapRet : integer;
+output ThreadException : integer;
+output ThreadExceptionRet : integer;
+inputoutput ExitInterrupt;
+inputoutput EnterInterrupt;
+
+  run InterruptMgr
+||
+  run SysMode
+
+end module
+
+module SchedBase:
+constant dummyThread : integer;
+function createThread(integer) : integer;
+procedure schedulerInit()();
+procedure scheduleChoose(boolean, integer)();
+input CreateThread : integer;
+input TestSchedule;
+input EnterInterrupt;
+input ExitInterrupt;
+output ThreadCreated : integer;
+output Run : integer;
+relation EnterInterrupt # ExitInterrupt;
+
+  call schedulerInit()();
+  present [not TestSchedule] then
+    emit Run(dummyThread)
+  end present;
+  loop
+    await CreateThread;
+    emit ThreadCreated(createThread(?CreateThread))
+  end loop
+||
+  var running := dummyThread : integer,
+      change : boolean in
+    loop
+      abort
+        await immediate TestSchedule;
+        loop
+          pause;
+          call scheduleChoose(change, running)();
+          if change then
+            emit Run(running)
+          end if;
+          await TestSchedule
+        end loop
+      when EnterInterrupt;
+      trap InterruptMode in
+        [
+          await immediate TestSchedule;
+          await ExitInterrupt;
+          emit TestSchedule
+        ||
+          await immediate ExitInterrupt;
+          exit InterruptMode
+        ]
+      end trap
+    end loop
+  end var
+
+end module
+
+module Scheduler:
+input CreateThread : integer;
+input TestSchedule;
+input EnterInterrupt;
+input ExitInterrupt;
+input ClockTick;
+output ThreadCreated : integer;
+output Run : integer;
+
+await tick;
+run SchedBase
+
+end module
+
+module SysMode:
+function runningThread() : integer;
+input Trap;
+input TrapRet;
+input Exception;
+input ExceptionRet;
+input EnterInterrupt;
+input ExitInterrupt;
+output ThreadTrap : integer;
+output ThreadTrapRet : integer;
+output ThreadException : integer;
+output ThreadExceptionRet : integer;
+relation Trap # TrapRet # Exception # ExceptionRet;
+relation EnterInterrupt # ExitInterrupt;
+
+loop
+  trap ThreadMode in
+    [
+      loop
+        await 
+          case Trap do
+            emit ThreadTrap(runningThread())
+          case Exception do
+            emit ThreadException(runningThread())
+          case TrapRet do
+            emit ThreadTrapRet(runningThread())
+          case ExceptionRet do
+            emit ThreadExceptionRet(runningThread())
+        end await
+      end loop
+    ||
+      await immediate EnterInterrupt;
+      exit ThreadMode
+    ]
+  end trap;
+  await ExitInterrupt
+end loop
+
+end module
+
+module thMain:
+type pointer;
+constant ActiveInit : boolean;
+constant Num_Thread : integer;
+constant actif : integer;
+constant bloque : integer;
+constant libre : integer;
+function Ad_ThreadState() : pointer;
+procedure multiplexage()(pointer, integer, integer);
+input BeReadyStop;
+input BeUnReadyStop;
+input BeReadySuspend;
+input BeUnReadySuspend;
+input BeReadySleep;
+input BeUnReadySleep;
+input MaskDelete;
+input UnMaskDelete;
+input DeleteThread;
+output TestSchedule;
+output ThreadDeleted;
+relation BeReadyStop # BeUnReadyStop;
+relation BeReadySleep # BeUnReadySleep;
+relation BeReadySuspend # BeUnReadySuspend;
+
+signal readyStop,
+       readySleep,
+       readySuspend in
+  if ActiveInit then
+    call multiplexage()(Ad_ThreadState(), Num_Thread, actif);
+    emit TestSchedule
+  end if;
+  trap EXIT in
+    [
+      if not ActiveInit then
+        await BeReadySuspend
+      end if;
+      loop
+        abort
+          sustain readySuspend
+        when BeUnReadySuspend;
+        await BeReadySuspend
+      end loop
+    ||
+      loop
+        abort
+          sustain readyStop
+        when BeUnReadyStop;
+        await BeReadyStop
+      end loop
+    ||
+      loop
+        abort
+          sustain readySleep
+        when BeUnReadySleep;
+        await BeReadySleep
+      end loop
+    ||
+      if ActiveInit then
+        await [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+      end if;
+      loop
+        trap blocked in
+          call multiplexage()(Ad_ThreadState(), Num_Thread, bloque);
+          emit TestSchedule;
+          loop
+            await [BeReadyStop or BeReadySuspend or BeReadySleep];
+            present [readyStop and readySuspend and readySleep] then
+              exit blocked
+            end present
+          end loop
+        end trap;
+        call multiplexage()(Ad_ThreadState(), Num_Thread, actif);
+        emit TestSchedule;
+        await [BeUnReadyStop or BeUnReadySuspend or BeUnReadySleep]
+      end loop
+    ||
+      loop
+        await 
+          case MaskDelete do
+            trap maskedDelete in
+                await immediate DeleteThread;
+                await immediate UnMaskDelete;
+                exit EXIT
+              ||
+                await immediate UnMaskDelete;
+                exit maskedDelete
+            end trap
+          case DeleteThread do
+            exit EXIT
+        end await
+      end loop
+    ]
+  end trap;
+  call multiplexage()(Ad_ThreadState(), Num_Thread, libre);
+  emit TestSchedule;
+  emit ThreadDeleted
+end signal
+
+end module
+
+module Thread:
+constant supervisorThread : boolean;
+constant ActiveInit : boolean;
+constant Num_Thread : integer;
+input DeleteThread : integer;
+input MaskSuspend;
+input UnMaskSuspend;
+input Suspend : integer;
+input Resume : integer;
+input Stop : integer;
+input Start : integer;
+input MaskAbort;
+input UnMaskAbort;
+input Abort : integer;
+input Awake : integer;
+input Sleep : integer;
+input TimerOut;
+input MaskStop;
+input UnMaskStop;
+input MaskDelete;
+input UnMaskDelete;
+input ThreadTrap : integer;
+input ThreadTrapRet : integer;
+input ThreadException : integer;
+input ThreadExceptionRet : integer;
+output Awaken;
+output SetTimer;
+output DelTimer;
+output TestSchedule;
+output EnterSystemMode;
+output ExitSystemMode;
+output ThreadDeleted;
+
+signal BeReadySuspend,
+       BeUnReadySuspend,
+       BeReadySleep,
+       BeUnReadySleep,
+       BeReadyStop,
+       BeUnReadyStop,
+       TimerOut_DMUX,
+       Trap,
+       TrapRet,
+       Exception,
+       ExceptionRet,
+       StopPur,
+       StartPur,
+       SuspendPur,
+       AwakePur,
+       AbortPur,
+       ResumePur,
+       DeleteThreadPur in
+    weak abort
+        run thSuspend [
+          constant ActiveInit / ActiveInit;
+          signal MaskSuspend / MaskSuspend,
+                 UnMaskSuspend / UnMaskSuspend,
+                 SuspendPur / Suspend,
+                 ResumePur / Resume,
+                 BeReadySuspend / BeReadySuspend,
+                 BeUnReadySuspend / BeUnReadySuspend ]
+      ||
+        run thStop [
+          signal MaskStop / MaskStop,
+                 UnMaskStop / UnMaskStop,
+                 StopPur / Stop,
+                 StartPur / Start,
+                 BeReadyStop / BeReadyStop,
+                 BeUnReadyStop / BeUnReadyStop ]
+      ||
+        run thTrapExc [
+          constant supervisorThread / supervisorThread;
+          signal Trap / Trap,
+                 TrapRet / TrapRet,
+                 Exception / Exception,
+                 ExceptionRet / ExceptionRet,
+                 EnterSystemMode / EnterSystemMode,
+                 ExitSystemMode / ExitSystemMode ]
+      ||
+        run Interface [
+          constant Num_Thread / Num_Thread;
+          signal TimerOut / TimerOut,
+                 TimerOut_DMUX / TimerOut_DMUX,
+                 ThreadTrap / ThreadTrap,
+                 Trap / Trap,
+                 ThreadTrapRet / ThreadTrapRet,
+                 TrapRet / TrapRet,
+                 ThreadException / ThreadException,
+                 Exception / Exception,
+                 ThreadExceptionRet / ThreadExceptionRet,
+                 ExceptionRet / ExceptionRet,
+                 Stop / Stop,
+                 StopPur / StopPur,
+                 Start / Start,
+                 StartPur / StartPur,
+                 Suspend / Suspend,
+                 SuspendPur / SuspendPur,
+                 Awake / Awake,
+                 AwakePur / AwakePur,
+                 Abort / Abort,
+                 AbortPur / AbortPur,
+                 DeleteThread / DeleteThread,
+                 DeleteThreadPur / DeleteThreadPur ]
+    when DeleteThreadPur do
+      emit BeReadyStop;
+      emit BeReadySuspend
+    end weak abort
+  ||
+    run thSleep [
+      constant Num_Thread / Num_Thread;
+      signal DeleteThreadPur / DeleteThread,
+             MaskAbort / MaskAbort,
+             UnMaskAbort / UnMaskAbort,
+             AbortPur / Abort,
+             AwakePur / Awake,
+             Sleep / Sleep,
+             TimerOut_DMUX / TimerOut,
+             BeReadySleep / BeReadySleep,
+             BeUnReadySleep / BeUnReadySleep,
+             Awaken / Awaken,
+             SetTimer / SetTimer,
+             DelTimer / DelTimer ]
+  ||
+    run thMain [
+      constant Num_Thread / Num_Thread,
+               ActiveInit / ActiveInit;
+      signal BeReadyStop / BeReadyStop,
+             BeUnReadyStop / BeUnReadyStop,
+             BeReadySuspend / BeReadySuspend,
+             BeUnReadySuspend / BeUnReadySuspend,
+             BeReadySleep / BeReadySleep,
+             BeUnReadySleep / BeUnReadySleep,
+             DeleteThreadPur / DeleteThread,
+             TestSchedule / TestSchedule,
+             MaskDelete / MaskDelete,
+             ThreadDeleted / ThreadDeleted,
+             UnMaskDelete / UnMaskDelete ]
+end signal
+
+end module
+
+module thSleep:
+type pointer;
+constant K_ETIMEOUT : integer;
+constant K_EABORT : integer;
+constant K_OK : integer;
+constant Num_Thread : integer;
+function Ad_Awaken() : pointer;
+function Ad_SetTimer() : pointer;
+function Ad_DelTimer() : pointer;
+procedure multiplexage()(pointer, integer, integer);
+input DeleteThread;
+input MaskAbort;
+input UnMaskAbort;
+input Abort;
+input Awake;
+input Sleep : integer;
+input TimerOut;
+output BeReadySleep;
+output BeUnReadySleep;
+output Awaken;
+output SetTimer;
+output DelTimer;
+
+var aborting := 0 : integer,
+    maskedAbort := false : boolean,
+    delay := 0 : integer in
+  abort
+    loop
+      await [Abort or Sleep or MaskAbort or UnMaskAbort];
+      present 
+        case [MaskAbort and not UnMaskAbort] do
+          maskedAbort := true
+        case UnMaskAbort do
+          maskedAbort := false
+      end present;
+      present 
+        case Sleep do
+          if ?Sleep <> 0 then
+            if aborting > 0 and not maskedAbort then
+              aborting := aborting - 1;
+              call multiplexage()(Ad_Awaken(), Num_Thread, K_EABORT);
+              emit Awaken
+            else
+              delay := ?Sleep;
+              call multiplexage()(Ad_SetTimer(), Num_Thread, delay);
+              emit SetTimer;
+              emit BeUnReadySleep;
+              trap sleeping in
+                loop
+                  await [MaskAbort or UnMaskAbort or Awake or TimerOut or Abort];
+                  present 
+                    case [MaskAbort and not UnMaskAbort] do
+                      maskedAbort := true
+                    case UnMaskAbort do
+                      maskedAbort := false
+                  end present;
+                  present Awake then
+                    call multiplexage()(Ad_DelTimer(), Num_Thread, delay);
+                    emit DelTimer;
+                    call multiplexage()(Ad_Awaken(), Num_Thread, K_OK);
+                    emit Awaken;
+                    exit sleeping
+                  end present;
+                  present TimerOut then
+                    call multiplexage()(Ad_Awaken(), Num_Thread, K_ETIMEOUT);
+                    emit Awaken;
+                    exit sleeping
+                  end present;
+                  present Abort then
+                    if not maskedAbort then
+                      call multiplexage()(Ad_DelTimer(), Num_Thread, delay);
+                      emit DelTimer;
+                      call multiplexage()(Ad_Awaken(), Num_Thread, K_EABORT);
+                      emit Awaken;
+                      exit sleeping
+                    else
+                      aborting := aborting + 1
+                    end if
+                  end present
+                end loop
+              end trap;
+              emit BeReadySleep
+            end if
+          else
+            call multiplexage()(Ad_Awaken(), Num_Thread, K_ETIMEOUT);
+            emit Awaken
+          end if
+        case Abort do
+          aborting := aborting + 1
+      end present
+    end loop
+  when DeleteThread do
+    call multiplexage()(Ad_DelTimer(), Num_Thread, delay);
+    emit DelTimer;
+    call multiplexage()(Ad_Awaken(), Num_Thread, K_EABORT);
+    emit Awaken;
+    emit BeReadySleep
+  end abort
+end var
+
+end module
+
+module thStop:
+input MaskStop;
+input UnMaskStop;
+input Stop;
+input Start;
+output BeReadyStop;
+output BeUnReadyStop;
+
+signal maskedStop in
+    loop
+      await [MaskStop and not UnMaskStop];
+      abort
+        sustain maskedStop
+      when [UnMaskStop and not MaskStop]
+    end loop
+  ||
+    loop
+      await [Stop and not Start];
+      var stop_is_masked : boolean in
+        abort
+          present maskedStop then
+            stop_is_masked := true;
+            await [UnMaskStop and not MaskStop];
+            emit BeUnReadyStop
+          else
+            stop_is_masked := false;
+            emit BeUnReadyStop
+          end present;
+          halt
+        when [Start and not Stop] do
+          if not stop_is_masked then
+            emit BeReadyStop
+          end if
+        end abort
+      end var
+    end loop
+end signal
+
+end module
+
+module thSuspend:
+constant ActiveInit : boolean;
+input MaskSuspend;
+input UnMaskSuspend;
+input Suspend;
+input Resume;
+output BeReadySuspend;
+output BeUnReadySuspend;
+
+signal maskedSuspend,
+       initSuspend,
+       shouldSuspend,
+       shouldResume in
+    loop
+      await [MaskSuspend and not UnMaskSuspend];
+      abort
+        sustain maskedSuspend
+      when [UnMaskSuspend and not MaskSuspend]
+    end loop
+  ||
+    var suspCnt := 0 : integer in
+      if not ActiveInit then
+        suspCnt := suspCnt - 1;
+        emit shouldSuspend;
+        emit initSuspend
+      end if;
+      loop
+        await [Suspend or Resume];
+        present Suspend then
+          present [not Resume] then
+            suspCnt := suspCnt - 1;
+            if suspCnt = - 1 then
+              emit shouldSuspend
+            end if
+          end present
+        else
+          present Resume then
+            suspCnt := suspCnt + 1;
+            if suspCnt = 0 then
+              emit shouldResume
+            end if
+          end present
+        end present
+      end loop
+    end var
+  ||
+    loop
+      await immediate shouldSuspend;
+      var var_BeReadySuspend := false : boolean in
+        abort
+          present maskedSuspend then
+            await [UnMaskSuspend and not MaskSuspend];
+            var_BeReadySuspend := true;
+            emit BeUnReadySuspend
+          else
+            var_BeReadySuspend := true;
+            present [not initSuspend] then
+              emit BeUnReadySuspend
+            end present
+          end present;
+          halt
+        when shouldResume do
+          if var_BeReadySuspend then
+            emit BeReadySuspend
+          end if
+        end abort
+      end var
+    end loop
+end signal
+
+end module
+
+module thTrapExc:
+constant supervisorThread : boolean;
+input Trap;
+input TrapRet;
+input Exception;
+input ExceptionRet;
+output EnterSystemMode;
+output ExitSystemMode;
+relation Trap # TrapRet # Exception # ExceptionRet;
+
+var sysLevel : integer,
+    etat_init := true : boolean in
+  if supervisorThread then
+    emit EnterSystemMode;
+    halt
+  end if;
+  every [Trap or Exception] do
+    if etat_init then
+      sysLevel := 1;
+      emit EnterSystemMode;
+      etat_init := false
+    else
+      sysLevel := sysLevel + 1
+    end if;
+    await [TrapRet or ExceptionRet];
+    sysLevel := sysLevel - 1;
+    if sysLevel = 0 then
+      emit ExitSystemMode;
+      etat_init := true
+    end if
+  end every
+end var
+
+end module
+
+module TimeGuard:
+type TimeVal;
+constant deltaT : TimeVal;
+function diffTimeVal(TimeVal, TimeVal) : integer;
+function TimeInc(TimeVal) : TimeVal;
+procedure dequeueTimersAt(TimeVal, boolean)(TimeVal);
+procedure initCurrentTime()();
+input ClockTick;
+input NextTimeOut : TimeVal;
+input NoTimer;
+output TimerOut;
+relation NextTimeOut # NoTimer;
+
+signal ClockVal : TimeVal in
+    call initCurrentTime()();
+    every ClockTick do
+      emit ClockVal(TimeInc(deltaT))
+    end every
+  ||
+    var nextTimer : TimeVal,
+        delay : integer,
+        noMore := true : boolean in
+      loop
+        abort
+          await immediate NextTimeOut;
+          nextTimer := ?NextTimeOut;
+          trap Waiting in
+            loop
+              delay := diffTimeVal(nextTimer, ?ClockVal);
+              if delay > 0 then
+                await delay ClockTick;
+                call dequeueTimersAt(nextTimer, noMore)(nextTimer);
+                emit TimerOut;
+                await ClockTick
+              else
+                call dequeueTimersAt(nextTimer, noMore)(nextTimer);
+                emit TimerOut;
+                await ClockTick
+              end if;
+              if noMore then
+                exit Waiting
+              end if
+            end loop
+          end trap
+        when [NoTimer or NextTimeOut]
+      end loop
+    end var
+end signal
+
+end module
+
+module TimerMgr:
+type TimeVal;
+constant nullTimeVal : TimeVal;
+procedure enqueueTimers(TimeVal, boolean)();
+procedure dequeueTimers(TimeVal, boolean, boolean)();
+input DelTimer;
+input SetTimer;
+output NextTimeOutDelay : TimeVal;
+output NoTimerDelay;
+
+var next1 := nullTimeVal : TimeVal,
+    next2 := nullTimeVal : TimeVal,
+    isNext : boolean,
+    wasNext : boolean,
+    noMore := true : boolean in
+    loop
+      await SetTimer;
+      call enqueueTimers(next1, isNext)();
+      if isNext then
+        await tick;
+        emit NextTimeOutDelay(next1)
+      end if
+    end loop
+  ||
+    loop
+      await DelTimer;
+      call dequeueTimers(next2, noMore, wasNext)();
+      if wasNext then
+        await tick;
+        emit NextTimeOutDelay(next2)
+      end if;
+      if noMore then
+        await tick;
+        emit NoTimerDelay
+      end if
+    end loop
+end var
+
+end module
+
+module Time:
+type TimeVal;
+input DelTimer;
+input SetTimer;
+input ClockTick;
+output TimerOut;
+
+signal NextTimeOutDelay : TimeVal,
+       NoTimerDelay,
+       NextTimeOut : TimeVal,
+       NoTimer in
+    run TimerMgr [
+      signal DelTimer / DelTimer,
+             SetTimer / SetTimer,
+             NextTimeOut / NextTimeOutDelay,
+             NoTimer / NoTimerDelay ]
+  ||
+    run TimeGuard [
+      signal ClockTick / ClockTick,
+             NextTimeOut / NextTimeOut,
+             NoTimer / NoTimer,
+             TimerOut / TimerOut ]
+end signal
+
+end module

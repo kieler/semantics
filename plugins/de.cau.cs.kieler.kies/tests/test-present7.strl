@@ -1,0 +1,45 @@
+module test_present7:
+input A;
+input B;
+input C;
+output W;
+output X;
+output Y;
+output Z;
+
+loop
+  present A then
+    pause
+  end present;
+  present B else
+    emit W
+  end present;
+  present 
+    case A do
+      pause;
+      emit X
+    case B
+    case C do
+      emit Y
+  end present;
+  present A then
+    present B then
+      pause
+    else
+      emit Z
+    end present;
+    present C else
+      pause
+    end present
+  else
+    present 
+      case A
+      case B do
+        emit X
+      case C
+    end present
+  end present;
+  pause
+end loop
+
+end module
