@@ -1,1 +1,0 @@
-#define identity(x) x

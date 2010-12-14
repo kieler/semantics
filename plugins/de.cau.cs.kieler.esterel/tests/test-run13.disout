@@ -1,7 +1,0 @@
-module Test_Run13:
-
-signal A : integer in
-  emit A(10)
-end signal
-
-end module

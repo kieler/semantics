@@ -1,6 +1,0 @@
-module test_halt1:
-
-halt;
-halt
-
-end module

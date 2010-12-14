@@ -1,1 +1,0 @@
-#define mynot(x) (!x)

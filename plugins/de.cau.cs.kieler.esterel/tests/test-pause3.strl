@@ -1,7 +1,0 @@
-module test_pause3:
-
-pause;
-pause;
-pause
-
-end module
