@@ -185,10 +185,15 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Program ****************
  *
  * // ==============================================
+ * 
  * // ===              B.5 Modules               ===
+ * 
  * // ==============================================
+ * 
  * //	root rule. one esterel file can contain multiple modules
+ * 
  * //(modules+=Module)*;
+ * 
  * Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
  * 	modules+=Module*;
  *
@@ -246,6 +251,7 @@ protected class Program_ModulesAssignment extends AssignmentToken  {
 /************ begin Rule Module ****************
  *
  * // module consists of interface and body
+ * 
  * Module:
  * 	"module" name=ID ":" interface=ModuleInterface? body=ModuleBody end=EndModule;
  *
@@ -492,6 +498,7 @@ protected class Module_EndAssignment_5 extends AssignmentToken  {
 /************ begin Rule ModuleBody ****************
  *
  * // help function to clearly divide a Module into interface and body	
+ * 
  * ModuleBody:
  * 	statements+=Statement;
  *
@@ -550,8 +557,11 @@ protected class ModuleBody_StatementsAssignment extends AssignmentToken  {
 /************ begin Rule ModuleInterface ****************
  *
  * // ----------------------------------------------
+ * 
  * //            Interface Declarations
+ * 
  * // ----------------------------------------------
+ * 
  * ModuleInterface:
  * 	(intSignalDecls+=InterfaceSignalDecl | intTypeDecls+=TypeDecl | intSensorDecls+=SensorDecl |
  * 	intConstantDecls+=ConstantDecls | intRelationDecls+=RelationDecl | intTaskDecls+=TaskDecl |
@@ -965,6 +975,7 @@ protected class ModuleInterface_IntProcedureDeclsAssignment_7 extends Assignment
 /************ begin Rule ChannelDescription ****************
  *
  * // overwrite to add the EsterelTypeIdentifier
+ * 
  * ChannelDescription:
  * 	":" type=EsterelTypeIdentifier | "(" type=EsterelTypeIdentifier ")" | ":=" expression=Expression ":"
  * 	type=EsterelTypeIdentifier;
@@ -1370,6 +1381,7 @@ protected class ChannelDescription_TypeAssignment_2_3 extends AssignmentToken  {
 /************ begin Rule EsterelTypeIdentifier ****************
  *
  * // overwrite to allow function references for signal declaration
+ * 
  * EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
  * 	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
  * 	operator=CombineOperator));
@@ -1796,6 +1808,7 @@ protected class EsterelTypeIdentifier_OperatorAssignment_2_1_3_1 extends Assignm
 /************ begin Rule TypeIdentifier ****************
  *
  * // overwrite to allow types defined in a specific module
+ * 
  * TypeIdentifier:
  * 	type=ValueType | typeID=ID | "combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator | {EsterelType}
  * 	estType=[Type];
@@ -2205,6 +2218,7 @@ protected class TypeIdentifier_EstTypeAssignment_3_1 extends AssignmentToken  {
 /************ begin Rule LocalSignalDecl ****************
  *
  * // --> B.4.20 signal: Local Signal Declaration <--
+ * 
  * LocalSignalDecl:
  * 	"signal" signalList=LocalSignalList "in" statement=Statement "end" optEnd="signal"?;
  *
@@ -2643,8 +2657,11 @@ protected class LocalSignalList_SignalAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule SensorDecl ****************
  *
  * //ChannelType:
+ * 
  * //	//make reference to declared types
+ * 
  * //Problem: Need reference OR BaseType
+ * 
  * SensorDecl:
  * 	"sensor" sensors+=SensorWithType ("," sensors+=SensorWithType)* ";";
  *
@@ -2868,6 +2885,7 @@ protected class SensorDecl_SemicolonKeyword_3 extends KeywordToken  {
 /************ begin Rule RelationDecl ****************
  *
  * // ==> Relations
+ * 
  * RelationDecl:
  * 	{Relation} "relation" relations+=RelationType ("," relations+=RelationType)* ";";
  *
@@ -3610,6 +3628,7 @@ protected class RelationIncompatibility_IncompAssignment_3_1 extends AssignmentT
 /************ begin Rule TypeDecl ****************
  *
  * // ==> Types
+ * 
  * TypeDecl:
  * 	"type" types+=Type ("," types+=Type)* ";";
  *
@@ -3878,6 +3897,7 @@ protected class Type_NameAssignment extends AssignmentToken  {
 /************ begin Rule ConstantDecls ****************
  *
  * // ==> Constants
+ * 
  * ConstantDecls:
  * 	"constant" constants+=OneTypeConstantDecls ("," constants+=OneTypeConstantDecls)* ";";
  *
@@ -4722,6 +4742,7 @@ protected class ConstantValue_IntValueAssignment_1 extends AssignmentToken  {
 /************ begin Rule FunctionDecl ****************
  *
  * // ==> Functions
+ * 
  * FunctionDecl:
  * 	"function" functions+=Function ("," functions+=Function)* ";";
  *
@@ -5576,6 +5597,7 @@ protected class FunctionCall_RightParenthesisKeyword_3 extends KeywordToken  {
 /************ begin Rule ProcedureDecl ****************
  *
  * // ==> Procedures
+ * 
  * ProcedureDecl:
  * 	"procedure" procedures+=Procedure ("," procedures+=Procedure)* ";";
  *
@@ -6288,6 +6310,7 @@ protected class Procedure_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule TaskDecl ****************
  *
  * // ==> Tasks
+ * 
  * TaskDecl:
  * 	"task" tasks+=Task ("," tasks+=Task)* ";";
  *
@@ -7000,8 +7023,11 @@ protected class Task_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule Statement ****************
  *
  * // ==============================================
+ * 
  * // ===            B.4 Statements              ===
+ * 
  * // ==============================================
+ * 
  * Statement:
  * 	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
  *
@@ -8249,6 +8275,7 @@ protected class AtomicStatement_WeakAbortParserRuleCall_24 extends RuleCallToken
 /************ begin Rule Sequence ****************
  *
  * // --> B.4.1 Control Flow Operators <--	
+ * 
  * Sequence returns Statement:
  * 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
  *
@@ -8834,6 +8861,7 @@ protected class Assignment_ExprAssignment_2 extends AssignmentToken  {
 /************ begin Rule Abort ****************
  *
  * // --> B.4.2 abort: Strong Preemption
+ * 
  * Abort:
  * 	"abort" statement=Statement "when" body=AbortBody;
  *
@@ -9747,6 +9775,7 @@ protected class AbortCaseSingle_StatementAssignment_2_1 extends AssignmentToken 
 /************ begin Rule WeakAbort ****************
  *
  * // --> B.4.25 weak abort: Weak Preemption
+ * 
  * WeakAbort returns Abort:
  * 	{WeakAbort} "weak" "abort" statement=Statement "when" body=WeakAbortBody;
  *
@@ -10784,6 +10813,7 @@ protected class WeakAbortCase_EndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Await ****************
  *
  * // --> B.4.3 await: Strong Preemption
+ * 
  * Await:
  * 	"await" body=AwaitBody;
  *
@@ -11385,6 +11415,7 @@ protected class AwaitCase_EndAssignment_2 extends AssignmentToken  {
 /************ begin Rule ProcCall ****************
  *
  * // --> B.4.4 call: Procedure Call
+ * 
  * ProcCall:
  * 	"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
  * 	(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
@@ -11882,7 +11913,9 @@ protected class ProcCall_RightParenthesisKeyword_7 extends KeywordToken  {
 /************ begin Rule Do ****************
  *
  * // --> B.4.5 do-upto: Conditional Iteration (deprecated)
+ * 
  * // --> B.4.6 do-watching: Strong Preemption (deprecated)
+ * 
  * Do:
  * 	"do" statement=Statement (end=DoUpto | end=DoWatching);
  *
@@ -12532,6 +12565,7 @@ protected class DoWatchingEnd_OptEndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Emit ****************
  *
  * // --> B.4.7 emit: Signal Emission <--
+ * 
  * Emit:
  * 	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=DataExpr ")")?;
  *
@@ -12803,6 +12837,7 @@ protected class Emit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule EveryDo ****************
  *
  * // --> B.4.8 every-do: Conditional Iteration
+ * 
  * EveryDo:
  * 	"every" delay=DelayExpr "do" statement=Statement "end" optEnd="every"?;
  *
@@ -13036,6 +13071,7 @@ protected class EveryDo_OptEndAssignment_5 extends AssignmentToken  {
 /************ begin Rule Exit ****************
  *
  * // --> B.4.10 exit: Trap Exit
+ * 
  * Exit:
  * 	"exit" trap=[TrapDecl] ("(" dataExpr=DataExpr ")")?;
  *
@@ -13249,6 +13285,7 @@ protected class Exit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Halt ****************
  *
  * // --> B.4.11 halt: Wait Forever
+ * 
  * Halt:
  * 	"halt" {Halt};
  *
@@ -13338,6 +13375,7 @@ protected class Halt_HaltAction_1 extends ActionToken  {
 /************ begin Rule IfTest ****************
  *
  * // --> B.4.12: if: Conditional for Data
+ * 
  * IfTest:
  * 	"if" expr=DataExpr thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
  *
@@ -14016,7 +14054,9 @@ protected class ElsePart_StatementAssignment_1 extends AssignmentToken  {
 /************ begin Rule Loop ****************
  *
  * // --> B.4.13 loop: Infinite Loop
+ * 
  * // --> B.4.14 loop-each: Condition Iteration
+ * 
  * Loop:
  * 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
  *
@@ -14440,6 +14480,7 @@ protected class LoopBody_StatementAssignment extends AssignmentToken  {
 /************ begin Rule Nothing ****************
  *
  * // --> B.4.15 nothing: No Operation
+ * 
  * Nothing:
  * 	"nothing" {Nothing};
  *
@@ -14529,6 +14570,7 @@ protected class Nothing_NothingAction_1 extends ActionToken  {
 /************ begin Rule Pause ****************
  *
  * // --> B.4.16 pause: Unit Delay
+ * 
  * Pause:
  * 	"pause" {Pause};
  *
@@ -14618,6 +14660,7 @@ protected class Pause_PauseAction_1 extends ActionToken  {
 /************ begin Rule Present ****************
  *
  * // --> B.4.17 present: Conditional for Signals
+ * 
  * Present:
  * 	"present" body=PresentBody elsePart=ElsePart? "end" optEnd="present"?;
  *
@@ -15640,6 +15683,7 @@ protected class PresentEvent_TickAssignment_2 extends AssignmentToken  {
 /************ begin Rule Repeat ****************
  *
  * // --> B.4.18 repeat: Iterate a Fixed Number of Times
+ * 
  * Repeat:
  * 	positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" optEnd="repeat"?;
  *
@@ -15907,7 +15951,9 @@ protected class Repeat_OptEndAssignment_6 extends AssignmentToken  {
 /************ begin Rule Run ****************
  *
  * // --> B.4.19 run: Module Instantiation
+ * 
  * //deprecated
+ * 
  * Run:
  * 	"run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
  * 	"]")?;
@@ -18791,6 +18837,7 @@ protected class SignalRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule Suspend ****************
  *
  * // --> B.4.21 suspend: Preemption with State Freeze
+ * 
  * Suspend:
  * 	"suspend" statement=Statement "when" delay=DelayExpr;
  *
@@ -18967,6 +19014,7 @@ protected class Suspend_DelayAssignment_3 extends AssignmentToken  {
 /************ begin Rule Sustain ****************
  *
  * // --> B.4.22 sustain: Emit a Signal Indefinitely
+ * 
  * Sustain:
  * 	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" dataExpr=DataExpr ")")?;
  *
@@ -19238,6 +19286,7 @@ protected class Sustain_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Trap ****************
  *
  * // --> B.4.23 trap: TrapDeclaration and Handling
+ * 
  * Trap:
  * 	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandler+=TrapHandler* "end" optEnd="trap"?;
  *
@@ -19844,9 +19893,13 @@ protected class TrapDecl_ChannelDescrAssignment_2 extends AssignmentToken  {
 /************ begin Rule TrapHandler ****************
  *
  * //
+ * 
  * //TrapDecl:
+ * 
  * //	{TrapDecl} name=ID
+ * 
  * //;
+ * 
  * TrapHandler:
  * 	"handle" trapExpr=TrapExpr "do" statement=Statement;
  *
@@ -20023,6 +20076,7 @@ protected class TrapHandler_StatementAssignment_3 extends AssignmentToken  {
 /************ begin Rule LocalVariable ****************
  *
  * // --> B.4.24 var: Local Variable Declaration
+ * 
  * LocalVariable:
  * 	var=InterfaceVariableDecl "in" statement=Statement "end" optEnd="var"?;
  *
@@ -20234,10 +20288,15 @@ protected class LocalVariable_OptEndAssignment_4 extends AssignmentToken  {
 /************ begin Rule DataExpr ****************
  *
  * // ==============================================
+ * 
  * // ===            B.3 Expressions             ===
+ * 
  * // ==============================================
+ * 
  * // introduce further rules on the same level as kexpressions.
+ * 
  * // just overriding the TextExpression does not work as for some reason Functions are not found correctly.
+ * 
  * DataExpr returns kexpressions::Expression:
  * 	Expression;
  *
@@ -20293,30 +20352,55 @@ protected class DataExpr_ExpressionParserRuleCall extends RuleCallToken {
 /************ begin Rule AtomicExpression ****************
  *
  * / *
+ * 
  * 	expr=Expression |
+ * 
  * 	data=DataTrap |
+ * 
  * 	data=DataFunction |
+ * 
  * 	data=DataConstant |
+ * 
  * 	data=ConstantValue
+ * 
  * 	// | data=FunctionCall
+ * 
  * 	;* // *
+ * 
  * TextExpression returns kexpressions::TextExpression:
+ * 
  * //code=HOSTCODE ("(" type=ID ")")? | code=STRING
+ * 
  * 	{EsterelTextExpression} (data=DataTrap | 
+ * 
  * 	//data=DataFunction | 
+ * 
  * 	data=DataConstant | data=ConstantValue);
  * 
+ * 
+ * 
  * Expression returns kexpressions::Expression:
+ * 
  * 	
+ * 
  * 	
+ * 
  * 	
+ * 
  * 	BooleanExpression
+ * 
  * 	| ValuedExpression 
+ * 
  * 	
+ * 
  * 	
+ * 
  * ;
+ * 
  * * /// overriding TextExpression does not work properly as DataConstants mix up with valued objects
+ * 
  * // if they are considered prio to ValuedObjectTextExpression. But DataFunction need to be prior to those! 
+ * 
  * AtomicExpression returns kexpressions::Expression:
  * 	DataFunction | DataTrap | BooleanValue | ValuedObjectTestExpression | TextExpression | "(" BooleanExpression ")" |
  * 	DataConstant;
@@ -21298,6 +21382,7 @@ protected class DataConstant_ValueAssignment_1_1 extends AssignmentToken  {
 /************ begin Rule TrapExpr ****************
  *
  * // --> B.3.5 Trap Expressions <--
+ * 
  * TrapExpr returns kexpressions::Expression:
  * 	SignalExpression;
  *
@@ -21347,6 +21432,7 @@ protected class TrapExpr_SignalExpressionParserRuleCall extends RuleCallToken {
 /************ begin Rule SignalExpression ****************
  *
  * // --> B.3.3 Signal Expressions <--
+ * 
  * SignalExpression returns kexpressions::Expression:
  * 	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=OrOperator
  * 	subExpressions+=SignalAndExpression)*;
@@ -22000,11 +22086,13 @@ protected class SignalNotExpression_SignalAtomicExpressionParserRuleCall_1 exten
  *
  * SignalAtomicExpression returns kexpressions::Expression:
  * 	SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // TODO maybe take this somewhere else 
+ * 
  * 	TrapReferenceExpr;
  *
  **/
 
 // SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // TODO maybe take this somewhere else 
+// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_Alternatives extends AlternativesToken {
 
@@ -22213,6 +22301,7 @@ protected class SignalAtomicExpression_SignalPreExprParserRuleCall_2 extends Rul
 }
 
 // // TODO maybe take this somewhere else 
+// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_TrapReferenceExprParserRuleCall_3 extends RuleCallToken {
 	
@@ -22597,6 +22686,7 @@ protected class TrapReferenceExpr_ValuedObjectAssignment_1 extends AssignmentTok
 /************ begin Rule DelayExpr ****************
  *
  * // --> B.3.4 Delay Expressions <--
+ * 
  * DelayExpr:
  * 	expr=DataExpr event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
  *
