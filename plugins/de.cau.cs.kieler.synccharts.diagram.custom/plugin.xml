@@ -503,6 +503,16 @@
             option="de.cau.cs.kieler.layout.options.borderSpacing"
             value="1.0">
       </option>
+      <option
+            class="de.cau.cs.kieler.core.kexpressions.ISignal"
+            option="de.cau.cs.kieler.layout.options.noLayout"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.core.kexpressions.IVariable"
+            option="de.cau.cs.kieler.layout.options.noLayout"
+            value="true">
+      </option>
    </extension>
       <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
