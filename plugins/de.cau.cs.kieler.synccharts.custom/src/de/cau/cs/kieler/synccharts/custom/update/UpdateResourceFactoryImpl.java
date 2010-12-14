@@ -71,7 +71,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      *
      */
-    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_3;
+    public static final Synccharts_MM_Version CURRENT_VERSION = Synccharts_MM_Version.v_0_2_4;
 
     /**
      * The command for reinitializing the diagram.
@@ -261,7 +261,11 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         /**
          * 
          */
-        v_0_2_3;
+        v_0_2_3,
+        /**
+         * 
+         */
+        v_0_2_4;
     }
 
     /**
@@ -285,6 +289,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         convert(uri, Synccharts_MM_Version.v_0_2_1);
         monitor.subTask("Converting v0.2.2 to v0.2.3");
         convert(uri, Synccharts_MM_Version.v_0_2_2);
+        monitor.subTask("Converting v0.2.3 to v0.2.4");
+        convert(uri, Synccharts_MM_Version.v_0_2_3);
     }
 
     /**
@@ -334,6 +340,9 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
                     newString = convertLineV_0_2_2ToV_0_2_3(s);
                     break;
                 case v_0_2_3:
+                    newString = convertLineV_0_2_3ToV_0_2_4(s);
+                    break;
+                case v_0_2_4:
                     return;
                 }
                 lines.add(newString);
@@ -391,6 +400,22 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         if (result.contains("xsi:type=\"synccharts:Emission\"")) {
             result = result.replaceAll(" signal=\"", " DUMMY_signal=\"");
         }
+        return result;
+    }
+
+    private String convertLineV_0_2_3ToV_0_2_4(final String s) {
+        String result = s;
+        if (result.contains(getVersionURI(Synccharts_MM_Version.v_0_2_3))) {
+            result = result.replace(
+                    getVersionURI(Synccharts_MM_Version.v_0_2_3),
+                    getVersionURI(Synccharts_MM_Version.v_0_2_4));
+            result = result
+                    .replaceAll(
+                            "xmlns:expressions=\"http://kieler.cs.cau.de/expressions/0.1.2\"",
+                            "xmlns:kexpressions=\"http://kieler.cs.cau.de/kexpressions/0.1.2\"");
+        }
+        result = result.replaceAll("xsi:type=\"expressions:",
+                "xsi:type=\"kexpressions:");
         return result;
     }
 
@@ -549,6 +574,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
         case v_0_2_2:
             return Synccharts_MM_Version.v_0_2_3;
         case v_0_2_3:
+            return Synccharts_MM_Version.v_0_2_4;
+        case v_0_2_4:
             return null;
         }
         return null;
@@ -639,6 +666,8 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.2\"";
         case v_0_2_3:
             return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.3\"";
+        case v_0_2_4:
+            return "xmlns:synccharts=\"http://kieler.cs.cau.de/synccharts/0.2.4\"";
         }
         return null;
     }
