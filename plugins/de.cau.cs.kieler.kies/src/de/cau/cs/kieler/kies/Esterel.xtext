@@ -429,7 +429,7 @@ DataTrap returns kexpressions::Expression:
 	{TrapExpression} "??" trap=[kexpressions::ISignal|ID];
 
 DataFunction returns kexpressions::Expression:
-	{FunctionExpression} funcion=[Function|ID] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+	{FunctionExpression} function=[Function|ID] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
 
 DataConstant returns kexpressions::Expression:
 	{ConstantExpression} (constant=[Constant|ID] | value=ConstantValue);
