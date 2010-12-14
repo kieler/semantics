@@ -206,6 +206,8 @@ protected class Root_InterfaceDeclarationParserRuleCall_1 extends RuleCallToken 
 
 /************ begin Rule Expression ****************
  *
+ * //Variable returns annotations::Annotatable:
+ * //    (annotations += StringAnnotation)*;
  * // --------------------------
  * //
  * //   EXPRESSIONS

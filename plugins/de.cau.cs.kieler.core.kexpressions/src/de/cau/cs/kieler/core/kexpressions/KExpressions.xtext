@@ -248,8 +248,9 @@ enum ValueTestOperator returns OperatorType:
    the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 */
 enum ValueType returns ValueType:
-	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned"	| 
-	INT="int" | FLOAT="float" | HOST="host";
+	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned"	| 
+	INT="integer" | FLOAT="float" | DOUBLE="double" |
+	STRING="string" | HOST="host";
 
 
 enum CombineOperator returns CombineOperator:
@@ -268,7 +269,8 @@ terminal INT returns ecore::EInt:
 
 // make sure the Float rule does not shadow the INT rule
 terminal Float returns ecore::EFloatObject :
-    ((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
+ '-'?('0'..'9')+ ("."('0'..'9')*) (("e"|"E")("+"|"-")?('0'..'9')+)? "f"? |
+ '-'?('0'..'9')+"f";
     
     
 // introduce boolean values

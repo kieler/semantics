@@ -738,7 +738,7 @@
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/BOOL"/>
-          <literal value="bool"/>
+          <literal value="boolean"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/UNSIGNED"/>
@@ -746,11 +746,19 @@
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/INT"/>
-          <literal value="int"/>
+          <literal value="integer"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/FLOAT"/>
           <literal value="float"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/DOUBLE"/>
+          <literal value="double"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/STRING"/>
+          <literal value="string"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/HOST"/>
@@ -815,30 +823,40 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
-              <elements xsi:type="xtext:Keyword" value="."/>
-              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
+          <elements xsi:type="xtext:CharacterRange" cardinality="+">
+            <left value="0"/>
+            <right value="9"/>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Keyword" value="."/>
+            <elements xsi:type="xtext:CharacterRange" cardinality="*">
+              <left value="0"/>
+              <right value="9"/>
             </elements>
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
-              <elements xsi:type="xtext:Group" cardinality="?">
-                <elements xsi:type="xtext:Keyword" value="."/>
-                <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
-              </elements>
-              <elements xsi:type="xtext:Alternatives">
-                <elements xsi:type="xtext:Keyword" value="e"/>
-                <elements xsi:type="xtext:Keyword" value="E"/>
-              </elements>
-              <elements xsi:type="xtext:Keyword" cardinality="?" value="+"/>
-              <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Alternatives">
+              <elements xsi:type="xtext:Keyword" value="e"/>
+              <elements xsi:type="xtext:Keyword" value="E"/>
+            </elements>
+            <elements xsi:type="xtext:Alternatives" cardinality="?">
+              <elements xsi:type="xtext:Keyword" value="+"/>
+              <elements xsi:type="xtext:Keyword" value="-"/>
+            </elements>
+            <elements xsi:type="xtext:CharacterRange" cardinality="+">
+              <left value="0"/>
+              <right value="9"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" cardinality="?" value="f"/>
         </elements>
         <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:RuleCall" rule="/0/@rules.45"/>
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
+          <elements xsi:type="xtext:CharacterRange" cardinality="+">
+            <left value="0"/>
+            <right value="9"/>
+          </elements>
           <elements xsi:type="xtext:Keyword" value="f"/>
         </elements>
       </alternatives>
