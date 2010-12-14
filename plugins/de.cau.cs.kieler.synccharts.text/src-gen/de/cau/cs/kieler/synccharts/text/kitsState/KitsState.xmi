@@ -5,11 +5,11 @@
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.3#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.4#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="RootState">
       <type metamodel="/0/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//State"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//State"/>
       </type>
       <alternatives xsi:type="xtext:RuleCall" rule="/1/@rules.4"/>
     </rules>
@@ -25,14 +25,11 @@
       <ePackage href="http://kieler.cs.cau.de/kexpressions/0.1.2#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.3#/"/>
-    </metamodelDeclarations>
-    <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="syncchartsExtended">
-      <ePackage href="http://kieler.cs.cau.de/syncchartsExtended/0.2.3#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.4#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="RootRegion">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
@@ -69,7 +66,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="SingleRegion">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Group" cardinality="?">
@@ -123,7 +120,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Region">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Region"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Region"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
@@ -155,7 +152,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="State">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//State"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//State"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
@@ -195,7 +192,7 @@
             <elements xsi:type="xtext:Assignment" feature="bodyReference" operator="=">
               <terminal xsi:type="xtext:CrossReference">
                 <type metamodel="/1/@metamodelDeclarations.3">
-                  <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//State"/>
+                  <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//State"/>
                 </type>
                 <terminal xsi:type="xtext:RuleCall" rule="/5/@rules.0"/>
               </terminal>
@@ -271,7 +268,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Transition">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Transition"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
@@ -286,7 +283,7 @@
         <elements xsi:type="xtext:Assignment" feature="targetState" operator="=">
           <terminal xsi:type="xtext:CrossReference">
             <type metamodel="/1/@metamodelDeclarations.3">
-              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//State"/>
+              <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//State"/>
             </type>
             <terminal xsi:type="xtext:RuleCall" rule="/5/@rules.0"/>
           </terminal>
@@ -332,6 +329,9 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/kexpressions/0.1.2#//Signal"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isInput" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="input"/>
         </elements>
@@ -389,6 +389,9 @@
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/kexpressions/0.1.2#//Variable"/>
       </type>
       <alternatives xsi:type="xtext:Group">
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
+        </elements>
         <elements xsi:type="xtext:Keyword" value="var"/>
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/5/@rules.0"/>
@@ -412,7 +415,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Substitution">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Substitution"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Substitution"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="actual" operator="=">
@@ -426,42 +429,42 @@
     </rules>
     <rules xsi:type="xtext:EnumRule" name="StateType">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.3#//StateType"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.4#//StateType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//StateType/NORMAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//StateType/NORMAL"/>
           <literal value="normal"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//StateType/CONDITIONAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//StateType/CONDITIONAL"/>
           <literal value="conditional"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//StateType/REFERENCE"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//StateType/REFERENCE"/>
           <literal value="reference"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//StateType/TEXTUAL"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//StateType/TEXTUAL"/>
           <literal value="textual"/>
         </elements>
       </alternatives>
     </rules>
     <rules xsi:type="xtext:EnumRule" name="TransitionType">
       <type metamodel="/1/@metamodelDeclarations.3">
-        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.3#//TransitionType"/>
+        <classifier xsi:type="ecore:EEnum" href="http://kieler.cs.cau.de/synccharts/0.2.4#//TransitionType"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//TransitionType/WEAKABORT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//TransitionType/WEAKABORT"/>
           <literal value="-->"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//TransitionType/STRONGABORT"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//TransitionType/STRONGABORT"/>
           <literal value="o->"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
-          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.3#//TransitionType/NORMALTERMINATION"/>
+          <enumLiteral href="http://kieler.cs.cau.de/synccharts/0.2.4#//TransitionType/NORMALTERMINATION"/>
           <literal value=">->"/>
         </elements>
       </alternatives>
@@ -472,19 +475,19 @@
       <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="synccharts">
-      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.3#/"/>
+      <ePackage href="http://kieler.cs.cau.de/synccharts/0.2.4#/"/>
     </metamodelDeclarations>
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="kexpressions">
       <ePackage href="http://kieler.cs.cau.de/kexpressions/0.1.2#/"/>
     </metamodelDeclarations>
     <rules xsi:type="xtext:ParserRule" name="Transition">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Transition"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Transition"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/2/@metamodelDeclarations.1">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Transition"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Transition"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
@@ -512,12 +515,12 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Action">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Action"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Action"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Action">
           <type metamodel="/2/@metamodelDeclarations.1">
-            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Action"/>
+            <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Action"/>
           </type>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
@@ -545,7 +548,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Effect">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Effect"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Effect"/>
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:RuleCall" rule="/2/@rules.3"/>
@@ -555,7 +558,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Emission">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Emission"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Emission"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="signal" operator="=">
@@ -577,7 +580,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="Assignment">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//Assignment"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Assignment"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="variable" operator="=">
@@ -596,7 +599,7 @@
     </rules>
     <rules xsi:type="xtext:ParserRule" name="TextEffect">
       <type metamodel="/2/@metamodelDeclarations.1">
-        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.3#//TextEffect"/>
+        <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//TextEffect"/>
       </type>
       <alternatives xsi:type="xtext:Group">
         <elements xsi:type="xtext:Assignment" feature="code" operator="=">
@@ -1359,7 +1362,7 @@
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/BOOL"/>
-          <literal value="bool"/>
+          <literal value="boolean"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/UNSIGNED"/>
@@ -1367,11 +1370,19 @@
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/INT"/>
-          <literal value="int"/>
+          <literal value="integer"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/FLOAT"/>
           <literal value="float"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/DOUBLE"/>
+          <literal value="double"/>
+        </elements>
+        <elements xsi:type="xtext:EnumLiteralDeclaration">
+          <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/STRING"/>
+          <literal value="string"/>
         </elements>
         <elements xsi:type="xtext:EnumLiteralDeclaration">
           <enumLiteral href="http://kieler.cs.cau.de/kexpressions/0.1.2#//ValueType/HOST"/>
@@ -1436,30 +1447,40 @@
       </type>
       <alternatives xsi:type="xtext:Alternatives">
         <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:Alternatives">
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
-              <elements xsi:type="xtext:Keyword" value="."/>
-              <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
+          <elements xsi:type="xtext:CharacterRange" cardinality="+">
+            <left value="0"/>
+            <right value="9"/>
+          </elements>
+          <elements xsi:type="xtext:Group">
+            <elements xsi:type="xtext:Keyword" value="."/>
+            <elements xsi:type="xtext:CharacterRange" cardinality="*">
+              <left value="0"/>
+              <right value="9"/>
             </elements>
-            <elements xsi:type="xtext:Group">
-              <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
-              <elements xsi:type="xtext:Group" cardinality="?">
-                <elements xsi:type="xtext:Keyword" value="."/>
-                <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
-              </elements>
-              <elements xsi:type="xtext:Alternatives">
-                <elements xsi:type="xtext:Keyword" value="e"/>
-                <elements xsi:type="xtext:Keyword" value="E"/>
-              </elements>
-              <elements xsi:type="xtext:Keyword" cardinality="?" value="+"/>
-              <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
+          </elements>
+          <elements xsi:type="xtext:Group" cardinality="?">
+            <elements xsi:type="xtext:Alternatives">
+              <elements xsi:type="xtext:Keyword" value="e"/>
+              <elements xsi:type="xtext:Keyword" value="E"/>
+            </elements>
+            <elements xsi:type="xtext:Alternatives" cardinality="?">
+              <elements xsi:type="xtext:Keyword" value="+"/>
+              <elements xsi:type="xtext:Keyword" value="-"/>
+            </elements>
+            <elements xsi:type="xtext:CharacterRange" cardinality="+">
+              <left value="0"/>
+              <right value="9"/>
             </elements>
           </elements>
           <elements xsi:type="xtext:Keyword" cardinality="?" value="f"/>
         </elements>
         <elements xsi:type="xtext:Group">
-          <elements xsi:type="xtext:RuleCall" rule="/3/@rules.45"/>
+          <elements xsi:type="xtext:Keyword" cardinality="?" value="-"/>
+          <elements xsi:type="xtext:CharacterRange" cardinality="+">
+            <left value="0"/>
+            <right value="9"/>
+          </elements>
           <elements xsi:type="xtext:Keyword" value="f"/>
         </elements>
       </alternatives>

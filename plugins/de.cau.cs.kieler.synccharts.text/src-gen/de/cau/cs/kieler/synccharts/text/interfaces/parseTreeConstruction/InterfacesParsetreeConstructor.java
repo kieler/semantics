@@ -6214,11 +6214,11 @@ protected class Effect_TextEffectParserRuleCall_2 extends RuleCallToken {
 /************ begin Rule Emission ****************
  *
  * Emission returns synccharts::Emission:
- * 	signal=[expressions::Signal] ("(" newValue=Expression ")")?;
+ * 	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
  *
  **/
 
-// signal=[expressions::Signal] ("(" newValue=Expression ")")?
+// signal=[kexpressions::Signal] ("(" newValue=Expression ")")?
 protected class Emission_Group extends GroupToken {
 	
 	public Emission_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6248,7 +6248,7 @@ protected class Emission_Group extends GroupToken {
 
 }
 
-// signal=[expressions::Signal]
+// signal=[kexpressions::Signal]
 protected class Emission_SignalAssignment_0 extends AssignmentToken  {
 	
 	public Emission_SignalAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6404,11 +6404,11 @@ protected class Emission_RightParenthesisKeyword_1_2 extends KeywordToken  {
 /************ begin Rule Assignment ****************
  *
  * Assignment returns synccharts::Assignment:
- * 	variable=[expressions::Variable] ":=" expression=Expression;
+ * 	variable=[kexpressions::Variable] ":=" expression=Expression;
  *
  **/
 
-// variable=[expressions::Variable] ":=" expression=Expression
+// variable=[kexpressions::Variable] ":=" expression=Expression
 protected class Assignment_Group extends GroupToken {
 	
 	public Assignment_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6437,7 +6437,7 @@ protected class Assignment_Group extends GroupToken {
 
 }
 
-// variable=[expressions::Variable]
+// variable=[kexpressions::Variable]
 protected class Assignment_VariableAssignment_0 extends AssignmentToken  {
 	
 	public Assignment_VariableAssignment_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -6854,6 +6854,8 @@ protected class Root_InterfaceDeclarationParserRuleCall_1 extends RuleCallToken 
 
 /************ begin Rule Expression ****************
  *
+ * //Variable returns annotations::Annotatable:
+ * //    (annotations += StringAnnotation)*;
  * // --------------------------
  * //
  * //   EXPRESSIONS

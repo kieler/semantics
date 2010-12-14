@@ -90,8 +90,7 @@ Transition returns synccharts::Transition:
 // ---------------------------------------------------------------------------------------------------
 
 Signal returns kexpressions::Signal:
-
-//    (annotation2s += StringAnnotation)*
+    (annotations+=StringAnnotation)*
     (isInput?='input')?
 	(isOutput?='output')?
 	'signal' name=ID (':=' initialValue=AnyType)?
@@ -104,7 +103,7 @@ Signal returns kexpressions::Signal:
 // ---------------------------------------------------------------------------------------------------
 
 Variable returns kexpressions::Variable:
-//    (annotations += StringAnnotation)*
+    (annotations += StringAnnotation)*
     'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 
 // ---------------------------------------------------------------------------------------------------

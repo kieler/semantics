@@ -208,16 +208,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//Emission returns synccharts::Emission:
-		//	signal=[expressions::Signal] ("(" newValue=Expression ")")?;
+		//	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//signal=[expressions::Signal] ("(" newValue=Expression ")")?
+		//signal=[kexpressions::Signal] ("(" newValue=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
-		//signal=[expressions::Signal]
+		//signal=[kexpressions::Signal]
 		public Assignment getSignalAssignment_0() { return cSignalAssignment_0; }
 
-		//[expressions::Signal]
+		//[kexpressions::Signal]
 		public CrossReference getSignalSignalCrossReference_0_0() { return cSignalSignalCrossReference_0_0; }
 
 		//ID
@@ -250,16 +250,16 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		
 		//Assignment returns synccharts::Assignment:
-		//	variable=[expressions::Variable] ":=" expression=Expression;
+		//	variable=[kexpressions::Variable] ":=" expression=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//variable=[expressions::Variable] ":=" expression=Expression
+		//variable=[kexpressions::Variable] ":=" expression=Expression
 		public Group getGroup() { return cGroup; }
 
-		//variable=[expressions::Variable]
+		//variable=[kexpressions::Variable]
 		public Assignment getVariableAssignment_0() { return cVariableAssignment_0; }
 
-		//[expressions::Variable]
+		//[kexpressions::Variable]
 		public CrossReference getVariableVariableCrossReference_0_0() { return cVariableVariableCrossReference_0_0; }
 
 		//ID
@@ -321,7 +321,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final EnumLiteralDeclaration cDIVEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
 		private final Keyword cDIVColonKeyword_0 = (Keyword)cDIVEnumLiteralDeclaration.eContents().get(0);
 		
-		//enum DivOperator returns expressions::OperatorType:
+		//enum DivOperator returns kexpressions::OperatorType:
 		//	DIV=":";
 		public EnumRule getRule() { return rule; }
 
@@ -399,7 +399,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns synccharts::Emission:
-	//	signal=[expressions::Signal] ("(" newValue=Expression ")")?;
+	//	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
 	public EmissionElements getEmissionAccess() {
 		return (pEmission != null) ? pEmission : (pEmission = new EmissionElements());
 	}
@@ -409,7 +409,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns synccharts::Assignment:
-	//	variable=[expressions::Variable] ":=" expression=Expression;
+	//	variable=[kexpressions::Variable] ":=" expression=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -428,7 +428,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextEffectAccess().getRule();
 	}
 
-	//enum DivOperator returns expressions::OperatorType:
+	//enum DivOperator returns kexpressions::OperatorType:
 	//	DIV=":";
 	public DivOperatorElements getDivOperatorAccess() {
 		return (unknownRuleDivOperator != null) ? unknownRuleDivOperator : (unknownRuleDivOperator = new DivOperatorElements());
@@ -448,6 +448,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootAccess().getRule();
 	}
 
+	////Variable returns annotations::Annotatable:
+	////    (annotations += StringAnnotation)*;
 	//// --------------------------
 	////
 	////   EXPRESSIONS
@@ -912,7 +914,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * /enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
+	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
+	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -943,7 +946,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////    '-'?('0'..'9')+;
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
-	//	(INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";
+	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
 	public TerminalRule getFloatRule() {
 		return gaKExpressions.getFloatRule();
 	} 

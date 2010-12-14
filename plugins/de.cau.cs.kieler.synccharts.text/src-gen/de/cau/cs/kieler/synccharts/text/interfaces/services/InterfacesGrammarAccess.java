@@ -1276,7 +1276,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emission returns synccharts::Emission:
-	//	signal=[expressions::Signal] ("(" newValue=Expression ")")?;
+	//	signal=[kexpressions::Signal] ("(" newValue=Expression ")")?;
 	public ActionsGrammarAccess.EmissionElements getEmissionAccess() {
 		return gaActions.getEmissionAccess();
 	}
@@ -1286,7 +1286,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Assignment returns synccharts::Assignment:
-	//	variable=[expressions::Variable] ":=" expression=Expression;
+	//	variable=[kexpressions::Variable] ":=" expression=Expression;
 	public ActionsGrammarAccess.AssignmentElements getAssignmentAccess() {
 		return gaActions.getAssignmentAccess();
 	}
@@ -1305,7 +1305,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getTextEffectAccess().getRule();
 	}
 
-	//enum DivOperator returns expressions::OperatorType:
+	//enum DivOperator returns kexpressions::OperatorType:
 	//	DIV=":";
 	public ActionsGrammarAccess.DivOperatorElements getDivOperatorAccess() {
 		return gaActions.getDivOperatorAccess();
@@ -1325,6 +1325,8 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 		return getRootAccess().getRule();
 	}
 
+	////Variable returns annotations::Annotatable:
+	////    (annotations += StringAnnotation)*;
 	//// --------------------------
 	////
 	////   EXPRESSIONS
@@ -1789,7 +1791,8 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * /enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
+	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
+	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaActions.getValueTypeAccess();
 	}
@@ -1820,7 +1823,7 @@ public class InterfacesGrammarAccess extends AbstractGrammarElementFinder {
 	////    '-'?('0'..'9')+;
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
-	//	(INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";
+	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
 	public TerminalRule getFloatRule() {
 		return gaActions.getFloatRule();
 	} 
