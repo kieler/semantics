@@ -49,7 +49,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     private static final String SYNCCHARTS_PACKAGE = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
             + "KExpressionsPackage";
-    private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.esterel.esterel.EsterelPackage";
+    private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
     private static final String TRANSFORMATION_FILE = "toSyncchartTransformation.ext";
     // private static final String TRANSFORMATION_FILE = "optimization.ext";
@@ -142,7 +142,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
         List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
-        if (!selected.isEmpty() && selected.size() == 1) {
+        if (selected != null && !selected.isEmpty() && selected.size() == 1) {
             for (EObject obj : selected) {
                 if (obj instanceof State) {
                     start = (State) obj;

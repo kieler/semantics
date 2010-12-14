@@ -2,7 +2,7 @@ import ecore;
 import annotations;
 import kexpressions;
 import synccharts;
-import utilities;
+import utilities; 
 import esterel;
 
 extension feature;
@@ -886,15 +886,15 @@ Void rule(State s, Block b):
 
  
 emf::EObject castToEMF(emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
 ;
 
 ecore::EObject castToEcore(emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
 ;
 
 Void setJavaBodyContents(State s, emf::EObject o):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
 
 

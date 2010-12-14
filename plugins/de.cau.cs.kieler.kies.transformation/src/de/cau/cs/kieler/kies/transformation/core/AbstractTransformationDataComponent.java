@@ -30,6 +30,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.ExecutionContextImpl;
 import org.eclipse.xtend.expression.Variable;
+import org.eclipse.xtend.typesystem.MetaModel;
 import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONObject;
@@ -240,7 +241,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             } catch (ConfigurationException ce) {
                 // package class could not be found
                 // this is bad and should not happen.
-                System.err.println("ERRORRRRRR");
+                System.err.println("A problem occured while registering MetaModel: "
+                        + basePackage);
                 return;
             }
         }

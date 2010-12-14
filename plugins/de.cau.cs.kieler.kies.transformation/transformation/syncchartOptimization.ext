@@ -392,17 +392,17 @@ Void clearBodyReferences(State s):
 ;
   
 Void addToFrontOfList(List list, List list2):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
 ;
 
 Void debug(EObject obj):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;
 
 Void debug(Region r):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;
 
 Void debug(State s):
-	JAVA  de.cau.cs.kieler.esterel.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;
