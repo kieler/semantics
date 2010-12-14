@@ -9,6 +9,14 @@
             name="Esterel to SyncCharts Transformation">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent"
+            id="de.cau.cs.kieler.kies.transformation.Optimization"
+            name="SyncCharts Optimization">
+      </content>
+   </extension>
   
   <extension
          point="org.eclipse.ui.menus">
@@ -31,14 +39,6 @@
       </menuContribution>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
-      <content
-            class="de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent"
-            id="de.cau.cs.kieler.kies.transformation.Optimization"
-            name="SyncCharts Optimization">
-      </content>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"
@@ -58,6 +58,18 @@
                enablesFor="1"
                id="de.cau.cs.kieler.kies.transformation.initialTransformationHandler"
                label="Transform to SyncChart"
+               menubarPath="de.cau.cs.kieler">
+         </action>
+      </objectContribution>
+      <objectContribution
+            adaptable="false"
+            id="de.cau.cs.kieler.kies.transformation.compare"
+            nameFilter="*.kixs"
+            objectClass="org.eclipse.core.resources.IFile">
+         <action
+               class="de.cau.cs.kieler.kies.transformation.test.CompareTwoKIXS"
+               id="de.cau.cs.kieler.kies.transformation.compare"
+               label="Compare"
                menubarPath="de.cau.cs.kieler">
          </action>
       </objectContribution>

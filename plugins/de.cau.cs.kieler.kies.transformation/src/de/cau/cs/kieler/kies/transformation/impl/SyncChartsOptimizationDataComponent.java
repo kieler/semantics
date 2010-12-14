@@ -41,7 +41,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 /**
  * @author uru
  * 
- */ 
+ */
 public class SyncChartsOptimizationDataComponent extends AbstractTransformationDataComponent {
 
     // base packages and xpand transformation file.
@@ -58,6 +58,14 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
     private LinkedList<State> flattenedStates = new LinkedList<State>();;
+
+    /**
+     * @param rootState
+     *            the rootState to set
+     */
+    public void setRootState(State rootState) {
+        this.rootState = rootState;
+    }
 
     /**
      * {@inheritDoc}
@@ -105,13 +113,14 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                         }
                     }
                 }
-
-                // collect initial set of all possible states
-                collectAllStatesRecursivley(rootState, 0);
-                flattenedStates = new LinkedList<State>();
-                for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
-                    flattenedStates.addAll(stateHierarchy.get(i));
-                }
+            }
+        }
+        if (rootState != null) {
+            // collect initial set of all possible states
+            collectAllStatesRecursivley(rootState, 0);
+            flattenedStates = new LinkedList<State>();
+            for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
+                flattenedStates.addAll(stateHierarchy.get(i));
             }
         }
     }
@@ -150,7 +159,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
-        if (!selected.isEmpty() && selected.size() == 1) {
+        if (selected != null && !selected.isEmpty() && selected.size() == 1) {
             for (EObject obj : selected) {
                 if (obj instanceof State) {
                     start = (State) obj;

@@ -252,5 +252,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             }
         }
     }
+    
+    /**
+     * @return the domain
+     */
+    public TransactionalEditingDomain getDomain() {
+        return domain;
+    }
 
 }
