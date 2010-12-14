@@ -341,6 +341,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeRenaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Type"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newType" eType="ecore:EEnum ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValueType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Type"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantRenaming">
@@ -350,6 +351,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionRenaming">
     <eStructuralFeatures xsi:type="ecore:EReference" name="newName" eType="#//Function"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="newFunc" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="oldName" eType="#//Function"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ProcedureRenaming">

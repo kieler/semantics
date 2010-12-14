@@ -2839,9 +2839,19 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getTypeRenaming_NewType()
+  {
+    return (EAttribute)typeRenamingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getTypeRenaming_OldName()
   {
-    return (EReference)typeRenamingEClass.getEStructuralFeatures().get(1);
+    return (EReference)typeRenamingEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2909,9 +2919,19 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getFunctionRenaming_NewFunc()
+  {
+    return (EAttribute)functionRenamingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getFunctionRenaming_OldName()
   {
-    return (EReference)functionRenamingEClass.getEStructuralFeatures().get(1);
+    return (EReference)functionRenamingEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -4036,6 +4056,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     typeRenamingEClass = createEClass(TYPE_RENAMING);
     createEReference(typeRenamingEClass, TYPE_RENAMING__NEW_NAME);
+    createEAttribute(typeRenamingEClass, TYPE_RENAMING__NEW_TYPE);
     createEReference(typeRenamingEClass, TYPE_RENAMING__OLD_NAME);
 
     constantRenamingEClass = createEClass(CONSTANT_RENAMING);
@@ -4045,6 +4066,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     functionRenamingEClass = createEClass(FUNCTION_RENAMING);
     createEReference(functionRenamingEClass, FUNCTION_RENAMING__NEW_NAME);
+    createEAttribute(functionRenamingEClass, FUNCTION_RENAMING__NEW_FUNC);
     createEReference(functionRenamingEClass, FUNCTION_RENAMING__OLD_NAME);
 
     procedureRenamingEClass = createEClass(PROCEDURE_RENAMING);
@@ -4508,6 +4530,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(typeRenamingEClass, TypeRenaming.class, "TypeRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTypeRenaming_NewName(), this.getType(), null, "newName", null, 0, 1, TypeRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTypeRenaming_NewType(), theKExpressionsPackage.getValueType(), "newType", null, 0, 1, TypeRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeRenaming_OldName(), this.getType(), null, "oldName", null, 0, 1, TypeRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constantRenamingEClass, ConstantRenaming.class, "ConstantRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4517,6 +4540,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(functionRenamingEClass, FunctionRenaming.class, "FunctionRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunctionRenaming_NewName(), this.getFunction(), null, "newName", null, 0, 1, FunctionRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFunctionRenaming_NewFunc(), ecorePackage.getEString(), "newFunc", null, 0, 1, FunctionRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFunctionRenaming_OldName(), this.getFunction(), null, "oldName", null, 0, 1, FunctionRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(procedureRenamingEClass, ProcedureRenaming.class, "ProcedureRenaming", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

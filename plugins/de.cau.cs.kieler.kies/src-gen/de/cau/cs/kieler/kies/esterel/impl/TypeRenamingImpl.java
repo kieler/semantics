@@ -6,6 +6,8 @@
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
+import de.cau.cs.kieler.core.kexpressions.ValueType;
+
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.Type;
 import de.cau.cs.kieler.kies.esterel.TypeRenaming;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TypeRenamingImpl#getNewName <em>New Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TypeRenamingImpl#getNewType <em>New Type</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TypeRenamingImpl#getOldName <em>Old Name</em>}</li>
  * </ul>
  * </p>
@@ -43,6 +46,26 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
    * @ordered
    */
   protected Type newName;
+
+  /**
+   * The default value of the '{@link #getNewType() <em>New Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNewType()
+   * @generated
+   * @ordered
+   */
+  protected static final ValueType NEW_TYPE_EDEFAULT = ValueType.PURE;
+
+  /**
+   * The cached value of the '{@link #getNewType() <em>New Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getNewType()
+   * @generated
+   * @ordered
+   */
+  protected ValueType newType = NEW_TYPE_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getOldName() <em>Old Name</em>}' reference.
@@ -123,6 +146,29 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
    * <!-- end-user-doc -->
    * @generated
    */
+  public ValueType getNewType()
+  {
+    return newType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setNewType(ValueType newNewType)
+  {
+    ValueType oldNewType = newType;
+    newType = newNewType == null ? NEW_TYPE_EDEFAULT : newNewType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TYPE_RENAMING__NEW_TYPE, oldNewType, newType));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public Type getOldName()
   {
     if (oldName != null && oldName.eIsProxy())
@@ -174,6 +220,8 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
       case EsterelPackage.TYPE_RENAMING__NEW_NAME:
         if (resolve) return getNewName();
         return basicGetNewName();
+      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+        return getNewType();
       case EsterelPackage.TYPE_RENAMING__OLD_NAME:
         if (resolve) return getOldName();
         return basicGetOldName();
@@ -193,6 +241,9 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
     {
       case EsterelPackage.TYPE_RENAMING__NEW_NAME:
         setNewName((Type)newValue);
+        return;
+      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+        setNewType((ValueType)newValue);
         return;
       case EsterelPackage.TYPE_RENAMING__OLD_NAME:
         setOldName((Type)newValue);
@@ -214,6 +265,9 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
       case EsterelPackage.TYPE_RENAMING__NEW_NAME:
         setNewName((Type)null);
         return;
+      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+        setNewType(NEW_TYPE_EDEFAULT);
+        return;
       case EsterelPackage.TYPE_RENAMING__OLD_NAME:
         setOldName((Type)null);
         return;
@@ -233,10 +287,29 @@ public class TypeRenamingImpl extends MinimalEObjectImpl.Container implements Ty
     {
       case EsterelPackage.TYPE_RENAMING__NEW_NAME:
         return newName != null;
+      case EsterelPackage.TYPE_RENAMING__NEW_TYPE:
+        return newType != NEW_TYPE_EDEFAULT;
       case EsterelPackage.TYPE_RENAMING__OLD_NAME:
         return oldName != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (newType: ");
+    result.append(newType);
+    result.append(')');
+    return result.toString();
   }
 
 } //TypeRenamingImpl

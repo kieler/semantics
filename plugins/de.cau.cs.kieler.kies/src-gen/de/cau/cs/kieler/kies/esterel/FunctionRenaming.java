@@ -17,6 +17,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getNewName <em>New Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getNewFunc <em>New Func</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getOldName <em>Old Name</em>}</li>
  * </ul>
  * </p>
@@ -52,6 +53,32 @@ public interface FunctionRenaming extends EObject
    * @generated
    */
   void setNewName(Function value);
+
+  /**
+   * Returns the value of the '<em><b>New Func</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>New Func</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>New Func</em>' attribute.
+   * @see #setNewFunc(String)
+   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getFunctionRenaming_NewFunc()
+   * @model
+   * @generated
+   */
+  String getNewFunc();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getNewFunc <em>New Func</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>New Func</em>' attribute.
+   * @see #getNewFunc()
+   * @generated
+   */
+  void setNewFunc(String value);
 
   /**
    * Returns the value of the '<em><b>Old Name</b></em>' reference.

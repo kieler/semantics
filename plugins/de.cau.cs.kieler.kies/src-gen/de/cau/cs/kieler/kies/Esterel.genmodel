@@ -260,6 +260,7 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//TypeRenaming">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeRenaming/newType"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/oldName"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//ConstantRenaming">
@@ -269,6 +270,7 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//FunctionRenaming">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//FunctionRenaming/newFunc"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/oldName"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//ProcedureRenaming">

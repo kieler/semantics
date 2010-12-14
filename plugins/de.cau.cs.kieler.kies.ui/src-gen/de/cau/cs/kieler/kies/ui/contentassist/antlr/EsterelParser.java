@@ -61,8 +61,11 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRunAccess().getAlternatives(), "rule__Run__Alternatives");
 					put(grammarAccess.getModuleRenamingAccess().getAlternatives(), "rule__ModuleRenaming__Alternatives");
 					put(grammarAccess.getRenamingAccess().getAlternatives(), "rule__Renaming__Alternatives");
+					put(grammarAccess.getTypeRenamingAccess().getAlternatives_0(), "rule__TypeRenaming__Alternatives_0");
 					put(grammarAccess.getConstantRenamingAccess().getAlternatives_0(), "rule__ConstantRenaming__Alternatives_0");
+					put(grammarAccess.getFunctionRenamingAccess().getAlternatives_0(), "rule__FunctionRenaming__Alternatives_0");
 					put(grammarAccess.getSignalRenamingAccess().getAlternatives_0(), "rule__SignalRenaming__Alternatives_0");
+					put(grammarAccess.getBuildInFunctionAccess().getAlternatives(), "rule__BuildInFunction__Alternatives");
 					put(grammarAccess.getSustainAccess().getAlternatives_1(), "rule__Sustain__Alternatives_1");
 					put(grammarAccess.getAtomicExpressionAccess().getAlternatives(), "rule__AtomicExpression__Alternatives");
 					put(grammarAccess.getDataConstantAccess().getAlternatives_1(), "rule__DataConstant__Alternatives_1");
@@ -248,7 +251,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExecAccess().getGroup_0_0(), "rule__Exec__Group_0_0__0");
 					put(grammarAccess.getExecAccess().getGroup_0_0_5(), "rule__Exec__Group_0_0_5__0");
 					put(grammarAccess.getExecAccess().getGroup_0_1(), "rule__Exec__Group_0_1__0");
-					put(grammarAccess.getExecAccess().getGroup_0_1_2(), "rule__Exec__Group_0_1_2__0");
 					put(grammarAccess.getExecBodyAccess().getGroup(), "rule__ExecBody__Group__0");
 					put(grammarAccess.getExecBodyAccess().getGroup_2(), "rule__ExecBody__Group_2__0");
 					put(grammarAccess.getExecBodyAccess().getGroup_2_1(), "rule__ExecBody__Group_2_1__0");
@@ -487,12 +489,14 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRenamingAccess().getRenamingsAssignment_4_2_1(), "rule__Renaming__RenamingsAssignment_4_2_1");
 					put(grammarAccess.getRenamingAccess().getRenamingsAssignment_5_1(), "rule__Renaming__RenamingsAssignment_5_1");
 					put(grammarAccess.getRenamingAccess().getRenamingsAssignment_5_2_1(), "rule__Renaming__RenamingsAssignment_5_2_1");
-					put(grammarAccess.getTypeRenamingAccess().getNewNameAssignment_0(), "rule__TypeRenaming__NewNameAssignment_0");
+					put(grammarAccess.getTypeRenamingAccess().getNewNameAssignment_0_0(), "rule__TypeRenaming__NewNameAssignment_0_0");
+					put(grammarAccess.getTypeRenamingAccess().getNewTypeAssignment_0_1(), "rule__TypeRenaming__NewTypeAssignment_0_1");
 					put(grammarAccess.getTypeRenamingAccess().getOldNameAssignment_2(), "rule__TypeRenaming__OldNameAssignment_2");
 					put(grammarAccess.getConstantRenamingAccess().getNewNameAssignment_0_0(), "rule__ConstantRenaming__NewNameAssignment_0_0");
 					put(grammarAccess.getConstantRenamingAccess().getNewValueAssignment_0_1(), "rule__ConstantRenaming__NewValueAssignment_0_1");
 					put(grammarAccess.getConstantRenamingAccess().getOldNameAssignment_2(), "rule__ConstantRenaming__OldNameAssignment_2");
-					put(grammarAccess.getFunctionRenamingAccess().getNewNameAssignment_0(), "rule__FunctionRenaming__NewNameAssignment_0");
+					put(grammarAccess.getFunctionRenamingAccess().getNewNameAssignment_0_0(), "rule__FunctionRenaming__NewNameAssignment_0_0");
+					put(grammarAccess.getFunctionRenamingAccess().getNewFuncAssignment_0_1(), "rule__FunctionRenaming__NewFuncAssignment_0_1");
 					put(grammarAccess.getFunctionRenamingAccess().getOldNameAssignment_2(), "rule__FunctionRenaming__OldNameAssignment_2");
 					put(grammarAccess.getProcedureRenamingAccess().getNewNameAssignment_0(), "rule__ProcedureRenaming__NewNameAssignment_0");
 					put(grammarAccess.getProcedureRenamingAccess().getOldNameAssignment_2(), "rule__ProcedureRenaming__OldNameAssignment_2");
@@ -547,7 +551,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExecAccess().getRetSignalAssignment_0_0_4(), "rule__Exec__RetSignalAssignment_0_0_4");
 					put(grammarAccess.getExecAccess().getStatementAssignment_0_0_5_1(), "rule__Exec__StatementAssignment_0_0_5_1");
 					put(grammarAccess.getExecAccess().getExecCaseListAssignment_0_1_1(), "rule__Exec__ExecCaseListAssignment_0_1_1");
-					put(grammarAccess.getExecAccess().getExecCaseListAssignment_0_1_2_1(), "rule__Exec__ExecCaseListAssignment_0_1_2_1");
+					put(grammarAccess.getExecAccess().getExecCaseListAssignment_0_1_2(), "rule__Exec__ExecCaseListAssignment_0_1_2");
 					put(grammarAccess.getExecAccess().getOptEndAssignment_2(), "rule__Exec__OptEndAssignment_2");
 					put(grammarAccess.getExecBodyAccess().getVarsAssignment_2_0(), "rule__ExecBody__VarsAssignment_2_0");
 					put(grammarAccess.getExecBodyAccess().getVarsAssignment_2_1_1(), "rule__ExecBody__VarsAssignment_2_1_1");

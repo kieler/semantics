@@ -2736,13 +2736,22 @@ public interface EsterelPackage extends EPackage
   int TYPE_RENAMING__NEW_NAME = 0;
 
   /**
+   * The feature id for the '<em><b>New Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_RENAMING__NEW_TYPE = 1;
+
+  /**
    * The feature id for the '<em><b>Old Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TYPE_RENAMING__OLD_NAME = 1;
+  int TYPE_RENAMING__OLD_NAME = 2;
 
   /**
    * The number of structural features of the '<em>Type Renaming</em>' class.
@@ -2751,7 +2760,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TYPE_RENAMING_FEATURE_COUNT = 2;
+  int TYPE_RENAMING_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.ConstantRenamingImpl <em>Constant Renaming</em>}' class.
@@ -2819,13 +2828,22 @@ public interface EsterelPackage extends EPackage
   int FUNCTION_RENAMING__NEW_NAME = 0;
 
   /**
+   * The feature id for the '<em><b>New Func</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FUNCTION_RENAMING__NEW_FUNC = 1;
+
+  /**
    * The feature id for the '<em><b>Old Name</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FUNCTION_RENAMING__OLD_NAME = 1;
+  int FUNCTION_RENAMING__OLD_NAME = 2;
 
   /**
    * The number of structural features of the '<em>Function Renaming</em>' class.
@@ -2834,7 +2852,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FUNCTION_RENAMING_FEATURE_COUNT = 2;
+  int FUNCTION_RENAMING_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.ProcedureRenamingImpl <em>Procedure Renaming</em>}' class.
@@ -6256,6 +6274,17 @@ public interface EsterelPackage extends EPackage
   EReference getTypeRenaming_NewName();
 
   /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kies.esterel.TypeRenaming#getNewType <em>New Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>New Type</em>'.
+   * @see de.cau.cs.kieler.kies.esterel.TypeRenaming#getNewType()
+   * @see #getTypeRenaming()
+   * @generated
+   */
+  EAttribute getTypeRenaming_NewType();
+
+  /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.kies.esterel.TypeRenaming#getOldName <em>Old Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6329,6 +6358,17 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getFunctionRenaming_NewName();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getNewFunc <em>New Func</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>New Func</em>'.
+   * @see de.cau.cs.kieler.kies.esterel.FunctionRenaming#getNewFunc()
+   * @see #getFunctionRenaming()
+   * @generated
+   */
+  EAttribute getFunctionRenaming_NewFunc();
 
   /**
    * Returns the meta object for the reference '{@link de.cau.cs.kieler.kies.esterel.FunctionRenaming#getOldName <em>Old Name</em>}'.
@@ -8920,6 +8960,14 @@ public interface EsterelPackage extends EPackage
     EReference TYPE_RENAMING__NEW_NAME = eINSTANCE.getTypeRenaming_NewName();
 
     /**
+     * The meta object literal for the '<em><b>New Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TYPE_RENAMING__NEW_TYPE = eINSTANCE.getTypeRenaming_NewType();
+
+    /**
      * The meta object literal for the '<em><b>Old Name</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -8978,6 +9026,14 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference FUNCTION_RENAMING__NEW_NAME = eINSTANCE.getFunctionRenaming_NewName();
+
+    /**
+     * The meta object literal for the '<em><b>New Func</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FUNCTION_RENAMING__NEW_FUNC = eINSTANCE.getFunctionRenaming_NewFunc();
 
     /**
      * The meta object literal for the '<em><b>Old Name</b></em>' reference feature.

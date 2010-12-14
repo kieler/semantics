@@ -333,13 +333,13 @@ Renaming:
 	renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*;
 
 TypeRenaming:
-	newName=[Type|ID] "/" oldName=[Type|ID];
+	(newName=[Type|ID] | newType=ValueType) "/" oldName=[Type|ID];
 
 ConstantRenaming:
 	(newName=[kexpressions::ValuedObject|ID] | newValue=ConstantAtom) "/" oldName=[kexpressions::ValuedObject|ID];
 
 FunctionRenaming:
-	newName=[Function|ID] "/" oldName=[Function|ID];
+	(newName=[Function|ID] | newFunc=BuildInFunction) "/" oldName=[Function|ID];
 
 ProcedureRenaming:
 	newName=[Procedure|ID] "/" oldName=[Procedure|ID];
@@ -349,6 +349,13 @@ TaskRenaming:
 
 SignalRenaming:
 	(newName=[kexpressions::ISignal|ID] | "tick") "/" oldName=[kexpressions::ISignal|ID];
+	
+	
+	// renamings can also rename build in types and functions
+BuildInFunction:
+	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or"
+;
+	
 
 	// --> B.4.21 suspend: Preemption with State Freeze
 Suspend:
@@ -468,7 +475,7 @@ BracketSigExpression returns kexpressions::Expression:
 
 Exec:
 	("exec" task=[Task|ID] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
-	execCaseList+=ExecCase ("," execCaseList+=ExecCase)*) "end" (optEnd="exec")?;
+	execCaseList+=ExecCase (execCaseList+=ExecCase)*) "end" (optEnd="exec")?;
 
 ExecBody:
 	{ExecBody} "(" (vars+=[kexpressions::IVariable|ID] ("," vars+=[kexpressions::IVariable|ID])*)? ")" "("

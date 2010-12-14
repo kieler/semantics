@@ -3805,29 +3805,41 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class TypeRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cNewNameTypeCrossReference_0_0 = (CrossReference)cNewNameAssignment_0.eContents().get(0);
-		private final RuleCall cNewNameTypeIDTerminalRuleCall_0_0_1 = (RuleCall)cNewNameTypeCrossReference_0_0.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cNewNameAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final CrossReference cNewNameTypeCrossReference_0_0_0 = (CrossReference)cNewNameAssignment_0_0.eContents().get(0);
+		private final RuleCall cNewNameTypeIDTerminalRuleCall_0_0_0_1 = (RuleCall)cNewNameTypeCrossReference_0_0_0.eContents().get(1);
+		private final Assignment cNewTypeAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final RuleCall cNewTypeValueTypeEnumRuleCall_0_1_0 = (RuleCall)cNewTypeAssignment_0_1.eContents().get(0);
 		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cOldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cOldNameTypeCrossReference_2_0 = (CrossReference)cOldNameAssignment_2.eContents().get(0);
 		private final RuleCall cOldNameTypeIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameTypeCrossReference_2_0.eContents().get(1);
 		
 		//TypeRenaming:
-		//	newName=[Type] "/" oldName=[Type];
+		//	(newName=[Type] | newType=ValueType) "/" oldName=[Type];
 		public ParserRule getRule() { return rule; }
 
-		//newName=[Type] "/" oldName=[Type]
+		//(newName=[Type] | newType=ValueType) "/" oldName=[Type]
 		public Group getGroup() { return cGroup; }
 
+		//newName=[Type] | newType=ValueType
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//newName=[Type]
-		public Assignment getNewNameAssignment_0() { return cNewNameAssignment_0; }
+		public Assignment getNewNameAssignment_0_0() { return cNewNameAssignment_0_0; }
 
 		//[Type]
-		public CrossReference getNewNameTypeCrossReference_0_0() { return cNewNameTypeCrossReference_0_0; }
+		public CrossReference getNewNameTypeCrossReference_0_0_0() { return cNewNameTypeCrossReference_0_0_0; }
 
 		//ID
-		public RuleCall getNewNameTypeIDTerminalRuleCall_0_0_1() { return cNewNameTypeIDTerminalRuleCall_0_0_1; }
+		public RuleCall getNewNameTypeIDTerminalRuleCall_0_0_0_1() { return cNewNameTypeIDTerminalRuleCall_0_0_0_1; }
+
+		//newType=ValueType
+		public Assignment getNewTypeAssignment_0_1() { return cNewTypeAssignment_0_1; }
+
+		//ValueType
+		public RuleCall getNewTypeValueTypeEnumRuleCall_0_1_0() { return cNewTypeValueTypeEnumRuleCall_0_1_0; }
 
 		//"/"
 		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
@@ -3897,29 +3909,41 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class FunctionRenamingElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionRenaming");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cNewNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cNewNameFunctionCrossReference_0_0 = (CrossReference)cNewNameAssignment_0.eContents().get(0);
-		private final RuleCall cNewNameFunctionIDTerminalRuleCall_0_0_1 = (RuleCall)cNewNameFunctionCrossReference_0_0.eContents().get(1);
+		private final Alternatives cAlternatives_0 = (Alternatives)cGroup.eContents().get(0);
+		private final Assignment cNewNameAssignment_0_0 = (Assignment)cAlternatives_0.eContents().get(0);
+		private final CrossReference cNewNameFunctionCrossReference_0_0_0 = (CrossReference)cNewNameAssignment_0_0.eContents().get(0);
+		private final RuleCall cNewNameFunctionIDTerminalRuleCall_0_0_0_1 = (RuleCall)cNewNameFunctionCrossReference_0_0_0.eContents().get(1);
+		private final Assignment cNewFuncAssignment_0_1 = (Assignment)cAlternatives_0.eContents().get(1);
+		private final RuleCall cNewFuncBuildInFunctionParserRuleCall_0_1_0 = (RuleCall)cNewFuncAssignment_0_1.eContents().get(0);
 		private final Keyword cSolidusKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cOldNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final CrossReference cOldNameFunctionCrossReference_2_0 = (CrossReference)cOldNameAssignment_2.eContents().get(0);
 		private final RuleCall cOldNameFunctionIDTerminalRuleCall_2_0_1 = (RuleCall)cOldNameFunctionCrossReference_2_0.eContents().get(1);
 		
 		//FunctionRenaming:
-		//	newName=[Function] "/" oldName=[Function];
+		//	(newName=[Function] | newFunc=BuildInFunction) "/" oldName=[Function];
 		public ParserRule getRule() { return rule; }
 
-		//newName=[Function] "/" oldName=[Function]
+		//(newName=[Function] | newFunc=BuildInFunction) "/" oldName=[Function]
 		public Group getGroup() { return cGroup; }
 
+		//newName=[Function] | newFunc=BuildInFunction
+		public Alternatives getAlternatives_0() { return cAlternatives_0; }
+
 		//newName=[Function]
-		public Assignment getNewNameAssignment_0() { return cNewNameAssignment_0; }
+		public Assignment getNewNameAssignment_0_0() { return cNewNameAssignment_0_0; }
 
 		//[Function]
-		public CrossReference getNewNameFunctionCrossReference_0_0() { return cNewNameFunctionCrossReference_0_0; }
+		public CrossReference getNewNameFunctionCrossReference_0_0_0() { return cNewNameFunctionCrossReference_0_0_0; }
 
 		//ID
-		public RuleCall getNewNameFunctionIDTerminalRuleCall_0_0_1() { return cNewNameFunctionIDTerminalRuleCall_0_0_1; }
+		public RuleCall getNewNameFunctionIDTerminalRuleCall_0_0_0_1() { return cNewNameFunctionIDTerminalRuleCall_0_0_0_1; }
+
+		//newFunc=BuildInFunction
+		public Assignment getNewFuncAssignment_0_1() { return cNewFuncAssignment_0_1; }
+
+		//BuildInFunction
+		public RuleCall getNewFuncBuildInFunctionParserRuleCall_0_1_0() { return cNewFuncBuildInFunctionParserRuleCall_0_1_0; }
 
 		//"/"
 		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
@@ -4060,6 +4084,76 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//ID
 		public RuleCall getOldNameISignalIDTerminalRuleCall_2_0_1() { return cOldNameISignalIDTerminalRuleCall_2_0_1; }
+	}
+
+	public class BuildInFunctionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BuildInFunction");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Keyword cAsteriskKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
+		private final Keyword cSolidusKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cPlusSignKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final Keyword cHyphenMinusKeyword_3 = (Keyword)cAlternatives.eContents().get(3);
+		private final Keyword cModKeyword_4 = (Keyword)cAlternatives.eContents().get(4);
+		private final Keyword cEqualsSignKeyword_5 = (Keyword)cAlternatives.eContents().get(5);
+		private final Keyword cLessThanSignGreaterThanSignKeyword_6 = (Keyword)cAlternatives.eContents().get(6);
+		private final Keyword cGreaterThanSignKeyword_7 = (Keyword)cAlternatives.eContents().get(7);
+		private final Keyword cLessThanSignKeyword_8 = (Keyword)cAlternatives.eContents().get(8);
+		private final Keyword cLessThanSignEqualsSignKeyword_9 = (Keyword)cAlternatives.eContents().get(9);
+		private final Keyword cGreaterThanSignEqualsSignKeyword_10 = (Keyword)cAlternatives.eContents().get(10);
+		private final Keyword cNotKeyword_11 = (Keyword)cAlternatives.eContents().get(11);
+		private final Keyword cAndKeyword_12 = (Keyword)cAlternatives.eContents().get(12);
+		private final Keyword cOrKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
+		
+		//// renamings can also rename build in types and functions
+		//
+		//BuildInFunction returns ecore::EString:
+		//	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
+		public ParserRule getRule() { return rule; }
+
+		//"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or"
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//"*"
+		public Keyword getAsteriskKeyword_0() { return cAsteriskKeyword_0; }
+
+		//"/"
+		public Keyword getSolidusKeyword_1() { return cSolidusKeyword_1; }
+
+		//"+"
+		public Keyword getPlusSignKeyword_2() { return cPlusSignKeyword_2; }
+
+		//"-"
+		public Keyword getHyphenMinusKeyword_3() { return cHyphenMinusKeyword_3; }
+
+		//"mod"
+		public Keyword getModKeyword_4() { return cModKeyword_4; }
+
+		//"="
+		public Keyword getEqualsSignKeyword_5() { return cEqualsSignKeyword_5; }
+
+		//"<>"
+		public Keyword getLessThanSignGreaterThanSignKeyword_6() { return cLessThanSignGreaterThanSignKeyword_6; }
+
+		//">"
+		public Keyword getGreaterThanSignKeyword_7() { return cGreaterThanSignKeyword_7; }
+
+		//"<"
+		public Keyword getLessThanSignKeyword_8() { return cLessThanSignKeyword_8; }
+
+		//"<="
+		public Keyword getLessThanSignEqualsSignKeyword_9() { return cLessThanSignEqualsSignKeyword_9; }
+
+		//">="
+		public Keyword getGreaterThanSignEqualsSignKeyword_10() { return cGreaterThanSignEqualsSignKeyword_10; }
+
+		//"not"
+		public Keyword getNotKeyword_11() { return cNotKeyword_11; }
+
+		//"and"
+		public Keyword getAndKeyword_12() { return cAndKeyword_12; }
+
+		//"or"
+		public Keyword getOrKeyword_13() { return cOrKeyword_13; }
 	}
 
 	public class SuspendElements extends AbstractParserRuleElementFinder {
@@ -5059,25 +5153,23 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cExecKeyword_0_1_0 = (Keyword)cGroup_0_1.eContents().get(0);
 		private final Assignment cExecCaseListAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
 		private final RuleCall cExecCaseListExecCaseParserRuleCall_0_1_1_0 = (RuleCall)cExecCaseListAssignment_0_1_1.eContents().get(0);
-		private final Group cGroup_0_1_2 = (Group)cGroup_0_1.eContents().get(2);
-		private final Keyword cCommaKeyword_0_1_2_0 = (Keyword)cGroup_0_1_2.eContents().get(0);
-		private final Assignment cExecCaseListAssignment_0_1_2_1 = (Assignment)cGroup_0_1_2.eContents().get(1);
-		private final RuleCall cExecCaseListExecCaseParserRuleCall_0_1_2_1_0 = (RuleCall)cExecCaseListAssignment_0_1_2_1.eContents().get(0);
+		private final Assignment cExecCaseListAssignment_0_1_2 = (Assignment)cGroup_0_1.eContents().get(2);
+		private final RuleCall cExecCaseListExecCaseParserRuleCall_0_1_2_0 = (RuleCall)cExecCaseListAssignment_0_1_2.eContents().get(0);
 		private final Keyword cEndKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cOptEndAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final Keyword cOptEndExecKeyword_2_0 = (Keyword)cOptEndAssignment_2.eContents().get(0);
 		
 		//Exec:
 		//	("exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
-		//	execCaseList+=ExecCase ("," execCaseList+=ExecCase)*) "end" optEnd="exec"?;
+		//	execCaseList+=ExecCase execCaseList+=ExecCase*) "end" optEnd="exec"?;
 		public ParserRule getRule() { return rule; }
 
 		//("exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
-		//execCaseList+=ExecCase ("," execCaseList+=ExecCase)*) "end" optEnd="exec"?
+		//execCaseList+=ExecCase execCaseList+=ExecCase*) "end" optEnd="exec"?
 		public Group getGroup() { return cGroup; }
 
 		//"exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
-		//execCaseList+=ExecCase ("," execCaseList+=ExecCase)*
+		//execCaseList+=ExecCase execCaseList+=ExecCase*
 		public Alternatives getAlternatives_0() { return cAlternatives_0; }
 
 		//"exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)?
@@ -5125,7 +5217,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Statement
 		public RuleCall getStatementStatementParserRuleCall_0_0_5_1_0() { return cStatementStatementParserRuleCall_0_0_5_1_0; }
 
-		//"exec" execCaseList+=ExecCase ("," execCaseList+=ExecCase)*
+		//"exec" execCaseList+=ExecCase execCaseList+=ExecCase*
 		public Group getGroup_0_1() { return cGroup_0_1; }
 
 		//"exec"
@@ -5137,17 +5229,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ExecCase
 		public RuleCall getExecCaseListExecCaseParserRuleCall_0_1_1_0() { return cExecCaseListExecCaseParserRuleCall_0_1_1_0; }
 
-		//("," execCaseList+=ExecCase)*
-		public Group getGroup_0_1_2() { return cGroup_0_1_2; }
-
-		//","
-		public Keyword getCommaKeyword_0_1_2_0() { return cCommaKeyword_0_1_2_0; }
-
-		//execCaseList+=ExecCase
-		public Assignment getExecCaseListAssignment_0_1_2_1() { return cExecCaseListAssignment_0_1_2_1; }
+		//execCaseList+=ExecCase*
+		public Assignment getExecCaseListAssignment_0_1_2() { return cExecCaseListAssignment_0_1_2; }
 
 		//ExecCase
-		public RuleCall getExecCaseListExecCaseParserRuleCall_0_1_2_1_0() { return cExecCaseListExecCaseParserRuleCall_0_1_2_1_0; }
+		public RuleCall getExecCaseListExecCaseParserRuleCall_0_1_2_0() { return cExecCaseListExecCaseParserRuleCall_0_1_2_0; }
 
 		//"end"
 		public Keyword getEndKeyword_1() { return cEndKeyword_1; }
@@ -5520,6 +5606,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private ProcedureRenamingElements pProcedureRenaming;
 	private TaskRenamingElements pTaskRenaming;
 	private SignalRenamingElements pSignalRenaming;
+	private BuildInFunctionElements pBuildInFunction;
 	private SuspendElements pSuspend;
 	private SustainElements pSustain;
 	private TrapElements pTrap;
@@ -6538,7 +6625,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//TypeRenaming:
-	//	newName=[Type] "/" oldName=[Type];
+	//	(newName=[Type] | newType=ValueType) "/" oldName=[Type];
 	public TypeRenamingElements getTypeRenamingAccess() {
 		return (pTypeRenaming != null) ? pTypeRenaming : (pTypeRenaming = new TypeRenamingElements());
 	}
@@ -6558,7 +6645,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionRenaming:
-	//	newName=[Function] "/" oldName=[Function];
+	//	(newName=[Function] | newFunc=BuildInFunction) "/" oldName=[Function];
 	public FunctionRenamingElements getFunctionRenamingAccess() {
 		return (pFunctionRenaming != null) ? pFunctionRenaming : (pFunctionRenaming = new FunctionRenamingElements());
 	}
@@ -6595,6 +6682,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getSignalRenamingRule() {
 		return getSignalRenamingAccess().getRule();
+	}
+
+	//// renamings can also rename build in types and functions
+	//
+	//BuildInFunction returns ecore::EString:
+	//	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
+	public BuildInFunctionElements getBuildInFunctionAccess() {
+		return (pBuildInFunction != null) ? pBuildInFunction : (pBuildInFunction = new BuildInFunctionElements());
+	}
+	
+	public ParserRule getBuildInFunctionRule() {
+		return getBuildInFunctionAccess().getRule();
 	}
 
 	//// --> B.4.21 suspend: Preemption with State Freeze
@@ -6916,7 +7015,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//Exec:
 	//	("exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
-	//	execCaseList+=ExecCase ("," execCaseList+=ExecCase)*) "end" optEnd="exec"?;
+	//	execCaseList+=ExecCase execCaseList+=ExecCase*) "end" optEnd="exec"?;
 	public ExecElements getExecAccess() {
 		return (pExec != null) ? pExec : (pExec = new ExecElements());
 	}
@@ -7755,7 +7854,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
 	// * /enum ValueType:
-	//	PURE="pure" | BOOL="bool" | UNSIGNED="unsigned" | INT="int" | FLOAT="float" | HOST="host";
+	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
+	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {
 		return gaKExpressions.getValueTypeAccess();
 	}
@@ -7779,7 +7879,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	////    '-'?('0'..'9')+;
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
-	//	(INT "." INT | INT ("." INT)? ("e" | "E") "+"? INT) "f"? | INT "f";
+	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
 	public TerminalRule getFloatRule() {
 		return gaKExpressions.getFloatRule();
 	} 
