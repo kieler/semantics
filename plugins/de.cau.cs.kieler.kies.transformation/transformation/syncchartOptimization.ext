@@ -20,6 +20,8 @@ Boolean ruleAll(List[State] states, Integer max):
 	(
 		let s = states.first():
 		switch{
+			case rule1applies(s) : 
+				rule1(s)
 			case rule2applies(s) :
 				(rule2(s)  )
 			case rule4applies(s):
@@ -62,7 +64,14 @@ Boolean rule1applies(State s):
 			(isTransitionWithout(s.outgoingTransitions.get(0)) ? true : false)
 		default : false
 	}
-	
+;
+
+Void rule1(State s):
+	let targetState = s.outgoingTransitions.get(0).targetState:
+	let incomingTrans = s.incomingTransitions.copyList():
+	incomingTrans.setTargetState(targetState) ->
+	s.outgoingTransitions.get(0).removeTransition() ->
+	s.removeStateFromRegion()
 ;
 
 /*
