@@ -1,5 +1,5 @@
 import synccharts;
-import expressions;
+import kexpressions;
 
 // determine whether trigger or effect of an action contain host code
 Boolean containsHostCode(TextEffect effect):
