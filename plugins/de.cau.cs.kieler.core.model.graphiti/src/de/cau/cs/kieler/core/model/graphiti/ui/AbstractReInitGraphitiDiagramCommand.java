@@ -17,6 +17,10 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -36,12 +40,26 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
+import org.eclipse.graphiti.dt.IDiagramTypeProvider;
+import org.eclipse.graphiti.features.IAddFeature;
+import org.eclipse.graphiti.features.IFeatureProvider;
+import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
+import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.mm.pictograms.Anchor;
+import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
+import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.pictograms.PictogramLink;
+import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
+import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
+import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
 import org.eclipse.graphiti.ui.internal.parts.IPictogramElementEditPart;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
@@ -57,30 +75,45 @@ import de.cau.cs.kieler.core.util.Maybe;
 /**
  * @author soh
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractReInitGraphitiDiagramCommand extends
         AbstractReInitDiagramCommand {
 
     /**
      * Creates a new AbstractReInitGraphitiDiagramCommand.java.
      * 
-     * @param diagramTypeName
-     * @param gridSize
-     * @param snapToGrid
+     * @param diagramTypeNameParam
+     *            the name
+     * @param gridSizeParam
+     *            the grid size
+     * @param snapToGridParam
+     *            true if it should snap to grid
      */
-    public AbstractReInitGraphitiDiagramCommand(final String diagramTypeName,
-            final int gridSize, final boolean snapToGrid) {
+    public AbstractReInitGraphitiDiagramCommand(
+            final String diagramTypeNameParam, final int gridSizeParam,
+            final boolean snapToGridParam) {
         super();
-        this.diagramTypeName = diagramTypeName;
-        this.gridSize = gridSize;
-        this.snapToGrid = snapToGrid;
+        this.diagramTypeName = diagramTypeNameParam;
+        this.gridSize = gridSizeParam;
+        this.snapToGrid = snapToGridParam;
     }
 
     private String diagramTypeName;
     private int gridSize;
     private boolean snapToGrid;
 
+    /**
+     * Getter for the editor id.
+     * 
+     * @return the id
+     */
     protected abstract String getEditorId();
 
+    /**
+     * Getter for the container.
+     * 
+     * @return the container
+     */
     private IWorkbenchWindow getContainer() {
         return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
     }
@@ -93,7 +126,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     @Override
     public EObject getEObjectFromEditPart(final EditPart editPart) {
         if (editPart instanceof IPictogramElementEditPart) {
-            System.out.println("yses");
+            IPictogramElementEditPart part = (IPictogramElementEditPart) editPart;
+            return part.getPictogramElement();
         }
         return null;
     }
@@ -102,7 +136,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * {@inheritDoc}
      */
     @Override
-    public boolean createNewDiagram(final EObject modelRoot,
+    public boolean createNewDiagram(final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath) {
         final Maybe<Resource> diagramResource = new Maybe<Resource>();
@@ -110,7 +144,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             @Override
             protected void execute(final IProgressMonitor monitor)
                     throws CoreException, InterruptedException {
-                diagramResource.set(createDiagram(diagramPath, modelRoot,
+                diagramResource.set(createDiagram(diagramPath, modelRootParam,
                         editingDomain, monitor));
                 if (diagramResource.get() != null && getEditorId() != null) {
                     try {
@@ -141,6 +175,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             }
             return false;
         }
+
         return diagramResource.get() != null;
     }
 
@@ -149,7 +184,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param diagramFile
      *            URI for the diagram file
-     * @param modelRoot
+     * @param modelRootParam
      *            URI for the model file
      * @param editingDomain
      *            the editing domain
@@ -158,7 +193,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @return a resource for the new diagram file
      */
     private Resource createDiagram(final IFile diagramFile,
-            final EObject modelRoot,
+            final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
             final IProgressMonitor progressMonitor) {
         progressMonitor.beginTask("Creating diagram and model files", 2);
@@ -186,7 +221,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 @Override
                 protected void doExecute() {
                     createModel(diagramResource, diagramFile.getName(),
-                            modelRoot);
+                            modelRootParam);
                 }
             });
             progressMonitor.worked(1);
@@ -216,25 +251,165 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      *            resource for the diagram model
      * @param diagramName
      *            name of the diagram model
-     * @param modelResource
-     *            resource for the domain model
-     * @param modelName
-     *            name of the domain model
+     * @param modelRootParam
+     *            the root element
      */
     private void createModel(final Resource diagramResource,
-            final String diagramName, final EObject modelRoot) {
-        final Resource modelResource = modelRoot.eResource();
+            final String diagramName, final EObject modelRootParam) {
+        final Resource modelResource = modelRootParam.eResource();
         modelResource.setTrackingModification(true);
         // EObject domainModel = createModel(modelName);
         // modelResource.getContents().add(domainModel);
         diagramResource.setTrackingModification(true);
-        Diagram diagram = Graphiti.getPeCreateService().createDiagram(
+        Diagram newDiagram = Graphiti.getPeCreateService().createDiagram(
                 diagramTypeName, diagramName, gridSize, snapToGrid);
-        linkModelToDiagram(modelRoot, diagram, diagramResource);
+        PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
+        link.setPictogramElement(newDiagram);
+        link.getBusinessObjects().add(modelRootParam);
+        diagramResource.getContents().add(newDiagram);
     }
 
-    protected abstract void linkModelToDiagram(EObject modelRoot,
-            Diagram diagram, Resource diagramResource);
+    private List<EObject> connections;
+    private Map<EObject, PictogramElement> elements;
+
+    /**
+     * 
+     * @param editor
+     */
+    protected void linkModelToDiagram(final DiagramEditor editor) {
+        connections = new LinkedList<EObject>();
+        elements = new HashMap<EObject, PictogramElement>();
+
+        IDiagramTypeProvider dtp = editor.getDiagramTypeProvider();
+        IFeatureProvider provider = dtp.getFeatureProvider();
+
+        EditPart part = editor.getGraphicalViewer().getContents();
+
+        if (part instanceof DiagramEditPart) {
+            DiagramEditPart dep = (DiagramEditPart) part;
+            PictogramElement elem = dep.getPictogramElement();
+            List<EObject> list = elem.getLink().getBusinessObjects();
+            EObject modelRoot = list.get(0);
+            if (elem instanceof ContainerShape) {
+                for (EObject eObj : modelRoot.eContents()) {
+                    linkToDiagram(eObj, provider, (ContainerShape) elem, editor);
+                }
+
+                processConnections(provider, editor);
+            }
+        }
+    }
+
+    protected abstract boolean isConnection(EObject eObj);
+
+    protected abstract EObject getConnectionSource(EObject connection);
+
+    protected abstract EObject getConnectionTarget(EObject connection);
+
+    /**
+     * @param provider
+     * @param editor
+     */
+    private void processConnections(final IFeatureProvider provider,
+            final DiagramEditor editor) {
+        for (EObject connection : connections) {
+            EObject src = getConnectionSource(connection);
+            EObject target = getConnectionTarget(connection);
+
+            PictogramElement srcElement = elements.get(src);
+            PictogramElement targetElement = elements.get(target);
+
+            Anchor srcAnchor = null;
+            ContainerShape srcContainer = null;
+            if (srcElement instanceof ContainerShape) {
+                srcContainer = (ContainerShape) srcElement;
+                srcAnchor = srcContainer.getAnchors().get(0);
+            } else if (srcElement instanceof Anchor) {
+                srcAnchor = (Anchor) srcElement;
+                AnchorContainer container = srcAnchor.getParent();
+                if (container instanceof ContainerShape) {
+                    srcContainer = (ContainerShape) container;
+                }
+            }
+            Anchor targetAnchor = null;
+            ContainerShape targetContainer = null;
+            if (targetElement instanceof ContainerShape) {
+                targetContainer = (ContainerShape) targetElement;
+                targetAnchor = targetContainer.getAnchors().get(0);
+            } else if (targetElement instanceof Anchor) {
+                targetAnchor = (Anchor) targetElement;
+            }
+
+            AddConnectionContext context = new AddConnectionContext(srcAnchor,
+                    targetAnchor);
+            context.setNewObject(connection);
+            if (srcElement instanceof ContainerShape) {
+                context.setTargetContainer((ContainerShape) srcElement);
+            }
+
+            addAndLinkIfPossible(provider, context, editor);
+        }
+    }
+
+    /**
+     * Add the eObject to the diagram and connections it.
+     * 
+     * @param provider
+     * @param context
+     * @param editor
+     * @param eObj
+     * @return
+     */
+    private PictogramElement addAndLinkIfPossible(
+            final IFeatureProvider provider, final AddContext context,
+            final DiagramEditor editor) {
+        final TransactionalEditingDomain domain = editor.getEditingDomain();
+        CommandStack cs = domain.getCommandStack();
+        final Maybe<PictogramElement> result = new Maybe<PictogramElement>();
+
+        final IAddFeature feature = provider.getAddFeature(context);
+
+        cs.execute(new RecordingCommand(domain) {
+
+            @Override
+            protected void doExecute() {
+                result.set(feature.add(context));
+            }
+        });
+
+        return result.get();
+    }
+
+    /**
+     * Link the given eObject to newly create elements in the diagram.
+     * 
+     * @param eObj
+     * @param provider
+     * @param container
+     * @param editor
+     */
+    private void linkToDiagram(final EObject eObj,
+            final IFeatureProvider provider, final ContainerShape container,
+            final DiagramEditor editor) {
+        if (isConnection(eObj)) {
+            connections.add(eObj);
+            return;
+        }
+        AddContext context = new AddContext();
+        context.setNewObject(eObj);
+        context.setTargetContainer(container);
+        PictogramElement element = addAndLinkIfPossible(provider, context,
+                editor);
+
+        elements.put(eObj, element);
+
+        if (element instanceof ContainerShape) {
+            ContainerShape cs = (ContainerShape) element;
+            for (EObject child : eObj.eContents()) {
+                linkToDiagram(child, provider, cs, editor);
+            }
+        }
+    }
 
     /**
      * Open the diagram from the given resource.
@@ -251,8 +426,11 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
             IWorkbenchPage page = getContainer().getActivePage();
-            page.openEditor(new FileEditorInput((IFile) workspaceResource),
-                    getEditorId());
+            IEditorPart theEditor = page.openEditor(new FileEditorInput(
+                    (IFile) workspaceResource), getEditorId());
+            if (theEditor instanceof DiagramEditor) {
+                linkModelToDiagram((DiagramEditor) theEditor);
+            }
         }
     }
 }
