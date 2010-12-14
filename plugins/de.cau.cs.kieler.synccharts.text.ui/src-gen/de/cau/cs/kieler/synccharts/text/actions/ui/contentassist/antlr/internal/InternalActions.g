@@ -1849,7 +1849,7 @@ rule__ValueType__Alternatives
 
     |(
 { before(grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); }
-(	'bool' 
+(	'boolean' 
 )
 { after(grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1()); }
 )
@@ -1863,7 +1863,7 @@ rule__ValueType__Alternatives
 
     |(
 { before(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
-(	'int' 
+(	'integer' 
 )
 { after(grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3()); }
 )
@@ -1876,10 +1876,24 @@ rule__ValueType__Alternatives
 )
 
     |(
-{ before(grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_5()); }
+{ before(grammarAccess.getValueTypeAccess().getDOUBLEEnumLiteralDeclaration_5()); }
+(	'double' 
+)
+{ after(grammarAccess.getValueTypeAccess().getDOUBLEEnumLiteralDeclaration_5()); }
+)
+
+    |(
+{ before(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_6()); }
+(	'string' 
+)
+{ after(grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_6()); }
+)
+
+    |(
+{ before(grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_7()); }
 (	'host' 
 )
-{ after(grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_5()); }
+{ after(grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_7()); }
 )
 
 ;
@@ -7720,7 +7734,7 @@ finally {
 
 RULE_INT : '-'? ('0'..'9')+;
 
-RULE_FLOAT : ((RULE_INT '.' RULE_INT|RULE_INT ('.' RULE_INT)? ('e'|'E') '+'? RULE_INT) 'f'?|RULE_INT 'f');
+RULE_FLOAT : ('-'? ('0'..'9')+ '.' ('0'..'9')* (('e'|'E') ('+'|'-')? ('0'..'9')+)? 'f'?|'-'? ('0'..'9')+ 'f');
 
 RULE_BOOLEAN : ('true'|'false');
 
