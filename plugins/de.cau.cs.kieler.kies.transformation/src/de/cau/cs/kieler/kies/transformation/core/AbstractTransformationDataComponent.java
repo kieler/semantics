@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kies.transformation.core;
 
 import java.util.HashMap;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.ConfigurationException;
@@ -27,16 +29,17 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.ExecutionContextImpl;
 import org.eclipse.xtend.expression.Variable;
-import org.eclipse.xtend.typesystem.MetaModel;
 import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -241,8 +244,10 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             } catch (ConfigurationException ce) {
                 // package class could not be found
                 // this is bad and should not happen.
-                System.err.println("A problem occured while registering MetaModel: "
-                        + basePackage);
+                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                        "A problem occured while registering MetaModel "
+                                + "(maybe the package name was misspelled).", ce);
+                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 return;
             }
         }

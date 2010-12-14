@@ -22,8 +22,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
@@ -41,7 +39,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * DataComponent for transforming an esterel program stepwise into a syncchart.
  * 
  * @author uru
- *  
+ * 
  */
 public class EsterelToSyncChartDataComponent extends AbstractTransformationDataComponent {
 
@@ -228,97 +226,4 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         properties[0] = new KiemProperty("Recursive", true);
         return properties;
     }
-
-    // /**
-    // * returns a QueueStatement for the passed parameters.
-    // *
-    // * @param transName
-    // * name of the transformation
-    // * @param syncElement
-    // * the state
-    // * @param estElement
-    // * the esterel element
-    // * @return new QueueStatement
-    // */
-    // public static AbstractTransformationStatement getTransformationStatement(
-    // final String transName, final State syncElement, final EObject estElement) {
-    // QueueStatement qs = new QueueStatement(transName, syncElement, estElement);
-    // return qs;
-    // }
-    //
-    // /**
-    // * {@inheritDoc}
-    // */
-    //
-    // public AbstractTransformationStatement getNextQueueStatement() {
-    //
-    // // check if any state is selected
-    // List<EObject> selected = getCurrentEditorSelection();
-    //
-    // QueueStatement returnStatement = null;
-    // // currently only for one selected item possible
-    // if (!selected.isEmpty() && selected.size() == 1) {
-    // for (EObject obj : selected) {
-    // if (obj instanceof State) {
-    //
-    // QueueStatement qs = stateQueueMapping.get((State) obj);
-    //
-    // if (qs != null) {
-    // getQueue().clear();
-    // if (!qs.isDone()) {
-    // return qs;
-    // } else {
-    // recursivelyCollectQueueStatements(qs);
-    // if (getQueue().isEmpty()) {
-    // QueueStatement rootQs = stateQueueMapping.get(rootState);
-    // recursivelyCollectQueueStatements(rootQs);
-    // }
-    // return getQueue().poll();
-    // }
-    // }
-    // int i = 0;
-    // } else {
-    // // if no further elements in the queue, check if there is another branch which
-    // // is not done yet
-    // if (getQueue().isEmpty()) {
-    // QueueStatement rootQs = stateQueueMapping.get(rootState);
-    // recursivelyCollectQueueStatements(rootQs);
-    // }
-    // }
-    // }
-    // }
-    // return super.getNextQueueStatement();
-    // }
-    //
-    // private void recursivelyCollectQueueStatements(QueueStatement parent) {
-    // for (QueueStatement qs : parent.getChildren()) {
-    // if (qs.isDone()) {
-    // recursivelyCollectQueueStatements(qs);
-    // } else {
-    // getQueue().add(qs);
-    // }
-    // }
-    // }
-    //
-    // /**
-    // * {@inheritDoc}
-    // */
-    // @Override
-    // public boolean appendToQueue(final AbstractTransformationStatement statement) {
-    //
-    // if (statement instanceof QueueStatement) {
-    // // map the current transformation statement to the corresponding state
-    // State currentState = ((QueueStatement) statement).getState();
-    // stateQueueMapping.put(currentState, (QueueStatement) statement);
-    //
-    // // register it at the parent
-    // State parentState = currentState.getParentRegion().getParentState();
-    // if (parentState != null) {
-    // QueueStatement parentQs = stateQueueMapping.get(parentState);
-    // parentQs.getChildren().add((QueueStatement) statement);
-    // }
-    // }
-    // return super.appendToQueue(statement);
-    // }
-    //
 }
