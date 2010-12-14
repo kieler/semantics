@@ -31,7 +31,7 @@ import org.eclipse.xtend.expression.Variable;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -41,7 +41,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * DataComponent for transforming an esterel program stepwise into a syncchart.
  * 
  * @author uru
- * 
+ *  
  */
 public class EsterelToSyncChartDataComponent extends AbstractTransformationDataComponent {
 

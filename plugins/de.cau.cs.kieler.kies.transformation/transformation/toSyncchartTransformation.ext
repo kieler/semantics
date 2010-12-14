@@ -23,7 +23,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  
 /*
  
-   */
+   */ 
    
   Void sandbox(State s):
   let t = new Transition:

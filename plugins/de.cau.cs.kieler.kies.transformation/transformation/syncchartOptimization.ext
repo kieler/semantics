@@ -8,7 +8,7 @@ import ecore;
 extension feature; 
 extension org::eclipse::xtend::util::stdlib::cloning;
 
-/*
+/* 
  	Main algorithm
 */
 Boolean ruleAll(List[State] states, Integer max):

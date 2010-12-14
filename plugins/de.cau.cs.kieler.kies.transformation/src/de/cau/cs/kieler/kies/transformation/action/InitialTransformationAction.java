@@ -58,7 +58,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
- de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
@@ -70,7 +70,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
  * 
  */
 public class InitialTransformationAction implements IActionDelegate {
-
+ 
     private IInputValidator kixsValidator = new KixsInputValidator();
     private IFile strlFile;
     private IFile kixsFile;
@@ -85,86 +85,86 @@ public class InitialTransformationAction implements IActionDelegate {
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-        
-//        times = "";
-//        injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
-//        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-//        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
-//        URI uri = URI.createFileURI("test/test.strl"); // uri of your resource, may be fictional
-//
-//        long start = System.currentTimeMillis();
-//        final XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
-//        rs.getResources().add(resource);
-//
-//        // we are sure f exists, as we read the path automatically
-//        File f = new File( strlFile.getRawLocation().toOSString());
-//        FileInputStream fis;
-//        try {
-//            fis = new FileInputStream(f);
-//
-//            resource.load(fis, null);
-//        } catch (Exception e1) {
-//            // TODO Auto-generated catch block
-//            e1.printStackTrace();
-//        }
-//        EcoreUtil.resolveAll(resource);
-//        long end = System.currentTimeMillis();
-//        times += f.getName() + " Parse: " + (end - start) + "ms";
-//
-//        start = System.currentTimeMillis();
-//        // serialize
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        final OutputStreamWriter osw = new OutputStreamWriter(baos);
-//
-//        Runnable r = new Runnable() {
-//
-//            public void run() {
-//                // TODO Auto-generated method stub
-//                try {
-//                    Program p = (Program) resource.getContents().get(0);
-//                    Module m1 = p.getModules().get(0);
-//                    
-////                    TreeIterator<EObject> it = m1.eAllContents();
-////                    while(it.hasNext()) {
-////                        EObject e = it.next();
-////                        e.eAdapters().clear();
-////                        if(e instanceof MinimalEObjectImpl.Container){
-////                            MinimalEObjectImpl.Container cont = (MinimalEObjectImpl.Container) e;
-////                            
-////                        }
-////                        int i = 0;
-////                    }
-//                    Serializer serializerUtil = injector.getInstance(Serializer.class);
-//                    serializerUtil.serialize(p, osw,
-//                            SaveOptions.defaultOptions());
-//                    // System.out.println("Serialized result: " + baos.toString());
-//                } catch (Exception ex) {
-//                    //ex.printStackTrace();
-//                    System.out.println("SERIALIZE ERROR");
-//                }
-//            }
-//        };
-//        Thread t = new Thread(r);
-//        t.start();
-//        try {
-//            t.join(20000);
-//            end = System.currentTimeMillis();
-//            if (t.isAlive()) {
-//                t.suspend();
-//                times += " Serialize: exceeded time limit\n";
-//            } else {
-//                times += " Serialize: " + (end - start) + "ms\n";
-//            }
-//
-//        } catch (Exception e) {
-//            System.out.println("Some Thread error");
-//        }
-//        
-//        System.out.println(times);
-//
-//        if (1 == 1) {
-//            return;
-//        }
+
+        // times = "";
+        // injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
+        // XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
+        // IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
+        // URI uri = URI.createFileURI("test/test.strl"); // uri of your resource, may be fictional
+        //
+        // long start = System.currentTimeMillis();
+        // final XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
+        // rs.getResources().add(resource);
+        //
+        // // we are sure f exists, as we read the path automatically
+        // File f = new File( strlFile.getRawLocation().toOSString());
+        // FileInputStream fis;
+        // try {
+        // fis = new FileInputStream(f);
+        //
+        // resource.load(fis, null);
+        // } catch (Exception e1) {
+        // // TODO Auto-generated catch block
+        // e1.printStackTrace();
+        // }
+        // EcoreUtil.resolveAll(resource);
+        // long end = System.currentTimeMillis();
+        // times += f.getName() + " Parse: " + (end - start) + "ms";
+        //
+        // start = System.currentTimeMillis();
+        // // serialize
+        // ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // final OutputStreamWriter osw = new OutputStreamWriter(baos);
+        //
+        // Runnable r = new Runnable() {
+        //
+        // public void run() {
+        // // TODO Auto-generated method stub
+        // try {
+        // Program p = (Program) resource.getContents().get(0);
+        // Module m1 = p.getModules().get(0);
+        //
+        // // TreeIterator<EObject> it = m1.eAllContents();
+        // // while(it.hasNext()) {
+        // // EObject e = it.next();
+        // // e.eAdapters().clear();
+        // // if(e instanceof MinimalEObjectImpl.Container){
+        // // MinimalEObjectImpl.Container cont = (MinimalEObjectImpl.Container) e;
+        // //
+        // // }
+        // // int i = 0;
+        // // }
+        // Serializer serializerUtil = injector.getInstance(Serializer.class);
+        // serializerUtil.serialize(p, osw,
+        // SaveOptions.defaultOptions());
+        // // System.out.println("Serialized result: " + baos.toString());
+        // } catch (Exception ex) {
+        // //ex.printStackTrace();
+        // System.out.println("SERIALIZE ERROR");
+        // }
+        // }
+        // };
+        // Thread t = new Thread(r);
+        // t.start();
+        // try {
+        // t.join(20000);
+        // end = System.currentTimeMillis();
+        // if (t.isAlive()) {
+        // t.suspend();
+        // times += " Serialize: exceeded time limit\n";
+        // } else {
+        // times += " Serialize: " + (end - start) + "ms\n";
+        // }
+        //
+        // } catch (Exception e) {
+        // System.out.println("Some Thread error");
+        // }
+        //
+        // System.out.println(times);
+        //
+        // if (1 == 1) {
+        // return;
+        // }
 
         if (strlFile == null || !strlFile.exists()) {
             return;
