@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation.kivi;
+package de.cau.cs.kieler.kies.transformation.kivi;
 
 import java.util.Iterator;
 import java.util.List;
@@ -31,8 +31,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.esterel.transformation.core.TransformationCommand;
-import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kies.transformation.core.TransformationCommand;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
  * @author uru

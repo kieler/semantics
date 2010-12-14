@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation;
+package de.cau.cs.kieler.kies.transformation;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,9 +22,8 @@ import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.kivi.RefreshGMFElementsEffect;
-
-public class RefreshGMFPoliciesHandler extends AbstractHandler {
+import de.cau.cs.kieler.kies.transformation.kivi.RefreshGMFElementsEffect;
+ublic class RefreshGMFPoliciesHandler extends AbstractHandler {
 
     /**
      * {@inheritDoc}

@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Esterel to SyncCharts Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.kies.transformation;singleton:=true
 Bundle-Version: 0.1.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.esterel.transformation.Activator
+Bundle-Activator: de.cau.cs.kieler.kies.transformation.Activator
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,

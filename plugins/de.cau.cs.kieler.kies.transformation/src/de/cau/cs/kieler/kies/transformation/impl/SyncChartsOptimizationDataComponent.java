@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation.impl;
+package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -29,10 +29,10 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
 
-import de.cau.cs.kieler.esterel.transformation.core.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.esterel.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;

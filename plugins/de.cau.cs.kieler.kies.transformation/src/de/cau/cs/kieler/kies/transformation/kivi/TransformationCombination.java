@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation.kivi;
+package de.cau.cs.kieler.kies.transformation.kivi;
 
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
@@ -21,7 +21,7 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger.TransformationState;
+import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger.TransformationState;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 

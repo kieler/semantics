@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation.core;
+package de.cau.cs.kieler.kies.transformation.core;
 
 import java.util.HashMap;
 
@@ -36,7 +36,7 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.esterel.transformation.kivi.TransformationTrigger;
+import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;

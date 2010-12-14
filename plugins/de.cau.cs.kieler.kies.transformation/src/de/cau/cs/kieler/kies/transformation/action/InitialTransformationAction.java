@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.esterel.transformation.action;
+package de.cau.cs.kieler.kies.transformation.action;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
@@ -56,9 +56,9 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
-import de.cau.cs.kieler.esterel.transformation.Activator;
-import de.cau.cs.kieler.esterel.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+ de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
