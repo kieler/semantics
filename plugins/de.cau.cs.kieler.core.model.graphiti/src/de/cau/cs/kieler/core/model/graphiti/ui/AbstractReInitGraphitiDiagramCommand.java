@@ -52,6 +52,7 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.mm.pictograms.PictogramLink;
 import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
+import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
@@ -313,42 +314,75 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private void processConnections(final IFeatureProvider provider,
             final DiagramEditor editor) {
         for (EObject connection : connections) {
-            EObject src = getConnectionSource(connection);
-            EObject target = getConnectionTarget(connection);
+            AddConnectionContext context = processConnection(elements,
+                    connection);
 
-            PictogramElement srcElement = elements.get(src);
-            PictogramElement targetElement = elements.get(target);
-
-            Anchor srcAnchor = null;
-            ContainerShape srcContainer = null;
-            if (srcElement instanceof ContainerShape) {
-                srcContainer = (ContainerShape) srcElement;
-                srcAnchor = srcContainer.getAnchors().get(0);
-            } else if (srcElement instanceof Anchor) {
-                srcAnchor = (Anchor) srcElement;
-                AnchorContainer container = srcAnchor.getParent();
-                if (container instanceof ContainerShape) {
-                    srcContainer = (ContainerShape) container;
-                }
+            if (context != null) {
+                addAndLinkIfPossible(provider, context, editor);
             }
-            Anchor targetAnchor = null;
-            ContainerShape targetContainer = null;
-            if (targetElement instanceof ContainerShape) {
-                targetContainer = (ContainerShape) targetElement;
-                targetAnchor = targetContainer.getAnchors().get(0);
-            } else if (targetElement instanceof Anchor) {
-                targetAnchor = (Anchor) targetElement;
-            }
-
-            AddConnectionContext context = new AddConnectionContext(srcAnchor,
-                    targetAnchor);
-            context.setNewObject(connection);
-            if (srcElement instanceof ContainerShape) {
-                context.setTargetContainer((ContainerShape) srcElement);
-            }
-
-            addAndLinkIfPossible(provider, context, editor);
         }
+    }
+
+    /**
+     * Process a single connection. This method should be overridden if the
+     * standard implementation doesn't produce the desired results. When the
+     * method is called it can be guaranteed that all other elements have
+     * already been added to the diagram.
+     * 
+     * @param elementsParam
+     *            the map of already added elements.
+     * @param connection
+     *            the domain model element of the connection to be added
+     * @return the context to execute for adding
+     */
+    protected AddConnectionContext processConnection(
+            final Map<EObject, PictogramElement> elementsParam,
+            final EObject connection) {
+        EObject src = getConnectionSource(connection);
+        EObject target = getConnectionTarget(connection);
+
+        PictogramElement srcElement = elementsParam.get(src);
+        PictogramElement targetElement = elementsParam.get(target);
+
+        Anchor srcAnchor = null;
+        ContainerShape srcContainer = null;
+        if (srcElement instanceof ContainerShape) {
+            srcContainer = (ContainerShape) srcElement;
+            srcAnchor = srcContainer.getAnchors().get(0);
+        } else if (srcElement instanceof Anchor) {
+            srcAnchor = (Anchor) srcElement;
+            AnchorContainer container = srcAnchor.getParent();
+            if (container instanceof ContainerShape) {
+                srcContainer = (ContainerShape) container;
+            }
+        } else if (srcElement instanceof Shape) {
+            Shape s = (Shape) srcElement;
+            srcAnchor = s.getAnchors().get(0);
+            srcContainer = s.getContainer();
+        }
+        Anchor targetAnchor = null;
+        ContainerShape targetContainer = null;
+        if (targetElement instanceof ContainerShape) {
+            targetContainer = (ContainerShape) targetElement;
+            targetAnchor = targetContainer.getAnchors().get(0);
+        } else if (targetElement instanceof Anchor) {
+            targetAnchor = (Anchor) targetElement;
+            AnchorContainer container = targetAnchor.getParent();
+            if (container instanceof ContainerShape) {
+                targetContainer = (ContainerShape) container;
+            }
+        } else if (targetElement instanceof Shape) {
+            Shape s = (Shape) targetElement;
+            targetAnchor = s.getAnchors().get(0);
+            targetContainer = s.getContainer();
+        }
+
+        AddConnectionContext context = new AddConnectionContext(srcAnchor,
+                targetAnchor);
+        context.setNewObject(connection);
+        context.setTargetContainer(srcContainer);
+
+        return context;
     }
 
     /**
@@ -369,13 +403,15 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
 
         final IAddFeature feature = provider.getAddFeature(context);
 
-        cs.execute(new RecordingCommand(domain) {
+        if (feature != null) {
+            cs.execute(new RecordingCommand(domain) {
 
-            @Override
-            protected void doExecute() {
-                result.set(feature.add(context));
-            }
-        });
+                @Override
+                protected void doExecute() {
+                    result.set(feature.add(context));
+                }
+            });
+        }
 
         return result.get();
     }
@@ -401,12 +437,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         PictogramElement element = addAndLinkIfPossible(provider, context,
                 editor);
 
-        elements.put(eObj, element);
+        if (element != null) {
+            elements.put(eObj, element);
 
-        if (element instanceof ContainerShape) {
-            ContainerShape cs = (ContainerShape) element;
-            for (EObject child : eObj.eContents()) {
-                linkToDiagram(child, provider, cs, editor);
+            if (element instanceof ContainerShape) {
+                ContainerShape cs = (ContainerShape) element;
+                for (EObject child : eObj.eContents()) {
+                    linkToDiagram(child, provider, cs, editor);
+                }
             }
         }
     }
