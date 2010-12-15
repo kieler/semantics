@@ -43,12 +43,13 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.esterel.cec.CEC;
-import de.cau.cs.kieler.esterel.esterel.Input;
-import de.cau.cs.kieler.esterel.esterel.Module;
-import de.cau.cs.kieler.esterel.esterel.Output;
-import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.esterel.esterel.Signal;
-import de.cau.cs.kieler.esterel.esterel.SignalDecl;
+import de.cau.cs.kieler.core.kexpressions.Input;
+import de.cau.cs.kieler.kies.esterel.Module;
+import de.cau.cs.kieler.core.kexpressions.Output;
+import de.cau.cs.kieler.kies.esterel.Program;
+import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
+
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -271,15 +272,15 @@ public class DataComponent extends JSONObjectDataComponent {
         JSONObject res = new JSONObject();
         try {
             if (myModel != null) {
-                for (Module mod : myModel.getModule()) {
-                    for (SignalDecl sig : mod.getModInt().getIntSignalDecl()) {
+                for (Module mod : myModel.getModules()) {
+                    for (InterfaceSignalDecl sig : mod.getInterface().getIntSignalDecls()) {
                         if (sig instanceof Input) {
-                            for (Signal s : sig.getSignal()) {
+                            for (Signal s : sig.getSignals()) {
                                 res.accumulate(s.getName(), JSONSignalValues.newValue(true));
                             }
                         }
                         if (sig instanceof Output) {
-                            for (Signal s : sig.getSignal()) {
+                            for (Signal s : sig.getSignals()) {
                                 res.accumulate(s.getName(), JSONSignalValues.newValue(true));
                                 outputs.add(s.getName());
                             }

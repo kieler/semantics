@@ -1,3 +1,4 @@
+«IMPORT kexpressions»
 «IMPORT esterel»
 
 «DEFINE module FOR Module»
@@ -11,7 +12,7 @@
 cJSON* output = 0;
 cJSON* value = 0;
 
-«FOREACH this.modInt.intSignalDecl AS signals»
+«FOREACH this.interface.intSignalDecls AS signals»
   «EXPAND OutputFunctions(name) FOR signals»
 «ENDFOREACH»
 
@@ -32,7 +33,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-  «FOREACH this.modInt.intSignalDecl AS signal-»
+  «FOREACH this.interface.intSignalDecls AS signal-»
     «EXPAND CallInputs(name) FOR signal»
   «ENDFOREACH»
 }
@@ -56,26 +57,26 @@ int main(){
 
 
 «DEFINE main FOR esterel::Program-»
-	«EXPAND module FOR module.first()»
+	«EXPAND module FOR modules.first()»
 «ENDDEFINE»
 
 «DEFINE OutputFunctions(String modName) FOR Output»
-  «FOREACH signal AS sig»«modName»_O_«sig.name»(
-    «IF sig.channel!=null &&  sig.channel.type!=null && sig.channel.type.type.matches("integer")»int i«ENDIF»){
+  «FOREACH signals AS sig»«modName»_O_«sig.name»(
+    «IF sig.channelDescr!=null &&  sig.channelDescr.type!=null && sig.channelDescr.type.type==int»int i«ENDIF»){
    	value = cJSON_CreateObject();
 	cJSON_AddTrueToObject(value, "present");
-	«IF sig.channel.type!=null && sig.channel.type.type.matches("integer")»	cJSON_AddNumberToObject(value, "value", i);
+	«IF sig.channelDescr.type!=null && sig.channelDescr.type.type==int»	cJSON_AddNumberToObject(value, "value", i);
 	«ENDIF»
 	cJSON_AddItemToObject(output, "«sig.name»", value);
   } 
 «ENDFOREACH-»
 «ENDDEFINE»
 
-«DEFINE OutputFunctions(String modName) FOR SignalDecl»
+«DEFINE OutputFunctions(String modName) FOR InterfaceSignalDecl»
 «ENDDEFINE»
 
 «DEFINE CallInputs(String modName) FOR Input»
-  «FOREACH signal AS sig»
+  «FOREACH signals AS sig»
   child = cJSON_GetObjectItem(object, "«sig.name»");
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
@@ -87,5 +88,5 @@ int main(){
   «ENDFOREACH-»
  «ENDDEFINE»
  
- «DEFINE CallInputs(String modName) FOR SignalDecl»
+ «DEFINE CallInputs(String modName) FOR InterfaceSignalDecl»
  «ENDDEFINE»

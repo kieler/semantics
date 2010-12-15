@@ -31,14 +31,14 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xpand2.Generator;
 import org.eclipse.xpand2.output.Outlet;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
-import org.eclipse.xtext.concurrent.IUnitOfWork;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 
-import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
-import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.kies.esterel.EsterelPackage;
+import de.cau.cs.kieler.kies.esterel.Program;
 
 /**
  * Generate interface code (A_data.c) for an Esterel module A.strl.
