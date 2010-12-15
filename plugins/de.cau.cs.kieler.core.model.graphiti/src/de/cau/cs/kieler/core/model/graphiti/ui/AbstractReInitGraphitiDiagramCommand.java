@@ -74,14 +74,23 @@ import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
+ * Abstract super class for commands that initialize any graphiti diagram.
+ * 
  * @author soh
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractReInitGraphitiDiagramCommand extends
         AbstractReInitDiagramCommand {
 
+    /** The name of the diagram type. */
+    private String diagramTypeName;
+    /** the grid size. */
+    private int gridSize;
+    /** true if snap to grid should be on by default. */
+    private boolean snapToGrid;
+
     /**
-     * Creates a new AbstractReInitGraphitiDiagramCommand.java.
+     * Creates a new AbstractReInitGraphitiDiagramCommand.
      * 
      * @param diagramTypeNameParam
      *            the name
@@ -98,10 +107,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         this.gridSize = gridSizeParam;
         this.snapToGrid = snapToGridParam;
     }
-
-    private String diagramTypeName;
-    private int gridSize;
-    private boolean snapToGrid;
 
     /**
      * Getter for the editor id.
@@ -140,6 +145,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     public boolean createNewDiagram(final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath) {
+        // taken from the new wizard and adapted
         final Maybe<Resource> diagramResource = new Maybe<Resource>();
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
             @Override
@@ -197,13 +203,11 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
             final IProgressMonitor progressMonitor) {
+        // taken from the new wizard and adapted
         progressMonitor.beginTask("Creating diagram and model files", 2);
-        // create a resource set and editing domain
-        // TransactionalEditingDomain editingDomain = DiagramEditorFactory
-        // .createResourceSetAndEditingDomain();
+        // create a resource set
         ResourceSet resourceSet = editingDomain.getResourceSet();
         CommandStack commandStack = editingDomain.getCommandStack();
-        // create resources for the diagram and domain model files
 
         if (!diagramFile.exists()) {
             InputStream input = new ByteArrayInputStream("".getBytes());
@@ -214,6 +218,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 e0.printStackTrace();
             }
         }
+        // create resource for the diagram
         String path = diagramFile.getFullPath().toString();
         final Resource diagramResource = resourceSet.createResource(URI
                 .createPlatformResourceURI(path, true));
@@ -228,7 +233,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             progressMonitor.worked(1);
 
             try {
-                // modelResource.save(createSaveOptions());
                 diagramResource.save(GraphitiNewWizard.createSaveOptions());
             } catch (IOException exception) {
                 IStatus status = new Status(IStatus.ERROR,
@@ -237,7 +241,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                         exception);
                 StatusManager.getManager().handle(status);
             }
-            // setCharset(WorkspaceSynchronizer.getFile(modelResource));
             GraphitiNewWizard.setCharset(WorkspaceSynchronizer
                     .getFile(diagramResource));
         }
@@ -246,7 +249,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     }
 
     /**
-     * Create a model in the given resources.
+     * Link the domain model root to the diagram.
      * 
      * @param diagramResource
      *            resource for the diagram model
@@ -257,10 +260,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      */
     private void createModel(final Resource diagramResource,
             final String diagramName, final EObject modelRootParam) {
-        final Resource modelResource = modelRootParam.eResource();
-        modelResource.setTrackingModification(true);
-        // EObject domainModel = createModel(modelName);
-        // modelResource.getContents().add(domainModel);
         diagramResource.setTrackingModification(true);
         Diagram newDiagram = Graphiti.getPeCreateService().createDiagram(
                 diagramTypeName, diagramName, gridSize, snapToGrid);
@@ -270,20 +269,29 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         diagramResource.getContents().add(newDiagram);
     }
 
+    /**
+     * List of connections to be processed after the other elements are
+     * finished.
+     */
     private List<EObject> connections;
+    /** Store the elements that are already added and linked. */
     private Map<EObject, PictogramElement> elements;
 
     /**
+     * Link the model to the newly created diagram inside the editor.
      * 
      * @param editor
+     *            the editor
      */
     protected void linkModelToDiagram(final DiagramEditor editor) {
         connections = new LinkedList<EObject>();
         elements = new HashMap<EObject, PictogramElement>();
 
+        // get the feature provider for getting the AddFeatures
         IDiagramTypeProvider dtp = editor.getDiagramTypeProvider();
         IFeatureProvider provider = dtp.getFeatureProvider();
 
+        // get the root edit part for the diagram
         EditPart part = editor.getGraphicalViewer().getContents();
 
         if (part instanceof DiagramEditPart) {
@@ -292,24 +300,53 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             List<EObject> list = elem.getLink().getBusinessObjects();
             EObject modelRoot = list.get(0);
             if (elem instanceof ContainerShape) {
+                // process children of the root element
                 for (EObject eObj : modelRoot.eContents()) {
                     linkToDiagram(eObj, provider, (ContainerShape) elem, editor);
                 }
-
+                // deal with connections after finished
                 processConnections(provider, editor);
             }
         }
     }
 
+    /**
+     * The given domain model element represents a connection which should be
+     * dealt with after all other elements are added. This is necessary since
+     * connection require their source and target to be already present while
+     * adding.
+     * 
+     * @param eObj
+     *            the domain model element
+     * @return true if the element represents a connection
+     */
     protected abstract boolean isConnection(EObject eObj);
 
+    /**
+     * Get the source element of a connection.
+     * 
+     * @param connection
+     *            the connection
+     * @return the source of the connection
+     */
     protected abstract EObject getConnectionSource(EObject connection);
 
+    /**
+     * Get the target element for a connection.
+     * 
+     * @param connection
+     *            the connection
+     * @return the target of the connection
+     */
     protected abstract EObject getConnectionTarget(EObject connection);
 
     /**
+     * Process the list of connections after the rest is finished.
+     * 
      * @param provider
+     *            the feature provider for getting the AddConnectionFeatures
      * @param editor
+     *            the editor for the editing domain
      */
     private void processConnections(final IFeatureProvider provider,
             final DiagramEditor editor) {
@@ -338,28 +375,36 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     protected AddConnectionContext processConnection(
             final Map<EObject, PictogramElement> elementsParam,
             final EObject connection) {
+        // the domain model source and target
         EObject src = getConnectionSource(connection);
         EObject target = getConnectionTarget(connection);
 
+        // the already added graphical elements
         PictogramElement srcElement = elementsParam.get(src);
         PictogramElement targetElement = elementsParam.get(target);
 
+        // Determine the source anchor and container
         Anchor srcAnchor = null;
         ContainerShape srcContainer = null;
         if (srcElement instanceof ContainerShape) {
+            // The source is a simple node (e.g. KAOM Entity)
             srcContainer = (ContainerShape) srcElement;
             srcAnchor = srcContainer.getAnchors().get(0);
         } else if (srcElement instanceof Anchor) {
+            // The source is an anchor itself (e.g. KAOM Port)
             srcAnchor = (Anchor) srcElement;
             AnchorContainer container = srcAnchor.getParent();
             if (container instanceof ContainerShape) {
                 srcContainer = (ContainerShape) container;
             }
         } else if (srcElement instanceof Shape) {
+            // The source is a generic shape (e.g. KAOM Relation)
             Shape s = (Shape) srcElement;
             srcAnchor = s.getAnchors().get(0);
             srcContainer = s.getContainer();
         }
+
+        // Determine the target anchor
         Anchor targetAnchor = null;
         ContainerShape targetContainer = null;
         if (targetElement instanceof ContainerShape) {
@@ -377,6 +422,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             targetContainer = s.getContainer();
         }
 
+        // create the context
         AddConnectionContext context = new AddConnectionContext(srcAnchor,
                 targetAnchor);
         context.setNewObject(connection);
@@ -386,13 +432,18 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     }
 
     /**
-     * Add the eObject to the diagram and connections it.
+     * Add the eObject to the diagram.
      * 
      * @param provider
+     *            feature provider for the features
      * @param context
+     *            the context (must be AddConnectionContext if the domain model
+     *            element is a connection)
      * @param editor
+     *            the editor of the diagram
      * @param eObj
-     * @return
+     *            the domain model element to add
+     * @return the added diagram element or null
      */
     private PictogramElement addAndLinkIfPossible(
             final IFeatureProvider provider, final AddContext context,
@@ -404,6 +455,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         final IAddFeature feature = provider.getAddFeature(context);
 
         if (feature != null) {
+            // only do something if the element has a graphical representation
             cs.execute(new RecordingCommand(domain) {
 
                 @Override
@@ -417,31 +469,43 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     }
 
     /**
-     * Link the given eObject to newly create elements in the diagram.
+     * Link the given eObject to newly created elements in the diagram.
      * 
      * @param eObj
+     *            the domain model element to add
      * @param provider
+     *            the feature provider for getting the AddFeatures
      * @param container
+     *            the parent container
      * @param editor
+     *            the editor
      */
     private void linkToDiagram(final EObject eObj,
             final IFeatureProvider provider, final ContainerShape container,
             final DiagramEditor editor) {
         if (isConnection(eObj)) {
+            // connections should be dealt with after
+            // all other elements are present
             connections.add(eObj);
             return;
         }
+        // create a context for adding the element
         AddContext context = new AddContext();
         context.setNewObject(eObj);
         context.setTargetContainer(container);
+
+        // add the element
         PictogramElement element = addAndLinkIfPossible(provider, context,
                 editor);
 
         if (element != null) {
+            // only do something if the element has a graphical representation
             elements.put(eObj, element);
 
             if (element instanceof ContainerShape) {
+                // element may contain visible children
                 ContainerShape cs = (ContainerShape) element;
+                // recursively add children of the domain model element
                 for (EObject child : eObj.eContents()) {
                     linkToDiagram(child, provider, cs, editor);
                 }
@@ -467,6 +531,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             IEditorPart theEditor = page.openEditor(new FileEditorInput(
                     (IFile) workspaceResource), getEditorId());
             if (theEditor instanceof DiagramEditor) {
+                // editor is open, can add the rest of the elements now
                 linkModelToDiagram((DiagramEditor) theEditor);
             }
         }
