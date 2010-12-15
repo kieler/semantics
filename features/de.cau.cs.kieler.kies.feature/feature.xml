@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.esterel"
-      label="KIELER Esterel Editor"
+      id="de.cau.cs.kieler.kies"
+      label="KIELER Esterel Contributions"
       version="0.1.3.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
@@ -109,15 +109,19 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <update label="KIELER nightly builds Update Site" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
+   <requires>
+      <import plugin="de.cau.cs.kieler.core.model"/>
+   </requires>
+
    <plugin
-         id="de.cau.cs.kieler.esterel"
+         id="de.cau.cs.kieler.kies"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.esterel.ui"
+         id="de.cau.cs.kieler.kies.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
