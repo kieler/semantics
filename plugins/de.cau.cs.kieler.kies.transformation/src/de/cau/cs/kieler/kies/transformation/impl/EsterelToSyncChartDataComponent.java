@@ -123,6 +123,14 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     }
 
     /**
+     * @param rootState
+     *            the rootState to set
+     */
+    public void setRootState(State rootState) {
+        this.rootState = rootState;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override

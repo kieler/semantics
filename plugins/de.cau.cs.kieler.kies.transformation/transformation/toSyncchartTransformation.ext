@@ -3,7 +3,7 @@ import annotations;
 import kexpressions;
 import synccharts;
 import utilities; 
-import esterel;
+import esterel; 
 
 extension feature;
 extension org::eclipse::xtend::util::stdlib::cloning;
@@ -1003,6 +1003,11 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
  * 
  */
 Expression convertEsterelExpression(Expression e):
+	if e != null then 
+		 convertEsterelExpressionRec(e) ->
+	e
+;
+Expression convertEsterelExpressionRec(Expression e):
 	let funcs = (Set[FunctionExpression]) e.eAllContents.select(e|FunctionExpression.isInstance(e)):
 	let traps = (Set[TrapExpression]) e.eAllContents.select(e|TrapExpression.isInstance(e)):
 	funcs.replaceWithCorrespondingExpression() ->
@@ -1016,13 +1021,13 @@ Void replaceWithCorrespondingExpression(Expression e):
 	parent.subExpressions.remove(e)
 ;
 
-Expression convertEsterelExpression(FunctionExpression fe):
+Expression convertEsterelExpressionRec(FunctionExpression fe):
 	let textExpr = new TextExpression:
 	textExpr.setCode(fe.funcion.name + "(todo" + ")") ->
 	textExpr
 ;
 
-Expression convertEsterelExpression(TrapExpression te):
+Expression convertEsterelExpressionRec(TrapExpression te):
 	let textExpr = new TextExpression:
 	textExpr.setCode(te.trap.name + "(todo" + ")") ->
 	textExpr

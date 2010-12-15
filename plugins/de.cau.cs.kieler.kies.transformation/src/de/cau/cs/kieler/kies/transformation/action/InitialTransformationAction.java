@@ -14,64 +14,38 @@
 package de.cau.cs.kieler.kies.transformation.action;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.IAction;
-import org.eclipse.jface.dialogs.IInputValidator;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionDelegate;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
-import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.StateType;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 
 /**
  * @author uru
  * 
  */
 public class InitialTransformationAction implements IActionDelegate {
- 
-    private IInputValidator kixsValidator = new KixsInputValidator();
+
     private IFile strlFile;
     private IFile kixsFile;
     private IFile kidsFile;
@@ -196,15 +170,15 @@ public class InitialTransformationAction implements IActionDelegate {
                             // create all the elements
                             long start = System.currentTimeMillis();
                             System.out.println("Start: " + start);
-                            createSyncchartDiagram();
+                            TransformationUtil.createSyncchartDiagram(kixsFile, strlFile.getName());
                             long opened = System.currentTimeMillis();
                             System.out.println("Opened: " + opened);
                             uiMonitor.worked(40);
-                            doInitialEsterelTransformation();
+                            TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
                             long esterel = System.currentTimeMillis();
                             System.out.println("Esterel: " + esterel);
                             uiMonitor.worked(60);
-                            refreshEditPolicies();
+                            TransformationUtil.refreshEditPolicies();
                             long refresh = System.currentTimeMillis();
                             System.out.println("Refresh: " + refresh);
                             uiMonitor.worked(90);
@@ -259,139 +233,4 @@ public class InitialTransformationAction implements IActionDelegate {
         return strlFile;
     }
 
-    /**
-     * Fill the root esterel elements into the syncchart.
-     */
-    private void doInitialEsterelTransformation() {
-        try {
-            ResourceSet resourceSet = new ResourceSetImpl();
-            final URI strlURI = URI.createPlatformResourceURI(strlFile.getFullPath().toString(),
-                    true);
-            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
-                    false);
-
-            // setup initial syncchart with one state in the global region
-            Resource resource = resourceSet.getResource(kixsURI, true);
-            SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
-            Region rootRegion = (Region) resource.getContents().get(0);
-            State rootState = sf.createState();
-            rootState.setId("rsstate");
-            rootRegion.getStates().add(rootState);
-            rootState.setLabel("EsterelState");
-            rootState.setType(StateType.TEXTUAL);
-
-            // get the esterel code and add it as body reference
-            Resource xtextResource = resourceSet.getResource(strlURI, true);
-            EObject esterelModule = xtextResource.getContents().get(0);
-            rootState.setBodyReference(esterelModule);
-
-            // parse the esterel code and display as textual code
-            TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
-            rootState.getBodyText().add(code);
-            code.setCode(TransformationUtil.getSerializedString(esterelModule));
-
-            // save the resource
-            resource.save(null);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    "Problem parsing the Esterel file.", e);
-            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-        }
-    }
-
-    /**
-     * Creates a new SyncChart.
-     */
-    private void createSyncchartDiagram() {
-        try {
-            if (kixsFile.exists()) {
-                Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
-                String currentName = strlFile.getName();
-                currentName = currentName.substring(0, currentName.lastIndexOf(".") + 1) + "kixs";
-                InputDialog inputdiag = new InputDialog(shell, "Existing File.",
-                        "File already exists. Overwrite or choose a new name.", currentName,
-                        kixsValidator);
-                if (inputdiag.open() == InputDialog.OK) {
-                    String newName = inputdiag.getValue();
-                    IPath newPath = new Path(strlFile.getFullPath().removeLastSegments(1)
-                            .append(newName).toString());
-                    kixsFile = workspaceRoot.getFile(newPath);
-                }
-            }
-
-            // create corresponding syncchart
-            final URI kidsURI = URI.createPlatformResourceURI(kidsFile.getFullPath().toString(),
-                    false);
-            final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
-                    false);
-
-            System.out.println("Creating new SyncCharts Diagram.");
-
-            // create a new SyncCharts Diagram.
-            final IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
-                protected void execute(final IProgressMonitor monitor) throws CoreException,
-                        InterruptedException {
-                    Resource diagram = SyncchartsDiagramEditorUtil.createDiagram(kidsURI, kixsURI,
-                            monitor);
-                    try {
-                        diagram.save(null);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-            };
-            // run
-            op.run(null);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                    "Problem creating a new SyncChartsDiagram.", e);
-            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-        }
-    }
-
-    private void refreshEditPolicies() {
-        // update edit policies, so GMF will generate diagram elements
-        // for model elements which have been generated during the
-        // transformation.
-        IEditorPart activeEditor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage().getActiveEditor();
-        if (activeEditor instanceof IDiagramWorkbenchPart) {
-            EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor).getDiagramEditPart()
-                    .getModel()).getElement();
-            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                System.out.println(nextEditPolicy.toString());
-                nextEditPolicy.refresh();
-            }
-            IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                    .getDiagramGraphicalViewer();
-            graphViewer.flush();
-        }
-    }
-
-    /**
-     * assures that string inputs have the file extention ".kixs".
-     * 
-     * @author uru
-     * 
-     */
-    class KixsInputValidator implements IInputValidator {
-        /**
-         * {@inheritDoc}
-         */
-        public String isValid(final String newText) {
-            int i = newText.lastIndexOf(".");
-            String fileExt = newText.substring(i + 1, newText.length());
-            if (fileExt.equals("kixs")) {
-                return null;
-            } else {
-                return "File extention has to be .kixs";
-            }
-        }
-    }
 }
