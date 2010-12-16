@@ -74,7 +74,7 @@
          </action>
       </objectContribution>
    </extension>
-   <extension
+   <!--extension
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
@@ -82,6 +82,6 @@
             id="de.cau.cs.kieler.kies.transformation.command1"
             name="Refresh Edit Policies">
       </command>
-   </extension>
+   </extension-->
 
 </plugin>
