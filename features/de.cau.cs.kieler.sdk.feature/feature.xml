@@ -370,4 +370,12 @@ litigation.
          id="de.cau.cs.kieler.keg.source"
          version="0.0.0"/>
 
+   <includes
+         id="de.cau.cs.kieler.papyrus"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.papyrus.source"
+         version="0.0.0"/>
+
 </feature>

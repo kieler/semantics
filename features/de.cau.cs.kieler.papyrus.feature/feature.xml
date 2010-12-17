@@ -221,13 +221,12 @@ litigation.
    </url>
 
    <requires>
+      <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.core" version="0.2.0" match="greaterOrEqual"/>
       <import feature="de.cau.cs.kieler.kiml" version="0.1.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
-      <import plugin="org.eclipse.papyrus.core"/>
-      <import plugin="org.eclipse.papyrus.diagram.statemachine"/>
       <import feature="de.cau.cs.kieler.uml2" version="0.2.0" match="greaterOrEqual"/>
-      <import plugin="de.cau.cs.kieler.sim.kivi"/>
+      <import feature="de.cau.cs.kieler.sim.kiem" version="0.4.0.qualifier"/>
+      <import feature="org.eclipse.papyrus" version="0.7.0.v201007251735"/>
    </requires>
 
    <plugin
