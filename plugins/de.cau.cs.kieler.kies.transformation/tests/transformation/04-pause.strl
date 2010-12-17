@@ -1,0 +1,3 @@
+module pauseModule:
+	pause
+end module

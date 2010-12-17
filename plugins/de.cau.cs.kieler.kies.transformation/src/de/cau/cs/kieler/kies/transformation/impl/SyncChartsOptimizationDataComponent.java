@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * @author uru
@@ -52,6 +53,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String TRANSFORMATION_FILE = "syncchartOptimization.ext";
 
     private State rootState;
+    private Region rootRegion;
 
     private XtendFacade facade;
 
@@ -99,6 +101,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 EditPart selPart = selected.get(0);
                 Object selView = selPart.getModel();
                 EObject selModel = ((View) selView).getElement();
+                rootRegion = (Region) selModel;
                 State root = ((Region) selModel).getStates().get(0);
                 rootState = root;
 
@@ -238,6 +241,21 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         properties[0] = new KiemProperty("Recursive", true);
         return properties;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doPostTransformation() {
+        try {
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.PARSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -34,6 +34,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * DataComponent for transforming an esterel program stepwise into a syncchart.
@@ -57,6 +58,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
     /** current synccharts root state. */
     private State rootState;
+    private Region rootRegion;
 
     private XtendFacade facade;
 
@@ -114,6 +116,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
                     EditPart selPart = selected.get(0);
                     Object selView = selPart.getModel();
                     EObject selModel = ((View) selView).getElement();
+                    rootRegion = (Region) selModel;
                     State root = ((Region) selModel).getStates().get(0);
                     rootState = root;
                 }
@@ -123,11 +126,11 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     }
 
     /**
-     * @param rootState
+     * @param theRootState
      *            the rootState to set
      */
-    public void setRootState(State rootState) {
-        this.rootState = rootState;
+    public void setRootState(final State theRootState) {
+        this.rootState = theRootState;
     }
 
     /**
@@ -233,5 +236,20 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
         properties[0] = new KiemProperty("Recursive", true);
         return properties;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void doPostTransformation() {
+        try {
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.PARSE);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

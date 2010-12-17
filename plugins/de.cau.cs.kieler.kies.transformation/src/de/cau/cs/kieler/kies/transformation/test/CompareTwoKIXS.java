@@ -88,6 +88,8 @@ public class CompareTwoKIXS implements IActionDelegate {
         // Loading models
 
         try {
+  
+            
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
 
             Resource resource = resourceSet.getResource(kixsURI, true);

@@ -86,6 +86,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                         descriptor.getTransformationName(), descriptor.getParameters(), domain);
             }
         } else {
+            doPostTransformation();
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     MessageDialog.openInformation(shell, "Done",
@@ -144,6 +145,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * @return either the next transformation or <code>null</code>.
      */
     public abstract TransformationDescriptor getNextTransformation();
+
+    /**
+     * this method is called if there are no further steps to do and the transformation will
+     * terminate.
+     */
+    public abstract void doPostTransformation();
 
     /**
      * 
@@ -252,7 +259,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             }
         }
     }
-    
+
     /**
      * @return the domain
      */
