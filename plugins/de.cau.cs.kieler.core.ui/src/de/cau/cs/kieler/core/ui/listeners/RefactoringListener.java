@@ -156,22 +156,24 @@ public class RefactoringListener implements IRefactoringHistoryListener {
     private List<IFile> getUserSelection(final List<IFile> affectedFiles,
             final OP op) {
         final List<IFile> result = new LinkedList<IFile>();
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        if (!affectedFiles.isEmpty()) {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
-            public void run() {
-                // open a dialog displaying the initially found files and
-                // ask the user which of them should be affected
-                Shell shell = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getShell();
+                public void run() {
+                    // open a dialog displaying the initially found files and
+                    // ask the user which of them should be affected
+                    Shell shell = PlatformUI.getWorkbench()
+                            .getActiveWorkbenchWindow().getShell();
 
-                AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
-                        shell, affectedFiles, op);
-                List<IFile> results = dialog.openDialog();
-                if (results != null) {
-                    result.addAll(results);
+                    AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
+                            shell, affectedFiles, op);
+                    List<IFile> results = dialog.openDialog();
+                    if (results != null) {
+                        result.addAll(results);
+                    }
                 }
-            }
-        });
+            });
+        }
         return result;
     }
 
@@ -235,6 +237,9 @@ public class RefactoringListener implements IRefactoringHistoryListener {
     private void find(final List<IFile> result, final IFile root,
             final IPath model, final OP op, final String newName,
             final int index) {
+        if (root == null || root.getFileExtension() == null) {
+            return;
+        }
         if (root.getFileExtension().equals(DIAGRAM_EXTENSIONS[index])) {
             // found relevant file
             try {
