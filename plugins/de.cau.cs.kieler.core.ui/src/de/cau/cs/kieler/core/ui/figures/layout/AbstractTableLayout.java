@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 
-import de.cau.cs.kieler.core.ui.figures.IAttributeAwareFigure;
 import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
 import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;
 import de.cau.cs.kieler.core.ui.figures.layout.container.LayoutSizes;
