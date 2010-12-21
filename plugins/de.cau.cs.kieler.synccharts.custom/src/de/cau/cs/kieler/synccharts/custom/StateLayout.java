@@ -16,7 +16,6 @@ package de.cau.cs.kieler.synccharts.custom;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notifier;
-import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;

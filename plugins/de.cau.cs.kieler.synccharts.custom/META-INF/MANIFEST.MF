@@ -36,9 +36,6 @@ Import-Package: org.eclipse.draw2d,
  org.eclipse.gmf.runtime.notation,
  org.eclipse.ui.part
 Export-Package: de.cau.cs.kieler.synccharts.custom,
- de.cau.cs.kieler.synccharts.custom.contentassist.example,
- de.cau.cs.kieler.synccharts.custom.contentassist.part,
- de.cau.cs.kieler.synccharts.custom.contentassist.providers,
  de.cau.cs.kieler.synccharts.custom.layout,
  de.cau.cs.kieler.synccharts.custom.providers,
  de.cau.cs.kieler.synccharts.custom.update
