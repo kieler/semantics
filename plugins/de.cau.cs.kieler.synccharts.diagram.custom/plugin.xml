@@ -587,5 +587,29 @@
                name="SyncCharts Highlight Selected Transitions">
          </combination>
       </extension>
-
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
+         <propertyTabs
+               contributorId="de.cau.cs.kieler.synccharts.diagram">
+            <propertyTab
+                  category="domain"
+                  id="property.tab.annotations"
+                  label="Annotations">
+            </propertyTab>
+         </propertyTabs>
+      </extension>
+      <extension
+            point="org.eclipse.ui.views.properties.tabbed.propertySections">
+         <propertySections
+               contributorId="de.cau.cs.kieler.synccharts.diagram">
+            <propertySection
+                  class="de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsAnnotationsPropertySection"
+                  id="property.section.annotations"
+                  tab="property.tab.annotations">
+               <input type="org.eclipse.gmf.runtime.notation.View"/>
+               <input type="org.eclipse.gef.EditPart"/>
+               <input type="de.cau.cs.kieler.synccharts.diagram.navigator.SyncchartsAbstractNavigatorItem"/>
+            </propertySection>
+         </propertySections>
+      </extension>
 </plugin>
