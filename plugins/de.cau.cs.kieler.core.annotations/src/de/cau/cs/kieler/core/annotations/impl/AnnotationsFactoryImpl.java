@@ -75,6 +75,7 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
             case AnnotationsPackage.FLOAT_ANNOTATION: return createFloatAnnotation();
             case AnnotationsPackage.CONTAINMENT_ANNOTATION: return createContainmentAnnotation();
             case AnnotationsPackage.IMPORT_ANNOTATION: return createImportAnnotation();
+            case AnnotationsPackage.TYPED_STRING_ANNOTATION: return createTypedStringAnnotation();
             default:
                 throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
         }
@@ -158,6 +159,16 @@ public class AnnotationsFactoryImpl extends EFactoryImpl implements AnnotationsF
     public ImportAnnotation createImportAnnotation() {
         ImportAnnotationImpl importAnnotation = new ImportAnnotationImpl();
         return importAnnotation;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public TypedStringAnnotation createTypedStringAnnotation() {
+        TypedStringAnnotationImpl typedStringAnnotation = new TypedStringAnnotationImpl();
+        return typedStringAnnotation;
     }
 
     /**

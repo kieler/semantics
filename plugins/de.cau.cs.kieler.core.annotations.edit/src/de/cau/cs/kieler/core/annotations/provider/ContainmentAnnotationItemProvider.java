@@ -203,6 +203,11 @@ public class ContainmentAnnotationItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
+                 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (AnnotationsPackage.Literals.CONTAINMENT_ANNOTATION__OBJECT,
                  EcoreFactory.eINSTANCE.createEAttribute()));
 
         newChildDescriptors.add

@@ -267,6 +267,29 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
     }
 
     /**
+     * This keeps track of the one adapter used for all {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation} instances.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected TypedStringAnnotationItemProvider typedStringAnnotationItemProvider;
+
+    /**
+     * This creates an adapter for a {@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation}.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Adapter createTypedStringAnnotationAdapter() {
+        if (typedStringAnnotationItemProvider == null) {
+            typedStringAnnotationItemProvider = new TypedStringAnnotationItemProvider(this);
+        }
+
+        return typedStringAnnotationItemProvider;
+    }
+
+    /**
      * This returns the root adapter factory that contains this factory.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -373,6 +396,7 @@ public class AnnotationsItemProviderAdapterFactory extends AnnotationsAdapterFac
         if (floatAnnotationItemProvider != null) floatAnnotationItemProvider.dispose();
         if (containmentAnnotationItemProvider != null) containmentAnnotationItemProvider.dispose();
         if (importAnnotationItemProvider != null) importAnnotationItemProvider.dispose();
+        if (typedStringAnnotationItemProvider != null) typedStringAnnotationItemProvider.dispose();
     }
 
 }

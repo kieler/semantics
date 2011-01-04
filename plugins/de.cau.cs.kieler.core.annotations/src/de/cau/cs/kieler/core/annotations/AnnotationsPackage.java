@@ -494,6 +494,62 @@ public interface AnnotationsPackage extends EPackage {
 
 
     /**
+     * The meta object id for the '{@link de.cau.cs.kieler.core.annotations.impl.TypedStringAnnotationImpl <em>Typed String Annotation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.core.annotations.impl.TypedStringAnnotationImpl
+     * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getTypedStringAnnotation()
+     * @generated
+     */
+    int TYPED_STRING_ANNOTATION = 10;
+
+    /**
+     * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPED_STRING_ANNOTATION__ANNOTATIONS = STRING_ANNOTATION__ANNOTATIONS;
+
+    /**
+     * The feature id for the '<em><b>Name</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPED_STRING_ANNOTATION__NAME = STRING_ANNOTATION__NAME;
+
+    /**
+     * The feature id for the '<em><b>Value</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPED_STRING_ANNOTATION__VALUE = STRING_ANNOTATION__VALUE;
+
+    /**
+     * The feature id for the '<em><b>Type</b></em>' attribute.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPED_STRING_ANNOTATION__TYPE = STRING_ANNOTATION_FEATURE_COUNT + 0;
+
+    /**
+     * The number of structural features of the '<em>Typed String Annotation</em>' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     * @ordered
+     */
+    int TYPED_STRING_ANNOTATION_FEATURE_COUNT = STRING_ANNOTATION_FEATURE_COUNT + 1;
+
+
+    /**
      * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.NamedObject <em>Named Object</em>}'.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -693,6 +749,27 @@ public interface AnnotationsPackage extends EPackage {
     EAttribute getImportAnnotation_ImportURI();
 
     /**
+     * Returns the meta object for class '{@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation <em>Typed String Annotation</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for class '<em>Typed String Annotation</em>'.
+     * @see de.cau.cs.kieler.core.annotations.TypedStringAnnotation
+     * @generated
+     */
+    EClass getTypedStringAnnotation();
+
+    /**
+     * Returns the meta object for the attribute '{@link de.cau.cs.kieler.core.annotations.TypedStringAnnotation#getType <em>Type</em>}'.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @return the meta object for the attribute '<em>Type</em>'.
+     * @see de.cau.cs.kieler.core.annotations.TypedStringAnnotation#getType()
+     * @see #getTypedStringAnnotation()
+     * @generated
+     */
+    EAttribute getTypedStringAnnotation_Type();
+
+    /**
      * Returns the factory that creates the instances of the model.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -885,6 +962,24 @@ public interface AnnotationsPackage extends EPackage {
          * @generated
          */
         EAttribute IMPORT_ANNOTATION__IMPORT_URI = eINSTANCE.getImportAnnotation_ImportURI();
+
+        /**
+         * The meta object literal for the '{@link de.cau.cs.kieler.core.annotations.impl.TypedStringAnnotationImpl <em>Typed String Annotation</em>}' class.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @see de.cau.cs.kieler.core.annotations.impl.TypedStringAnnotationImpl
+         * @see de.cau.cs.kieler.core.annotations.impl.AnnotationsPackageImpl#getTypedStringAnnotation()
+         * @generated
+         */
+        EClass TYPED_STRING_ANNOTATION = eINSTANCE.getTypedStringAnnotation();
+
+        /**
+         * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+         * <!-- begin-user-doc -->
+         * <!-- end-user-doc -->
+         * @generated
+         */
+        EAttribute TYPED_STRING_ANNOTATION__TYPE = eINSTANCE.getTypedStringAnnotation_Type();
 
     }
 

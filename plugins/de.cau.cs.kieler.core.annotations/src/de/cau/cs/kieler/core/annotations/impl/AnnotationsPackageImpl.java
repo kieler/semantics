@@ -26,6 +26,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
 import de.cau.cs.kieler.core.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 
+import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EGenericType;
@@ -112,6 +113,13 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * @generated
      */
     private EClass importAnnotationEClass = null;
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    private EClass typedStringAnnotationEClass = null;
 
     /**
      * Creates an instance of the model <b>Package</b>, registered with
@@ -353,6 +361,24 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
      * <!-- end-user-doc -->
      * @generated
      */
+    public EClass getTypedStringAnnotation() {
+        return typedStringAnnotationEClass;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    public EAttribute getTypedStringAnnotation_Type() {
+        return (EAttribute)typedStringAnnotationEClass.getEStructuralFeatures().get(0);
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
     public AnnotationsFactory getAnnotationsFactory() {
         return (AnnotationsFactory)getEFactoryInstance();
     }
@@ -404,6 +430,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         importAnnotationEClass = createEClass(IMPORT_ANNOTATION);
         createEAttribute(importAnnotationEClass, IMPORT_ANNOTATION__IMPORT_URI);
+
+        typedStringAnnotationEClass = createEClass(TYPED_STRING_ANNOTATION);
+        createEAttribute(typedStringAnnotationEClass, TYPED_STRING_ANNOTATION__TYPE);
     }
 
     /**
@@ -446,6 +475,7 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         floatAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         containmentAnnotationEClass.getESuperTypes().add(this.getAnnotation());
         importAnnotationEClass.getESuperTypes().add(this.getAnnotation());
+        typedStringAnnotationEClass.getESuperTypes().add(this.getStringAnnotation());
 
         // Initialize classes and features; add operations and parameters
         initEClass(namedObjectEClass, NamedObject.class, "NamedObject", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -486,6 +516,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
 
         initEClass(importAnnotationEClass, ImportAnnotation.class, "ImportAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
         initEAttribute(getImportAnnotation_ImportURI(), ecorePackage.getEString(), "importURI", null, 0, 1, ImportAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+        initEClass(typedStringAnnotationEClass, TypedStringAnnotation.class, "TypedStringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+        initEAttribute(getTypedStringAnnotation_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypedStringAnnotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
         // Create resource
         createResource(eNS_URI);
