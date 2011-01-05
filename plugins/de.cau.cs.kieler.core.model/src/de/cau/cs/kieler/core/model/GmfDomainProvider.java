@@ -15,6 +15,7 @@ package de.cau.cs.kieler.core.model;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.notation.View;
 
@@ -40,6 +41,19 @@ public class GmfDomainProvider implements IDomainProvider {
                 return view.getElement();
             }
             return (EObject) adaptable.getAdapter(EObject.class);
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public TransactionalEditingDomain getEditingDomain(final Object object) {
+        if (object instanceof IGraphicalEditPart) {
+            return ((IGraphicalEditPart) object).getEditingDomain();
+        } else if (object instanceof IAdaptable) {
+            IAdaptable adaptable = (IAdaptable) object;
+            return (TransactionalEditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
         }
         return null;
     }
