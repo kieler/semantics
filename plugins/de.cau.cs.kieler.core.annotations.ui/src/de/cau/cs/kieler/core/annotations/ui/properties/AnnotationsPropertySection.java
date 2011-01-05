@@ -14,20 +14,27 @@
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
+import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
+import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
+import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
 import de.cau.cs.kieler.core.model.IDomainProvider;
 
 /**
@@ -53,11 +60,10 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
     private Annotatable annotatable;
     /** the editing domain for changes to the model. */
     private TransactionalEditingDomain editingDomain;
-    
     /** the domain model provider used to retrieve annotatable elements. */
     private IDomainProvider domainProvider;
-    /** the columns of the tree viewer. */
-    private TreeColumn[] columns;
+    /** the widths of the columns of the tree viewer. */
+    private int[] columnWidth;
     
     /**
      * Creates a property section for annotations based on the given domain model provider.
@@ -73,35 +79,13 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
      * {@inheritDoc}
      */
     @Override
-    public void createControls(Composite parent,
-            TabbedPropertySheetPage tabbedPropertySheetPage) {
+    public void createControls(final Composite parent,
+            final TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
         final Composite composite = getWidgetFactory().createFlatFormComposite(parent);
         viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.SINGLE
                 | SWT.HIDE_SELECTION);
-        IPreferenceStore preferenceStore = AnnotationsActivator.getInstance().getPreferenceStore();
-        
-        // create columns
-        columns = new TreeColumn[2];
-        TreeViewerColumn annotationCol = new TreeViewerColumn(viewer, SWT.NONE);
-        int width = preferenceStore.getInt(PREF_COL_WIDTH + COL_ANNOTATION);
-        if (width <= 2) {
-            width = DEFAULT_COL_WIDTH;
-        }
-        columns[COL_ANNOTATION] = annotationCol.getColumn();
-        columns[COL_ANNOTATION].setWidth(width);
-        columns[COL_ANNOTATION].setText("Annotation");
-        columns[COL_ANNOTATION].setResizable(true);
-        TreeViewerColumn valueCol = new TreeViewerColumn(viewer, SWT.NONE);
-        width = preferenceStore.getInt(PREF_COL_WIDTH + COL_VALUE);
-        if (width <= 2) {
-            width = DEFAULT_COL_WIDTH;
-        }
-        columns[COL_VALUE] = valueCol.getColumn();
-        columns[COL_VALUE].setWidth(width);
-        columns[COL_VALUE].setText("Value");
-        columns[COL_VALUE].setResizable(true);
-        valueCol.setEditingSupport(new AnnotationsEditingSupport(viewer, this));
+        createColumns();
         viewer.getTree().setHeaderVisible(true);
         viewer.getTree().setLinesVisible(true);
 
@@ -117,6 +101,58 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
         formData.top = new FormAttachment(0, 0);
         formData.bottom = new FormAttachment(100, 0);
         viewer.getControl().setLayoutData(formData);
+        
+        // create context menu for the tree viewer
+        MenuManager menuManager = new MenuManager("#PopupMenu");
+        menuManager.add(new AddAnnotationAction(this, AddHow.TOP_LEVEL));
+        menuManager.add(new AddAnnotationAction(this, AddHow.SUB_ANNOT));
+        Menu menu = menuManager.createContextMenu(viewer.getControl());
+        viewer.getControl().setMenu(menu);
+    }
+    
+    /**
+     * Create the columns for the tree viewer.
+     */
+    private void createColumns() {
+        IPreferenceStore preferenceStore = AnnotationsActivator.getInstance().getPreferenceStore();
+        columnWidth = new int[2];
+
+        // create column for annotation name
+        final TreeViewerColumn annotationCol = new TreeViewerColumn(viewer, SWT.NONE);
+        int width = preferenceStore.getInt(PREF_COL_WIDTH + COL_ANNOTATION);
+        if (width <= 2) {
+            width = DEFAULT_COL_WIDTH;
+        }
+        TreeColumn column = annotationCol.getColumn();
+        column.setWidth(width);
+        column.setText("Annotation");
+        column.setResizable(true);
+        column.addControlListener(new ControlListener() {
+            public void controlResized(ControlEvent e) {
+                columnWidth[COL_ANNOTATION] = annotationCol.getColumn().getWidth();
+            }
+            public void controlMoved(ControlEvent e) {
+            }
+        });
+        
+        // create column for annotation value
+        final TreeViewerColumn valueCol = new TreeViewerColumn(viewer, SWT.NONE);
+        width = preferenceStore.getInt(PREF_COL_WIDTH + COL_VALUE);
+        if (width <= 2) {
+            width = DEFAULT_COL_WIDTH;
+        }
+        column = valueCol.getColumn();
+        column.setWidth(width);
+        column.setText("Value");
+        column.setResizable(true);
+        column.addControlListener(new ControlListener() {
+            public void controlResized(ControlEvent e) {
+                columnWidth[COL_VALUE] = valueCol.getColumn().getWidth();
+            }
+            public void controlMoved(ControlEvent e) {
+            }
+        });
+        valueCol.setEditingSupport(new AnnotationsEditingSupport(viewer, this));
     }
     
     /**
@@ -132,10 +168,10 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
      */
     @Override
     public void dispose() {
-        if (columns != null) {
+        if (columnWidth != null) {
             IPreferenceStore preferenceStore = AnnotationsActivator.getInstance().getPreferenceStore();
-            for (int i = 0; i < columns.length; i++) {
-                preferenceStore.setValue(PREF_COL_WIDTH + i, columns[i].getWidth());
+            for (int i = 0; i < columnWidth.length; i++) {
+                preferenceStore.setValue(PREF_COL_WIDTH + i, columnWidth[i]);
             }
         }
         super.dispose();
@@ -167,12 +203,35 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
     }
     
     /**
+     * Returns the currently selected annotatable.
+     * 
+     * @return the selected annotatable
+     */
+    public Annotatable getAnnotatable() {
+        return annotatable;
+    }
+    
+    /**
      * Returns the editing domain for model changes.
      * 
      * @return the editing domain
      */
     public TransactionalEditingDomain getEditingDomain() {
         return editingDomain;
+    }
+    
+    /**
+     * Returns the currently selected annotation in the table.
+     * 
+     * @return the selected annotation
+     */
+    public Annotation getTableSelection() {
+        TreeItem[] selection = viewer.getTree().getSelection();
+        if (selection.length > 0 && selection[0].getData() instanceof Annotation) {
+            return (Annotation) selection[0].getData();
+        } else {
+            return null;
+        }
     }
 
 }

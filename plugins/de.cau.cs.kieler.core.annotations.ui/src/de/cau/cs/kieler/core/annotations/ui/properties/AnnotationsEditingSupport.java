@@ -27,10 +27,12 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.annotations.ui.AnnotationType;
 import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
 
 /**
@@ -75,9 +77,11 @@ public class AnnotationsEditingSupport extends EditingSupport {
     @Override
     protected CellEditor getCellEditor(final Object element) {
         Composite parent = (Composite) getViewer().getControl();
-        if (element instanceof StringAnnotation) {
+        switch (AnnotationType.of((Annotation) element)) {
+        case STRING:
+        case TYPED_STRING:
             return new TextCellEditor(parent);
-        } else if (element instanceof IntAnnotation) {
+        case INT:
             CellEditor intEditor = new TextCellEditor(parent);
             intEditor.setValidator(new ICellEditorValidator() {
                 public String isValid(final Object value) {
@@ -90,7 +94,7 @@ public class AnnotationsEditingSupport extends EditingSupport {
                 }
             });
             return intEditor;
-        } else if (element instanceof FloatAnnotation) {
+        case FLOAT:
             CellEditor floatEditor = new TextCellEditor(parent);
             floatEditor.setValidator(new ICellEditorValidator() {
                 public String isValid(final Object value) {
@@ -103,7 +107,7 @@ public class AnnotationsEditingSupport extends EditingSupport {
                 }
             });
             return floatEditor;
-        } else if (element instanceof BooleanAnnotation) {
+        case BOOLEAN:
             ComboBoxCellEditor boolEditor = new ComboBoxCellEditor(parent,
                     BOOLEAN_CHOICES, SWT.READ_ONLY);
             return boolEditor;
@@ -116,13 +120,15 @@ public class AnnotationsEditingSupport extends EditingSupport {
      */
     @Override
     protected Object getValue(final Object element) {
-        if (element instanceof StringAnnotation) {
+        switch (AnnotationType.of((Annotation) element)) {
+        case STRING:
+        case TYPED_STRING:
             return ((StringAnnotation) element).getValue();
-        } else if (element instanceof IntAnnotation) {
+        case INT:
             return Integer.toString(((IntAnnotation) element).getValue());
-        } else if (element instanceof FloatAnnotation) {
+        case FLOAT:
             return Float.toString(((FloatAnnotation) element).getValue());
-        } else if (element instanceof BooleanAnnotation) {
+        case BOOLEAN:
             return ((BooleanAnnotation) element).isValue()
                     ? Integer.valueOf(1) : Integer.valueOf(0);
         }
@@ -139,22 +145,28 @@ public class AnnotationsEditingSupport extends EditingSupport {
             editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
                     "Modify Annotation") {
                 protected void doExecute() {
-                    if (element instanceof StringAnnotation) {
+                    switch (AnnotationType.of((Annotation) element)) {
+                    case STRING:
+                    case TYPED_STRING:
                         ((StringAnnotation) element).setValue((String) value);
-                    } else if (element instanceof IntAnnotation) {
+                        break;
+                    case INT:
                         try {
                             ((IntAnnotation) element).setValue(Integer.parseInt((String) value));
                         } catch (NumberFormatException exception) {
                             // ignore exception
                         }
-                    } else if (element instanceof FloatAnnotation) {
+                        break;
+                    case FLOAT:
                         try {
                             ((FloatAnnotation) element).setValue(Float.parseFloat((String) value));
                         } catch (NumberFormatException exception) {
                             // ignore exception
                         }
-                    } else if (element instanceof BooleanAnnotation) {
+                        break;
+                    case BOOLEAN:
                         ((BooleanAnnotation) element).setValue(((Integer) value) == 1);
+                        break;
                     }
                 }
             });
