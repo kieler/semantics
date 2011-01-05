@@ -26,6 +26,9 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
+import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
+import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin.Images;
+import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 
 /**
  * Label provider for annotations.
@@ -38,6 +41,22 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
      * {@inheritDoc}
      */
     public Image getColumnImage(Object element, int columnIndex) {
+        if (columnIndex == AnnotationsPropertySection.COL_VALUE) {
+            Images images = ((AnnotationsUiPlugin) AnnotationsActivator.getInstance()).getImages();
+            if (element instanceof StringAnnotation) {
+                return images.get("prop_text");
+            } else if (element instanceof IntAnnotation) {
+                return images.get("prop_int");
+            } else if (element instanceof BooleanAnnotation) {
+                if (((BooleanAnnotation) element).isValue()) {
+                    return images.get("prop_true");
+                } else {
+                    return images.get("prop_false");
+                }
+            } else if (element instanceof FloatAnnotation) {
+                return images.get("prop_float");
+            }
+        }
         return null;
     }
 

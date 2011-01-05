@@ -20,7 +20,7 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
-Bundle-Activator: de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator
+Bundle-Activator: de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin
 Export-Package: de.cau.cs.kieler.core.annotations.ui,
  de.cau.cs.kieler.core.annotations.ui.contentassist,
  de.cau.cs.kieler.core.annotations.ui.contentassist.antlr,
