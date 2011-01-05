@@ -53,6 +53,12 @@ public class AddAnnotationAction extends Action {
     /** the property section for annotations. */
     private AnnotationsPropertySection propertySection;
     
+    /**
+     * Creates an action for adding annotations.
+     * 
+     * @param thepropertySection the property section for annotations
+     * @param thehow whether to add annotations on top level or as sub-annotations
+     */
     public AddAnnotationAction(final AnnotationsPropertySection thepropertySection,
             final AddHow thehow) {
         switch (thehow) {

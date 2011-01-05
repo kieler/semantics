@@ -106,6 +106,7 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
         MenuManager menuManager = new MenuManager("#PopupMenu");
         menuManager.add(new AddAnnotationAction(this, AddHow.TOP_LEVEL));
         menuManager.add(new AddAnnotationAction(this, AddHow.SUB_ANNOT));
+        menuManager.add(new RemoveAnnotationAction(this));
         Menu menu = menuManager.createContextMenu(viewer.getControl());
         viewer.getControl().setMenu(menu);
     }
