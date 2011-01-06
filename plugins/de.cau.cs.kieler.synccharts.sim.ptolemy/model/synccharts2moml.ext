@@ -1,6 +1,6 @@
 //import annotatations;
 //import ecore;
-import expressions;
+import kexpressions;
 import synccharts;
 
 import moml;
@@ -445,12 +445,12 @@ Void n2wState(List[synccharts::Region] regionList) :
 
 Void n2wTransition(List[synccharts::Transition] transitionList, synccharts::State state) :
   let transition = transitionList.first():
-  let operatorExpression = new expressions::OperatorExpression:
+  let operatorExpression = new kexpressions::OperatorExpression:
   dump("TEST TRANSITION "+getURIFragment(transition)) ->
   (transitionList.withoutFirst().size > 0) ?
      n2wTransition(transitionList.withoutFirst(), state) : null ->
    //add a new operator/complex expression trigger (will be filled recusively)
-   operatorExpression.setOperator(expressions::OperatorType::AND) ->
+   operatorExpression.setOperator(kexpressions::OperatorType::AND) ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
     transition.setTrigger(operatorExpression) : null ->
   (transition.type.toString().matches("NORMALTERMINATION") && (state.regions.size > 0)) ?
@@ -470,12 +470,12 @@ Void n2wBuildTriggerState(List[synccharts::Region] regionList,
 					        synccharts::Transition weakAbortTransition) :
   let region = regionList.first():
   let regionSignalName = "finished_" + hash(region.states.flatten().toString()):
-  let regionSignal = new expressions::Signal:
-  let valuedObjectReference = new expressions::ValuedObjectReference:
+  let regionSignal = new kexpressions::Signal:
+  let valuedObjectReference = new kexpressions::ValuedObjectReference:
   let trigger = weakAbortTransition.trigger:
    //construct a new (local) signal
    regionSignal.setName(regionSignalName) ->
-   regionSignal.setType(expressions::ValueType::PURE) ->
+   regionSignal.setType(kexpressions::ValueType::PURE) ->
    //add signal to main state
    mainState.signals.add(regionSignal) ->
    //construct a new signal reference (for trigger) and add it
@@ -1548,7 +1548,7 @@ boolean isMacroState(synccharts::State state) :
 ; 
 
 //Construct the trigger.
-String buildTrigger(expressions::Expression expression, 
+String buildTrigger(kexpressions::Expression expression, 
 					String terminatedURIHash) :
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			buildTrigger(de.cau.cs.kieler.core.kexpressions.Expression, 
