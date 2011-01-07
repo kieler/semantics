@@ -100,9 +100,37 @@ Set[String] getEmfId(StateMachine sm, String maudeStateId) :
 
 //-----------------------------------------------------------------------------
 
+// Tests whether this initial PseudoState vertex has a parent containing state that is
+//   1. the top-level state machine OR 
+//   2. is marked DIRECTLY by an initial state (or a chain of beginning with a top-level state machine).
+boolean hasInitialParent(Vertex vertex):
+	let isStateMachine = vertex.eContainer.eContainer.metaType == StateMachine:
+	let isInitialContainer = ((vertex.eContainer.eContainer.metaType == State) &&
+	                          (getInitialPseudostatesPointingTo((State)vertex.eContainer.eContainer).size > 0)
+	                         ):
+	switch {
+	  // the easy case
+	  case isStateMachine : true
+	  // validate recursiveley
+	  case isInitialContainer : hasInitialParent(getInitialPseudostatesPointingTo((State)vertex.eContainer.eContainer).first())
+	  // if nothing from above is true we can give up 
+	  default : false
+	}
+;
+
+
+// Get the list of InitialPseudo vertices pointing to a state (if any exists, null otherwise)
+List[Vertex] getInitialPseudostatesPointingTo(State state):
+	let initialPseudoStates = (Set[Vertex])state.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	// target gets a list of targets, the state we are searching for must appear in that list
+	initialPseudoStates.flatten().select(e|e.outgoing.target.contains(state))
+;
+
+
 // Get ids of all initial state targets and their regions
 Set[String] getInitialStates(Package package):
-	let initialPseudoStates = (Set[Vertex])package.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let allInitialPseudoStates = (Set[Vertex])package.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let initialPseudoStates = allInitialPseudoStates.select(e|e.hasInitialParent()):
 	let initialStates = initialPseudoStates.outgoing.target:
 	let initialRegions = initialStates.getParent():
 	let all = initialStates.addAll(initialRegions):
@@ -111,7 +139,8 @@ Set[String] getInitialStates(Package package):
 
 // Get ids of all initial state targets and their regions
 Set[String] getInitialStates(StateMachine sm):
-	let initialPseudoStates = (Set[Vertex])sm.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let allInitialPseudoStates = (Set[Vertex])sm.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
+	let initialPseudoStates = allInitialPseudoStates.select(e|e.hasInitialParent()):
 	let initialStates = initialPseudoStates.outgoing.target:
 	let initialRegions = initialStates.getParent():
 	let all = initialStates.addAll(initialRegions):
