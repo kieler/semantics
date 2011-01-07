@@ -119,7 +119,7 @@ boolean hasInitialParent(Vertex vertex):
 ;
 
 
-// Get the list of InitialPseudo vertices pointing to a state (if any exists, null otherwise)
+// Get the list of InitialPseudo vertices pointing to a state 
 List[Vertex] getInitialPseudostatesPointingTo(State state):
 	let initialPseudoStates = (Set[Vertex])state.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((Vertex)e).isInitial()):
 	// target gets a list of targets, the state we are searching for must appear in that list
