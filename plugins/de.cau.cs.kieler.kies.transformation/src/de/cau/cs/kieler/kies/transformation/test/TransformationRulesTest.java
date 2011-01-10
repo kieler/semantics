@@ -65,7 +65,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
 public class TransformationRulesTest {
 
     // FIXME
-    private String pathToWS = "/../eclipseWS3/";
+    private String pathToWS = "/../eclipse WS/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
 

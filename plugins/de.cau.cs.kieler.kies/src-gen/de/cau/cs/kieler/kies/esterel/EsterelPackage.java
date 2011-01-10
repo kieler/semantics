@@ -4189,7 +4189,7 @@ public interface EsterelPackage extends EPackage
   int CONSTANT_EXPRESSION__CONSTANT = KExpressionsPackage.EXPRESSION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -7244,15 +7244,15 @@ public interface EsterelPackage extends EPackage
   EReference getConstantExpression_Constant();
 
   /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kies.esterel.ConstantExpression#getValue <em>Value</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.kies.esterel.ConstantExpression#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @return the meta object for the attribute '<em>Value</em>'.
    * @see de.cau.cs.kieler.kies.esterel.ConstantExpression#getValue()
    * @see #getConstantExpression()
    * @generated
    */
-  EReference getConstantExpression_Value();
+  EAttribute getConstantExpression_Value();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kies.esterel.TrapReferenceExpr <em>Trap Reference Expr</em>}'.
@@ -9750,12 +9750,12 @@ public interface EsterelPackage extends EPackage
     EReference CONSTANT_EXPRESSION__CONSTANT = eINSTANCE.getConstantExpression_Constant();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference CONSTANT_EXPRESSION__VALUE = eINSTANCE.getConstantExpression_Value();
+    EAttribute CONSTANT_EXPRESSION__VALUE = eINSTANCE.getConstantExpression_Value();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kies.esterel.impl.TrapReferenceExprImpl <em>Trap Reference Expr</em>}' class.

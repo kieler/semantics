@@ -435,7 +435,7 @@ FunctionExpression returns kexpressions::Expression:
 	{FunctionExpression} function=[Function|ID] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
 
 ConstantExpression returns kexpressions::Expression:
-	{ConstantExpression} (constant=[Constant|ID] | value=ConstantValue);
+	{ConstantExpression} (constant=[Constant|ID] | value=ConstantAtom);
 
 	// --> B.3.5 Trap Expressions <--
 // -------------------------------------

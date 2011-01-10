@@ -3749,9 +3749,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getConstantExpression_Value()
+  public EAttribute getConstantExpression_Value()
   {
-    return (EReference)constantExpressionEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)constantExpressionEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -4178,7 +4178,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     constantExpressionEClass = createEClass(CONSTANT_EXPRESSION);
     createEReference(constantExpressionEClass, CONSTANT_EXPRESSION__CONSTANT);
-    createEReference(constantExpressionEClass, CONSTANT_EXPRESSION__VALUE);
+    createEAttribute(constantExpressionEClass, CONSTANT_EXPRESSION__VALUE);
 
     trapReferenceExprEClass = createEClass(TRAP_REFERENCE_EXPR);
   }
@@ -4652,7 +4652,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(constantExpressionEClass, ConstantExpression.class, "ConstantExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConstantExpression_Constant(), this.getConstant(), null, "constant", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getConstantExpression_Value(), this.getConstantValue(), null, "value", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstantExpression_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(trapReferenceExprEClass, TrapReferenceExpr.class, "TrapReferenceExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

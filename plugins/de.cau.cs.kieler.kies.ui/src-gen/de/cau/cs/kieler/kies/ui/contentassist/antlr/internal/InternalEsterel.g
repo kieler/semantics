@@ -773,32 +773,6 @@ finally {
 
 
 
-// Entry rule entryRuleConstantValue
-entryRuleConstantValue 
-:
-{ before(grammarAccess.getConstantValueRule()); }
-	 ruleConstantValue
-{ after(grammarAccess.getConstantValueRule()); } 
-	 EOF 
-;
-
-// Rule ConstantValue
-ruleConstantValue
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getConstantValueAccess().getAlternatives()); }
-(rule__ConstantValue__Alternatives)
-{ after(grammarAccess.getConstantValueAccess().getAlternatives()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
 
 
 // Entry rule entryRuleFunctionDecl
@@ -4825,27 +4799,6 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstantValue__Alternatives
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getConstantValueAccess().getValueAssignment_0()); }
-(rule__ConstantValue__ValueAssignment_0)
-{ after(grammarAccess.getConstantValueAccess().getValueAssignment_0()); }
-)
-
-    |(
-{ before(grammarAccess.getConstantValueAccess().getIntValueAssignment_1()); }
-(rule__ConstantValue__IntValueAssignment_1)
-{ after(grammarAccess.getConstantValueAccess().getIntValueAssignment_1()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
 
 rule__AtomicStatement__Alternatives
     @init {
@@ -26422,35 +26375,7 @@ finally {
 	restoreStackSize(stackSize);
 }
 
-rule__ConstantValue__ValueAssignment_0
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getConstantValueAccess().getValueConstantLiteralParserRuleCall_0_0()); }
-	ruleConstantLiteral{ after(grammarAccess.getConstantValueAccess().getValueConstantLiteralParserRuleCall_0_0()); }
-)
 
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__ConstantValue__IntValueAssignment_1
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getConstantValueAccess().getIntValueINTTerminalRuleCall_1_0()); }
-	RULE_INT{ after(grammarAccess.getConstantValueAccess().getIntValueINTTerminalRuleCall_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
 
 rule__FunctionDecl__FunctionsAssignment_1
     @init {
@@ -29113,8 +29038,8 @@ rule__ConstantExpression__ValueAssignment_1_1
     }
 :
 (
-{ before(grammarAccess.getConstantExpressionAccess().getValueConstantValueParserRuleCall_1_1_0()); }
-	ruleConstantValue{ after(grammarAccess.getConstantExpressionAccess().getValueConstantValueParserRuleCall_1_1_0()); }
+{ before(grammarAccess.getConstantExpressionAccess().getValueConstantAtomParserRuleCall_1_1_0()); }
+	ruleConstantAtom{ after(grammarAccess.getConstantExpressionAccess().getValueConstantAtomParserRuleCall_1_1_0()); }
 )
 
 ;

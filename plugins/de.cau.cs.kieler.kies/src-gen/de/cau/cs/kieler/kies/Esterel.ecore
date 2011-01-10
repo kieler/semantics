@@ -494,8 +494,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantExpression" eSuperTypes="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="constant" eType="#//Constant"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//ConstantValue"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TrapReferenceExpr" eSuperTypes="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ValuedObjectReference"/>
 </ecore:EPackage>

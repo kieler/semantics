@@ -1041,25 +1041,40 @@ Expression convertEsterelExpression(Void v):
 Expression convertEsterelExpression(ConstantExpression te):
     let textExpr = new TextExpression:
     textExpr.setCode("todo") ->
-    switch {
-        case te.value != null && te.value.value != null :
+    convertConstantExpressionJava(te)
+    
+    //switch {
+        /*case te.value != null && te.value.value != null :
             (switch {
                 /*case Float.isInstance(te.value.value) :
                     (let fltVal = new FloatValue:
                      fltVal.setValue((Float) e.value.value) ->
                      fltVal)*/
-                default:
+                /*default:
                     textExpr
             })
         case te.value != null && te.value.intValue != null:
             (let intVal = new IntValue:
              intVal.setValue(te.value.intValue) ->
-             intVal)
+             intVal)*/
+        /*case te.value != null :
+        	(switch {
+        		case Integer.isInstance(te.value):
+        			(let intVal = new IntValue:
+             		intVal.setValue((Integer) te.value) ->
+             		intVal)
+             	case Float.isInstance(te.value):
+             		(let floatVal = new FloatValue:
+             		floatVal.setValue((Float) te.value) ->
+             		floatVal)             	
+        		default:
+        			textExpr
+        	})
         case te.constant != null:
             te.constant.name
         default:
             textExpr
-    }
+    }*/
 ;
 
 List copyList(List list):
@@ -1068,6 +1083,9 @@ List copyList(List list):
 ;
 
 
+Void convertConstantExpressionJava(ConstantExpression e):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
+;
  
 emf::EObject castToEMF(emf::EObject o):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)

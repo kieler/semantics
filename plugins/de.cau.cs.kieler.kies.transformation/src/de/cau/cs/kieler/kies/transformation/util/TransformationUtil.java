@@ -62,6 +62,7 @@ import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
+import de.cau.cs.kieler.kies.esterel.ConstantExpression;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.synccharts.Region;
@@ -146,6 +147,14 @@ public final class TransformationUtil {
             s.setType(StateType.TEXTUAL);
             code.setCode(TransformationUtil.getSerializedString(obj));
             s.getBodyText().add(code);
+        }
+    }
+
+    public static void convertConstantExpression(ConstantExpression cexpr) {
+        if (cexpr.getValue() != null) {
+            System.out.println(cexpr.getValue());
+        } else if (cexpr.getConstant() != null) {
+            System.out.println("constant");
         }
     }
 

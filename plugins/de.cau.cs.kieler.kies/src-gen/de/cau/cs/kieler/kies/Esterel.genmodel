@@ -379,7 +379,7 @@
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//ConstantExpression">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/constant"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/value"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantExpression/value"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//TrapReferenceExpr"/>
   </genPackages>

@@ -2413,76 +2413,6 @@ ruleConstantLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
 
 
 
-// Entry rule entryRuleConstantValue
-entryRuleConstantValue returns [EObject current=null] 
-	:
-	{ currentNode = createCompositeNode(grammarAccess.getConstantValueRule(), currentNode); }
-	 iv_ruleConstantValue=ruleConstantValue 
-	 { $current=$iv_ruleConstantValue.current; } 
-	 EOF 
-;
-
-// Rule ConstantValue
-ruleConstantValue returns [EObject current=null] 
-    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
-    }
-    @after { resetLookahead(); 
-    	lastConsumedNode = currentNode;
-    }:
-((
-(
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getConstantValueAccess().getValueConstantLiteralParserRuleCall_0_0(), currentNode); 
-	    }
-		lv_value_0_0=ruleConstantLiteral		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getConstantValueRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"value",
-	        		lv_value_0_0, 
-	        		"ConstantLiteral", 
-	        		currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-
-)
-)
-    |(
-(
-		lv_intValue_1_0=RULE_INT
-		{
-			createLeafNode(grammarAccess.getConstantValueAccess().getIntValueINTTerminalRuleCall_1_0(), "intValue"); 
-		}
-		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getConstantValueRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode, $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"intValue",
-	        		lv_intValue_1_0, 
-	        		"INT", 
-	        		lastConsumedNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	    }
-
-)
-))
-;
-
-
-
 
 
 // Entry rule entryRuleFunctionDecl
@@ -9426,9 +9356,9 @@ ruleConstantExpression returns [EObject current=null]
     |(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getConstantExpressionAccess().getValueConstantValueParserRuleCall_1_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getConstantExpressionAccess().getValueConstantAtomParserRuleCall_1_1_0(), currentNode); 
 	    }
-		lv_value_2_0=ruleConstantValue		{
+		lv_value_2_0=ruleConstantAtom		{
 	        if ($current==null) {
 	            $current = factory.create(grammarAccess.getConstantExpressionRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
@@ -9438,7 +9368,7 @@ ruleConstantExpression returns [EObject current=null]
 	       			$current, 
 	       			"value",
 	        		lv_value_2_0, 
-	        		"ConstantValue", 
+	        		"ConstantAtom", 
 	        		currentNode);
 	        } catch (ValueConverterException vce) {
 				handleValueConverterException(vce);
