@@ -108,6 +108,15 @@ public interface EsterelFactory extends EFactory
   SensorDecl createSensorDecl();
 
   /**
+   * Returns a new object of class '<em>Sensor With Type</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Sensor With Type</em>'.
+   * @generated
+   */
+  SensorWithType createSensorWithType();
+
+  /**
    * Returns a new object of class '<em>Relation Decl</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -817,15 +826,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   ExecCase createExecCase();
-
-  /**
-   * Returns a new object of class '<em>Sensor With Type</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Sensor With Type</em>'.
-   * @generated
-   */
-  SensorWithType createSensorWithType();
 
   /**
    * Returns a new object of class '<em>Type Identifier</em>'.

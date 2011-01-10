@@ -171,6 +171,13 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsterelPackage.SENSOR_WITH_TYPE:
+      {
+        SensorWithType sensorWithType = (SensorWithType)theEObject;
+        T result = caseSensorWithType(sensorWithType);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case EsterelPackage.RELATION_DECL:
       {
         RelationDecl relationDecl = (RelationDecl)theEObject;
@@ -757,13 +764,6 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.SENSOR_WITH_TYPE:
-      {
-        SensorWithType sensorWithType = (SensorWithType)theEObject;
-        T result = caseSensorWithType(sensorWithType);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.ESTEREL_TYPE_IDENTIFIER:
       {
         EsterelTypeIdentifier esterelTypeIdentifier = (EsterelTypeIdentifier)theEObject;
@@ -1040,6 +1040,22 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseSensorDecl(SensorDecl object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSensorWithType(SensorWithType object)
   {
     return null;
   }
@@ -2304,22 +2320,6 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseExecCase(ExecCase object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Sensor With Type</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSensorWithType(SensorWithType object)
   {
     return null;
   }

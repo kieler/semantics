@@ -133,6 +133,11 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createSensorDeclAdapter();
       }
       @Override
+      public Adapter caseSensorWithType(SensorWithType object)
+      {
+        return createSensorWithTypeAdapter();
+      }
+      @Override
       public Adapter caseRelationDecl(RelationDecl object)
       {
         return createRelationDeclAdapter();
@@ -528,11 +533,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createExecCaseAdapter();
       }
       @Override
-      public Adapter caseSensorWithType(SensorWithType object)
-      {
-        return createSensorWithTypeAdapter();
-      }
-      @Override
       public Adapter caseEsterelTypeIdentifier(EsterelTypeIdentifier object)
       {
         return createEsterelTypeIdentifierAdapter();
@@ -805,6 +805,21 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createSensorDeclAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kies.esterel.SensorWithType <em>Sensor With Type</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.kies.esterel.SensorWithType
+   * @generated
+   */
+  public Adapter createSensorWithTypeAdapter()
   {
     return null;
   }
@@ -1990,21 +2005,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExecCaseAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kies.esterel.SensorWithType <em>Sensor With Type</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kies.esterel.SensorWithType
-   * @generated
-   */
-  public Adapter createSensorWithTypeAdapter()
   {
     return null;
   }

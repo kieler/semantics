@@ -18,7 +18,7 @@ import org.eclipse.emf.common.util.EList;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionExpression#getFuncion <em>Funcion</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionExpression#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.FunctionExpression#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
  * </p>
@@ -30,30 +30,30 @@ import org.eclipse.emf.common.util.EList;
 public interface FunctionExpression extends Expression
 {
   /**
-   * Returns the value of the '<em><b>Funcion</b></em>' reference.
+   * Returns the value of the '<em><b>Function</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Funcion</em>' reference isn't clear,
+   * If the meaning of the '<em>Function</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Funcion</em>' reference.
-   * @see #setFuncion(Function)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getFunctionExpression_Funcion()
+   * @return the value of the '<em>Function</em>' reference.
+   * @see #setFunction(Function)
+   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getFunctionExpression_Function()
    * @model
    * @generated
    */
-  Function getFuncion();
+  Function getFunction();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.FunctionExpression#getFuncion <em>Funcion</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.FunctionExpression#getFunction <em>Function</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Funcion</em>' reference.
-   * @see #getFuncion()
+   * @param value the new value of the '<em>Function</em>' reference.
+   * @see #getFunction()
    * @generated
    */
-  void setFuncion(Function value);
+  void setFunction(Function value);
 
   /**
    * Returns the value of the '<em><b>Kexpressions</b></em>' containment reference list.

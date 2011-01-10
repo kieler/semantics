@@ -42,6 +42,10 @@
     <genClasses ecoreClass="Esterel.ecore#//SensorDecl">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorDecl/sensors"/>
     </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//SensorWithType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/sensor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/type"/>
+    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//RelationDecl"/>
     <genClasses ecoreClass="Esterel.ecore#//RelationType">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//RelationType/type"/>
@@ -339,10 +343,6 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/retSignal"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/statement"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//SensorWithType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/sensor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/type"/>
-    </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//EsterelTypeIdentifier">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelTypeIdentifier/func"/>
     </genClasses>
@@ -374,7 +374,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapExpression/trap"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//FunctionExpression">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/funcion"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/function"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/kexpressions"/>
     </genClasses>
     <genClasses ecoreClass="Esterel.ecore#//ConstantExpression">

@@ -4,15 +4,11 @@ generate esterel "http://www.cau.de/cs/kieler/kies/Esterel"
 import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore" as kexpressions
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-// ==============================================
-// ===              B.5 Modules               ===
-// ==============================================
-
 //	root rule. one esterel file can contain multiple modules
 Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
-	(modules+=Module)*; //(modules+=Module)*;
+	(modules+=Module)*;
 
-// module consists of interface and body
+	// module consists of interface and body
 Module:
 	"module" name=ID ":" (interface=ModuleInterface)? body=ModuleBody end=EndModule;
 
@@ -24,8 +20,7 @@ EndModule:
 ModuleBody:
 	statements+=Statement;
 
-	// ----------------------------------------------
-//            Interface Declarations
+	//            Interface Declarations
 // ----------------------------------------------
 ModuleInterface:
 	(intSignalDecls+=InterfaceSignalDecl
@@ -57,7 +52,8 @@ TypeIdentifier:
 	| ("combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator)
 	| {EsterelType} estType=[Type|ID];
 
-	// --> B.4.20 signal: Local Signal Declaration <--
+	// ==> Local Signal Declaration
+// -------------------------------------
 LocalSignalDecl:
 	"signal" signalList=LocalSignalList "in" statement=Statement "end" (optEnd="signal")?;
 
@@ -65,13 +61,19 @@ LocalSignalList:
 	{LocalSignal} signal+=ISignal
 	("," signal+=ISignal)*;
 
-	//ChannelType:
-//	//make reference to declared types
-//Problem: Need reference OR BaseType
+	// ==> Sensor
+// -------------------------------------
 SensorDecl:
 	"sensor" sensors+=SensorWithType ("," sensors+=SensorWithType)* ";";
 
+SensorWithType:
+	(sensor=Sensor (":" type=TypeIdentifier)) | (sensor=Sensor "(" type=TypeIdentifier ")");
+
+Sensor returns kexpressions::ISignal:
+	name=ID;
+
 	// ==> Relations
+// -------------------------------------
 RelationDecl:
 	{Relation} "relation" relations+=RelationType ("," relations+=RelationType)* ";";
 
@@ -86,6 +88,7 @@ RelationIncompatibility:
 	incomp+=[kexpressions::ISignal|ID])*;
 
 	// ==> Types
+// -------------------------------------
 TypeDecl:
 	"type" types+=Type ("," types+=Type)* ";";
 
@@ -93,35 +96,30 @@ Type:
 	name=ID;
 
 	// ==> Constants
+// -------------------------------------
 ConstantDecls:
 	"constant" constants+=OneTypeConstantDecls ("," constants+=OneTypeConstantDecls)* ";";
- 
+
 OneTypeConstantDecls:
 	constants+=ConstantWithValue ("," constants+=ConstantWithValue)* ":" type=TypeIdentifier;
 
 ConstantWithValue:
 	constant=Constant ("=" value=ConstantAtom)?;
- 
+
 Constant returns kexpressions::ValuedObject:
-	{Constant} name=ID; 
-	
+	{Constant} name=ID;
+
 ConstantAtom:
-	Integer | ConstantLiteral;
+	INT | ConstantLiteral;
 
 ConstantLiteral:
 	Float | Boolean | ID | STRING;
-	
-	
-	terminal INT returns ecore::EInt:
-    '-'?('0'..'9')+;
-Integer:
-	"-"? INT
-;
 
 ConstantValue:
-	value=ConstantLiteral | intValue=Integer;
+	value=ConstantLiteral | intValue=INT;
 
 	// ==> Functions
+// -------------------------------------
 FunctionDecl:
 	"function" functions+=Function ("," functions+=Function)* ";";
 
@@ -161,16 +159,19 @@ AtomicStatement returns Statement:
 Sequence returns Statement:
 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
 
-VarStatement returns Statement:
-	vardecl=IVariable;
-
 Block:
 	"[" statement=Statement "]";
 
+VarStatement returns Statement:
+	vardecl=IVariable;
+
+	// Assignment
+// -------------------------------------
 Assignment:
 	var=[kexpressions::IVariable|ID] ":=" expr=DataExpr;
 
 	// --> B.4.2 abort: Strong Preemption
+// -------------------------------------
 Abort:
 	"abort" statement=Statement "when" body=AbortBody;
 
@@ -187,6 +188,7 @@ AbortCaseSingle:
 	"case" delay=DelayExpr ("do" statement=Statement)?;
 
 	// --> B.4.25 weak abort: Weak Preemption
+// -------------------------------------
 WeakAbort returns Abort:
 	{WeakAbort} "weak" "abort" statement=Statement "when" body=WeakAbortBody;
 
@@ -206,6 +208,7 @@ WeakAbortCase returns AbortCase:
 	{WeakAbortCase} cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=WeakAbortEnd;
 
 	// --> B.4.3 await: Strong Preemption
+// -------------------------------------
 Await:
 	"await" body=AwaitBody;
 
@@ -222,12 +225,15 @@ AwaitCase:
 	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AwaitEnd;
 
 	// --> B.4.4 call: Procedure Call
+// -------------------------------------
 ProcCall:
-	"call" proc=[Procedure|ID] "(" (varList+=[kexpressions::IVariable|ID] ("," varList+=[kexpressions::IVariable|ID])*)? ")"
+	"call" proc=[Procedure|ID] "(" (varList+=[kexpressions::IVariable|ID] ("," varList+=[kexpressions::IVariable|ID])*)?
+	")"
 	"(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
 
 	// --> B.4.5 do-upto: Conditional Iteration (deprecated)
 // --> B.4.6 do-watching: Strong Preemption (deprecated)
+// -------------------------------------
 Do:
 	"do" statement=Statement (end=DoUpto | end=DoWatching);
 
@@ -241,22 +247,27 @@ DoWatchingEnd:
 	"timeout" statement=Statement "end" (optEnd="timeout")?;
 
 	// --> B.4.7 emit: Signal Emission <--
+// -------------------------------------
 Emit:
 	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=DataExpr ")")?;
 
 	// --> B.4.8 every-do: Conditional Iteration
+// -------------------------------------
 EveryDo:
 	"every" delay=DelayExpr "do" statement=Statement "end" (optEnd="every")?;
 
 	// --> B.4.10 exit: Trap Exit
+// -------------------------------------
 Exit:
 	"exit" trap=[TrapDecl|ID] ("(" dataExpr=DataExpr ")")?;
 
 	// --> B.4.11 halt: Wait Forever
+// -------------------------------------
 Halt:
-	"halt" {Halt};
+	{Halt} "halt";
 
 	// --> B.4.12: if: Conditional for Data
+// -------------------------------------
 IfTest:
 	"if" expr=DataExpr (thenPart=ThenPart)? (elsif+=ElsIf)* (elsePart=ElsePart)? "end" (optEnd="if")?;
 
@@ -271,6 +282,7 @@ ElsePart:
 
 	// --> B.4.13 loop: Infinite Loop
 // --> B.4.14 loop-each: Condition Iteration
+// -------------------------------------
 Loop:
 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
 
@@ -287,14 +299,17 @@ LoopBody:
 	statement=Statement;
 
 	// --> B.4.15 nothing: No Operation
+// -------------------------------------
 Nothing:
 	"nothing" {Nothing};
 
 	// --> B.4.16 pause: Unit Delay
+// -------------------------------------
 Pause:
 	"pause" {Pause};
 
 	// --> B.4.17 present: Conditional for Signals
+// -------------------------------------
 Present:
 	"present" body=PresentBody (elsePart=ElsePart)? "end" (optEnd="present")?;
 
@@ -314,12 +329,19 @@ PresentEvent:
 	expression=SignalExpression | "[" expression=SignalExpression "]" | tick=Tick;
 
 	// --> B.4.18 repeat: Iterate a Fixed Number of Times
+// -------------------------------------
 Repeat:
 	(positive?="positive")? "repeat" dataExpr=DataExpr "times" statement=Statement "end" (optEnd="repeat")?;
+
 	// --> B.4.19 run: Module Instantiation
+// -------------------------------------
 Run:
 	"run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
 	"]")?; //deprecated
+
+
+// Renamings
+// -------------------------------------
 ModuleRenaming:
 	module=[Module|ID] | (newName=ID "/" module=[Module|ID]);
 
@@ -327,10 +349,12 @@ RenamingList:
 	list+=Renaming (";" list+=Renaming)*;
 
 Renaming:
-	"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)* | "constant" renamings+=ConstantRenaming (","
-	renamings+=ConstantRenaming)* | "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)* |
-	"procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)* | "task" renamings+=TaskRenaming (","
-	renamings+=TaskRenaming)* | "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*;
+	"type" renamings+=TypeRenaming ("," renamings+=TypeRenaming)*
+	| "constant" renamings+=ConstantRenaming ("," renamings+=ConstantRenaming)*
+	| "function" renamings+=FunctionRenaming ("," renamings+=FunctionRenaming)*
+	| "procedure" renamings+=ProcedureRenaming ("," renamings+=ProcedureRenaming)*
+	| "task" renamings+=TaskRenaming ("," renamings+=TaskRenaming)*
+	| "signal" renamings+=SignalRenaming ("," renamings+=SignalRenaming)*;
 
 TypeRenaming:
 	(newName=[Type|ID] | newType=ValueType) "/" oldName=[Type|ID];
@@ -349,39 +373,38 @@ TaskRenaming:
 
 SignalRenaming:
 	(newName=[kexpressions::ISignal|ID] | "tick") "/" oldName=[kexpressions::ISignal|ID];
-	
-	
+
 	// renamings can also rename build in types and functions
 BuildInFunction:
-	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or"
-;
-	
+	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
 
 	// --> B.4.21 suspend: Preemption with State Freeze
+// -------------------------------------
 Suspend:
 	"suspend" statement=Statement "when" delay=DelayExpr;
 
 	// --> B.4.22 sustain: Emit a Signal Indefinitely
+// -------------------------------------
 Sustain:
 	"sustain" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" dataExpr=DataExpr ")")?;
 
 	// --> B.4.23 trap: TrapDeclaration and Handling
+// -------------------------------------
 Trap:
-	"trap" trapDeclList=TrapDeclList "in" statement=Statement (trapHandler+=TrapHandler)* "end" (optEnd="trap")?;
+	"trap" trapDeclList=TrapDeclList "in" statement=Statement
+	(trapHandler+=TrapHandler)* "end" (optEnd="trap")?;
 
 TrapDeclList:
 	trapDecls+=TrapDecl ("," trapDecls+=TrapDecl)*;
 
 TrapDecl returns kexpressions::ISignal:
 	{TrapDecl} name=ID channelDescr=(ChannelDescription)?;
-	//
-//TrapDecl:
-//	{TrapDecl} name=ID
-//;
+
 TrapHandler:
 	"handle" trapExpr=TrapExpr "do" statement=Statement;
 
 	// --> B.4.24 var: Local Variable Declaration
+// -------------------------------------
 LocalVariable:
 	var=InterfaceVariableDecl "in" statement=Statement "end" (optEnd="var")?;
 
@@ -389,56 +412,38 @@ LocalVariable:
 // ===            B.3 Expressions             ===
 // ==============================================
 
-// introduce further rules on the same level as kexpressions.
-// just overriding the TextExpression does not work as for some reason Functions are not found correctly.
+// In the literature sometimes exists a differentiation of DataExpression and SignalExpression
+// for that reason the rule is renamed here for better readability
 DataExpr returns kexpressions::Expression:
 	Expression;
-	/*
-	expr=Expression |
-	data=DataTrap |
-	data=DataFunction |
-	data=DataConstant |
-	data=ConstantValue
-	// | data=FunctionCall
-	;*/
-/*
-TextExpression returns kexpressions::TextExpression:
-//code=HOSTCODE ("(" type=ID ")")? | code=STRING
-	{EsterelTextExpression} (data=DataTrap | 
-	//data=DataFunction | 
-	data=DataConstant | data=ConstantValue);
 
-Expression returns kexpressions::Expression:
-	
-	
-	
-	BooleanExpression
-	| ValuedExpression 
-	
-	
-;
-*/
-
-// overriding TextExpression does not work properly as DataConstants mix up with valued objects
-// if they are considered prio to ValuedObjectTextExpression. But DataFunction need to be prior to those! 
+	// esterel are a bit richer than what is provided by kexpressions. These rules are intoduced here
+// care about order of the rules! 
 AtomicExpression returns kexpressions::Expression:
-	DataFunction | DataTrap | BooleanValue | ValuedObjectTestExpression | TextExpression | '(' BooleanExpression ')' |
-	DataConstant;
+	FunctionExpression
+	| TrapExpression
+	| BooleanValue
+	| ValuedObjectTestExpression
+	| TextExpression
+	| '(' BooleanExpression ')'
+	| ConstantExpression;
 
-DataTrap returns kexpressions::Expression:
+TrapExpression returns kexpressions::Expression:
 	{TrapExpression} "??" trap=[kexpressions::ISignal|ID];
 
-DataFunction returns kexpressions::Expression:
+FunctionExpression returns kexpressions::Expression:
 	{FunctionExpression} function=[Function|ID] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
 
-DataConstant returns kexpressions::Expression:
+ConstantExpression returns kexpressions::Expression:
 	{ConstantExpression} (constant=[Constant|ID] | value=ConstantValue);
 
 	// --> B.3.5 Trap Expressions <--
+// -------------------------------------
 TrapExpr returns kexpressions::Expression:
 	SignalExpression;
 
 	// --> B.3.3 Signal Expressions <--
+// -------------------------------------
 SignalExpression returns kexpressions::Expression:
 	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=OrOperator
 	subExpressions+=SignalAndExpression)*;
@@ -448,10 +453,14 @@ SignalAndExpression returns kexpressions::Expression:
 	subExpressions+=SignalNotExpression)*;
 
 SignalNotExpression returns kexpressions::Expression:
-	{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=(SignalNotExpression) | SignalAtomicExpression;
+	{kexpressions::OperatorExpression} operator=NotOperator subExpressions+=(SignalNotExpression) |
+	SignalAtomicExpression;
 
 SignalAtomicExpression returns kexpressions::Expression:
-	SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | TrapReferenceExpr // TODO maybe take this somewhere else 
+	SignalReferenceExpr
+	| "(" SignalExpression ")"
+	| SignalPreExpr
+	| TrapReferenceExpr // maybe place this somewhere else 
 ;
 
 SignalReferenceExpr returns kexpressions::ValuedObjectReference:
@@ -464,15 +473,15 @@ TrapReferenceExpr returns kexpressions::ValuedObjectReference:
 	{TrapReferenceExpr} valuedObject=[TrapDecl|ID];
 
 	// --> B.3.4 Delay Expressions <--
+// -------------------------------------
 DelayExpr:
 	(expr=DataExpr event=DelayEvent) | event=DelayEvent | (isImmediate?="immediate" event=DelayEvent);
 
 DelayEvent:
-	tick=Tick | expr=SignalReferenceExpr | expr=BracketSigExpression;
+	tick=Tick | expr=SignalReferenceExpr | "[" expr=SignalExpression "]";
 
-BracketSigExpression returns kexpressions::Expression:
-	"[" SignalExpression "]";
-
+	// --> Exec
+// -------------------------------------
 Exec:
 	("exec" task=[Task|ID] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
 	execCaseList+=ExecCase (execCaseList+=ExecCase)*) "end" (optEnd="exec")?;
@@ -483,17 +492,12 @@ ExecBody:
 
 ExecCase:
 	"case" task=[Task|ID] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)?;
+
 	// ==============================================
 // === B.2 Namespaces and Predefined Objects  ===
 // ==============================================
 Tick:
 	"tick";
-
-SensorWithType:
-	(sensor=Sensor (":" type=TypeIdentifier)) | (sensor=Sensor "(" type=TypeIdentifier ")");
-
-Sensor returns kexpressions::ISignal:
-	name=ID;
 
 terminal Esterel_SL_Comment:
 	'%' !('\n' |
@@ -502,172 +506,6 @@ terminal Esterel_SL_Comment:
 terminal Esterel_ML_Comment:
 	('%' '{')->('}' '%');
 
-	// allow escaping by double quotes ( "this is a ""quote"", how nice." )
-// custom terminal rule allowing to save transition label string as they are
+	// allow escaping by double quotes ( "this is a ""quote"", how nice." ) - esterelstyle
 terminal STRING returns ecore::EString:
 	'"' (!('"') | ('"' '"'))* '"';
-
-	// FIXME ID somehow overlaps with the boolean rule
-//terminal ID:
-//	('a'..'z' | 'A'..'Z') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9')*;
-
-//terminal Boolean returns ecore::EBooleanObject:
-//	"true" | "false";
-
-// ----------------------------------------------
-//            Signal Declarations
-// ----------------------------------------------
-//Signal returns kexpressions::Signal:
-//	{kexpressions::Signal} name=ID;
-//
-//SignalDecl:
-//	signal=Signal channelDescr=(ChannelDescription)?;
-//
-//	// ==> Signals and Sensors <==
-//InterfaceSignalDecl:
-//	{Input} "input" signals+=SignalDecl ("," signals+=SignalDecl)* ";" |
-//	{Output} "output" signals+=SignalDecl ("," signals+=SignalDecl)* ";" |
-//	{InputOutput} "inputoutput" signals+=SignalDecl ("," signals+=SignalDecl)* ";" |
-//	{Return} "return" signals+=SignalDecl ("," signals+=SignalDecl)* ";";
-//
-//	// ==> Signals <==
-//ChannelDescription:
-//	(":" type=ChannelType)
-//	| ("(" type=ChannelType ")")
-//	| (":=" dataExpr=DataExpr ":" type=ChannelType);
-//
-//ChannelType returns ChannelType:
-//	type=ValueType
-//	| {EsterelChannelType} ("combine" typeCombine=TypeIdentifier "with" (func=[Function|ID] | op=DataOp));
-
-// TODO FUNCTIONS
-//TypeIdentifier returns kexpressions::TypeIdentifier:
-//	type=ValueType
-//	| typeID=ID;
-
-
-//LocalVariable:
-//	"var" varDecl=VariableDecl "in" statement=Statement "end" "var"?;
-//VariableDecl:
-//	varList=VariableList ":" type=TypeIdentifier
-//	({VariableDecl.left=current} "," varList=VariableList ":" type=TypeIdentifier)*;
-//
-//VariableList:
-//	variable+=VariableSingle
-//	({VariableList.left=current} "," variable+=VariableSingle)*;
-//
-//VariableSingle:
-//	variable=Variable (":=" expression=DataExpr)?;
-//
-//Variable returns kexpressions::Variable:
-//	{kexpressions::Variable} name=ID;
-
-
-//
-//DataOp:
-//	operator=(AndOperator |
-//	OrOperator |
-//	NotOperator |
-//	CompareOperator | // EQ="=" | LT="<" | LEQ="<=" | GT=">" | GEQ=">=" | NE="<>";
-//	AddOperator |
-//	SubOperator |
-//	MultOperator |
-//	DivOperator |
-//	ModOperator);
-
-// override Textexpression as esterel allows additional expression types
-// e.g. ?? trap-ident or function-ident
-//TextExpression returns TextExpression:
-//	data=DataTrap | data=DataFunction | data=DataConstant | data=ConstantValue;
-
-// --> B.3.1 Data Expressions
-//DataExpr:
-//	DataMult ({DataExpr.left=current} (op="+" | op="-" | op="or") right=DataMult)*;
-//(DataUnaryExpr ( {DataExpr.left=current} op=DataOp  right=DataExpr)?)
-//|	(op=DataOp  expr=DataExpr);
-//DataMult:
-//	DataEquation ({DataMult.left=current} (op="*" | op="/" | op="mod" | op="and") right=DataEquation)*;
-//
-//DataEquation:
-//	DataMinus ((op="<" | op=">" | op="<=" | op=">=" | op="<>" | op="=") right=DataMinus)?;
-//
-//DataMinus:
-//	(pre="-" | pre="not")? expr=DataUnaryExpr;
-//
-//DataOp:
-//	"and"
-//	| "or"
-//	| "not"
-//	| "<"
-//	| ">"
-//	| "<="
-//	| ">="
-//	| "<>"
-//	| "="
-//	| "+"
-//	| "-"
-//	| "*"
-//	| "/"
-//	| "mod";
-//
-//DataUnaryExpr:
-//	{DataTick} Tick
-//	| DataValueFloat
-////	| DataValueBoolean
-//	| DataValueInt
-//	| DataValueString
-//	| DataValueID
-//	| DataBlock
-//	| DataCurrent
-//	| DataPre
-//	| DataTrap
-//	| DataFunction;
-//
-//DataValueID:
-//	value=ID;
-//
-//DataValueFloat:
-//	value=Float;
-//
-////DataValueBoolean:
-////	value=Boolean;
-//
-//DataValueInt:
-//	value=INT;
-//
-//DataValueString:
-//	value=STRING;
-//
-//DataBlock:
-//	"(" dataExpr=DataExpr ")";
-//
-//DataCurrent:
-//	"?" ((signal=[kexpressions::Signal|ID]) | tick=Tick);
-//
-//DataPre:
-//	"pre" "(" "?" ((signal=[kexpressions::Signal|ID]) | tick=Tick) ")";
-//    
-
-//SigExpr:
-//	kexpressions+=SigExprAND ("or" kexpressions+=SigExprAND)*;
-//SigExprAND:
-//	kexpressions+=SigExprUnary ("and" kexpressions+=SigExprUnary)*;
-//SigExprUnary:
-//	expr=ID | "(" sigExpr=SigExpr ")" |
-//	"not" sigExpr=SigExprUnary
-//	| tick="tick";
-
-//	Sensor returns kexpressions::ValuedObject:
-//	{Sensor} ((name=ID ":" (type=ValueType | typeID=ID)) |
-//	(name=ID "(" (type=ValueType | typeID=ID) ")"));
-
-//terminal Float: ((INT"."INT | INT("."INT)?("e"|"E")("-"|"+")?INT))"f"? | INT"f";
-
-//	terminal Float returns ecore::EFloatObject :
-//    ('0'..'9')+ ("."('0'..'9')*) (("e"|"E")("+"|"-")?('0'..'9')+)? "f"? | 
-//    ('0'..'9')+"f";
-
-
-//terminal Boolean : "true" | "false";
-//terminal BaseType:
-//	"boolean" | "integer" | "float" | "double" | "string";

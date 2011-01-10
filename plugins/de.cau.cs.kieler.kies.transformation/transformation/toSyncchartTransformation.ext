@@ -70,7 +70,7 @@ Void rule(State s, Module m):
 	if(!m.interface.intSignalDecls.isEmpty) then
 		m.interface.intSignalDecls.extractSignals(s) ->	
 	// TODO set body content
-	setJavaBodyContents(s, statement) ->
+	setJavaBodyReference(s, statement) ->
 	//appendNextTransformation(newState, statement)
 	recursiveRule(s, statement)
 ;
@@ -163,7 +163,7 @@ Void ruleAbort(State s, Abort a):
 	) -> 	
 	// handle abort's body statement
 	toFinalTrans.connectTransition(initState, finalState) ->
-	setJavaBodyContents(initState, a.statement) ->
+	setJavaBodyReference(initState, a.statement) ->
 	recursiveRule(initState, a.statement)
 ;
 		
@@ -192,7 +192,7 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	// care! the "do" body of about might be null
 	if (body != null) then
 		// set body text 
-		(setJavaBodyContents(caseState, body)  ->
+		(setJavaBodyReference(caseState, body)  ->
 		recursiveRule(caseState, body))
 ;
 
@@ -284,7 +284,7 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
  	 ) ->
  		
  	// recursive
- 	initState.setJavaBodyContents(d.statement) ->
+ 	initState.setJavaBodyReference(d.statement) ->
  	initState.recursiveRule(d.statement)
  ;
 
@@ -332,7 +332,7 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 	
 	// if timeout
 	if (dw.end != null) then
-		(abortF.setJavaBodyContents(dw.end.statement) ->
+		(abortF.setJavaBodyReference(dw.end.statement) ->
 		abortF.recursiveRule(dw.end.statement) )
 ;
 
@@ -390,7 +390,7 @@ Void rule(State s, EveryDo e):
 	initT.addDelayToTrigger(e.delay) ->
 	everyT.addDelayToTrigger(e.delay) ->
 	// recursive
-	everyS.setJavaBodyContents(e.statement) ->
+	everyS.setJavaBodyReference(e.statement) ->
 	everyS.recursiveRule(e.statement)
 ;
 
@@ -444,7 +444,7 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 	
 	// if thenpart, recursive
 	if (s != null) then
-		(ifS.setJavaBodyContents(s) ->
+		(ifS.setJavaBodyReference(s) ->
 		ifS.recursiveRule(s)) ->
 		
 	// create artificial nothing
@@ -471,7 +471,7 @@ Void rule(State s, LocalSignalDecl ls):
 	ls.signalList.extractLocalSignals(s) ->
 	
 	// recursive
-	sigS.setJavaBodyContents(ls.statement) ->
+	sigS.setJavaBodyReference(ls.statement) ->
 	sigS.recursiveRule(ls.statement)
 ;
 
@@ -494,7 +494,7 @@ Void rule(State s, LocalVariable v):
 	v.var.varDecls.extractLocalVariables(s) ->
 	
 	// recursive
-	varS.setJavaBodyContents( v.statement) ->
+	varS.setJavaBodyReference( v.statement) ->
 	varS.recursiveRule(v.statement)
 ;
 
@@ -521,7 +521,7 @@ Void rule(State s, Loop l):
  		(selfTrans.setType(TransitionType::STRONGABORT) ->
  		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
  	
- 	setJavaBodyContents(loopState, l.body.statement) ->
+ 	setJavaBodyReference(loopState, l.body.statement) ->
 	recursiveRule(loopState, l.body.statement)
  ;
  
@@ -559,7 +559,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 		if(statements.size > 1) then
 			ruleParallelRecursive(parent, statements.withoutFirst()) ->
 		
-		setJavaBodyContents(s, statements.first()) ->
+		setJavaBodyReference(s, statements.first()) ->
 		recursiveRule(s, statements.first())
 		)
 	)	
@@ -615,7 +615,7 @@ Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expres
 	t.connectTransition(previous, newS) ->
 	
 	// recursive
-	newS.setJavaBodyContents(st) ->
+	newS.setJavaBodyReference(st) ->
 	newS.recursiveRule(st)
 ;
 
@@ -673,7 +673,7 @@ String createCallStatement(ProcCall c):
 	ruleSequenceRecursive(r, initial, list.withoutFirst()) ->
 	 
 	// process body of first sequence state
-	setJavaBodyContents(initial, list.first()) ->
+	setJavaBodyReference(initial, list.first()) ->
 	recursiveRule(initial, list.first())
 	
 ;
@@ -701,7 +701,7 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 	s.setIsFinal(true)))
 	
 	->
-	setJavaBodyContents(s, statements.first()) ->
+	setJavaBodyReference(s, statements.first()) ->
 	recursiveRule(s, statements.first())
 ;
 
@@ -726,7 +726,7 @@ Void rule(State s, Suspend sus):
 	susState.setSuspensionTrigger(act) ->
 	
 	// recursive
-	susState.setJavaBodyContents(sus.statement) ->
+	susState.setJavaBodyReference(sus.statement) ->
 	susState.recursiveRule(sus.statement)
 	
 ;
@@ -820,7 +820,7 @@ Void rule(State s, Trap t):
 	) ->
 
 
-	trapS.setJavaBodyContents(t.statement) ->
+	trapS.setJavaBodyReference(t.statement) ->
 	trapS.recursiveRule(t.statement)
 ;
 
@@ -857,7 +857,7 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 	macroT.setTrigger(convertEsterelExpression((Expression) clone(handler.trapExpr))) ->
 	
 	// recursive
-	macroS.setJavaBodyContents(handler.statement) ->
+	macroS.setJavaBodyReference(handler.statement) ->
 	macroS.recursiveRule(handler.statement) 
 ;
 
@@ -1023,7 +1023,7 @@ Void replaceWithCorrespondingExpression(Expression e):
 
 Expression convertEsterelExpressionRec(FunctionExpression fe):
 	let textExpr = new TextExpression:
-	textExpr.setCode(fe.funcion.name + "(todo" + ")") ->
+	textExpr.setCode(fe.function.name + "(todo" + ")") ->
 	textExpr
 ;
 
@@ -1033,6 +1033,34 @@ Expression convertEsterelExpressionRec(TrapExpression te):
 	textExpr
 ;
 
+// in case there is no expression at all, null is no problem here
+Expression convertEsterelExpression(Void v):
+	null
+;
+
+Expression convertEsterelExpression(ConstantExpression te):
+    let textExpr = new TextExpression:
+    textExpr.setCode("todo") ->
+    switch {
+        case te.value != null && te.value.value != null :
+            (switch {
+                /*case Float.isInstance(te.value.value) :
+                    (let fltVal = new FloatValue:
+                     fltVal.setValue((Float) e.value.value) ->
+                     fltVal)*/
+                default:
+                    textExpr
+            })
+        case te.value != null && te.value.intValue != null:
+            (let intVal = new IntValue:
+             intVal.setValue(te.value.intValue) ->
+             intVal)
+        case te.constant != null:
+            te.constant.name
+        default:
+            textExpr
+    }
+;
 
 List copyList(List list):
 	let copy = {}:
@@ -1049,6 +1077,6 @@ ecore::EObject castToEcore(emf::EObject o):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
 ;
 
-Void setJavaBodyContents(State s, emf::EObject o):
+Void setJavaBodyReference(State s, emf::EObject o):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;

@@ -52,6 +52,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="sensors" upperBound="-1"
         eType="#//SensorWithType" containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SensorWithType">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ISignal"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//TypeIdentifier"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="RelationDecl"/>
   <eClassifiers xsi:type="ecore:EClass" name="RelationType">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -88,7 +94,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ConstantValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="intValue" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionDecl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="functions" upperBound="-1"
@@ -443,12 +449,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SensorWithType">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="sensor" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ISignal"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//TypeIdentifier"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="EsterelTypeIdentifier" eSuperTypes="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//TypeIdentifier">
     <eStructuralFeatures xsi:type="ecore:EReference" name="func" eType="#//Function"/>
   </eClassifiers>
@@ -487,7 +487,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="trap" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//ISignal"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="FunctionExpression" eSuperTypes="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="funcion" eType="#//Function"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="function" eType="#//Function"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="kexpressions" upperBound="-1"
         eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//Expression"
         containment="true"/>

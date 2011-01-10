@@ -77,6 +77,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.LOCAL_SIGNAL_DECL: return createLocalSignalDecl();
       case EsterelPackage.LOCAL_SIGNAL_LIST: return createLocalSignalList();
       case EsterelPackage.SENSOR_DECL: return createSensorDecl();
+      case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
       case EsterelPackage.RELATION_DECL: return createRelationDecl();
       case EsterelPackage.RELATION_TYPE: return createRelationType();
       case EsterelPackage.RELATION_IMPLICATION: return createRelationImplication();
@@ -156,7 +157,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.EXEC: return createExec();
       case EsterelPackage.EXEC_BODY: return createExecBody();
       case EsterelPackage.EXEC_CASE: return createExecCase();
-      case EsterelPackage.SENSOR_WITH_TYPE: return createSensorWithType();
       case EsterelPackage.ESTEREL_TYPE_IDENTIFIER: return createEsterelTypeIdentifier();
       case EsterelPackage.ESTEREL_TYPE: return createEsterelType();
       case EsterelPackage.LOCAL_SIGNAL: return createLocalSignal();
@@ -274,6 +274,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     SensorDeclImpl sensorDecl = new SensorDeclImpl();
     return sensorDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SensorWithType createSensorWithType()
+  {
+    SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
+    return sensorWithType;
   }
 
   /**
@@ -1143,17 +1154,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     ExecCaseImpl execCase = new ExecCaseImpl();
     return execCase;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SensorWithType createSensorWithType()
-  {
-    SensorWithTypeImpl sensorWithType = new SensorWithTypeImpl();
-    return sensorWithType;
   }
 
   /**

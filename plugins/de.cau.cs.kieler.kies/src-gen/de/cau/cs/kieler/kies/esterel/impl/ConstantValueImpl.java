@@ -60,7 +60,7 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
    * @generated
    * @ordered
    */
-  protected static final String INT_VALUE_EDEFAULT = null;
+  protected static final int INT_VALUE_EDEFAULT = 0;
 
   /**
    * The cached value of the '{@link #getIntValue() <em>Int Value</em>}' attribute.
@@ -70,7 +70,7 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
    * @generated
    * @ordered
    */
-  protected String intValue = INT_VALUE_EDEFAULT;
+  protected int intValue = INT_VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -121,7 +121,7 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getIntValue()
+  public int getIntValue()
   {
     return intValue;
   }
@@ -131,9 +131,9 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setIntValue(String newIntValue)
+  public void setIntValue(int newIntValue)
   {
-    String oldIntValue = intValue;
+    int oldIntValue = intValue;
     intValue = newIntValue;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.CONSTANT_VALUE__INT_VALUE, oldIntValue, intValue));
@@ -171,7 +171,7 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
         setValue((String)newValue);
         return;
       case EsterelPackage.CONSTANT_VALUE__INT_VALUE:
-        setIntValue((String)newValue);
+        setIntValue((Integer)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -210,7 +210,7 @@ public class ConstantValueImpl extends MinimalEObjectImpl.Container implements C
       case EsterelPackage.CONSTANT_VALUE__VALUE:
         return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
       case EsterelPackage.CONSTANT_VALUE__INT_VALUE:
-        return INT_VALUE_EDEFAULT == null ? intValue != null : !INT_VALUE_EDEFAULT.equals(intValue);
+        return intValue != INT_VALUE_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }

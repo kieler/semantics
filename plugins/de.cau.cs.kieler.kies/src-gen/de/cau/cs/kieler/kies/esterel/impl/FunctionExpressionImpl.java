@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.FunctionExpressionImpl#getFuncion <em>Funcion</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.FunctionExpressionImpl#getFunction <em>Function</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.FunctionExpressionImpl#getKexpressions <em>Kexpressions</em>}</li>
  * </ul>
  * </p>
@@ -46,14 +46,14 @@ import org.eclipse.emf.ecore.util.InternalEList;
 public class FunctionExpressionImpl extends ExpressionImpl implements FunctionExpression
 {
   /**
-   * The cached value of the '{@link #getFuncion() <em>Funcion</em>}' reference.
+   * The cached value of the '{@link #getFunction() <em>Function</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getFuncion()
+   * @see #getFunction()
    * @generated
    * @ordered
    */
-  protected Function funcion;
+  protected Function function;
 
   /**
    * The cached value of the '{@link #getKexpressions() <em>Kexpressions</em>}' containment reference list.
@@ -91,19 +91,19 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public Function getFuncion()
+  public Function getFunction()
   {
-    if (funcion != null && funcion.eIsProxy())
+    if (function != null && function.eIsProxy())
     {
-      InternalEObject oldFuncion = (InternalEObject)funcion;
-      funcion = (Function)eResolveProxy(oldFuncion);
-      if (funcion != oldFuncion)
+      InternalEObject oldFunction = (InternalEObject)function;
+      function = (Function)eResolveProxy(oldFunction);
+      if (function != oldFunction)
       {
         if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.FUNCTION_EXPRESSION__FUNCION, oldFuncion, funcion));
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
       }
     }
-    return funcion;
+    return function;
   }
 
   /**
@@ -111,9 +111,9 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public Function basicGetFuncion()
+  public Function basicGetFunction()
   {
-    return funcion;
+    return function;
   }
 
   /**
@@ -121,12 +121,12 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFuncion(Function newFuncion)
+  public void setFunction(Function newFunction)
   {
-    Function oldFuncion = funcion;
-    funcion = newFuncion;
+    Function oldFunction = function;
+    function = newFunction;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION_EXPRESSION__FUNCION, oldFuncion, funcion));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.FUNCTION_EXPRESSION__FUNCTION, oldFunction, function));
   }
 
   /**
@@ -169,9 +169,9 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCION:
-        if (resolve) return getFuncion();
-        return basicGetFuncion();
+      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+        if (resolve) return getFunction();
+        return basicGetFunction();
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
         return getKexpressions();
     }
@@ -189,8 +189,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCION:
-        setFuncion((Function)newValue);
+      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+        setFunction((Function)newValue);
         return;
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
         getKexpressions().clear();
@@ -210,8 +210,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCION:
-        setFuncion((Function)null);
+      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+        setFunction((Function)null);
         return;
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
         getKexpressions().clear();
@@ -230,8 +230,8 @@ public class FunctionExpressionImpl extends ExpressionImpl implements FunctionEx
   {
     switch (featureID)
     {
-      case EsterelPackage.FUNCTION_EXPRESSION__FUNCION:
-        return funcion != null;
+      case EsterelPackage.FUNCTION_EXPRESSION__FUNCTION:
+        return function != null;
       case EsterelPackage.FUNCTION_EXPRESSION__KEXPRESSIONS:
         return kexpressions != null && !kexpressions.isEmpty();
     }

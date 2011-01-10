@@ -198,6 +198,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass sensorWithTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass relationDeclEClass = null;
 
   /**
@@ -751,13 +758,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass sensorWithTypeEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass esterelTypeIdentifierEClass = null;
 
   /**
@@ -1192,6 +1192,36 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getSensorDecl_Sensors()
   {
     return (EReference)sensorDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSensorWithType()
+  {
+    return sensorWithTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSensorWithType_Sensor()
+  {
+    return (EReference)sensorWithTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSensorWithType_Type()
+  {
+    return (EReference)sensorWithTypeEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3459,36 +3489,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSensorWithType()
-  {
-    return sensorWithTypeEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSensorWithType_Sensor()
-  {
-    return (EReference)sensorWithTypeEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSensorWithType_Type()
-  {
-    return (EReference)sensorWithTypeEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getEsterelTypeIdentifier()
   {
     return esterelTypeIdentifierEClass;
@@ -3709,7 +3709,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFunctionExpression_Funcion()
+  public EReference getFunctionExpression_Function()
   {
     return (EReference)functionExpressionEClass.getEStructuralFeatures().get(0);
   }
@@ -3829,6 +3829,10 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     sensorDeclEClass = createEClass(SENSOR_DECL);
     createEReference(sensorDeclEClass, SENSOR_DECL__SENSORS);
+
+    sensorWithTypeEClass = createEClass(SENSOR_WITH_TYPE);
+    createEReference(sensorWithTypeEClass, SENSOR_WITH_TYPE__SENSOR);
+    createEReference(sensorWithTypeEClass, SENSOR_WITH_TYPE__TYPE);
 
     relationDeclEClass = createEClass(RELATION_DECL);
 
@@ -4135,10 +4139,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(execCaseEClass, EXEC_CASE__RET_SIGNAL);
     createEReference(execCaseEClass, EXEC_CASE__STATEMENT);
 
-    sensorWithTypeEClass = createEClass(SENSOR_WITH_TYPE);
-    createEReference(sensorWithTypeEClass, SENSOR_WITH_TYPE__SENSOR);
-    createEReference(sensorWithTypeEClass, SENSOR_WITH_TYPE__TYPE);
-
     esterelTypeIdentifierEClass = createEClass(ESTEREL_TYPE_IDENTIFIER);
     createEReference(esterelTypeIdentifierEClass, ESTEREL_TYPE_IDENTIFIER__FUNC);
 
@@ -4173,7 +4173,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(trapExpressionEClass, TRAP_EXPRESSION__TRAP);
 
     functionExpressionEClass = createEClass(FUNCTION_EXPRESSION);
-    createEReference(functionExpressionEClass, FUNCTION_EXPRESSION__FUNCION);
+    createEReference(functionExpressionEClass, FUNCTION_EXPRESSION__FUNCTION);
     createEReference(functionExpressionEClass, FUNCTION_EXPRESSION__KEXPRESSIONS);
 
     constantExpressionEClass = createEClass(CONSTANT_EXPRESSION);
@@ -4304,6 +4304,10 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(sensorDeclEClass, SensorDecl.class, "SensorDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSensorDecl_Sensors(), this.getSensorWithType(), null, "sensors", null, 0, -1, SensorDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(sensorWithTypeEClass, SensorWithType.class, "SensorWithType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSensorWithType_Sensor(), theKExpressionsPackage.getISignal(), null, "sensor", null, 0, 1, SensorWithType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSensorWithType_Type(), this.getTypeIdentifier(), null, "type", null, 0, 1, SensorWithType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(relationDeclEClass, RelationDecl.class, "RelationDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(relationTypeEClass, RelationType.class, "RelationType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4335,7 +4339,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(constantValueEClass, ConstantValue.class, "ConstantValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getConstantValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getConstantValue_IntValue(), ecorePackage.getEString(), "intValue", null, 0, 1, ConstantValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getConstantValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, ConstantValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionDeclEClass, FunctionDecl.class, "FunctionDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunctionDecl_Functions(), this.getFunction(), null, "functions", null, 0, -1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4609,10 +4613,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getExecCase_RetSignal(), theKExpressionsPackage.getISignal(), null, "retSignal", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExecCase_Statement(), this.getStatement(), null, "statement", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(sensorWithTypeEClass, SensorWithType.class, "SensorWithType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSensorWithType_Sensor(), theKExpressionsPackage.getISignal(), null, "sensor", null, 0, 1, SensorWithType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSensorWithType_Type(), this.getTypeIdentifier(), null, "type", null, 0, 1, SensorWithType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(esterelTypeIdentifierEClass, EsterelTypeIdentifier.class, "EsterelTypeIdentifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEsterelTypeIdentifier_Func(), this.getFunction(), null, "func", null, 0, 1, EsterelTypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4647,7 +4647,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getTrapExpression_Trap(), theKExpressionsPackage.getISignal(), null, "trap", null, 0, 1, TrapExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(functionExpressionEClass, FunctionExpression.class, "FunctionExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFunctionExpression_Funcion(), this.getFunction(), null, "funcion", null, 0, 1, FunctionExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionExpression_Function(), this.getFunction(), null, "function", null, 0, 1, FunctionExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFunctionExpression_Kexpressions(), theKExpressionsPackage.getExpression(), null, "kexpressions", null, 0, -1, FunctionExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(constantExpressionEClass, ConstantExpression.class, "ConstantExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

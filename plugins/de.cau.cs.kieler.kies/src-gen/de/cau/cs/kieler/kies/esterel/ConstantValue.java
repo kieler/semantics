@@ -62,12 +62,12 @@ public interface ConstantValue extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Int Value</em>' attribute.
-   * @see #setIntValue(String)
+   * @see #setIntValue(int)
    * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getConstantValue_IntValue()
    * @model
    * @generated
    */
-  String getIntValue();
+  int getIntValue();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.ConstantValue#getIntValue <em>Int Value</em>}' attribute.
@@ -77,6 +77,6 @@ public interface ConstantValue extends EObject
    * @see #getIntValue()
    * @generated
    */
-  void setIntValue(String value);
+  void setIntValue(int value);
 
 } // ConstantValue
