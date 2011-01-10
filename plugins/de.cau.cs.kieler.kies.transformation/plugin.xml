@@ -18,26 +18,7 @@
       </content>
    </extension>
   
-  <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.kies.transformation.command1"
-               label="Refresh GMF Edit Policies"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
-                  </equals>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
+
    <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
@@ -82,6 +63,26 @@
             id="de.cau.cs.kieler.kies.transformation.command1"
             name="Refresh Edit Policies">
       </command>
+   </extension-->
+   <!--extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.kies.transformation.command1"
+               label="Refresh GMF Edit Policies"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+               <with
+                     variable="activeEditorId">
+                  <equals
+                        value="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+                  </equals>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
    </extension-->
 
 </plugin>
