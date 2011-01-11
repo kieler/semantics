@@ -14,7 +14,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.model.util.XtendTransformationUtil;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -32,7 +32,7 @@ public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
 
         final EPackage p1 = SyncchartsPackage.eINSTANCE;
         final EPackage p2 = SPackage.eINSTANCE;
-        final EPackage p3 = ExpressionsPackage.eINSTANCE;
+        final EPackage p3 = KExpressionsPackage.eINSTANCE;
         final EPackage p4 = AnnotationsPackage.eINSTANCE;
 
         Status myStatus = null;
