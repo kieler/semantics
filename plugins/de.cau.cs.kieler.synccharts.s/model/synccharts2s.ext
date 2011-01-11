@@ -1,6 +1,6 @@
 import synccharts;
 import annotations;
-import expressions;
+import kexpressions;
 import s;
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
 //extension org::eclipse:xtend:::util::stdlib::counter;   // usage of counters 
@@ -88,7 +88,7 @@ cached List computeThreadPriorities(synccharts::State rootState):
 
 
 // builds a state for s
-s::State buildState(String name, List[expressions::Signal] signals, List[s::Instruction] instructions):
+s::State buildState(String name, List[kexpressions::Signal] signals, List[s::Instruction] instructions):
 	let state = new s::State:
 		state.setName(name) ->
 		state.setSignals(signals) ->
@@ -249,7 +249,7 @@ create s::State this transformMainIntern(synccharts::State state):
 //;
 
 // Transforms a SyncCharts signal into a s Signal 
-create expressions::Signal this transform(expressions::Signal signal):
+create kexpressions::Signal this transform(kexpressions::Signal signal):
 	createTrace(this,signal,"SyncCharts","S") ->
 	this.setCombineOperator(signal.combineOperator) ->
 	this.setName(signal.name) ->
@@ -267,6 +267,6 @@ create expressions::Signal this transform(expressions::Signal signal):
 // signal
 //;
 
-List[expressions::Signal] getStateSignals(synccharts::State state):
+List[kexpressions::Signal] getStateSignals(synccharts::State state):
 	state.signals.transform()
 ;

@@ -1,6 +1,6 @@
 import synccharts;
 import annotations;
-import expressions;
+import kexpressions;
 import s;
 extension org::eclipse::xtend::util::stdlib::io;          // debug printouts
 extension org::eclipse::xtend::util::stdlib::crossref;    // find elements that reference others
