@@ -35,7 +35,7 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
-import de.cau.cs.kieler.core.model.IDomainProvider;
+import de.cau.cs.kieler.core.ui.IEditingProvider;
 
 /**
  * Property section for annotatable objects.
@@ -61,7 +61,7 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
     /** the editing domain for changes to the model. */
     private TransactionalEditingDomain editingDomain;
     /** the domain model provider used to retrieve annotatable elements. */
-    private IDomainProvider domainProvider;
+    private IEditingProvider domainProvider;
     /** the widths of the columns of the tree viewer. */
     private int[] columnWidth;
     
@@ -71,7 +71,7 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
      * 
      * @param thedomainProvider the domain model provider
      */
-    public AnnotationsPropertySection(final IDomainProvider thedomainProvider) {
+    public AnnotationsPropertySection(final IEditingProvider thedomainProvider) {
         this.domainProvider = thedomainProvider;
     }
     

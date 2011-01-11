@@ -14,7 +14,7 @@
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
 import de.cau.cs.kieler.core.annotations.ui.properties.AnnotationsPropertySection;
-import de.cau.cs.kieler.core.model.GmfDomainProvider;
+import de.cau.cs.kieler.core.model.GmfEditingProvider;
 
 /**
  * Property section for SyncCharts annotations.
@@ -27,7 +27,7 @@ public class SyncchartsAnnotationsPropertySection extends AnnotationsPropertySec
      * Creates a property section for SyncCharts annotations.
      */
     public SyncchartsAnnotationsPropertySection() {
-        super(new GmfDomainProvider());
+        super(new GmfEditingProvider());
     }
     
 }
