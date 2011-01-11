@@ -190,7 +190,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                     + flattenedStates.get(0));
             // if (foo != null) {
             TransformationDescriptor descriptor = new TransformationDescriptor("ruleAll",
-                    new Object[] { flattenedStates, 1 });
+                    new Object[] { flattenedStates });
             // workedStates.add(foo);
             return descriptor;
             // }

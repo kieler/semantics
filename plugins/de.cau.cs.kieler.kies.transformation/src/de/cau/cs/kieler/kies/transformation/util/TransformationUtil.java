@@ -34,6 +34,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
@@ -70,12 +71,14 @@ import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
 import de.cau.cs.kieler.kies.esterel.ConstantExpression;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
  * utility class.
@@ -202,6 +205,27 @@ public final class TransformationUtil {
         TextExpression te = fac.createTextExpression();
         te.setCode("unsupported ConstantExpression: " + cexpr.getClass());
         return te;
+    }
+
+    /**
+     * Compares the triggers of two transitions. Any delay is ignored as it does not matter here.
+     * The same applies for any effects of the second transition.
+     * 
+     * Used in context of optimization rule3.
+     * 
+     * @param t1
+     *            chronologically first transition
+     * @param t2
+     *            chronologically second transition
+     * @return true if the triggers of both transitions match, false otherwise.
+     */
+    public static boolean compareTrigger(final Action t1, final Action t2) {
+        Action tmp1 = EcoreUtil.copy(t1);
+        tmp1.setDelay(1);
+        Action tmp2 = EcoreUtil.copy(t2);
+        tmp2.setDelay(1);
+        tmp2.getEffects().clear();
+        return ActionLabelSerializer.toString(tmp1).equals(ActionLabelSerializer.toString(tmp2));
     }
 
     public static void addToFrontOfList(final List<State> list, final List<State> list2) {

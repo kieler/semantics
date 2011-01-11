@@ -19,52 +19,48 @@ extension org::eclipse::xtend::util::stdlib::cloning;
 
 /* 
  	Main algorithm
+ 	
+ 	rule 2 & 3 just need to be applied to simplestates
+ 	rule 7 & 8 can just be applied if the State still exists
 */
-Boolean ruleAll(List[State] states, Integer max):
-	//if rule2applies(s) then rule2(s) ->
-	//if rule5applies(s) then rule5(s) ->
-	//if rule6applies(s) then rule6(s) 
-	
+Boolean ruleAll(List[State] states):
+
 	if states.size > 0 then 
 	(
 		let s = states.first():
 		switch{
 			case ((boolean) GLOBALVAR rule1) && rule1applies(s) : 
 				rule1(s)
-			case ((boolean) GLOBALVAR rule2) && rule2applies(s) :
-				(rule2(s)  )
+			case ((boolean) GLOBALVAR rule2) && s.isSimpleState() && rule2applies(s) :
+				rule2(s)
+			case ((boolean) GLOBALVAR rule3) && s.isSimpleState() && rule3applies(s) :
+				rule3(s)
 			case ((boolean) GLOBALVAR rule4) && rule4applies(s):
-				(rule4(s))
-			case ((boolean) GLOBALVAR rule5) && rule5applies(s) :
-				//s.setLabel("rule5") 
-				(rule5(s))	 
+				rule4(s)
+			case ((boolean) GLOBALVAR rule5) && rule5applies(s) : 
+				rule5(s)
 			case ((boolean) GLOBALVAR rule6) && rule6applies(s) :
-				//s.setLabel("rule6")  
-				(rule6(s, states)) 
+				rule6(s, states)
+			case s.parentRegion != null && ((boolean) GLOBALVAR rule7) && rule7applies(s) :
+				rule7(s)
+			case s.parentRegion != null && ((boolean) GLOBALVAR rule8) && rule8applies(s) :
+				rule8(s)
 			default :
-			// clear the body references and remove state
-			(s.clearBodyReferences() -> states.remove(states.first()) -> ruleAll(states, max))
+			// this state is finished - clear the body references and remove state
+			(s.clearBodyReferences() -> states.remove(states.first()) -> ruleAll(states))
 		} 		
 	) ->
 	
-	//if max < 102 then
-	recursiveRule(states, max)
+	recursiveRule(states)
 ;
-
-/*
-Void ruleAll(List[State] states, Integer max):
-	//states.remove(states.first()) ->
-	if states.size > 0 then 
-		rule(states, max + 1)		
-;*/
 
 /**
  * Recursive rule used to specify wheter the control flow should be passed
  * back to the java implementation or if xtend should keep on transforming
  */
-Void recursiveRule(List[State] states, Integer max):
+Void recursiveRule(List[State] states):
 	 if ((boolean) GLOBALVAR recursive) && states.size > 0 then
-		ruleAll(states, max + 1)
+		ruleAll(states)
 ;
 
 
@@ -90,7 +86,7 @@ Void rule1(State s):
 	s.removeStateFromRegion()
 ;
 
-/*
+/**
 	rule2 : Remove unnecessary plain states
 		if simplestate, is not final nor initial, has only one outgoing transition
 		with trigger = #tick
@@ -112,22 +108,44 @@ Void rule2(State s):
 	incomingTrans.setTargetState(outgoingTrans.targetState) ->
 	// append effects
 	incomingTrans.addEffects(effects) ->
+	
+	// if s is initial .. the new target needs to be initial
+	if s.isInitial then
+		outgoingTrans.targetState.setIsInitial(true) ->
 
 	// remove state and outgoing transition
 	outgoingTrans.removeTransition() ->
 	s.parentRegion.states.remove(s)
 ;
 
-/*
-	rule2.2 : remove unnecessary plain states where in and out have the same trigger (not immediate)
-*/
-// TODO
+/**
+ *	rule3 : remove unnecessary plain states 
+ *		if incoming and outgoing transitions have the same trigger (not immediate)
+ */
+Boolean rule3applies(State s):
+	switch {
+		case isSimpleState(s) && s.hasNumberOfIncomingTrans(1) && s.hasNumberOfOutgoingTrans(1) 
+		&& s.hasOnlyMatchingTriggerTrans() : 
+			 true
+		default : false
+	}
+;
+
+Void rule3(State s):
+	let in = s.incomingTransitions.get(0):
+	let out = s.outgoingTransitions.get(0):
+	out.setSourceState(in.sourceState) ->
+	out.setDelay(in.delay + out.delay) ->
+	if s.isInitial then
+		out.targetState.setIsInitial(true) ->
+	removeTransition(in) ->
+	s.removeStateFromRegion()
+;
 
 
-
-/*
-	rule4: Remove simple final states if there is more than one and bend transitions
-		more than 1 final simplestate
+/**
+	rule4: Remove simple final states if there is more than one and bend their transitions
+		to one simple final state
 */
 Boolean rule4applies(State s):
 	switch {
@@ -144,6 +162,7 @@ Void rule4(State s):
 
 Void handleRule4(Region r):
 	let simpleFinals = r.states.select(e|e.isSimpleState() && e.isFinal):
+	// keep the first one and bend transitions there
 	let firstFinal = simpleFinals.first():
 	let simpleWithoutFirst = simpleFinals.withoutFirst():
 	simpleWithoutFirst.handleRule4rec(firstFinal)
@@ -160,7 +179,7 @@ Void bendAndRemove(Transition t, State to):
 	oldTarget.removeStateFromRegion()
 ;
 
-/*
+/**
 	rule5 : Remove unnecessary normal terminations
 		macro state with no final states and outgoing transition
 		care: do not remove loopstates
@@ -186,16 +205,14 @@ Void removeTransAndPossiblyState(Transition t):
 		removeStateFromRegion(target)
 ;
 
-/*
+/**
 	rule6 : remove unnecessary macro states
 		if no outgoing weak/strong abortions, no signals or variables, 
 		is no parallel macro state, has a parent macro state 
 */
 Boolean rule6applies(State s):
 	switch {
-		// do not remove inital loopstate 
-		
-		// TODO check if just test for interfaceDecls or signals and vars
+		// TODO check if just test for interfaceDecls or signals and vars is enough
 		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) && !isSimpleState(s) &&
 			!hasSignalsVariables(s) && hasParentMacroState(s) && !isParallelMacroState(s):
 				true
@@ -245,14 +262,56 @@ Void rule6(State s, List[State] states):
 	
 	->
 	
-	
-	
-	
 	// remove old normal termination and old state
 	if (!normalTerms.isEmpty) then
 		normalTerms.removeTransition() ->
 	s.removeStateFromRegion()
 ;
+
+/**
+	rule7 : remove macrostates which have only two substates
+		if
+*/
+Boolean rule7applies(State s):
+	switch {
+		// TODO hasParent necessary?
+		case !isSimpleState(s) && s.hasParentMacroState() && s.hasNumberOfSubStates(1):
+				true
+		default: false
+	}
+;
+
+Void rule7(State s):
+	// make sure in case of multiple regions no nullpointer is thrown
+	let parentReg = s.parentRegion:
+	let incomingT = s.incomingTransitions.copyList():
+	let outgoingT = s.outgoingTransitions.copyList():
+	let states = (List[State]) {}:
+	s.regions.collectStates(states) ->
+	(let found = states.get(0):
+	 parentReg.states.add(found) ->
+	 incomingT.setTargetState(found) ->
+	 outgoingT.setSourceState(found)
+	) ->
+	s.removeStateFromRegion()
+; 
+
+/**
+	rule8 : test the final character of a macrostate
+		if final, is macrostate, has no final states as children 
+*/
+Boolean rule8applies(State s):
+	switch {
+		case !isSimpleState(s) && s.isFinal && !s.hasFinalSubState():
+				true
+		default: false
+	}
+;
+
+Void rule8(State s):
+	s.setIsFinal(false)
+;
+
 
 
 /*
@@ -281,12 +340,38 @@ Boolean hasOnlySelfLoop(State s):
 	self.size > 0 && self.size == s.outgoingTransitions.size
 ;
 
+Boolean hasNumberOfSubStates(State s, Integer number):
+	let states = (List[State]) {}:
+	s.regions.collectStates(states) ->
+	states.size == number
+;
+
 Boolean hasOutTransitions(State s):
 	!s.outgoingTransitions.isEmpty
 ;
+
+Boolean hasNumberOfOutgoingTrans(State s, Integer n):
+	s.outgoingTransitions.size == n
+;
+
+Boolean hasNumberOfIncomingTrans(State s, Integer n):
+	s.incomingTransitions.size == n
+;
+
 Boolean hasOutWeakTransitions(State s):
 	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
 	weaks.size > 0
+;
+
+// only use after checking for existing transitions
+Boolean hasOnlyMatchingTriggerTrans(State s):
+	let in = s.incomingTransitions.get(0):
+	let out = s.outgoingTransitions.get(0):
+	// incoming trans may not have any effect
+	(in.effects.isEmpty) ?
+		in.compareTrigger(out)
+		:
+		false	
 ;
 
 Boolean hasOutNormalTransitions(State s):
@@ -399,13 +484,13 @@ Void removeTransition(Transition t):
 // remove a state from the region
 Void removeStateFromRegion(State state):
 	let parent = state.parentRegion:
- state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
- state.incomingTransitions.removeAll(state.incomingTransitions) ->
- parent.states.remove(state)
- ->
- // todo verify
- if parent.states.isEmpty then
- 	parent.parentState.regions.remove(parent)
+ 	state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
+ 	state.incomingTransitions.removeAll(state.incomingTransitions) ->
+ 	parent.states.remove(state)
+ 	->
+ 	// todo verify
+ 	if parent.states.isEmpty then
+ 		parent.parentState.regions.remove(parent)
  	
 ;
   
@@ -429,5 +514,10 @@ Void debug(Region r):
 ;
 
 Void debug(State s):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+;
+
+Boolean compareTrigger(Action t1, Action t2):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.compareTrigger(de.cau.cs.kieler.synccharts.Action, 
+	de.cau.cs.kieler.synccharts.Action) 
 ;
