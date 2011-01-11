@@ -159,7 +159,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return list of selected list elements. Tree elements are not returned.
      */
-    public Collection<Object> getSelectedElements() {
+    public final Collection<Object> getSelectedElements() {
         // First, visit all checked elements
         visitCheckedElements(resourceTreeViewer.getInput());
         
@@ -197,7 +197,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     /**
      * {@inheritDoc}
      */
-    public void createControl(final Composite parent) {
+    public final void createControl(final Composite parent) {
         // Composite
         composite = new Composite(parent, SWT.NULL);
         composite.setLayout(new GridLayout(2, true));
@@ -374,15 +374,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     /**
      * Returns the viewer filters to be used for the resource tree. This
      * method is only called once, upon the resource tree's creation. Subclasses
-     * may override. The default implementation returns {@code null}.
+     * may override. The default implementation returns an empty array.
      * 
      * Note: This could be made more flexible to allow changeing the list of
      * active filters after creation.
      * 
-     * @return array of filters or {@code null}.
+     * @return array of filters.
      */
     protected ViewerFilter[] getResourceTreeFilters() {
-        return null;
+        return new ViewerFilter[0];
     }
     
     /**
@@ -424,15 +424,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     /**
      * Returns the viewer filters to be used for the resource list. This
      * method is only called once, upon the resource list's creation. Subclasses
-     * may override. The default implementation returns {@code null}.
+     * may override. The default implementation returns an empty array.
      * 
      * Note: This could be made more flexible to allow changeing the list of
      * active filters after creation.
      * 
-     * @return array of filters or {@code null}.
+     * @return array of filters.
      */
     protected ViewerFilter[] getResourceListFilters() {
-        return null;
+        return new ViewerFilter[0];
     }
     
     /**
@@ -442,7 +442,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @param newInput the new input object for the resource tree.
      */
-    protected void setResourceTreeInput(final Object newInput) {
+    protected final void setResourceTreeInput(final Object newInput) {
         // Clear user selections
         checkedListItems.clear();
         checkedTreeItems.clear();
@@ -459,7 +459,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return {@code true} if anything is selected.
      */
-    public boolean isAnythingSelected() {
+    public final boolean isAnythingSelected() {
         return !checkedTreeItems.isEmpty() || !checkedListItems.isEmpty();
     }
     
@@ -468,7 +468,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * Does not trigger validation.
      */
-    protected void selectAllListItems() {
+    protected final void selectAllListItems() {
         Object listInput = resourceListViewer.getInput();
         
         if (listInput != null) {
@@ -485,7 +485,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * Does not trigger validation.
      */
-    protected void deselectAllListItems() {
+    protected final void deselectAllListItems() {
         Object listInput = resourceListViewer.getInput();
         
         if (listInput != null) {
@@ -525,8 +525,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * @param browseButtonText the browse button's text.
      * @return the new source group.
      */
-    protected Composite createDefaultSourceGroup(final Composite parent, final String labelText,
-            final String browseButtonText) {
+    protected final Composite createDefaultSourceGroup(final Composite parent,
+            final String labelText, final String browseButtonText) {
 
         // This method uses magic numbers for layout purposes, so keep Checkstyle from
         // checking for those
@@ -611,7 +611,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return the source group's combo box.
      */
-    protected Combo getSourceGroupCombo() {
+    protected final Combo getSourceGroupCombo() {
         return sourceGroupSourceCombo;
     }
     
@@ -621,7 +621,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return the source group's browse button.
      */
-    protected Button getSourceGroupBrowseButton() {
+    protected final Button getSourceGroupBrowseButton() {
         return sourceGroupBrowseButton;
     }
     
@@ -726,8 +726,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * @param browseButtonText the browse button's text.
      * @return the new target group.
      */
-    protected Composite createDefaultTargetGroup(final Composite parent, final String labelText,
-            final String browseButtonText) {
+    protected final Composite createDefaultTargetGroup(final Composite parent,
+            final String labelText, final String browseButtonText) {
 
         // This method uses magic numbers for layout purposes, so keep Checkstyle from
         // checking for those
@@ -812,7 +812,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return the target group's combo box.
      */
-    protected Combo getTargetGroupCombo() {
+    protected final Combo getTargetGroupCombo() {
         return targetGroupTargetCombo;
     }
     
@@ -822,7 +822,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * 
      * @return the target group's browse button.
      */
-    protected Button getTargetGroupBrowseButton() {
+    protected final Button getTargetGroupBrowseButton() {
         return targetGroupBrowseButton;
     }
     
@@ -850,7 +850,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * actual validation is done by subclasses in {@link doValidate()}. If the
      * page validates fine, any error message set is cleared.
      */
-    protected void validate() {
+    protected final void validate() {
         boolean valid = doValidate();
         setPageComplete(valid);
         
@@ -897,7 +897,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Restores the user's saved input. Called after all controls have been
      * created. The default implementation does nothing. Subclasses may override.
      */
-    public void restoreDialogSettings() {
+    protected void restoreDialogSettings() {
         // Do nothing.
     }
     
