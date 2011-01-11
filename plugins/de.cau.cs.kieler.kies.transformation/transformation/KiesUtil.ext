@@ -1,0 +1,180 @@
+import ecore;
+import annotations;
+import kexpressions;
+import synccharts;
+import utilities; 
+import esterel; 
+
+extension feature;
+extension org::eclipse::xtend::util::stdlib::cloning;
+
+ /*
+  * #################################################################################
+  * 
+  * Convenient methods used by the Esterel to SyncCharts transformation.
+  * 
+  */
+
+/**
+ * extracts the expression and immediate information of a esterel::DelayExpr
+ * and adds them to the synccharts::Transition
+ */
+Void addDelayToTrigger(synccharts::Transition t, DelayExpr delay):
+	if delay.isImmediate then 
+		t.setIsImmediate(true) ->
+	// clone the expression as in should stay in esterel model too
+	t.setTrigger((Expression)clone(delay.event.expr)) ->
+	if delay.expr != null then
+		t -> // TODO not yet supported, as synccharts do not offer a delay expression! 
+	t		
+;
+
+/**
+ * extracts all signals from InterfaceSignalDecl and adds them to the state
+ */
+Void extractSignals(InterfaceSignalDecl decl, State s):
+	let clonedDecl = (InterfaceSignalDecl) clone(decl):
+	let copy = (List[Signal]) copyList(clonedDecl.signals):
+	switch {
+		case Input.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(false))
+		case Output.isInstance(decl) : (copy.setIsInput(false) ->  copy.setIsOutput(true))
+		case InputOutput.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(true))
+   		default : decl //no information about input/output
+	} ->
+	if clonedDecl.signals.size > 0 then
+		copy.addSignalToState(s)
+;
+
+Void addSignalToState(Signal sig, State st):
+	st.signals.add(sig)
+;
+
+/**
+ * extract all variables
+ */ 
+Void extractLocalVariables(VariableDecl decl, State s):
+	let vars = (List[IVariable]) clone(decl.variables):
+	vars.addVariableToState(s)
+; 
+
+Void addVariableToState(kexpressions::Variable v, State s):
+	s.variables.add(v)
+;
+
+/**
+ * extracts all local signals
+ */
+Void extractLocalSignals(LocalSignalList lsl, State s):
+	if LocalSignal.isInstance(lsl) then
+		(let copy = (List[ISignal]) clone(((LocalSignal)lsl).signal):
+		 copy.addSignalToState(s)
+		)
+;
+
+/**
+ * connects a transition to the two passed states
+ */
+Void connectTransition(Transition t, State source, State target):
+	t.setSourceState(source) ->
+	t.setTargetState(target) ->
+	source.outgoingTransitions.add(t)
+;
+
+/**
+ * removes EVERYTHING !! body text, sets state type to NORMAL
+ */
+Void removeBodyText(State s):
+ 	s.bodyText.removeAll(s.bodyText) ->
+ 	s.setBodyReference(null) ->
+ 	s.setType(StateType::NORMAL)
+;
+
+/**
+ * only sets the label if there's no previous label
+ */
+Void setLabelIfEmpty(State s, String label):
+	(s.label == null || s.label.trim().length == 0) ? 
+		s.setLabel(label) : s
+;
+
+// collect all traps in an "or" expression
+Void collectTraps(TrapDeclList traps, OperatorExpression expr):
+ 	traps.trapDecls.addTrapToExpression(expr)
+;
+// as trap just extends ISignal .. TrapDecl is unknown here
+Void addTrapToExpression(ISignal trap, OperatorExpression expr):
+	let ref = new ValuedObjectReference:
+	ref.setValuedObject(trap) ->
+	expr.subExpressions.add(ref)
+;
+
+/*
+ * esterel provides additional expression constructs which need to be converted 
+ * into a synccharts adequate form.
+ * These are: - FunctionExpression (replaced by hostcode)
+ *			  - TrapExpression (replaced by hostcode)
+ * 			  - ConstantExpression (replaced by corresponding primitive type)
+ * 
+ */
+Expression convertEsterelExpression(Expression e):
+	if e != null then 
+		 convertEsterelExpressionRec(e) ->	e
+;
+// in case there is no expression at all, null is no problem here
+Expression convertEsterelExpression(Void v):
+	null
+;
+Void replaceWithCorrespondingExpression(Expression e):
+	let parent = (ComplexExpression) e.eContainer:
+	parent.subExpressions.add(e.convertEsterelExpression()) ->
+	parent.subExpressions.remove(e)
+;
+// apply conversion on children
+Expression convertEsterelExpressionRec(Expression e):
+	if ComplexExpression.isInstance(e) then
+		((ComplexExpression) e).subExpressions.convertEsterelExpression()
+;
+// Function expression
+Expression convertEsterelExpressionRec(FunctionExpression fe):
+	let textExpr = new TextExpression:
+	textExpr.setCode(fe.function.name + "(todo" + ")") ->
+	textExpr
+;
+// Trap expression
+Expression convertEsterelExpressionRec(TrapExpression te):
+	let textExpr = new TextExpression:
+	textExpr.setCode(te.trap.name + "(todo" + ")") ->
+	textExpr
+;
+// Constant expression
+Expression convertEsterelExpression(ConstantExpression te):
+    convertConstantExpressionJava(te)
+;
+
+/**
+ * returns a copy of the passed list, just the list is new, all elements
+ * remain the same
+ */
+List copyList(List list):
+	let copy = {}:
+	copy.addAll(list)
+;
+
+
+Expression convertConstantExpressionJava(ConstantExpression e):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
+;
+
+Void setJavaBodyReference(State s, emf::EObject o):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+;
+
+/*
+emf::EObject castToEMF(emf::EObject o):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
+;
+
+ecore::EObject castToEcore(emf::EObject o):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
+;
+*/

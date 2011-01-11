@@ -5,12 +5,16 @@ import synccharts;
 import utilities; 
 import esterel; 
 
+extension KiesUtil;
 extension feature;
 extension org::eclipse::xtend::util::stdlib::cloning;
  
  
-/*
+/**
+ * Esterel to SyncCharts transformation rules.
+ *
  * Some notes: 
+ * - currently just the FIRST module is transformed, if there are more than one they are ignored
  * - keep in mind to add states to their parents first, so potential transitions 
  *   generate a notification which is handled
  * - if the parent state has a label, do not overwrite it
@@ -18,92 +22,91 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * - remember to pass the GLOBALVAR "recursive" to the XtendFacade
  * - add / remove bodytext!
  * - DO NOT use states.addAll{s1, s2}. this does NOT trigger the listener for unique ids!
+ *
+ * @author uru
  */
  
- 
-/*
- 
-   */ 
-   
-  Void sandbox(State s):
-  let t = new Transition:
-  let e = new Effect:
-  let de = new DelayExpr:
- // ((synccharts::Action)t).setLabel("foobat") ->
-  // addSelfLoop(s)->
-	
-s	
-  ;
-
-
-
-
+/**
+ * Recursive rule used to specify wheter the control flow should be passed
+ * back to the java implementation or if xtend should keep on transforming
+ */
 Void recursiveRule(State s, emf::EObject e):
-	((boolean) GLOBALVAR recursive) ? rule(s, e) : s
-	-> s
-;
- 
-// just dummy for xtend 
-Void rule(State s, emf::EObject noneed):
-	s.setLabel("Not Supported yet: " + noneed.metaType)
-;
- 
-
-// rule for Program, forwards the first module
-Void rule(State s, Program p):
- 	let m = ((emf::EObject) s.bodyReference):
- 	let mo = (Program) castToEMF(m):	
-	rule(s, mo.modules.get(0))
+	if ((boolean) GLOBALVAR recursive) then
+		rule(s, e)
 ;
 
-/*
+/**
+ * Assures that every transformation rule with further statements is finished 
+ * properly. This means that any further statement is passed as body reference and the
+ * recursive rule is called.
+ */
+Void finalizeRule(State s, emf::EObject o):
+	setJavaBodyReference(s, o) ->
+	recursiveRule(s, o)
+;
+
+/**
+ * Called at the beginning of every rule, currently just removes any bodytext and sets name
+ */
+Void initializeRule(State s, emf::EObject o):
+	removeBodyText(s) ->
+	s.setLabelIfEmpty(o.metaType.name.replaceAll("esterel::", "") + " State")
+;
+ 
+// rule for the case an unknown object should be transformed
+Void rule(State s, emf::EObject noSupport):
+	s.setLabel("Not Supported yet: " + noSupport.metaType)
+;
+
+// rule for Program, just forwards the first module
+Void rule(State s, Program p):		
+	rule(s, p.modules.get(0))
+;
+
+/**
  * rule 1 (module)
  */ 
 Void rule(State s, Module m):
 	let statement = m.body.statements.get(0):
-	removeBodyText(s) ->
+	initializeRule(s, m) ->
 	// always set label here!
 	s.setLabel(m.name) ->
-	//s.setIsInitial(true) ->
-	//s.setIsFinal(true) ->
-	// TODO set singals
+
+	// extract the signals
 	if(!m.interface.intSignalDecls.isEmpty) then
 		m.interface.intSignalDecls.extractSignals(s) ->	
-	// TODO set body content
-	setJavaBodyReference(s, statement) ->
-	//appendNextTransformation(newState, statement)
-	recursiveRule(s, statement)
+	// TODO extract all other declarations
+	// for this a proper synccharts representation is needed
+	
+	s.finalizeRule(statement)
 ;
 
-/*
+/**
  * rule 2 (nothing)
  */ 
 Void rule(State s, Nothing n):
 	let nState = new State:
 	let r = new Region:
-	s.removeBodyText() ->
+	initializeRule(s, n) ->
 	s.regions.add(r) ->
-	s.setLabelIfEmpty("Nothing State") ->
 	r.states.add(nState) ->
 	nState.setIsFinal(true) ->
 	nState.setIsInitial(true)
 ;
 
-/*
+/**
  * rule 3 (halt)
  */
 Void rule(State s, Halt h):
 	let r = new Region:
 	let ns = new State:
-	removeBodyText(s) ->
+	initializeRule(s, h) ->
 	s.regions.add(r) ->
-	s.setLabelIfEmpty("Halt State") ->
 	r.states.add(ns) ->
 	ns.setIsInitial(true)
-	
 ;
  
-/*
+/**
  * rule 4 (pause)
  */
 Void rule(State s, Pause p):
@@ -111,9 +114,8 @@ Void rule(State s, Pause p):
 	let initS = new State:
 	let finalS = new State:
 	let t = new Transition:
+	initializeRule(s, p) ->
 	// setup states
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Pause State") ->
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	r.states.add(finalS) ->
@@ -124,8 +126,8 @@ Void rule(State s, Pause p):
 	t.connectTransition(initS, finalS)
 ;
 
- /*
- * rule 5 (abort)
+/**
+ * rule 5 (abort), rule 6 (weak abort)
  */
 Void rule(State s, Abort a):
 	ruleAbort(s, a)
@@ -138,8 +140,7 @@ Void ruleAbort(State s, Abort a):
  	let caseStates = {}:
  	let finalState = new State:
  	let toFinalTrans = new Transition:
- 	removeBodyText(s) ->
- 	(WeakAbort.isInstance(a) ? s.setLabelIfEmpty("Weak Abort State") : s.setLabelIfEmpty("Abort State")) ->
+ 	initializeRule(s, a) ->
  	// add new state
  	s.regions.add(r) ->
  	r.states.add(initState) ->
@@ -150,21 +151,22 @@ Void ruleAbort(State s, Abort a):
 	initState.setIsInitial(true) ->
 	finalState.setIsFinal(true) ->
 	
+	// ERRORMARKERS are not really errors!
 	// just an instance or cases? 
  	(AbortInstance.isInstance(a.body) ?
+ 		// INSTANCE
 	 	handleAbortCaseSingle(r, initState, 1, 
 	 		((AbortInstance)a.body).delay,
 	 		((AbortInstance)a.body).statement,
 	 		WeakAbort.isInstance(a)) 
  	:
+ 		// CASES
  		(toFinalTrans.setPriority(((AbortCase)a.body).cases.size + 1) ->
- 		// handle cases (only for ABRO currently)
 	 	handleAbortCases(r, initState, 1, ((AbortCase)a.body).cases, WeakAbort.isInstance(a)))
 	) -> 	
-	// handle abort's body statement
 	toFinalTrans.connectTransition(initState, finalState) ->
-	setJavaBodyReference(initState, a.statement) ->
-	recursiveRule(initState, a.statement)
+	// handle abort's body statement
+	finalizeRule(initState, a.statement)
 ;
 		
 Void handleAbortCases(Region parent, State source, Integer prio, List[AbortCaseSingle] cases, boolean weak):
@@ -181,7 +183,7 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	caseState.setIsFinal(true) ->
 	parent.states.add(caseState) ->
 	
-	// create and add transition
+	// create and add transition (weak abort needs strong abortion!)
 	if !weak then trans.setType(TransitionType::STRONGABORT) ->
 	trans.setPriority(prio) ->
 	
@@ -189,56 +191,46 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	trans.addDelayToTrigger(expr) ->
 		
 	trans.connectTransition(source, caseState) ->
-	// care! the "do" body of about might be null
+	// care! the "do" body of abort might be null
 	if (body != null) then
 		// set body text 
-		(setJavaBodyReference(caseState, body)  ->
-		recursiveRule(caseState, body))
+		finalizeRule(caseState, body)
 ;
 
-/*
- * rule 6 (weak abort)
- */
-// TODO
-
-/*
+/**
  * rule 7 (assign)
  */
- Void rule(State s, esterel::Assignment assign):
- 	let r = new Region:
- 	let initS = new State:
- 	let finalS = new State:
- 	let t = new Transition:
- 	let sa = new synccharts::Assignment:
- 	s.removeBodyText() ->
- 	// setup states
- 	s.setLabelIfEmpty("Assign State") ->
- 	s.regions.add(r) ->
- 	initS.setIsInitial(true) ->
- 	finalS.setIsFinal(true) ->
- 	r.states.add(initS) ->
- 	r.states.add(finalS) ->
- 	// init transition
- 	t.connectTransition(initS, finalS) ->
-
+Void rule(State s, esterel::Assignment assign):
+	let r = new Region:
+	let initS = new State:
+	let finalS = new State:
+	let t = new Transition:
+	let sa = new synccharts::Assignment:
+	initializeRule(s, assign) ->
+	// setup states
+	s.regions.add(r) ->
+	initS.setIsInitial(true) ->
+	finalS.setIsFinal(true) ->
+	r.states.add(initS) ->
+	r.states.add(finalS) ->
+	// init transition
+	t.connectTransition(initS, finalS) ->
  	sa.setVariable(assign.var) ->
- 	
- 	if (assign.expr != null) then
- 		(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
- 		
- 	//add assignment to the transition
- 	t.effects.add(sa)
- ;
+	// care to convert the expression prior adding it
+	if (assign.expr != null) then
+		(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
+	//add assignment to the transition
+	t.effects.add(sa)
+;
 
-/*
+/**
  * rule 8 (await)
  */
 Void rule(State s, Await a):
  	let r = new Region :
  	let initState = new State:
  	let caseStates = {}:
-	removeBodyText(s) ->
- 	s.setLabelIfEmpty("Await State") ->
+	initializeRule(s, a) ->
  	// add state
  	s.regions.add(r) ->
  	initState.setIsInitial(true) ->
@@ -263,38 +255,37 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
 ;
 
 
- /*
-  * rule 10 & 11 (do upto & watching)
-  */
- Void rule(State s, Do d):
- 	// end is either DoUpto or DoWatching and just effects the outgoing context.
+/**
+ * rule 10 & 11 (do upto & watching)
+ */
+Void rule(State s, Do d):
+	// end is either DoUpto or DoWatching and just effects the outgoing context.
  	// hence we transform the "do" statement here and then decide
  	let r = new Region :
  	let initState = new State:
-	removeBodyText(s) ->
+	initializeRule(s, d) ->
 	s.regions.add(r) ->
 	r.states.add(initState) ->
 	initState.setIsInitial(true) ->
  	
+ 	// ERRORMARKERS are not really errors!
  	// handle end
  	((DoUpto.isInstance(d.end)) ? 
- 		handleDoUpto(s, initState, r, (DoUpto) castToEMF(d.end) )
+ 		handleDoUpto(s, initState, r, (DoUpto) d.end)
  		:
- 		handleDoWatching(s, initState, r, (DoWatching) castToEMF(d.end) )
- 	 ) ->
- 		
- 	// recursive
- 	initState.setJavaBodyReference(d.statement) ->
- 	initState.recursiveRule(d.statement)
- ;
+ 		handleDoWatching(s, initState, r, (DoWatching) d.end)
+ 	) ->
 
- /*
-  * rule 10 (doupto)
-  */
+	finalizeRule(initState, d.statement)
+;
+
+/**
+ * rule 10 (doupto)
+ */
 Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
 	let finalS = new State:
 	let t = new Transition:
-	
+	// set a more explicit state name
 	parent.setLabelIfEmpty("Doupto State") ->
 	parentR.states.add(finalS) ->
 	finalS.setIsFinal(true) ->
@@ -304,17 +295,15 @@ Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
 	t.addDelayToTrigger(du.expr)
 ;
 
-
- /*
-  * rule 11 (do watching)
-  */
+/**
+ * rule 11 (do watching)
+ */
 Void handleDoWatching(State parent, State previous, Region parentR, DoWatching dw):
 	let abortF = new State:
 	let normalF = new State:
 	let abortT = new Transition:
 	let normalT = new Transition:
-	
-	// setup
+	// set a more explicit state name
 	parent.setLabelIfEmpty("Dowatching State") ->
 	parentR.states.add(abortF) ->
 	parentR.states.add(normalF) ->
@@ -328,27 +317,25 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 	abortT.connectTransition(previous, abortF) ->
 	normalT.connectTransition(previous, normalF) ->
 	
+	// add delay
 	abortT.addDelayToTrigger(dw.delay) ->
 	
 	// if timeout
 	if (dw.end != null) then
-		(abortF.setJavaBodyReference(dw.end.statement) ->
-		abortF.recursiveRule(dw.end.statement) )
+		finalizeRule(abortF, dw.end.statement)
 ;
 
-
- /*
-  * rule 12 (emit)
-  */
+/**
+ * rule 12 (emit)
+ */
 Void rule(State s, Emit e):
 	let initS = new State:
 	let finalS = new State:
 	let r = new Region:
 	let emitTrans = new Transition:
 	let emission = new Emission:
-	removeBodyText(s) ->
+	initializeRule(s, e) ->
 	s.regions.add(r) ->
-	s.setLabelIfEmpty("Emit State") ->
 	initS.setIsInitial(true) ->
 	finalS.setIsFinal(true) ->
 	
@@ -365,7 +352,7 @@ Void rule(State s, Emit e):
 	emitTrans.connectTransition(initS, finalS)
 ;
 
-/*
+/**
  * rule 13 (every)
  */
 Void rule(State s, EveryDo e):
@@ -374,9 +361,8 @@ Void rule(State s, EveryDo e):
 	let everyS = new State:
 	let initT = new Transition:
 	let everyT = new Transition:
-	s.removeBodyText() ->
+	initializeRule(s, e) ->
 	// setup states
-	s.setLabelIfEmpty("Every State") ->
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	r.states.add(everyS) ->
@@ -390,11 +376,10 @@ Void rule(State s, EveryDo e):
 	initT.addDelayToTrigger(e.delay) ->
 	everyT.addDelayToTrigger(e.delay) ->
 	// recursive
-	everyS.setJavaBodyReference(e.statement) ->
-	everyS.recursiveRule(e.statement)
+	finalizeRule(everyS, e.statement)
 ;
 
-/*
+/**
  * rule 14 (if)
  */
 Void rule(State s, IfTest ift):
@@ -402,13 +387,12 @@ Void rule(State s, IfTest ift):
 	let initS = new State:
 	// priority for possible else case
 	let maxprio = 2 + ift.elsif.size:
-	s.removeBodyText() ->
+	initializeRule(s, ift) ->
+	// IfTest does not sound nice :)
 	s.setLabelIfEmpty("If State") ->
-
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	initS.setIsInitial(true) ->
-
 	// first if
 	handleIfSingle(r, initS, 1, ift.expr, (ift.thenPart != null) ? ift.thenPart.statement : null) ->
 	
@@ -419,7 +403,6 @@ Void rule(State s, IfTest ift):
 	// possible else
 	if (ift.elsePart != null) then
 		handleIfSingle(r, initS, maxprio, null, ift.elsePart.statement)
-	
 ;
 
 Void handleElseIfParts(Region parent, State previous, Integer prio, List[ElsIf] elses):
@@ -437,15 +420,14 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 	
 	// setup transition
 	if (e != null) then
-	( castToEcore(e) ->
-		ifT.setTrigger(convertEsterelExpression((Expression) clone(e)))) ->
+		(ifT.setTrigger(convertEsterelExpression((Expression) clone(e)))) ->
+	
 	ifT.connectTransition(previous, ifS) ->
 	ifT.setPriority(prio) ->
 	
 	// if thenpart, recursive
 	if (s != null) then
-		(ifS.setJavaBodyReference(s) ->
-		ifS.recursiveRule(s)) ->
+		finalizeRule(ifS, s) ->
 		
 	// create artificial nothing
 	if (s == null) then 
@@ -453,87 +435,76 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 		rule(ifS, n))
 ;
 
-
-/*
+/**
  * rule 15 (localsignal)
  */
 Void rule(State s, LocalSignalDecl ls):
 	let r = new Region:
 	let sigS = new State:
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Localsignal State") ->
+	initializeRule(s, ls) ->
 	// setup
 	s.regions.add(r) ->
 	r.states.add(sigS) ->
 	sigS.setIsInitial(true) ->
 	sigS.setIsFinal(true) ->
-	
+	// extract local signals
 	ls.signalList.extractLocalSignals(s) ->
-	
 	// recursive
-	sigS.setJavaBodyReference(ls.statement) ->
-	sigS.recursiveRule(ls.statement)
+	finalizeRule(sigS, ls.statement)
 ;
 
-
-/*
+/**
  * rule 16 (localvariable)
  */
 Void rule(State s, LocalVariable v):
 	let r = new Region:
 	let varS = new State:
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Localvariable State") ->
+	initializeRule(s, v) ->
 	// setup
 	s.regions.add(r) ->
 	r.states.add(varS) ->
 	varS.setIsInitial(true) ->
 	varS.setIsFinal(true) ->
-	
 	// add variables to state
 	v.var.varDecls.extractLocalVariables(s) ->
-	
 	// recursive
-	varS.setJavaBodyReference( v.statement) ->
-	varS.recursiveRule(v.statement)
+	finalizeRule(varS, v.statement)
 ;
 
 
-/*
+/**
  * rule 17 (loop) & rule 18 (loop each)
  */
 Void rule(State s, Loop l):
 	let r = new Region:
 	let loopState = new State:
  	let selfTrans = new Transition:
- 	removeBodyText(s) ->
- 	// setup state
+ 	initializeRule(s, l) ->
+	// name has to be determined separately
 	(LoopEach.isInstance(l.end) ? s.setLabelIfEmpty("LoopEach State") 
-			: s.setLabelIfEmpty("Loop_State")) ->
- 	s.regions.add(r) ->
- 	r.states.add(loopState) ->
- 	loopState.setIsInitial(true) ->
- 	// setup transition
- 	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
+		: s.setLabelIfEmpty("Loop State")) ->
+	// setup state
+	s.regions.add(r) ->
+	r.states.add(loopState) ->
+	loopState.setIsInitial(true) ->
+	// setup transition
+	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
  	selfTrans.connectTransition(loopState, loopState) ->
- 	
- 	if LoopEach.isInstance(l.end) then
+	
+	// handle each case
+	if LoopEach.isInstance(l.end) then
  		(selfTrans.setType(TransitionType::STRONGABORT) ->
  		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
  	
- 	setJavaBodyReference(loopState, l.body.statement) ->
-	recursiveRule(loopState, l.body.statement)
- ;
+	finalizeRule(loopState, l.body.statement)
+;
  
-
- /* 
-  * rule 19 (parallel)
-  */
+/**
+ * rule 19 (parallel)
+ */
 Void rule(State s, Parallel p):
-	removeBodyText(s) ->
-	s.setLabelIfEmpty("Parallel State") -> 
-	
-	// important to copy the list here! otherwise esterel resource gets destroyed
+	initializeRule(s, p) ->	
+	// important to copy the list here! otherwise the esterel resource gets destroyed
  	ruleParallelRecursive(s, p.list.copyList())
 ;
 
@@ -559,20 +530,18 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 		if(statements.size > 1) then
 			ruleParallelRecursive(parent, statements.withoutFirst()) ->
 		
-		setJavaBodyReference(s, statements.first()) ->
-		recursiveRule(s, statements.first())
+		finalizeRule(s, statements.first())
 		)
 	)	
 ;
 
- /* 
-  * rule 20 (present)
-  */
+/**
+ * rule 20 (present)
+ */
 Void rule(State s, Present p):
 	let r = new Region:
 	let pS = new State:
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Present State") ->
+	initializeRule(s, p) ->
 	// setup
 	s.regions.add(r) ->
 	r.states.add(pS) ->
@@ -581,8 +550,8 @@ Void rule(State s, Present p):
 	(PresentEventBody.isInstance(p.body) ? 
 		// handle present ... then ... form
 		(let event = ((PresentEventBody)p.body).event.expression:
-		let thenPart = ((PresentEventBody)p.body).thenPart:  
-		handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : null) 
+		 let thenPart = ((PresentEventBody)p.body).thenPart:  
+		 handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : null) 
 		)
 		:
 		// handle present cases
@@ -603,24 +572,19 @@ Void handlePresentCases(Region parent, State previous, Integer prio, List[Presen
 	)
 ;
 
-// TODO check if this is redundant to if single
 Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expression e, Statement st):
 	let newS = new State:
 	let t = new Transition:
-	// setup
 	parent.states.add(newS) ->
+	// transition
 	t.setPriority(prio) ->
 	t.setTrigger(convertEsterelExpression((Expression) clone(e))) ->
-	
 	t.connectTransition(previous, newS) ->
-	
 	// recursive
-	newS.setJavaBodyReference(st) ->
-	newS.recursiveRule(st)
+	finalizeRule(newS, st)
 ;
 
-
-/*
+/**
  * rule 22 (call)
  */
 Void rule(State s, ProcCall c):
@@ -629,9 +593,8 @@ Void rule(State s, ProcCall c):
 	let finalS = new State:
 	let t = new Transition:
 	let textEffect = new TextEffect:
+	initializeRule(s, c) ->
 	// setup
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Call State") ->
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	r.states.add(finalS) ->
@@ -642,7 +605,6 @@ Void rule(State s, ProcCall c):
 	// create call statement
 	textEffect.setCode(c.createCallStatement()) ->
 	t.effects.add(textEffect) 
-	
 ;
 
 String createCallStatement(ProcCall c):
@@ -650,32 +612,22 @@ String createCallStatement(ProcCall c):
 	"call " + c.proc.name + "(todo" + ")" + "(todo" + ")"   
 ;
 
-
-/*
+/**
  * rule 23 (sequence)
  */
  Void rule(State s, Sequence seq):
  	let r = new Region:
  	let initial = new State:
  	let list = (List[Statement]){}:
- 	s.removeBodyText() ->
- 	// create initial state
-	s.setLabelIfEmpty("Sequence State") ->
+ 	initializeRule(s, seq) ->
 	s.regions.add(r) ->
 	initial.setIsInitial(true) ->
 	r.states.add(initial) ->
-	
 	// as the grammar generates nested sequences, we flatten it first
 	// this is important to conserve order!
 	seq.flattenSequence(list) ->
-	
 	// call recursively
-	ruleSequenceRecursive(r, initial, list.withoutFirst()) ->
-	 
-	// process body of first sequence state
-	setJavaBodyReference(initial, list.first()) ->
-	recursiveRule(initial, list.first())
-	
+	ruleSequenceRecursive(r, initial, list) 
 ;
 
 Void flattenSequence(Statement s, List list):
@@ -698,40 +650,31 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 	ruleSequenceRecursive(region, s, statements.withoutFirst())  
 	: 
 	// else finished and the last one is a final state!
-	s.setIsFinal(true)))
-	
-	->
-	setJavaBodyReference(s, statements.first()) ->
-	recursiveRule(s, statements.first())
+	s.setIsFinal(true))) ->
+	finalizeRule(s, statements.first())
 ;
 
-
-/*
+/**
  * rule 24 (suspend)
  */
 Void rule(State s, Suspend sus):
 	let r = new Region:
 	let susState = new State:
-	let act = new Action:
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Suspend State") ->
+	let act = new synccharts::Transition:
+	initializeRule(s, sus) ->
 	s.regions.add(r) ->
 	r.states.add(susState) ->
-	
 	// setup
 	susState.setIsInitial(true) ->
 	susState.setIsFinal(true) ->
 	// add suspension
 	act.addDelayToTrigger(sus.delay) ->
 	susState.setSuspensionTrigger(act) ->
-	
 	// recursive
-	susState.setJavaBodyReference(sus.statement) ->
-	susState.recursiveRule(sus.statement)
-	
+	finalizeRule(susState, sus.statement)
 ;
 
-/*
+/**
  * rule 25 (sustain)
  */
 Void rule(State s, Sustain sus):
@@ -741,14 +684,11 @@ Void rule(State s, Sustain sus):
 	let initT = new Transition:
 	let sustT = new Transition:
 	let emission = new Emission:
-	
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Sustain State") ->
+	initializeRule(s, sus) ->
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	r.states.add(finalS) ->
 	initS.setIsInitial(true) ->
-	
 	// setup transitions
 	initT.connectTransition(initS, finalS) ->
 	sustT.connectTransition(finalS, finalS) ->
@@ -758,10 +698,9 @@ Void rule(State s, Sustain sus):
 	sustT.effects.add((Emission) clone(emission))
 ;
 
-
- /* 
-  * rule 26 (trap)
-  */
+/**
+ * rule 26 (trap)
+ */
 Void rule(State s, Trap t):
 	let r = new Region: 
 	let trapS = new State:
@@ -770,15 +709,12 @@ Void rule(State s, Trap t):
 	let haltS = new State:
 	let haltT = new Transition:
 	let haltSig = new Signal:
-	
-	s.removeBodyText() ->
-	s.setLabelIfEmpty("Trap State") ->
+	initializeRule(s, t) ->
 	// setup
 	s.regions.add(r) ->
 	r.states.add(trapS) ->
 	r.states.add(finalS) ->
 	r.states.add(haltS) ->
-	
 	// normal termination
 	finalS.setIsFinal(true) ->
 	normalT.setType(TransitionType::NORMALTERMINATION) ->
@@ -795,8 +731,8 @@ Void rule(State s, Trap t):
 	haltT.setIsImmediate(true) ->
 	haltT.setPriority(1) ->
 	(let vo = new ValuedObjectReference:
-	vo.setValuedObject(haltSig) ->
-	haltT.setTrigger(vo)) ->
+	 vo.setValuedObject(haltSig) ->
+	 haltT.setTrigger(vo)) ->
 	
 	// setup exit state
 	(let handleState = new State:
@@ -819,9 +755,7 @@ Void rule(State s, Trap t):
 	 	handleTrapHandler(handleState, t.trapHandler)
 	) ->
 
-
-	trapS.setJavaBodyReference(t.statement) ->
-	trapS.recursiveRule(t.statement)
+	finalizeRule(trapS, t.statement)
 ;
 
 Void handleTrapHandler(State handleState, List[TrapHandler] handler):
@@ -861,22 +795,19 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 	macroS.recursiveRule(handler.statement) 
 ;
 
-
- /* 
-  * rule 27 (exit)
-  * TODO: add traphalts of possible parent traps
-  */
+/**
+ * rule 27 (exit)
+ * TODO: add traphalts of possible parent traps
+ */
 Void rule(State s, Exit e):
 	let initS = new State:
 	let finalS = new State:
 	let r = new Region:
 	let emitTrans = new Transition:
 	let emission = new Emission:
-	removeBodyText(s) ->
+	initializeRule(s, e) ->
 	s.regions.add(r) ->
-	s.setLabelIfEmpty("Exit State") ->
 	initS.setIsInitial(true) ->
-	
 	// add new states to region
 	r.states.add(initS) ->
 	r.states.add(finalS) ->
@@ -890,171 +821,16 @@ Void rule(State s, Exit e):
 	emitTrans.connectTransition(initS, finalS)
 ;
 
- /* 
-  * rule 28 (weak abort)
-  * 
-  */
+/** 
+ * rule 28 (weak abort)
+ */
 Void rule(State s, WeakAbort wa):
 	ruleAbort(s, wa)
 ;
 
-
-/*
-	omit the block, theres a parallel in it!
-*/
+/**
+ * omit the block, theres a parallel in it!
+ */
 Void rule(State s, Block b):
 	rule(s, (Parallel) b.statement)
-;
-
-
- /*
-  * #################################################################################
-  * 
-  * Convenient methods
-  * 
-  */
-
-
-// extracts the expression and immediate information of a esterel::DelayExpr
-// and adds them to the synccharts::Transition
-Void addDelayToTrigger(Action t, DelayExpr delay):
-	if delay.isImmediate then t.setIsImmediate(true) ->
-	// clone the expression as in should stay in esterel model too
-	t.setTrigger((Expression)clone(delay.event.expr)) ->
-	if delay.expr != null then
-		t -> // TODO not yet supported, as synccharts do not offer a delay expression! 
-	t		
-;
-
-// extracts all signals from InterfaceSignalDecl and adds them to the state
-Void extractSignals(InterfaceSignalDecl decl, State s):
-	let clonedDecl = (InterfaceSignalDecl) clone(decl):
-	let copy = (List[Signal]) copyList(clonedDecl.signals):
-	switch {
-		case Input.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(false))
-		case Output.isInstance(decl) : (copy.setIsInput(false) ->  copy.setIsOutput(true))
-		case InputOutput.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(true))
-   		default : decl //no information about input/output
-	} ->
-	if clonedDecl.signals.size > 0 then
-		copy.addSignalToState(s)
-;
-
-// extract all variables 
-Void extractLocalVariables(VariableDecl decl, State s):
-	let vars = (List[IVariable]) clone(decl.variables):
-	vars.addVariableToState(s)
-; 
-
-Void addVariableToState(kexpressions::Variable v, State s):
-	s.variables.add(v)
-;
-
-// extracts all local signals
-Void extractLocalSignals(LocalSignalList lsl, State s):
-	if LocalSignal.isInstance(lsl) then
-		(let copy = (List[ISignal]) clone(((LocalSignal)lsl).signal):
-		copy.addSignalToState(s)
-		)
-;
-
-// adds sig to the state, does some processing
-Void addSignalToState(Signal sig, State st):
-	st.signals.add(sig)
-;
-
-// connects a transition to the two passed states
-Void connectTransition(Transition t, State source, State target):
-	t.setSourceState(source) ->
-	t.setTargetState(target) ->
-	source.outgoingTransitions.add(t)
-;
-
-// removes ALL !! body text, set state type to NORMAL
-Void removeBodyText(State s):
- 	s.bodyText.removeAll(s.bodyText) ->
- 	s.setBodyReference(null) ->
- 	s.setType(StateType::NORMAL)
-;
-
-// only set the label if there's no previous label
-Void setLabelIfEmpty(State s, String label):
-	(s.label == null || s.label.trim().length == 0) ? 
-		s.setLabel(label) : s
-;
-
-// collect all traps in an "or" expression
-Void collectTraps(TrapDeclList traps, OperatorExpression expr):
- 	traps.trapDecls.addTrapToExpression(expr)
-;
-// as trap just extends ISignal .. TrapDecl is unknown here
-Void addTrapToExpression(ISignal trap, OperatorExpression expr):
-	let ref = new ValuedObjectReference:
-	ref.setValuedObject(trap) ->
-	expr.subExpressions.add(ref)
-;
-
-/*
- * esterel provides additional expression constructs which need to be converted 
- * into a synccharts adequate form.
- * These are: - FunctionExpression (replaced by hostcode)
- *			  - TrapExpression (replaced by hostcode)
- * 			  - ConstantExpression (replaced by corresponding primitive type)
- * 
- */
-Expression convertEsterelExpression(Expression e):
-	if e != null then 
-		 convertEsterelExpressionRec(e) ->	e
-;
-// in case there is no expression at all, null is no problem here
-Expression convertEsterelExpression(Void v):
-	null
-;
-Void replaceWithCorrespondingExpression(Expression e):
-	let parent = (ComplexExpression) e.eContainer:
-	parent.subExpressions.add(e.convertEsterelExpression()) ->
-	parent.subExpressions.remove(e)
-;
-// apply conversion on children
-Expression convertEsterelExpressionRec(Expression e):
-	if ComplexExpression.isInstance(e) then
-		((ComplexExpression) e).subExpressions.convertEsterelExpression()
-;
-// Function expression
-Expression convertEsterelExpressionRec(FunctionExpression fe):
-	let textExpr = new TextExpression:
-	textExpr.setCode(fe.function.name + "(todo" + ")") ->
-	textExpr
-;
-// Trap expression
-Expression convertEsterelExpressionRec(TrapExpression te):
-	let textExpr = new TextExpression:
-	textExpr.setCode(te.trap.name + "(todo" + ")") ->
-	textExpr
-;
-// Constant expression
-Expression convertEsterelExpression(ConstantExpression te):
-    convertConstantExpressionJava(te)
-;
-
-List copyList(List list):
-	let copy = {}:
-	copy.addAll(list)
-;
-
-
-Expression convertConstantExpressionJava(ConstantExpression e):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
-;
- 
-emf::EObject castToEMF(emf::EObject o):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
-;
-
-ecore::EObject castToEcore(emf::EObject o):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
-;
-
-Void setJavaBodyReference(State s, emf::EObject o):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
