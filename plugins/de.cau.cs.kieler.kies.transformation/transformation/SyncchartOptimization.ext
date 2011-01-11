@@ -8,6 +8,15 @@ import ecore;
 extension feature; 
 extension org::eclipse::xtend::util::stdlib::cloning;
 
+/**
+ * 
+ * Global Variables:
+ *		* recursive : should the rules be applied recursively?
+ * 		* rule1-8 : should ruleX be considered?
+ * ALL these have to be provided by the calling facade!
+ *
+ */ 
+
 /* 
  	Main algorithm
 */
@@ -20,16 +29,16 @@ Boolean ruleAll(List[State] states, Integer max):
 	(
 		let s = states.first():
 		switch{
-			case rule1applies(s) : 
+			case ((boolean) GLOBALVAR rule1) && rule1applies(s) : 
 				rule1(s)
-			case rule2applies(s) :
+			case ((boolean) GLOBALVAR rule2) && rule2applies(s) :
 				(rule2(s)  )
-			case rule4applies(s):
+			case ((boolean) GLOBALVAR rule4) && rule4applies(s):
 				(rule4(s))
-			case rule5applies(s) :
+			case ((boolean) GLOBALVAR rule5) && rule5applies(s) :
 				//s.setLabel("rule5") 
 				(rule5(s))	 
-			case rule6applies(s) :
+			case ((boolean) GLOBALVAR rule6) && rule6applies(s) :
 				//s.setLabel("rule6")  
 				(rule6(s, states)) 
 			default :
@@ -49,12 +58,17 @@ Void ruleAll(List[State] states, Integer max):
 		rule(states, max + 1)		
 ;*/
 
+/**
+ * Recursive rule used to specify wheter the control flow should be passed
+ * back to the java implementation or if xtend should keep on transforming
+ */
 Void recursiveRule(List[State] states, Integer max):
 	 if ((boolean) GLOBALVAR recursive) && states.size > 0 then
 		ruleAll(states, max + 1)
-	;
+;
 
-/*
+
+/**
 	rule1 : Remove unnecessary conditional state 
 		if conditional, one plain outgoing transition
 */
@@ -69,15 +83,17 @@ Boolean rule1applies(State s):
 Void rule1(State s):
 	let targetState = s.outgoingTransitions.get(0).targetState:
 	let incomingTrans = s.incomingTransitions.copyList():
+	// bend transition to new target
 	incomingTrans.setTargetState(targetState) ->
 	s.outgoingTransitions.get(0).removeTransition() ->
+	// remove conditional state
 	s.removeStateFromRegion()
 ;
 
 /*
 	rule2 : Remove unnecessary plain states
 		if simplestate, is not final nor initial, has only one outgoing transition
-		an trigger = #tick
+		with trigger = #tick
 */
 Boolean rule2applies(State s):
 	switch {

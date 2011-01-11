@@ -161,6 +161,9 @@ List copyList(List list):
 ;
 
 
+/**
+ * Methods calling Java
+ */
 Expression convertConstantExpressionJava(ConstantExpression e):
 	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
 ;
@@ -168,13 +171,3 @@ Expression convertConstantExpressionJava(ConstantExpression e):
 Void setJavaBodyReference(State s, emf::EObject o):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
-
-/*
-emf::EObject castToEMF(emf::EObject o):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
-;
-
-ecore::EObject castToEcore(emf::EObject o):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.castToEObjcet(org.eclipse.emf.ecore.EObject)
-;
-*/

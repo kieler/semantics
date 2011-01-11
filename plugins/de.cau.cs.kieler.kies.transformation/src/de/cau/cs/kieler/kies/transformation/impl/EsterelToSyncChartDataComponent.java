@@ -50,8 +50,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
             + "KExpressionsPackage";
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
-    private static final String TRANSFORMATION_FILE = "toSyncchartTransformation.ext";
-    // private static final String TRANSFORMATION_FILE = "optimization.ext";
+    private static final String TRANSFORMATION_FILE = "ToSyncchartTransformation.ext";
 
     /** first transformation being executed. */
     public static final String INITIAL_TRANSFORMATION = "rule";

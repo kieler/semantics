@@ -50,7 +50,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
             + "KExpressionsPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
-    private static final String TRANSFORMATION_FILE = "syncchartOptimization.ext";
+    private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
 
     private State rootState;
     private Region rootRegion;
@@ -83,6 +83,12 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         // init global variables
         HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
         globalVars.put("recursive", new Variable("boolean", recursive));
+
+        for (int i = 1; i < 9; i++) {
+            KiemProperty p = getProperties()[i];
+            boolean ruleX = p.getValueAsBoolean();
+            globalVars.put("rule" + i, new Variable("boolean", ruleX));
+        }
 
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
@@ -236,10 +242,15 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public KiemProperty[] provideProperties() {
-        final int numberOfProperties = 1;
+        final int numberOfProperties = 9;
         KiemProperty[] properties = new KiemProperty[numberOfProperties];
 
         properties[0] = new KiemProperty("Recursive", true);
+        // create rules for the optimizations
+        for (int i = 1; i < numberOfProperties; i++) {
+            properties[i] = new KiemProperty("rule" + i, true);
+        }
+
         return properties;
     }
 
