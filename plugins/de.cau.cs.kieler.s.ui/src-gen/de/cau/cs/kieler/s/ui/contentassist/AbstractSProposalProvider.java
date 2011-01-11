@@ -5,7 +5,7 @@ package de.cau.cs.kieler.s.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.*;
-import de.cau.cs.kieler.core.expressions.ui.contentassist.ExpressionsProposalProvider;
+import de.cau.cs.kieler.core.kexpressions.ui.contentassist.KExpressionsProposalProvider;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
@@ -15,7 +15,7 @@ import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
  * with a more concrete subtype. 
  */
 @SuppressWarnings("all")
-public class AbstractSProposalProvider extends ExpressionsProposalProvider {
+public class AbstractSProposalProvider extends KExpressionsProposalProvider {
 		
 	public void completeProgram_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 		completeRuleCall(((RuleCall)assignment.getTerminal()), context, acceptor);

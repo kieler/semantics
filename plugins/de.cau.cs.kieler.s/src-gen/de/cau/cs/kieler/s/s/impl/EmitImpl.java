@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;

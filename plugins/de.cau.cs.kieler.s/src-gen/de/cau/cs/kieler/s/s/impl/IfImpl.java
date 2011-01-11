@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.expressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.s.s.If;
 import de.cau.cs.kieler.s.s.Instruction;

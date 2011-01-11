@@ -29,7 +29,7 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.KielerException;
-import de.cau.cs.kieler.core.expressions.ExpressionsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.model.util.XpandTransformationUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -144,7 +144,7 @@ public abstract class AbstractWorkflowGenerator {
         try {
             XpandTransformationUtil.model2TextTransform(
                     getPathToMainTemplate(), getNameOfMainMethod(), uri,
-                    outPath, this.postProcessor, SPackage.eINSTANCE, ExpressionsPackage.eINSTANCE);
+                    outPath, this.postProcessor, SPackage.eINSTANCE, KExpressionsPackage.eINSTANCE);
             ResourcesPlugin
                     .getWorkspace()
                     .getRoot()

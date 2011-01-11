@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.expressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -87,7 +87,7 @@ public interface Program extends EObject
 
   /**
    * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.expressions.Signal}.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Signal}.
    * <!-- begin-user-doc -->
    * <p>
    * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
