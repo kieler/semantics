@@ -14,11 +14,15 @@
 
 package de.cau.cs.kieler.core.ui.wizards;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
@@ -155,25 +159,42 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     
     /**
      * Returns a list of selected elements. This operation can take a very long
-     * time, so it might be a good idea to wrap this in a progress monitor.
+     * time.
      * 
-     * @return list of selected list elements. Tree elements are not returned.
+     * @param monitor progress monitor. May be {@code null}.
+     * @return list of selected list elements. Tree elements are not returned. If
+     *         the user cancels the operation through the progress monitor,
+     *         {@code null} is returned.
      */
-    public final Collection<Object> getSelectedElements() {
+    public final Collection<Object> getSelectedElements(final IProgressMonitor monitor) {
+        IProgressMonitor progressMonitor = monitor;
+        if (progressMonitor == null) {
+            progressMonitor = new NullProgressMonitor();
+        }
+        
+        progressMonitor.beginTask("Discovering selected items...", 1);
+        
         // First, visit all checked elements
-        visitCheckedElements(resourceTreeViewer.getInput());
+        visitCheckedElements(resourceTreeViewer.getInput(), progressMonitor);
         
         // Now, return the list of selected list items
-        return checkedListItems.values();
+        if (progressMonitor.isCanceled()) {
+            progressMonitor.done();
+            return null;
+        } else {
+            progressMonitor.done();
+            return checkedListItems.values();
+        }
     }
     
     /**
      * If this element is checked or grayed, visits all child elements. This
      * makes sure that all necessary list items are in our map.
      * 
+     * @param monitor progress monitor.
      * @param element the element to visit.
      */
-    private void visitCheckedElements(final Object element) {
+    private void visitCheckedElements(final Object element, final IProgressMonitor monitor) {
         // Note: If filters can be changed after creation, this method must be
         // modified to visit tree items that are checked anew every time to be
         // able to include children that didn't previously make it through the
@@ -185,7 +206,12 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         // If the item is checked or grayed, visit its children
         if (checkedTreeItems.contains(element) || resourceTreeViewer.getGrayed(element)) {
             for (Object child : resourceTreeContentProvider.getChildren(element)) {
-                visitCheckedElements(child);
+                // Check if the user cancelled the operation
+                if (monitor.isCanceled()) {
+                    return;
+                }
+                
+                visitCheckedElements(child, monitor);
             }
         }
     }
@@ -1045,7 +1071,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 // the element's children
                 checkedListItems.removeAll(element);
                 if (checked) {
-                    checkedListItems.putAll(element, Arrays.asList(
+                    checkedListItems.putAll(element, filterListItems(
                             resourceListContentProvider.getElements(element)));
                 }
                 
@@ -1098,7 +1124,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             // Find out if all of its children in the list are checked
             boolean allListChildrenChecked =
                 checkedListItems.get(element).size()
-                == resourceListContentProvider.getElements(element).length;
+                == filterListItems(resourceListContentProvider.getElements(element)).size();
             
             // Find out if all of its children in the tree are checked
             boolean allTreeChildrenChecked = true;
@@ -1142,5 +1168,34 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             
             return anyListChildrenChecked || anyTreeChildrenChecked;
         }
+    }
+    
+    /**
+     * Applies the list viewer filters to the given array of list viewer items.
+     * 
+     * @param items array of items to filter.
+     * @return filtered list of items.
+     */
+    private List<Object> filterListItems(final Object[] items) {
+        List<Object> result = new ArrayList<Object>(items.length);
+        ViewerFilter[] filters = resourceListViewer.getFilters();
+        Object listViewerInput = resourceListViewer.getInput();
+        
+        for (Object item : items) {
+            boolean select = true;
+            
+            for (ViewerFilter filter : filters) {
+                if (!filter.select(resourceListViewer, listViewerInput, item)) {
+                    select = false;
+                    break;
+                }
+            }
+            
+            if (select) {
+                result.add(item);
+            }
+        }
+        
+        return result;
     }
 }

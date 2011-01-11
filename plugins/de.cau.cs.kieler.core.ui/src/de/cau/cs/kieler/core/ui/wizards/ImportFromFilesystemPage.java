@@ -24,6 +24,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -272,13 +273,13 @@ public class ImportFromFilesystemPage extends ResourceTreeAndListPage {
     // Result Extraction
     
     /**
-     * Returns the selected files. This is a potentially long-running operation
-     * that should be covered by a progress monitor.
+     * Returns the selected files. This is a potentially long-running operation.
      * 
+     * @param monitor progress monitor. May be {@code null}.
      * @return the list of selected files.
      */
-    public List<File> getFiles() {
-        Collection<Object> selection = getSelectedElements();
+    public List<File> getFiles(final IProgressMonitor monitor) {
+        Collection<Object> selection = getSelectedElements(monitor);
         List<File> files = new ArrayList<File>(selection.size());
         
         // Extract the files from all selection elements
