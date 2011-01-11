@@ -175,7 +175,12 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         progressMonitor.beginTask("Discovering selected items...", 1);
         
         // First, visit all checked elements
-        visitCheckedElements(resourceTreeViewer.getInput(), progressMonitor);
+        Collection<Object> elements = new ArrayList<Object>();
+        for (Object element : resourceTreeContentProvider.getChildren(
+                resourceTreeViewer.getInput())) {
+
+            gatherSelectedElements(element, elements, progressMonitor);
+        }
         
         // Now, return the list of selected list items
         if (progressMonitor.isCanceled()) {
@@ -183,36 +188,52 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             return null;
         } else {
             progressMonitor.done();
-            return checkedListItems.values();
+            return elements;
         }
     }
     
     /**
-     * If this element is checked or grayed, visits all child elements. This
-     * makes sure that all necessary list items are in our map.
+     * Gathers the item's selected resource list children in the given list. If
+     * the item is checked, all list children are put into the list and all of
+     * its resource tree children are recursively visited. If the element is
+     * grayed, only those resource list children are gathered that were selected
+     * by the user and only those resource tree children that are checked or
+     * grayed are recursively visited.
+     * 
+     * All elements added to the list are required to pass the installed filters
+     * first.
      * 
      * @param monitor progress monitor.
      * @param element the element to visit.
      */
-    private void visitCheckedElements(final Object element, final IProgressMonitor monitor) {
-        // Note: If filters can be changed after creation, this method must be
-        // modified to visit tree items that are checked anew every time to be
-        // able to include children that didn't previously make it through the
-        // filter.
+    private void gatherSelectedElements(final Object element, final Collection<Object> elements,
+            final IProgressMonitor monitor) {
         
-        // Visit this item
-        visitTreeItem(element, false);
+        // Check if the user wants to cancel
+        if (monitor.isCanceled()) {
+            return;
+        }
         
-        // If the item is checked or grayed, visit its children
-        if (checkedTreeItems.contains(element) || resourceTreeViewer.getGrayed(element)) {
-            for (Object child : resourceTreeContentProvider.getChildren(element)) {
-                // Check if the user cancelled the operation
-                if (monitor.isCanceled()) {
-                    return;
-                }
-                
-                visitCheckedElements(child, monitor);
-            }
+        // Check if this item is checked or grayed
+        if (checkedTreeItems.contains(element)) {
+            // Checked; gather all of its resource list children
+            elements.addAll(filterListItems(resourceListContentProvider.getElements(element)));
+            
+            // Check all of its children in the resource tree so that their
+            // resource list items will be added as well
+            checkedTreeItems.addAll(filterTreeItems(
+                    resourceTreeContentProvider.getChildren(element)));
+        } else if (resourceTreeViewer.getGrayed(element)) {
+            // Grayed; gather those resource list children that are selected
+            elements.addAll(filterListItems(checkedListItems.get(element).toArray()));
+        } else {
+            // The item is neither checked nor grayed; escape. ESCAPE!
+            return;
+        }
+        
+        // Iterate through the element's children
+        for (Object child : resourceTreeContentProvider.getChildren(element)) {
+            gatherSelectedElements(child, elements, monitor);
         }
     }
     
@@ -996,6 +1017,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      *                   element and the item check states restored.
      */
     private void visitTreeItem(final Object element, final boolean updateList) {
+        System.out.println("Visiting item " + ((ExtendedFileSystemElement) element).getFile().getName());
+        
         // Was the item visited before?
         if (!visitedTreeItems.contains(element)) {
             // The item is now visited
@@ -1168,6 +1191,36 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             
             return anyListChildrenChecked || anyTreeChildrenChecked;
         }
+    }
+    
+    /**
+     * Applies the tree viewer filters to the given array of tree viewer items.
+     * 
+     * @param items array of items to filter.
+     * @return filtered list of items.
+     */
+    private List<Object> filterTreeItems(final Object[] items) {
+        List<Object> result = new ArrayList<Object>(items.length);
+        ViewerFilter[] filters = resourceTreeViewer.getFilters();
+        
+        for (Object item : items) {
+            boolean select = true;
+            
+            for (ViewerFilter filter : filters) {
+                if (!filter.select(
+                        resourceTreeViewer, resourceTreeContentProvider.getParent(item), item)) {
+                    
+                    select = false;
+                    break;
+                }
+            }
+            
+            if (select) {
+                result.add(item);
+            }
+        }
+        
+        return result;
     }
     
     /**
