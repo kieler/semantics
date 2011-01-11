@@ -999,82 +999,42 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
  * into a synccharts adequate form.
  * These are: - FunctionExpression (replaced by hostcode)
  *			  - TrapExpression (replaced by hostcode)
- * 			  - ConstantExpression (replaced by corresponding primitive type) (TODO)
+ * 			  - ConstantExpression (replaced by corresponding primitive type)
  * 
  */
 Expression convertEsterelExpression(Expression e):
 	if e != null then 
-		 convertEsterelExpressionRec(e) ->
-	e
+		 convertEsterelExpressionRec(e) ->	e
 ;
-Expression convertEsterelExpressionRec(Expression e):
-	let funcs = (Set[FunctionExpression]) e.eAllContents.select(e|FunctionExpression.isInstance(e)):
-	let traps = (Set[TrapExpression]) e.eAllContents.select(e|TrapExpression.isInstance(e)):
-	funcs.replaceWithCorrespondingExpression() ->
-	traps.replaceWithCorrespondingExpression() ->
-	e
+// in case there is no expression at all, null is no problem here
+Expression convertEsterelExpression(Void v):
+	null
 ;
-
 Void replaceWithCorrespondingExpression(Expression e):
 	let parent = (ComplexExpression) e.eContainer:
 	parent.subExpressions.add(e.convertEsterelExpression()) ->
 	parent.subExpressions.remove(e)
 ;
-
+// apply conversion on children
+Expression convertEsterelExpressionRec(Expression e):
+	if ComplexExpression.isInstance(e) then
+		((ComplexExpression) e).subExpressions.convertEsterelExpression()
+;
+// Function expression
 Expression convertEsterelExpressionRec(FunctionExpression fe):
 	let textExpr = new TextExpression:
 	textExpr.setCode(fe.function.name + "(todo" + ")") ->
 	textExpr
 ;
-
+// Trap expression
 Expression convertEsterelExpressionRec(TrapExpression te):
 	let textExpr = new TextExpression:
 	textExpr.setCode(te.trap.name + "(todo" + ")") ->
 	textExpr
 ;
-
-// in case there is no expression at all, null is no problem here
-Expression convertEsterelExpression(Void v):
-	null
-;
-
+// Constant expression
 Expression convertEsterelExpression(ConstantExpression te):
-    let textExpr = new TextExpression:
-    textExpr.setCode("todo") ->
     convertConstantExpressionJava(te)
-    
-    //switch {
-        /*case te.value != null && te.value.value != null :
-            (switch {
-                /*case Float.isInstance(te.value.value) :
-                    (let fltVal = new FloatValue:
-                     fltVal.setValue((Float) e.value.value) ->
-                     fltVal)*/
-                /*default:
-                    textExpr
-            })
-        case te.value != null && te.value.intValue != null:
-            (let intVal = new IntValue:
-             intVal.setValue(te.value.intValue) ->
-             intVal)*/
-        /*case te.value != null :
-        	(switch {
-        		case Integer.isInstance(te.value):
-        			(let intVal = new IntValue:
-             		intVal.setValue((Integer) te.value) ->
-             		intVal)
-             	case Float.isInstance(te.value):
-             		(let floatVal = new FloatValue:
-             		floatVal.setValue((Float) te.value) ->
-             		floatVal)             	
-        		default:
-        			textExpr
-        	})
-        case te.constant != null:
-            te.constant.name
-        default:
-            textExpr
-    }*/
 ;
 
 List copyList(List list):
@@ -1083,7 +1043,7 @@ List copyList(List list):
 ;
 
 
-Void convertConstantExpressionJava(ConstantExpression e):
+Expression convertConstantExpressionJava(ConstantExpression e):
 	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
 ;
  

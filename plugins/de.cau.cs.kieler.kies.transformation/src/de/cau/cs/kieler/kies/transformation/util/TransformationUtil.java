@@ -57,7 +57,12 @@ import org.eclipse.xtext.resource.SaveOptions;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.kexpressions.BooleanValue;
+import de.cau.cs.kieler.core.kexpressions.Expression;
+import de.cau.cs.kieler.core.kexpressions.FloatValue;
+import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
+import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
@@ -150,12 +155,53 @@ public final class TransformationUtil {
         }
     }
 
-    public static void convertConstantExpression(ConstantExpression cexpr) {
-        if (cexpr.getValue() != null) {
-            System.out.println(cexpr.getValue());
-        } else if (cexpr.getConstant() != null) {
-            System.out.println("constant");
+    /**
+     * Converts an Esterel {@link ConstantExpression} into an equivalent {@link Expression}. This is
+     * in unambiguous order: {@link IntValue}, {@link FloatValue}, {@link BooleanValue} or an
+     * {@link TextExpression} for a string constant or a referenced constant.
+     * 
+     * @param cexpr
+     *            constant expression to convert
+     * @return equivalent kexpression
+     */
+    public static Expression convertConstantExpression(final ConstantExpression cexpr) {
+        if (cexpr == null) {
+            return null;
         }
+
+        KExpressionsFactory fac = KExpressionsFactory.eINSTANCE;
+        if (cexpr.getValue() != null) {
+            String val = cexpr.getValue();
+            try {
+                // first try integer
+                IntValue intVal = fac.createIntValue();
+                intVal.setValue(Integer.valueOf(val));
+                return intVal;
+            } catch (NumberFormatException nfeInt) {
+                try { // second float
+                    FloatValue floatVal = fac.createFloatValue();
+                    floatVal.setValue(Float.valueOf(val));
+                    return floatVal;
+                } catch (NumberFormatException nfeFloat) {
+                    if (val.equalsIgnoreCase("true") || val.equalsIgnoreCase("false")) {
+                        BooleanValue boolVal = fac.createBooleanValue();
+                        boolVal.setValue(Boolean.valueOf(val));
+                        return boolVal;
+                    } else {
+                        TextExpression te = fac.createTextExpression();
+                        te.setCode(val);
+                        return te;
+                    }
+                }
+            }
+        } else if (cexpr.getConstant() != null) {
+            TextExpression te = fac.createTextExpression();
+            te.setCode(cexpr.getConstant().getName());
+            return te;
+        }
+        TextExpression te = fac.createTextExpression();
+        te.setCode("unsupported ConstantExpression: " + cexpr.getClass());
+        return te;
     }
 
     public static void addToFrontOfList(final List<State> list, final List<State> list2) {

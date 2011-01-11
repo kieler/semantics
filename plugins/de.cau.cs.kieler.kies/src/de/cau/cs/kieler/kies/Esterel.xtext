@@ -115,9 +115,6 @@ ConstantAtom:
 ConstantLiteral:
 	Float | Boolean | ID | STRING;
 
-ConstantValue:
-	value=ConstantLiteral | intValue=INT;
-
 	// ==> Functions
 // -------------------------------------
 FunctionDecl:
@@ -125,9 +122,6 @@ FunctionDecl:
 
 Function:
 	name=ID "(" (idList+=TypeIdentifier ("," idList+=TypeIdentifier)*)? ")" ":" type=TypeIdentifier;
-
-FunctionCall:
-	func=[Function|ID] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 
 	// ==> Procedures
 ProcedureDecl:
