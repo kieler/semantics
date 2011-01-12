@@ -82,17 +82,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         if (descriptor != null) {
             System.out.println("Trigger");
             if (TransformationTrigger.getInstance() != null) {
-
-                try {
-                    TransformationTrigger.getInstance().step(getXtendFacade(),
-                            descriptor.getTransformationName(), descriptor.getParameters(), domain);
-                } catch (StackOverflowError soe) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "A stackoverflow occured. As the optimization of large diagrams "
-                                    + "requires more stack than usually, increasing the stacksize "
-                                    + "may solve the problem.", soe);
-                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-                }
+                TransformationTrigger.getInstance().step(getXtendFacade(),
+                        descriptor.getTransformationName(), descriptor.getParameters(), domain);
             }
         } else {
             doPostTransformation();

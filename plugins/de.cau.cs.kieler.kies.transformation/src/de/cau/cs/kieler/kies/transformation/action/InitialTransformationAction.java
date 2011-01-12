@@ -170,7 +170,7 @@ public class InitialTransformationAction implements IActionDelegate {
                             // create all the elements
                             long start = System.currentTimeMillis();
                             System.out.println("Start: " + start);
-                            TransformationUtil.createSyncchartDiagram(kixsFile, strlFile.getName());
+                            TransformationUtil.createSyncchartDiagram(kixsFile);
                             long opened = System.currentTimeMillis();
                             System.out.println("Opened: " + opened);
                             uiMonitor.worked(40);

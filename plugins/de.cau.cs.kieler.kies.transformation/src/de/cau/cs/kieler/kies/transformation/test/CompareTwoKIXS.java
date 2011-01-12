@@ -81,15 +81,14 @@ public class CompareTwoKIXS implements IActionDelegate {
         System.out.println(kixsFile1);
         IPath strlPath = kixsFile1.getFullPath().removeFileExtension().addFileExtension("strl");
         IFile strlFile = workspaceRoot.getFile(strlPath);
-        TransformationUtil.createSyncchartDiagram(kixsFile1, strlFile.getName());
+        TransformationUtil.createSyncchartDiagram(kixsFile1);
         TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile1);
         // TransformationUtil.refreshEditPolicies();
 
         // Loading models
 
         try {
-  
-            
+
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
 
             Resource resource = resourceSet.getResource(kixsURI, true);

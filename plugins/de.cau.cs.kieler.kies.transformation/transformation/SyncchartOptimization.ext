@@ -5,7 +5,7 @@ import utilities;
 import esterel;
 import ecore;
 
-extension feature; 
+extension KiesUtil;
 extension org::eclipse::xtend::util::stdlib::cloning;
 
 /**
@@ -70,15 +70,15 @@ Void recursiveRule(List[State] states):
 */
 Boolean rule1applies(State s):
 	switch {
-		case isConditional(s) && isOneOutTransition(s) : 
-			(isTransitionWithout(s.outgoingTransitions.get(0)) ? true : false)
+		case isConditional(s) && hasNumberOfOutgoingTrans(s, 1) : 
+			(isTransitionWithoutTaE(s.outgoingTransitions.get(0)) ? true : false)
 		default : false
 	}
 ;
 
 Void rule1(State s):
 	let targetState = s.outgoingTransitions.get(0).targetState:
-	let incomingTrans = s.incomingTransitions.copyList():
+	let incomingTrans = s.incomingTransitions.copyListTrans():
 	// bend transition to new target
 	incomingTrans.setTargetState(targetState) ->
 	s.outgoingTransitions.get(0).removeTransition() ->
@@ -94,14 +94,15 @@ Void rule1(State s):
 Boolean rule2applies(State s):
 	switch {
 		case isSimpleState(s) && !s.isFinal && !s.isInitial &&
-			isOneOutTransition(s) && isOutTransitionTick(s.outgoingTransitions.get(0)):
+			hasNumberOfOutgoingTrans(s, 1) && isImmediateTransition(s.outgoingTransitions.get(0)) && 
+			isTransitionWithoutTaE(s.outgoingTransitions.get(0)):
 				true
 		default : false
 	}
 ;
 
 Void rule2(State s):
-	let incomingTrans = s.incomingTransitions.copyList():
+	let incomingTrans = s.incomingTransitions.copyListTrans():
 	let outgoingTrans = s.outgoingTransitions.first():
 	let effects = outgoingTrans.effects:
 	// bend transitions
@@ -169,7 +170,7 @@ Void handleRule4(Region r):
 ;
 
 Void handleRule4rec(State s, State to):
-	let incomings = s.incomingTransitions.copyList():
+	let incomings = s.incomingTransitions.copyListTrans():
 	incomings.bendAndRemove(to)
 ;
 
@@ -194,7 +195,7 @@ Boolean rule5applies(State s):
 
 Void rule5(State s):
 	let outTrans = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION
-		&& (s.isInitial || e.sourceState != e.targetState)).copyList():
+		&& (s.isInitial || e.sourceState != e.targetState)).copyListTrans():
 	outTrans.removeTransAndPossiblyState()
 ;
 
@@ -225,7 +226,7 @@ Void rule6(State s, List[State] states):
 	let initial = findInitialState(r):
 	let finalMacros = r.states.select(e|!isSimpleState(e) && e.isFinal):
 	let finalSimples = r.states.select(e|isSimpleState(e) && e.isFinal):
-	let incomingTrans = s.incomingTransitions.copyList():
+	let incomingTrans = s.incomingTransitions.copyListTrans():
 	let normalTerms = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
 	
 	// do not make states without incoming transitions or only one selfloop noninitial
@@ -245,7 +246,7 @@ Void rule6(State s, List[State] states):
 	// final simples become nonfinal
 	finalSimples.setIsFinal(false) ->
 	
-	finalSimples.createWeakAbortTo(s.outgoingTransitions.get(0).targetState) ->
+	finalSimples.createImmediateWeakAbortTo(s.outgoingTransitions.get(0).targetState) ->
 	if !normalTerms.isEmpty then
 		finalMacros.copyNormalTransitionFrom(normalTerms.get(0))
 	)
@@ -253,7 +254,7 @@ Void rule6(State s, List[State] states):
 	
 	// copy whole stuff 
 	->
-	(let copyStates = r.states.copyList():
+	(let copyStates = r.states.copyListTrans():
 	s.parentRegion.states.addAll(copyStates) ->
 	// add the inner states to the list, as there might be new optimization potential
 	//states.addAll(copyStates)
@@ -284,8 +285,8 @@ Boolean rule7applies(State s):
 Void rule7(State s):
 	// make sure in case of multiple regions no nullpointer is thrown
 	let parentReg = s.parentRegion:
-	let incomingT = s.incomingTransitions.copyList():
-	let outgoingT = s.outgoingTransitions.copyList():
+	let incomingT = s.incomingTransitions.copyListTrans():
+	let outgoingT = s.outgoingTransitions.copyListTrans():
 	let states = (List[State]) {}:
 	s.regions.collectStates(states) ->
 	(let found = states.get(0):
@@ -310,214 +311,4 @@ Boolean rule8applies(State s):
 
 Void rule8(State s):
 	s.setIsFinal(false)
-;
-
-
-
-/*
-	Predicates
-*/
-
-Boolean isConditional(State s):
-	s.type == StateType::CONDITIONAL
-;
-
-Boolean isOneOutTransition(State s):
-	s.outgoingTransitions.size == 1
-;
-
-Boolean isTransitionWithout(Transition t):
-	t.trigger == null && t.effects.size == 0
-;
-
-Boolean isOutTransitionTick(Transition t):
-	// TODO add "tick"
-	t.isImmediate && true
-;
-
-Boolean hasOnlySelfLoop(State s):
-	let self = s.incomingTransitions.select(e|e.targetState == e.sourceState):
-	self.size > 0 && self.size == s.outgoingTransitions.size
-;
-
-Boolean hasNumberOfSubStates(State s, Integer number):
-	let states = (List[State]) {}:
-	s.regions.collectStates(states) ->
-	states.size == number
-;
-
-Boolean hasOutTransitions(State s):
-	!s.outgoingTransitions.isEmpty
-;
-
-Boolean hasNumberOfOutgoingTrans(State s, Integer n):
-	s.outgoingTransitions.size == n
-;
-
-Boolean hasNumberOfIncomingTrans(State s, Integer n):
-	s.incomingTransitions.size == n
-;
-
-Boolean hasOutWeakTransitions(State s):
-	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
-	weaks.size > 0
-;
-
-// only use after checking for existing transitions
-Boolean hasOnlyMatchingTriggerTrans(State s):
-	let in = s.incomingTransitions.get(0):
-	let out = s.outgoingTransitions.get(0):
-	// incoming trans may not have any effect
-	(in.effects.isEmpty) ?
-		in.compareTrigger(out)
-		:
-		false	
-;
-
-Boolean hasOutNormalTransitions(State s):
-	let normals = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
-	normals.size > 0
-;
-
-Boolean hasOutStrongTransitions(State s):
-	let strongs = s.outgoingTransitions.select(e|e.type == TransitionType::STRONGABORT):
-	strongs.size > 0 
-;
-
-Boolean hasInterfaceDeclaration(State s):
-	s// TODO s.interfaceDecls.size == 0
-;
-
-Boolean hasFinalSubState(State s):
-	let states = (List[State]) {}:
-	s.regions.collectStates(states) ->
-	!states.select(e|e.isFinal).isEmpty
-;
-
-Void collectStates(Region r, List[State] states):
-	states.addAll(r.states)
-;
-
-
-Boolean hasMultipleSimpleFinalSubStates(State s):
-	let regions = s.regions.select(e | e.states.select(e|e.isSimpleState() && e.isFinal).size > 1):
-	!regions.isEmpty
-;
-
-Boolean hasParentMacroState(State s):
-	s.parentRegion.parentState != null
-;
-
-Boolean isParallelMacroState(State s):
-	s.regions.size > 1	
-;
-
-/*
-	convinient methods
-*/
-State findInitialState(Region r):
-	let initials = r.states.select(e|e.isInitial):
-	if initials.isEmpty then
-	 (let s = new State:
-	 let sig = new Signal:
-	 sig.setName("fail") ->
-	 s.setLabel("here i fail") ->
-	 s.signals.add(sig) ->
-	 r.states.add(s) ->
-	 initials.add(s) ) ->
-	initials.get(0)
-;
-
-/*
-	creation methods
-*/
-Void createWeakAbortTo(State from, State to):
-	let t = new Transition:
-	from.outgoingTransitions.add(t) ->
-	t.setSourceState(from) ->
-	t.setTargetState(to) ->
-	to.incomingTransitions.add(t) ->
-	
-	
-	t.setType(TransitionType::WEAKABORT) ->
-	t.setIsImmediate(true)
-	// todo t.setTrigger tick
-;
-
-Void copyNormalTransitionFrom(State from, Transition t):
-	/*let newT = (Transition) clone(t):
-	newT.setType(TransitionType::NORMALTERMINATION) ->
-	newT.setSourceState(from) ->
-	from.outgoingTransitions.add(newT)
-*/
-
-	let newT = new Transition:
-	newT.setSourceState(from) ->
-	newT.setType(t.type) ->
-	newT.setTrigger((Expression) clone(t.trigger)) -> 
-	newT.setEffects((List[Effect]) clone(t.effects)) ->
-	newT.setTargetState(t.targetState) ->
-	from.outgoingTransitions.add(newT) ->
-	t.targetState.incomingTransitions.add(newT)
-	
-;
-
-Void addEffects(Transition t, List[Effect] effects):
-	// make sure to clone! as it's containment
-	t.effects.addAll(clone(effects))
-; 
-
-List[Transition] copyList(List[Transition] list):
-	let copy = {}:
-	copy.addAll(list)
-;
-
-Void removeTransition(Transition t):
-	let source = t.sourceState:
-	let target = t.targetState:
-	t.setTargetState(null) ->
-	t.setSourceState(null) ->
-	source.outgoingTransitions.remove(t) ->
-	target.incomingTransitions.remove(t)
-;
-
-// remove a state from the region
-Void removeStateFromRegion(State state):
-	let parent = state.parentRegion:
- 	state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
- 	state.incomingTransitions.removeAll(state.incomingTransitions) ->
- 	parent.states.remove(state)
- 	->
- 	// todo verify
- 	if parent.states.isEmpty then
- 		parent.parentState.regions.remove(parent)
- 	
-;
-  
- // clears bodycontents of all child states of State s.
-Void clearBodyReferences(State s):
-	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
-	states.add(s) ->
-	states.setBodyReference(null)
-;
-  
-Void addToFrontOfList(List list, List list2):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
-;
-
-Void debug(EObject obj):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
-;
-
-Void debug(Region r):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
-;
-
-Void debug(State s):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
-;
-
-Boolean compareTrigger(Action t1, Action t2):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.compareTrigger(de.cau.cs.kieler.synccharts.Action, 
-	de.cau.cs.kieler.synccharts.Action) 
 ;

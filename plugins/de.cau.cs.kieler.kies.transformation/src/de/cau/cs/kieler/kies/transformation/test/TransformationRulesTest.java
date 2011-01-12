@@ -161,7 +161,7 @@ public class TransformationRulesTest {
         IFile kixsFile = workspaceRoot.getFile(kixsPath);
         final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
 
-        TransformationUtil.createSyncchartDiagram(kixsFile, strlFile.getName());
+        TransformationUtil.createSyncchartDiagram(kixsFile);
         TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
 
         try {

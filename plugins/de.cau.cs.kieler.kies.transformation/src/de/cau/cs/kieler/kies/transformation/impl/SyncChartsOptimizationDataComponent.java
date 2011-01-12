@@ -19,6 +19,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
@@ -26,12 +28,16 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
+import org.json.JSONObject;
 
+import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
@@ -227,6 +233,24 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 collectAllStatesRecursivley(s, level + 1);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
+        JSONObject o = null;
+        try {
+            o = super.step(arg0);
+        } catch (StackOverflowError soe) {
+            Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                    "A stackoverflow occured. As the optimization of large diagrams "
+                            + "requires more stack than usual, increasing the stacksize "
+                            + "may solve the problem.", soe);
+            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+        }
+        return o;
     }
 
     /**

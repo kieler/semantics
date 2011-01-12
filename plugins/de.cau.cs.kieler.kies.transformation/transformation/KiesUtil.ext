@@ -152,6 +152,89 @@ Expression convertEsterelExpression(ConstantExpression te):
 ;
 
 /**
+ * finds and returns the initial state of the passed region.
+ * In case an inconsistency occurs, a dummy state is created giving feedback about the problem.
+ */
+State findInitialState(Region r):
+	let initials = r.states.select(e|e.isInitial):
+	if initials.isEmpty then
+		(let s = new State:
+		 s.setLabel("Inconsistency! Could not find initial state in this region.") ->
+		 r.states.add(s) ->
+		 initials.add(s)) ->
+	initials.get(0)
+;
+
+/**
+ * creates an immediate weakly aborting transition between the two passed states.
+ */
+Void createImmediateWeakAbortTo(State from, State to):
+	let t = new Transition:
+	from.outgoingTransitions.add(t) ->
+	t.setSourceState(from) ->
+	t.setTargetState(to) ->
+	to.incomingTransitions.add(t) ->
+	
+	t.setType(TransitionType::WEAKABORT) ->
+	t.setIsImmediate(true)
+;
+
+/**
+ * copies a normal transition with "from" as the new source state.
+ */
+Void copyNormalTransitionFrom(State from, Transition t):
+	let newT = new Transition:
+	newT.setSourceState(from) ->
+	newT.setType(t.type) ->
+	newT.setTrigger((Expression) clone(t.trigger)) -> 
+	newT.setEffects((List[Effect]) clone(t.effects)) ->
+	newT.setTargetState(t.targetState) ->
+	from.outgoingTransitions.add(newT) ->
+	t.targetState.incomingTransitions.add(newT)
+;
+
+/**
+ * adds all the passed effects to the transition (clones them previously)
+ */
+Void addEffects(Transition t, List[Effect] effects):
+	// make sure to clone! as it's containment
+	t.effects.addAll(clone(effects))
+; 
+
+/**
+ * removes the passed transition from all containments
+ */
+Void removeTransition(Transition t):
+	let source = t.sourceState:
+	let target = t.targetState:
+	t.setTargetState(null) ->
+	t.setSourceState(null) ->
+	source.outgoingTransitions.remove(t) ->
+	target.incomingTransitions.remove(t)
+;
+
+/**
+ * remove a state from its parent region, if the state was the last one within that region,
+ * the region is removed as well.
+ */
+Void removeStateFromRegion(State state):
+	let parent = state.parentRegion:
+ 	state.outgoingTransitions.removeAll(state.outgoingTransitions) ->
+ 	state.incomingTransitions.removeAll(state.incomingTransitions) ->
+ 	parent.states.remove(state) ->
+ 	if parent.states.isEmpty then
+ 		(if parent.parentState != null then
+ 			parent.parentState.regions.remove(parent))
+;
+
+/**
+ * adds all states of r to the list
+ */
+Void collectStates(Region r, List[State] states):
+	states.addAll(r.states)
+;
+
+/**
  * returns a copy of the passed list, just the list is new, all elements
  * remain the same
  */
@@ -160,14 +243,161 @@ List copyList(List list):
 	copy.addAll(list)
 ;
 
+// to avoid casting
+List[Transition] copyListTrans(List[Transition] list):
+	let copy = {}:
+	copy.addAll(list)
+;
 
 /**
- * Methods calling Java
+ * #################################################################################
+ * 		Predicates used to determine the optimization capacity of a state.
+ */
+
+Boolean isConditional(State s):
+	s.type == StateType::CONDITIONAL
+;
+
+Boolean isTransitionWithoutTaE(Transition t):
+	t.trigger == null && t.effects.size == 0
+;
+
+Boolean isImmediateTransition(Transition t):
+	t.isImmediate
+;
+
+Boolean isParallelMacroState(State s):
+	s.regions.size > 1	
+;
+
+Boolean isSimpleState(State s):
+ 	!s.hasSignalsVariables() 
+    && s.regions.isEmpty 
+    && s.entryActions.isEmpty 
+    && s.innerActions.isEmpty
+    && s.exitActions.isEmpty
+    && s.suspensionTrigger == null
+;
+
+Boolean hasSignalsVariables(State state):
+ 	scopeHasSignalsVariables(state)
+;
+
+Boolean hasOnlySelfLoop(State s):
+	let self = s.incomingTransitions.select(e|e.targetState == e.sourceState):
+	self.size > 0 && self.size == s.outgoingTransitions.size
+;
+
+Boolean hasNumberOfSubStates(State s, Integer number):
+	let states = (List[State]) {}:
+	s.regions.collectStates(states) ->
+	states.size == number
+;
+
+Boolean hasNumberOfOutgoingTrans(State s, Integer n):
+	s.outgoingTransitions.size == n
+;
+
+Boolean hasNumberOfIncomingTrans(State s, Integer n):
+	s.incomingTransitions.size == n
+;
+
+Boolean hasOutTransitions(State s):
+	!s.outgoingTransitions.isEmpty
+;
+
+Boolean hasOutWeakTransitions(State s):
+	let weaks = s.outgoingTransitions.select(e|e.type == TransitionType::WEAKABORT):
+	weaks.size > 0
+;
+
+// only use after checking for existing transitions
+Boolean hasOnlyMatchingTriggerTrans(State s):
+	let in = s.incomingTransitions.get(0):
+	let out = s.outgoingTransitions.get(0):
+	// incoming trans may not have any effect
+	(in.effects.isEmpty) ?
+		in.compareTrigger(out)
+		:
+		false	
+;
+
+Boolean hasOutNormalTransitions(State s):
+	let normals = s.outgoingTransitions.select(e|e.type == TransitionType::NORMALTERMINATION):
+	normals.size > 0
+;
+
+Boolean hasOutStrongTransitions(State s):
+	let strongs = s.outgoingTransitions.select(e|e.type == TransitionType::STRONGABORT):
+	strongs.size > 0 
+;
+
+Boolean hasFinalSubState(State s):
+	let states = (List[State]) {}:
+	s.regions.collectStates(states) ->
+	!states.select(e|e.isFinal).isEmpty
+;
+
+Boolean hasMultipleSimpleFinalSubStates(State s):
+	let regions = s.regions.select(e | e.states.select(e|e.isSimpleState() && e.isFinal).size > 1):
+	!regions.isEmpty
+;
+
+Boolean hasParentMacroState(State s):
+	s.parentRegion.parentState != null
+;
+
+
+/**
+ * #####################################################################
+ * 		Methods calling Java
+ */
+ 
+/**
+ * converts a ConstantExpression into a kexpressions valid form. See javadoc for futher information.
  */
 Expression convertConstantExpressionJava(ConstantExpression e):
 	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
 ;
 
-Void setJavaBodyReference(State s, emf::EObject o):
+/**
+ * sets the state's body reference and adds TextualCode for the specific esterel element.  
+ */
+Void setJavaBodyReference(State s, emf::EObject esterelElement):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+;
+ 
+/** 
+ * clears bodycontents of EVERY child states of State s.
+ */
+Void clearBodyReferences(State s):
+	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
+	states.add(s) ->
+	states.setBodyReference(null)
+;
+
+/**
+ * adds all elements of list2 to the front of list1.
+ */
+Void addToFrontOfList(List list1, List list2):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+;
+
+/**
+ * compares the two passed triggers and returns wheter they are equivalent. Ignores possible delays and t2's effects.
+ */
+Boolean compareTrigger(Action t1, Action t2):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.compareTrigger(de.cau.cs.kieler.synccharts.Action, 
+	de.cau.cs.kieler.synccharts.Action) 
+;
+
+
+Void debug(EObject obj):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+;
+Void debug(Region r):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+;
+Void debug(State s):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
 ;
