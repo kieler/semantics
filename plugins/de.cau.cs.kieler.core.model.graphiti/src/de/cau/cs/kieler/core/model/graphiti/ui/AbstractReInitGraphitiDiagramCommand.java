@@ -299,22 +299,23 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             List<EObject> list = elem.getLink().getBusinessObjects();
             final EObject modelRoot = list.get(0);
             if (elem instanceof ContainerShape) {
-            	final TransactionalEditingDomain domain = editor.getEditingDomain();
+                final TransactionalEditingDomain domain = editor
+                        .getEditingDomain();
                 CommandStack cs = domain.getCommandStack();
                 cs.execute(new RecordingCommand(domain) {
-					
-					@Override
-					protected void doExecute() {
-						// process children of the root element
-		                for (EObject eObj : modelRoot.eContents()) {
-		                	ContainerShape contShape = (ContainerShape) elem;
-		                    linkToDiagram(eObj, provider, contShape, editor);
-		                }
-		                // deal with connections after finished
-		                processConnections(provider, editor);
-					}
-				});
-            } 
+
+                    @Override
+                    protected void doExecute() {
+                        // process children of the root element
+                        for (EObject eObj : modelRoot.eContents()) {
+                            ContainerShape contShape = (ContainerShape) elem;
+                            linkToDiagram(eObj, provider, contShape, editor);
+                        }
+                        // deal with connections after finished
+                        processConnections(provider, editor);
+                    }
+                });
+            }
         }
     }
 
@@ -460,7 +461,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
 
         if (feature != null) {
             // only do something if the element has a graphical representation
-                   result = feature.add(context);
+            result = feature.add(context);
         }
         return result;
     }
@@ -508,7 +509,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 }
             }
         }
-        
+
     }
 
     /**
