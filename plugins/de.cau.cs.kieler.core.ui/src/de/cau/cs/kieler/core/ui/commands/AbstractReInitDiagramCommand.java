@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -46,8 +47,11 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
@@ -131,6 +135,14 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         super.setBaseEnabled(false);
     }
 
+    /**
+     * GMF method for getting model element from EditPart. Subclasses should
+     * override.
+     * 
+     * @param editPart
+     *            the editpart
+     * @return the domain model element
+     */
     public EObject getEObjectFromEditPart(final EditPart editPart) {
         Object model = editPart.getModel();
         if (model instanceof View) {
@@ -253,28 +265,57 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         } else {
             selection = getUserSelection(partners);
         }
-        for (IFile partner : selection) {
-            performPreOperationActions(path, partners);
 
-            IFile kixsPath = path.getFileExtension()
-                    .equals(getModelExtension()) ? path : partner;
-            IFile kidsPath = path.getFileExtension().equals(
-                    getDiagramExtension()) ? path : partner;
+        reinitializeSelectedFiles(path, partners, selection);
 
-            // delete old diagram file
-            if (kidsPath != null) {
-                IResource[] resources = new IResource[1];
-                resources[0] = kidsPath;
-                try {
-                    ResourcesPlugin.getWorkspace()
-                            .delete(resources, true, null);
-                } catch (CoreException e0) {
-                    e0.printStackTrace();
+    }
+
+    /**
+     * 
+     * @param path
+     * @param partners
+     * @param selection
+     */
+    private void reinitializeSelectedFiles(final IFile path,
+            final List<IFile> partners, final List<IFile> selection) {
+        IWorkbench wb = PlatformUI.getWorkbench();
+        IProgressService ps = wb.getProgressService();
+        try {
+            ps.busyCursorWhile(new IRunnableWithProgress() {
+
+                public void run(final IProgressMonitor monitor)
+                        throws InvocationTargetException, InterruptedException {
+                    for (IFile partner : selection) {
+                        performPreOperationActions(path, partners, monitor);
+
+                        IFile kixsPath = path.getFileExtension().equals(
+                                getModelExtension()) ? path : partner;
+                        IFile kidsPath = path.getFileExtension().equals(
+                                getDiagramExtension()) ? path : partner;
+
+                        // delete old diagram file
+                        if (kidsPath != null) {
+                            IResource[] resources = new IResource[1];
+                            resources[0] = kidsPath;
+                            try {
+                                ResourcesPlugin.getWorkspace().delete(
+                                        resources, true, null);
+                            } catch (CoreException e0) {
+                                e0.printStackTrace();
+                            }
+                        }
+                        reinitializeDiagram(kixsPath, kidsPath, monitor);
+
+                        performPostOperationAction(path, partners, monitor);
+                    }
                 }
-            }
-            reinitializeDiagram(kixsPath, kidsPath);
-
-            performPostOperationAction(path, partners);
+            });
+        } catch (InvocationTargetException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
 
     }
@@ -287,10 +328,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the file
      * @param partners
      *            the partner files
+     * @param monitor
+     *            the progress monitor
      */
     @SuppressWarnings("unused")
     protected void performPostOperationAction(final IFile path,
-            final List<IFile> partners) {
+            final List<IFile> partners, final IProgressMonitor monitor) {
     }
 
     /**
@@ -301,10 +344,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the file
      * @param partners
      *            the partner files
+     * @param monitor
+     *            the progress monitor
      */
     @SuppressWarnings("unused")
     protected void performPreOperationActions(final IFile path,
-            final List<IFile> partners) {
+            final List<IFile> partners, final IProgressMonitor monitor) {
     }
 
     /**
@@ -401,9 +446,11 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the source file.
      * @param diagramPath
      *            the destination file.
+     * @param monitor
+     *            the progress monitor
      */
     public void reinitializeDiagram(final IFile modelPath,
-            final IFile diagramPath) {
+            final IFile diagramPath, final IProgressMonitor monitor) {
         String[] array = modelPath.toString().split("/");
         StringBuilder builder = new StringBuilder();
         for (int i = 0; i < array.length - 1; i++) {
@@ -432,9 +479,15 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             StatusManager.getManager().handle(status, StatusManager.LOG);
             return;
         }
-        createNewDiagram(modelRoot, editingDomain, diagramPath);
+        createNewDiagram(modelRoot, editingDomain, diagramPath, monitor);
     }
 
+    /**
+     * GMF method for creating a new transactional editing domain. Subclasses
+     * should override.
+     * 
+     * @return a new transactional editing domain
+     */
     protected TransactionalEditingDomain createEditingDomain() {
         return GMFEditingDomainFactory.INSTANCE.createEditingDomain();
     }
@@ -449,11 +502,13 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the editing domain.
      * @param diagramPath
      *            the destination file
+     * @param monitor
+     *            the progress monitor
      * @return true if the creation was successful
      */
     public abstract boolean createNewDiagram(final EObject modelRoot,
             final TransactionalEditingDomain editingDomain,
-            final IFile diagramPath);
+            final IFile diagramPath, IProgressMonitor monitor);
 
     /**
      * A monitor that blocks the calling thread until the monitored thread is

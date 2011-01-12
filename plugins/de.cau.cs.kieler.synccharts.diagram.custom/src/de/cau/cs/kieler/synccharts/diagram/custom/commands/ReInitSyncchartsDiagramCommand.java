@@ -40,6 +40,7 @@ import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCo
 import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.progress.WorkbenchJob;
 
 import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
@@ -77,10 +78,12 @@ public class ReInitSyncchartsDiagramCommand extends
      *            the file
      * @param partners
      *            the partner files
+     * @param monitor
+     *            the progress monitor
      */
     @Override
     protected void performPostOperationAction(final IFile path,
-            final List<IFile> partners) {
+            final List<IFile> partners, final IProgressMonitor monitor) {
         WorkbenchJob job = new WorkbenchJob("") {
 
             @Override
@@ -110,12 +113,14 @@ public class ReInitSyncchartsDiagramCommand extends
      *            the editing domain.
      * @param diagramFile
      *            the destination file
+     * @param monitor
+     *            the progress monitor
      * @return true if the creation was successful
      */
     @Override
     public boolean createNewDiagram(final EObject diagramRoot,
             final TransactionalEditingDomain editingDomain,
-            final IFile diagramFile) {
+            final IFile diagramFile, final IProgressMonitor monitor) {
         List<IFile> affectedFiles = new LinkedList<IFile>();
         refreshWorkspace();
 
@@ -139,12 +144,12 @@ public class ReInitSyncchartsDiagramCommand extends
 
         SyncchartsDiagramEditorUtil.setCharset(diagramFile);
         affectedFiles.add(diagramFile);
-        URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
+        final URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
                 .getFullPath().toString(), true);
         ResourceSet resourceSet = editingDomain.getResourceSet();
         final Resource diagramResource = resourceSet
                 .createResource(diagramModelURI);
-        AbstractTransactionalCommand command = new AbstractTransactionalCommand(
+        final AbstractTransactionalCommand command = new AbstractTransactionalCommand(
                 editingDomain,
                 Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
                 affectedFiles) {
@@ -166,21 +171,29 @@ public class ReInitSyncchartsDiagramCommand extends
                 return CommandResult.newOKCommandResult();
             }
         };
-        try {
-            OperationHistoryFactory.getOperationHistory().execute(command,
-                    new NullProgressMonitor(), null);
-            diagramResource.save(SyncchartsDiagramEditorUtil.getSaveOptions());
-            SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
-        } catch (ExecutionException e) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to create model and diagram", e); //$NON-NLS-1$
-        } catch (IOException ex) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
-        } catch (PartInitException ex) {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Unable to open editor", ex); //$NON-NLS-1$
-        }
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+            public void run() {
+                try {
+                    OperationHistoryFactory.getOperationHistory().execute(
+                            command, new NullProgressMonitor(), null);
+                    diagramResource.save(SyncchartsDiagramEditorUtil
+                            .getSaveOptions());
+                    SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
+                } catch (ExecutionException e) {
+                    SyncchartsDiagramEditorPlugin.getInstance().logError(
+                            "Unable to create model and diagram", e); //$NON-NLS-1$
+                } catch (IOException ex) {
+                    SyncchartsDiagramEditorPlugin
+                            .getInstance()
+                            .logError(
+                                    "Save operation failed for: " + diagramModelURI, ex); //$NON-NLS-1$
+                } catch (PartInitException ex) {
+                    SyncchartsDiagramEditorPlugin.getInstance().logError(
+                            "Unable to open editor", ex); //$NON-NLS-1$
+                }
+            }
+        });
         return true;
     }
 

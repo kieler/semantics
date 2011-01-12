@@ -16,7 +16,6 @@ package de.cau.cs.kieler.core.model.graphiti.ui;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,13 +58,11 @@ import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
 import org.eclipse.graphiti.ui.internal.parts.IPictogramElementEditPart;
 import org.eclipse.jface.dialogs.ErrorDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -144,46 +141,21 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     @Override
     public boolean createNewDiagram(final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
-            final IFile diagramPath) {
+            final IFile diagramPath, final IProgressMonitor monitor) {
         // taken from the new wizard and adapted
-        final Maybe<Resource> diagramResource = new Maybe<Resource>();
-        IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
-            @Override
-            protected void execute(final IProgressMonitor monitor)
-                    throws CoreException, InterruptedException {
-                diagramResource.set(createDiagram(diagramPath, modelRootParam,
-                        editingDomain, monitor));
-                if (diagramResource.get() != null && getEditorId() != null) {
-                    try {
-                        openDiagram(diagramResource.get());
-                    } catch (PartInitException exception) {
-                        ErrorDialog.openError(getContainer().getShell(),
-                                "Error opening diagram editor", null,
-                                exception.getStatus());
-                    }
-                }
-            }
-        };
-        try {
-            getContainer().run(false, true, op);
-        } catch (InterruptedException exception) {
-            return false;
-        } catch (InvocationTargetException exception) {
-            if (exception.getTargetException() instanceof CoreException) {
+        Resource diagramResource = createDiagram(diagramPath, modelRootParam,
+                editingDomain, monitor);
+        if (diagramResource != null && getEditorId() != null) {
+            try {
+                openDiagram(diagramResource);
+            } catch (PartInitException exception) {
                 ErrorDialog.openError(getContainer().getShell(),
-                        "Creation Problems", null, ((CoreException) exception
-                                .getTargetException()).getStatus());
-            } else {
-                IStatus status = new Status(IStatus.ERROR,
-                        KielerGraphitiPlugin.PLUGIN_ID,
-                        "Error creating diagram",
-                        exception.getTargetException());
-                StatusManager.getManager().handle(status, StatusManager.LOG);
+                        "Error opening diagram editor", null,
+                        exception.getStatus());
             }
-            return false;
         }
 
-        return diagramResource.get() != null;
+        return diagramResource != null;
     }
 
     /**
@@ -312,7 +284,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                             linkToDiagram(eObj, provider, contShape, editor);
                         }
                         // deal with connections after finished
-                        processConnections(provider, editor);
+                        processConnections(provider);
                     }
                 });
             }
@@ -354,17 +326,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param provider
      *            the feature provider for getting the AddConnectionFeatures
-     * @param editor
-     *            the editor for the editing domain
      */
-    private void processConnections(final IFeatureProvider provider,
-            final DiagramEditor editor) {
+    private void processConnections(final IFeatureProvider provider) {
         for (EObject connection : connections) {
             AddConnectionContext context = processConnection(elements,
                     connection);
 
             if (context != null) {
-                addAndLinkIfPossible(provider, context, editor);
+                addAndLinkIfPossible(provider, context);
             }
         }
     }
@@ -447,18 +416,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @param context
      *            the context (must be AddConnectionContext if the domain model
      *            element is a connection)
-     * @param editor
-     *            the editor of the diagram
      * @param eObj
      *            the domain model element to add
      * @return the added diagram element or null
      */
     private PictogramElement addAndLinkIfPossible(
-            final IFeatureProvider provider, final AddContext context,
-            final DiagramEditor editor) {
+            final IFeatureProvider provider, final AddContext context) {
         PictogramElement result = null;
         IAddFeature feature = provider.getAddFeature(context);
-
         if (feature != null) {
             // only do something if the element has a graphical representation
             result = feature.add(context);
@@ -493,8 +458,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         context.setTargetContainer(container);
 
         // add the element
-        PictogramElement element = addAndLinkIfPossible(provider, context,
-                editor);
+        PictogramElement element = addAndLinkIfPossible(provider, context);
 
         if (element != null) {
             // only do something if the element has a graphical representation
@@ -523,12 +487,27 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private void openDiagram(final Resource diagramResource)
             throws PartInitException {
         String path = diagramResource.getURI().toPlatformString(true);
-        IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot()
-                .findMember(new Path(path));
+        final IResource workspaceResource = ResourcesPlugin.getWorkspace()
+                .getRoot().findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
-            IWorkbenchPage page = getContainer().getActivePage();
-            IEditorPart theEditor = page.openEditor(new FileEditorInput(
-                    (IFile) workspaceResource), getEditorId());
+            final Maybe<IEditorPart> editor = new Maybe<IEditorPart>();
+            final Maybe<PartInitException> except = new Maybe<PartInitException>();
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                public void run() {
+                    IWorkbenchPage page = getContainer().getActivePage();
+                    try {
+                        editor.set(page.openEditor(new FileEditorInput(
+                                (IFile) workspaceResource), getEditorId()));
+                    } catch (PartInitException e) {
+                        except.set(e);
+                    }
+                }
+            });
+            if (except.get() != null) {
+                throw except.get();
+            }
+            IEditorPart theEditor = editor.get();
             if (theEditor instanceof DiagramEditor) {
                 // editor is open, can add the rest of the elements now
                 linkModelToDiagram((DiagramEditor) theEditor);
