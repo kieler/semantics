@@ -286,27 +286,35 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     protected void linkModelToDiagram(final DiagramEditor editor) {
         connections = new LinkedList<EObject>();
         elements = new HashMap<EObject, PictogramElement>();
-
         // get the feature provider for getting the AddFeatures
         IDiagramTypeProvider dtp = editor.getDiagramTypeProvider();
-        IFeatureProvider provider = dtp.getFeatureProvider();
+        final IFeatureProvider provider = dtp.getFeatureProvider();
 
         // get the root edit part for the diagram
         EditPart part = editor.getGraphicalViewer().getContents();
 
         if (part instanceof DiagramEditPart) {
             DiagramEditPart dep = (DiagramEditPart) part;
-            PictogramElement elem = dep.getPictogramElement();
+            final PictogramElement elem = dep.getPictogramElement();
             List<EObject> list = elem.getLink().getBusinessObjects();
-            EObject modelRoot = list.get(0);
+            final EObject modelRoot = list.get(0);
             if (elem instanceof ContainerShape) {
-                // process children of the root element
-                for (EObject eObj : modelRoot.eContents()) {
-                    linkToDiagram(eObj, provider, (ContainerShape) elem, editor);
-                }
-                // deal with connections after finished
-                processConnections(provider, editor);
-            }
+            	final TransactionalEditingDomain domain = editor.getEditingDomain();
+                CommandStack cs = domain.getCommandStack();
+                cs.execute(new RecordingCommand(domain) {
+					
+					@Override
+					protected void doExecute() {
+						// process children of the root element
+		                for (EObject eObj : modelRoot.eContents()) {
+		                	ContainerShape contShape = (ContainerShape) elem;
+		                    linkToDiagram(eObj, provider, contShape, editor);
+		                }
+		                // deal with connections after finished
+		                processConnections(provider, editor);
+					}
+				});
+            } 
         }
     }
 
@@ -427,7 +435,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 targetAnchor);
         context.setNewObject(connection);
         context.setTargetContainer(srcContainer);
-
         return context;
     }
 
@@ -448,24 +455,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private PictogramElement addAndLinkIfPossible(
             final IFeatureProvider provider, final AddContext context,
             final DiagramEditor editor) {
-        final TransactionalEditingDomain domain = editor.getEditingDomain();
-        CommandStack cs = domain.getCommandStack();
-        final Maybe<PictogramElement> result = new Maybe<PictogramElement>();
-
-        final IAddFeature feature = provider.getAddFeature(context);
+        PictogramElement result = null;
+        IAddFeature feature = provider.getAddFeature(context);
 
         if (feature != null) {
             // only do something if the element has a graphical representation
-            cs.execute(new RecordingCommand(domain) {
-
-                @Override
-                protected void doExecute() {
-                    result.set(feature.add(context));
-                }
-            });
+                   result = feature.add(context);
         }
-
-        return result.get();
+        return result;
     }
 
     /**
@@ -511,6 +508,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 }
             }
         }
+        
     }
 
     /**
