@@ -91,11 +91,11 @@ public class NewAnnotationDialog extends Dialog {
     }
     
     private static final String[][] TYPE_LABELS = new String[][] {
-            { "String annotation", AnnotationType.STRING.toString() },
-            { "Integer annotation", AnnotationType.INT.toString() },
-            { "Floating point annotation", AnnotationType.FLOAT.toString() },
-            { "Boolean annotation", AnnotationType.BOOLEAN.toString() },
-            { "Typed string annotation" , AnnotationType.TYPED_STRING.toString() }
+            { "String", AnnotationType.STRING.toString() },
+            { "Integer", AnnotationType.INT.toString() },
+            { "Floating point", AnnotationType.FLOAT.toString() },
+            { "Boolean", AnnotationType.BOOLEAN.toString() },
+            { "Typed string" , AnnotationType.TYPED_STRING.toString() }
     };
 
     /**

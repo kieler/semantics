@@ -3,6 +3,7 @@
 <plugin>
    <extension-point id="balloonPopupBarContribution" name="Balloon Popup Bar Contribution" schema="schema/balloonPopupBarContribution.exsd"/>
    <extension-point id="customSplashExtension" name="Splash Extensions" schema="schema/customSplashExtension.exsd"/>
+   <extension-point id="graphicalFrameworkBridges" name="Graphical Framework Bridges" schema="schema/graphicalFrameworkBridges.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category

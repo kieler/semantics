@@ -603,7 +603,7 @@
          <propertySections
                contributorId="de.cau.cs.kieler.synccharts.diagram">
             <propertySection
-                  class="de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsAnnotationsPropertySection"
+                  class="de.cau.cs.kieler.core.annotations.ui.properties.AnnotationsPropertySection"
                   id="property.section.annotations"
                   tab="property.tab.annotations">
                <input type="org.eclipse.gmf.runtime.notation.View"/>

@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -35,14 +35,15 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
-import de.cau.cs.kieler.core.ui.IEditingProvider;
+import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
 /**
  * Property section for annotatable objects.
  *
  * @author msp
  */
-public abstract class AnnotationsPropertySection extends AbstractPropertySection {
+public class AnnotationsPropertySection extends AbstractPropertySection {
     
     /** column index for annotation name. */
     public static final int COL_ANNOTATION = 0;
@@ -59,21 +60,9 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
     /** the annotatable object that is currently shown in the property section. */
     private Annotatable annotatable;
     /** the editing domain for changes to the model. */
-    private TransactionalEditingDomain editingDomain;
-    /** the domain model provider used to retrieve annotatable elements. */
-    private IEditingProvider domainProvider;
+    private EditingDomain editingDomain;
     /** the widths of the columns of the tree viewer. */
     private int[] columnWidth;
-    
-    /**
-     * Creates a property section for annotations based on the given domain model provider.
-     * Subclasses must have a default constructor that creates a suitable domain provider.
-     * 
-     * @param thedomainProvider the domain model provider
-     */
-    public AnnotationsPropertySection(final IEditingProvider thedomainProvider) {
-        this.domainProvider = thedomainProvider;
-    }
     
     /**
      * {@inheritDoc}
@@ -186,18 +175,21 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
         if (getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) getSelection();
             Object object = selection.getFirstElement();
+            IGraphicalFrameworkBridge frameworkBridge = GraphicalFrameworkService
+                    .getInstance().getBridge(object);
             if (!(object instanceof Annotatable)) {
-                object = domainProvider.getElement(object);
+                object = frameworkBridge.getElement(object);
             }
             if (annotatable == object) {
                 viewer.refresh();
             } else {
                 if (object instanceof Annotatable) {
                     annotatable = (Annotatable) object;
+                    editingDomain = frameworkBridge.getEditingDomain(selection.getFirstElement());
                 } else {
                     annotatable = null;
+                    editingDomain = null;
                 }
-                editingDomain = domainProvider.getEditingDomain(selection.getFirstElement());
                 viewer.setInput(object);
             }
         }
@@ -217,7 +209,7 @@ public abstract class AnnotationsPropertySection extends AbstractPropertySection
      * 
      * @return the editing domain
      */
-    public TransactionalEditingDomain getEditingDomain() {
+    public EditingDomain getEditingDomain() {
         return editingDomain;
     }
     

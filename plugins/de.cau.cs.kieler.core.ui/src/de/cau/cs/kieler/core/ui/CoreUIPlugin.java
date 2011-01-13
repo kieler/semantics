@@ -48,10 +48,11 @@ public class CoreUIPlugin extends AbstractUIPlugin {
     @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
-        CombinedWorkbenchListener.getInstance().earlyStartup();
         plugin = this;
+        CombinedWorkbenchListener.getInstance().earlyStartup();
         RefactoringCore.getHistoryService().addHistoryListener(
                 new RefactoringListener());
+        GraphicalFrameworkService.start();
     }
 
     /**

@@ -15,20 +15,28 @@ package de.cau.cs.kieler.core.ui;
 
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
 /**
- * Interface for providers of graphical editing features. This can be used to connect code that
+ * Interface for bridges to graphical editing frameworks. This can be used to connect code that
  * is independent of specific editor frameworks to frameworks such as GMF.
  *
  * @author msp
  */
-public interface IEditingProvider {
+public interface IGraphicalFrameworkBridge {
 
+    /**
+     * Determine whether this bridge supports the given object.
+     * 
+     * @param object an edit part, editor part, or notational object
+     * @return true if this bridge supports the given object
+     */
+    boolean supports(Object object);
+    
     /**
      * Retrieve the domain model element from the given object.
      * 
@@ -56,7 +64,7 @@ public interface IEditingProvider {
      * @param object a selectable object, such as an edit part
      * @return the transactional editing domain, or {@code null} if there is none
      */
-    TransactionalEditingDomain getEditingDomain(Object object);
+    EditingDomain getEditingDomain(Object object);
     
     /**
      * Returns a layer figure for the associated diagram that can be used to draw

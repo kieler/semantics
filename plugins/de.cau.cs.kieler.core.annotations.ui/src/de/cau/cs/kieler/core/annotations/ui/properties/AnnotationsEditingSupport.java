@@ -140,7 +140,8 @@ public class AnnotationsEditingSupport extends EditingSupport {
      */
     @Override
     protected void setValue(final Object element, final Object value) {
-        TransactionalEditingDomain editingDomain = propertySection.getEditingDomain();
+        TransactionalEditingDomain editingDomain = (TransactionalEditingDomain)
+                propertySection.getEditingDomain();
         if (editingDomain != null) {
             editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
                     "Modify Annotation") {

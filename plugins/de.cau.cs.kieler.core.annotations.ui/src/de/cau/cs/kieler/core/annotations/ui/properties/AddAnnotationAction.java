@@ -85,7 +85,8 @@ public class AddAnnotationAction extends Action {
         NewAnnotationDialog annotationDialog = new NewAnnotationDialog(shell);
         if (annotationDialog.open() == NewAnnotationDialog.OK) {
             final Annotation annotation = annotationDialog.createAnnotation();
-            TransactionalEditingDomain editingDomain = propertySection.getEditingDomain();
+            TransactionalEditingDomain editingDomain = (TransactionalEditingDomain)
+                    propertySection.getEditingDomain();
             if (editingDomain != null) {
                 editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
                         "Add Annotation") {

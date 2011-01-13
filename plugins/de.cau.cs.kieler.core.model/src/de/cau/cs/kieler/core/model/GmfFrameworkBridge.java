@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.model;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.RootEditPart;
@@ -30,14 +31,23 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
-import de.cau.cs.kieler.core.ui.IEditingProvider;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
 /**
  * Domain model element provider for GMF.
  *
  * @author msp
  */
-public class GmfEditingProvider implements IEditingProvider {
+public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
+
+    /**
+     * {@inheritDoc}
+     */
+    public boolean supports(final Object object) {
+        return object instanceof IGraphicalEditPart
+                || object instanceof DiagramEditor
+                || object instanceof View;
+    }
 
     /**
      * Finds the diagram edit part of an edit part.
@@ -102,12 +112,12 @@ public class GmfEditingProvider implements IEditingProvider {
     /**
      * {@inheritDoc}
      */
-    public TransactionalEditingDomain getEditingDomain(final Object object) {
+    public EditingDomain getEditingDomain(final Object object) {
         if (object instanceof IGraphicalEditPart) {
             return ((IGraphicalEditPart) object).getEditingDomain();
         } else if (object instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable) object;
-            return (TransactionalEditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
+            return (EditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
         }
         return null;
     }

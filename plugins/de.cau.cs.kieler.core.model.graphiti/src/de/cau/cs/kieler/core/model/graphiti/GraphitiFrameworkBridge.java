@@ -18,6 +18,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalViewer;
@@ -30,7 +31,7 @@ import org.eclipse.graphiti.ui.internal.util.gef.ScalableRootEditPartAnimated;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
-import de.cau.cs.kieler.core.ui.IEditingProvider;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
 /**
  * Editing provider for Graphiti.
@@ -39,8 +40,17 @@ import de.cau.cs.kieler.core.ui.IEditingProvider;
  * @author msp
  */
 @SuppressWarnings("restriction")
-public class GraphitiEditingProvider implements IEditingProvider {
+public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
 
+    /**
+     * {@inheritDoc}
+     */
+    public boolean supports(final Object object) {
+        return object instanceof IPictogramElementEditPart
+                || object instanceof DiagramEditor
+                || object instanceof PictogramElement;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -48,6 +58,11 @@ public class GraphitiEditingProvider implements IEditingProvider {
         if (object instanceof IPictogramElementEditPart) {
             List<EObject> businessObjects = ((IPictogramElementEditPart) object)
                     .getPictogramElement().getLink().getBusinessObjects();
+            if (!businessObjects.isEmpty()) {
+                return businessObjects.get(0);
+            }
+        } else if (object instanceof PictogramElement) {
+            List<EObject> businessObjects = ((PictogramElement) object).getLink().getBusinessObjects();
             if (!businessObjects.isEmpty()) {
                 return businessObjects.get(0);
             }
@@ -84,13 +99,13 @@ public class GraphitiEditingProvider implements IEditingProvider {
     /**
      * {@inheritDoc}
      */
-    public TransactionalEditingDomain getEditingDomain(final Object object) {
+    public EditingDomain getEditingDomain(final Object object) {
         if (object instanceof IPictogramElementEditPart) {
             return ((IPictogramElementEditPart) object).getConfigurationProvider()
                     .getDiagramEditor().getEditingDomain();
         } else if (object instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable) object;
-            return (TransactionalEditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
+            return (EditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
         }
         return null;
     }

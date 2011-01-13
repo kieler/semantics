@@ -54,7 +54,8 @@ public class RemoveAnnotationAction extends Action {
     @Override
     public void run() {
         final Annotation annotation = propertySection.getTableSelection();
-        TransactionalEditingDomain editingDomain = propertySection.getEditingDomain();
+        TransactionalEditingDomain editingDomain = (TransactionalEditingDomain)
+                propertySection.getEditingDomain();
         if (annotation != null && editingDomain != null) {
             final EObject container = annotation.eContainer();
             if (container instanceof Annotatable) {
