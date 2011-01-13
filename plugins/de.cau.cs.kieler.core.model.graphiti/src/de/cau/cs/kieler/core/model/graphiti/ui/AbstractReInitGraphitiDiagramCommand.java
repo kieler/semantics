@@ -30,6 +30,7 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -78,6 +79,76 @@ import de.cau.cs.kieler.core.util.Maybe;
 @SuppressWarnings("restriction")
 public abstract class AbstractReInitGraphitiDiagramCommand extends
         AbstractReInitDiagramCommand {
+
+    /**
+     * Command for performing the reinitialization process.
+     * 
+     * @author soh
+     */
+    private class ReInitCommand extends AbstractCommand {
+
+        /** The provider for creating the add features. */
+        private IFeatureProvider provider;
+        /** The model root element. */
+        private EObject modelRoot;
+        /** The diagram root element. */
+        private PictogramElement elem;
+        /** The editor. */
+        private DiagramEditor editor;
+
+        /**
+         * 
+         * Creates a new ReinitCommand.
+         * 
+         * @param providerParam
+         *            the provider
+         * @param modelRootParam
+         *            the model root
+         * @param elemParam
+         *            the diagram root
+         * @param editorParam
+         *            the editor
+         */
+        public ReInitCommand(final IFeatureProvider providerParam,
+                final EObject modelRootParam, final PictogramElement elemParam,
+                final DiagramEditor editorParam) {
+            provider = providerParam;
+            modelRoot = modelRootParam;
+            elem = elemParam;
+            editor = editorParam;
+        }
+
+        @Override
+        public boolean canExecute() {
+            return true;
+        }
+
+        public void execute() {
+            doExecute();
+        }
+
+        /**
+         * 
+         */
+        protected void doExecute() {
+            // process children of the root element
+            for (EObject eObj : modelRoot.eContents()) {
+                ContainerShape contShape = (ContainerShape) elem;
+                linkToDiagram(eObj, provider, contShape, editor);
+            }
+            // deal with connections after finished
+            processConnections(provider);
+        }
+
+        @Override
+        public boolean canUndo() {
+            return false;
+        }
+
+        public void redo() {
+            execute();
+        }
+    }
 
     /** The name of the diagram type. */
     private String diagramTypeName;
@@ -260,33 +331,20 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         elements = new HashMap<EObject, PictogramElement>();
         // get the feature provider for getting the AddFeatures
         IDiagramTypeProvider dtp = editor.getDiagramTypeProvider();
-        final IFeatureProvider provider = dtp.getFeatureProvider();
+        IFeatureProvider provider = dtp.getFeatureProvider();
 
         // get the root edit part for the diagram
         EditPart part = editor.getGraphicalViewer().getContents();
 
         if (part instanceof DiagramEditPart) {
             DiagramEditPart dep = (DiagramEditPart) part;
-            final PictogramElement elem = dep.getPictogramElement();
+            PictogramElement elem = dep.getPictogramElement();
             List<EObject> list = elem.getLink().getBusinessObjects();
-            final EObject modelRoot = list.get(0);
+            EObject modelRoot = list.get(0);
             if (elem instanceof ContainerShape) {
-                final TransactionalEditingDomain domain = editor
-                        .getEditingDomain();
+                TransactionalEditingDomain domain = editor.getEditingDomain();
                 CommandStack cs = domain.getCommandStack();
-                cs.execute(new RecordingCommand(domain) {
-
-                    @Override
-                    protected void doExecute() {
-                        // process children of the root element
-                        for (EObject eObj : modelRoot.eContents()) {
-                            ContainerShape contShape = (ContainerShape) elem;
-                            linkToDiagram(eObj, provider, contShape, editor);
-                        }
-                        // deal with connections after finished
-                        processConnections(provider);
-                    }
-                });
+                cs.execute(new ReInitCommand(provider, modelRoot, elem, editor));
             }
         }
     }
