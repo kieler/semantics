@@ -1,82 +1,23 @@
 package de.cau.cs.kieler.uml2.sim.kiem;
 
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
-import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.util.Diagnostic;
-import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.mwe.core.WorkflowContext;
-import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
-import org.eclipse.emf.mwe.core.issues.Issues;
-import org.eclipse.emf.mwe.core.issues.IssuesImpl;
-import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
-import org.eclipse.emf.mwe.internal.core.Workflow;
-import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.IConsoleManager;
-import org.eclipse.ui.console.MessageConsole;
-import org.eclipse.ui.console.MessageConsoleStream;
-import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xpand2.Generator;
-import org.eclipse.xpand2.output.Outlet;
-import org.eclipse.xtend.XtendComponent;
-import org.eclipse.xtend.XtendFacade;
-import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
-import org.eclipse.xtend.typesystem.MetaModel;
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import de.cau.cs.kieler.uml2.sim.Uml2SimPlugin;
-
-import org.eclipse.uml2.uml.Model;
-import org.eclipse.uml2.uml.Transition;
-import org.eclipse.uml2.uml.UMLPackage;
-
-import org.eclipse.ui.console.ConsolePlugin;
-import org.eclipse.ui.console.IConsole;
-import org.eclipse.ui.console.IConsoleManager;
-import org.eclipse.ui.console.MessageConsole;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -86,7 +27,8 @@ public class DataComponentSim extends DataComponent implements
         IJSONObjectDataComponent {
 
     /**
-     * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
+     * The constant MAUDEPARSESTATESTARTER indicates the start token to search
+     * for.
      */
     private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
 
@@ -113,6 +55,7 @@ public class DataComponentSim extends DataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #doProvideProperties()
      */
+    @Override
     public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
         KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
@@ -123,7 +66,6 @@ public class DataComponentSim extends DataComponent implements
 
     // -------------------------------------------------------------------------
 
-
     /**
      * Extract the active states.
      * 
@@ -131,6 +73,7 @@ public class DataComponentSim extends DataComponent implements
      *            the maude result if any, empty list if no solution found
      * @return the string[]
      */
+    @Override
     public List<String[]> extractActiveStates(String maudeResult) {
         boolean error = maudeResult.contains(MAUDEERROR);
         LinkedList activeStatesChoices = new LinkedList();
@@ -144,7 +87,8 @@ public class DataComponentSim extends DataComponent implements
 
         while (foundAnotherSolution) {
             try {
-                int firstSolutionStartIndex = maudeResult.indexOf(MAUDEPARSESTATESTARTER);
+                int firstSolutionStartIndex = maudeResult
+                        .indexOf(MAUDEPARSESTATESTARTER);
 
                 // check if solution is found
                 if (firstSolutionStartIndex < 0) {
@@ -153,8 +97,9 @@ public class DataComponentSim extends DataComponent implements
                 }
 
                 // part result
-                String maudePartResult = maudeResult.substring(firstSolutionStartIndex
-                        + MAUDEPARSESTATESTARTER.length());
+                String maudePartResult = maudeResult
+                        .substring(firstSolutionStartIndex
+                                + MAUDEPARSESTATESTARTER.length());
 
                 // remainder (may contain previous solutions)
                 maudeResult = maudeResult.substring(firstSolutionStartIndex
@@ -219,7 +164,8 @@ public class DataComponentSim extends DataComponent implements
      *            the maude result
      * @return the string[]
      */
-    public String[] extractActions(String maudeResult) {
+    @Override
+    public String[] extractActions(final String maudeResult) {
         // TODO: this seems not yes possible.
         String[] returnArray = new String[1];
         return returnArray;
@@ -233,7 +179,9 @@ public class DataComponentSim extends DataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #doStep(org.json .JSONObject)
      */
-    public JSONObject doStep(JSONObject signals) throws KiemExecutionException {
+    @Override
+    public JSONObject doStep(final JSONObject signals)
+            throws KiemExecutionException {
         // the return object to construct
         JSONObject returnObj = new JSONObject();
 
@@ -241,18 +189,20 @@ public class DataComponentSim extends DataComponent implements
         // first collect events
         String triggerEventsQuery = "";
         String[] signalNames = JSONObject.getNames(signals);
-        for (String signalName : signalNames) {
-            try {
-                Object object;
-                object = signals.get(signalName);
-                if (JSONSignalValues.isPresent(object)) {
-                    if (!triggerEventsQuery.isEmpty()) {
-                        triggerEventsQuery += ",";
+        if (signalNames != null) {
+            for (String signalName : signalNames) {
+                try {
+                    Object object;
+                    object = signals.get(signalName);
+                    if (JSONSignalValues.isPresent(object)) {
+                        if (!triggerEventsQuery.isEmpty()) {
+                            triggerEventsQuery += ",";
+                        }
+                        triggerEventsQuery += signalName;
                     }
-                    triggerEventsQuery += signalName;
+                } catch (JSONException e) {
+                    // ignore errors - should not happen at all
                 }
-            } catch (JSONException e) {
-                // ignore errors - should not happen at all
             }
         }
         // if no events selected, produce this dummy event for maude
@@ -273,7 +223,9 @@ public class DataComponentSim extends DataComponent implements
         // susp441237549)) empty) (res,
         // ee1)) =>* mastate such that isDone mastate .
         String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
-                + currentStatesQuery + ")) empty) (" + triggerEventsQuery
+                + currentStatesQuery
+                + ")) empty) ("
+                + triggerEventsQuery
                 + ")) =>* mastate such that isDone mastate . \n";
 
         // Debug output query request
@@ -281,9 +233,11 @@ public class DataComponentSim extends DataComponent implements
 
         String result = "";
         try {
-            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+            result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest,
+                    maudeSessionId);
         } catch (Exception e) {
-            throw new KiemExecutionException("A Maude simulation error occurred.", false, e);
+            throw new KiemExecutionException(
+                    "A Maude simulation error occurred.", false, e);
         }
 
         // Debug output query rresult
@@ -307,7 +261,7 @@ public class DataComponentSim extends DataComponent implements
             returnObj.accumulate(stateName, getCurrentStateIds(currentStates));
         } catch (Exception e) {
             // ignore any errors
-        	e.printStackTrace();
+            e.printStackTrace();
         }
 
         // no actions can be extracted so far
@@ -320,7 +274,9 @@ public class DataComponentSim extends DataComponent implements
     private List<String[]> currentStatesChoices;
     private String[] currentStatesSelected;
 
-    public String[] selectCurrentState(List<String[]> currentStatesChoicesParam) {
+    @Override
+    public String[] selectCurrentState(
+            final List<String[]> currentStatesChoicesParam) {
         flagDialogDone = false;
         currentStatesChoices = currentStatesChoicesParam;
         // this is also the default case if nothing is selected of canceled
@@ -330,9 +286,9 @@ public class DataComponentSim extends DataComponent implements
             public void run() {
                 // Disable timeout
                 TimeoutThread.setAwaitUserRepsonse(true);
-                
-                Shell currentShell = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                        .getShell();
+
+                Shell currentShell = PlatformUI.getWorkbench()
+                        .getActiveWorkbenchWindow().getShell();
                 SelectTraceDialog dialog = new SelectTraceDialog(currentShell,
                         "Select an execution trace");
 
@@ -355,14 +311,15 @@ public class DataComponentSim extends DataComponent implements
 
                 if (dialog.open() == WizardDialog.OK) {
                     try {
-                        currentStatesSelected = currentStatesChoices.get(dialog.getSelectedIndex());
+                        currentStatesSelected = currentStatesChoices.get(dialog
+                                .getSelectedIndex());
                     } catch (Exception e) {
                         // go with the default
                     }
                 }
                 // MUST eisable timeout again
                 TimeoutThread.setAwaitUserRepsonse(false);
-                
+
                 flagDialogDone = true;
             }
         });
@@ -386,6 +343,7 @@ public class DataComponentSim extends DataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #initialize()
      */
+    @Override
     public void initialize() throws KiemInitializationException {
         String pathToMaude = this.getProperties()[1].getValue();
 
@@ -403,11 +361,12 @@ public class DataComponentSim extends DataComponent implements
         // initialize with initial states (and regions)
         currentStates = getInitialStates();
 
-        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                pathToMaudeCode);
+        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(
+                pathToMaude, pathToMaudeCode);
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
-            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
+            printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null,
+                    1000, maudeSessionId));
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot start Maude. Plase make sure that the paths are "
@@ -423,6 +382,7 @@ public class DataComponentSim extends DataComponent implements
      * 
      * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
      */
+    @Override
     public void wrapup() throws KiemInitializationException {
         MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
 

@@ -15,10 +15,12 @@ package de.cau.cs.kieler.core.model.effects;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
+import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.figures.BorderedNodeFigure;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
@@ -31,8 +33,8 @@ import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
- * A simple transient highlighting effect. Can change line colors, line styles, and line widths for
- * Shapes and NodeFigures.
+ * A simple transient highlighting effect. Can change line colors, line styles,
+ * and line widths for Shapes and NodeFigures.
  * 
  * 
  * @author mmu
@@ -76,7 +78,8 @@ public class HighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor) {
-        EditPart editPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), eObject);
+        EditPart editPart = ModelingUtil.getEditPart(
+                editor.getDiagramEditPart(), eObject);
         if (editPart instanceof GraphicalEditPart) {
             targetEditPart = (GraphicalEditPart) editPart;
             targetFigure = targetEditPart.getFigure();
@@ -96,7 +99,8 @@ public class HighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor, final int lineStyle) {
+    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+            final int lineStyle) {
         this(eObject, editor);
         style = lineStyle;
         color = null;
@@ -135,7 +139,8 @@ public class HighlightEffect extends AbstractEffect {
      *            the line style to use for borders (black/white mode)
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor,
-            final Color highlightColor, final Color background, final int lineStyle) {
+            final Color highlightColor, final Color background,
+            final int lineStyle) {
         this(eObject, editor, highlightColor, lineStyle);
         backgroundColor = background;
     }
@@ -184,7 +189,8 @@ public class HighlightEffect extends AbstractEffect {
      * @param highlightColor
      *            the color to highlight the state with
      * @param children
-     *            true if labels should be highlighted in the given color as well
+     *            true if labels should be highlighted in the given color as
+     *            well
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor,
             final Color highlightColor, final boolean children) {
@@ -204,10 +210,12 @@ public class HighlightEffect extends AbstractEffect {
      * @param background
      *            the color to use for painting the background
      * @param children
-     *            true if labels should be highlighted in the given color as well
+     *            true if labels should be highlighted in the given color as
+     *            well
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor,
-            final Color highlightColor, final Color background, final boolean children) {
+            final Color highlightColor, final Color background,
+            final boolean children) {
         this(eObject, editor, highlightColor, children);
         backgroundColor = background;
     }
@@ -217,6 +225,7 @@ public class HighlightEffect extends AbstractEffect {
      */
     public void execute() {
         MonitoredOperation.runInUI(new Runnable() {
+
             public void run() {
                 if (targetFigure == null) {
                     return;
@@ -227,7 +236,8 @@ public class HighlightEffect extends AbstractEffect {
                     // line width
                     if (changeWidth && originalWidth == -1) {
                         originalWidth = shape.getLineWidth();
-                        shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
+                        shape.setLineWidth(Math.min(originalWidth
+                                + widthIncrease, widthMax));
                     } else if (!changeWidth && originalWidth != -1) {
                         shape.setLineWidth(originalWidth);
                         originalWidth = -1;
@@ -244,20 +254,33 @@ public class HighlightEffect extends AbstractEffect {
                 }
 
                 // Papyrus
-                if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
+                if (targetFigure instanceof BorderedNodeFigure) {
+                    // TODO: FIXME bad hack
+                    BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
+                    IFigure border = bnf.getBorderItemContainer();
+                    while (border.getChildren().size() > 0) {
+                        border.getChildren().remove(0);
+                    }
+                    RectangleFigure rect = new RectangleFigure();
+                    rect.setBounds(targetFigure.getBounds());
+                    rect.setForegroundColor(ColorConstants.red);
+                    rect.setOpaque(false);
+                    rect.setAlpha(100);
+                    bnf.getBorderItemContainer().add(rect);
+
                     if (changeWidth && originalWidth == -1) {
-                        originalWidth = ((RoundedRectangleBorder) targetFigure.getBorder())
-                                .getWidth();
-                        ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(Math.min(
-                                originalWidth + widthIncrease, widthMax));
+                        originalWidth = bnf.getLineWidth();
+
+                        // bnf.setLineWidth(Math.min(
+                        // originalWidth + widthIncrease, widthMax));
                     }
                     if (style != -1) {
                         if (originalStyle == -1) {
-                            originalStyle = ((RoundedRectangleBorder) targetFigure.getBorder())
-                                    .getStyle();
+                            originalStyle = bnf.getLineStyle();
                         }
-                        ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(style);
+                        bnf.setLineStyle(style);
                     }
+                    bnf.repaint();
                 }
 
                 // color
@@ -269,14 +292,17 @@ public class HighlightEffect extends AbstractEffect {
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                // potential issue: original color of children may be different?
-                                ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
+                                // potential issue: original color of children
+                                // may be different?
+                                ((GraphicalEditPart) o).getFigure()
+                                        .setForegroundColor(color);
                             }
                         }
                     } else {
                         for (Object child : targetFigure.getChildren()) {
                             if (child instanceof WrappingLabel) {
-                                ((WrappingLabel) child).setForegroundColor(originalColor);
+                                ((WrappingLabel) child)
+                                        .setForegroundColor(originalColor);
                             }
                         }
                     }
@@ -293,8 +319,10 @@ public class HighlightEffect extends AbstractEffect {
                     targetFigure.setBackgroundColor(originalBackgroundColor);
                 }
             }
-        }, true); // TODO investigate whether false works - would be massively faster
-                  // TODO false does *not* work, leads to a huge queue of highlights in the UI
+        }, true); // TODO investigate whether false works - would be massively
+                  // faster
+                  // TODO false does *not* work, leads to a huge queue of
+                  // highlights in the UI
                   // thread
         // targetFigure.repaint();
     }
@@ -306,14 +334,22 @@ public class HighlightEffect extends AbstractEffect {
                 if (targetFigure == null) {
                     return;
                 }
+                // TODO: FIXME bad hack
+                if (targetFigure instanceof BorderedNodeFigure) {
+                    BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
+                    IFigure border = bnf.getBorderItemContainer();
+                    while (border.getChildren().size() > 0) {
+                        border.getChildren().remove(0);
+                    }
+                }
 
                 if (originalColor != null) {
                     targetFigure.setForegroundColor(originalColor);
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                ((GraphicalEditPart) o).getFigure().setForegroundColor(
-                                        originalColor);
+                                ((GraphicalEditPart) o).getFigure()
+                                        .setForegroundColor(originalColor);
                             }
                         }
                     }
@@ -333,10 +369,12 @@ public class HighlightEffect extends AbstractEffect {
 
                 if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
                     if (originalWidth != -1) {
-                        ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
+                        ((RoundedRectangleBorder) targetFigure.getBorder())
+                                .setWidth(originalWidth);
                     }
                     if (originalStyle != -1) {
-                        ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
+                        ((RoundedRectangleBorder) targetFigure.getBorder())
+                                .setStyle(originalStyle);
                     }
                 }
 
@@ -413,6 +451,14 @@ public class HighlightEffect extends AbstractEffect {
             if (undo instanceof HighlightEffect) {
                 HighlightEffect otherEffect = (HighlightEffect) undo;
                 if (otherEffect.targetFigure == targetFigure) {
+                    // TODO: FIXME bad hack
+                    if (otherEffect.targetFigure instanceof BorderedNodeFigure) {
+                        BorderedNodeFigure bnf = (BorderedNodeFigure) otherEffect.targetFigure;
+                        IFigure border = bnf.getBorderItemContainer();
+                        while (border.getChildren().size() > 0) {
+                            border.getChildren().remove(0);
+                        }
+                    }
                     originalColor = otherEffect.originalColor;
                     originalBackgroundColor = otherEffect.originalBackgroundColor;
                     originalWidth = otherEffect.originalWidth;
