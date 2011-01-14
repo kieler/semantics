@@ -110,6 +110,19 @@ public final class GraphicalFrameworkService {
         /**
          * {@inheritDoc}
          */
+        public EditPart getEditPart(final IEditorPart editorPart, final Object object) {
+            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
+                EditPart result = entry.getFirst().getEditPart(editorPart, object);
+                if (result != null) {
+                    return result;
+                }
+            }
+            return null;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
         public EditingDomain getEditingDomain(final Object object) {
             for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
                 EditingDomain result = entry.getFirst().getEditingDomain(object);

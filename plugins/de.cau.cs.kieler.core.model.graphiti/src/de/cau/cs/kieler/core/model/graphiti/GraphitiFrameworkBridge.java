@@ -99,6 +99,14 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
+    public EditPart getEditPart(final IEditorPart editorPart, final Object object) {
+        // TODO has to be implemented properly
+        return getEditPart(object);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public EditingDomain getEditingDomain(final Object object) {
         if (object instanceof IPictogramElementEditPart) {
             return ((IPictogramElementEditPart) object).getConfigurationProvider()

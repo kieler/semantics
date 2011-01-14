@@ -50,13 +50,25 @@ public interface IGraphicalFrameworkBridge {
      * part is passed, then the return value is the corresponding diagram edit part.
      * If an edit part is passed, it is filtered in such a way that the most relevant
      * related edit part is returned; e.g. for a compartment edit part the containing
-     * node edit part is returned.
+     * node edit part is returned. If a model element is passed, the most relevant
+     * edit part in the active editor is returned.
      * 
-     * @param object an editor part or edit part
+     * @param object an editor part, edit part, notational object, or model element
      * @return the relevant edit part, or {@code null} if the passed object cannot
      *     be handled
      */
     EditPart getEditPart(Object object);
+    
+    /**
+     * Returns the relevant edit part for the given object. If a model element is passed,
+     * the most relevant edit part in the given editor is returned.
+     * 
+     * @param editorPart an editor part
+     * @param object an edit part, notational object, or model element
+     * @return the relevant edit part, or {@code null} if the passed object cannot
+     *     be handled
+     */
+    EditPart getEditPart(IEditorPart editorPart, Object object);
     
     /**
      * Retrieve the editing domain for model changes of the given object.

@@ -49,6 +49,8 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
+import de.cau.cs.kieler.core.model.GmfFrameworkBridge;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 
@@ -125,7 +127,7 @@ public final class ModelingUtil {
      *            the root EditPart so start the search. May be null, then the current active editor
      *            is used
      * @return the corresponding EditPart
-     * 
+     * @deprecated use {@link IGraphicalFrameworkBridge#getEditPart(IEditorPart, Object)} instead
      */
     public static EditPart getEditPart(final EObject eObject, final EditPart rootEditPart) {
         // if (cachedEditParts2 == null) {
@@ -269,6 +271,7 @@ public final class ModelingUtil {
      * @param theElement
      *            the EObject to find
      * @return the EditPart, or {@code null} if none was found
+     * @deprecated use {@link IGraphicalFrameworkBridge#getEditPart(IEditorPart, Object)} instead
      */
     public static EditPart getEditPart(final DiagramEditPart dep, final EObject theElement) {
         // attempted fix for the concurrent modification exception on delete
@@ -310,6 +313,7 @@ public final class ModelingUtil {
      * @param element
      *            the EObject to find
      * @return the EditPart, or {@code null} if none was found
+     * @deprecated use {@link IGraphicalFrameworkBridge#getEditPart(IEditorPart, Object)} instead
      */
     public static EditPart getEditPart(final IEditorPart editorPart, final EObject element) {
         if (editorPart instanceof DiagramEditor) {
@@ -444,8 +448,8 @@ public final class ModelingUtil {
      * 
      *         TODO: search of transition edit parts iterates all edit parts and will take linear
      *         time. You should improve this, by maybe build a local cache hash map
+     * @deprecated use {@link IGraphicalFrameworkBridge#getEditPart(Object)} instead
      */
-
     public static EditPart getEditPart(final EObject eObject) {
         try {
             DiagramEditor editor = (DiagramEditor) PlatformUI.getWorkbench()
