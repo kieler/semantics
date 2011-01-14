@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.core.ui.util;
 
+import java.util.Collection;
+
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
@@ -26,6 +28,12 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  * of the ancestors. (checked if all children are checked, grayed if some,
  * but not all children are checked) Similarly, it goes down the hierarchy
  * marking all children as checked.
+ * 
+ * If items should be checked programmatically, this should happen through
+ * the methods of this class to be able to update the ancestor and child
+ * elements. Since programmatically triggered changes on the check state of
+ * an element do not trigger events, the check state manager cannot cope with
+ * this on its own.
  * 
  * @author cds
  */
@@ -57,12 +65,64 @@ public class TreeViewerCheckStateManager {
     
     
     /**
+     * Checks the given element, updating its ancestors and children in the
+     * process.
+     * 
+     * @param element the element to be checked.
+     */
+    public void checkElement(final Object element) {
+        treeViewer.setChecked(element, true);
+        onCheckStateChanged(element, true);
+    }
+
+    /**
+     * Checks the given elements, updating theirs ancestors and children in the
+     * process.
+     * 
+     * @param elements the elements to be checked.
+     */
+    public void checkElements(final Collection<?> elements) {
+        for (Object o : elements) {
+            checkElement(o);
+        }
+    }
+
+    /**
+     * Unchecks the given element, updating its ancestors and children in the
+     * process.
+     * 
+     * @param element the element to be unchecked.
+     */
+    public void uncheckElement(final Object element) {
+        treeViewer.setChecked(element, false);
+        onCheckStateChanged(element, false);
+    }
+
+    /**
+     * Unchecks the given elements, updating theirs ancestors and children in the
+     * process.
+     * 
+     * @param elements the elements to be unchecked.
+     */
+    public void uncheckElements(final Collection<?> elements) {
+        for (Object o : elements) {
+            uncheckElement(o);
+        }
+    }
+    
+    
+    /**
      * Called when an element's check state changes as a result of a user action.
      * 
      * @param element the element whose check state has changed.
      * @param checked whether the element is now checked or not.
      */
     private void onCheckStateChanged(final Object element, final boolean checked) {
+        // If the element is grayed, check it
+        if (treeViewer.getGrayed(element)) {
+            treeViewer.setGrayed(element, false);
+        }
+        
         ITreeContentProvider contentProvider =
             (ITreeContentProvider) treeViewer.getContentProvider();
         
