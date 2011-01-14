@@ -114,6 +114,11 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      */
     private Set<Object> checkedTreeItems = new HashSet<Object>();
     
+    /**
+     * Set of tree items that are grayed.
+     */
+    private Set<Object> grayedTreeItems = new HashSet<Object>();
+    
     // UI CONTROLS
     private Composite composite = null;
     
@@ -223,7 +228,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             // resource list items will be added as well
             checkedTreeItems.addAll(filterTreeItems(
                     resourceTreeContentProvider.getChildren(element)));
-        } else if (resourceTreeViewer.getGrayed(element)) {
+        } else if (grayedTreeItems.contains(element)) {
             // Grayed; gather those resource list children that are selected
             elements.addAll(filterListItems(checkedListItems.get(element).toArray()));
         } else {
@@ -493,6 +498,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         // Clear user selections
         checkedListItems.clear();
         checkedTreeItems.clear();
+        grayedTreeItems.clear();
         visitedTreeItems.clear();
         
         // Set the tree viewer's new input and validate the page
@@ -502,12 +508,12 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     }
     
     /**
-     * Checks if there is anything selected.
+     * Checks if there is anything selected. This can only be a hint.
      * 
      * @return {@code true} if anything is selected.
      */
     public final boolean isAnythingSelected() {
-        return !checkedTreeItems.isEmpty() || !checkedListItems.isEmpty();
+        return !(checkedTreeItems.isEmpty() && grayedTreeItems.isEmpty());
     }
     
     /**
@@ -1070,18 +1076,21 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             // The item is not checked, and we cannot say anything about its
             // childrens' check state, so we don't change anything there
             checkedTreeItems.remove(element);
+            grayedTreeItems.add(element);
             
             resourceTreeViewer.setGrayChecked(element, true);
         } else {
             if (checked) {
                 // The item is now checked
                 checkedTreeItems.add(element);
+                grayedTreeItems.remove(element);
 
                 resourceTreeViewer.setChecked(element, true);
                 resourceTreeViewer.setGrayed(element, false);
             } else {
-                // The tree item isn't checked anymore
+                // The tree item isn't checked or grayed anymore
                 checkedTreeItems.remove(element);
+                grayedTreeItems.remove(element);
 
                 resourceTreeViewer.setChecked(element, false);
                 resourceTreeViewer.setGrayed(element, false);
