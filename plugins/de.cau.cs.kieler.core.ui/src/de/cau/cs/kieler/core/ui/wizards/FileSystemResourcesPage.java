@@ -45,7 +45,7 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
  * 
  * @author cds
  */
-public class ImportFromFilesystemPage extends ResourceTreeAndListPage {
+public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     
     /**
      * Provides the folder tree to the resource selection group.
@@ -245,7 +245,7 @@ public class ImportFromFilesystemPage extends ResourceTreeAndListPage {
      * @param fileExtensions array of allowed file name extensions without
      *                       preceding dot. May be {@code null}.
      */
-    public ImportFromFilesystemPage(final String pageName, final boolean workspaceTargetGroup,
+    public FileSystemResourcesPage(final String pageName, final boolean workspaceTargetGroup,
             final String[] fileExtensions) {
         
         super(pageName);
@@ -501,7 +501,7 @@ public class ImportFromFilesystemPage extends ResourceTreeAndListPage {
      */
     @Override
     protected Composite createOptionsGroup(final Composite parent) {
-        // No target group
+        // No options group
         return null;
     }
     

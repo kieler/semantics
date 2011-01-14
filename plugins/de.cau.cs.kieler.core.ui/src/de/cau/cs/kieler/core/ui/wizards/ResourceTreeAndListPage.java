@@ -92,6 +92,10 @@ import com.google.common.collect.Multimap;
  * default options group created, since there is no way to know which options
  * might be needed.
  * 
+ * There are currently two specializations of this class. {@link FileSystemResourcesPage}
+ * specializes in file system imports while {@link WorkspaceResourcesPage}
+ * specializes in workspace imports.
+ * 
  * @author cds
  */
 public abstract class ResourceTreeAndListPage extends WizardPage {
@@ -289,6 +293,9 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         
         // Restore dialog settings
         restoreDialogSettings();
+        
+        // Do any initialization
+        initializeControls();
     }
     
     /**
@@ -380,6 +387,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 });
             }
         });
+    }
+    
+    /**
+     * Called after the controls were created and the settings restored. Subclasses
+     * may override and can use this method to do any initialization tasks that
+     * might be left. The default implementation does nothing.
+     */
+    protected void initializeControls() {
+        // Do nothing
     }
     
     
@@ -618,6 +634,17 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             }
         });
         
+        sourceGroupSourceCombo.addSelectionListener(new SelectionAdapter() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                applyNewSource(sourceGroupSourceCombo.getText());
+                validate();
+            }
+        });
+        
         sourceGroupBrowseButton.addSelectionListener(new SelectionAdapter() {
             /**
              * {@inheritDoc}
@@ -815,6 +842,17 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             @Override
             public void focusLost(final FocusEvent e) {
                 applyNewTarget(targetGroupTargetCombo.getText());
+                validate();
+            }
+        });
+        
+        targetGroupTargetCombo.addSelectionListener(new SelectionAdapter() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void widgetSelected(final SelectionEvent e) {
+                applyNewSource(targetGroupTargetCombo.getText());
                 validate();
             }
         });
@@ -1187,10 +1225,10 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             // Find out if any of its children in the list are checked
             boolean anyListChildrenChecked = checkedListItems.get(element).size() > 0;
             
-            // Find out if any of its children in the tree are checked
+            // Find out if any of its children in the tree are checked or grayed
             boolean anyTreeChildrenChecked = false;
             for (Object child : resourceTreeContentProvider.getChildren(element)) {
-                if (checkedTreeItems.contains(child)) {
+                if (checkedTreeItems.contains(child) || grayedTreeItems.contains(child)) {
                     anyTreeChildrenChecked = true;
                     break;
                 }

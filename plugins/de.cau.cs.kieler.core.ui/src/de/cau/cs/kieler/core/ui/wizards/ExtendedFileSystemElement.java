@@ -23,7 +23,7 @@ import org.eclipse.ui.dialogs.FileSystemElement;
  * A {@code FileSystemElement} representing {@code File}s and carrying extended states.
  * Most importantly, this element tracks whether it has already been visited or not.
  * "Visited" in this context means that someone has already added all subdirectories
- * and subfolders to it. This class is used by {@link ImportFromFilesystemPage}.
+ * and subfolders to it. This class is used by {@link FileSystemResourcesPage}.
  * 
  * @author cds
  */
