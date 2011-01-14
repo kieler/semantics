@@ -1023,8 +1023,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      *                   element and the item check states restored.
      */
     private void visitTreeItem(final Object element, final boolean updateList) {
-        System.out.println("Visiting item " + ((ExtendedFileSystemElement) element).getFile().getName());
-        
         // Was the item visited before?
         if (!visitedTreeItems.contains(element)) {
             // The item is now visited
