@@ -72,7 +72,7 @@ public class ReInitSyncchartsDiagramCommand extends
 
     /**
      * Perform actions after the reinit. In this case an auto layout on the
-     * currenly active diagram.
+     * currently active diagram.
      * 
      * @param path
      *            the file
