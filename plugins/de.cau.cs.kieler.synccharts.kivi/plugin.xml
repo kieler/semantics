@@ -36,46 +36,4 @@
             active="true">
       </combination>
    </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="toolbar:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.kivi.command.signalflow"
-               icon="icons/signalflow.gif"
-               label="Signal Flow"
-               style="toggle"
-               tooltip="Show the flow of signals">
-            <visibleWhen
-                  checkEnabled="false">
-               <with
-                     variable="activeEditor">
-                  <test
-                        forcePluginActivation="false"
-                        property="de.cau.cs.kieler.synccharts.kivi.isSyncChartsEditor">
-                  </test>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.kivi.SignalFlowHandler"
-            id="de.cau.cs.kieler.synccharts.kivi.command.signalflow"
-            name="Signal Flow">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="de.cau.cs.kieler.synccharts.kivi.SignalFlowTester"
-            id="de.cau.cs.kieler.synccharts.kivi.isSyncChartsEditor"
-            namespace="de.cau.cs.kieler.synccharts.kivi"
-            properties="isSyncChartsEditor"
-            type="org.eclipse.ui.IEditorPart">
-      </propertyTester>
-   </extension>
 </plugin>

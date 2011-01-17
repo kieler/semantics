@@ -21,6 +21,8 @@ import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
@@ -28,6 +30,8 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger.ButtonState;
+import de.cau.cs.kieler.core.kivi.triggers.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -54,6 +58,16 @@ public class SignalFlowCombination extends AbstractCombination {
             CombinationParameter.RGB_TYPE) };
 
     private static final int DEFAULT_LENGTH = 15;
+    
+    private static final String buttonId = "de.cau.cs.kieler.synccharts.kivi.signalflow";
+    
+    public SignalFlowCombination(){
+        super();
+        ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,"icons/signalflow.gif");
+        String tooltip = "Show the Dual Model of the current SyncChart. It shows the data communication from effects to triggers.";
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model", tooltip, icon, SWT.CHECK, null, "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
+    }
+    
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
@@ -62,9 +76,10 @@ public class SignalFlowCombination extends AbstractCombination {
      * @param selection
      *            the selection state
      */
-    public void execute(final SignalFlowActiveState active, final SelectionState selection) {
-        if (active.isActive()) {
-            if (!shouldExecute(active, selection)) {
+    public void execute(final ButtonState button, final SelectionState selection) {
+        if(button.getButtonId().equals(buttonId) && button.isPushedIn())
+            {
+            if (!shouldExecute(button, selection)) {
                 doNothing(); // keep arrows as-is, eg for exporting images
                 return;
             }
@@ -166,8 +181,8 @@ public class SignalFlowCombination extends AbstractCombination {
         return true;
     }
 
-    private boolean shouldExecute(final SignalFlowActiveState active, final SelectionState selection) {
-        if (active.getSequenceNumber() > selection.getSequenceNumber()) { // button was just pushed
+    private boolean shouldExecute(final ButtonState button, final SelectionState selection) {
+        if (button.getSequenceNumber() > selection.getSequenceNumber()) { // button was just pushed
             return true;
         }
         if (selection.getSelectedEObjects().size() == 1) {
