@@ -15,8 +15,6 @@ package de.cau.cs.kieler.core.model.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -279,7 +277,7 @@ public class XtendStatus implements IStatus {
         return buffer.toString();
     }
 
-    private String serialize(AnyType anyType) {
+    private String serialize(final AnyType anyType) {
         // Create a resource set.
         ResourceSet resourceSet = new ResourceSetImpl();
 
@@ -297,7 +295,7 @@ public class XtendStatus implements IStatus {
         // Add the model objects to the contents.
         resource.getContents().add(anyType);
 
-        HashMap options = new HashMap();
+        HashMap<String, Object> options = new HashMap<String, Object>();
         options.put(XMLResource.OPTION_EXTENDED_META_DATA, true);
         
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
