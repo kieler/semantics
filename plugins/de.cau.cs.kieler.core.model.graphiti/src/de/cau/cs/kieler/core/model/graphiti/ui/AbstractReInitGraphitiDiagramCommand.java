@@ -37,7 +37,10 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.emf.transaction.impl.AbstractTransactionalCommandStack;
+import org.eclipse.emf.transaction.impl.TransactionImpl;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
 import org.eclipse.graphiti.dt.IDiagramTypeProvider;
@@ -150,6 +153,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         }
     }
 
+    /** Options for executing the command. */
+    private Map<String, Boolean> cmdOptions = null;
+
     /** The name of the diagram type. */
     private String diagramTypeName;
     /** the grid size. */
@@ -174,6 +180,12 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         this.diagramTypeName = diagramTypeNameParam;
         this.gridSize = gridSizeParam;
         this.snapToGrid = snapToGridParam;
+
+        cmdOptions = new HashMap<String, Boolean>();
+        // disable notifications and validations
+        // saves considerable time on huge diagrams (34 seconds -> 3 seconds)
+        cmdOptions.put(TransactionImpl.OPTION_NO_NOTIFICATIONS, true);
+        cmdOptions.put(TransactionImpl.OPTION_NO_VALIDATION, true);
     }
 
     /**
@@ -219,10 +231,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         if (diagramResource != null && getEditorId() != null) {
             try {
                 openDiagram(diagramResource);
-            } catch (PartInitException exception) {
+            } catch (PartInitException e) {
                 ErrorDialog.openError(getContainer().getShell(),
-                        "Error opening diagram editor", null,
-                        exception.getStatus());
+                        "Error opening diagram editor", null, e.getStatus());
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (RollbackException e) {
+                ErrorDialog.openError(getContainer().getShell(),
+                        "Error: Transaction rolled back", null, e.getStatus());
             }
         }
 
@@ -325,8 +341,13 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param editor
      *            the editor
+     * @throws RollbackException
+     *             if the transaction was rolled back
+     * @throws InterruptedException
+     *             if the transaction was interrupted
      */
-    protected void linkModelToDiagram(final DiagramEditor editor) {
+    protected void linkModelToDiagram(final DiagramEditor editor)
+            throws InterruptedException, RollbackException {
         connections = new LinkedList<EObject>();
         elements = new HashMap<EObject, PictogramElement>();
         // get the feature provider for getting the AddFeatures
@@ -344,7 +365,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             if (elem instanceof ContainerShape) {
                 TransactionalEditingDomain domain = editor.getEditingDomain();
                 CommandStack cs = domain.getCommandStack();
-                cs.execute(new ReInitCommand(provider, modelRoot, elem, editor));
+                AbstractTransactionalCommandStack atcs = (AbstractTransactionalCommandStack) cs;
+                atcs.execute(new ReInitCommand(provider, modelRoot, elem,
+                        editor), cmdOptions);
             }
         }
     }
@@ -541,9 +564,13 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      *            a resource for a diagram file
      * @throws PartInitException
      *             if the diagram could not be opened
+     * @throws RollbackException
+     *             if the transaction was rolled back
+     * @throws InterruptedException
+     *             if the transaction was interrupted
      */
     private void openDiagram(final Resource diagramResource)
-            throws PartInitException {
+            throws PartInitException, InterruptedException, RollbackException {
         String path = diagramResource.getURI().toPlatformString(true);
         final IResource workspaceResource = ResourcesPlugin.getWorkspace()
                 .getRoot().findMember(new Path(path));
