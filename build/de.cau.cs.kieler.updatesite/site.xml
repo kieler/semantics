@@ -145,6 +145,9 @@
    <feature url="features/de.cau.cs.kieler.kvid.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kvid.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.graphiti_0.1.0.qualifier.jar" id="de.cau.cs.kieler.graphiti" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient
