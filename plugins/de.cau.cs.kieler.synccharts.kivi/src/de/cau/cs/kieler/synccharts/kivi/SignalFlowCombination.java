@@ -30,8 +30,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger.ButtonState;
-import de.cau.cs.kieler.core.kivi.triggers.KiviMenuContributionService;
+import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
+import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
+import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -62,7 +63,7 @@ public class SignalFlowCombination extends AbstractCombination {
     private static final String buttonId = "de.cau.cs.kieler.synccharts.kivi.signalflow";
     
     public SignalFlowCombination(){
-        super();
+        super(); 
         ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,"icons/signalflow.gif");
         String tooltip = "Show the Dual Model of the current SyncChart. It shows the data communication from effects to triggers.";
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model", tooltip, icon, SWT.CHECK, null, "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
