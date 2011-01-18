@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class Activator extends AbstractUIPlugin {
 
     // The plug-in ID
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.transformation";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.kies.transformation";
 
     // The shared instance
     private static Activator plugin;

@@ -16,12 +16,14 @@ package de.cau.cs.kieler.kies.transformation.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
@@ -52,8 +54,10 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
@@ -233,13 +237,13 @@ public final class TransformationUtil {
     /**
      * @return the currently active editor.
      */
-    public static DiagramEditor getActiveEditor() {
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
+    public static IEditorPart getActiveEditor() {
+        final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
+                if (editor != null) {
+                    maybe.set(editor);
                 }
             }
         });
@@ -403,6 +407,90 @@ public final class TransformationUtil {
                     "Problem creating a new SyncChartsDiagram.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
+    }
+
+    public static void strlToKixsAndOpen(final IFile strlFile) {
+
+        // start with a progress dialog as parsing and opening might take some time
+        Display.getDefault().syncExec(new Runnable() {
+
+            public void run() {
+                try {
+                    // TODO Auto-generated method stub
+
+                    PlatformUI.getWorkbench().getProgressService()
+                            .run(false, true, new IRunnableWithProgress() {
+                                public void run(final IProgressMonitor uiMonitor) {
+
+                                    IFile kixsFile, kidsFile;
+                                    IWorkspaceRoot workspaceRoot;
+
+                                    // CHECKSTYLEOFF MagicNumber
+                                    // used some numbers to estimate work done
+                                    uiMonitor.beginTask("Initial Transformation", 100);
+                                    // access workspace
+                                    IWorkspace workspace = ResourcesPlugin.getWorkspace();
+                                    workspaceRoot = workspace.getRoot();
+
+                                    // get files relative to Workspace
+                                    IPath kidsPath = strlFile.getFullPath().removeFileExtension()
+                                            .addFileExtension("kids");
+                                    IPath kixsPath = strlFile.getFullPath().removeFileExtension()
+                                            .addFileExtension("kixs");
+                                    kidsFile = workspaceRoot.getFile(kidsPath);
+                                    kixsFile = workspaceRoot.getFile(kixsPath);
+
+                                    System.out.println(strlFile.toString());
+                                    // create all the elements
+                                    long start = System.currentTimeMillis();
+                                    System.out.println("Start: " + start);
+                                    TransformationUtil.createSyncchartDiagram(kixsFile);
+                                    long opened = System.currentTimeMillis();
+                                    System.out.println("Opened: " + opened);
+                                    uiMonitor.worked(40);
+                                    TransformationUtil.doInitialEsterelTransformation(strlFile,
+                                            kixsFile);
+                                    long esterel = System.currentTimeMillis();
+                                    System.out.println("Esterel: " + esterel);
+                                    uiMonitor.worked(60);
+                                    TransformationUtil.refreshEditPolicies();
+                                    long refresh = System.currentTimeMillis();
+                                    System.out.println("Refresh: " + refresh);
+                                    uiMonitor.worked(90);
+                                    // CHECKSTYLEON MagicNumber
+
+                                    // open the editor with the kids file
+                                    IWorkbenchPage page = PlatformUI.getWorkbench()
+                                            .getActiveWorkbenchWindow().getActivePage();
+                                    try {
+                                        page.openEditor(new FileEditorInput(kidsFile),
+                                                SyncchartsDiagramEditor.ID);
+                                    } catch (PartInitException e) {
+                                        e.printStackTrace();
+                                        Status myStatus = new Status(IStatus.ERROR,
+                                                Activator.PLUGIN_ID,
+                                                "Problem opening the SyncCharts Diagram.", e);
+                                        StatusManager.getManager().handle(myStatus,
+                                                StatusManager.SHOW);
+                                    }
+
+                                    long showing = System.currentTimeMillis();
+                                    System.out.println("Showing: " + showing);
+                                    long total = showing - start;
+                                    System.out.println("Total: " + total + " Sek: "
+                                            + (total / 1000f) + "s");
+                                }
+                            });
+                } catch (InvocationTargetException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     /**

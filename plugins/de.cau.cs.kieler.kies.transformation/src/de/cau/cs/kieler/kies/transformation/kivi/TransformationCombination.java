@@ -14,14 +14,17 @@
 package de.cau.cs.kieler.kies.transformation.kivi;
 
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.util.Maybe;
+import de.cau.cs.kieler.core.kivi.triggers.KiviMenuContributionService;
+import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger.TransformationState;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -32,6 +35,13 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 public class TransformationCombination extends AbstractCombination {
 
     private TransformationEffect effect;
+
+    /**
+     * 
+     */
+    public TransformationCombination() {
+        super();
+    }
 
     /**
      * executes this combination.
@@ -55,7 +65,7 @@ public class TransformationCombination extends AbstractCombination {
                     descriptor.getEditingDomain());
             effect.schedule();
 
-            DiagramEditor activeEditor = getActiveEditor();
+            IEditorPart activeEditor = TransformationUtil.getActiveEditor();
             if (activeEditor instanceof SyncchartsDiagramEditor) {
                 // refresh GMF edit policies
                 RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
@@ -67,18 +77,5 @@ public class TransformationCombination extends AbstractCombination {
                 layoutEffect.schedule();
             }
         }
-    }
-
-    private DiagramEditor getActiveEditor() {
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
-                }
-            }
-        });
-        return maybe.get();
     }
 }

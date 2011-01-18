@@ -27,6 +27,12 @@
             description="Performs a Transformation"
             name="Transformation Combination">
       </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.kies.transformation.kivi.KIEMRemoteCombination"
+            description="Remote Controls KIEM"
+            name="KIEM Remote Combination">
+      </combination>
    </extension>
    <extension
          point="org.eclipse.ui.popupMenus">

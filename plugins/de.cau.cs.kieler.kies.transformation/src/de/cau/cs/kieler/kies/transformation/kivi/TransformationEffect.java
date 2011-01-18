@@ -27,6 +27,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 
@@ -91,7 +92,7 @@ public class TransformationEffect extends AbstractEffect {
 
                 // create a compound command to make sure all gmf elements are refreshed
                 // after the transformation was executed
-                // for some reason it is important to do this in a seperate command!
+                // for some reason it is important to do this in a separate command!
                 CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
 
                 TransformationCommand command = new TransformationCommand(xtendFacade, parameters,
@@ -130,7 +131,7 @@ public class TransformationEffect extends AbstractEffect {
 
         @Override
         protected void doExecute() {
-            final DiagramEditor activeEditor = TransformationUtil.getActiveEditor();
+            final IEditorPart activeEditor = TransformationUtil.getActiveEditor();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
                     if (activeEditor instanceof IDiagramWorkbenchPart) {

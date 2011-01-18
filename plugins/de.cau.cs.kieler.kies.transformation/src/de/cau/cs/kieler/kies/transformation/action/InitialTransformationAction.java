@@ -143,74 +143,7 @@ public class InitialTransformationAction implements IActionDelegate {
         if (strlFile == null || !strlFile.exists()) {
             return;
         }
-
-        try {
-
-            // start with a progress dialog as parsing and opening might take some time
-            PlatformUI.getWorkbench().getProgressService()
-                    .run(false, true, new IRunnableWithProgress() {
-                        public void run(final IProgressMonitor uiMonitor) {
-
-                            // CHECKSTYLEOFF MagicNumber
-                            // used some numbers to estimate work done
-                            uiMonitor.beginTask("Initial Transformation", 100);
-                            // access workspace
-                            IWorkspace workspace = ResourcesPlugin.getWorkspace();
-                            workspaceRoot = workspace.getRoot();
-
-                            // get files relative to Workspace
-                            IPath kidsPath = strlFile.getFullPath().removeFileExtension()
-                                    .addFileExtension("kids");
-                            IPath kixsPath = strlFile.getFullPath().removeFileExtension()
-                                    .addFileExtension("kixs");
-                            kidsFile = workspaceRoot.getFile(kidsPath);
-                            kixsFile = workspaceRoot.getFile(kixsPath);
-
-                            System.out.println(strlFile.toString());
-                            // create all the elements
-                            long start = System.currentTimeMillis();
-                            System.out.println("Start: " + start);
-                            TransformationUtil.createSyncchartDiagram(kixsFile);
-                            long opened = System.currentTimeMillis();
-                            System.out.println("Opened: " + opened);
-                            uiMonitor.worked(40);
-                            TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
-                            long esterel = System.currentTimeMillis();
-                            System.out.println("Esterel: " + esterel);
-                            uiMonitor.worked(60);
-                            TransformationUtil.refreshEditPolicies();
-                            long refresh = System.currentTimeMillis();
-                            System.out.println("Refresh: " + refresh);
-                            uiMonitor.worked(90);
-                            // CHECKSTYLEON MagicNumber
-
-                            // open the editor with the kids file
-                            IWorkbenchPage page = PlatformUI.getWorkbench()
-                                    .getActiveWorkbenchWindow().getActivePage();
-                            try {
-                                page.openEditor(new FileEditorInput(kidsFile),
-                                        SyncchartsDiagramEditor.ID);
-                            } catch (PartInitException e) {
-                                e.printStackTrace();
-                                Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                                        "Problem opening the SyncCharts Diagram.", e);
-                                StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-                            }
-
-                            long showing = System.currentTimeMillis();
-                            System.out.println("Showing: " + showing);
-                            long total = showing - start;
-                            System.out
-                                    .println("Total: " + total + " Sek: " + (total / 1000f) + "s");
-                        }
-                    });
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
+        TransformationUtil.strlToKixsAndOpen(strlFile);
 
     }
 
