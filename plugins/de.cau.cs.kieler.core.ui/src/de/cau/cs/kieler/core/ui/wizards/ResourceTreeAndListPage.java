@@ -59,6 +59,8 @@ import org.eclipse.ui.model.WorkbenchViewerComparator;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 
+import de.cau.cs.kieler.core.ui.Messages;
+
 
 /**
  * A wizard page that displays a checked tree and a checked list, as well as a
@@ -181,7 +183,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             progressMonitor = new NullProgressMonitor();
         }
         
-        progressMonitor.beginTask("Discovering selected items...", 1);
+        progressMonitor.beginTask(Messages.ResourceTreeAndListPage_task_itemDiscovery, 1);
         
         // First, visit all checked elements
         Collection<Object> elements = new ArrayList<Object>();
@@ -740,12 +742,12 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         
         // Select All Button
         buttonBarSelectAllButton = new Button(buttonComposite, SWT.NULL);
-        buttonBarSelectAllButton.setText("Select All");
+        buttonBarSelectAllButton.setText(Messages.ResourceTreeAndListPage_selectAllButton_text);
         buttonBarSelectAllButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         // Deselect All Button
         buttonBarDeselectAllButton = new Button(buttonComposite, SWT.NULL);
-        buttonBarDeselectAllButton.setText("Deselect All");
+        buttonBarDeselectAllButton.setText(Messages.ResourceTreeAndListPage_deselectAllButton_text);
         buttonBarDeselectAllButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         // Event handlers

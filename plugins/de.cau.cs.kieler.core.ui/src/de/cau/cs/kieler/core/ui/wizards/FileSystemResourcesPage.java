@@ -35,6 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
+import de.cau.cs.kieler.core.ui.Messages;
 import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
 
 
@@ -212,8 +213,8 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     
     
     // CONSTANTS
-    private static final String SETT_SOURCE_DIR_HISTORY = ".sourceDir.history";
-    private static final String SETT_TARGET_DIR_HISTORY = ".targetDir.history";
+    private static final String SETT_SOURCE_DIR_HISTORY = ".sourceDir.history"; //$NON-NLS-1$
+    private static final String SETT_TARGET_DIR_HISTORY = ".targetDir.history"; //$NON-NLS-1$
     
     private static final int HISTORY_SIZE = 15;
     
@@ -250,8 +251,8 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         super(pageName);
         
-        setTitle("Import from file system");
-        setMessage("Select the files to import from the local file system.");
+        setTitle(Messages.FileSystemResourcesPage_title);
+        setMessage(Messages.FileSystemResourcesPage_message);
         
         showTargetGroup = workspaceTargetGroup;
         
@@ -260,7 +261,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
             extensions = new String[fileExtensions.length];
             
             for (int i = 0; i < fileExtensions.length; i++) {
-                extensions[i] = "." + fileExtensions[i].toLowerCase();
+                extensions[i] = "." + fileExtensions[i].toLowerCase(); //$NON-NLS-1$
             }
         }
         
@@ -368,15 +369,15 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     protected Composite createSourceGroup(final Composite parent) {
         // The default source group is fine for us
         Composite sourceGroup = createDefaultSourceGroup(parent,
-                "From directory:",
-                "Browse...");
+                Messages.FileSystemResourcesPage_sourceGroup_text,
+                Messages.FileSystemResourcesPage_sourceGroup_browse);
         
         sourceComboHistoryManager = new ComboHistoryManager(getSourceGroupCombo(), HISTORY_SIZE);
         
         // Prepare the directory dialog used by the browse button
         directoryDialog = new DirectoryDialog(parent.getShell(), SWT.SAVE | SWT.SHEET);
-        directoryDialog.setText("Select Directory");
-        directoryDialog.setMessage("Select a directory to import from.");
+        directoryDialog.setText(Messages.FileSystemResourcesPage_selectDirectoryDialog_title);
+        directoryDialog.setMessage(Messages.FileSystemResourcesPage_selectDirectoryDialog_message);
         
         return sourceGroup;
     }
@@ -438,8 +439,8 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         // The default target group is fine for us
         Composite targetGroup = createDefaultTargetGroup(parent,
-                "Into folder:",
-                "Browse...");
+                Messages.FileSystemResourcesPage_targetGroup_text,
+                Messages.FileSystemResourcesPage_targetGroup_browse);
         
         targetComboHistoryManager = new ComboHistoryManager(getTargetGroupCombo(), HISTORY_SIZE);
         
@@ -478,8 +479,8 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
                 getShell(),
                 currentContainer,
                 true,
-                "Select a folder to import into.");
-        dialog.setTitle("Select Workspace Folder");
+                Messages.FileSystemResourcesPage_containerSelectionDialog_message);
+        dialog.setTitle(Messages.FileSystemResourcesPage_containerSelectionDialog_title);
         dialog.showClosedProjects(false);
         
         if (dialog.open() == Dialog.OK) {
@@ -518,14 +519,14 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         // The user has to select at least something
         if (!isAnythingSelected()) {
-            setErrorMessage("Select at least one file.");
+            setErrorMessage(Messages.FileSystemResourcesPage_errors_noFileSelected);
             return false;
         }
         
         // The user may have to select a target
         if (showTargetGroup) {
             if (getTargetGroupCombo().getText().trim().length() == 0) {
-                setErrorMessage("Specify a target folder.");
+                setErrorMessage(Messages.FileSystemResourcesPage_errors_noTargetSelected);
                 return false;
             }
         }

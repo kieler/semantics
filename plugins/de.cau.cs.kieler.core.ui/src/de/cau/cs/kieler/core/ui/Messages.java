@@ -41,7 +41,30 @@ public final class Messages extends NLS {
     public static String ModelErrorHandler_MarkerError;
     public static String ModelErrorHandler_MarkerCreationError;
     public static String DoubleFieldEditor_doubleBounds;
+    public static String FileSystemResourcesPage_containerSelectionDialog_message;
+    public static String FileSystemResourcesPage_containerSelectionDialog_title;
+    public static String FileSystemResourcesPage_errors_noFileSelected;
+    public static String FileSystemResourcesPage_errors_noTargetSelected;
+    public static String FileSystemResourcesPage_message;
+    public static String FileSystemResourcesPage_selectDirectoryDialog_message;
+    public static String FileSystemResourcesPage_selectDirectoryDialog_title;
+    public static String FileSystemResourcesPage_sourceGroup_browse;
+    public static String FileSystemResourcesPage_sourceGroup_text;
+    public static String FileSystemResourcesPage_targetGroup_browse;
+    public static String FileSystemResourcesPage_targetGroup_text;
+    public static String FileSystemResourcesPage_title;
+    public static String ResourceTreeAndListPage_deselectAllButton_text;
+    public static String ResourceTreeAndListPage_selectAllButton_text;
+    public static String ResourceTreeAndListPage_task_itemDiscovery;
     public static String TextViewer_2;
+    public static String WorkspaceResourcesPage_containerSelectionDialog_message;
+    public static String WorkspaceResourcesPage_containerSelectionDialog_title;
+    public static String WorkspaceResourcesPage_errors_noFileSelected;
+    public static String WorkspaceResourcesPage_errors_noTargetSelected;
+    public static String WorkspaceResourcesPage_message;
+    public static String WorkspaceResourcesPage_targetGroup_browse;
+    public static String WorkspaceResourcesPage_targetGroup_text;
+    public static String WorkspaceResourcesPage_title;
 
     static {
         // initialize resource bundle

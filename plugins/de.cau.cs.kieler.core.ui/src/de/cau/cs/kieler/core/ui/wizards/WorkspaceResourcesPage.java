@@ -32,6 +32,7 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
+import de.cau.cs.kieler.core.ui.Messages;
 import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
 
 
@@ -45,7 +46,7 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
 public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
     
     // CONSTANTS
-    private static final String SETT_TARGET_DIR_HISTORY = ".targetDir.history";
+    private static final String SETT_TARGET_DIR_HISTORY = ".targetDir.history"; //$NON-NLS-1$
     
     private static final int HISTORY_SIZE = 15;
     
@@ -80,8 +81,8 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
         
         super(pageName);
         
-        setTitle("Import from workspace");
-        setMessage("Select the files to import from the workspace.");
+        setTitle(Messages.WorkspaceResourcesPage_title);
+        setMessage(Messages.WorkspaceResourcesPage_message);
         
         showTargetGroup = workspaceTargetGroup;
         
@@ -90,7 +91,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
             extensions = new String[fileExtensions.length];
             
             for (int i = 0; i < fileExtensions.length; i++) {
-                extensions[i] = "." + fileExtensions[i].toLowerCase();
+                extensions[i] = "." + fileExtensions[i].toLowerCase(); //$NON-NLS-1$
             }
         }
         
@@ -227,8 +228,8 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
         
         // The default target group is fine for us
         Composite targetGroup = createDefaultTargetGroup(parent,
-                "Into folder:",
-                "Browse...");
+                Messages.WorkspaceResourcesPage_targetGroup_text,
+                Messages.WorkspaceResourcesPage_targetGroup_browse);
         
         targetComboHistoryManager = new ComboHistoryManager(getTargetGroupCombo(), HISTORY_SIZE);
         
@@ -267,8 +268,8 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                 getShell(),
                 currentContainer,
                 true,
-                "Select a folder to import into.");
-        dialog.setTitle("Select Workspace Folder");
+                Messages.WorkspaceResourcesPage_containerSelectionDialog_message);
+        dialog.setTitle(Messages.WorkspaceResourcesPage_containerSelectionDialog_title);
         dialog.showClosedProjects(false);
         
         if (dialog.open() == Dialog.OK) {
@@ -307,14 +308,14 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
         
         // The user has to select at least something
         if (!isAnythingSelected()) {
-            setErrorMessage("Select at least one file.");
+            setErrorMessage(Messages.WorkspaceResourcesPage_errors_noFileSelected);
             return false;
         }
         
         // The user may have to select a target
         if (showTargetGroup) {
             if (getTargetGroupCombo().getText().trim().length() == 0) {
-                setErrorMessage("Specify a target folder.");
+                setErrorMessage(Messages.WorkspaceResourcesPage_errors_noTargetSelected);
                 return false;
             }
         }
