@@ -221,7 +221,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     @Override
     public EObject getEObjectFromEditPart(final EditPart editPart) {
         if (editPart instanceof IPictogramElementEditPart) {
-            IPictogramElementEditPart part = (IPictogramElementEditPart) editPart;
+            IPictogramElementEditPart part =
+                    (IPictogramElementEditPart) editPart;
             return part.getPictogramElement();
         }
         return null;
@@ -235,8 +236,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath, final IProgressMonitor monitor) {
         // taken from the new wizard and adapted
-        Resource diagramResource = createDiagram(diagramPath, modelRootParam,
-                editingDomain, monitor);
+        Resource diagramResource =
+                createDiagram(diagramPath, modelRootParam, editingDomain,
+                        monitor);
         if (diagramResource != null && getEditorId() != null) {
             try {
                 openDiagram(diagramResource);
@@ -288,8 +290,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         }
         // create resource for the diagram
         String path = diagramFile.getFullPath().toString();
-        final Resource diagramResource = resourceSet.createResource(URI
-                .createPlatformResourceURI(path, true));
+        final Resource diagramResource =
+                resourceSet.createResource(URI.createPlatformResourceURI(path,
+                        true));
         if (diagramResource != null/*&& modelResource != null*/) {
             commandStack.execute(new RecordingCommand(editingDomain) {
                 @Override
@@ -303,10 +306,11 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             try {
                 diagramResource.save(GraphitiNewWizard.createSaveOptions());
             } catch (IOException exception) {
-                IStatus status = new Status(IStatus.ERROR,
-                        KielerGraphitiPlugin.PLUGIN_ID,
-                        "Unable to store model and diagram resources",
-                        exception);
+                IStatus status =
+                        new Status(IStatus.ERROR,
+                                KielerGraphitiPlugin.PLUGIN_ID,
+                                "Unable to store model and diagram resources",
+                                exception);
                 StatusManager.getManager().handle(status);
             }
             GraphitiNewWizard.setCharset(WorkspaceSynchronizer
@@ -329,8 +333,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private void createModel(final Resource diagramResource,
             final String diagramName, final EObject modelRootParam) {
         diagramResource.setTrackingModification(false);
-        Diagram newDiagram = Graphiti.getPeCreateService().createDiagram(
-                diagramTypeName, diagramName, gridSize, snapToGrid);
+        Diagram newDiagram =
+                Graphiti.getPeCreateService().createDiagram(diagramTypeName,
+                        diagramName, gridSize, snapToGrid);
         PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
         link.setPictogramElement(newDiagram);
         link.getBusinessObjects().add(modelRootParam);
@@ -385,11 +390,17 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         float offset = 1.0f;
         if (ports.size() > 1) {
             BoxRelativeAnchor firstPort = ports.get(0);
+            int portHeight = firstPort.getGraphicsAlgorithm().getHeight();
+            int minHeight = 2 * ports.size() * portHeight;
             AnchorContainer parent = firstPort.getParent();
             GraphicsAlgorithm ga = findVisibleGa(parent.getGraphicsAlgorithm());
-            int height = firstPort.getGraphicsAlgorithm().getHeight();
+            int invisibleHeight = parent.getGraphicsAlgorithm().getHeight();
+            int dif = invisibleHeight - ga.getHeight();
+            parent.getGraphicsAlgorithm().setHeight(
+                    Math.max(invisibleHeight, minHeight + dif));
+            ga.setHeight(Math.max(ga.getHeight(), minHeight));
             int parentHeight = ga.getHeight();
-            if (height * ports.size() > parentHeight) {
+            if (portHeight * ports.size() > parentHeight) {
                 offset = 0.0f;
                 interval = 1.0f / (ports.size() - 1.0f);
             }
@@ -496,7 +507,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             if (elem instanceof ContainerShape) {
                 TransactionalEditingDomain domain = editor.getEditingDomain();
                 CommandStack cs = domain.getCommandStack();
-                AbstractTransactionalCommandStack atcs = (AbstractTransactionalCommandStack) cs;
+                AbstractTransactionalCommandStack atcs =
+                        (AbstractTransactionalCommandStack) cs;
                 atcs.execute(new ReInitCommand(provider, modelRoot, elem,
                         editor), cmdOptions);
             }
@@ -541,8 +553,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      */
     private void processConnections(final IFeatureProvider provider) {
         for (EObject connection : connections) {
-            AddConnectionContext context = processConnection(elements,
-                    connection);
+            AddConnectionContext context =
+                    processConnection(elements, connection);
 
             if (context != null) {
                 PictogramElement elem = addAndLinkIfPossible(provider, context);
@@ -615,8 +627,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         }
 
         // create the context
-        AddConnectionContext context = new AddConnectionContext(srcAnchor,
-                targetAnchor);
+        AddConnectionContext context =
+                new AddConnectionContext(srcAnchor, targetAnchor);
         context.setNewObject(connection);
         context.setTargetContainer(srcContainer);
         return context;
@@ -710,11 +722,13 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private void openDiagram(final Resource diagramResource)
             throws PartInitException, InterruptedException, RollbackException {
         String path = diagramResource.getURI().toPlatformString(true);
-        final IResource workspaceResource = ResourcesPlugin.getWorkspace()
-                .getRoot().findMember(new Path(path));
+        final IResource workspaceResource =
+                ResourcesPlugin.getWorkspace().getRoot()
+                        .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
             final Maybe<IEditorPart> editor = new Maybe<IEditorPart>();
-            final Maybe<PartInitException> except = new Maybe<PartInitException>();
+            final Maybe<PartInitException> except =
+                    new Maybe<PartInitException>();
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
                 public void run() {
