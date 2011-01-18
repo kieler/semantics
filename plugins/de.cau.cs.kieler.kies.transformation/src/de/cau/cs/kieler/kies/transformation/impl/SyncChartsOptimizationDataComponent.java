@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,9 +28,10 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
 import org.json.JSONObject;
+
+import com.google.common.collect.ImmutableMap;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
@@ -61,11 +61,35 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private State rootState;
     private Region rootRegion;
 
-    private XtendFacade facade;
-
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
     private LinkedList<State> flattenedStates = new LinkedList<State>();;
+
+    public static final String GLOBALVAR_REC = "recursive";
+    public static final String GLOBALVAR_RULE1 = "rule1";
+    public static final String GLOBALVAR_RULE2 = "rule2";
+    public static final String GLOBALVAR_RULE3 = "rule3";
+    public static final String GLOBALVAR_RULE4 = "rule4";
+    public static final String GLOBALVAR_RULE5 = "rule5";
+    public static final String GLOBALVAR_RULE6 = "rule6";
+    public static final String GLOBALVAR_RULE7 = "rule7";
+    public static final String GLOBALVAR_RULE8 = "rule8";
+
+    /**
+     * 
+     */
+    public SyncChartsOptimizationDataComponent() {
+        super(new ImmutableMap.Builder<String, Variable>()
+                .put(GLOBALVAR_REC, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE1, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE2, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE3, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE4, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE5, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE6, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE7, TransformationUtil.getXtendVarBoolean(true))
+                .put(GLOBALVAR_RULE8, TransformationUtil.getXtendVarBoolean(true)).build());
+    }
 
     /**
      * @param rootState
@@ -85,15 +109,15 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         // get recursive property
         KiemProperty prop = getProperties()[0];
         boolean recursive = prop.getValueAsBoolean();
-
+        globalVars.get(GLOBALVAR_REC).setValue(recursive);
         // init global variables
-        HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        globalVars.put("recursive", new Variable("boolean", recursive));
+        // HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
+        // globalVars.put("recursive", new Variable("boolean", recursive));
 
         for (int i = 1; i < 9; i++) {
             KiemProperty p = getProperties()[i];
             boolean ruleX = p.getValueAsBoolean();
-            globalVars.put("rule" + i, new Variable("boolean", ruleX));
+            globalVars.get("rule" + i).setValue(ruleX);
         }
 
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
@@ -251,14 +275,6 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
         return o;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public XtendFacade getXtendFacade() {
-        return facade;
     }
 
     /**

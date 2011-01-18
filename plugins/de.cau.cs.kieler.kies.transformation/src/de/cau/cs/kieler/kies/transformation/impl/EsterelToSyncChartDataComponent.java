@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kies.transformation.impl;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,8 +22,9 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
+
+import com.google.common.collect.ImmutableMap;
 
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
@@ -59,7 +59,16 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     private State rootState;
     private Region rootRegion;
 
-    private XtendFacade facade;
+    public static final String GLOBVAR_REC = "recursive";
+
+    /**
+     * default constructor providing one global variable. Namely GLOBALVAR_REC, determining whether
+     * transformation should be executed recursively or not.
+     */
+    public EsterelToSyncChartDataComponent() {
+        super(new ImmutableMap.Builder<String, Variable>().put(GLOBVAR_REC,
+                TransformationUtil.getXtendVarBoolean(true)).build());
+    }
 
     /**
      * {@inheritDoc}
@@ -71,11 +80,9 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         // get recursive property
         KiemProperty prop = getProperties()[0];
         boolean recursive = prop.getValueAsBoolean();
+        globalVars.get(GLOBVAR_REC).setValue(recursive);
 
-        // init global variables
-        HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        globalVars.put("recursive", new Variable("boolean", recursive));
-
+        // init facade
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
 
@@ -130,14 +137,6 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      */
     public void setRootState(final State theRootState) {
         this.rootState = theRootState;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public XtendFacade getXtendFacade() {
-        return facade;
     }
 
     /**

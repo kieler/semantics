@@ -59,6 +59,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
+import org.eclipse.xtend.expression.Variable;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 
@@ -193,7 +194,7 @@ public final class TransformationUtil {
             }
         } else if (cexpr.getConstant() != null) {
             TextExpression te = fac.createTextExpression();
-            te.setCode(cexpr.getConstant().getName());
+            te.setCode(cexpr.getConstant().getName()); 
             return te;
         }
         TextExpression te = fac.createTextExpression();
@@ -515,6 +516,10 @@ public final class TransformationUtil {
                     .getDiagramGraphicalViewer();
             graphViewer.flush();
         }
+    }
+
+    public static Variable getXtendVarBoolean(boolean bool) {
+        return new Variable("boolean", bool);
     }
 
     /**

@@ -13,10 +13,12 @@
  */
 package de.cau.cs.kieler.kies.transformation.core;
 
-import java.util.HashMap;
+import java.util.Collections;
+import java.util.Map;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.mwe.core.ConfigurationException;
@@ -37,14 +39,18 @@ import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONObject;
 
+import com.google.common.collect.Maps;
+
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * Abstract implementation of a TransformationDataComponent.
@@ -57,6 +63,23 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     private TransactionalEditingDomain domain;
     private Shell shell;
+
+    protected XtendFacade facade;
+    protected Map<String, Variable> globalVars;
+
+    /**
+     * Any extending class has to provide a map with global Variables.
+     * 
+     * @param globVars
+     *            Map with global Variables for the XtendFacade.
+     */
+    public AbstractTransformationDataComponent(final Map<String, Variable> globVars) {
+        if (globVars != null) {
+            globalVars = globVars;
+        } else {
+            globalVars = Collections.emptyMap();
+        }
+    }
 
     /**
      * {@inheritDoc}
@@ -77,12 +100,36 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
+        // if undo ...
+        if (isHistoryStep()) {
+            IEditorPart editor = TransformationUtil.getActiveEditor();
+            if (editor instanceof SyncchartsDiagramEditor) {
+                CommandStack stack = ((SyncchartsDiagramEditor) editor).getEditingDomain()
+                        .getCommandStack();
+                if (stack.canUndo()) {
+                    // System.out.println(stack.getMostRecentCommand().getLabel());
+                    stack.undo();
+                }
+                if (!stack.canUndo()) {
+                    // TODO deactivate back button
+                }
+            }
+            return null;
+        }
+
         // do next transformation
         TransformationDescriptor descriptor = getNextTransformation();
         if (descriptor != null) {
             System.out.println("Trigger");
             if (TransformationTrigger.getInstance() != null) {
-                TransformationTrigger.getInstance().step(getXtendFacade(),
+                if (facade == null) {
+                    Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                            "XtendFacade has not been initialized properly!");
+                    StatusManager.getManager().handle(status);
+                    return null;
+                }
+                // else execute Transformation
+                TransformationTrigger.getInstance().step(facade,
                         descriptor.getTransformationName(), descriptor.getParameters(), domain);
             }
         } else {
@@ -126,10 +173,21 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return true;
     }
 
-    /**
-     * @return the XtendFacade responsible for calling the extensions.
-     */
-    public abstract XtendFacade getXtendFacade();
+    public boolean setGlobalVariable(final String globalVar, final boolean value) {
+        Variable var = globalVars.get(globalVar);
+        if (var == null) {
+            return false;
+        }
+        var.setValue(value);
+        // make sure the facade is set properly
+        facade = AbstractTransformationDataComponent.initializeFacade(getTransformationFile(),
+                getBasePackages(), Maps.newHashMap(globalVars));
+        return true;
+    }
+
+    public XtendFacade getXtendFacade() {
+        return facade;
+    }
 
     /**
      * @return all base packages needed for the transformations planned.
@@ -218,7 +276,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * @return XtendFacade
      */
     public static XtendFacade initializeFacade(final String extentionFile,
-            final String[] basePackages, final HashMap<String, Variable> globalVars) {
+            final String[] basePackages, final Map<String, Variable> globalVars) {
         String extentionWithout = extentionFile;
         // cut off file extention
         if (extentionWithout.contains("." + XtendFile.FILE_EXTENSION)) {
