@@ -197,7 +197,12 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
     public IFigure getDrawingLayer(final EditPart editPart) {
         DiagramEditPart diagramEditPart = getDiagramEditPart(editPart);
         if (diagramEditPart != null) {
-            return diagramEditPart.getLayer(DiagramRootEditPart.PAGE_BREAKS_LAYER);
+            // figures on the connection layer are not printed out somehow... return a connection figure
+            IFigure layer = diagramEditPart.getLayer(DiagramRootEditPart.CONNECTION_LAYER);
+            if (layer != null && layer.getChildren().size() > 0) {
+                return (IFigure) layer.getChildren().get(0);
+            }
+            return layer;
         }
         return null;
     }
