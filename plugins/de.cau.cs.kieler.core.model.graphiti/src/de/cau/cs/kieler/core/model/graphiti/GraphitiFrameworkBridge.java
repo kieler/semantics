@@ -58,24 +58,27 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      */
     public EObject getElement(final Object object) {
         if (object instanceof IPictogramElementEditPart) {
-            List<EObject> businessObjects = ((IPictogramElementEditPart) object)
-                    .getPictogramElement().getLink().getBusinessObjects();
-            if (!businessObjects.isEmpty()) {
-                return businessObjects.get(0);
+            PictogramElement pe = ((IPictogramElementEditPart) object).getPictogramElement();
+            if (pe.getLink() != null) {
+                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
+                if (!businessObjects.isEmpty()) {
+                    return businessObjects.get(0);
+                }
             }
         } else if (object instanceof PictogramElement) {
-            List<EObject> businessObjects = ((PictogramElement) object)
-                    .getLink().getBusinessObjects();
-            if (!businessObjects.isEmpty()) {
-                return businessObjects.get(0);
+            PictogramElement pe = (PictogramElement) object;
+            if (pe.getLink() != null) {
+                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
+                if (!businessObjects.isEmpty()) {
+                    return businessObjects.get(0);
+                }
             }
         } else if (object instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable) object;
-            PictogramElement pictogramElement = (PictogramElement) adaptable
+            PictogramElement pe = (PictogramElement) adaptable
                     .getAdapter(PictogramElement.class);
-            if (pictogramElement != null) {
-                List<EObject> businessObjects = pictogramElement.getLink()
-                        .getBusinessObjects();
+            if (pe != null && pe.getLink() != null) {
+                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
                 if (!businessObjects.isEmpty()) {
                     return businessObjects.get(0);
                 }
