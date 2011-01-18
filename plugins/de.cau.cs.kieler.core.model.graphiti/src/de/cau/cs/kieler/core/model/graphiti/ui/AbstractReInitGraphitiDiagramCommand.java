@@ -17,9 +17,11 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -48,8 +50,11 @@ import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
+import org.eclipse.graphiti.mm.pictograms.BoxRelativeAnchor;
+import org.eclipse.graphiti.mm.pictograms.Connection;
 import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
@@ -141,6 +146,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             }
             // deal with connections after finished
             processConnections(provider);
+            // align box relative anchors after incoming/outgoing connections
+            // can be determined
+            alignBoxRelativeAnchors();
         }
 
         @Override
@@ -319,7 +327,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      */
     private void createModel(final Resource diagramResource,
             final String diagramName, final EObject modelRootParam) {
-        diagramResource.setTrackingModification(true);
+        diagramResource.setTrackingModification(false);
         Diagram newDiagram = Graphiti.getPeCreateService().createDiagram(
                 diagramTypeName, diagramName, gridSize, snapToGrid);
         PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
@@ -335,6 +343,127 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     private List<EObject> connections;
     /** Store the elements that are already added and linked. */
     private Map<EObject, PictogramElement> elements;
+    /** Store entities with box relative anchors that have to be layouted. */
+    private Set<AnchorContainer> itemsWithBoxRelativeAnchors;
+
+    /**
+     * Align all BoxRelativeAnchors to a sensible position.
+     */
+    private void alignBoxRelativeAnchors() {
+        for (AnchorContainer ac : itemsWithBoxRelativeAnchors) {
+            alignBoxRelativeAnchors(ac);
+        }
+    }
+
+    /**
+     * Align the BoxRelativeAnchors on one container to a sensible position.
+     * 
+     * @param ac
+     *            the anchor container.
+     */
+    private void alignBoxRelativeAnchors(final AnchorContainer ac) {
+        List<Anchor> anchors = ac.getAnchors();
+        List<BoxRelativeAnchor> left = new LinkedList<BoxRelativeAnchor>();
+        List<BoxRelativeAnchor> right = new LinkedList<BoxRelativeAnchor>();
+        determineSideForAnchors(anchors, left, right);
+        alignPortsOnSide(left, true);
+        alignPortsOnSide(right, false);
+    }
+
+    /**
+     * Distribute the ports equally on the specified side.
+     * 
+     * @param ports
+     *            the list of ports to distribute
+     * @param isLeft
+     *            true if the ports are on the left side of the box
+     */
+    private void alignPortsOnSide(final List<BoxRelativeAnchor> ports,
+            final boolean isLeft) {
+        float interval = 1.0f / (ports.size() + 1.0f);
+        float offset = 1.0f;
+        if (ports.size() > 1) {
+            BoxRelativeAnchor firstPort = ports.get(0);
+            AnchorContainer parent = firstPort.getParent();
+            GraphicsAlgorithm ga = findVisibleGa(parent.getGraphicsAlgorithm());
+            int height = firstPort.getGraphicsAlgorithm().getHeight();
+            int parentHeight = ga.getHeight();
+            if (height * ports.size() > parentHeight) {
+                offset = 0.0f;
+                interval = 1.0f / (ports.size() - 1.0f);
+            }
+        }
+        for (int i = 0; i < ports.size(); i++) {
+            BoxRelativeAnchor port = ports.get(i);
+            port.setRelativeWidth(isLeft ? 0.0 : 1.0);
+            port.setRelativeHeight((i + offset) * interval);
+        }
+    }
+
+    /**
+     * Find a visible GraphicsAlgorithm to stick the ports on.
+     * 
+     * @param graphicsAlgorithm
+     *            parent GA
+     * @return a visible GA
+     */
+    private GraphicsAlgorithm findVisibleGa(
+            final GraphicsAlgorithm graphicsAlgorithm) {
+        if (graphicsAlgorithm.getLineVisible()) {
+            return graphicsAlgorithm;
+        }
+        GraphicsAlgorithm result = graphicsAlgorithm;
+        for (GraphicsAlgorithm ga : graphicsAlgorithm
+                .getGraphicsAlgorithmChildren()) {
+            GraphicsAlgorithm returned = findVisibleGa(ga);
+            if (returned.getLineVisible()) {
+                result = returned;
+                break;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Determine on which side to place a port. Ports with more incoming than
+     * outgoing edges are placed on the left. Ports with more outgoing than
+     * incoming edges are placed on the right. A port with equal number of
+     * incoming and outgoing edges is placed on the side which has the least
+     * number of ports.
+     * 
+     * @param anchors
+     *            the anchors to distribute
+     * @param left
+     *            the ports on the left
+     * @param right
+     *            the ports on the right
+     */
+    private void determineSideForAnchors(final List<Anchor> anchors,
+            final List<BoxRelativeAnchor> left,
+            final List<BoxRelativeAnchor> right) {
+        List<BoxRelativeAnchor> undef = new LinkedList<BoxRelativeAnchor>();
+        for (Anchor a : anchors) {
+            if (a instanceof BoxRelativeAnchor) {
+                BoxRelativeAnchor port = (BoxRelativeAnchor) a;
+                List<Connection> out = a.getOutgoingConnections();
+                List<Connection> in = a.getIncomingConnections();
+                if (out.size() == in.size()) {
+                    undef.add(port);
+                } else if (out.size() > in.size()) {
+                    right.add(port);
+                } else {
+                    left.add(port);
+                }
+            }
+        }
+        for (BoxRelativeAnchor a : undef) {
+            if (left.size() > right.size()) {
+                right.add(a);
+            } else {
+                left.add(a);
+            }
+        }
+    }
 
     /**
      * Link the model to the newly created diagram inside the editor.
@@ -350,6 +479,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             throws InterruptedException, RollbackException {
         connections = new LinkedList<EObject>();
         elements = new HashMap<EObject, PictogramElement>();
+        itemsWithBoxRelativeAnchors = new HashSet<AnchorContainer>();
         // get the feature provider for getting the AddFeatures
         IDiagramTypeProvider dtp = editor.getDiagramTypeProvider();
         IFeatureProvider provider = dtp.getFeatureProvider();
@@ -545,6 +675,12 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             // only do something if the element has a graphical representation
             elements.put(eObj, element);
 
+            if (element instanceof BoxRelativeAnchor) {
+                BoxRelativeAnchor port = (BoxRelativeAnchor) element;
+                AnchorContainer ac = port.getParent();
+                itemsWithBoxRelativeAnchors.add(ac);
+            }
+
             if (element instanceof ContainerShape) {
                 // element may contain visible children
                 ContainerShape cs = (ContainerShape) element;
@@ -554,7 +690,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 }
             }
         }
-
     }
 
     /**
