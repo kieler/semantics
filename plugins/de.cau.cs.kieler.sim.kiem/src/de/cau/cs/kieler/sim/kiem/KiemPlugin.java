@@ -1203,6 +1203,12 @@ public class KiemPlugin extends AbstractUIPlugin {
                     componentClone);
             this.dataComponentWrapperList.add(dataComponentWrapper);
 
+            // possibly refresh UI
+            if (eventManager != null) {
+                eventManager
+                        .notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
+            }
+            
             return dataComponentWrapper;
         } catch (CoreException e) {
             e.printStackTrace();
