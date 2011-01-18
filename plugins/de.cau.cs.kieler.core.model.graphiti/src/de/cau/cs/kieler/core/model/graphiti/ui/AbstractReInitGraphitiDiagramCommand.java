@@ -50,6 +50,7 @@ import org.eclipse.graphiti.features.IAddFeature;
 import org.eclipse.graphiti.features.IFeatureProvider;
 import org.eclipse.graphiti.features.context.impl.AddConnectionContext;
 import org.eclipse.graphiti.features.context.impl.AddContext;
+import org.eclipse.graphiti.features.context.impl.UpdateContext;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.pictograms.Anchor;
 import org.eclipse.graphiti.mm.pictograms.AnchorContainer;
@@ -544,7 +545,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                     connection);
 
             if (context != null) {
-                addAndLinkIfPossible(provider, context);
+                PictogramElement elem = addAndLinkIfPossible(provider, context);
+
+                provider.updateIfPossibleAndNeeded(new UpdateContext(elem));
             }
         }
     }
