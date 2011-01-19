@@ -367,7 +367,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @param ac
      *            the anchor container.
      */
-    private void alignBoxRelativeAnchors(final AnchorContainer ac) {
+    public static void alignBoxRelativeAnchors(final AnchorContainer ac) {
         List<Anchor> anchors = ac.getAnchors();
         List<BoxRelativeAnchor> left = new LinkedList<BoxRelativeAnchor>();
         List<BoxRelativeAnchor> right = new LinkedList<BoxRelativeAnchor>();
@@ -384,7 +384,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @param isLeft
      *            true if the ports are on the left side of the box
      */
-    private void alignPortsOnSide(final List<BoxRelativeAnchor> ports,
+    private static void alignPortsOnSide(final List<BoxRelativeAnchor> ports,
             final boolean isLeft) {
         float interval = 1.0f / (ports.size() + 1.0f);
         float offset = 1.0f;
@@ -419,7 +419,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      *            parent GA
      * @return a visible GA
      */
-    private GraphicsAlgorithm findVisibleGa(
+    private static GraphicsAlgorithm findVisibleGa(
             final GraphicsAlgorithm graphicsAlgorithm) {
         if (graphicsAlgorithm.getLineVisible()) {
             return graphicsAlgorithm;
@@ -450,7 +450,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @param right
      *            the ports on the right
      */
-    private void determineSideForAnchors(final List<Anchor> anchors,
+    private static void determineSideForAnchors(final List<Anchor> anchors,
             final List<BoxRelativeAnchor> left,
             final List<BoxRelativeAnchor> right) {
         List<BoxRelativeAnchor> undef = new LinkedList<BoxRelativeAnchor>();
