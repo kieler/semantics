@@ -10,7 +10,7 @@
             name="validate">
       </command>
       <command
-            defaultHandler="de.cau.cs.kieler.core.kivi.triggers.ButtonTrigger$ButtonHandler"
+            defaultHandler="de.cau.cs.kieler.core.kivi.menu.ButtonHandler"
             id="de.cau.cs.kieler.core.model.showhierarchy"
             name="show hierarchy">
       </command>
