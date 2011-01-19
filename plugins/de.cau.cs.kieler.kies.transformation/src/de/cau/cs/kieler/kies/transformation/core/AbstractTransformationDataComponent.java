@@ -15,6 +15,8 @@ package de.cau.cs.kieler.kies.transformation.core;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -64,8 +66,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     private TransactionalEditingDomain domain;
     private Shell shell;
 
+    private static final int STEP_TIMEOUT = 2;
+    private Semaphore semaphore;
+
     protected XtendFacade facade;
     protected Map<String, Variable> globalVars;
+
+    private int skipSteps = 0;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -93,6 +100,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 shell = wb.getActiveWorkbenchWindow().getShell();
             }
         });
+        semaphore = new Semaphore(1);
     }
 
     /**
@@ -100,8 +108,15 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
+        if (skipSteps > 0) {
+            skipSteps--;
+            return null;
+        }
+
+        System.out.println("in dc: " + Thread.currentThread());
         // if undo ...
         if (isHistoryStep()) {
+            System.out.println("History");
             IEditorPart editor = TransformationUtil.getActiveEditor();
             if (editor instanceof SyncchartsDiagramEditor) {
                 CommandStack stack = ((SyncchartsDiagramEditor) editor).getEditingDomain()
@@ -115,6 +130,18 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 }
             }
             return null;
+        }
+        System.out.println("Non History");
+
+        try {
+            boolean aquired = semaphore.tryAcquire(STEP_TIMEOUT, TimeUnit.SECONDS);
+            System.out.println("Aquire");
+            if (!aquired) {
+                System.out.println("Problem occured");
+                return null;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
 
         // do next transformation
@@ -130,16 +157,17 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 }
                 // else execute Transformation
                 TransformationTrigger.getInstance().step(facade,
-                        descriptor.getTransformationName(), descriptor.getParameters(), domain);
+                        descriptor.getTransformationName(), descriptor.getParameters(), domain,
+                        semaphore);
             }
         } else {
             doPostTransformation();
-            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-                public void run() {
-                    MessageDialog.openInformation(shell, "Done",
-                            "Transformation finished. No further elements to process.");
-                }
-            });
+//            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+//                public void run() {
+//                    MessageDialog.openInformation(shell, "Done",
+//                            "Transformation finished. No further elements to process.");
+//                }
+//            });
             throw new KiemExecutionException("No Further Transformations", true, false, true, null);
         }
         return null;
@@ -149,6 +177,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
+        System.out.println("wrappp");
     }
 
     /**
@@ -171,6 +200,14 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     @Override
     public boolean isHistoryObserver() {
         return true;
+    }
+
+    /**
+     * @param skipSteps
+     *            the skipSteps to set
+     */
+    public void setSkipSteps(int skipSteps) {
+        this.skipSteps = skipSteps;
     }
 
     public boolean setGlobalVariable(final String globalVar, final boolean value) {

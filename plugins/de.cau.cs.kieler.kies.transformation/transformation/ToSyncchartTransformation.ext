@@ -63,6 +63,13 @@ Void rule(State s, Program p):
 	rule(s, p.modules.get(0))
 ;
 
+// rule allows to execute transformation for more than one state simultaneously
+Void rule(List[State] states, List[emf::EObject] esterel):
+	rule(states.first(), esterel.first()) ->
+	if states.size > 1 then
+		rule(states.withoutFirst(), esterel.withoutFirst())
+;
+
 /**
  * rule 1 (module)
  */ 
@@ -627,7 +634,10 @@ String createCallStatement(ProcCall c):
 	// this is important to conserve order!
 	seq.flattenSequence(list) ->
 	// call recursively
-	ruleSequenceRecursive(r, initial, list) 
+	ruleSequenceRecursive(r, initial, list.withoutFirst()) ->
+	
+	// process body of first sequence state
+	finalizeRule(initial, list.first())
 ;
 
 Void flattenSequence(Statement s, List list):

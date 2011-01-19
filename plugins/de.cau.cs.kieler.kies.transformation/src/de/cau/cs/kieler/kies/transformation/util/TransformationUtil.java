@@ -194,7 +194,7 @@ public final class TransformationUtil {
             }
         } else if (cexpr.getConstant() != null) {
             TextExpression te = fac.createTextExpression();
-            te.setCode(cexpr.getConstant().getName()); 
+            te.setCode(cexpr.getConstant().getName());
             return te;
         }
         TextExpression te = fac.createTextExpression();
@@ -242,7 +242,9 @@ public final class TransformationUtil {
         final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
+                IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage().getActiveEditor();
+                // EditorUtils.getLastActiveEditor();
                 if (editor != null) {
                     maybe.set(editor);
                 }

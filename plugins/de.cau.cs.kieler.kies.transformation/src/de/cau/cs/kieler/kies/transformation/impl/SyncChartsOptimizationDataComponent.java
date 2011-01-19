@@ -31,6 +31,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.expression.Variable;
 import org.json.JSONObject;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
@@ -56,6 +57,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
             + "KExpressionsPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
+    /** needed because KiesUtil.ext has to be evaluated!. */
+    private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
 
     private State rootState;
@@ -169,11 +172,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public String[] getBasePackages() {
-        LinkedList<String> basePackages = new LinkedList<String>();
-        basePackages.add(SYNCCHARTS_PACKAGE);
-        basePackages.add(EXPRESSIONS_PACKAGE);
-        basePackages.add(ECORE_PACKAGE);
-        return basePackages.toArray(new String[basePackages.size()]);
+        return new String[] { SYNCCHARTS_PACKAGE, EXPRESSIONS_PACKAGE, ESTEREL_PACKAGE,
+                ECORE_PACKAGE };
     }
 
     /**

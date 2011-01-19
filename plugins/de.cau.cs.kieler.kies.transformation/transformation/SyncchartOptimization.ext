@@ -95,7 +95,7 @@ Boolean rule2applies(State s):
 	switch {
 		case isSimpleState(s) && !s.isFinal && !s.isInitial &&
 			hasNumberOfOutgoingTrans(s, 1) && isImmediateTransition(s.outgoingTransitions.get(0)) && 
-			isTransitionWithoutTaE(s.outgoingTransitions.get(0)):
+			isTransitionWithoutT(s.outgoingTransitions.get(0)):
 				true
 		default : false
 	}

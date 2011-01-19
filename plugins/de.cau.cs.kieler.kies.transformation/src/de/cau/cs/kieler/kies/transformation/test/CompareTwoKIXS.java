@@ -104,7 +104,7 @@ public class CompareTwoKIXS implements IActionDelegate {
                     .createEditingDomain(resourceSet);
             SyncchartsContentUtil.addTriggerListeners(ted);
             TransformationEffect effect = new TransformationEffect(edc.getXtendFacade(),
-                    td.getTransformationName(), td.getParameters(), ted);
+                    td.getTransformationName(), td.getParameters(), ted, null);
             effect.execute();
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.SERIALIZE);

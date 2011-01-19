@@ -262,6 +262,10 @@ Boolean isTransitionWithoutTaE(Transition t):
 	t.trigger == null && t.effects.size == 0
 ;
 
+Boolean isTransitionWithoutT(Transition t):
+	t.trigger == null
+;
+
 Boolean isImmediateTransition(Transition t):
 	t.isImmediate
 ;

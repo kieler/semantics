@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kies.transformation.kivi;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.Semaphore;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.common.command.CompoundCommand;
@@ -22,7 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
@@ -47,6 +47,7 @@ public class TransformationEffect extends AbstractEffect {
     private Object[] parameters;
     private String transformationName;
     private TransactionalEditingDomain editingDomain;
+    private Semaphore lock;
 
     private Object result = null;
 
@@ -63,12 +64,14 @@ public class TransformationEffect extends AbstractEffect {
      *            editing domain in which the transformation should be performed.
      */
     public TransformationEffect(final XtendFacade facade, final String theTransformationName,
-            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
+            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
+            final Semaphore aLock) {
         super();
         this.parameters = theParameters;
         this.transformationName = theTransformationName;
         this.xtendFacade = facade;
         this.editingDomain = theEditingDomain;
+        this.lock = aLock;
     }
 
     /**
@@ -85,8 +88,9 @@ public class TransformationEffect extends AbstractEffect {
      */
     public void execute() {
 
+
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+       PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
 
@@ -103,8 +107,13 @@ public class TransformationEffect extends AbstractEffect {
                 CommandStack stack = editingDomain.getCommandStack();
                 stack.execute(cc);
                 result = command.getResult();
+
+                if (lock != null) {
+                    System.out.println("Release");
+                   // lock.release();
+                }
             }
-        });
+        }); 
     }
 
     /**

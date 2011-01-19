@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
@@ -28,13 +27,13 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
-import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * @author uru
@@ -56,43 +55,46 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private static final String ESTEREL_TO_SYNCCHARTS_COMP_ID = "de.cau.cs.kieler.kies.transformation.Transformation";
     private static final String OPTIMIZATION_COMP_ID = "de.cau.cs.kieler.kies.transformation.Optimization";
 
+    private static final int BUSY_WAIT_DELAY = 1000;
+
     /** current datacomponentwrapper or null. */
     private DataComponentWrapper wrapper = null;
     /** current execution context if initialized or null. */
     private Execution execution = null;
 
+    private Long currentStep = null;
+
     /**
      * Default Constructor, setting up all needed buttons.
      */
     public KIEMRemoteCombination() {
-        String tooltip = "Does Something";
-
         // #### step
         ImageDescriptor iconStep = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepIcon.png");
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", tooltip,
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", "Step",
                 iconStep, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### back
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepBackIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "StepBack",
-                tooltip, iconStepBack, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                "Step Back", iconStepBack, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### initial transformation from strl
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_START_TRANSFORMATION,
-                "Init", tooltip, null, SWT.PUSH, null, ESTEREL_EDITOR_ID);
+                "Init", "Initialize Transformation to SyncCharts.", null, SWT.PUSH, null,
+                ESTEREL_EDITOR_ID);
 
         // #### expand (complete transformation)
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND, "Expand",
-                tooltip, null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                "Completely Expand", null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### expand and optimize
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE, "EaO",
-                tooltip, null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                "Expand and Optimize", null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### stop
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STOP, "Stop", tooltip,
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STOP, "Stop", "Stop",
                 null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
     }
 
@@ -235,7 +237,17 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private void step() {
         if (execution != null) {
             setRecursiveTransformation(false);
-            boolean stepped = execution.stepExecutionSync();
+            if (currentStep != null) {
+                System.out.println(currentStep);
+                ((AbstractTransformationDataComponent) wrapper.getDataComponent()).setSkipSteps(1);
+                execution.stepExecutionPause(currentStep + 1);
+                while (!execution.isPaused()) {
+                    pause();
+                }
+            }
+
+            execution.stepExecutionSync();
+            currentStep = null;
         }
     }
 
@@ -248,18 +260,44 @@ public class KIEMRemoteCombination extends AbstractCombination {
 
     private void expandAndOptimize() {
         if (execution != null) {
+
+            // finish current transformation
             setRecursiveTransformation(true);
             execution.stepExecutionSync();
-            execution.abortExecutionAsync();
 
+            // pause until finished, then stop
+            while (!execution.isPaused()) {
+                pause();
+            }
+            execution.stopExecutionSync();
+
+            while (execution.isStarted()) {
+                pause();
+            }
+
+            // initialize the optimization
             initializeOptimization();
+            while (execution == null) {
+                pause();
+            }
+            // run
             setRecursiveOptimization(true);
             execution.stepExecutionSync();
+
+            // wait till finished and stop
+            while (!execution.isPaused()) {
+                pause();
+            }
+            execution.stopExecutionSync();
         }
     }
 
     private void back() {
         if (execution != null) {
+            // if first step back remember the current number
+            if (currentStep == null) {
+                currentStep = execution.getSteps();
+            }
             execution.stepBackExecutionSync();
         }
     }
@@ -279,6 +317,14 @@ public class KIEMRemoteCombination extends AbstractCombination {
                     SyncChartsOptimizationDataComponent.GLOBALVAR_REC, bool);
         } else {
             System.err.println("tried setting opt recursive went wrong");
+        }
+    }
+
+    private void pause() {
+        try {
+            Thread.sleep(BUSY_WAIT_DELAY);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

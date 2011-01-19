@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.kies.transformation.kivi;
 
+import java.util.concurrent.Semaphore;
+
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.xtend.XtendFacade;
 
@@ -71,9 +73,10 @@ public class TransformationTrigger extends AbstractTrigger {
      *            editing domain in which the transformation should be performed.
      */
     public void step(final XtendFacade facade, final String theTransformationName,
-            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
+            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
+            final Semaphore aSem) {
         trigger(new TransformationState(facade, theTransformationName, theParameters,
-                theEditingDomain));
+                theEditingDomain, aSem));
     }
 
     /**
@@ -87,6 +90,7 @@ public class TransformationTrigger extends AbstractTrigger {
         private String transformationName;
         private Object[] parameters;
         private TransactionalEditingDomain editingDomain;
+        private Semaphore semaphore;
 
         /**
          * Default Constructor.
@@ -105,12 +109,14 @@ public class TransformationTrigger extends AbstractTrigger {
          *            editing domain in which the transformation should be performed.
          */
         public TransformationState(final XtendFacade facade, final String theTransformationName,
-                final Object[] theParameters, final TransactionalEditingDomain theEditingDomain) {
+                final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
+                final Semaphore aSem) {
             super();
             this.transformationName = theTransformationName;
             this.parameters = theParameters;
             this.xtendFacade = facade;
             this.editingDomain = theEditingDomain;
+            this.semaphore = aSem;
         }
 
         /**
@@ -139,6 +145,13 @@ public class TransformationTrigger extends AbstractTrigger {
          */
         public TransactionalEditingDomain getEditingDomain() {
             return editingDomain;
+        }
+
+        /**
+         * @return the semaphore
+         */
+        public Semaphore getSemaphore() {
+            return semaphore;
         }
 
         /**

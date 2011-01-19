@@ -25,6 +25,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtend.expression.Variable;
 
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
@@ -145,6 +146,28 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     @Override
     public TransformationDescriptor getNextTransformation() {
 
+        if (((Boolean) globalVars.get(GLOBVAR_REC).getValue())) {
+            List<State> states;
+            // either fetch the rootstate or any child state that has not been transformed yet
+            if (rootState.getBodyText().size() > 0) {
+                states = Lists.newArrayList(rootState);
+            } else {
+                states = findAllTransformableStates(rootState);
+            }
+
+            if (states.isEmpty()) {
+                return null;
+            }
+
+            List<Object> esterel = Lists.newLinkedList();
+            for (State s : states) {
+                esterel.add(s.getBodyReference());
+            }
+            TransformationDescriptor descr = new TransformationDescriptor(INITIAL_TRANSFORMATION,
+                    new Object[] { states, esterel });
+            return descr;
+        }
+
         State start = rootState;
 
         List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
@@ -203,17 +226,30 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         return null;
     }
 
+    // according to hierarchy!
+    private List<State> findAllTransformableStates(final State parent) {
+        List<State> foundStates = Lists.newLinkedList();
+        for (Region r : parent.getRegions()) {
+            for (State s : r.getStates()) {
+                if (s.getBodyText().size() != 0) {
+                    foundStates.add(s);
+                } else {
+                    // scan the children
+                    foundStates.addAll(findAllTransformableStates(s));
+                }
+
+            }
+        }
+        return foundStates;
+    }
+
     /**
      * {@inheritDoc}
      */
     @Override
     public String[] getBasePackages() {
-        LinkedList<String> basePackages = new LinkedList<String>();
-        basePackages.add(SYNCCHARTS_PACKAGE);
-        basePackages.add(EXPRESSIONS_PACKAGE);
-        basePackages.add(ESTEREL_PACKAGE);
-        basePackages.add(ECORE_PACKAGE);
-        return basePackages.toArray(new String[basePackages.size()]);
+        return new String[] { SYNCCHARTS_PACKAGE, EXPRESSIONS_PACKAGE, ESTEREL_PACKAGE,
+                ECORE_PACKAGE };
     }
 
     /**

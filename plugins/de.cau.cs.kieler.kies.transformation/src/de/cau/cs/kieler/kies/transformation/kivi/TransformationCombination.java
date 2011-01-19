@@ -56,7 +56,7 @@ public class TransformationCombination extends AbstractCombination {
             // start the transformation
             effect = new TransformationEffect(descriptor.getXtendFacade(),
                     descriptor.getTransformationName(), descriptor.getParameters(),
-                    descriptor.getEditingDomain());
+                    descriptor.getEditingDomain(), descriptor.getSemaphore());
             effect.schedule();
 
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();
