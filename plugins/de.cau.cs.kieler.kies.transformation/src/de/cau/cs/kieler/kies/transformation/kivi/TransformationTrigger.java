@@ -21,6 +21,7 @@ import org.eclipse.xtend.XtendFacade;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 
 /**
  * @author uru
@@ -72,11 +73,9 @@ public class TransformationTrigger extends AbstractTrigger {
      * @param theEditingDomain
      *            editing domain in which the transformation should be performed.
      */
-    public void step(final XtendFacade facade, final String theTransformationName,
-            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
-            final Semaphore aSem) {
-        trigger(new TransformationState(facade, theTransformationName, theParameters,
-                theEditingDomain, aSem));
+    public void step(final XtendFacade facade, final TransformationDescriptor descriptor,
+            final TransactionalEditingDomain theEditingDomain, final Semaphore aSem) {
+        trigger(new TransformationState(facade, descriptor, theEditingDomain, aSem));
     }
 
     /**
@@ -87,8 +86,7 @@ public class TransformationTrigger extends AbstractTrigger {
     public static final class TransformationState extends AbstractTriggerState {
 
         private XtendFacade xtendFacade;
-        private String transformationName;
-        private Object[] parameters;
+        private TransformationDescriptor descriptor;
         private TransactionalEditingDomain editingDomain;
         private Semaphore semaphore;
 
@@ -108,12 +106,10 @@ public class TransformationTrigger extends AbstractTrigger {
          * @param theEditingDomain
          *            editing domain in which the transformation should be performed.
          */
-        public TransformationState(final XtendFacade facade, final String theTransformationName,
-                final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
-                final Semaphore aSem) {
+        public TransformationState(final XtendFacade facade,
+                final TransformationDescriptor theDescriptor,
+                final TransactionalEditingDomain theEditingDomain, final Semaphore aSem) {
             super();
-            this.transformationName = theTransformationName;
-            this.parameters = theParameters;
             this.xtendFacade = facade;
             this.editingDomain = theEditingDomain;
             this.semaphore = aSem;
@@ -127,17 +123,10 @@ public class TransformationTrigger extends AbstractTrigger {
         }
 
         /**
-         * @return the transformationName
+         * @return the descriptor
          */
-        public String getTransformationName() {
-            return transformationName;
-        }
-
-        /**
-         * @return the parameters
-         */
-        public Object[] getParameters() {
-            return parameters;
+        public TransformationDescriptor getDescriptor() {
+            return descriptor;
         }
 
         /**

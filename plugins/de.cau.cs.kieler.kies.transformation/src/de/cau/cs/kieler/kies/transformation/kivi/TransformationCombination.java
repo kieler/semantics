@@ -40,23 +40,22 @@ public class TransformationCombination extends AbstractCombination {
     /**
      * executes this combination.
      * 
-     * @param descriptor
+     * @param state
      *            the descriptor containing information about the transformation.
      * @param transformationTrigger
      *            used to determine if the transformation was already executed and the result can be
      *            retrieved.
      */
-    public void execute(final TransformationState descriptor,
+    public void execute(final TransformationState state,
             final EffectTriggerState<TransformationEffect> transformationTrigger) {
 
-        if (transformationTrigger.getSequenceNumber() > descriptor.getSequenceNumber()) {
+        if (transformationTrigger.getSequenceNumber() > state.getSequenceNumber()) {
             System.out.println("effect has been executed" + effect.getResult());
         } else {
             System.out.println("standard execution");
             // start the transformation
-            effect = new TransformationEffect(descriptor.getXtendFacade(),
-                    descriptor.getTransformationName(), descriptor.getParameters(),
-                    descriptor.getEditingDomain(), descriptor.getSemaphore());
+            effect = new TransformationEffect(state.getXtendFacade(), state.getDescriptor(),
+                    state.getEditingDomain(), state.getSemaphore());
             effect.schedule();
 
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();

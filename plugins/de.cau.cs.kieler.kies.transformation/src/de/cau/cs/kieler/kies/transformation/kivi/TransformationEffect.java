@@ -33,6 +33,7 @@ import org.eclipse.xtend.XtendFacade;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.kies.transformation.core.TransformationCommand;
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
@@ -44,8 +45,7 @@ public class TransformationEffect extends AbstractEffect {
     private static final String COMMAND_NAME = "Transformation Command";
 
     private XtendFacade xtendFacade;
-    private Object[] parameters;
-    private String transformationName;
+    private TransformationDescriptor descriptor;
     private TransactionalEditingDomain editingDomain;
     private Semaphore lock;
 
@@ -63,13 +63,12 @@ public class TransformationEffect extends AbstractEffect {
      * @param theEditingDomain
      *            editing domain in which the transformation should be performed.
      */
-    public TransformationEffect(final XtendFacade facade, final String theTransformationName,
-            final Object[] theParameters, final TransactionalEditingDomain theEditingDomain,
-            final Semaphore aLock) {
+    public TransformationEffect(final XtendFacade facade,
+            final TransformationDescriptor theDescriptor,
+            final TransactionalEditingDomain theEditingDomain, final Semaphore aLock) {
         super();
-        this.parameters = theParameters;
-        this.transformationName = theTransformationName;
         this.xtendFacade = facade;
+        this.descriptor = theDescriptor;
         this.editingDomain = theEditingDomain;
         this.lock = aLock;
     }
@@ -98,8 +97,8 @@ public class TransformationEffect extends AbstractEffect {
                 // for some reason it is important to do this in a separate command!
                 CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
 
-                TransformationCommand command = new TransformationCommand(xtendFacade, parameters,
-                        transformationName, editingDomain);
+                TransformationCommand command = new TransformationCommand(xtendFacade, descriptor,
+                        editingDomain);
                 cc.append(command);
                 cc.append(new RefreshGMFElementsCommand(editingDomain));
 

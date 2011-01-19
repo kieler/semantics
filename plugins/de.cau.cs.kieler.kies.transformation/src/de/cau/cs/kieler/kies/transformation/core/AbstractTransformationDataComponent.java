@@ -153,9 +153,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                     return null;
                 }
                 // else execute Transformation
-                TransformationTrigger.getInstance().step(facade,
-                        descriptor.getTransformationName(), descriptor.getParameters(), domain,
-                        semaphore);
+                TransformationTrigger.getInstance().step(facade, descriptor, domain, semaphore);
             }
         } else {
             doPostTransformation();
