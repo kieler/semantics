@@ -20,6 +20,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
@@ -72,7 +75,6 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
 import de.cau.cs.kieler.kies.esterel.ConstantExpression;
@@ -96,11 +98,29 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
  */
 public final class TransformationUtil {
 
+    public static Logger logger = Logger.getLogger("kies");
+
     /** injector used for serialization. */
     private static Injector injector;
 
     static {
         injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
+        logger.getHandlers()[0] = new Handler() {
+
+            @Override
+            public void publish(LogRecord record) {
+                System.out.println(record.getMessage());
+            }
+
+            @Override
+            public void flush() {
+
+            }
+
+            @Override
+            public void close() throws SecurityException {
+            }
+        };
     }
 
     /** utility class. */

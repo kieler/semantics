@@ -31,8 +31,8 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.expression.Variable;
 import org.json.JSONObject;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
@@ -47,6 +47,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
+ * DataComponent optimizing an existing SyncCharts.
+ * 
  * @author uru
  * 
  */
@@ -66,8 +68,12 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
-    private LinkedList<State> flattenedStates = new LinkedList<State>();;
+    private LinkedList<State> flattenedStates = new LinkedList<State>();
 
+    /**
+     * global variable determining whether the transformation should be run recursively, hence
+     * everything is transformed within one step.
+     */
     public static final String GLOBALVAR_REC = "recursive";
     public static final String GLOBALVAR_RULE1 = "rule1";
     public static final String GLOBALVAR_RULE2 = "rule2";
@@ -113,20 +119,20 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         KiemProperty prop = getProperties()[0];
         boolean recursive = prop.getValueAsBoolean();
         globalVars.get(GLOBALVAR_REC).setValue(recursive);
-        // init global variables
-        // HashMap<String, Variable> globalVars = new HashMap<String, Variable>();
-        // globalVars.put("recursive", new Variable("boolean", recursive));
 
+        // get all rule properties
         for (int i = 1; i < 9; i++) {
             KiemProperty p = getProperties()[i];
             boolean ruleX = p.getValueAsBoolean();
             globalVars.get("rule" + i).setValue(ruleX);
         }
 
+        // initialize facade
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
 
-        IEditorPart editor = getActiveEditor();
+        // get current models' root element
+        IEditorPart editor = TransformationUtil.getActiveEditor();
         if (editor instanceof SyncchartsDiagramEditor) {
             EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
             EditPartViewer viewer = rootEditPart.getViewer();
@@ -157,6 +163,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 }
             }
         }
+
         if (rootState != null) {
             // collect initial set of all possible states
             collectAllStatesRecursivley(rootState, 0);
@@ -195,11 +202,10 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         }
 
         State start = rootState;
-
-        List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
+        List<EObject> selection = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
-        if (selected != null && !selected.isEmpty() && selected.size() == 1) {
-            for (EObject obj : selected) {
+        if (selection != null && !selection.isEmpty() && selection.size() == 1) {
+            for (EObject obj : selection) {
                 if (obj instanceof State) {
                     start = (State) obj;
                 }
@@ -209,23 +215,18 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         // collect all possible states
         stateHierarchy.clear();
         collectAllStatesRecursivley(start, 0);
-        flattenedStates = new LinkedList<State>();
+        flattenedStates = Lists.newLinkedList();
         for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
             flattenedStates.addAll(stateHierarchy.get(i));
         }
 
         if (!flattenedStates.isEmpty()) {
-            // foo = flattenedStates.poll();
-            System.out.println(" ######### foo " + flattenedStates.size() + " "
+            TransformationUtil.logger.info(" ######### foo " + flattenedStates.size() + " "
                     + flattenedStates.get(0));
-            // if (foo != null) {
+
             TransformationDescriptor descriptor = new TransformationDescriptor("ruleAll",
                     new Object[] { flattenedStates });
-            // workedStates.add(foo);
             return descriptor;
-            // }
-        } else {
-            System.out.println("DONE");
         }
 
         return null;
@@ -246,7 +247,6 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         if (stateHierarchy.size() <= level || stateHierarchy.get(level) == null) {
             LinkedList<State> levelStates = new LinkedList<State>();
-            // stateHierarchy.ensureCapacity(level + 1);
             stateHierarchy.add(level, levelStates);
         }
         LinkedList<State> levelStates = stateHierarchy.get(level);
@@ -299,13 +299,17 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public void doPostTransformation() {
+        // assure that all references to old esterel signals are remove.
+        // currently this is done by just applying a serialization and parsing of the action labels.
         try {
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.SERIALIZE);
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.PARSE);
         } catch (Exception e) {
-            e.printStackTrace();
+            Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "An error occured trying to serialize and parse Action labels after SyncCharts optimization.");
+            StatusManager.getManager().handle(status);
         }
     }
 

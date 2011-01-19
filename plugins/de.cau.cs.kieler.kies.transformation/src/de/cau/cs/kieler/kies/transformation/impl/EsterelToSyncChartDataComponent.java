@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.kies.transformation.impl;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -56,10 +55,14 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     /** first transformation being executed. */
     public static final String INITIAL_TRANSFORMATION = "rule";
 
-    /** current synccharts root state. */
+    /** current syncchart's root state. */
     private State rootState;
     private Region rootRegion;
 
+    /**
+     * global variable determining whether the transformation should be run recursively, hence
+     * everything is transformed within one step.
+     */
     public static final String GLOBVAR_REC = "recursive";
 
     /**
@@ -83,61 +86,31 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         boolean recursive = prop.getValueAsBoolean();
         globalVars.get(GLOBVAR_REC).setValue(recursive);
 
-        // init facade
+        // initialize facade
         facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
 
-        boolean fromResource = false;
-        if (fromResource) {
-            // final URI kixsURI = URI.createPlatformResourceURI("platform:/dfghj/abro.kixs",
-            // false);
-            // ResourceSet resourceSet = new ResourceSetImpl();
-            // resource = resourceSet.getResource(kixsURI, true);
-            // Region rootRegion = (Region) resource.getContents().get(0);
-            // State root = rootRegion.getStates().get(0);
-            //
-            // TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
-            // .createEditingDomain(resourceSet);
-            //
-            // getRunner().setEditDomain(ted);
-            //
-            // // initializing first statement
-            // QueueStatement qs = new QueueStatement(INITIAL_TRANSFORMATION, root,
-            // root.getBodyReference());
-            // appendToQueue(qs);
-            // System.out.println("Added First Statement");
-        } else {
-            // catch the first model and place it on the queue
-            // FIXME this should be done a better way!
-            IEditorPart editor = getActiveEditor();
-            if (editor instanceof SyncchartsDiagramEditor) {
-                EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-                EditPartViewer viewer = rootEditPart.getViewer();
+        // fetch the root model element
+        IEditorPart editor = TransformationUtil.getActiveEditor();
+        if (editor instanceof SyncchartsDiagramEditor) {
+            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+            EditPartViewer viewer = rootEditPart.getViewer();
 
-                // programmatically select the root state
-                viewer.select(rootEditPart);
+            // programmatically select the root state
+            viewer.select(rootEditPart);
 
-                @SuppressWarnings("unchecked")
-                List<EditPart> selected = viewer.getSelectedEditParts();
-                if (selected.size() == 1) {
-                    EditPart selPart = selected.get(0);
-                    Object selView = selPart.getModel();
-                    EObject selModel = ((View) selView).getElement();
-                    rootRegion = (Region) selModel;
-                    State root = ((Region) selModel).getStates().get(0);
-                    rootState = root;
-                }
+            @SuppressWarnings("unchecked")
+            List<EditPart> selected = viewer.getSelectedEditParts();
+            if (selected.size() == 1) {
+                EditPart selPart = selected.get(0);
+                Object selView = selPart.getModel();
+                EObject selModel = ((View) selView).getElement();
+                rootRegion = (Region) selModel;
+                State root = ((Region) selModel).getStates().get(0);
+                rootState = root;
             }
-            System.out.println("Added First Statement");
         }
-    }
-
-    /**
-     * @param theRootState
-     *            the rootState to set
-     */
-    public void setRootState(final State theRootState) {
-        this.rootState = theRootState;
+        TransformationUtil.logger.info("Added First Statement");
     }
 
     /**
@@ -146,30 +119,35 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     @Override
     public TransformationDescriptor getNextTransformation() {
 
+        // first case is that we demand recursive execution
         if (((Boolean) globalVars.get(GLOBVAR_REC).getValue())) {
             List<State> states;
-            // either fetch the rootstate or any child state that has not been transformed yet
+            // either fetch the root state or any child state that has not been transformed yet
             if (rootState.getBodyText().size() > 0) {
                 states = Lists.newArrayList(rootState);
             } else {
                 states = findAllTransformableStates(rootState);
             }
 
+            // if no state was found return
             if (states.isEmpty()) {
                 return null;
             }
 
+            // else fetch corresponding esterel elements
             List<Object> esterel = Lists.newLinkedList();
             for (State s : states) {
                 esterel.add(s.getBodyReference());
             }
+
+            // and return descriptor
             TransformationDescriptor descr = new TransformationDescriptor(INITIAL_TRANSFORMATION,
                     new Object[] { states, esterel });
             return descr;
         }
 
+        // second case is non recursive execution
         State start = rootState;
-
         List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
         if (selected != null && !selected.isEmpty() && selected.size() == 1) {
@@ -193,11 +171,14 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         return null;
     }
 
+    /**
+     * find the next transformable state. For this first the same hierarchy level {@code parent} is
+     * in is scanned, and if nothing is found, level per level is searched.
+     */
     private State findNextTransformableState(final State parent) {
         if (parent.getBodyText().size() != 0) {
             return parent;
         }
-
         State hierarchy = scanHierarchy(parent);
         if (hierarchy != null) {
             return hierarchy;
@@ -211,7 +192,6 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
                 }
             }
         }
-
         return null;
     }
 
@@ -226,7 +206,10 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         return null;
     }
 
-    // according to hierarchy!
+    /**
+     * returns a list with all possibly transformable states in any hierarchy level below
+     * {@code parent}'s.
+     */
     private List<State> findAllTransformableStates(final State parent) {
         List<State> foundStates = Lists.newLinkedList();
         for (Region r : parent.getRegions()) {
@@ -285,5 +268,13 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param theRootState
+     *            the rootState to set
+     */
+    public void setRootState(final State theRootState) {
+        this.rootState = theRootState;
     }
 }

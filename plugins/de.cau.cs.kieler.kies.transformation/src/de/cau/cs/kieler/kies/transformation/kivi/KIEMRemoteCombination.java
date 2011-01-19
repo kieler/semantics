@@ -26,6 +26,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
+import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
@@ -68,11 +69,11 @@ public class KIEMRemoteCombination extends AbstractCombination {
      * Default Constructor, setting up all needed buttons.
      */
     public KIEMRemoteCombination() {
-        // #### step
-        ImageDescriptor iconStep = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
-                "icons/stepIcon.png");
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", "Step",
-                iconStep, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+
+        // #### initial transformation from strl
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_START_TRANSFORMATION,
+                "Init", "Initialize Transformation to SyncCharts.", null, SWT.PUSH, null,
+                ESTEREL_EDITOR_ID);
 
         // #### back
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
@@ -80,22 +81,29 @@ public class KIEMRemoteCombination extends AbstractCombination {
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "StepBack",
                 "Step Back", iconStepBack, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
-        // #### initial transformation from strl
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_START_TRANSFORMATION,
-                "Init", "Initialize Transformation to SyncCharts.", null, SWT.PUSH, null,
-                ESTEREL_EDITOR_ID);
+        // #### step
+        ImageDescriptor iconStep = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/stepIcon.png");
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", "Step",
+                iconStep, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### expand (complete transformation)
+        ImageDescriptor iconExpand = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/expandIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND, "Expand",
-                "Completely Expand", null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                "Expand", iconExpand, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### expand and optimize
+        ImageDescriptor iconExpandAndOptimize = Activator.imageDescriptorFromPlugin(
+                Activator.PLUGIN_ID, "icons/expandAndOptimizeIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE, "EaO",
-                "Expand and Optimize", null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
 
         // #### stop
+        ImageDescriptor iconStop = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/stopIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STOP, "Stop", "Stop",
-                null, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
+                iconStop, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID);
     }
 
     /**

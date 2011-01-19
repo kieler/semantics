@@ -88,9 +88,8 @@ public class TransformationEffect extends AbstractEffect {
      */
     public void execute() {
 
-
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
-       PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
 
@@ -110,10 +109,10 @@ public class TransformationEffect extends AbstractEffect {
 
                 if (lock != null) {
                     System.out.println("Release");
-                   // lock.release();
+                    lock.release();
                 }
             }
-        }); 
+        });
     }
 
     /**

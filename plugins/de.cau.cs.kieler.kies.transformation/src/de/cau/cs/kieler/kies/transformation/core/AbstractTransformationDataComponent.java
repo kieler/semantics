@@ -28,7 +28,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.internal.xtend.xtend.XtendFile;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
@@ -43,8 +42,6 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Maps;
 
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
@@ -162,12 +159,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             }
         } else {
             doPostTransformation();
-//            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-//                public void run() {
-//                    MessageDialog.openInformation(shell, "Done",
-//                            "Transformation finished. No further elements to process.");
-//                }
-//            });
+            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+                public void run() {
+                    MessageDialog.openInformation(shell, "Done",
+                            "Transformation finished. No further elements to process.");
+                }
+            });
             throw new KiemExecutionException("No Further Transformations", true, false, true, null);
         }
         return null;
@@ -177,7 +174,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        System.out.println("wrappp");
     }
 
     /**
@@ -210,6 +206,16 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         this.skipSteps = skipSteps;
     }
 
+    /**
+     * set the value of a global variable. As identifier for {@code globalVar} only use the GLOBVAR
+     * constants defined by the specific transformation data component.
+     * 
+     * @param globalVar
+     *            variable to change
+     * @param value
+     *            new value
+     * @return true if successful
+     */
     public boolean setGlobalVariable(final String globalVar, final boolean value) {
         Variable var = globalVars.get(globalVar);
         if (var == null) {
@@ -222,6 +228,9 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return true;
     }
 
+    /**
+     * @return the current {@link XtendFacade}
+     */
     public XtendFacade getXtendFacade() {
         return facade;
     }
@@ -248,31 +257,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public abstract void doPostTransformation();
 
     /**
-     * 
-     * @return the currently active editor.
-     */
-    protected DiagramEditor getActiveEditor() {
-
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
-                }
-            }
-        });
-        return maybe.get();
-    }
-
-    /**
-     * 
      * @return currently active editor's editing domain
      */
     protected TransactionalEditingDomain getActiveEditorEditingDomain() {
-        DiagramEditor activeEditor = getActiveEditor();
-        if (activeEditor != null) {
-            return activeEditor.getEditingDomain();
+        IEditorPart activeEditor = TransformationUtil.getActiveEditor();
+        if (activeEditor != null && activeEditor instanceof DiagramEditor) {
+            return ((DiagramEditor) activeEditor).getEditingDomain();
         }
         return null;
     }
@@ -356,7 +346,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     }
 
     /**
-     * @return the domain
+     * @return the editing domain
      */
     public TransactionalEditingDomain getDomain() {
         return domain;
