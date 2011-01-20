@@ -91,7 +91,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
             extensions = new String[fileExtensions.length];
             
             for (int i = 0; i < fileExtensions.length; i++) {
-                extensions[i] = "." + fileExtensions[i].toLowerCase(); //$NON-NLS-1$
+                extensions[i] = fileExtensions[i].toLowerCase(); //$NON-NLS-1$
             }
         }
         
