@@ -423,6 +423,9 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         alignPortsOnSide(out, dir);
     }
 
+    private static final float PORT_DISTANCE = 2.0f;
+    private static final float SIDE_RELATION = 0.05f;
+
     /**
      * Distribute the ports equally on the specified side.
      * 
@@ -439,33 +442,46 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             BoxRelativeAnchor firstPort = ports.get(0);
             AnchorContainer parent = firstPort.getParent();
             GraphicsAlgorithm ga = findVisibleGa(parent.getGraphicsAlgorithm());
+            int newWidth = ga.getWidth();
+            int newHeight = ga.getHeight();
+            int newParentWidth = parent.getGraphicsAlgorithm().getWidth();
+            int newParentHeight = parent.getGraphicsAlgorithm().getHeight();
+            int portHeight = firstPort.getGraphicsAlgorithm().getHeight();
+            int minHeight =
+                    Math.round(PORT_DISTANCE * ports.size() * portHeight);
+            int invisibleHeight = parent.getGraphicsAlgorithm().getHeight();
+            int heightDif = invisibleHeight - ga.getHeight();
+            int portWidth = firstPort.getGraphicsAlgorithm().getWidth();
+            int minWidth = Math.round(PORT_DISTANCE * ports.size() * portWidth);
+            int invisibleWidth = parent.getGraphicsAlgorithm().getWidth();
+            int widthDif = invisibleWidth - ga.getWidth();
             if (side == LayoutDirection.LEFT || side == LayoutDirection.RIGHT) {
-                int portHeight = firstPort.getGraphicsAlgorithm().getHeight();
-                int minHeight = 2 * ports.size() * portHeight;
-                int invisibleHeight = parent.getGraphicsAlgorithm().getHeight();
-                int heightDif = invisibleHeight - ga.getHeight();
-                parent.getGraphicsAlgorithm().setHeight(
-                        Math.max(invisibleHeight, minHeight + heightDif));
-                ga.setHeight(Math.max(ga.getHeight(), minHeight));
-                int parentHeight = ga.getHeight();
-                if (portHeight * ports.size() > parentHeight) {
+                newHeight = Math.max(ga.getHeight(), minHeight);
+                newParentHeight = newHeight + heightDif;
+                newWidth =
+                        Math.max(ga.getWidth(),
+                                Math.round(newHeight * SIDE_RELATION));
+                newParentWidth = newWidth + widthDif;
+                if (portHeight * ports.size() > newParentHeight) {
                     offset = 0.0f;
                     interval = 1.0f / (ports.size() - 1.0f);
                 }
             } else {
-                int portWidth = firstPort.getGraphicsAlgorithm().getWidth();
-                int minWidth = 2 * ports.size() * portWidth;
-                int invisibleWidth = parent.getGraphicsAlgorithm().getWidth();
-                int widthDif = invisibleWidth - ga.getWidth();
-                parent.getGraphicsAlgorithm().setWidth(
-                        Math.max(invisibleWidth, minWidth + widthDif));
-                ga.setWidth(Math.max(ga.getWidth(), minWidth));
-                int parentWidth = ga.getWidth();
-                if (portWidth * ports.size() > parentWidth) {
+                newWidth = Math.max(ga.getWidth(), minWidth);
+                newParentWidth = newWidth + widthDif;
+                newHeight =
+                        Math.max(ga.getHeight(),
+                                Math.round(newWidth * SIDE_RELATION));
+                newParentHeight = newHeight + heightDif;
+                if (portWidth * ports.size() > newParentWidth) {
                     offset = 0.0f;
                     interval = 1.0f / (ports.size() - 1.0f);
                 }
             }
+            parent.getGraphicsAlgorithm().setHeight(newParentHeight);
+            ga.setHeight(newHeight);
+            parent.getGraphicsAlgorithm().setWidth(newParentWidth);
+            ga.setWidth(newWidth);
         }
         for (int i = 0; i < ports.size(); i++) {
             BoxRelativeAnchor port = ports.get(i);
