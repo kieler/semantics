@@ -22,7 +22,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.ui,
  de.cau.cs.kieler.core.annotations,
- de.cau.cs.kieler.core.kivi
+ de.cau.cs.kieler.core.kivi,
+ org.eclipse.ui.ide;bundle-version="3.6.1"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.model,
@@ -30,6 +31,7 @@ Export-Package: de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.model.transformation,
  de.cau.cs.kieler.core.model.transformation.xtend,
  de.cau.cs.kieler.core.model.trigger,
+ de.cau.cs.kieler.core.model.ui,
  de.cau.cs.kieler.core.model.util,
  de.cau.cs.kieler.core.model.validation
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

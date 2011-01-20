@@ -25,15 +25,12 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.common.core.command.CommandResult;
 import org.eclipse.gmf.runtime.diagram.core.services.ViewService;
 import org.eclipse.gmf.runtime.emf.commands.core.command.AbstractTransactionalCommand;
@@ -41,13 +38,12 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.progress.WorkbenchJob;
 
-import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
+import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.Messages;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -67,60 +63,51 @@ public class ReInitSyncchartsDiagramCommand extends
     /** File extension for model files. */
     private static final String MODEL_EXTENSION = "kixs";
 
-    /** Delay for the auto layout. */
-    private static final long AUTO_LAYOUT_DELAY = 1000;
+    // /** Delay for the auto layout. */
+    // private static final long AUTO_LAYOUT_DELAY = 1000;
+    //
+    // /**
+    // * Perform actions after the reinit. In this case an auto layout on the
+    // * currently active diagram.
+    // *
+    // * @param path
+    // * the file
+    // * @param partners
+    // * the partner files
+    // * @param monitor
+    // * the progress monitor
+    // */
+    // @Override
+    // protected void performPostOperationAction(final IFile path,
+    // final List<IFile> partners, final IProgressMonitor monitor) {
+    // WorkbenchJob job = new WorkbenchJob("") {
+    //
+    // @Override
+    // public IStatus runInUIThread(final IProgressMonitor monitor) {
+    // // perform auto layout
+    // IEditorPart editor = EditorUtils.getLastActiveEditor();
+    // EditPart part = null;
+    // if (editor != null) {
+    // EclipseLayoutServices.getInstance().layout(editor, part,
+    // false, true);
+    // }
+    // return new Status(IStatus.OK,
+    // "de.cau.cs.kieler.synccharts.diagram.custom", "Done");
+    // }
+    // };
+    //
+    // job.schedule(AUTO_LAYOUT_DELAY);
+    // }
 
     /**
-     * Perform actions after the reinit. In this case an auto layout on the
-     * currently active diagram.
      * 
-     * @param path
-     *            the file
-     * @param partners
-     *            the partner files
-     * @param monitor
-     *            the progress monitor
+     * {@inheritDoc}
      */
     @Override
-    protected void performPostOperationAction(final IFile path,
-            final List<IFile> partners, final IProgressMonitor monitor) {
-        WorkbenchJob job = new WorkbenchJob("") {
-
-            @Override
-            public IStatus runInUIThread(final IProgressMonitor monitor) {
-                // perform auto layout
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                EditPart part = null;
-                if (editor != null) {
-                    EclipseLayoutServices.getInstance().layout(editor, part,
-                            false, true);
-                }
-                return new Status(IStatus.OK,
-                        "de.cau.cs.kieler.synccharts.diagram.custom", "Done");
-            }
-        };
-
-        job.schedule(AUTO_LAYOUT_DELAY);
-    }
-
-    /**
-     * Create a new diagram file from the given semantics model. This code is
-     * taken directly from the synccharts.diagram plugin.
-     * 
-     * @param diagramRoot
-     *            the root element.
-     * @param editingDomain
-     *            the editing domain.
-     * @param diagramFile
-     *            the destination file
-     * @param monitor
-     *            the progress monitor
-     * @return true if the creation was successful
-     */
-    @Override
-    public boolean createNewDiagram(final EObject diagramRoot,
+    public IEditorPart createNewDiagram(final EObject diagramRoot,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramFile, final IProgressMonitor monitor) {
+        final Maybe<IEditorPart> result = new Maybe<IEditorPart>(null);
         List<IFile> affectedFiles = new LinkedList<IFile>();
         refreshWorkspace();
 
@@ -144,33 +131,40 @@ public class ReInitSyncchartsDiagramCommand extends
 
         SyncchartsDiagramEditorUtil.setCharset(diagramFile);
         affectedFiles.add(diagramFile);
-        final URI diagramModelURI = URI.createPlatformResourceURI(diagramFile
-                .getFullPath().toString(), true);
+        final URI diagramModelURI =
+                URI.createPlatformResourceURI(diagramFile.getFullPath()
+                        .toString(), true);
         ResourceSet resourceSet = editingDomain.getResourceSet();
-        final Resource diagramResource = resourceSet
-                .createResource(diagramModelURI);
-        final AbstractTransactionalCommand command = new AbstractTransactionalCommand(
-                editingDomain,
-                Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
-                affectedFiles) {
+        final Resource diagramResource =
+                resourceSet.createResource(diagramModelURI);
+        final AbstractTransactionalCommand command =
+                new AbstractTransactionalCommand(
+                        editingDomain,
+                        Messages.SyncchartsNewDiagramFileWizard_InitDiagramCommand,
+                        affectedFiles) {
 
-            @Override
-            protected CommandResult doExecuteWithResult(
-                    final IProgressMonitor monitor, final IAdaptable info)
-                    throws ExecutionException {
-                int diagramVID = SyncchartsVisualIDRegistry
-                        .getDiagramVisualID(diagramRoot);
-                if (diagramVID != RegionEditPart.VISUAL_ID) {
-                    String msg = Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
-                    return CommandResult.newErrorCommandResult(msg);
-                }
-                Diagram diagram = ViewService.createDiagram(diagramRoot,
-                        RegionEditPart.MODEL_ID,
-                        SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
-                diagramResource.getContents().add(diagram);
-                return CommandResult.newOKCommandResult();
-            }
-        };
+                    @Override
+                    protected CommandResult doExecuteWithResult(
+                            final IProgressMonitor monitor,
+                            final IAdaptable info) throws ExecutionException {
+                        int diagramVID =
+                                SyncchartsVisualIDRegistry
+                                        .getDiagramVisualID(diagramRoot);
+                        if (diagramVID != RegionEditPart.VISUAL_ID) {
+                            String msg =
+                                    Messages.SyncchartsNewDiagramFileWizard_IncorrectRootError;
+                            return CommandResult.newErrorCommandResult(msg);
+                        }
+                        Diagram diagram =
+                                ViewService
+                                        .createDiagram(
+                                                diagramRoot,
+                                                RegionEditPart.MODEL_ID,
+                                                SyncchartsDiagramEditorPlugin.DIAGRAM_PREFERENCES_HINT);
+                        diagramResource.getContents().add(diagram);
+                        return CommandResult.newOKCommandResult();
+                    }
+                };
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
@@ -179,7 +173,10 @@ public class ReInitSyncchartsDiagramCommand extends
                             command, new NullProgressMonitor(), null);
                     diagramResource.save(SyncchartsDiagramEditorUtil
                             .getSaveOptions());
-                    SyncchartsDiagramEditorUtil.openDiagram(diagramResource);
+                    IEditorPart editor =
+                            openDiagram(diagramResource,
+                                    SyncchartsDiagramEditor.ID);
+                    result.set(editor);
                 } catch (ExecutionException e) {
                     SyncchartsDiagramEditorPlugin.getInstance().logError(
                             "Unable to create model and diagram", e); //$NON-NLS-1$
@@ -194,7 +191,7 @@ public class ReInitSyncchartsDiagramCommand extends
                 }
             }
         });
-        return true;
+        return result.get();
     }
 
     /**

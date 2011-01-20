@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.Variable;
-import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
+import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;

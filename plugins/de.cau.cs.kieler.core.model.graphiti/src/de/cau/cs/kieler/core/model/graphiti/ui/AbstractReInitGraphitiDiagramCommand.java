@@ -77,7 +77,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.model.graphiti.KielerGraphitiPlugin;
-import de.cau.cs.kieler.core.ui.commands.AbstractReInitDiagramCommand;
+import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -232,7 +232,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * {@inheritDoc}
      */
     @Override
-    public boolean createNewDiagram(final EObject modelRootParam,
+    public IEditorPart createNewDiagram(final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath, final IProgressMonitor monitor) {
         // taken from the new wizard and adapted
@@ -241,7 +241,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                         monitor);
         if (diagramResource != null && getEditorId() != null) {
             try {
-                openDiagram(diagramResource);
+                return openDiagram(diagramResource);
             } catch (PartInitException e) {
                 ErrorDialog.openError(getContainer().getShell(),
                         "Error opening diagram editor", null, e.getStatus());
@@ -253,7 +253,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             }
         }
 
-        return diagramResource != null;
+        return null;
     }
 
     /**
@@ -362,18 +362,65 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     }
 
     /**
+     * Constants for the direction of the layout. Used for port alignment.
+     * 
+     * @author soh
+     */
+    public static enum LayoutDirection {
+        LEFT, RIGHT, DOWN, UP;
+
+        /**
+         * Gives the opposite direction of the given direction.
+         * 
+         * @param dir
+         *            the direction
+         * @return the opposite direction
+         */
+        public static LayoutDirection opposite(final LayoutDirection dir) {
+            switch (dir) {
+            case DOWN:
+                return UP;
+            case LEFT:
+                return RIGHT;
+            case RIGHT:
+                return LEFT;
+            case UP:
+                return DOWN;
+            }
+            return null;
+        }
+    }
+
+    /**
      * Align the BoxRelativeAnchors on one container to a sensible position.
+     * This method places all BoxRelativeAnchors with incoming connections on
+     * the left side. All BoxRelativeAnchors with outgoing connections are
+     * placed on the right side. BoxRelativeAnchors with no connections are
+     * placed equally on the side with less connections.
      * 
      * @param ac
      *            the anchor container.
      */
-    public static void alignBoxRelativeAnchors(final AnchorContainer ac) {
+    public void alignBoxRelativeAnchors(final AnchorContainer ac) {
+        alignBoxRelativeAnchors(ac, LayoutDirection.RIGHT);
+    }
+
+    /**
+     * Align the BoxRelativeAnchors according to the layout direction.
+     * 
+     * @param ac
+     *            the anchor container.
+     * @param dir
+     *            the direction.
+     */
+    public void alignBoxRelativeAnchors(final AnchorContainer ac,
+            final LayoutDirection dir) {
         List<Anchor> anchors = ac.getAnchors();
-        List<BoxRelativeAnchor> left = new LinkedList<BoxRelativeAnchor>();
-        List<BoxRelativeAnchor> right = new LinkedList<BoxRelativeAnchor>();
-        determineSideForAnchors(anchors, left, right);
-        alignPortsOnSide(left, true);
-        alignPortsOnSide(right, false);
+        List<BoxRelativeAnchor> in = new LinkedList<BoxRelativeAnchor>();
+        List<BoxRelativeAnchor> out = new LinkedList<BoxRelativeAnchor>();
+        determineSideForAnchors(anchors, in, out);
+        alignPortsOnSide(in, LayoutDirection.opposite(dir));
+        alignPortsOnSide(out, dir);
     }
 
     /**
@@ -381,34 +428,54 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param ports
      *            the list of ports to distribute
-     * @param isLeft
-     *            true if the ports are on the left side of the box
+     * @param side
+     *            the side on which to align the ports
      */
-    private static void alignPortsOnSide(final List<BoxRelativeAnchor> ports,
-            final boolean isLeft) {
+    protected void alignPortsOnSide(final List<BoxRelativeAnchor> ports,
+            final LayoutDirection side) {
         float interval = 1.0f / (ports.size() + 1.0f);
         float offset = 1.0f;
         if (ports.size() > 1) {
             BoxRelativeAnchor firstPort = ports.get(0);
-            int portHeight = firstPort.getGraphicsAlgorithm().getHeight();
-            int minHeight = 2 * ports.size() * portHeight;
             AnchorContainer parent = firstPort.getParent();
             GraphicsAlgorithm ga = findVisibleGa(parent.getGraphicsAlgorithm());
-            int invisibleHeight = parent.getGraphicsAlgorithm().getHeight();
-            int dif = invisibleHeight - ga.getHeight();
-            parent.getGraphicsAlgorithm().setHeight(
-                    Math.max(invisibleHeight, minHeight + dif));
-            ga.setHeight(Math.max(ga.getHeight(), minHeight));
-            int parentHeight = ga.getHeight();
-            if (portHeight * ports.size() > parentHeight) {
-                offset = 0.0f;
-                interval = 1.0f / (ports.size() - 1.0f);
+            if (side == LayoutDirection.LEFT || side == LayoutDirection.RIGHT) {
+                int portHeight = firstPort.getGraphicsAlgorithm().getHeight();
+                int minHeight = 2 * ports.size() * portHeight;
+                int invisibleHeight = parent.getGraphicsAlgorithm().getHeight();
+                int heightDif = invisibleHeight - ga.getHeight();
+                parent.getGraphicsAlgorithm().setHeight(
+                        Math.max(invisibleHeight, minHeight + heightDif));
+                ga.setHeight(Math.max(ga.getHeight(), minHeight));
+                int parentHeight = ga.getHeight();
+                if (portHeight * ports.size() > parentHeight) {
+                    offset = 0.0f;
+                    interval = 1.0f / (ports.size() - 1.0f);
+                }
+            } else {
+                int portWidth = firstPort.getGraphicsAlgorithm().getWidth();
+                int minWidth = 2 * ports.size() * portWidth;
+                int invisibleWidth = parent.getGraphicsAlgorithm().getWidth();
+                int widthDif = invisibleWidth - ga.getWidth();
+                parent.getGraphicsAlgorithm().setWidth(
+                        Math.max(invisibleWidth, minWidth + widthDif));
+                ga.setWidth(Math.max(ga.getWidth(), minWidth));
+                int parentWidth = ga.getWidth();
+                if (portWidth * ports.size() > parentWidth) {
+                    offset = 0.0f;
+                    interval = 1.0f / (ports.size() - 1.0f);
+                }
             }
         }
         for (int i = 0; i < ports.size(); i++) {
             BoxRelativeAnchor port = ports.get(i);
-            port.setRelativeWidth(isLeft ? 0.0 : 1.0);
-            port.setRelativeHeight((i + offset) * interval);
+            if (side == LayoutDirection.LEFT || side == LayoutDirection.RIGHT) {
+                port.setRelativeWidth(side == LayoutDirection.LEFT ? 0.0 : 1.0);
+                port.setRelativeHeight((i + offset) * interval);
+            } else {
+                port.setRelativeWidth((i + offset) * interval);
+                port.setRelativeHeight(side == LayoutDirection.UP ? 0.0 : 1.0);
+            }
         }
     }
 
@@ -419,7 +486,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      *            parent GA
      * @return a visible GA
      */
-    private static GraphicsAlgorithm findVisibleGa(
+    protected GraphicsAlgorithm findVisibleGa(
             final GraphicsAlgorithm graphicsAlgorithm) {
         if (graphicsAlgorithm.getLineVisible()) {
             return graphicsAlgorithm;
@@ -445,14 +512,14 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param anchors
      *            the anchors to distribute
-     * @param left
+     * @param inPorts
      *            the ports on the left
-     * @param right
+     * @param outPorts
      *            the ports on the right
      */
-    private static void determineSideForAnchors(final List<Anchor> anchors,
-            final List<BoxRelativeAnchor> left,
-            final List<BoxRelativeAnchor> right) {
+    protected void determineSideForAnchors(final List<Anchor> anchors,
+            final List<BoxRelativeAnchor> inPorts,
+            final List<BoxRelativeAnchor> outPorts) {
         List<BoxRelativeAnchor> undef = new LinkedList<BoxRelativeAnchor>();
         for (Anchor a : anchors) {
             if (a instanceof BoxRelativeAnchor) {
@@ -462,17 +529,17 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 if (out.size() == in.size()) {
                     undef.add(port);
                 } else if (out.size() > in.size()) {
-                    right.add(port);
+                    outPorts.add(port);
                 } else {
-                    left.add(port);
+                    inPorts.add(port);
                 }
             }
         }
         for (BoxRelativeAnchor a : undef) {
-            if (left.size() > right.size()) {
-                right.add(a);
+            if (inPorts.size() > outPorts.size()) {
+                outPorts.add(a);
             } else {
-                left.add(a);
+                inPorts.add(a);
             }
         }
     }
@@ -712,6 +779,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @param diagramResource
      *            a resource for a diagram file
+     * @return the opened diagram editor
      * @throws PartInitException
      *             if the diagram could not be opened
      * @throws RollbackException
@@ -719,7 +787,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @throws InterruptedException
      *             if the transaction was interrupted
      */
-    private void openDiagram(final Resource diagramResource)
+    private IEditorPart openDiagram(final Resource diagramResource)
             throws PartInitException, InterruptedException, RollbackException {
         String path = diagramResource.getURI().toPlatformString(true);
         final IResource workspaceResource =
@@ -749,6 +817,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
                 // editor is open, can add the rest of the elements now
                 linkModelToDiagram((DiagramEditor) theEditor);
             }
+            return theEditor;
         }
+        return null;
     }
 }

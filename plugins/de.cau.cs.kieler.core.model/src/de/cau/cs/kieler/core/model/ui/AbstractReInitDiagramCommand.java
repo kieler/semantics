@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.ui.commands;
+package de.cau.cs.kieler.core.model.ui;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -49,12 +49,18 @@ import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.model.trigger.ReInitDiagramDoneTrigger;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.ui.commands.AffectedFileSelectionDialog;
 
 /**
  * A command that reinitializes a diagram file from a given model file.
@@ -89,7 +95,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     @SuppressWarnings("restriction")
     public void setEnabled(final Object evaluationContext) {
         if (evaluationContext instanceof EvaluationContext) {
-            EvaluationContext evalContext = (EvaluationContext) evaluationContext;
+            EvaluationContext evalContext =
+                    (EvaluationContext) evaluationContext;
 
             // get list of selected files
             Object defVar = evalContext.getDefaultVariable();
@@ -101,8 +108,9 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         // selection is an a file
-                        path = ((org.eclipse.core.internal.resources.File) o)
-                                .getFullPath();
+                        path =
+                                ((org.eclipse.core.internal.resources.File) o)
+                                        .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
                         EObject eObj = getEObjectFromEditPart(editPart);
@@ -170,20 +178,23 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     IPath path = null;
                     // perform same checks as in set enabled
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        path = ((org.eclipse.core.internal.resources.File) o)
-                                .getFullPath();
+                        path =
+                                ((org.eclipse.core.internal.resources.File) o)
+                                        .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
                         EObject eObj = getEObjectFromEditPart(editPart);
                         if (eObj != null) {
                             URI uri = eObj.eResource().getURI();
-                            path = Path
-                                    .fromOSString(uri.toPlatformString(true));
+                            path =
+                                    Path.fromOSString(uri
+                                            .toPlatformString(true));
                         }
                     }
                     if (path != null) {
-                        IFile file = ResourcesPlugin.getWorkspace().getRoot()
-                                .getFile(path);
+                        IFile file =
+                                ResourcesPlugin.getWorkspace().getRoot()
+                                        .getFile(path);
                         try {
                             // execute transformation
                             reinitialize(file);
@@ -204,6 +215,9 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      * Refresh the workspace.
      */
     protected void refreshWorkspace() {
+        // Here we have to block the caller until eclipse has finished
+        // refreshing the workspace, otherwise necessary files might
+        // not show up.
         WaitUntilDoneMonitor monitor = new WaitUntilDoneMonitor();
         try {
             ResourcesPlugin.getWorkspace().getRoot()
@@ -226,11 +240,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
-                Shell shell = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getShell();
+                Shell shell =
+                        PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                                .getShell();
 
-                AffectedFileSelectionDialog dialog = new AffectedFileSelectionDialog(
-                        shell, affectedFiles);
+                AffectedFileSelectionDialog dialog =
+                        new AffectedFileSelectionDialog(shell, affectedFiles);
                 List<IFile> results = dialog.openDialog();
                 if (results != null) {
                     result.addAll(results);
@@ -253,13 +268,14 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         if (partners.isEmpty()) {
             IPath plain = path.getFullPath().removeFileExtension();
             IPath newPath = plain.addFileExtension(getDiagramExtension());
-            IFile file = ResourcesPlugin.getWorkspace().getRoot()
-                    .getFile(newPath);
+            IFile file =
+                    ResourcesPlugin.getWorkspace().getRoot().getFile(newPath);
             int i = 0;
             while (file.exists()) {
                 newPath = plain.append(i++ + "");
-                file = ResourcesPlugin.getWorkspace().getRoot()
-                        .getFile(newPath);
+                file =
+                        ResourcesPlugin.getWorkspace().getRoot()
+                                .getFile(newPath);
             }
             selection.add(file);
         } else {
@@ -288,10 +304,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     for (IFile partner : selection) {
                         performPreOperationActions(path, partners, monitor);
 
-                        IFile kixsPath = path.getFileExtension().equals(
-                                getModelExtension()) ? path : partner;
-                        IFile kidsPath = path.getFileExtension().equals(
-                                getDiagramExtension()) ? path : partner;
+                        IFile kixsPath =
+                                path.getFileExtension().equals(
+                                        getModelExtension()) ? path : partner;
+                        IFile kidsPath =
+                                path.getFileExtension().equals(
+                                        getDiagramExtension()) ? path : partner;
 
                         // delete old diagram file
                         if (kidsPath != null) {
@@ -304,9 +322,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                                 e0.printStackTrace();
                             }
                         }
-                        reinitializeDiagram(kixsPath, kidsPath, monitor);
+                        IEditorPart newEditor =
+                                reinitializeDiagram(kixsPath, kidsPath, monitor);
 
                         performPostOperationAction(path, partners, monitor);
+
+                        ReInitDiagramDoneTrigger.triggerAll(newEditor);
                     }
                 }
             });
@@ -448,8 +469,9 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the destination file.
      * @param monitor
      *            the progress monitor
+     * @return the diagram editor that was opened, may be null
      */
-    public void reinitializeDiagram(final IFile modelPath,
+    public IEditorPart reinitializeDiagram(final IFile modelPath,
             final IFile diagramPath, final IProgressMonitor monitor) {
         String[] array = modelPath.toString().split("/");
         StringBuilder builder = new StringBuilder();
@@ -459,8 +481,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             }
         }
         builder.append(array[array.length - 1]);
-        URI domainModelURI = URI.createPlatformResourceURI(builder.toString(),
-                true);
+        URI domainModelURI =
+                URI.createPlatformResourceURI(builder.toString(), true);
 
         TransactionalEditingDomain editingDomain = createEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
@@ -471,15 +493,16 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             modelRoot = resource.getContents().get(0);
         } catch (WrappedException ex) {
             ex.printStackTrace();
-            return;
+            return null;
         }
         if (modelRoot == null) {
-            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
-                    "DiagramRoot is null.");
+            IStatus status =
+                    new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                            "DiagramRoot is null.");
             StatusManager.getManager().handle(status, StatusManager.LOG);
-            return;
+            return null;
         }
-        createNewDiagram(modelRoot, editingDomain, diagramPath, monitor);
+        return createNewDiagram(modelRoot, editingDomain, diagramPath, monitor);
     }
 
     /**
@@ -504,11 +527,38 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the destination file
      * @param monitor
      *            the progress monitor
-     * @return true if the creation was successful
+     * @return the editor that was opened for the diagram, may be null
      */
-    public abstract boolean createNewDiagram(final EObject modelRoot,
+    public abstract IEditorPart createNewDiagram(final EObject modelRoot,
             final TransactionalEditingDomain editingDomain,
             final IFile diagramPath, IProgressMonitor monitor);
+
+    /**
+     * Utility method for opening an editor on the resource.
+     * 
+     * @param diagram
+     *            the resource
+     * @param editorId
+     *            the editor id
+     * @return the opened editor
+     * @throws PartInitException
+     *             if the editor was not opened
+     */
+    protected IEditorPart openDiagram(final Resource diagram,
+            final String editorId) throws PartInitException {
+        String path = diagram.getURI().toPlatformString(true);
+        IResource workspaceResource =
+                ResourcesPlugin.getWorkspace().getRoot()
+                        .findMember(new Path(path));
+        if (workspaceResource instanceof IFile) {
+            IWorkbenchPage page =
+                    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage();
+            return page.openEditor(new FileEditorInput(
+                    (IFile) workspaceResource), editorId);
+        }
+        return null;
+    }
 
     /**
      * A monitor that blocks the calling thread until the monitored thread is
