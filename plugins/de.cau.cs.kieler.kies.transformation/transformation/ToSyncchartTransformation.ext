@@ -70,7 +70,7 @@ Void rule(List[State] states, List[emf::EObject] esterel):
 		rule(states.withoutFirst(), esterel.withoutFirst())
 ;
 
-/**
+/** !-
  * rule 1 (module)
  */ 
 Void rule(State s, Module m):
@@ -88,7 +88,7 @@ Void rule(State s, Module m):
 	s.finalizeRule(statement)
 ;
 
-/**
+/** !-
  * rule 2 (nothing)
  */ 
 Void rule(State s, Nothing n):
@@ -101,7 +101,7 @@ Void rule(State s, Nothing n):
 	nState.setIsInitial(true)
 ;
 
-/**
+/** !-
  * rule 3 (halt)
  */
 Void rule(State s, Halt h):
@@ -113,7 +113,7 @@ Void rule(State s, Halt h):
 	ns.setIsInitial(true)
 ;
  
-/**
+/** !-
  * rule 4 (pause)
  */
 Void rule(State s, Pause p):
@@ -133,7 +133,7 @@ Void rule(State s, Pause p):
 	t.connectTransition(initS, finalS)
 ;
 
-/**
+/** !-
  * rule 5 (abort), rule 6 (weak abort)
  */
 Void rule(State s, Abort a):
@@ -204,7 +204,7 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 		finalizeRule(caseState, body)
 ;
 
-/**
+/** !-
  * rule 7 (assign)
  */
 Void rule(State s, esterel::Assignment assign):
@@ -230,7 +230,7 @@ Void rule(State s, esterel::Assignment assign):
 	t.effects.add(sa)
 ;
 
-/**
+/** !-
  * rule 8 (await)
  */
 Void rule(State s, Await a):
@@ -262,7 +262,7 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
 ;
 
 
-/**
+/** !-
  * rule 10 & 11 (do upto & watching)
  */
 Void rule(State s, Do d):
@@ -286,7 +286,7 @@ Void rule(State s, Do d):
 	finalizeRule(initState, d.statement)
 ;
 
-/**
+/** !-
  * rule 10 (doupto)
  */
 Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
@@ -302,7 +302,7 @@ Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
 	t.addDelayToTrigger(du.expr)
 ;
 
-/**
+/** !-
  * rule 11 (do watching)
  */
 Void handleDoWatching(State parent, State previous, Region parentR, DoWatching dw):
@@ -332,7 +332,7 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 		finalizeRule(abortF, dw.end.statement)
 ;
 
-/**
+/** !-
  * rule 12 (emit)
  */
 Void rule(State s, Emit e):
@@ -359,7 +359,7 @@ Void rule(State s, Emit e):
 	emitTrans.connectTransition(initS, finalS)
 ;
 
-/**
+/** !-
  * rule 13 (every)
  */
 Void rule(State s, EveryDo e):
@@ -386,7 +386,7 @@ Void rule(State s, EveryDo e):
 	finalizeRule(everyS, e.statement)
 ;
 
-/**
+/** !-
  * rule 14 (if)
  */
 Void rule(State s, IfTest ift):
@@ -442,7 +442,7 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 		rule(ifS, n))
 ;
 
-/**
+/** !-
  * rule 15 (localsignal)
  */
 Void rule(State s, LocalSignalDecl ls):
@@ -460,7 +460,7 @@ Void rule(State s, LocalSignalDecl ls):
 	finalizeRule(sigS, ls.statement)
 ;
 
-/**
+/** !-
  * rule 16 (localvariable)
  */
 Void rule(State s, LocalVariable v):
@@ -479,7 +479,7 @@ Void rule(State s, LocalVariable v):
 ;
 
 
-/**
+/** !-
  * rule 17 (loop) & rule 18 (loop each)
  */
 Void rule(State s, Loop l):
@@ -506,7 +506,7 @@ Void rule(State s, Loop l):
 	finalizeRule(loopState, l.body.statement)
 ;
  
-/**
+/** !-
  * rule 19 (parallel)
  */
 Void rule(State s, Parallel p):
@@ -542,7 +542,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 	)	
 ;
 
-/**
+/** !-
  * rule 20 (present)
  */
 Void rule(State s, Present p):
@@ -591,7 +591,7 @@ Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expres
 	finalizeRule(newS, st)
 ;
 
-/**
+/** !-
  * rule 22 (call)
  */
 Void rule(State s, ProcCall c):
@@ -619,7 +619,7 @@ String createCallStatement(ProcCall c):
 	"call " + c.proc.name + "(todo" + ")" + "(todo" + ")"   
 ;
 
-/**
+/** !-
  * rule 23 (sequence)
  */
  Void rule(State s, Sequence seq):
@@ -664,7 +664,7 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 	finalizeRule(s, statements.first())
 ;
 
-/**
+/** !-
  * rule 24 (suspend)
  */
 Void rule(State s, Suspend sus):
@@ -684,7 +684,7 @@ Void rule(State s, Suspend sus):
 	finalizeRule(susState, sus.statement)
 ;
 
-/**
+/** !-
  * rule 25 (sustain)
  */
 Void rule(State s, Sustain sus):
@@ -708,7 +708,7 @@ Void rule(State s, Sustain sus):
 	sustT.effects.add((Emission) clone(emission))
 ;
 
-/**
+/** !-
  * rule 26 (trap)
  */
 Void rule(State s, Trap t):
@@ -805,8 +805,8 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 	macroS.recursiveRule(handler.statement) 
 ;
 
-/**
- * rule 27 (exit)
+/** !-
+ * rule 27 (exit) 
  * TODO: add traphalts of possible parent traps
  */
 Void rule(State s, Exit e):
@@ -831,14 +831,15 @@ Void rule(State s, Exit e):
 	emitTrans.connectTransition(initS, finalS)
 ;
 
-/** 
+/** !-
  * rule 28 (weak abort)
  */
 Void rule(State s, WeakAbort wa):
 	ruleAbort(s, wa)
 ;
 
-/**
+/** !- 
+ * rule (block)
  * omit the block, theres a parallel in it!
  */
 Void rule(State s, Block b):

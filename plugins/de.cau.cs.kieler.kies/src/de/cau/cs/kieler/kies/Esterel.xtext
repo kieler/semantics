@@ -9,18 +9,18 @@ Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 	(modules+=Module)*;
 
 	// module consists of interface and body
+// !-(module)
 Module:
 	"module" name=ID ":" (interface=ModuleInterface)? body=ModuleBody end=EndModule;
 
 EndModule:
 	"end" "module"
 	| "."; //deprecated
-
-// help function to clearly divide a Module into interface and body	
 ModuleBody:
 	statements+=Statement;
+	// -!
 
-	//            Interface Declarations
+//            Interface Declarations
 // ----------------------------------------------
 ModuleInterface:
 	(intSignalDecls+=InterfaceSignalDecl
@@ -53,15 +53,16 @@ TypeIdentifier:
 	| {EsterelType} estType=[Type|ID];
 
 	// ==> Local Signal Declaration
-// -------------------------------------
+// !-(localsignal) -------------------------------------
 LocalSignalDecl:
 	"signal" signalList=LocalSignalList "in" statement=Statement "end" (optEnd="signal")?;
 
 LocalSignalList:
 	{LocalSignal} signal+=ISignal
 	("," signal+=ISignal)*;
+	// -!
 
-	// ==> Sensor
+// ==> Sensor
 // -------------------------------------
 SensorDecl:
 	"sensor" sensors+=SensorWithType ("," sensors+=SensorWithType)* ";";
@@ -142,17 +143,20 @@ Task:
 	// ==============================================
 // ===            B.4 Statements              ===
 // ==============================================
+// !-(parallel)
 Statement:
 	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
 
+	// -!
 AtomicStatement returns Statement:
 	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort;
 
 	// --> B.4.1 Control Flow Operators <--	
+// !-(sequence)
 Sequence returns Statement:
 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
-
+	// -!
 Block:
 	"[" statement=Statement "]";
 
@@ -160,11 +164,12 @@ VarStatement returns Statement:
 	vardecl=IVariable;
 
 	// Assignment
-// -------------------------------------
+// !-(assign) -------------------------------------
 Assignment:
 	var=[kexpressions::IVariable|ID] ":=" expr=DataExpr;
+	// -!
 
-	// --> B.4.2 abort: Strong Preemption
+// !-(abort) --> B.4.2 abort: Strong Preemption
 // -------------------------------------
 Abort:
 	"abort" statement=Statement "when" body=AbortBody;
@@ -180,8 +185,9 @@ AbortCase:
 
 AbortCaseSingle:
 	"case" delay=DelayExpr ("do" statement=Statement)?;
+	// -!
 
-	// --> B.4.25 weak abort: Weak Preemption
+// --> B.4.25 weak abort: Weak Preemption
 // -------------------------------------
 WeakAbort returns Abort:
 	{WeakAbort} "weak" "abort" statement=Statement "when" body=WeakAbortBody;
@@ -202,15 +208,12 @@ WeakAbortCase returns AbortCase:
 	{WeakAbortCase} cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=WeakAbortEnd;
 
 	// --> B.4.3 await: Strong Preemption
-// -------------------------------------
+// !-(await) -------------------------------------
 Await:
 	"await" body=AwaitBody;
 
 AwaitBody:
 	AwaitInstance | AwaitCase;
-
-AwaitEnd:
-	"end" "await"?;
 
 AwaitInstance:
 	delay=DelayExpr ("do" statement=Statement end=AwaitEnd)?;
@@ -218,7 +221,11 @@ AwaitInstance:
 AwaitCase:
 	cases+=AbortCaseSingle (cases+=AbortCaseSingle)* end=AwaitEnd;
 
-	// --> B.4.4 call: Procedure Call
+AwaitEnd:
+	"end" "await"?;
+	// -!
+
+// --> B.4.4 call: Procedure Call
 // -------------------------------------
 ProcCall:
 	"call" proc=[Procedure|ID] "(" (varList+=[kexpressions::IVariable|ID] ("," varList+=[kexpressions::IVariable|ID])*)?
@@ -227,7 +234,7 @@ ProcCall:
 
 	// --> B.4.5 do-upto: Conditional Iteration (deprecated)
 // --> B.4.6 do-watching: Strong Preemption (deprecated)
-// -------------------------------------
+// !-(doupto) -------------------------------------
 Do:
 	"do" statement=Statement (end=DoUpto | end=DoWatching);
 
@@ -239,29 +246,31 @@ DoWatching:
 
 DoWatchingEnd:
 	"timeout" statement=Statement "end" (optEnd="timeout")?;
+	// -!
 
-	// --> B.4.7 emit: Signal Emission <--
-// -------------------------------------
+// --> B.4.7 emit: Signal Emission <--
+// !-(emit)2 -------------------------------------
 Emit:
 	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=DataExpr ")")?;
-
-	// --> B.4.8 every-do: Conditional Iteration
-// -------------------------------------
+	// -!
+// --> B.4.8 every-do: Conditional Iteration
+// !-(every)-------------------------------------
 EveryDo:
 	"every" delay=DelayExpr "do" statement=Statement "end" (optEnd="every")?;
+	// -!
 
-	// --> B.4.10 exit: Trap Exit
-// -------------------------------------
+// --> B.4.10 exit: Trap Exit
+// !-(exit) -------------------------------------
 Exit:
 	"exit" trap=[TrapDecl|ID] ("(" dataExpr=DataExpr ")")?;
-
-	// --> B.4.11 halt: Wait Forever
-// -------------------------------------
+	// -!
+// --> B.4.11 halt: Wait Forever
+// !-(halt) -------------------------------------
 Halt:
 	{Halt} "halt";
-
-	// --> B.4.12: if: Conditional for Data
-// -------------------------------------
+	// -!
+// --> B.4.12: if: Conditional for Data
+// !-(if)-------------------------------------
 IfTest:
 	"if" expr=DataExpr (thenPart=ThenPart)? (elsif+=ElsIf)* (elsePart=ElsePart)? "end" (optEnd="if")?;
 
@@ -273,10 +282,10 @@ ThenPart:
 
 ElsePart:
 	"else" statement=Statement;
-
-	// --> B.4.13 loop: Infinite Loop
+	// -!
+// --> B.4.13 loop: Infinite Loop
 // --> B.4.14 loop-each: Condition Iteration
-// -------------------------------------
+// !-(loop)-------------------------------------
 Loop:
 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
 
@@ -291,19 +300,19 @@ LoopDelay:
 
 LoopBody:
 	statement=Statement;
-
-	// --> B.4.15 nothing: No Operation
-// -------------------------------------
+	// -!
+// --> B.4.15 nothing: No Operation
+// !-(nothing) -------------------------------------
 Nothing:
 	"nothing" {Nothing};
-
-	// --> B.4.16 pause: Unit Delay
-// -------------------------------------
+	// -!
+// --> B.4.16 pause: Unit Delay
+// !-(pause) -------------------------------------
 Pause:
 	"pause" {Pause};
-
-	// --> B.4.17 present: Conditional for Signals
-// -------------------------------------
+	// -!
+// --> B.4.17 present: Conditional for Signals
+// !-(present) -------------------------------------
 Present:
 	"present" body=PresentBody (elsePart=ElsePart)? "end" (optEnd="present")?;
 
@@ -321,8 +330,9 @@ PresentCase:
 
 PresentEvent:
 	expression=SignalExpression | "[" expression=SignalExpression "]" | tick=Tick;
+	// -!
 
-	// --> B.4.18 repeat: Iterate a Fixed Number of Times
+// --> B.4.18 repeat: Iterate a Fixed Number of Times
 // -------------------------------------
 Repeat:
 	(positive?="positive")? "repeat" dataExpr=DataExpr "times" statement=Statement "end" (optEnd="repeat")?;
@@ -373,17 +383,17 @@ BuildInFunction:
 	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
 
 	// --> B.4.21 suspend: Preemption with State Freeze
-// -------------------------------------
+// !-(suspend)-------------------------------------
 Suspend:
 	"suspend" statement=Statement "when" delay=DelayExpr;
-
-	// --> B.4.22 sustain: Emit a Signal Indefinitely
-// -------------------------------------
+	// -!
+// --> B.4.22 sustain: Emit a Signal Indefinitely
+// !-(sustain) -------------------------------------
 Sustain:
 	"sustain" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" dataExpr=DataExpr ")")?;
-
-	// --> B.4.23 trap: TrapDeclaration and Handling
-// -------------------------------------
+	// -!
+// --> B.4.23 trap: TrapDeclaration and Handling
+// !-(trap)-------------------------------------
 Trap:
 	"trap" trapDeclList=TrapDeclList "in" statement=Statement
 	(trapHandler+=TrapHandler)* "end" (optEnd="trap")?;
@@ -396,13 +406,13 @@ TrapDecl returns kexpressions::ISignal:
 
 TrapHandler:
 	"handle" trapExpr=TrapExpr "do" statement=Statement;
-
-	// --> B.4.24 var: Local Variable Declaration
-// -------------------------------------
+	// -!
+// --> B.4.24 var: Local Variable Declaration
+// !-(localvariable) -------------------------------------
 LocalVariable:
 	var=InterfaceVariableDecl "in" statement=Statement "end" (optEnd="var")?;
-
-	// ==============================================
+	// -!
+// ==============================================
 // ===            B.3 Expressions             ===
 // ==============================================
 
