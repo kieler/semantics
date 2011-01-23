@@ -123,7 +123,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         if (((Boolean) globalVars.get(GLOBVAR_REC).getValue())) {
             List<State> states;
             // either fetch the root state or any child state that has not been transformed yet
-            if (rootState.getBodyText().size() > 0) {
+            if (isTransformable(rootState)) {
                 states = Lists.newArrayList(rootState);
             } else {
                 states = findAllTransformableStates(rootState);
@@ -176,7 +176,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      * in is scanned, and if nothing is found, level per level is searched.
      */
     private State findNextTransformableState(final State parent) {
-        if (parent.getBodyText().size() != 0) {
+        if (isTransformable(parent)) {
             return parent;
         }
         State hierarchy = scanHierarchy(parent);
@@ -198,7 +198,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     private State scanHierarchy(final State parent) {
         for (Region r : parent.getRegions()) {
             for (State s : r.getStates()) {
-                if (s.getBodyText().size() != 0) {
+                if (isTransformable(s)) {
                     return s;
                 }
             }
@@ -214,7 +214,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         List<State> foundStates = Lists.newLinkedList();
         for (Region r : parent.getRegions()) {
             for (State s : r.getStates()) {
-                if (s.getBodyText().size() != 0) {
+                if (isTransformable(s)) {
                     foundStates.add(s);
                 } else {
                     // scan the children
@@ -224,6 +224,10 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
             }
         }
         return foundStates;
+    }
+
+    private boolean isTransformable(State s) {
+        return s.getBodyText().size() > 0;
     }
 
     /**
