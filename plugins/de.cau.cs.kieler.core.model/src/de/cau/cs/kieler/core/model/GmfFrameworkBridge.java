@@ -32,9 +32,13 @@ import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEd
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Domain model element provider for GMF.
@@ -149,18 +153,30 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
             IAdaptable adaptable = (IAdaptable) object;
             return (EditPart) adaptable.getAdapter(EditPart.class);
         } else {
-            IEditorPart editorPart = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-            if (editorPart instanceof DiagramEditor) {
-                DiagramEditor diagramEditor = (DiagramEditor) editorPart;
-                if (object instanceof View) {
-                    return getEditPart(diagramEditor.getDiagramEditPart(), (View) object);
-                } else if (object instanceof EObject) {
-                    return getEditPart(diagramEditor.getDiagramEditPart(), (EObject) object);
+            final Maybe<EditPart> editPart = new Maybe<EditPart>();
+            MonitoredOperation.runInUI(new Runnable() {
+                public void run() {
+                    IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    if (workbenchWindow != null) {
+                        IWorkbenchPage workbenchPage = workbenchWindow.getActivePage();
+                        if (workbenchPage != null) {
+                            IEditorPart editorPart = workbenchPage.getActiveEditor();
+                            if (editorPart instanceof DiagramEditor) {
+                                DiagramEditPart diagramEditPart = ((DiagramEditor) editorPart)
+                                        .getDiagramEditPart();
+                                if (object instanceof View) {
+                                    editPart.set(getEditPart(diagramEditPart, (View) object));
+                                } else if (object instanceof EObject) {
+                                    editPart.set(getEditPart(diagramEditPart, (EObject) object));
+                                }
+                            }
+                        }
+                    }
                 }
-            }
+            }, true);
+            return editPart.get();
         }
-        return null;
     }
 
     /**
