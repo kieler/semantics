@@ -9,8 +9,9 @@
    <extension point="de.cau.cs.kieler.kex">
 
 <category
-         id="de.cau.cs.kieler.synccharts"
-         title="SyncCharts">
+      icon="icons/SyncchartsDiagramFile.gif"
+      id="de.cau.cs.kieler.synccharts"
+      title="SyncCharts">
    </category>
    <example
          author="KIELER Workgroup"
