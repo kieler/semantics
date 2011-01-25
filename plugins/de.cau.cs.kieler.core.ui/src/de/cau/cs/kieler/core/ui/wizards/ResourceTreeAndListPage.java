@@ -619,7 +619,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 new GridData(SWT.FILL, SWT.CENTER, true, false));
         
         // Browse Button
-        sourceGroupBrowseButton = new Button(sourceGroup, SWT.DEFAULT);
+        sourceGroupBrowseButton = new Button(sourceGroup, SWT.PUSH);
         sourceGroupBrowseButton.setText(browseButtonText);
         sourceGroupBrowseButton.setLayoutData(
                 new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
@@ -733,7 +733,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         buttonBar.setLayout(gl);
         
         // Composite the buttons are placed in
-        Composite buttonComposite = new Composite(buttonBar, SWT.NULL);
+        Composite buttonComposite = new Composite(buttonBar, SWT.PUSH);
         buttonComposite.setLayoutData(new GridData(SWT.END, SWT.BEGINNING, true, true));
         gl = new GridLayout(2, true);
         gl.marginHeight = 0;
@@ -741,12 +741,12 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         buttonComposite.setLayout(gl);
         
         // Select All Button
-        buttonBarSelectAllButton = new Button(buttonComposite, SWT.NULL);
+        buttonBarSelectAllButton = new Button(buttonComposite, SWT.PUSH);
         buttonBarSelectAllButton.setText(Messages.ResourceTreeAndListPage_selectAllButton_text);
         buttonBarSelectAllButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
         // Deselect All Button
-        buttonBarDeselectAllButton = new Button(buttonComposite, SWT.NULL);
+        buttonBarDeselectAllButton = new Button(buttonComposite, SWT.PUSH);
         buttonBarDeselectAllButton.setText(Messages.ResourceTreeAndListPage_deselectAllButton_text);
         buttonBarDeselectAllButton.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         
@@ -831,7 +831,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 new GridData(SWT.FILL, SWT.CENTER, true, false));
         
         // Browse Button
-        targetGroupBrowseButton = new Button(targetGroup, SWT.DEFAULT);
+        targetGroupBrowseButton = new Button(targetGroup, SWT.PUSH);
         targetGroupBrowseButton.setText(browseButtonText);
         targetGroupBrowseButton.setLayoutData(
                 new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
