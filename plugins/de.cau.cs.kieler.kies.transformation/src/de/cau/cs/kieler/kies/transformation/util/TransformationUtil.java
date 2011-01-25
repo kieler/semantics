@@ -101,10 +101,11 @@ public final class TransformationUtil {
     public static Logger logger = Logger.getLogger("kies");
 
     /** injector used for serialization. */
-    private static Injector injector;
+    private static Injector injector = new EsterelStandaloneSetup()
+            .createInjectorAndDoEMFRegistration();;
 
-    static {
-        injector = new EsterelStandaloneSetup().createInjectorAndDoEMFRegistration();
+    /** utility class. */
+    private TransformationUtil() {
         logger.getHandlers()[0] = new Handler() {
 
             @Override
@@ -121,10 +122,6 @@ public final class TransformationUtil {
             public void close() throws SecurityException {
             }
         };
-    }
-
-    /** utility class. */
-    private TransformationUtil() {
     }
 
     /**
