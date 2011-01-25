@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.core;
+package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.Collection;
 import java.util.Vector;
@@ -20,11 +20,13 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.xtend.XtendFacade;
 
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
+
 /**
  * @author uru
  * 
  */
-public class TransformationCommand extends RecordingCommand {
+public class XtendTransformationCommand extends RecordingCommand {
 
     private XtendFacade xtendFacade;
     private TransformationDescriptor descriptor;
@@ -37,7 +39,7 @@ public class TransformationCommand extends RecordingCommand {
      * @param theDescriptor
      * @param editingDomain
      */
-    public TransformationCommand(final XtendFacade xtendFacade,
+    public XtendTransformationCommand(final XtendFacade xtendFacade,
             final TransformationDescriptor theDescriptor,
             final TransactionalEditingDomain editingDomain) {
         super(editingDomain);

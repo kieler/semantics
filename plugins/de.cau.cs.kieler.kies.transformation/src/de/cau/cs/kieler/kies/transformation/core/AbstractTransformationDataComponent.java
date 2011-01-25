@@ -43,7 +43,8 @@ import org.json.JSONObject;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger;
+import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationTrigger;
+import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -135,7 +136,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             System.out.println("Aquire");
             if (!aquired) {
                 System.out.println("Problem occured");
-                return null;
+                throw new KiemExecutionException("Timeout, could not aquire semaphore.", true,
+                        false, true, null);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -153,7 +155,9 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                     return null;
                 }
                 // else execute Transformation
-                TransformationTrigger.getInstance().step(facade, descriptor, domain, semaphore);
+                TransformationContext context = new XtendTransformationContext(facade, descriptor,
+                        domain, semaphore);
+                TransformationTrigger.getInstance().step(context);
             }
         } else {
             doPostTransformation();

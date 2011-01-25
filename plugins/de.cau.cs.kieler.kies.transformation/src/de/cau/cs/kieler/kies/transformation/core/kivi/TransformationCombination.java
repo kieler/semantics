@@ -11,13 +11,13 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.kivi;
+package de.cau.cs.kieler.kies.transformation.core.kivi;
 
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
-import de.cau.cs.kieler.kies.transformation.kivi.TransformationTrigger.TransformationState;
+import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationTrigger.TransformationState;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -54,8 +54,7 @@ public class TransformationCombination extends AbstractCombination {
         } else {
             System.out.println("standard execution");
             // start the transformation
-            effect = new TransformationEffect(state.getXtendFacade(), state.getDescriptor(),
-                    state.getEditingDomain(), state.getSemaphore());
+            effect = new TransformationEffect(state.getContext());
             effect.schedule();
 
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();

@@ -23,13 +23,13 @@
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"
-            class="de.cau.cs.kieler.kies.transformation.kivi.TransformationCombination"
+            class="de.cau.cs.kieler.kies.transformation.core.kivi.TransformationCombination"
             description="Performs a Transformation"
             name="Transformation Combination">
       </combination>
       <combination
             active="true"
-            class="de.cau.cs.kieler.kies.transformation.kivi.KIEMRemoteCombination"
+            class="de.cau.cs.kieler.kies.transformation.impl.kivi.KIEMRemoteCombination"
             description="Remote Controls KIEM"
             name="KIEM Remote Combination">
       </combination>

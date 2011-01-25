@@ -40,9 +40,11 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
 
+import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.kivi.TransformationEffect;
+import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -180,8 +182,9 @@ public class TransformationRulesTest {
             TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
                     .createEditingDomain(resourceSet);
             SyncchartsContentUtil.addTriggerListeners(ted);
-            TransformationEffect effect = new TransformationEffect(edc.getXtendFacade(), td, ted,
-                    null);
+            TransformationContext context = new XtendTransformationContext(edc.getXtendFacade(),
+                    td, ted, null);
+            TransformationEffect effect = new TransformationEffect(context);
             effect.execute();
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.SERIALIZE);

@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2010 by
+ * Copyright 2011 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.kivi;
+package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.Iterator;
 import java.util.List;
@@ -31,39 +31,31 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 
-import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.kies.transformation.core.TransformationCommand;
+import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
- * @author uru
+ * @author chicken
  * 
  */
-public class TransformationEffect extends AbstractEffect {
+public class XtendTransformationContext implements TransformationContext {
 
     private static final String COMMAND_NAME = "Transformation Command";
 
     private XtendFacade xtendFacade;
-    private TransformationDescriptor descriptor;
     private TransactionalEditingDomain editingDomain;
+
+    private TransformationDescriptor descriptor;
+
     private Semaphore lock;
 
     private Object result = null;
-
+    
     /**
-     * Default constructor.
      * 
-     * @param facade
-     *            the XtendFacade responsible for calling the transformation.
-     * @param theTransformationName
-     *            name of the transformation to run.
-     * @param theParameters
-     *            parameters to pass.
-     * @param theEditingDomain
-     *            editing domain in which the transformation should be performed.
      */
-    public TransformationEffect(final XtendFacade facade,
+    public XtendTransformationContext(final XtendFacade facade,
             final TransformationDescriptor theDescriptor,
             final TransactionalEditingDomain theEditingDomain, final Semaphore aLock) {
         super();
@@ -73,20 +65,7 @@ public class TransformationEffect extends AbstractEffect {
         this.lock = aLock;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void undo() {
-        System.out.println("TransformEffect undo");
-        super.undo();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public void execute() {
-
+    public void executeCurrent() {
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
@@ -97,7 +76,7 @@ public class TransformationEffect extends AbstractEffect {
                 // for some reason it is important to do this in a separate command!
                 CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
 
-                TransformationCommand command = new TransformationCommand(xtendFacade, descriptor,
+                XtendTransformationCommand command = new XtendTransformationCommand(xtendFacade, descriptor,
                         editingDomain);
                 cc.append(command);
                 cc.append(new RefreshGMFElementsCommand(editingDomain));
@@ -115,9 +94,34 @@ public class TransformationEffect extends AbstractEffect {
     }
 
     /**
-     * @return the result
+     * @param xtendFacade
+     *            the xtendFacade to set
      */
-    public Object getResult() {
+    public void setXtendFacade(XtendFacade xtendFacade) {
+        this.xtendFacade = xtendFacade;
+    }
+
+    /**
+     * @param editingDomain
+     *            the editingDomain to set
+     */
+    public void setEditingDomain(TransactionalEditingDomain editingDomain) {
+        this.editingDomain = editingDomain;
+    }
+
+    /**
+     * @param descriptor
+     *            the descriptor to set
+     */
+    public void setDescriptor(TransformationDescriptor descriptor) {
+        this.descriptor = descriptor;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Object getLastResult() {
         return result;
     }
 
