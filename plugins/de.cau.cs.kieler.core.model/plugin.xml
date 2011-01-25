@@ -81,6 +81,12 @@
             description="Show the hierarchy levels of a diagram by painting each level in a different color."
             name="Show Hierarchy Levels">
       </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.core.model.combinations.ManualFocusCombination"
+            description="Focus&amp;Context by manual selection of elements in the focus or hierarchy levels that should be visible."
+            name="Manual Focus (Semantic Zoom)">
+      </combination>
 <!--      <combination
             active="true"
             class="de.cau.cs.kieler.core.model.combinations.SynchronizeViewsCombination"
