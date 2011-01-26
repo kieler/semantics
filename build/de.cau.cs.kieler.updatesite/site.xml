@@ -148,6 +148,9 @@
    <feature url="features/de.cau.cs.kieler.graphiti_0.1.0.qualifier.jar" id="de.cau.cs.kieler.graphiti" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.graphiti.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.graphiti.source" version="0.1.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
    <feature url="features/net.sourceforge.lpsolve_5.5.2.qualifier.jar" id="net.sourceforge.lpsolve" version="5.5.2.qualifier">
       <category name="KIELER"/>
    </feature>
