@@ -29,7 +29,7 @@ import org.eclipse.swt.graphics.Color;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
@@ -78,8 +78,9 @@ public class HighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      */
     public HighlightEffect(final EObject eObject, final DiagramEditor editor) {
-        EditPart editPart = ModelingUtil.getEditPart(
-                editor.getDiagramEditPart(), eObject);
+        EditPart editPart =
+                GraphicalFrameworkService.getInstance().getBridge(editor)
+                        .getEditPart(editor, eObject);
         if (editPart instanceof GraphicalEditPart) {
             targetEditPart = (GraphicalEditPart) editPart;
             targetFigure = targetEditPart.getFigure();
@@ -453,14 +454,16 @@ public class HighlightEffect extends AbstractEffect {
                 if (otherEffect.targetFigure == targetFigure) {
                     // TODO: FIXME bad hack
                     if (otherEffect.targetFigure instanceof BorderedNodeFigure) {
-                        BorderedNodeFigure bnf = (BorderedNodeFigure) otherEffect.targetFigure;
+                        BorderedNodeFigure bnf =
+                                (BorderedNodeFigure) otherEffect.targetFigure;
                         IFigure border = bnf.getBorderItemContainer();
                         while (border.getChildren().size() > 0) {
                             border.getChildren().remove(0);
                         }
                     }
                     originalColor = otherEffect.originalColor;
-                    originalBackgroundColor = otherEffect.originalBackgroundColor;
+                    originalBackgroundColor =
+                            otherEffect.originalBackgroundColor;
                     originalWidth = otherEffect.originalWidth;
                     originalStyle = otherEffect.originalStyle;
                     return this;
