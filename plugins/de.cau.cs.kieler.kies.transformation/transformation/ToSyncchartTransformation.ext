@@ -703,7 +703,7 @@ Void rule(State s, Sustain sus):
 	initT.connectTransition(initS, finalS) ->
 	sustT.connectTransition(finalS, finalS) ->
 	emission.setSignal(sus.signal) ->
-	emission.setNewValue(convertEsterelExpression((Expression) clone(sus.dataExpr))) ->
+	emission.setNewValue(convertEsterelExpression((Expression) clone(sus.expression))) ->
 	initT.effects.add(emission) ->
 	sustT.effects.add((Emission) clone(emission))
 ;
@@ -825,7 +825,7 @@ Void rule(State s, Exit e):
 	// add the effect
 	emitTrans.setIsImmediate(true) ->
 	emission.setSignal(e.trap) ->
-	emission.setNewValue(convertEsterelExpression((Expression)clone(e.dataExpr))) ->
+	emission.setNewValue(convertEsterelExpression((Expression)clone(e.expression))) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
 	emitTrans.connectTransition(initS, finalS)

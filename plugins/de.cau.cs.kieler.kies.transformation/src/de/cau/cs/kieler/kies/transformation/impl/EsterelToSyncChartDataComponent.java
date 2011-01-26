@@ -21,7 +21,6 @@ import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.xtend.expression.Variable;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -70,8 +69,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      * transformation should be executed recursively or not.
      */
     public EsterelToSyncChartDataComponent() {
-        super(new ImmutableMap.Builder<String, Variable>().put(GLOBVAR_REC,
-                TransformationUtil.getXtendVarBoolean(true)).build());
+        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)));
     }
 
     /**
