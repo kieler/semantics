@@ -49,7 +49,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRelationTypeAccess().getAlternatives(), "rule__RelationType__Alternatives");
 					put(grammarAccess.getConstantAtomAccess().getAlternatives(), "rule__ConstantAtom__Alternatives");
 					put(grammarAccess.getConstantLiteralAccess().getAlternatives(), "rule__ConstantLiteral__Alternatives");
-					put(grammarAccess.getConstantValueAccess().getAlternatives(), "rule__ConstantValue__Alternatives");
 					put(grammarAccess.getAtomicStatementAccess().getAlternatives(), "rule__AtomicStatement__Alternatives");
 					put(grammarAccess.getAbortBodyAccess().getAlternatives(), "rule__AbortBody__Alternatives");
 					put(grammarAccess.getWeakAbortBodyAccess().getAlternatives(), "rule__WeakAbortBody__Alternatives");
@@ -127,9 +126,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getFunctionAccess().getGroup(), "rule__Function__Group__0");
 					put(grammarAccess.getFunctionAccess().getGroup_2(), "rule__Function__Group_2__0");
 					put(grammarAccess.getFunctionAccess().getGroup_2_1(), "rule__Function__Group_2_1__0");
-					put(grammarAccess.getFunctionCallAccess().getGroup(), "rule__FunctionCall__Group__0");
-					put(grammarAccess.getFunctionCallAccess().getGroup_2(), "rule__FunctionCall__Group_2__0");
-					put(grammarAccess.getFunctionCallAccess().getGroup_2_1(), "rule__FunctionCall__Group_2_1__0");
 					put(grammarAccess.getProcedureDeclAccess().getGroup(), "rule__ProcedureDecl__Group__0");
 					put(grammarAccess.getProcedureDeclAccess().getGroup_2(), "rule__ProcedureDecl__Group_2__0");
 					put(grammarAccess.getProcedureAccess().getGroup(), "rule__Procedure__Group__0");
@@ -163,10 +159,10 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getWeakAbortInstanceAccess().getGroup_2(), "rule__WeakAbortInstance__Group_2__0");
 					put(grammarAccess.getWeakAbortCaseAccess().getGroup(), "rule__WeakAbortCase__Group__0");
 					put(grammarAccess.getAwaitAccess().getGroup(), "rule__Await__Group__0");
-					put(grammarAccess.getAwaitEndAccess().getGroup(), "rule__AwaitEnd__Group__0");
 					put(grammarAccess.getAwaitInstanceAccess().getGroup(), "rule__AwaitInstance__Group__0");
 					put(grammarAccess.getAwaitInstanceAccess().getGroup_1(), "rule__AwaitInstance__Group_1__0");
 					put(grammarAccess.getAwaitCaseAccess().getGroup(), "rule__AwaitCase__Group__0");
+					put(grammarAccess.getAwaitEndAccess().getGroup(), "rule__AwaitEnd__Group__0");
 					put(grammarAccess.getProcCallAccess().getGroup(), "rule__ProcCall__Group__0");
 					put(grammarAccess.getProcCallAccess().getGroup_3(), "rule__ProcCall__Group_3__0");
 					put(grammarAccess.getProcCallAccess().getGroup_3_1(), "rule__ProcCall__Group_3_1__0");
@@ -362,17 +358,12 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getConstantWithValueAccess().getConstantAssignment_0(), "rule__ConstantWithValue__ConstantAssignment_0");
 					put(grammarAccess.getConstantWithValueAccess().getValueAssignment_1_1(), "rule__ConstantWithValue__ValueAssignment_1_1");
 					put(grammarAccess.getConstantAccess().getNameAssignment_1(), "rule__Constant__NameAssignment_1");
-					put(grammarAccess.getConstantValueAccess().getValueAssignment_0(), "rule__ConstantValue__ValueAssignment_0");
-					put(grammarAccess.getConstantValueAccess().getIntValueAssignment_1(), "rule__ConstantValue__IntValueAssignment_1");
 					put(grammarAccess.getFunctionDeclAccess().getFunctionsAssignment_1(), "rule__FunctionDecl__FunctionsAssignment_1");
 					put(grammarAccess.getFunctionDeclAccess().getFunctionsAssignment_2_1(), "rule__FunctionDecl__FunctionsAssignment_2_1");
 					put(grammarAccess.getFunctionAccess().getNameAssignment_0(), "rule__Function__NameAssignment_0");
 					put(grammarAccess.getFunctionAccess().getIdListAssignment_2_0(), "rule__Function__IdListAssignment_2_0");
 					put(grammarAccess.getFunctionAccess().getIdListAssignment_2_1_1(), "rule__Function__IdListAssignment_2_1_1");
 					put(grammarAccess.getFunctionAccess().getTypeAssignment_5(), "rule__Function__TypeAssignment_5");
-					put(grammarAccess.getFunctionCallAccess().getFuncAssignment_0(), "rule__FunctionCall__FuncAssignment_0");
-					put(grammarAccess.getFunctionCallAccess().getKexpressionsAssignment_2_0(), "rule__FunctionCall__KexpressionsAssignment_2_0");
-					put(grammarAccess.getFunctionCallAccess().getKexpressionsAssignment_2_1_1(), "rule__FunctionCall__KexpressionsAssignment_2_1_1");
 					put(grammarAccess.getProcedureDeclAccess().getProceduresAssignment_1(), "rule__ProcedureDecl__ProceduresAssignment_1");
 					put(grammarAccess.getProcedureDeclAccess().getProceduresAssignment_2_1(), "rule__ProcedureDecl__ProceduresAssignment_2_1");
 					put(grammarAccess.getProcedureAccess().getNameAssignment_0(), "rule__Procedure__NameAssignment_0");
@@ -441,7 +432,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getEveryDoAccess().getStatementAssignment_3(), "rule__EveryDo__StatementAssignment_3");
 					put(grammarAccess.getEveryDoAccess().getOptEndAssignment_5(), "rule__EveryDo__OptEndAssignment_5");
 					put(grammarAccess.getExitAccess().getTrapAssignment_1(), "rule__Exit__TrapAssignment_1");
-					put(grammarAccess.getExitAccess().getDataExprAssignment_2_1(), "rule__Exit__DataExprAssignment_2_1");
+					put(grammarAccess.getExitAccess().getExpressionAssignment_2_1(), "rule__Exit__ExpressionAssignment_2_1");
 					put(grammarAccess.getIfTestAccess().getExprAssignment_1(), "rule__IfTest__ExprAssignment_1");
 					put(grammarAccess.getIfTestAccess().getThenPartAssignment_2(), "rule__IfTest__ThenPartAssignment_2");
 					put(grammarAccess.getIfTestAccess().getElsifAssignment_3(), "rule__IfTest__ElsifAssignment_3");
@@ -469,7 +460,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentEventAccess().getExpressionAssignment_1_1(), "rule__PresentEvent__ExpressionAssignment_1_1");
 					put(grammarAccess.getPresentEventAccess().getTickAssignment_2(), "rule__PresentEvent__TickAssignment_2");
 					put(grammarAccess.getRepeatAccess().getPositiveAssignment_0(), "rule__Repeat__PositiveAssignment_0");
-					put(grammarAccess.getRepeatAccess().getDataExprAssignment_2(), "rule__Repeat__DataExprAssignment_2");
+					put(grammarAccess.getRepeatAccess().getExpressionAssignment_2(), "rule__Repeat__ExpressionAssignment_2");
 					put(grammarAccess.getRepeatAccess().getStatementAssignment_4(), "rule__Repeat__StatementAssignment_4");
 					put(grammarAccess.getRepeatAccess().getOptEndAssignment_6(), "rule__Repeat__OptEndAssignment_6");
 					put(grammarAccess.getRunAccess().getModuleAssignment_0_1(), "rule__Run__ModuleAssignment_0_1");
@@ -512,7 +503,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSuspendAccess().getDelayAssignment_3(), "rule__Suspend__DelayAssignment_3");
 					put(grammarAccess.getSustainAccess().getSignalAssignment_1_0(), "rule__Sustain__SignalAssignment_1_0");
 					put(grammarAccess.getSustainAccess().getTickAssignment_1_1(), "rule__Sustain__TickAssignment_1_1");
-					put(grammarAccess.getSustainAccess().getDataExprAssignment_2_1(), "rule__Sustain__DataExprAssignment_2_1");
+					put(grammarAccess.getSustainAccess().getExpressionAssignment_2_1(), "rule__Sustain__ExpressionAssignment_2_1");
 					put(grammarAccess.getTrapAccess().getTrapDeclListAssignment_1(), "rule__Trap__TrapDeclListAssignment_1");
 					put(grammarAccess.getTrapAccess().getStatementAssignment_3(), "rule__Trap__StatementAssignment_3");
 					put(grammarAccess.getTrapAccess().getTrapHandlerAssignment_4(), "rule__Trap__TrapHandlerAssignment_4");
