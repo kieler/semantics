@@ -7,5 +7,41 @@
             class="de.cau.cs.kieler.core.model.graphiti.GraphitiFrameworkBridge">
       </bridge>
    </extension>
-
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.core.model.graphiti.ShowGraphitiHierarchyCombination"
+            description="Show the hierarchy in Graphiti diagrams"
+            name="Show Hierarchy Levels (Graphiti)">
+      </combination>
+   </extension>
+	<extension
+         point="org.eclipse.ui.commands">
+      <command
+            defaultHandler="de.cau.cs.kieler.core.kivi.menu.ButtonHandler"
+            id="de.cau.cs.kieler.core.model.graphiti.showhierarchy"
+            name="show hierarchy">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="toolbar:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.core.model.graphiti.showhierarchy"
+               icon="icons/rainbow.gif"
+               style="toggle">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <instanceof
+                        value="org.eclipse.graphiti.ui.editor.DiagramEditor">
+                  </instanceof>
+               </with>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 </plugin>

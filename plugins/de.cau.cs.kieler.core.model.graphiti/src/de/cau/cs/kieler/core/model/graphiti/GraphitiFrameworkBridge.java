@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.model.graphiti;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -26,6 +27,7 @@ import org.eclipse.gef.GraphicalViewer;
 import org.eclipse.gef.RootEditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.graphiti.mm.pictograms.PictogramElement;
+import org.eclipse.graphiti.mm.pictograms.PictogramLink;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.internal.editor.GraphitiScrollingGraphicalViewer;
 import org.eclipse.graphiti.ui.internal.parts.IPictogramElementEditPart;
@@ -58,9 +60,11 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      */
     public EObject getElement(final Object object) {
         if (object instanceof IPictogramElementEditPart) {
-            PictogramElement pe = ((IPictogramElementEditPart) object).getPictogramElement();
+            PictogramElement pe =
+                    ((IPictogramElementEditPart) object).getPictogramElement();
             if (pe.getLink() != null) {
-                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
+                List<EObject> businessObjects =
+                        pe.getLink().getBusinessObjects();
                 if (!businessObjects.isEmpty()) {
                     return businessObjects.get(0);
                 }
@@ -68,17 +72,20 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
         } else if (object instanceof PictogramElement) {
             PictogramElement pe = (PictogramElement) object;
             if (pe.getLink() != null) {
-                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
+                List<EObject> businessObjects =
+                        pe.getLink().getBusinessObjects();
                 if (!businessObjects.isEmpty()) {
                     return businessObjects.get(0);
                 }
             }
         } else if (object instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable) object;
-            PictogramElement pe = (PictogramElement) adaptable
-                    .getAdapter(PictogramElement.class);
+            PictogramElement pe =
+                    (PictogramElement) adaptable
+                            .getAdapter(PictogramElement.class);
             if (pe != null && pe.getLink() != null) {
-                List<EObject> businessObjects = pe.getLink().getBusinessObjects();
+                List<EObject> businessObjects =
+                        pe.getLink().getBusinessObjects();
                 if (!businessObjects.isEmpty()) {
                     return businessObjects.get(0);
                 }
@@ -108,7 +115,26 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      */
     public EditPart getEditPart(final IEditorPart editorPart,
             final Object object) {
-        // TODO has to be implemented properly
+        if (editorPart instanceof DiagramEditor) {
+            DiagramEditor de = (DiagramEditor) editorPart;
+            Collection<?> col =
+                    de.getGraphicalViewer().getEditPartRegistry().values();
+            for (Object o : col) {
+                if (o instanceof IPictogramElementEditPart) {
+                    IPictogramElementEditPart editPart =
+                            (IPictogramElementEditPart) o;
+                    PictogramLink link =
+                            editPart.getPictogramElement().getLink();
+                    if (link != null) {
+                        EObject eObj = link.getBusinessObjects().get(0);
+                        if (eObj == object) {
+                            return de.getEditPartForPictogramElement(editPart
+                                    .getPictogramElement());
+                        }
+                    }
+                }
+            }
+        }
         return getEditPart(object);
     }
 
@@ -140,8 +166,8 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      *            the diagram's top-level edit part
      * @return the root pictogram element edit part
      */
-    public static IPictogramElementEditPart getEditPartFromDiagramEditorInternal2(
-            final EditPart editPart) {
+    public static IPictogramElementEditPart
+            getEditPartFromDiagramEditorInternal2(final EditPart editPart) {
         EditPartViewer viewer = editPart.getViewer();
         if (viewer instanceof GraphitiScrollingGraphicalViewer) {
             EditPart contents = viewer.getContents();
@@ -165,11 +191,13 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      */
     public ZoomManager getZoomManager(final EditPart editPart) {
         if (editPart instanceof IPictogramElementEditPart) {
-            GraphicalViewer viewer = ((IPictogramElementEditPart) editPart)
-                    .getConfigurationProvider().getDiagramEditor()
-                    .getGraphicalViewer();
+            GraphicalViewer viewer =
+                    ((IPictogramElementEditPart) editPart)
+                            .getConfigurationProvider().getDiagramEditor()
+                            .getGraphicalViewer();
             RootEditPart rep = viewer.getRootEditPart();
-            ScalableRootEditPartAnimated part = (ScalableRootEditPartAnimated) rep;
+            ScalableRootEditPartAnimated part =
+                    (ScalableRootEditPartAnimated) rep;
             return part.getZoomManager();
         }
         return null;
