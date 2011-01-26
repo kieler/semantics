@@ -356,7 +356,17 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
         PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
         link.setPictogramElement(diagram);
         link.getBusinessObjects().add(domainModel);
+        configureDiagram(diagram);
         diagramResource.getContents().add(diagram);
+    }
+    
+    /**
+     * Configure the diagram. May be overridden by subclasses.
+     * 
+     * @param diagram the top-level element of the pictogram model
+     */
+    protected void configureDiagram(final Diagram diagram) {
+    	// the default implementation does nothing
     }
 
     /**
