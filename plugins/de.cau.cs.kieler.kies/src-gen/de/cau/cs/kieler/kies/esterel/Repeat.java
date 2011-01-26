@@ -17,7 +17,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#isPositive <em>Positive</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getDataExpr <em>Data Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -56,30 +56,30 @@ public interface Repeat extends Statement
   void setPositive(boolean value);
 
   /**
-   * Returns the value of the '<em><b>Data Expr</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Data Expr</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Data Expr</em>' containment reference.
-   * @see #setDataExpr(Expression)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getRepeat_DataExpr()
+   * @return the value of the '<em>Expression</em>' containment reference.
+   * @see #setExpression(Expression)
+   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getRepeat_Expression()
    * @model containment="true"
    * @generated
    */
-  Expression getDataExpr();
+  Expression getExpression();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Repeat#getDataExpr <em>Data Expr</em>}' containment reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Repeat#getExpression <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Data Expr</em>' containment reference.
-   * @see #getDataExpr()
+   * @param value the new value of the '<em>Expression</em>' containment reference.
+   * @see #getExpression()
    * @generated
    */
-  void setDataExpr(Expression value);
+  void setExpression(Expression value);
 
   /**
    * Returns the value of the '<em><b>Statement</b></em>' containment reference.

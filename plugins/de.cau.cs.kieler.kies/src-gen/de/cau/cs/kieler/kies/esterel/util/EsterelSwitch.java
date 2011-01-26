@@ -243,13 +243,6 @@ public class EsterelSwitch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsterelPackage.CONSTANT_VALUE:
-      {
-        ConstantValue constantValue = (ConstantValue)theEObject;
-        T result = caseConstantValue(constantValue);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsterelPackage.FUNCTION_DECL:
       {
         FunctionDecl functionDecl = (FunctionDecl)theEObject;
@@ -261,13 +254,6 @@ public class EsterelSwitch<T>
       {
         Function function = (Function)theEObject;
         T result = caseFunction(function);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case EsterelPackage.FUNCTION_CALL:
-      {
-        FunctionCall functionCall = (FunctionCall)theEObject;
-        T result = caseFunctionCall(functionCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -1205,22 +1191,6 @@ public class EsterelSwitch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Constant Value</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Constant Value</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseConstantValue(ConstantValue object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Function Decl</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1248,22 +1218,6 @@ public class EsterelSwitch<T>
    * @generated
    */
   public T caseFunction(Function object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Function Call</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Function Call</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFunctionCall(FunctionCall object)
   {
     return null;
   }

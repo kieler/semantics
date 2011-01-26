@@ -24,7 +24,6 @@ import de.cau.cs.kieler.kies.esterel.Constant;
 import de.cau.cs.kieler.kies.esterel.ConstantDecls;
 import de.cau.cs.kieler.kies.esterel.ConstantExpression;
 import de.cau.cs.kieler.kies.esterel.ConstantRenaming;
-import de.cau.cs.kieler.kies.esterel.ConstantValue;
 import de.cau.cs.kieler.kies.esterel.ConstantWithValue;
 import de.cau.cs.kieler.kies.esterel.DelayEvent;
 import de.cau.cs.kieler.kies.esterel.DelayExpr;
@@ -45,7 +44,6 @@ import de.cau.cs.kieler.kies.esterel.ExecBody;
 import de.cau.cs.kieler.kies.esterel.ExecCase;
 import de.cau.cs.kieler.kies.esterel.Exit;
 import de.cau.cs.kieler.kies.esterel.Function;
-import de.cau.cs.kieler.kies.esterel.FunctionCall;
 import de.cau.cs.kieler.kies.esterel.FunctionDecl;
 import de.cau.cs.kieler.kies.esterel.FunctionExpression;
 import de.cau.cs.kieler.kies.esterel.FunctionRenaming;
@@ -268,13 +266,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass constantValueEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass functionDeclEClass = null;
 
   /**
@@ -283,13 +274,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass functionEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass functionCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1429,36 +1413,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getConstantValue()
-  {
-    return constantValueEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getConstantValue_Value()
-  {
-    return (EAttribute)constantValueEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getConstantValue_IntValue()
-  {
-    return (EAttribute)constantValueEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getFunctionDecl()
   {
     return functionDeclEClass;
@@ -1512,36 +1466,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getFunction_Type()
   {
     return (EReference)functionEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFunctionCall()
-  {
-    return functionCallEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFunctionCall_Func()
-  {
-    return (EReference)functionCallEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getFunctionCall_Kexpressions()
-  {
-    return (EReference)functionCallEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2279,7 +2203,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExit_DataExpr()
+  public EReference getExit_Expression()
   {
     return (EReference)exitEClass.getEStructuralFeatures().get(1);
   }
@@ -2719,7 +2643,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getRepeat_DataExpr()
+  public EReference getRepeat_Expression()
   {
     return (EReference)repeatEClass.getEStructuralFeatures().get(1);
   }
@@ -3119,7 +3043,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSustain_DataExpr()
+  public EReference getSustain_Expression()
   {
     return (EReference)sustainEClass.getEStructuralFeatures().get(2);
   }
@@ -3863,10 +3787,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(constantWithValueEClass, CONSTANT_WITH_VALUE__CONSTANT);
     createEAttribute(constantWithValueEClass, CONSTANT_WITH_VALUE__VALUE);
 
-    constantValueEClass = createEClass(CONSTANT_VALUE);
-    createEAttribute(constantValueEClass, CONSTANT_VALUE__VALUE);
-    createEAttribute(constantValueEClass, CONSTANT_VALUE__INT_VALUE);
-
     functionDeclEClass = createEClass(FUNCTION_DECL);
     createEReference(functionDeclEClass, FUNCTION_DECL__FUNCTIONS);
 
@@ -3874,10 +3794,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEAttribute(functionEClass, FUNCTION__NAME);
     createEReference(functionEClass, FUNCTION__ID_LIST);
     createEReference(functionEClass, FUNCTION__TYPE);
-
-    functionCallEClass = createEClass(FUNCTION_CALL);
-    createEReference(functionCallEClass, FUNCTION_CALL__FUNC);
-    createEReference(functionCallEClass, FUNCTION_CALL__KEXPRESSIONS);
 
     procedureDeclEClass = createEClass(PROCEDURE_DECL);
     createEReference(procedureDeclEClass, PROCEDURE_DECL__PROCEDURES);
@@ -3978,7 +3894,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     exitEClass = createEClass(EXIT);
     createEReference(exitEClass, EXIT__TRAP);
-    createEReference(exitEClass, EXIT__DATA_EXPR);
+    createEReference(exitEClass, EXIT__EXPRESSION);
 
     haltEClass = createEClass(HALT);
 
@@ -4040,7 +3956,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     repeatEClass = createEClass(REPEAT);
     createEAttribute(repeatEClass, REPEAT__POSITIVE);
-    createEReference(repeatEClass, REPEAT__DATA_EXPR);
+    createEReference(repeatEClass, REPEAT__EXPRESSION);
     createEReference(repeatEClass, REPEAT__STATEMENT);
     createEAttribute(repeatEClass, REPEAT__OPT_END);
 
@@ -4092,7 +4008,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     sustainEClass = createEClass(SUSTAIN);
     createEReference(sustainEClass, SUSTAIN__SIGNAL);
     createEAttribute(sustainEClass, SUSTAIN__TICK);
-    createEReference(sustainEClass, SUSTAIN__DATA_EXPR);
+    createEReference(sustainEClass, SUSTAIN__EXPRESSION);
 
     trapEClass = createEClass(TRAP);
     createEReference(trapEClass, TRAP__TRAP_DECL_LIST);
@@ -4337,10 +4253,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getConstantWithValue_Constant(), theKExpressionsPackage.getValuedObject(), null, "constant", null, 0, 1, ConstantWithValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getConstantWithValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantWithValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(constantValueEClass, ConstantValue.class, "ConstantValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getConstantValue_Value(), ecorePackage.getEString(), "value", null, 0, 1, ConstantValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getConstantValue_IntValue(), ecorePackage.getEInt(), "intValue", null, 0, 1, ConstantValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(functionDeclEClass, FunctionDecl.class, "FunctionDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getFunctionDecl_Functions(), this.getFunction(), null, "functions", null, 0, -1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4348,10 +4260,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEAttribute(getFunction_Name(), ecorePackage.getEString(), "name", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFunction_IdList(), this.getTypeIdentifier(), null, "idList", null, 0, -1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getFunction_Type(), this.getTypeIdentifier(), null, "type", null, 0, 1, Function.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(functionCallEClass, FunctionCall.class, "FunctionCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFunctionCall_Func(), this.getFunction(), null, "func", null, 0, 1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFunctionCall_Kexpressions(), theKExpressionsPackage.getExpression(), null, "kexpressions", null, 0, -1, FunctionCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(procedureDeclEClass, ProcedureDecl.class, "ProcedureDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProcedureDecl_Procedures(), this.getProcedure(), null, "procedures", null, 0, -1, ProcedureDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4452,7 +4360,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(exitEClass, Exit.class, "Exit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExit_Trap(), this.getTrapDecl(), null, "trap", null, 0, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExit_DataExpr(), theKExpressionsPackage.getExpression(), null, "dataExpr", null, 0, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExit_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Exit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(haltEClass, Halt.class, "Halt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4514,7 +4422,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(repeatEClass, Repeat.class, "Repeat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRepeat_Positive(), ecorePackage.getEBoolean(), "positive", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRepeat_DataExpr(), theKExpressionsPackage.getExpression(), null, "dataExpr", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRepeat_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRepeat_Statement(), this.getStatement(), null, "statement", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRepeat_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4566,7 +4474,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(sustainEClass, Sustain.class, "Sustain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getSustain_Signal(), theKExpressionsPackage.getISignal(), null, "signal", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getSustain_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSustain_DataExpr(), theKExpressionsPackage.getExpression(), null, "dataExpr", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSustain_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Sustain.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(trapEClass, Trap.class, "Trap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTrap_TrapDeclList(), this.getTrapDeclList(), null, "trapDeclList", null, 0, 1, Trap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -4,7 +4,7 @@ generate esterel "http://www.cau.de/cs/kieler/kies/Esterel"
 import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore" as kexpressions
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
-//	root rule. one esterel file can contain multiple modules
+//	root rule. an esterel file can contain multiple modules
 Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 	(modules+=Module)*;
 
@@ -38,7 +38,7 @@ ChannelDescription:
 	| ("(" type=EsterelTypeIdentifier ")")
 	| (":=" expression=Expression ":" type=EsterelTypeIdentifier);
 
-	// overwrite to allow function references for signal declaration
+	// overwrite to allow function references for signal declarationd
 EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
 	type=ValueType
 	| typeID=ID
@@ -166,7 +166,7 @@ VarStatement returns Statement:
 	// Assignment
 // !-(assign) -------------------------------------
 Assignment:
-	var=[kexpressions::IVariable|ID] ":=" expr=DataExpr;
+	var=[kexpressions::IVariable|ID] ":=" expr=Expression;
 	// -!
 
 // !-(abort) --> B.4.2 abort: Strong Preemption
@@ -230,7 +230,7 @@ AwaitEnd:
 ProcCall:
 	"call" proc=[Procedure|ID] "(" (varList+=[kexpressions::IVariable|ID] ("," varList+=[kexpressions::IVariable|ID])*)?
 	")"
-	"(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+	"(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 
 	// --> B.4.5 do-upto: Conditional Iteration (deprecated)
 // --> B.4.6 do-watching: Strong Preemption (deprecated)
@@ -251,7 +251,7 @@ DoWatchingEnd:
 // --> B.4.7 emit: Signal Emission <--
 // !-(emit)2 -------------------------------------
 Emit:
-	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=DataExpr ")")?;
+	"emit" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expr=Expression ")")?;
 	// -!
 // --> B.4.8 every-do: Conditional Iteration
 // !-(every)-------------------------------------
@@ -262,7 +262,7 @@ EveryDo:
 // --> B.4.10 exit: Trap Exit
 // !-(exit) -------------------------------------
 Exit:
-	"exit" trap=[TrapDecl|ID] ("(" dataExpr=DataExpr ")")?;
+	"exit" trap=[TrapDecl|ID] ("(" expression=Expression ")")?;
 	// -!
 // --> B.4.11 halt: Wait Forever
 // !-(halt) -------------------------------------
@@ -272,10 +272,10 @@ Halt:
 // --> B.4.12: if: Conditional for Data
 // !-(if)-------------------------------------
 IfTest:
-	"if" expr=DataExpr (thenPart=ThenPart)? (elsif+=ElsIf)* (elsePart=ElsePart)? "end" (optEnd="if")?;
+	"if" expr=Expression (thenPart=ThenPart)? (elsif+=ElsIf)* (elsePart=ElsePart)? "end" (optEnd="if")?;
 
 ElsIf:
-	"elsif" expr=DataExpr (thenPart=ThenPart)?;
+	"elsif" expr=Expression (thenPart=ThenPart)?;
 
 ThenPart:
 	"then" statement=Statement;
@@ -335,7 +335,7 @@ PresentEvent:
 // --> B.4.18 repeat: Iterate a Fixed Number of Times
 // -------------------------------------
 Repeat:
-	(positive?="positive")? "repeat" dataExpr=DataExpr "times" statement=Statement "end" (optEnd="repeat")?;
+	(positive?="positive")? "repeat" expression=Expression "times" statement=Statement "end" (optEnd="repeat")?;
 
 	// --> B.4.19 run: Module Instantiation
 // -------------------------------------
@@ -390,7 +390,7 @@ Suspend:
 // --> B.4.22 sustain: Emit a Signal Indefinitely
 // !-(sustain) -------------------------------------
 Sustain:
-	"sustain" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" dataExpr=DataExpr ")")?;
+	"sustain" ((signal=[kexpressions::ISignal|ID]) | tick=Tick) ("(" expression=Expression ")")?;
 	// -!
 // --> B.4.23 trap: TrapDeclaration and Handling
 // !-(trap)-------------------------------------
@@ -416,12 +416,7 @@ LocalVariable:
 // ===            B.3 Expressions             ===
 // ==============================================
 
-// In the literature sometimes exists a differentiation of DataExpression and SignalExpression
-// for that reason the rule is renamed here for better readability
-DataExpr returns kexpressions::Expression:
-	Expression;
-
-	// esterel are a bit richer than what is provided by kexpressions. These rules are intoduced here
+// esterel is a bit richer than what is provided by kexpressions. These rules are introduced here
 // care about order of the rules! 
 AtomicExpression returns kexpressions::Expression:
 	FunctionExpression
@@ -436,7 +431,7 @@ TrapExpression returns kexpressions::Expression:
 	{TrapExpression} "??" trap=[kexpressions::ISignal|ID];
 
 FunctionExpression returns kexpressions::Expression:
-	{FunctionExpression} function=[Function|ID] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+	{FunctionExpression} function=[Function|ID] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 
 ConstantExpression returns kexpressions::Expression:
 	{ConstantExpression} (constant=[Constant|ID] | value=ConstantAtom);
@@ -479,7 +474,7 @@ TrapReferenceExpr returns kexpressions::ValuedObjectReference:
 	// --> B.3.4 Delay Expressions <--
 // -------------------------------------
 DelayExpr:
-	(expr=DataExpr event=DelayEvent) | event=DelayEvent | (isImmediate?="immediate" event=DelayEvent);
+	(expr=Expression event=DelayEvent) | event=DelayEvent | (isImmediate?="immediate" event=DelayEvent);
 
 DelayEvent:
 	tick=Tick | expr=SignalReferenceExpr | "[" expr=SignalExpression "]";

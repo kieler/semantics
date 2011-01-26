@@ -28,7 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.RepeatImpl#isPositive <em>Positive</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.RepeatImpl#getDataExpr <em>Data Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.RepeatImpl#getExpression <em>Expression</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.RepeatImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.RepeatImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -59,14 +59,14 @@ public class RepeatImpl extends StatementImpl implements Repeat
   protected boolean positive = POSITIVE_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getDataExpr() <em>Data Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDataExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression dataExpr;
+  protected Expression expression;
 
   /**
    * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
@@ -147,9 +147,9 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getDataExpr()
+  public Expression getExpression()
   {
-    return dataExpr;
+    return expression;
   }
 
   /**
@@ -157,13 +157,13 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDataExpr(Expression newDataExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldDataExpr = dataExpr;
-    dataExpr = newDataExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__DATA_EXPR, oldDataExpr, newDataExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -174,20 +174,20 @@ public class RepeatImpl extends StatementImpl implements Repeat
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDataExpr(Expression newDataExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newDataExpr != dataExpr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (dataExpr != null)
-        msgs = ((InternalEObject)dataExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.REPEAT__DATA_EXPR, null, msgs);
-      if (newDataExpr != null)
-        msgs = ((InternalEObject)newDataExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.REPEAT__DATA_EXPR, null, msgs);
-      msgs = basicSetDataExpr(newDataExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.REPEAT__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.REPEAT__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__DATA_EXPR, newDataExpr, newDataExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.REPEAT__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -271,8 +271,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
   {
     switch (featureID)
     {
-      case EsterelPackage.REPEAT__DATA_EXPR:
-        return basicSetDataExpr(null, msgs);
+      case EsterelPackage.REPEAT__EXPRESSION:
+        return basicSetExpression(null, msgs);
       case EsterelPackage.REPEAT__STATEMENT:
         return basicSetStatement(null, msgs);
     }
@@ -291,8 +291,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
     {
       case EsterelPackage.REPEAT__POSITIVE:
         return isPositive();
-      case EsterelPackage.REPEAT__DATA_EXPR:
-        return getDataExpr();
+      case EsterelPackage.REPEAT__EXPRESSION:
+        return getExpression();
       case EsterelPackage.REPEAT__STATEMENT:
         return getStatement();
       case EsterelPackage.REPEAT__OPT_END:
@@ -314,8 +314,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
       case EsterelPackage.REPEAT__POSITIVE:
         setPositive((Boolean)newValue);
         return;
-      case EsterelPackage.REPEAT__DATA_EXPR:
-        setDataExpr((Expression)newValue);
+      case EsterelPackage.REPEAT__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
       case EsterelPackage.REPEAT__STATEMENT:
         setStatement((Statement)newValue);
@@ -340,8 +340,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
       case EsterelPackage.REPEAT__POSITIVE:
         setPositive(POSITIVE_EDEFAULT);
         return;
-      case EsterelPackage.REPEAT__DATA_EXPR:
-        setDataExpr((Expression)null);
+      case EsterelPackage.REPEAT__EXPRESSION:
+        setExpression((Expression)null);
         return;
       case EsterelPackage.REPEAT__STATEMENT:
         setStatement((Statement)null);
@@ -365,8 +365,8 @@ public class RepeatImpl extends StatementImpl implements Repeat
     {
       case EsterelPackage.REPEAT__POSITIVE:
         return positive != POSITIVE_EDEFAULT;
-      case EsterelPackage.REPEAT__DATA_EXPR:
-        return dataExpr != null;
+      case EsterelPackage.REPEAT__EXPRESSION:
+        return expression != null;
       case EsterelPackage.REPEAT__STATEMENT:
         return statement != null;
       case EsterelPackage.REPEAT__OPT_END:

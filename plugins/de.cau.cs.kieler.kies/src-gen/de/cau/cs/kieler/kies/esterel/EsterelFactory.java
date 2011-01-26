@@ -198,15 +198,6 @@ public interface EsterelFactory extends EFactory
   ConstantWithValue createConstantWithValue();
 
   /**
-   * Returns a new object of class '<em>Constant Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Constant Value</em>'.
-   * @generated
-   */
-  ConstantValue createConstantValue();
-
-  /**
    * Returns a new object of class '<em>Function Decl</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -223,15 +214,6 @@ public interface EsterelFactory extends EFactory
    * @generated
    */
   Function createFunction();
-
-  /**
-   * Returns a new object of class '<em>Function Call</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Function Call</em>'.
-   * @generated
-   */
-  FunctionCall createFunctionCall();
 
   /**
    * Returns a new object of class '<em>Procedure Decl</em>'.

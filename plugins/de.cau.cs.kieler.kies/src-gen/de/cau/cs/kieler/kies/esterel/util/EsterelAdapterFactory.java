@@ -183,11 +183,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
         return createConstantWithValueAdapter();
       }
       @Override
-      public Adapter caseConstantValue(ConstantValue object)
-      {
-        return createConstantValueAdapter();
-      }
-      @Override
       public Adapter caseFunctionDecl(FunctionDecl object)
       {
         return createFunctionDeclAdapter();
@@ -196,11 +191,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
       public Adapter caseFunction(Function object)
       {
         return createFunctionAdapter();
-      }
-      @Override
-      public Adapter caseFunctionCall(FunctionCall object)
-      {
-        return createFunctionCallAdapter();
       }
       @Override
       public Adapter caseProcedureDecl(ProcedureDecl object)
@@ -960,21 +950,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kies.esterel.ConstantValue <em>Constant Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kies.esterel.ConstantValue
-   * @generated
-   */
-  public Adapter createConstantValueAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kies.esterel.FunctionDecl <em>Function Decl</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -1000,21 +975,6 @@ public class EsterelAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createFunctionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.kies.esterel.FunctionCall <em>Function Call</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.kies.esterel.FunctionCall
-   * @generated
-   */
-  public Adapter createFunctionCallAdapter()
   {
     return null;
   }

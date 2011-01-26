@@ -87,10 +87,8 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.CONSTANT_DECLS: return createConstantDecls();
       case EsterelPackage.ONE_TYPE_CONSTANT_DECLS: return createOneTypeConstantDecls();
       case EsterelPackage.CONSTANT_WITH_VALUE: return createConstantWithValue();
-      case EsterelPackage.CONSTANT_VALUE: return createConstantValue();
       case EsterelPackage.FUNCTION_DECL: return createFunctionDecl();
       case EsterelPackage.FUNCTION: return createFunction();
-      case EsterelPackage.FUNCTION_CALL: return createFunctionCall();
       case EsterelPackage.PROCEDURE_DECL: return createProcedureDecl();
       case EsterelPackage.PROCEDURE: return createProcedure();
       case EsterelPackage.TASK_DECL: return createTaskDecl();
@@ -391,17 +389,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public ConstantValue createConstantValue()
-  {
-    ConstantValueImpl constantValue = new ConstantValueImpl();
-    return constantValue;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public FunctionDecl createFunctionDecl()
   {
     FunctionDeclImpl functionDecl = new FunctionDeclImpl();
@@ -417,17 +404,6 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     FunctionImpl function = new FunctionImpl();
     return function;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FunctionCall createFunctionCall()
-  {
-    FunctionCallImpl functionCall = new FunctionCallImpl();
-    return functionCall;
   }
 
   /**

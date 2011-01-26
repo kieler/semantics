@@ -23,7 +23,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cModulesAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cModulesModuleParserRuleCall_0 = (RuleCall)cModulesAssignment.eContents().get(0);
 		
-		////	root rule. one esterel file can contain multiple modules
+		////	root rule. an esterel file can contain multiple modules
 		//
 		//Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 		//	modules+=Module*;
@@ -51,6 +51,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cEndEndModuleParserRuleCall_5_0 = (RuleCall)cEndAssignment_5.eContents().get(0);
 		
 		//// module consists of interface and body
+		//
+		//// !-(module)
 		//
 		//Module:
 		//	"module" name=ID ":" interface=ModuleInterface? body=ModuleBody end=EndModule;
@@ -125,8 +127,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cStatementsAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cStatementsStatementParserRuleCall_0 = (RuleCall)cStatementsAssignment.eContents().get(0);
 		
-		//// help function to clearly divide a Module into interface and body	
-		//
 		//ModuleBody:
 		//	statements+=Statement;
 		public ParserRule getRule() { return rule; }
@@ -158,6 +158,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cIntProcedureDeclsAssignment_7 = (Assignment)cAlternatives.eContents().get(7);
 		private final RuleCall cIntProcedureDeclsProcedureDeclParserRuleCall_7_0 = (RuleCall)cIntProcedureDeclsAssignment_7.eContents().get(0);
 		
+		//// -!
+		//
 		////            Interface Declarations
 		//
 		//// ----------------------------------------------
@@ -326,7 +328,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOperatorAssignment_2_1_3_1 = (Assignment)cAlternatives_2_1_3.eContents().get(1);
 		private final RuleCall cOperatorCombineOperatorEnumRuleCall_2_1_3_1_0 = (RuleCall)cOperatorAssignment_2_1_3_1.eContents().get(0);
 		
-		//// overwrite to allow function references for signal declaration
+		//// overwrite to allow function references for signal declarationd
 		//
 		//EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
 		//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
@@ -505,7 +507,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// ==> Local Signal Declaration
 		//
-		//// -------------------------------------
+		//// !-(localsignal) -------------------------------------
 		//
 		//LocalSignalDecl:
 		//	"signal" signalList=LocalSignalList "in" statement=Statement "end" optEnd="signal"?;
@@ -594,6 +596,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSensorsSensorWithTypeParserRuleCall_2_1_0 = (RuleCall)cSensorsAssignment_2_1.eContents().get(0);
 		private final Keyword cSemicolonKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
+		//// -!
+		//
 		//// ==> Sensor
 		//
 		//// -------------------------------------
@@ -1162,34 +1166,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getSTRINGTerminalRuleCall_3() { return cSTRINGTerminalRuleCall_3; }
 	}
 
-	public class ConstantValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantValue");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Assignment cValueAssignment_0 = (Assignment)cAlternatives.eContents().get(0);
-		private final RuleCall cValueConstantLiteralParserRuleCall_0_0 = (RuleCall)cValueAssignment_0.eContents().get(0);
-		private final Assignment cIntValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cIntValueINTTerminalRuleCall_1_0 = (RuleCall)cIntValueAssignment_1.eContents().get(0);
-		
-		//ConstantValue:
-		//	value=ConstantLiteral | intValue=INT;
-		public ParserRule getRule() { return rule; }
-
-		//value=ConstantLiteral | intValue=INT
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//value=ConstantLiteral
-		public Assignment getValueAssignment_0() { return cValueAssignment_0; }
-
-		//ConstantLiteral
-		public RuleCall getValueConstantLiteralParserRuleCall_0_0() { return cValueConstantLiteralParserRuleCall_0_0; }
-
-		//intValue=INT
-		public Assignment getIntValueAssignment_1() { return cIntValueAssignment_1; }
-
-		//INT
-		public RuleCall getIntValueINTTerminalRuleCall_1_0() { return cIntValueINTTerminalRuleCall_1_0; }
-	}
-
 	public class FunctionDeclElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionDecl");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -1304,66 +1280,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//TypeIdentifier
 		public RuleCall getTypeTypeIdentifierParserRuleCall_5_0() { return cTypeTypeIdentifierParserRuleCall_5_0; }
-	}
-
-	public class FunctionCallElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FunctionCall");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cFuncAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final CrossReference cFuncFunctionCrossReference_0_0 = (CrossReference)cFuncAssignment_0.eContents().get(0);
-		private final RuleCall cFuncFunctionIDTerminalRuleCall_0_0_1 = (RuleCall)cFuncFunctionCrossReference_0_0.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Assignment cKexpressionsAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
-		private final RuleCall cKexpressionsExpressionParserRuleCall_2_0_0 = (RuleCall)cKexpressionsAssignment_2_0.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cGroup_2.eContents().get(1);
-		private final Keyword cCommaKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cKexpressionsAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cKexpressionsExpressionParserRuleCall_2_1_1_0 = (RuleCall)cKexpressionsAssignment_2_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//FunctionCall:
-		//	func=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
-		public ParserRule getRule() { return rule; }
-
-		//func=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")"
-		public Group getGroup() { return cGroup; }
-
-		//func=[Function]
-		public Assignment getFuncAssignment_0() { return cFuncAssignment_0; }
-
-		//[Function]
-		public CrossReference getFuncFunctionCrossReference_0_0() { return cFuncFunctionCrossReference_0_0; }
-
-		//ID
-		public RuleCall getFuncFunctionIDTerminalRuleCall_0_0_1() { return cFuncFunctionIDTerminalRuleCall_0_0_1; }
-
-		//"("
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-
-		//(kexpressions+=Expression ("," kexpressions+=Expression)*)?
-		public Group getGroup_2() { return cGroup_2; }
-
-		//kexpressions+=Expression
-		public Assignment getKexpressionsAssignment_2_0() { return cKexpressionsAssignment_2_0; }
-
-		//Expression
-		public RuleCall getKexpressionsExpressionParserRuleCall_2_0_0() { return cKexpressionsExpressionParserRuleCall_2_0_0; }
-
-		//("," kexpressions+=Expression)*
-		public Group getGroup_2_1() { return cGroup_2_1; }
-
-		//","
-		public Keyword getCommaKeyword_2_1_0() { return cCommaKeyword_2_1_0; }
-
-		//kexpressions+=Expression
-		public Assignment getKexpressionsAssignment_2_1_1() { return cKexpressionsAssignment_2_1_1; }
-
-		//Expression
-		public RuleCall getKexpressionsExpressionParserRuleCall_2_1_1_0() { return cKexpressionsExpressionParserRuleCall_2_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
 	}
 
 	public class ProcedureDeclElements extends AbstractParserRuleElementFinder {
@@ -1662,6 +1578,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// ==============================================
 		//
+		//// !-(parallel)
+		//
 		//Statement:
 		//	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
 		public ParserRule getRule() { return rule; }
@@ -1717,6 +1635,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVarStatementParserRuleCall_23 = (RuleCall)cAlternatives.eContents().get(23);
 		private final RuleCall cWeakAbortParserRuleCall_24 = (RuleCall)cAlternatives.eContents().get(24);
 		
+		//// -!
+		//
 		//AtomicStatement returns Statement:
 		//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
 		//	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort;
@@ -1815,6 +1735,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// --> B.4.1 Control Flow Operators <--	
 		//
+		//// !-(sequence)
+		//
 		//Sequence returns Statement:
 		//	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
 		public ParserRule getRule() { return rule; }
@@ -1852,6 +1774,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatementStatementParserRuleCall_1_0 = (RuleCall)cStatementAssignment_1.eContents().get(0);
 		private final Keyword cRightSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		
+		//// -!
+		//
 		//Block:
 		//	"[" statement=Statement "]";
 		public ParserRule getRule() { return rule; }
@@ -1896,17 +1820,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVarIVariableIDTerminalRuleCall_0_0_1 = (RuleCall)cVarIVariableCrossReference_0_0.eContents().get(1);
 		private final Keyword cColonEqualsSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cExprAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExprDataExprParserRuleCall_2_0 = (RuleCall)cExprAssignment_2.eContents().get(0);
+		private final RuleCall cExprExpressionParserRuleCall_2_0 = (RuleCall)cExprAssignment_2.eContents().get(0);
 		
 		//// Assignment
 		//
-		//// -------------------------------------
+		//// !-(assign) -------------------------------------
 		//
 		//Assignment:
-		//	var=[kexpressions::IVariable] ":=" expr=DataExpr;
+		//	var=[kexpressions::IVariable] ":=" expr=Expression;
 		public ParserRule getRule() { return rule; }
 
-		//var=[kexpressions::IVariable] ":=" expr=DataExpr
+		//var=[kexpressions::IVariable] ":=" expr=Expression
 		public Group getGroup() { return cGroup; }
 
 		//var=[kexpressions::IVariable]
@@ -1921,11 +1845,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//":="
 		public Keyword getColonEqualsSignKeyword_1() { return cColonEqualsSignKeyword_1; }
 
-		//expr=DataExpr
+		//expr=Expression
 		public Assignment getExprAssignment_2() { return cExprAssignment_2; }
 
-		//DataExpr
-		public RuleCall getExprDataExprParserRuleCall_2_0() { return cExprDataExprParserRuleCall_2_0; }
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_2_0() { return cExprExpressionParserRuleCall_2_0; }
 	}
 
 	public class AbortElements extends AbstractParserRuleElementFinder {
@@ -1938,7 +1862,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cBodyAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cBodyAbortBodyParserRuleCall_3_0 = (RuleCall)cBodyAssignment_3.eContents().get(0);
 		
-		//// --> B.4.2 abort: Strong Preemption
+		//// -!
+		//
+		//// !-(abort) --> B.4.2 abort: Strong Preemption
 		//
 		//// -------------------------------------
 		//
@@ -2128,6 +2054,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cBodyAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final RuleCall cBodyWeakAbortBodyParserRuleCall_5_0 = (RuleCall)cBodyAssignment_5.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.25 weak abort: Weak Preemption
 		//
 		//// -------------------------------------
@@ -2337,7 +2265,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// --> B.4.3 await: Strong Preemption
 		//
-		//// -------------------------------------
+		//// !-(await) -------------------------------------
 		//
 		//Await:
 		//	"await" body=AwaitBody;
@@ -2374,26 +2302,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 		//AwaitCase
 		public RuleCall getAwaitCaseParserRuleCall_1() { return cAwaitCaseParserRuleCall_1; }
-	}
-
-	public class AwaitEndElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitEnd");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cAwaitKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		
-		//AwaitEnd returns ecore::EString:
-		//	"end" "await"?;
-		public ParserRule getRule() { return rule; }
-
-		//"end" "await"?
-		public Group getGroup() { return cGroup; }
-
-		//"end"
-		public Keyword getEndKeyword_0() { return cEndKeyword_0; }
-
-		//"await"?
-		public Keyword getAwaitKeyword_1() { return cAwaitKeyword_1; }
 	}
 
 	public class AwaitInstanceElements extends AbstractParserRuleElementFinder {
@@ -2476,6 +2384,26 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getEndAwaitEndParserRuleCall_2_0() { return cEndAwaitEndParserRuleCall_2_0; }
 	}
 
+	public class AwaitEndElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AwaitEnd");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cAwaitKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		
+		//AwaitEnd returns ecore::EString:
+		//	"end" "await"?;
+		public ParserRule getRule() { return rule; }
+
+		//"end" "await"?
+		public Group getGroup() { return cGroup; }
+
+		//"end"
+		public Keyword getEndKeyword_0() { return cEndKeyword_0; }
+
+		//"await"?
+		public Keyword getAwaitKeyword_1() { return cAwaitKeyword_1; }
+	}
+
 	public class ProcCallElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ProcCall");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -2497,24 +2425,26 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
 		private final Assignment cKexpressionsAssignment_6_0 = (Assignment)cGroup_6.eContents().get(0);
-		private final RuleCall cKexpressionsDataExprParserRuleCall_6_0_0 = (RuleCall)cKexpressionsAssignment_6_0.eContents().get(0);
+		private final RuleCall cKexpressionsExpressionParserRuleCall_6_0_0 = (RuleCall)cKexpressionsAssignment_6_0.eContents().get(0);
 		private final Group cGroup_6_1 = (Group)cGroup_6.eContents().get(1);
 		private final Keyword cCommaKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
 		private final Assignment cKexpressionsAssignment_6_1_1 = (Assignment)cGroup_6_1.eContents().get(1);
-		private final RuleCall cKexpressionsDataExprParserRuleCall_6_1_1_0 = (RuleCall)cKexpressionsAssignment_6_1_1.eContents().get(0);
+		private final RuleCall cKexpressionsExpressionParserRuleCall_6_1_1_0 = (RuleCall)cKexpressionsAssignment_6_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
+		//// -!
+		//
 		//// --> B.4.4 call: Procedure Call
 		//
 		//// -------------------------------------
 		//
 		//ProcCall:
 		//	"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
-		//	(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+		//	(kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 		public ParserRule getRule() { return rule; }
 
 		//"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
-		//(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")"
+		//(kexpressions+=Expression ("," kexpressions+=Expression)*)? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"call"
@@ -2565,26 +2495,26 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_5() { return cLeftParenthesisKeyword_5; }
 
-		//(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)?
+		//(kexpressions+=Expression ("," kexpressions+=Expression)*)?
 		public Group getGroup_6() { return cGroup_6; }
 
-		//kexpressions+=DataExpr
+		//kexpressions+=Expression
 		public Assignment getKexpressionsAssignment_6_0() { return cKexpressionsAssignment_6_0; }
 
-		//DataExpr
-		public RuleCall getKexpressionsDataExprParserRuleCall_6_0_0() { return cKexpressionsDataExprParserRuleCall_6_0_0; }
+		//Expression
+		public RuleCall getKexpressionsExpressionParserRuleCall_6_0_0() { return cKexpressionsExpressionParserRuleCall_6_0_0; }
 
-		//("," kexpressions+=DataExpr)*
+		//("," kexpressions+=Expression)*
 		public Group getGroup_6_1() { return cGroup_6_1; }
 
 		//","
 		public Keyword getCommaKeyword_6_1_0() { return cCommaKeyword_6_1_0; }
 
-		//kexpressions+=DataExpr
+		//kexpressions+=Expression
 		public Assignment getKexpressionsAssignment_6_1_1() { return cKexpressionsAssignment_6_1_1; }
 
-		//DataExpr
-		public RuleCall getKexpressionsDataExprParserRuleCall_6_1_1_0() { return cKexpressionsDataExprParserRuleCall_6_1_1_0; }
+		//Expression
+		public RuleCall getKexpressionsExpressionParserRuleCall_6_1_1_0() { return cKexpressionsExpressionParserRuleCall_6_1_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_7() { return cRightParenthesisKeyword_7; }
@@ -2606,7 +2536,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//
 		//// --> B.4.6 do-watching: Strong Preemption (deprecated)
 		//
-		//// -------------------------------------
+		//// !-(doupto) -------------------------------------
 		//
 		//Do:
 		//	"do" statement=Statement (end=DoUpto | end=DoWatching);
@@ -2745,18 +2675,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
 		private final Assignment cExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cExprDataExprParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
+		private final RuleCall cExprExpressionParserRuleCall_2_1_0 = (RuleCall)cExprAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
+		//// -!
+		//
 		//// --> B.4.7 emit: Signal Emission <--
 		//
-		//// -------------------------------------
+		//// !-(emit)2 -------------------------------------
 		//
 		//Emit:
-		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=DataExpr ")")?;
+		//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=DataExpr ")")?
+		//"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"emit"
@@ -2780,17 +2712,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Tick
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
 
-		//("(" expr=DataExpr ")")?
+		//("(" expr=Expression ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//expr=DataExpr
+		//expr=Expression
 		public Assignment getExprAssignment_2_1() { return cExprAssignment_2_1; }
 
-		//DataExpr
-		public RuleCall getExprDataExprParserRuleCall_2_1_0() { return cExprDataExprParserRuleCall_2_1_0; }
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_2_1_0() { return cExprExpressionParserRuleCall_2_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
@@ -2809,9 +2741,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_5 = (Assignment)cGroup.eContents().get(5);
 		private final Keyword cOptEndEveryKeyword_5_0 = (Keyword)cOptEndAssignment_5.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.8 every-do: Conditional Iteration
 		//
-		//// -------------------------------------
+		//// !-(every)-------------------------------------
 		//
 		//EveryDo:
 		//	"every" delay=DelayExpr "do" statement=Statement "end" optEnd="every"?;
@@ -2857,19 +2791,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTrapTrapDeclIDTerminalRuleCall_1_0_1 = (RuleCall)cTrapTrapDeclCrossReference_1_0.eContents().get(1);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cDataExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cDataExprDataExprParserRuleCall_2_1_0 = (RuleCall)cDataExprAssignment_2_1.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_1_0 = (RuleCall)cExpressionAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
+		//// -!
+		//
 		//// --> B.4.10 exit: Trap Exit
 		//
-		//// -------------------------------------
+		//// !-(exit) -------------------------------------
 		//
 		//Exit:
-		//	"exit" trap=[TrapDecl] ("(" dataExpr=DataExpr ")")?;
+		//	"exit" trap=[TrapDecl] ("(" expression=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"exit" trap=[TrapDecl] ("(" dataExpr=DataExpr ")")?
+		//"exit" trap=[TrapDecl] ("(" expression=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"exit"
@@ -2884,17 +2820,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getTrapTrapDeclIDTerminalRuleCall_1_0_1() { return cTrapTrapDeclIDTerminalRuleCall_1_0_1; }
 
-		//("(" dataExpr=DataExpr ")")?
+		//("(" expression=Expression ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//dataExpr=DataExpr
-		public Assignment getDataExprAssignment_2_1() { return cDataExprAssignment_2_1; }
+		//expression=Expression
+		public Assignment getExpressionAssignment_2_1() { return cExpressionAssignment_2_1; }
 
-		//DataExpr
-		public RuleCall getDataExprDataExprParserRuleCall_2_1_0() { return cDataExprDataExprParserRuleCall_2_1_0; }
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_1_0() { return cExpressionExpressionParserRuleCall_2_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
@@ -2906,9 +2842,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Action cHaltAction_0 = (Action)cGroup.eContents().get(0);
 		private final Keyword cHaltKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
+		//// -!
+		//
 		//// --> B.4.11 halt: Wait Forever
 		//
-		//// -------------------------------------
+		//// !-(halt) -------------------------------------
 		//
 		//Halt:
 		//	{Halt} "halt";
@@ -2929,7 +2867,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cIfKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cExprAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cExprDataExprParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
+		private final RuleCall cExprExpressionParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
 		private final Assignment cThenPartAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cThenPartThenPartParserRuleCall_2_0 = (RuleCall)cThenPartAssignment_2.eContents().get(0);
 		private final Assignment cElsifAssignment_3 = (Assignment)cGroup.eContents().get(3);
@@ -2940,25 +2878,27 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final Keyword cOptEndIfKeyword_6_0 = (Keyword)cOptEndAssignment_6.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.12: if: Conditional for Data
 		//
-		//// -------------------------------------
+		//// !-(if)-------------------------------------
 		//
 		//IfTest:
-		//	"if" expr=DataExpr thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
+		//	"if" expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
 		public ParserRule getRule() { return rule; }
 
-		//"if" expr=DataExpr thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?
+		//"if" expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?
 		public Group getGroup() { return cGroup; }
 
 		//"if"
 		public Keyword getIfKeyword_0() { return cIfKeyword_0; }
 
-		//expr=DataExpr
+		//expr=Expression
 		public Assignment getExprAssignment_1() { return cExprAssignment_1; }
 
-		//DataExpr
-		public RuleCall getExprDataExprParserRuleCall_1_0() { return cExprDataExprParserRuleCall_1_0; }
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_1_0() { return cExprExpressionParserRuleCall_1_0; }
 
 		//thenPart=ThenPart?
 		public Assignment getThenPartAssignment_2() { return cThenPartAssignment_2; }
@@ -2993,25 +2933,25 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cElsifKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cExprAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cExprDataExprParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
+		private final RuleCall cExprExpressionParserRuleCall_1_0 = (RuleCall)cExprAssignment_1.eContents().get(0);
 		private final Assignment cThenPartAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cThenPartThenPartParserRuleCall_2_0 = (RuleCall)cThenPartAssignment_2.eContents().get(0);
 		
 		//ElsIf:
-		//	"elsif" expr=DataExpr thenPart=ThenPart?;
+		//	"elsif" expr=Expression thenPart=ThenPart?;
 		public ParserRule getRule() { return rule; }
 
-		//"elsif" expr=DataExpr thenPart=ThenPart?
+		//"elsif" expr=Expression thenPart=ThenPart?
 		public Group getGroup() { return cGroup; }
 
 		//"elsif"
 		public Keyword getElsifKeyword_0() { return cElsifKeyword_0; }
 
-		//expr=DataExpr
+		//expr=Expression
 		public Assignment getExprAssignment_1() { return cExprAssignment_1; }
 
-		//DataExpr
-		public RuleCall getExprDataExprParserRuleCall_1_0() { return cExprDataExprParserRuleCall_1_0; }
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_1_0() { return cExprExpressionParserRuleCall_1_0; }
 
 		//thenPart=ThenPart?
 		public Assignment getThenPartAssignment_2() { return cThenPartAssignment_2; }
@@ -3080,11 +3020,13 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cEndAssignment_2_1 = (Assignment)cAlternatives_2.eContents().get(1);
 		private final RuleCall cEndLoopEachParserRuleCall_2_1_0 = (RuleCall)cEndAssignment_2_1.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.13 loop: Infinite Loop
 		//
 		//// --> B.4.14 loop-each: Condition Iteration
 		//
-		//// -------------------------------------
+		//// !-(loop)-------------------------------------
 		//
 		//Loop:
 		//	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
@@ -3196,9 +3138,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNothingKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Action cNothingAction_1 = (Action)cGroup.eContents().get(1);
 		
+		//// -!
+		//
 		//// --> B.4.15 nothing: No Operation
 		//
-		//// -------------------------------------
+		//// !-(nothing) -------------------------------------
 		//
 		//Nothing:
 		//	"nothing" {Nothing};
@@ -3220,9 +3164,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cPauseKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Action cPauseAction_1 = (Action)cGroup.eContents().get(1);
 		
+		//// -!
+		//
 		//// --> B.4.16 pause: Unit Delay
 		//
-		//// -------------------------------------
+		//// !-(pause) -------------------------------------
 		//
 		//Pause:
 		//	"pause" {Pause};
@@ -3250,9 +3196,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cOptEndPresentKeyword_4_0 = (Keyword)cOptEndAssignment_4.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.17 present: Conditional for Signals
 		//
-		//// -------------------------------------
+		//// !-(present) -------------------------------------
 		//
 		//Present:
 		//	"present" body=PresentBody elsePart=ElsePart? "end" optEnd="present"?;
@@ -3456,8 +3404,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPositiveAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final Keyword cPositivePositiveKeyword_0_0 = (Keyword)cPositiveAssignment_0.eContents().get(0);
 		private final Keyword cRepeatKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cDataExprAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cDataExprDataExprParserRuleCall_2_0 = (RuleCall)cDataExprAssignment_2.eContents().get(0);
+		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
 		private final Keyword cTimesKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cStatementAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final RuleCall cStatementStatementParserRuleCall_4_0 = (RuleCall)cStatementAssignment_4.eContents().get(0);
@@ -3465,15 +3413,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final Keyword cOptEndRepeatKeyword_6_0 = (Keyword)cOptEndAssignment_6.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.18 repeat: Iterate a Fixed Number of Times
 		//
 		//// -------------------------------------
 		//
 		//Repeat:
-		//	positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" optEnd="repeat"?;
+		//	positive?="positive"? "repeat" expression=Expression "times" statement=Statement "end" optEnd="repeat"?;
 		public ParserRule getRule() { return rule; }
 
-		//positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" optEnd="repeat"?
+		//positive?="positive"? "repeat" expression=Expression "times" statement=Statement "end" optEnd="repeat"?
 		public Group getGroup() { return cGroup; }
 
 		//positive?="positive"?
@@ -3485,11 +3435,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"repeat"
 		public Keyword getRepeatKeyword_1() { return cRepeatKeyword_1; }
 
-		//dataExpr=DataExpr
-		public Assignment getDataExprAssignment_2() { return cDataExprAssignment_2; }
+		//expression=Expression
+		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
 
-		//DataExpr
-		public RuleCall getDataExprDataExprParserRuleCall_2_0() { return cDataExprDataExprParserRuleCall_2_0; }
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_0() { return cExpressionExpressionParserRuleCall_2_0; }
 
 		//"times"
 		public Keyword getTimesKeyword_3() { return cTimesKeyword_3; }
@@ -4270,7 +4220,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// --> B.4.21 suspend: Preemption with State Freeze
 		//
-		//// -------------------------------------
+		//// !-(suspend)-------------------------------------
 		//
 		//Suspend:
 		//	"suspend" statement=Statement "when" delay=DelayExpr;
@@ -4310,19 +4260,21 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTickTickParserRuleCall_1_1_0 = (RuleCall)cTickAssignment_1_1.eContents().get(0);
 		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
 		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cDataExprAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cDataExprDataExprParserRuleCall_2_1_0 = (RuleCall)cDataExprAssignment_2_1.eContents().get(0);
+		private final Assignment cExpressionAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cExpressionExpressionParserRuleCall_2_1_0 = (RuleCall)cExpressionAssignment_2_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
 		
+		//// -!
+		//
 		//// --> B.4.22 sustain: Emit a Signal Indefinitely
 		//
-		//// -------------------------------------
+		//// !-(sustain) -------------------------------------
 		//
 		//Sustain:
-		//	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" dataExpr=DataExpr ")")?;
+		//	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expression=Expression ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" dataExpr=DataExpr ")")?
+		//"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expression=Expression ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"sustain"
@@ -4346,17 +4298,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//Tick
 		public RuleCall getTickTickParserRuleCall_1_1_0() { return cTickTickParserRuleCall_1_1_0; }
 
-		//("(" dataExpr=DataExpr ")")?
+		//("(" expression=Expression ")")?
 		public Group getGroup_2() { return cGroup_2; }
 
 		//"("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
-		//dataExpr=DataExpr
-		public Assignment getDataExprAssignment_2_1() { return cDataExprAssignment_2_1; }
+		//expression=Expression
+		public Assignment getExpressionAssignment_2_1() { return cExpressionAssignment_2_1; }
 
-		//DataExpr
-		public RuleCall getDataExprDataExprParserRuleCall_2_1_0() { return cDataExprDataExprParserRuleCall_2_1_0; }
+		//Expression
+		public RuleCall getExpressionExpressionParserRuleCall_2_1_0() { return cExpressionExpressionParserRuleCall_2_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_2_2() { return cRightParenthesisKeyword_2_2; }
@@ -4377,9 +4329,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final Keyword cOptEndTrapKeyword_6_0 = (Keyword)cOptEndAssignment_6.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.23 trap: TrapDeclaration and Handling
 		//
-		//// -------------------------------------
+		//// !-(trap)-------------------------------------
 		//
 		//Trap:
 		//	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandler+=TrapHandler* "end" optEnd="trap"?;
@@ -4538,9 +4492,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cOptEndAssignment_4 = (Assignment)cGroup.eContents().get(4);
 		private final Keyword cOptEndVarKeyword_4_0 = (Keyword)cOptEndAssignment_4.eContents().get(0);
 		
+		//// -!
+		//
 		//// --> B.4.24 var: Local Variable Declaration
 		//
-		//// -------------------------------------
+		//// !-(localvariable) -------------------------------------
 		//
 		//LocalVariable:
 		//	var=InterfaceVariableDecl "in" statement=Statement "end" optEnd="var"?;
@@ -4574,28 +4530,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getOptEndVarKeyword_4_0() { return cOptEndVarKeyword_4_0; }
 	}
 
-	public class DataExprElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "DataExpr");
-		private final RuleCall cExpressionParserRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//// ==============================================
-		//
-		//// ===            B.3 Expressions             ===
-		//
-		//// ==============================================
-		//
-		//// In the literature sometimes exists a differentiation of DataExpression and SignalExpression
-		//
-		//// for that reason the rule is renamed here for better readability
-		//
-		//DataExpr returns kexpressions::Expression:
-		//	Expression;
-		public ParserRule getRule() { return rule; }
-
-		//Expression
-		public RuleCall getExpressionParserRuleCall() { return cExpressionParserRuleCall; }
-	}
-
 	public class AtomicExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AtomicExpression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
@@ -4610,7 +4544,15 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_5_2 = (Keyword)cGroup_5.eContents().get(2);
 		private final RuleCall cConstantExpressionParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
 		
-		//// esterel are a bit richer than what is provided by kexpressions. These rules are intoduced here
+		//// -!
+		//
+		//// ==============================================
+		//
+		//// ===            B.3 Expressions             ===
+		//
+		//// ==============================================
+		//
+		//// esterel is a bit richer than what is provided by kexpressions. These rules are introduced here
 		//
 		//// care about order of the rules! 
 		//
@@ -4696,18 +4638,18 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cLeftParenthesisKeyword_2 = (Keyword)cGroup.eContents().get(2);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Assignment cKexpressionsAssignment_3_0 = (Assignment)cGroup_3.eContents().get(0);
-		private final RuleCall cKexpressionsDataExprParserRuleCall_3_0_0 = (RuleCall)cKexpressionsAssignment_3_0.eContents().get(0);
+		private final RuleCall cKexpressionsExpressionParserRuleCall_3_0_0 = (RuleCall)cKexpressionsAssignment_3_0.eContents().get(0);
 		private final Group cGroup_3_1 = (Group)cGroup_3.eContents().get(1);
 		private final Keyword cCommaKeyword_3_1_0 = (Keyword)cGroup_3_1.eContents().get(0);
 		private final Assignment cKexpressionsAssignment_3_1_1 = (Assignment)cGroup_3_1.eContents().get(1);
-		private final RuleCall cKexpressionsDataExprParserRuleCall_3_1_1_0 = (RuleCall)cKexpressionsAssignment_3_1_1.eContents().get(0);
+		private final RuleCall cKexpressionsExpressionParserRuleCall_3_1_1_0 = (RuleCall)cKexpressionsAssignment_3_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//FunctionExpression returns kexpressions::Expression:
-		//	{FunctionExpression} function=[Function] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+		//	{FunctionExpression} function=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 		public ParserRule getRule() { return rule; }
 
-		//{FunctionExpression} function=[Function] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")"
+		//{FunctionExpression} function=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")"
 		public Group getGroup() { return cGroup; }
 
 		//{FunctionExpression}
@@ -4725,26 +4667,26 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getLeftParenthesisKeyword_2() { return cLeftParenthesisKeyword_2; }
 
-		//(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)?
+		//(kexpressions+=Expression ("," kexpressions+=Expression)*)?
 		public Group getGroup_3() { return cGroup_3; }
 
-		//kexpressions+=DataExpr
+		//kexpressions+=Expression
 		public Assignment getKexpressionsAssignment_3_0() { return cKexpressionsAssignment_3_0; }
 
-		//DataExpr
-		public RuleCall getKexpressionsDataExprParserRuleCall_3_0_0() { return cKexpressionsDataExprParserRuleCall_3_0_0; }
+		//Expression
+		public RuleCall getKexpressionsExpressionParserRuleCall_3_0_0() { return cKexpressionsExpressionParserRuleCall_3_0_0; }
 
-		//("," kexpressions+=DataExpr)*
+		//("," kexpressions+=Expression)*
 		public Group getGroup_3_1() { return cGroup_3_1; }
 
 		//","
 		public Keyword getCommaKeyword_3_1_0() { return cCommaKeyword_3_1_0; }
 
-		//kexpressions+=DataExpr
+		//kexpressions+=Expression
 		public Assignment getKexpressionsAssignment_3_1_1() { return cKexpressionsAssignment_3_1_1; }
 
-		//DataExpr
-		public RuleCall getKexpressionsDataExprParserRuleCall_3_1_1_0() { return cKexpressionsDataExprParserRuleCall_3_1_1_0; }
+		//Expression
+		public RuleCall getKexpressionsExpressionParserRuleCall_3_1_1_0() { return cKexpressionsExpressionParserRuleCall_3_1_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
@@ -5073,7 +5015,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Assignment cExprAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cExprDataExprParserRuleCall_0_0_0 = (RuleCall)cExprAssignment_0_0.eContents().get(0);
+		private final RuleCall cExprExpressionParserRuleCall_0_0_0 = (RuleCall)cExprAssignment_0_0.eContents().get(0);
 		private final Assignment cEventAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
 		private final RuleCall cEventDelayEventParserRuleCall_0_1_0 = (RuleCall)cEventAssignment_0_1.eContents().get(0);
 		private final Assignment cEventAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
@@ -5089,20 +5031,20 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//// -------------------------------------
 		//
 		//DelayExpr:
-		//	expr=DataExpr event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
+		//	expr=Expression event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
 		public ParserRule getRule() { return rule; }
 
-		//expr=DataExpr event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent
+		//expr=Expression event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//expr=DataExpr event=DelayEvent
+		//expr=Expression event=DelayEvent
 		public Group getGroup_0() { return cGroup_0; }
 
-		//expr=DataExpr
+		//expr=Expression
 		public Assignment getExprAssignment_0_0() { return cExprAssignment_0_0; }
 
-		//DataExpr
-		public RuleCall getExprDataExprParserRuleCall_0_0_0() { return cExprDataExprParserRuleCall_0_0_0; }
+		//Expression
+		public RuleCall getExprExpressionParserRuleCall_0_0_0() { return cExprExpressionParserRuleCall_0_0_0; }
 
 		//event=DelayEvent
 		public Assignment getEventAssignment_0_1() { return cEventAssignment_0_1; }
@@ -5509,10 +5451,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private ConstantElements pConstant;
 	private ConstantAtomElements pConstantAtom;
 	private ConstantLiteralElements pConstantLiteral;
-	private ConstantValueElements pConstantValue;
 	private FunctionDeclElements pFunctionDecl;
 	private FunctionElements pFunction;
-	private FunctionCallElements pFunctionCall;
 	private ProcedureDeclElements pProcedureDecl;
 	private ProcedureElements pProcedure;
 	private TaskDeclElements pTaskDecl;
@@ -5536,9 +5476,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private WeakAbortCaseElements pWeakAbortCase;
 	private AwaitElements pAwait;
 	private AwaitBodyElements pAwaitBody;
-	private AwaitEndElements pAwaitEnd;
 	private AwaitInstanceElements pAwaitInstance;
 	private AwaitCaseElements pAwaitCase;
+	private AwaitEndElements pAwaitEnd;
 	private ProcCallElements pProcCall;
 	private DoElements pDo;
 	private DoUptoElements pDoUpto;
@@ -5584,7 +5524,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private TrapDeclElements pTrapDecl;
 	private TrapHandlerElements pTrapHandler;
 	private LocalVariableElements pLocalVariable;
-	private DataExprElements pDataExpr;
 	private AtomicExpressionElements pAtomicExpression;
 	private TrapExpressionElements pTrapExpression;
 	private FunctionExpressionElements pFunctionExpression;
@@ -5628,7 +5567,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	
-	////	root rule. one esterel file can contain multiple modules
+	////	root rule. an esterel file can contain multiple modules
 	//
 	//Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 	//	modules+=Module*;
@@ -5641,6 +5580,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// module consists of interface and body
+	//
+	//// !-(module)
 	//
 	//Module:
 	//	"module" name=ID ":" interface=ModuleInterface? body=ModuleBody end=EndModule;
@@ -5664,8 +5605,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEndModuleAccess().getRule();
 	}
 
-	//// help function to clearly divide a Module into interface and body	
-	//
 	//ModuleBody:
 	//	statements+=Statement;
 	public ModuleBodyElements getModuleBodyAccess() {
@@ -5676,6 +5615,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getModuleBodyAccess().getRule();
 	}
 
+	//// -!
+	//
 	////            Interface Declarations
 	//
 	//// ----------------------------------------------
@@ -5705,7 +5646,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getChannelDescriptionAccess().getRule();
 	}
 
-	//// overwrite to allow function references for signal declaration
+	//// overwrite to allow function references for signal declarationd
 	//
 	//EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
 	//	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
@@ -5733,7 +5674,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ==> Local Signal Declaration
 	//
-	//// -------------------------------------
+	//// !-(localsignal) -------------------------------------
 	//
 	//LocalSignalDecl:
 	//	"signal" signalList=LocalSignalList "in" statement=Statement "end" optEnd="signal"?;
@@ -5755,6 +5696,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getLocalSignalListAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// ==> Sensor
 	//
 	//// -------------------------------------
@@ -5921,16 +5864,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getConstantLiteralAccess().getRule();
 	}
 
-	//ConstantValue:
-	//	value=ConstantLiteral | intValue=INT;
-	public ConstantValueElements getConstantValueAccess() {
-		return (pConstantValue != null) ? pConstantValue : (pConstantValue = new ConstantValueElements());
-	}
-	
-	public ParserRule getConstantValueRule() {
-		return getConstantValueAccess().getRule();
-	}
-
 	//// ==> Functions
 	//
 	//// -------------------------------------
@@ -5953,16 +5886,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getFunctionRule() {
 		return getFunctionAccess().getRule();
-	}
-
-	//FunctionCall:
-	//	func=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
-	public FunctionCallElements getFunctionCallAccess() {
-		return (pFunctionCall != null) ? pFunctionCall : (pFunctionCall = new FunctionCallElements());
-	}
-	
-	public ParserRule getFunctionCallRule() {
-		return getFunctionCallAccess().getRule();
 	}
 
 	//// ==> Procedures
@@ -6017,6 +5940,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// ==============================================
 	//
+	//// !-(parallel)
+	//
 	//Statement:
 	//	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
 	public StatementElements getStatementAccess() {
@@ -6027,6 +5952,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getStatementAccess().getRule();
 	}
 
+	//// -!
+	//
 	//AtomicStatement returns Statement:
 	//	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
 	//	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort;
@@ -6040,6 +5967,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.4.1 Control Flow Operators <--	
 	//
+	//// !-(sequence)
+	//
 	//Sequence returns Statement:
 	//	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
 	public SequenceElements getSequenceAccess() {
@@ -6050,6 +5979,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSequenceAccess().getRule();
 	}
 
+	//// -!
+	//
 	//Block:
 	//	"[" statement=Statement "]";
 	public BlockElements getBlockAccess() {
@@ -6072,10 +6003,10 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// Assignment
 	//
-	//// -------------------------------------
+	//// !-(assign) -------------------------------------
 	//
 	//Assignment:
-	//	var=[kexpressions::IVariable] ":=" expr=DataExpr;
+	//	var=[kexpressions::IVariable] ":=" expr=Expression;
 	public AssignmentElements getAssignmentAccess() {
 		return (pAssignment != null) ? pAssignment : (pAssignment = new AssignmentElements());
 	}
@@ -6084,7 +6015,9 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAssignmentAccess().getRule();
 	}
 
-	//// --> B.4.2 abort: Strong Preemption
+	//// -!
+	//
+	//// !-(abort) --> B.4.2 abort: Strong Preemption
 	//
 	//// -------------------------------------
 	//
@@ -6138,6 +6071,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAbortCaseSingleAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.25 weak abort: Weak Preemption
 	//
 	//// -------------------------------------
@@ -6204,7 +6139,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.4.3 await: Strong Preemption
 	//
-	//// -------------------------------------
+	//// !-(await) -------------------------------------
 	//
 	//Await:
 	//	"await" body=AwaitBody;
@@ -6224,16 +6159,6 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAwaitBodyRule() {
 		return getAwaitBodyAccess().getRule();
-	}
-
-	//AwaitEnd returns ecore::EString:
-	//	"end" "await"?;
-	public AwaitEndElements getAwaitEndAccess() {
-		return (pAwaitEnd != null) ? pAwaitEnd : (pAwaitEnd = new AwaitEndElements());
-	}
-	
-	public ParserRule getAwaitEndRule() {
-		return getAwaitEndAccess().getRule();
 	}
 
 	//AwaitInstance:
@@ -6256,13 +6181,25 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAwaitCaseAccess().getRule();
 	}
 
+	//AwaitEnd returns ecore::EString:
+	//	"end" "await"?;
+	public AwaitEndElements getAwaitEndAccess() {
+		return (pAwaitEnd != null) ? pAwaitEnd : (pAwaitEnd = new AwaitEndElements());
+	}
+	
+	public ParserRule getAwaitEndRule() {
+		return getAwaitEndAccess().getRule();
+	}
+
+	//// -!
+	//
 	//// --> B.4.4 call: Procedure Call
 	//
 	//// -------------------------------------
 	//
 	//ProcCall:
 	//	"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
-	//	(kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+	//	(kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 	public ProcCallElements getProcCallAccess() {
 		return (pProcCall != null) ? pProcCall : (pProcCall = new ProcCallElements());
 	}
@@ -6275,7 +6212,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//
 	//// --> B.4.6 do-watching: Strong Preemption (deprecated)
 	//
-	//// -------------------------------------
+	//// !-(doupto) -------------------------------------
 	//
 	//Do:
 	//	"do" statement=Statement (end=DoUpto | end=DoWatching);
@@ -6317,12 +6254,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getDoWatchingEndAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.7 emit: Signal Emission <--
 	//
-	//// -------------------------------------
+	//// !-(emit)2 -------------------------------------
 	//
 	//Emit:
-	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=DataExpr ")")?;
+	//	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
@@ -6331,9 +6270,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEmitAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.8 every-do: Conditional Iteration
 	//
-	//// -------------------------------------
+	//// !-(every)-------------------------------------
 	//
 	//EveryDo:
 	//	"every" delay=DelayExpr "do" statement=Statement "end" optEnd="every"?;
@@ -6345,12 +6286,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getEveryDoAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.10 exit: Trap Exit
 	//
-	//// -------------------------------------
+	//// !-(exit) -------------------------------------
 	//
 	//Exit:
-	//	"exit" trap=[TrapDecl] ("(" dataExpr=DataExpr ")")?;
+	//	"exit" trap=[TrapDecl] ("(" expression=Expression ")")?;
 	public ExitElements getExitAccess() {
 		return (pExit != null) ? pExit : (pExit = new ExitElements());
 	}
@@ -6359,9 +6302,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getExitAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.11 halt: Wait Forever
 	//
-	//// -------------------------------------
+	//// !-(halt) -------------------------------------
 	//
 	//Halt:
 	//	{Halt} "halt";
@@ -6373,12 +6318,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getHaltAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.12: if: Conditional for Data
 	//
-	//// -------------------------------------
+	//// !-(if)-------------------------------------
 	//
 	//IfTest:
-	//	"if" expr=DataExpr thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
+	//	"if" expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
 	public IfTestElements getIfTestAccess() {
 		return (pIfTest != null) ? pIfTest : (pIfTest = new IfTestElements());
 	}
@@ -6388,7 +6335,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ElsIf:
-	//	"elsif" expr=DataExpr thenPart=ThenPart?;
+	//	"elsif" expr=Expression thenPart=ThenPart?;
 	public ElsIfElements getElsIfAccess() {
 		return (pElsIf != null) ? pElsIf : (pElsIf = new ElsIfElements());
 	}
@@ -6417,11 +6364,13 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getElsePartAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.13 loop: Infinite Loop
 	//
 	//// --> B.4.14 loop-each: Condition Iteration
 	//
-	//// -------------------------------------
+	//// !-(loop)-------------------------------------
 	//
 	//Loop:
 	//	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
@@ -6473,9 +6422,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getLoopBodyAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.15 nothing: No Operation
 	//
-	//// -------------------------------------
+	//// !-(nothing) -------------------------------------
 	//
 	//Nothing:
 	//	"nothing" {Nothing};
@@ -6487,9 +6438,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getNothingAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.16 pause: Unit Delay
 	//
-	//// -------------------------------------
+	//// !-(pause) -------------------------------------
 	//
 	//Pause:
 	//	"pause" {Pause};
@@ -6501,9 +6454,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getPauseAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.17 present: Conditional for Signals
 	//
-	//// -------------------------------------
+	//// !-(present) -------------------------------------
 	//
 	//Present:
 	//	"present" body=PresentBody elsePart=ElsePart? "end" optEnd="present"?;
@@ -6565,12 +6520,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getPresentEventAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.18 repeat: Iterate a Fixed Number of Times
 	//
 	//// -------------------------------------
 	//
 	//Repeat:
-	//	positive?="positive"? "repeat" dataExpr=DataExpr "times" statement=Statement "end" optEnd="repeat"?;
+	//	positive?="positive"? "repeat" expression=Expression "times" statement=Statement "end" optEnd="repeat"?;
 	public RepeatElements getRepeatAccess() {
 		return (pRepeat != null) ? pRepeat : (pRepeat = new RepeatElements());
 	}
@@ -6707,7 +6664,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --> B.4.21 suspend: Preemption with State Freeze
 	//
-	//// -------------------------------------
+	//// !-(suspend)-------------------------------------
 	//
 	//Suspend:
 	//	"suspend" statement=Statement "when" delay=DelayExpr;
@@ -6719,12 +6676,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSuspendAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.22 sustain: Emit a Signal Indefinitely
 	//
-	//// -------------------------------------
+	//// !-(sustain) -------------------------------------
 	//
 	//Sustain:
-	//	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" dataExpr=DataExpr ")")?;
+	//	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expression=Expression ")")?;
 	public SustainElements getSustainAccess() {
 		return (pSustain != null) ? pSustain : (pSustain = new SustainElements());
 	}
@@ -6733,9 +6692,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getSustainAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.23 trap: TrapDeclaration and Handling
 	//
-	//// -------------------------------------
+	//// !-(trap)-------------------------------------
 	//
 	//Trap:
 	//	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandler+=TrapHandler* "end" optEnd="trap"?;
@@ -6777,9 +6738,11 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTrapHandlerAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// --> B.4.24 var: Local Variable Declaration
 	//
-	//// -------------------------------------
+	//// !-(localvariable) -------------------------------------
 	//
 	//LocalVariable:
 	//	var=InterfaceVariableDecl "in" statement=Statement "end" optEnd="var"?;
@@ -6791,27 +6754,15 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getLocalVariableAccess().getRule();
 	}
 
+	//// -!
+	//
 	//// ==============================================
 	//
 	//// ===            B.3 Expressions             ===
 	//
 	//// ==============================================
 	//
-	//// In the literature sometimes exists a differentiation of DataExpression and SignalExpression
-	//
-	//// for that reason the rule is renamed here for better readability
-	//
-	//DataExpr returns kexpressions::Expression:
-	//	Expression;
-	public DataExprElements getDataExprAccess() {
-		return (pDataExpr != null) ? pDataExpr : (pDataExpr = new DataExprElements());
-	}
-	
-	public ParserRule getDataExprRule() {
-		return getDataExprAccess().getRule();
-	}
-
-	//// esterel are a bit richer than what is provided by kexpressions. These rules are intoduced here
+	//// esterel is a bit richer than what is provided by kexpressions. These rules are introduced here
 	//
 	//// care about order of the rules! 
 	//
@@ -6837,7 +6788,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//FunctionExpression returns kexpressions::Expression:
-	//	{FunctionExpression} function=[Function] "(" (kexpressions+=DataExpr ("," kexpressions+=DataExpr)*)? ")";
+	//	{FunctionExpression} function=[Function] "(" (kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
 	public FunctionExpressionElements getFunctionExpressionAccess() {
 		return (pFunctionExpression != null) ? pFunctionExpression : (pFunctionExpression = new FunctionExpressionElements());
 	}
@@ -6953,7 +6904,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// -------------------------------------
 	//
 	//DelayExpr:
-	//	expr=DataExpr event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
+	//	expr=Expression event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
 	public DelayExprElements getDelayExprAccess() {
 		return (pDelayExpr != null) ? pDelayExpr : (pDelayExpr = new DelayExprElements());
 	}

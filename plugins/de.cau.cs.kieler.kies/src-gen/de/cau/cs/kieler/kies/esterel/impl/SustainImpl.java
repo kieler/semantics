@@ -29,7 +29,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.SustainImpl#getSignal <em>Signal</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.SustainImpl#getTick <em>Tick</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.SustainImpl#getDataExpr <em>Data Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.SustainImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  * </p>
  *
@@ -68,14 +68,14 @@ public class SustainImpl extends StatementImpl implements Sustain
   protected String tick = TICK_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getDataExpr() <em>Data Expr</em>}' containment reference.
+   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getDataExpr()
+   * @see #getExpression()
    * @generated
    * @ordered
    */
-  protected Expression dataExpr;
+  protected Expression expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -169,9 +169,9 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getDataExpr()
+  public Expression getExpression()
   {
-    return dataExpr;
+    return expression;
   }
 
   /**
@@ -179,13 +179,13 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetDataExpr(Expression newDataExpr, NotificationChain msgs)
+  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
   {
-    Expression oldDataExpr = dataExpr;
-    dataExpr = newDataExpr;
+    Expression oldExpression = expression;
+    expression = newExpression;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__DATA_EXPR, oldDataExpr, newDataExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__EXPRESSION, oldExpression, newExpression);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -196,20 +196,20 @@ public class SustainImpl extends StatementImpl implements Sustain
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setDataExpr(Expression newDataExpr)
+  public void setExpression(Expression newExpression)
   {
-    if (newDataExpr != dataExpr)
+    if (newExpression != expression)
     {
       NotificationChain msgs = null;
-      if (dataExpr != null)
-        msgs = ((InternalEObject)dataExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__DATA_EXPR, null, msgs);
-      if (newDataExpr != null)
-        msgs = ((InternalEObject)newDataExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__DATA_EXPR, null, msgs);
-      msgs = basicSetDataExpr(newDataExpr, msgs);
+      if (expression != null)
+        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__EXPRESSION, null, msgs);
+      if (newExpression != null)
+        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.SUSTAIN__EXPRESSION, null, msgs);
+      msgs = basicSetExpression(newExpression, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__DATA_EXPR, newDataExpr, newDataExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.SUSTAIN__EXPRESSION, newExpression, newExpression));
   }
 
   /**
@@ -222,8 +222,8 @@ public class SustainImpl extends StatementImpl implements Sustain
   {
     switch (featureID)
     {
-      case EsterelPackage.SUSTAIN__DATA_EXPR:
-        return basicSetDataExpr(null, msgs);
+      case EsterelPackage.SUSTAIN__EXPRESSION:
+        return basicSetExpression(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -243,8 +243,8 @@ public class SustainImpl extends StatementImpl implements Sustain
         return basicGetSignal();
       case EsterelPackage.SUSTAIN__TICK:
         return getTick();
-      case EsterelPackage.SUSTAIN__DATA_EXPR:
-        return getDataExpr();
+      case EsterelPackage.SUSTAIN__EXPRESSION:
+        return getExpression();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -265,8 +265,8 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__TICK:
         setTick((String)newValue);
         return;
-      case EsterelPackage.SUSTAIN__DATA_EXPR:
-        setDataExpr((Expression)newValue);
+      case EsterelPackage.SUSTAIN__EXPRESSION:
+        setExpression((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -288,8 +288,8 @@ public class SustainImpl extends StatementImpl implements Sustain
       case EsterelPackage.SUSTAIN__TICK:
         setTick(TICK_EDEFAULT);
         return;
-      case EsterelPackage.SUSTAIN__DATA_EXPR:
-        setDataExpr((Expression)null);
+      case EsterelPackage.SUSTAIN__EXPRESSION:
+        setExpression((Expression)null);
         return;
     }
     super.eUnset(featureID);
@@ -309,8 +309,8 @@ public class SustainImpl extends StatementImpl implements Sustain
         return signal != null;
       case EsterelPackage.SUSTAIN__TICK:
         return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
-      case EsterelPackage.SUSTAIN__DATA_EXPR:
-        return dataExpr != null;
+      case EsterelPackage.SUSTAIN__EXPRESSION:
+        return expression != null;
     }
     return super.eIsSet(featureID);
   }
