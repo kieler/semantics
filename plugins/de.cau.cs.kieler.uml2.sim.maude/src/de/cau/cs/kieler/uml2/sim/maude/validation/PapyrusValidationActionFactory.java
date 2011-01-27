@@ -27,6 +27,7 @@ public class PapyrusValidationActionFactory extends
      */
     @Override
     public boolean supportsEditor(final IEditorPart editor) {
+    	try {
         if (editor instanceof PapyrusMultiDiagramEditor) {
             EObject eObj = (EObject) ((PapyrusMultiDiagramEditor) editor)
                     .getDiagramEditPart().getModel();
@@ -34,7 +35,8 @@ public class PapyrusValidationActionFactory extends
                 eObj = ((View) eObj).getElement();
                 return eObj.eClass().getEPackage().equals(UMLPackage.eINSTANCE);
             }
-        }
+        } 
+    	} catch (NullPointerException e) {}
         return false;
     }
 
