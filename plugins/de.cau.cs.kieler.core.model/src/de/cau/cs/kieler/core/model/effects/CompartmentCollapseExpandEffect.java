@@ -18,19 +18,20 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IResizableCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
-import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
 /**
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
  * collapses.
  * 
+ * @deprecated in some parts this effect is still specific to GMF only, see FIXMEs
  * @author haf, mmu
  */
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
@@ -40,8 +41,9 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     private EObject targetNode;
     private boolean doCollapse;
     private boolean originalCollapseState;
-    private DiagramEditor targetEditor;
+    private IWorkbenchPart targetEditor;
     private boolean justExecuted;
+    private IGraphicalFrameworkBridge bridge;
 
     /**
      * The compartment level gives the hierarchy to which to search for compartments to doCollapse.
@@ -57,22 +59,23 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * @param collapse
      *            true if collapsing, false if expanding
      */
-    public CompartmentCollapseExpandEffect(final DiagramEditor editor, final EObject node,
+    public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
             final EStructuralFeature featureToCollapse, final int theCompartmentLevel,
             final boolean collapse) {
         this.compartmentLevel = theCompartmentLevel;
         this.doCollapse = collapse;
         this.targetEditor = editor;
         this.targetNode = node;
-        EditPart parentPart = ModelingUtil.getEditPart(editor.getDiagramEditPart(), node);
+        this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
+        EditPart parentPart = bridge.getEditPart(targetEditor);
         if (parentPart != null) {
             outer: for (Object child : parentPart.getChildren()) {
                 if (child instanceof IResizableCompartmentEditPart) {
                     for (Object grandChild : ((IResizableCompartmentEditPart) child).getChildren()) {
                         if (grandChild instanceof EditPart) {
-                            EObject grandChildSemantic = ((View) ((EditPart) grandChild).getModel())
-                                    .getElement();
-                            if (grandChildSemantic.eContainingFeature() == featureToCollapse) {
+                            EObject grandChildSemantic = bridge.getElement(grandChild);
+                            if (featureToCollapse == null
+                                    || grandChildSemantic.eContainingFeature() == featureToCollapse) {
                                 targetEditPart = (IResizableCompartmentEditPart) child;
                                 break outer;
                             }
@@ -104,8 +107,10 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             ResizableCompartmentFigure f = (ResizableCompartmentFigure) targetEditPart.getFigure();
             if (f.isExpanded() == collapse) {
                 if (collapse) {
+                    System.out.println("Collapsing "+targetEditPart);
                     f.setCollapsed();
                 } else {
+                    System.out.println("Expanding "+targetEditPart);
                     f.setExpanded();
                 }
                 return true;
@@ -162,6 +167,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
     private boolean isCollapsed() {
         if (targetEditPart != null && targetEditPart.getModel() instanceof DrawerStyle) {
+            // FIXME: This is specific to GMF notation model
             return ((DrawerStyle) targetEditPart.getModel()).isCollapsed();
         } else {
             return !doCollapse;
@@ -173,7 +179,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * 
      * @return the target editor
      */
-    public DiagramEditor getTargetEditor() {
+    public IWorkbenchPart getTargetEditor() {
         return targetEditor;
     }
 

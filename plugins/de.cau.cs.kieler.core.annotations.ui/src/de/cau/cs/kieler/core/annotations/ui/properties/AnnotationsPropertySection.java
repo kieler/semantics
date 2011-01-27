@@ -31,6 +31,7 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
+import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
@@ -40,21 +41,21 @@ import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
 /**
  * Property section for annotatable objects.
- *
+ * 
  * @author msp
  */
 public class AnnotationsPropertySection extends AbstractPropertySection {
-    
+
     /** column index for annotation name. */
     public static final int COL_ANNOTATION = 0;
     /** column index for annotation value. */
     public static final int COL_VALUE = 1;
-    
+
     /** the initial width of the table columns. */
     private static final int DEFAULT_COL_WIDTH = 300;
     /** preference name prefix for column width. */
     private static final String PREF_COL_WIDTH = "property.col";
-    
+
     /** the viewer used to display content. */
     private TreeViewer viewer;
     /** the annotatable object that is currently shown in the property section. */
@@ -63,7 +64,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     private EditingDomain editingDomain;
     /** the widths of the columns of the tree viewer. */
     private int[] columnWidth;
-    
+
     /**
      * {@inheritDoc}
      */
@@ -72,8 +73,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
             final TabbedPropertySheetPage tabbedPropertySheetPage) {
         super.createControls(parent, tabbedPropertySheetPage);
         final Composite composite = getWidgetFactory().createFlatFormComposite(parent);
-        viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.SINGLE
-                | SWT.HIDE_SELECTION);
+        viewer = new TreeViewer(composite, SWT.FULL_SELECTION | SWT.SINGLE | SWT.HIDE_SELECTION);
         createColumns();
         viewer.getTree().setHeaderVisible(true);
         viewer.getTree().setLinesVisible(true);
@@ -82,7 +82,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
         viewer.setContentProvider(new AnnotationsContentProvider());
         viewer.setLabelProvider(new AnnotationsLabelProvider());
         refresh();
-        
+
         // specify layout of the tree viewer
         FormData formData = new FormData();
         formData.left = new FormAttachment(0, 0);
@@ -90,7 +90,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
         formData.top = new FormAttachment(0, 0);
         formData.bottom = new FormAttachment(100, 0);
         viewer.getControl().setLayoutData(formData);
-        
+
         // create context menu for the tree viewer
         MenuManager menuManager = new MenuManager("#PopupMenu");
         menuManager.add(new AddAnnotationAction(this, AddHow.TOP_LEVEL));
@@ -99,7 +99,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
         Menu menu = menuManager.createContextMenu(viewer.getControl());
         viewer.getControl().setMenu(menu);
     }
-    
+
     /**
      * Create the columns for the tree viewer.
      */
@@ -121,10 +121,11 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
             public void controlResized(ControlEvent e) {
                 columnWidth[COL_ANNOTATION] = annotationCol.getColumn().getWidth();
             }
+
             public void controlMoved(ControlEvent e) {
             }
         });
-        
+
         // create column for annotation value
         final TreeViewerColumn valueCol = new TreeViewerColumn(viewer, SWT.NONE);
         width = preferenceStore.getInt(PREF_COL_WIDTH + COL_VALUE);
@@ -139,12 +140,13 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
             public void controlResized(ControlEvent e) {
                 columnWidth[COL_VALUE] = valueCol.getColumn().getWidth();
             }
+
             public void controlMoved(ControlEvent e) {
             }
         });
         valueCol.setEditingSupport(new AnnotationsEditingSupport(viewer, this));
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -152,21 +154,22 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     public boolean shouldUseExtraSpace() {
         return true;
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void dispose() {
         if (columnWidth != null) {
-            IPreferenceStore preferenceStore = AnnotationsActivator.getInstance().getPreferenceStore();
+            IPreferenceStore preferenceStore = AnnotationsActivator.getInstance()
+                    .getPreferenceStore();
             for (int i = 0; i < columnWidth.length; i++) {
                 preferenceStore.setValue(PREF_COL_WIDTH + i, columnWidth[i]);
             }
         }
         super.dispose();
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -175,26 +178,31 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
         if (getSelection() instanceof IStructuredSelection) {
             IStructuredSelection selection = (IStructuredSelection) getSelection();
             Object object = selection.getFirstElement();
-            IGraphicalFrameworkBridge frameworkBridge = GraphicalFrameworkService
-                    .getInstance().getBridge(object);
-            if (!(object instanceof Annotatable)) {
-                object = frameworkBridge.getElement(object);
-            }
-            if (annotatable == object) {
-                viewer.refresh();
-            } else {
-                if (object instanceof Annotatable) {
-                    annotatable = (Annotatable) object;
-                    editingDomain = frameworkBridge.getEditingDomain(selection.getFirstElement());
-                } else {
-                    annotatable = null;
-                    editingDomain = null;
+            try {
+                IGraphicalFrameworkBridge frameworkBridge = GraphicalFrameworkService.getInstance()
+                        .getBridge(object);
+                if (!(object instanceof Annotatable)) {
+                    object = frameworkBridge.getElement(object);
                 }
-                viewer.setInput(object);
+                if (annotatable == object) {
+                    viewer.refresh();
+                } else {
+                    if (object instanceof Annotatable) {
+                        annotatable = (Annotatable) object;
+                        editingDomain = frameworkBridge.getEditingDomain(selection
+                                .getFirstElement());
+                    } else {
+                        annotatable = null;
+                        editingDomain = null;
+                    }
+                    viewer.setInput(object);
+                }
+            } catch (KielerNotSupportedException e) {
+                /* haf: nothing. Cannot refresh, if there is no diagram available. */
             }
         }
     }
-    
+
     /**
      * Returns the currently selected annotatable.
      * 
@@ -203,7 +211,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     public Annotatable getAnnotatable() {
         return annotatable;
     }
-    
+
     /**
      * Returns the editing domain for model changes.
      * 
@@ -212,7 +220,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     public EditingDomain getEditingDomain() {
         return editingDomain;
     }
-    
+
     /**
      * Returns the currently selected annotation in the table.
      * 

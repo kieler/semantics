@@ -29,28 +29,28 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
  * A service for providing bridges to graphical editing frameworks.
- *
+ * 
  * @author msp
  */
 public final class GraphicalFrameworkService {
 
     /** the extension point identifier. */
-    public static final String EXTENSION_POINT_ID
-            = "de.cau.cs.kieler.core.ui.graphicalFrameworkBridges";
-    
+    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.core.ui.graphicalFrameworkBridges";
+
     /** the singleton instance. **/
     private static GraphicalFrameworkService instance;
-    
+
     /**
      * Hidden constructor.
      */
     private GraphicalFrameworkService() {
     }
-    
+
     /**
      * Start the graphical framework service. Only visible to classes from the same package.
      */
@@ -58,7 +58,7 @@ public final class GraphicalFrameworkService {
         instance = new GraphicalFrameworkService();
         instance.loadExtensionPoint();
     }
-    
+
     /**
      * Returns the singleton instance.
      * 
@@ -67,10 +67,10 @@ public final class GraphicalFrameworkService {
     public static GraphicalFrameworkService getInstance() {
         return instance;
     }
-    
+
     /**
-     * A graphical framework bridge implementation that switches between all available
-     * bridges to retrieve requested elements.
+     * A graphical framework bridge implementation that switches between all available bridges to
+     * retrieve requested elements.
      */
     private class MultiplexingBridge implements IGraphicalFrameworkBridge {
 
@@ -171,20 +171,21 @@ public final class GraphicalFrameworkService {
             }
             return null;
         }
-        
+
     }
-    
+
     /** the sorted list of registered graphical framework bridges. */
-    private List<Pair<IGraphicalFrameworkBridge, Integer>> bridgeList
-            = new LinkedList<Pair<IGraphicalFrameworkBridge, Integer>>();
+    private List<Pair<IGraphicalFrameworkBridge, Integer>> bridgeList = new LinkedList<Pair<IGraphicalFrameworkBridge, Integer>>();
     /** the multiplexing bridge that is returned if no bridge directly supports an object. */
     private MultiplexingBridge multiplexingBridge = new MultiplexingBridge();
-    
+
     /**
      * Inserts a given graphical framework bridge into the sorted list.
      * 
-     * @param bridge a bridge implementation
-     * @param priority the priority of the new implementation
+     * @param bridge
+     *            a bridge implementation
+     * @param priority
+     *            the priority of the new implementation
      */
     private void insertBridge(final IGraphicalFrameworkBridge bridge, final int priority) {
         ListIterator<Pair<IGraphicalFrameworkBridge, Integer>> iter = bridgeList.listIterator();
@@ -197,7 +198,7 @@ public final class GraphicalFrameworkService {
         }
         iter.add(new Pair<IGraphicalFrameworkBridge, Integer>(bridge, priority));
     }
-    
+
     /**
      * Load the registered classes from the extension point.
      */
@@ -226,20 +227,25 @@ public final class GraphicalFrameworkService {
             }
         }
     }
-    
+
     /**
      * Retrieve the first suitable graphical editing framework bridge for the given object.
      * 
-     * @param object an edit part, editor part, or notational object
+     * @param object
+     *            an edit part, editor part, or notational object
      * @return the first suitable bridge
+     * @throws KielerNotSupportedException
+     *             if there is no bridge available for the given object
      */
-    public IGraphicalFrameworkBridge getBridge(final Object object) {
+    public IGraphicalFrameworkBridge getBridge(final Object object)
+            throws KielerNotSupportedException {
         for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
             if (entry.getFirst().supports(object)) {
                 return entry.getFirst();
             }
         }
-        return multiplexingBridge;
+        throw new KielerNotSupportedException("GraphicalFrameworkBridge",
+                "No bridge available for the given input.", object);
     }
-    
+
 }

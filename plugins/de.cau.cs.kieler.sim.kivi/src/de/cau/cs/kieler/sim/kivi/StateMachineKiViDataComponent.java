@@ -162,7 +162,7 @@ public abstract class StateMachineKiViDataComponent extends JSONObjectDataCompon
                                 if (!contains(statesByStep, active)) { // filter out newer
                                     currentStepObjects.add(active);
                                     // haf: here add a new state to the simulation state
-                                    simState.addObject("state", i, active);
+                                    //simState.addObject("state", i, active);
                                 }
                             }
                         }

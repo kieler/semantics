@@ -84,14 +84,18 @@ public class StateMachineSimulationTrigger extends AbstractTrigger {
     }
 
     /**
-     * Contains the currently active states.
-     * 
-     * @author mmu
-     * 
+     * A TriggerState for a KIEM simulation of a State Machine, e.g. a SyncChart. It
+     * contains categorized lists of objects that are semantically relevant in a 
+     * simulation step. These are for example the active states, transitions that have been
+     * taken in that step, signals that are present and values of signals and variables.
      */
     public static final class StateMachineSimulationState extends AbstractTriggerState {
 
-        Map<String,List<List<EObject>>> markedObjects;
+        List<EObject> activeStates;
+        List<EObject> takenTransitions;
+        List<EObject> presentSignals;
+        List<Object>  signalValues;
+        List<Object>  variableValues;
         
         private boolean isSimulating = false;
 
@@ -102,60 +106,16 @@ public class StateMachineSimulationTrigger extends AbstractTrigger {
             this.diagramEditor = editor;
         }
 
-        public void addObject(String role,int step,EObject object){
-            if(markedObjects == null){
-                markedObjects = new HashMap<String,List<List<EObject>>>();
+        public List<EObject> getActiveStates(int stepsAgo){
+            if(activeStates == null){
+                activeStates = new ArrayList<EObject>();
             }
-            List<List<EObject>> stepList = markedObjects.get(role);
-            if(stepList == null){
-                stepList = new ArrayList<List<EObject>>();
-                markedObjects.put(role, stepList);
-            }
-            List<EObject> objectList;
-            try{
-                objectList = (List<EObject>)stepList.get(step);
-            }catch(IndexOutOfBoundsException e){
-                objectList = new ArrayList<EObject>();
-                stepList.add(step, objectList);
-            }
-            if(objectList == null){
-                objectList = new ArrayList<EObject>();
-                stepList.add(step, objectList);
-            }
-            objectList.add(object);
+            return activeStates;
         }
         
-        public List<EObject> getObjectList(String role, int step){
-            if(markedObjects == null){
-                return null;
-            }
-            List<List<EObject>> stepList = markedObjects.get(role);
-            if(stepList == null){
-                return null;
-            }
-            try{
-                List<EObject> objectList = stepList.get(step);
-                return objectList;
-            }catch(IndexOutOfBoundsException e){
-                return null;
-            }
-        }
         
-        public List<EObject> getObjectList(String role){
-            if(markedObjects == null){
-                return null;
-            }
-            List<List<EObject>> stepList = markedObjects.get(role);
-            if(stepList == null){
-                return null;
-            }
-            try{
-                List<EObject> objectList = stepList.get(0);
-                return objectList;
-            }catch(IndexOutOfBoundsException e){
-                return null;
-            }
-        }
+        
+        
         
         /**
          * Default Constructor.

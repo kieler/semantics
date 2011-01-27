@@ -33,7 +33,7 @@ public class LayoutAfterCollapseCombination extends AbstractCombination {
      *            the effect state containing the most recent collapse/expand effect
      */
     public void execute(final EffectTriggerState<CompartmentCollapseExpandEffect> effectState) {
-        dontUndo();
+         dontUndo();
         if (effectState.getEffect().hasJustExecuted()) {
             schedule(new LayoutEffect(effectState.getEffect().getTargetEditor(), effectState
                     .getEffect().getTargetNode(), true, false, true));

@@ -33,6 +33,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
@@ -110,7 +111,8 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      */
     public void partDeactivated(final IWorkbenchPart part) {
         if (isDiagram(part)) {
-            getEditingDomain(currentEditor).removeResourceSetListener(this);
+            TransactionalEditingDomain domain = getEditingDomain(part);
+            domain.removeResourceSetListener(this);
         }
     }
 
@@ -201,13 +203,13 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * @return
      */
     protected static boolean isDiagram(final IWorkbenchPart part) {
-        try{
-        EditPart ep = GraphicalFrameworkService.getInstance().getBridge(part).getEditPart(part);
-        if (ep != null) {
-            return true;
-        }
-        }catch(NullPointerException e){
-            /*nothing, fallthrough. The bridge might get an NPE if there is no current active editor*/
+        try {
+            EditPart ep = GraphicalFrameworkService.getInstance().getBridge(part).getEditPart(part);
+            if (ep != null) {
+                return true;
+            }
+        } catch (KielerNotSupportedException e) {
+            /* nothing, fallthrough. */
         }
         return false;
     }
@@ -220,17 +222,17 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * @return the corresponding editing domain or null if not applicable
      */
     protected static TransactionalEditingDomain getEditingDomain(final IWorkbenchPart part) {
-        try{
-        EditPart ep = GraphicalFrameworkService.getInstance().getBridge(part).getEditPart(part);
-        if (ep != null) {
-            EditingDomain d = GraphicalFrameworkService.getInstance().getBridge(part)
-                    .getEditingDomain(ep);
-            if (d instanceof TransactionalEditingDomain) {
-                return (TransactionalEditingDomain) d;
+        try {
+            EditPart ep = GraphicalFrameworkService.getInstance().getBridge(part).getEditPart(part);
+            if (ep != null) {
+                EditingDomain d = GraphicalFrameworkService.getInstance().getBridge(part)
+                        .getEditingDomain(ep);
+                if (d instanceof TransactionalEditingDomain) {
+                    return (TransactionalEditingDomain) d;
+                }
             }
-        }
-        }catch(NullPointerException e){
-            /*nothing, fallthrough*/
+        } catch (KielerNotSupportedException e) {
+            /* nothing, fallthrough */
         }
         return null;
     }
@@ -371,9 +373,9 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         private List<IWorkbenchPart> openDiagramEditors = new ArrayList<IWorkbenchPart>();
 
         /** Default Constructor that can be used as a default state */
-        public ActiveEditorState(){
+        public ActiveEditorState() {
         }
-        
+
         /**
          * Constructor.
          * 
@@ -418,8 +420,9 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         }
 
         /**
-         * Get the semantic model in shape of the root EObject that corresponds to the
-         * diagram or other editor that was last active.
+         * Get the semantic model in shape of the root EObject that corresponds to the diagram or
+         * other editor that was last active.
+         * 
          * @return last active EObject model
          */
         public EObject getLastActiveSemanticModel() {
