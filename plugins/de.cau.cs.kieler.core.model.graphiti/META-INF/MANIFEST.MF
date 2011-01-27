@@ -20,6 +20,7 @@ Require-Bundle: org.eclipse.graphiti;bundle-version="0.7.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.core.kivi;bundle-version="0.1.0"
 Export-Package: de.cau.cs.kieler.core.model.graphiti,
+ de.cau.cs.kieler.core.model.graphiti.features,
  de.cau.cs.kieler.core.model.graphiti.ui
 Bundle-Activator: de.cau.cs.kieler.core.model.graphiti.KielerGraphitiPlugin
 Bundle-ActivationPolicy: lazy
