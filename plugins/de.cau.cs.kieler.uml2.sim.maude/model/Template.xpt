@@ -43,14 +43,14 @@ fmod eclipseInterface is
 
 ***// States //
   «IF  this.getStates().size > 0-»
-  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .	
+  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> State .	
 	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
   «ENDIF-»
   	
 «REM»also generate history and deep history states«ENDREM» 
 ***// PseudoStates //
   «IF  this.getHistoryStates().size > 0-»
-  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .	
+  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> State .	
 	«FOREACH this.getHistoryMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
   «ENDIF-»
   	
@@ -94,7 +94,23 @@ fmod eclipseInterface is
   ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
       «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»tr«pseudostate.getId()-»«ENDFOREACH-»
       : -> ModTransition .
-  
+*******************
+*** compound transitions
+*******************
+  «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
+
+
+
+
+*******************
+********new transitionsyntax  
+*******************
+  «FOREACH this.getTransitions() AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
+
+
+*******************
+*** old transitionsyntax
+*******************
   «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «resetPseudostates()-»

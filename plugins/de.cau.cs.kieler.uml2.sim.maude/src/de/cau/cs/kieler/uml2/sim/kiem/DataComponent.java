@@ -767,42 +767,44 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
         workflow.invoke(wfx, m2mMonitor, issues);
 
-//        for (MWEDiagnostic errorDiag : issues.getErrors()) {
-//            errorMsg = errorDiag.getMessage();
-//            Display.getDefault().syncExec(new Runnable() {
-//                public void run() {
-//                    final Shell shell = Display.getCurrent().getShells()[0];
-//                    MessageDialog.openInformation(shell, "Info", errorMsg);
-//                }
-//            });
-//        }
-//        for (MWEDiagnostic errorDiag : issues.getWarnings() ) {
-//            errorMsg = errorDiag.getMessage();
-//            Display.getDefault().syncExec(new Runnable() {
-//                public void run() {
-//                    final Shell shell = Display.getCurrent().getShells()[0];
-//                    MessageDialog.openInformation(shell, "Info", errorMsg);
-//                }
-//            });
-//        }
-//        for (MWEDiagnostic errorDiag : issues.getIssues() ) {
-//            errorMsg = errorDiag.getMessage();
-//            Display.getDefault().syncExec(new Runnable() {
-//                public void run() {
-//                    final Shell shell = Display.getCurrent().getShells()[0];
-//                    MessageDialog.openInformation(shell, "Info", errorMsg);
-//                }
-//            });
-//        }
-//        for (MWEDiagnostic errorDiag : issues.getInfos() ) {
-//            errorMsg = errorDiag.getMessage();
-//            Display.getDefault().syncExec(new Runnable() {
-//                public void run() {
-//                    final Shell shell = Display.getCurrent().getShells()[0];
-//                    MessageDialog.openInformation(shell, "Info", errorMsg);
-//                }
-//            });
-//        }
+        
+        // For debugging purposes
+        for (MWEDiagnostic errorDiag : issues.getErrors()) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getWarnings() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getIssues() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
+        for (MWEDiagnostic errorDiag : issues.getInfos() ) {
+            errorMsg = errorDiag.getMessage();
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    final Shell shell = Display.getCurrent().getShells()[0];
+                    MessageDialog.openInformation(shell, "Info", errorMsg);
+                }
+            });
+        }
         
         
         // refresh the workspace because we created a new file

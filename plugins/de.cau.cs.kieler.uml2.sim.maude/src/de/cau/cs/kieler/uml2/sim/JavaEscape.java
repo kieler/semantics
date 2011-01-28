@@ -435,6 +435,19 @@ public class JavaEscape {
         return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.SHALLOW_HISTORY);
     }
 
+    public static Boolean isChoice(Vertex vertex) {
+        // only a Pseudostate can be a choice state
+        if (!(vertex instanceof Pseudostate))
+            return false;
+        return ((((Pseudostate) vertex).getKind()).getValue() == PseudostateKind.CHOICE);
+    }
+
+    public static Boolean isPseudostate(Vertex vertex) {
+        return (vertex instanceof Pseudostate);
+    }
+
+    
+    
     // ------------------------------------------------------------------------
 
     public static EList<Vertex> getSourceNodes(Pseudostate pseudostate) {

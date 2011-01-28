@@ -290,6 +290,44 @@ Element getElementParent(Element me) :
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getParent(org.eclipse.uml2.uml.Element)  
 ;
 
+
+//-----------------------------------------------------------------------------
+
+// Base helpermethod for generation basic (i.e. not involving pseudostates) 
+// compound transitions  
+//  
+// Transitions are tuples of:
+// source guard Action target 
+String genMaudeBasicCompound(Transition n):
+ '   eq ctr'+n.getId()+ ' = simpleTrans "ctr'+n.getId()+'" '+
+// transition
+ 'tr'+n.getId()+' '+
+// containingRegion
+ ((Region)n.getParent()).getId() + ' .'   
+;
+
+
+//-----------------------------------------------------------------------------
+
+// Base helpermethod for generation simple transitions, compound transitions
+// are generated NOT using this method! 
+//  
+// Transitions are tuples of:
+// source guard Action target 
+String genMaude2(Transition n):
+ '   eq tr'+n.getId()+ ' = "tr'+n.getId()+'"'+
+// source 
+ '('+(n.source.getId()) + ') ' +
+// 'empty '+ 
+// guard 
+ n.guard2() + ' ' +
+// Action
+ n.action2() + ' '+
+// target 
+ '('+n.target.getId()+') ' +' .'   
+;
+
+
 //-----------------------------------------------------------------------------
 
 // Base helpermethod for generation normal (simple) transitions, complex one
@@ -360,6 +398,18 @@ List[Transition] getOutgoingTransitions(Vertex vertex) :
 // generation or in the other case is already handled by the maude simulatior
 // implicitly. 
 Boolean isConsidered(Transition transition):
+  let source = transition.source:
+  let target = transition.target:
+  !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin()
+  || target.isFork() || target.isJoin())
+;
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+
+// Checks whether a transition does not involve pseudostates
+// i.e. it is a basic compound transition 
+Boolean isBasicCompound(Transition transition):
   let source = transition.source:
   let target = transition.target:
   !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin()
@@ -546,6 +596,18 @@ Boolean isFork(Vertex vertex):
 Boolean isJoin(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isJoin(org.eclipse.uml2.uml.Vertex)
 ;
+
+// Test whether a vertex is of type Choice
+Boolean isChoice(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isChoice(org.eclipse.uml2.uml.Vertex)
+;
+
+// Test whether a vertex is a pseudostate
+Boolean isPseudo(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.isPseudostate(org.eclipse.uml2.uml.Vertex)
+;
+
+
 
 //-----------------------------------------------------------------------------
 
