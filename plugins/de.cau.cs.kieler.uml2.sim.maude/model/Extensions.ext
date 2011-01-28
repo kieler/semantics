@@ -412,7 +412,7 @@ Boolean isConsidered(Transition transition):
 Boolean isBasicCompound(Transition transition):
   let source = transition.source:
   let target = transition.target:
-  !(source.isPseudostate() || target.isPseudostate())
+  !(source.isPseudo() || target.isPseudo())
 ;
 
 //-----------------------------------------------------------------------------
