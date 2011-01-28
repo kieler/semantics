@@ -16,6 +16,7 @@ import org.eclipse.uml2.uml.Transition;
 
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
+
 public class JavaEscape {
 
     // Saves the Vertices that had been visited when searching for incoming
@@ -255,6 +256,8 @@ public class JavaEscape {
             return "J";
         if (isFork(vertex))
             return "F";
+        if (isChoice(vertex))
+            return "C";
         if (vertex.getName() == null)
             return "";
         return vertex.getName();
@@ -449,7 +452,21 @@ public class JavaEscape {
     
     
     // ------------------------------------------------------------------------
+    
+    // Removes duplicated transitions
+    public static EList<Transition> convertToSet(final EList<Transition> transitionList) {
+    	EList<Transition> uniqueTransitionList = new BasicEList<Transition>();
+    	for (Transition transition: transitionList) {
+    		if (!uniqueTransitionList.contains(transition)) {
+    			uniqueTransitionList.add(transition);
+    		}
+    	}
+    	return uniqueTransitionList;
+    }
 
+
+    // ------------------------------------------------------------------------
+    
     public static EList<Vertex> getSourceNodes(Pseudostate pseudostate) {
         EList<Vertex> returnList = new BasicEList<Vertex>();
         // pseudostate.eAllContents().

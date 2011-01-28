@@ -83,7 +83,7 @@ fmod eclipseInterface is
 *** Transitions
 «REM» First calculate psudostates (Fork / Join) for complex transition ids «ENDREM»
 «clearDoneVertices()-»
-«FOREACH this.getForkJoin() AS pseudostate-»
+«FOREACH this.getForkJoinChoice() AS pseudostate-»
    «IF !pseudostate.isDone("OUTGOING")-»
    «ignore(pseudostate.getPseudoSourceVertices().toString())-»
    «addPseudostate(pseudostate)-»
@@ -116,7 +116,7 @@ fmod eclipseInterface is
   «resetPseudostates()-»
   «REM»Clear marked vertices«ENDREM»
   «clearDoneVertices()-»
-  «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
+  «FOREACH this.getForkJoinChoice() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
 «REM»
    OLD SYNTAX

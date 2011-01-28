@@ -159,9 +159,9 @@ Set[Transition] getTransitions(Package package):
  ((Set[Transition])package.eAllContents.select(e|e.metaType == Transition))
 ;
 
-// Get all Fork or Join vertices of the state machine (these are Pseudostates)
-Set[Pseudostate] getForkJoin(StateMachine sm):
- ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() ) ))
+// Get all Fork or Join or Choice vertices of the state machine (these are Pseudostates)
+Set[Pseudostate] getForkJoinChoice(StateMachine sm):
+ ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() || ((Vertex)e).isChoice() ) ))
 ;
 
 // Get all States of the state machine
@@ -400,8 +400,8 @@ List[Transition] getOutgoingTransitions(Vertex vertex) :
 Boolean isConsidered(Transition transition):
   let source = transition.source:
   let target = transition.target:
-  !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin()
-  || target.isFork() || target.isJoin())
+  !(source.isInitial() || source.isDH() || source.isSH() || source.isFork() || source.isJoin() 
+  || target.isFork() || target.isJoin() || source.isChoice() || target.isChoice())
 ;
 
 //-----------------------------------------------------------------------------
@@ -457,13 +457,13 @@ Region getLastRootRegion() :
 // It will return null otherwise
 // The method will also set the root region of that complex transition and will
 // determine the trigger, guard and action of the complex transition.
-Set[Transition] getPseudoTargetTransitions(Pseudostate pseudostate) :
+List[Transition] getPseudoTargetTransitions(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():
     // get all transitions that have a fork or join as a target
     let allTransitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING"):
     let selectedTransitionList = allTransitionList.select(e|e.source.metaType == Pseudostate
-         && ( e.source.isJoin() || e.source.isFork() )) :
+         && ( e.source.isJoin() || e.source.isFork() || e.source.isChoice() )) :
     // Add information about complex transition for all sub-transitions
     allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
     allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
@@ -478,13 +478,13 @@ Set[Transition] getPseudoTargetTransitions(Pseudostate pseudostate) :
 // It will return null otherwise
 // The method will also set the root region of that complex transition and will
 // determine the trigger, guard and action of the complex transition.
-Set[Transition] getPseudoSourceTransitions(Pseudostate pseudostate) :
+List[Transition] getPseudoSourceTransitions(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():
     // get all transitions that have a fork or join as a target
     let allTransitionList = getAllPseudostateTransitions(pseudostate,"INCOMING") :
     let selectedTransitionList = allTransitionList.select(e|e.target.metaType == Pseudostate
-         && ( e.target.isJoin() || e.target.isFork() )) :
+         && ( e.target.isJoin() || e.target.isFork() || e.target.isChoice() )) :
     // Add information about complex transition for all sub-transitions
     allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
     allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
