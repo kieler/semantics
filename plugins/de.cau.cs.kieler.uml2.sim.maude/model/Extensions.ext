@@ -395,7 +395,7 @@ List[Transition] getOutgoingTransitions(Vertex vertex) :
 //-----------------------------------------------------------------------------
 
 // Checks whether a transition is eligible to be considered by the maude code
-// generation or in the other case is already handled by the maude simulatior
+// generation or in the other case is already handled by the maude simulator
 // implicitly. 
 Boolean isConsidered(Transition transition):
   let source = transition.source:
@@ -453,10 +453,54 @@ Region getLastRootRegion() :
 
 //-----------------------------------------------------------------------------
 
+// This returns all transitions for a join or fork pseudostate
+// It will return null otherwise
+// The method will also set the root region of that complex transition and will
+// determine the trigger, guard and action of the complex transition.
+Set[Transition] getPseudoTargetTransitions(Pseudostate pseudostate) :
+    let reset = resetLastRootRegion():
+    let reset2 = resetComplexTransitionInformation():
+    // get all transitions that have a fork or join as a target
+    let allTransitionList = getAllPseudostateTransitions(pseudostate,"OUTGOING"):
+    let selectedTransitionList = allTransitionList.select(e|e.source.metaType == Pseudostate
+         && ( e.source.isJoin() || e.source.isFork() )) :
+    // Add information about complex transition for all sub-transitions
+    allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
+    allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
+//    allTransitionList.trigger2().addComplexTransitionInformation("GUARD") ->
+    // Return selected transitions
+    selectedTransitionList
+;
+
+//-----------------------------------------------------------------------------
+
+// This returns all transitions for a join or fork pseudostate
+// It will return null otherwise
+// The method will also set the root region of that complex transition and will
+// determine the trigger, guard and action of the complex transition.
+Set[Transition] getPseudoSourceTransitions(Pseudostate pseudostate) :
+    let reset = resetLastRootRegion():
+    let reset2 = resetComplexTransitionInformation():
+    // get all transitions that have a fork or join as a target
+    let allTransitionList = getAllPseudostateTransitions(pseudostate,"INCOMING") :
+    let selectedTransitionList = allTransitionList.select(e|e.target.metaType == Pseudostate
+         && ( e.target.isJoin() || e.target.isFork() )) :
+    // Add information about complex transition for all sub-transitions
+    allTransitionList.trigger2().addComplexTransitionInformation("TRIGGER") ->
+    allTransitionList.action2().addComplexTransitionInformation("ACTION") ->
+//    allTransitionList.trigger2().addComplexTransitionInformation("GUARD") ->
+    // Return selected transitions
+    selectedTransitionList
+;
+
+//-----------------------------------------------------------------------------
+
+// NOT NEEDED ANY MORE FOR *NEW* COMPLEX TRANSITION SYNTAX
+
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
 // The method will also set the root region of that complex transition and will
-// determine the trigger, guard and actio of the complex transition.
+// determine the trigger, guard and action of the complex transition.
 Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():
@@ -474,10 +518,12 @@ Set[Vertex] getPseudoTargetVertices(Pseudostate pseudostate) :
 
 //-----------------------------------------------------------------------------
 
+// NOT NEEDED ANY MORE FOR *NEW* COMPLEX TRANSITION SYNTAX
+
 // This returns all nodes for a join or fork pseudostate
 // It will return null otherwise
 // The method will also set the root region of that complex transition and will
-// determine the trigger, guard and actio of the complex transition.
+// determine the trigger, guard and action of the complex transition.
 Set[Vertex] getPseudoSourceVertices(Pseudostate pseudostate) :
     let reset = resetLastRootRegion():
     let reset2 = resetComplexTransitionInformation():

@@ -97,7 +97,7 @@ fmod eclipseInterface is
 *******************
 *** compound transitions
 *******************
-  «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
+  «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
 
 
 
@@ -118,7 +118,11 @@ fmod eclipseInterface is
   «clearDoneVertices()-»
   «FOREACH this.getForkJoin() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
+«REM»
+   OLD SYNTAX
    eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») «getComplexTransitionInformation("TRIGGER").get(0)» «getComplexTransitionInformation("GUARD").get(0)» «getComplexTransitionInformation("ACTION").get(0)» skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+«ENDREM»   
+   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceTransitions() AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») «getComplexTransitionInformation("TRIGGER").get(0)» «getComplexTransitionInformation("GUARD").get(0)» «getComplexTransitionInformation("ACTION").get(0)» skip skip («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
    «addPseudostate(pseudostate)-»
    «ENDIF-»
   «ENDFOREACH-»
