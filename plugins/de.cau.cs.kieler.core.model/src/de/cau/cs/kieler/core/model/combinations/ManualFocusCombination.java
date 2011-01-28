@@ -15,14 +15,17 @@ package de.cau.cs.kieler.core.model.combinations;
 
 import java.util.List;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
+import de.cau.cs.kieler.core.model.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 
 /**
@@ -36,20 +39,28 @@ public class ManualFocusCombination extends AbstractCombination {
     public ManualFocusCombination() {
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, selectionFocusButtonId,
                 "focusSelect", "Focus selected model objects and do a semantic zooming.", null,
-                SWT.CHECK, null, "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
+                SWT.CHECK, null,
+                "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
     }
 
     public void execute(final ButtonState button, final SelectionState selection,
             final ActiveEditorState activeEditor) {
-        System.out.println("activeEditor: " + activeEditor);
-        if (button.isPushedIn(selectionFocusButtonId)) {
-            // collapse all objects
-            EObject model = activeEditor.getLastActiveSemanticModel();
-            System.out.println("MODEL: " + model);
+        // FIXME: active editor is triggered too often
+        if (this.getTriggerState() instanceof SelectionState) {
+            if (button.isPushedIn(selectionFocusButtonId)) {
+                // collapse all objects
+                EObject model = activeEditor.getLastActiveSemanticModel();
+                System.out.println("MODEL: " + model);
 
-            this.schedule(new CompartmentCollapseExpandEffect(activeEditor
-                    .getLastActiveDiagramEditor(), model, null, 0, true));
-            List<EObject> selected = selection.getSelectedEObjects();
+                FocusContextEffect focusEffect = new FocusContextEffect(
+                        activeEditor.getLastActiveDiagramEditor());
+                focusEffect.addFocus(selection.getSelectedEObjects(), true);
+
+                for (IEffect effect : focusEffect.getPrimitiveEffects()) {
+                    System.out.println(effect);
+                    this.schedule(effect);
+                }
+            }
         }
     }
 

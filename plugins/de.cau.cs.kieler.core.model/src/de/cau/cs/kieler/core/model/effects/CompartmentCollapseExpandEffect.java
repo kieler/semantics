@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.core.model.effects;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
@@ -37,7 +40,7 @@ import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
     private int compartmentLevel = 0; // TODO implement compartment levels
-    private IResizableCompartmentEditPart targetEditPart;
+    private List<IResizableCompartmentEditPart> targetEditParts;
     private EObject targetNode;
     private boolean doCollapse;
     private boolean originalCollapseState;
@@ -66,18 +69,25 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         this.doCollapse = collapse;
         this.targetEditor = editor;
         this.targetNode = node;
+        this.targetEditParts = new ArrayList<IResizableCompartmentEditPart>();
         this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
-        EditPart parentPart = bridge.getEditPart(targetEditor);
+        EditPart parentPart = bridge.getEditPart(node);
         if (parentPart != null) {
             outer: for (Object child : parentPart.getChildren()) {
                 if (child instanceof IResizableCompartmentEditPart) {
-                    for (Object grandChild : ((IResizableCompartmentEditPart) child).getChildren()) {
-                        if (grandChild instanceof EditPart) {
-                            EObject grandChildSemantic = bridge.getElement(grandChild);
-                            if (featureToCollapse == null
-                                    || grandChildSemantic.eContainingFeature() == featureToCollapse) {
-                                targetEditPart = (IResizableCompartmentEditPart) child;
-                                break outer;
+                    // if no feature is given, collapse all child compartments
+                    if (featureToCollapse == null) {
+                        targetEditParts.add((IResizableCompartmentEditPart) child);
+                    } else {
+                        // search for a specific feature
+                        for (Object grandChild : ((IResizableCompartmentEditPart) child)
+                                .getChildren()) {
+                            if (grandChild instanceof EditPart) {
+                                EObject grandChildSemantic = bridge.getElement(grandChild);
+                                if (grandChildSemantic.eContainingFeature() == featureToCollapse) {
+                                    targetEditParts.add((IResizableCompartmentEditPart) child);
+                                    break outer;
+                                }
                             }
                         }
                     }
@@ -102,21 +112,26 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     }
 
     private boolean apply(final boolean collapse) {
-        if (targetEditPart != null
-                && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
-            ResizableCompartmentFigure f = (ResizableCompartmentFigure) targetEditPart.getFigure();
-            if (f.isExpanded() == collapse) {
-                if (collapse) {
-                    System.out.println("Collapsing "+targetEditPart);
-                    f.setCollapsed();
-                } else {
-                    System.out.println("Expanding "+targetEditPart);
-                    f.setExpanded();
+        boolean changed = false;
+        for (IResizableCompartmentEditPart targetEditPart : targetEditParts) {
+            if (targetEditPart != null
+                    && targetEditPart.getFigure() instanceof ResizableCompartmentFigure) {
+                ResizableCompartmentFigure f = (ResizableCompartmentFigure) targetEditPart
+                        .getFigure();
+                // only do something if necessary
+                if (f.isExpanded() == collapse) {
+                    if (collapse) {
+                      //  System.out.println("Collapsing " + targetEditPart);
+                        f.setCollapsed();
+                    } else {
+                      //  System.out.println("Expanding " + targetEditPart);
+                        f.setExpanded();
+                    }
+                    changed = true;
                 }
-                return true;
             }
         }
-        return false;
+        return changed;
     }
 
     /**
@@ -147,7 +162,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     public IEffect merge(final IEffect otherEffect) {
         if (otherEffect instanceof CompartmentCollapseExpandEffect) {
             CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
-            if (other.targetEditor == targetEditor && other.targetEditPart == targetEditPart) {
+            if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
                 originalCollapseState = other.originalCollapseState;
                 return this;
             }
@@ -155,23 +170,26 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             IEffect undo = ((UndoEffect) otherEffect).getEffect();
             if (undo instanceof CompartmentCollapseExpandEffect) {
                 CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) undo;
-                if (other.targetEditor == targetEditor && other.targetEditPart == targetEditPart) {
+                if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
                     originalCollapseState = other.originalCollapseState;
                     return this;
                 }
             }
         }
-
         return null;
     }
 
     private boolean isCollapsed() {
-        if (targetEditPart != null && targetEditPart.getModel() instanceof DrawerStyle) {
-            // FIXME: This is specific to GMF notation model
-            return ((DrawerStyle) targetEditPart.getModel()).isCollapsed();
-        } else {
-            return !doCollapse;
+        boolean allCollapsed = true;
+        for (IResizableCompartmentEditPart targetEditPart : targetEditParts) {
+            if (targetEditPart != null && targetEditPart.getModel() instanceof DrawerStyle) {
+                // FIXME: This is specific to GMF notation model
+                allCollapsed &= ((DrawerStyle) targetEditPart.getModel()).isCollapsed();
+            } else {
+                allCollapsed &= !doCollapse;
+            }
         }
+        return allCollapsed;
     }
 
     /**
@@ -190,5 +208,16 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      */
     public EObject getTargetNode() {
         return targetNode;
+    }
+
+    public String toString() {
+        StringBuffer b = new StringBuffer();
+        if (this.doCollapse) {
+            b.append("Collapse: ");
+        } else {
+            b.append("Expand: ");
+        }
+        b.append(targetNode);
+        return b.toString();
     }
 }
