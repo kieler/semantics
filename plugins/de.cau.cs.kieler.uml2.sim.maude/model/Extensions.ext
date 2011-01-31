@@ -315,7 +315,7 @@ String genMaudeBasicCompound(Transition n):
 // Transitions are tuples of:
 // source guard Action target 
 String genMaude2(Transition n):
- '   eq tr'+n.getId()+ ' = "tr'+n.getId()+'"'+
+ '   eq tr'+n.getId()+ ' = basicTrans "tr'+n.getId()+'"'+
 // source 
  '('+(n.source.getId()) + ') ' +
 // 'empty '+ 

@@ -22,17 +22,21 @@ updatesite fix! extensions not found in models folder because it seems not to be
 	«FILE ((String)(GLOBALVAR modelname)) +".maude"»
 	
 load model-checker.maude
-load «((String)(GLOBALVAR maudebasecode))»STATES
-load «((String)(GLOBALVAR maudebasecode))»EVENTS
-load «((String)(GLOBALVAR maudebasecode))»ACTIONS
-load «((String)(GLOBALVAR maudebasecode))»TRANS
-load «((String)(GLOBALVAR maudebasecode))»SM
+load «((String)(GLOBALVAR maudebasecode))»VERTSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»ACTIONSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»EVENTSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICSSYNTAX
 
 fmod eclipseInterface is
- including STATEMACHINE .
- including TRANSITIONS .
- including STATES .
-*** // Events //
+  including COMPOUNDTRANSITIONSSYNTAX .
+  including VERTSSYNTAX .
+  including SEMANTICSSYNTAX .
+  including STATE-ACTION .
+  including PRIORITY .
+  including STATEMACHINESYNTAX . 
+ *** // Events //
   ops «FOREACH this.getTriggerEvents() AS event SEPARATOR " "-»«event-»«ENDFOREACH-» : -> Event .
   op allEvents : -> Events .
 
@@ -90,10 +94,23 @@ fmod eclipseInterface is
    «ENDIF-»
 «ENDFOREACH-»
 «REM»No getPseudostates() can be queried«ENDREM»
+
+*******************
+*** basic transitions op declaration
+*******************      
 *** ToDo: Add trigger statt noevent!!
-  ops «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
+  ops «FOREACH this.getTransitions()  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
       «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»tr«pseudostate.getId()-»«ENDFOREACH-»
-      : -> ModTransition .
+      : -> Transition .
+
+*******************
+*** compound transitions op declaration
+*******************      
+  ops «FOREACH this.getTransitions().select(e|e.isBasicCompound())  AS transition SEPARATOR "  "-»ctr«transition.getId()-»«ENDFOREACH-»
+      «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
+      : -> Compoundtransition .
+
+      
 *******************
 *** compound transitions
 *******************
