@@ -100,14 +100,12 @@ fmod eclipseInterface is
 *******************      
 *** ToDo: Add trigger statt noevent!!
   ops «FOREACH this.getTransitions()  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
-      «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»tr«pseudostate.getId()-»«ENDFOREACH-»
       : -> Transition .
 
 *******************
 *** compound transitions op declaration
 *******************      
   ops «FOREACH this.getTransitions().select(e|e.isBasicCompound())  AS transition SEPARATOR "  "-»ctr«transition.getId()-»«ENDFOREACH-»
-      «FOREACH getPseudostates()  AS pseudostate SEPARATOR " "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
       : -> Compoundtransition .
 
       
@@ -117,37 +115,30 @@ fmod eclipseInterface is
   «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
 
 
-
-
-*******************
-********new transitionsyntax  
-*******************
   «FOREACH this.getTransitions() AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
 
-
-*******************
-*** old transitionsyntax
-*******************
-  «FOREACH this.getTransitions().select(e|e.isConsidered()) AS transition SEPARATOR '\n'-»«transition.genMaude()-»«ENDFOREACH-»
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «resetPseudostates()-»
   «REM»Clear marked vertices«ENDREM»
   «clearDoneVertices()-»
   «FOREACH this.getForkJoinChoice() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-«REM»
-   OLD SYNTAX
-   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceVertices() AS source SEPARATOR ','-»«source.getId()-»«ENDFOREACH-») «getComplexTransitionInformation("TRIGGER").get(0)» «getComplexTransitionInformation("GUARD").get(0)» «getComplexTransitionInformation("ACTION").get(0)» skip skip («FOREACH pseudostate.getPseudoTargetVertices() AS target SEPARATOR ','-»«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
-«ENDREM»   
-   eq tr«pseudostate.getId()-» = («FOREACH pseudostate.getPseudoSourceTransitions() AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») «getComplexTransitionInformation("TRIGGER").get(0)» «getComplexTransitionInformation("GUARD").get(0)» «getComplexTransitionInformation("ACTION").get(0)» skip skip («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   eq ctr«pseudostate.getId()-» = «pseudostate.getClassIdentifier()-» "ctr«pseudostate.getId()-»" «getComplexTransitionInformation("TRIGGER").get(0)» («FOREACH pseudostate.getPseudoSourceTransitions() AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
    «addPseudostate(pseudostate)-»
    «ENDIF-»
   «ENDFOREACH-»
   
+  «REM»
+   TODO: 
+     allTrans mit allen basic und simple transitions?! Dann sollte man die genMaude2() Funktion eher (als Codegenerierung) 
+     nach Xpand verlagern und die (wiederverwendbare) Auswahlfunktion/ID-Funktion nach Xtend.
+   
+  «ENDREM»
+  
   op allTrans : -> Transitions .
   eq allTrans = «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR ",  "-»tr«transition.getId()-»«ENDFOREACH-»
   				«IF getPseudostates().size > 0-»,«ENDIF-»
-                «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»tr«pseudostate.getId()-»«ENDFOREACH-» .
+                «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-» .
 
 
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
@@ -159,7 +150,7 @@ endfm
 
 «REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
 
-
+«REM»
 load «((String)(GLOBALVAR maudebasecode))»STEPSEM
 
 mod INIT is
@@ -217,6 +208,7 @@ search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mas
 red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1, ee2)), <> inC(b--181774032)) .
 red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1,ee2)), <> inC(d--961763712)) .
 )***
+«ENDREM»
 
 	«ENDFILE»
 «ENDDEFINE»

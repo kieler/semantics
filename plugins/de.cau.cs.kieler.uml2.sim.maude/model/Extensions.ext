@@ -612,6 +612,11 @@ String getAlias(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAlias(org.eclipse.uml2.uml.Vertex)
 ;
 
+// Get the class identifier of a vertex
+String getClassIdentifier(Vertex vertex):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getClassIdentifier(org.eclipse.uml2.uml.Vertex)
+;
+
 // Get the alias of a transition
 String getAlias(Transition transition):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getAlias(org.eclipse.uml2.uml.Transition)

@@ -265,6 +265,21 @@ public class JavaEscape {
 
     // ------------------------------------------------------------------------
 
+    // Get Class Identifier of a Vertex for new compound transition definition
+    public static String getClassIdentifier(Vertex vertex) {
+        if (isJoin(vertex))
+            return "joinTrans";
+        if (isFork(vertex))
+            return "forkTrans";
+        if (isChoice(vertex))
+            return "choiceTrans";
+        if (vertex.getName() == null)
+            return "";
+        return "";
+    }
+
+    // ------------------------------------------------------------------------
+
     // Get Alias of a Transition for better traceability
     public static String getAlias(Transition transition) {
         return getAlias(transition.getSource()) + "2" + "-" + getAlias(transition.getTarget());
