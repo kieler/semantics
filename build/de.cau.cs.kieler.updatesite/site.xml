@@ -154,6 +154,9 @@
    <feature url="features/net.sourceforge.lpsolve_5.5.2.qualifier.jar" id="net.sourceforge.lpsolve" version="5.5.2.qualifier">
       <category name="KIELER"/>
    </feature>
+   <feature url="features/com.google.code_1.0.0.qualifier.jar" id="com.google.code" version="1.0.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient
