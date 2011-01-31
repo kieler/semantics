@@ -346,7 +346,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * List of connections to be processed after the other elements are
      * finished.
      */
-    private List<EObject> connections;
+    private Set<EObject> connections;
     /** Store the elements that are already added and linked. */
     private Map<EObject, PictogramElement> elements;
     /** Store entities with box relative anchors that have to be layouted. */
@@ -572,7 +572,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      */
     protected void linkModelToDiagram(final DiagramEditor editor)
             throws InterruptedException, RollbackException {
-        connections = new LinkedList<EObject>();
+        connections = new HashSet<EObject>();
         elements = new HashMap<EObject, PictogramElement>();
         itemsWithBoxRelativeAnchors = new HashSet<AnchorContainer>();
         // get the feature provider for getting the AddFeatures
@@ -773,21 +773,71 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             // only do something if the element has a graphical representation
             elements.put(eObj, element);
 
-            if (element instanceof BoxRelativeAnchor) {
-                BoxRelativeAnchor port = (BoxRelativeAnchor) element;
-                AnchorContainer ac = port.getParent();
-                itemsWithBoxRelativeAnchors.add(ac);
-            }
-
-            if (element instanceof ContainerShape) {
-                // element may contain visible children
-                ContainerShape cs = (ContainerShape) element;
-                // recursively add children of the domain model element
-                for (EObject child : eObj.eContents()) {
-                    linkToDiagram(child, provider, cs, editor);
+            if (addChildrenRecursively(eObj)) {
+                if (element instanceof BoxRelativeAnchor) {
+                    BoxRelativeAnchor port = (BoxRelativeAnchor) element;
+                    AnchorContainer ac = port.getParent();
+                    itemsWithBoxRelativeAnchors.add(ac);
                 }
+
+                if (element instanceof ContainerShape) {
+                    // element may contain visible children
+                    ContainerShape cs = (ContainerShape) element;
+                    // recursively add children of the domain model element
+                    for (EObject child : eObj.eContents()) {
+                        linkToDiagram(child, provider, cs, editor);
+                    }
+                }
+            } else {
+                findElements(element);
             }
         }
+    }
+
+    /**
+     * Recursively find all elements that were recursively added by an
+     * AddFeature outside the control of the ReInitCommand.
+     * 
+     * @param elem
+     *            the element
+     */
+    private void findElements(final PictogramElement elem) {
+        if (elem == null || elem.getLink() == null
+                || elem.getLink().getBusinessObjects().isEmpty()) {
+            return;
+        }
+        EObject modelElem = elem.getLink().getBusinessObjects().get(0);
+        if (isConnection(modelElem)) {
+            // connections should be dealt with after
+            // all other elements are present
+            connections.add(modelElem);
+            return;
+        } else if (elem instanceof Anchor) {
+            for (Connection c : ((Anchor) elem).getOutgoingConnections()) {
+                findElements(c);
+            }
+        }
+        if (modelElem != null) {
+            elements.put(modelElem, elem);
+        }
+        for (EObject child : elem.eContents()) {
+            if (child instanceof PictogramElement) {
+                findElements((PictogramElement) child);
+            }
+        }
+    }
+
+    /**
+     * If true all contained elements will be added recursively. If false it is
+     * assumed that the graphical elements for all children were already added
+     * when the parent element is added.
+     * 
+     * @param eObj
+     *            the model element
+     * @return true if the method should be called again for all children
+     */
+    protected boolean addChildrenRecursively(final EObject eObj) {
+        return true;
     }
 
     /**
