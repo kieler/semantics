@@ -1,0 +1,75 @@
+****************************************************************
+*** ToDos in diesem File
+*** - Kommentare
+*** - gatherActions siehe unten
+****************************************************************
+
+fmod VARIABLE is
+  including INT .
+  including STRING .
+  sort Variable .
+  sort VarID .
+  op Var-_ : String -> VarID [ctor] .
+  
+  op (_->_) : VarID Int -> Variable .
+     
+endfm
+
+fmod ACTION is
+  protecting STRING .
+  sorts Action .
+  
+  op skip : -> Action [ctor] .
+  op ac:_ : String -> Action [ctor] .
+endfm
+
+view Action from TRIV to ACTION is
+  sort Elt to Action . 
+endv
+
+view Variable from TRIV to VARIABLE is
+  sort Elt to Variable . 
+endv
+
+
+fmod ACTIONSSYNTAX is 
+  including ACTION .
+  including VARIABLE .
+  including LIST{Action} * (sort List{Action} to Actions, sort NeList{Action} to NeActions) .
+  including SET{Variable} * (sort Set{Variable} to Variables, sort NeSet{Variable} to NeVariables) .
+  
+  op seq_ : Actions -> Action .
+  op par_ : Actions -> Action .
+  
+  sort Expression .
+  subsort Int VarID < Expression .
+    
+  vars int1 int2 : Int .
+  vars exp1 exp2 : Expression .
+  var varid : VarID .
+  var variable : Variable .
+  var variables : Variables .
+  
+  op _:=_ : VarID Expression -> Action . 
+  
+  op -_ : Expression -> Expression [ditto] .
+  op _+_ : Expression Expression -> Expression 
+  [assoc comm prec 33
+         special (id-hook ACU_NumberOpSymbol (+)
+                  op-hook succSymbol (s_ : Nat ~> NzNat)
+                  op-hook minusSymbol (-_ : NzNat ~> Int))] .  
+  op evalEXP__ : Expression Variables -> Expression .
+  eq evalEXP (exp1 + varid) ((varid -> int2), variables) = evalEXP (exp1 + int2) ((varid -> int2), variables) .  
+  eq evalEXP int1 variables = int1 .  
+  
+  op evalAction__ : Action Variables -> Variables .
+  eq evalAction (varid := exp1) ((varid -> int2), variables) = 
+    (
+    (varid -> (evalEXP exp1 ((varid -> int2), variables))), 
+     variables) .
+  
+endfm
+*** red (((Var- "y")-> 7), ((Var- "x")-> 9))  .
+*** red (evalEXP (Var- "x" + Var- "y")  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
+*** red (evalAction (Var- "x" := (Var- "x" + Var- "y"))  (((Var- "y")-> 7), ((Var- "x")-> 9)))  .
+

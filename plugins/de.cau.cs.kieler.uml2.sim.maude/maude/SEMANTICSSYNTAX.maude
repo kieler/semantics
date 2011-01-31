@@ -1,0 +1,39 @@
+view Fireset from TRIV to COMPOUNDTRANSITIONSYNTAX is
+  sort Elt to Fireset .
+endv
+
+
+fmod SEMANTICSSYNTAX is 
+  
+  including STATEMACHINESYNTAX .
+  including COMPOUNDTRANSITIONSSYNTAX .
+  including SET{Fireset} * (sort Set{Fireset} to Firesets, sort NeSet{Fireset} to NeFiresets) .
+  
+  op fireset_ : Compoundtransitions -> Fireset .
+  
+  
+  sorts LtsState .
+  sort MState .  
+  
+  op maState__ : Configuration Events -> MState [ctor format (r d d n)] .
+  op maState__ : Configuration EventSS 
+    -> MState [ctor format (r d d d n)] .
+
+  
+  sort Configuration .
+  op fireC___ : Verts HistoryConfs Sets -> Configuration .
+  op unstableC____ : Verts HistoryConfs Compoundtransitions Action -> Configuration .
+  op unstableExecC______ : Verts HistoryConfs Compoundtransitions Transitions Transitions Action -> Configuration .
+  op leaveC________ : Verts HistoryConfs Compoundtransitions Compoundtransition Transitions Transitions Verts Action -> Configuration .
+  op enterC______ : Verts HistoryConfs Compoundtransitions Compoundtransition Verts Action -> Configuration .
+  op execTransC_______ : Verts HistoryConfs Compoundtransitions Compoundtransition Transitions Transitions Action -> Configuration .
+  op execC___ : Verts HistoryConfs Compoundtransitions -> Configuration .
+  op stableC__ : Verts HistoryConfs -> Configuration .  
+  op doneC__ : Verts HistoryConfs -> Configuration .
+  op eventSelC___ : Verts HistoryConfs Event -> Configuration .
+
+*** These are for the execution of single compoundtransitions
+
+   
+   
+endfm

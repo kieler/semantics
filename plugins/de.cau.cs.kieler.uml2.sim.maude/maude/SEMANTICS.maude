@@ -1,0 +1,127 @@
+mod SEMANTICS is 
+  including COMPOUNDTRANSITIONSSYNTAX .
+  including COMPOUNDTRANSITIONS .
+  including VERTSSYNTAX .
+  including VERTS .
+  including SEMANTICSSYNTAX .
+  including SMGETTER .
+  including STATE-DEFAULT .
+  including DEEP-DEFAULT .
+  including SHALLOW-DEFAULT .
+  including HISTORY-CONF .
+  including STATE-ACTION .
+  including PRIORITY .
+  including STATEMACHINE . 
+  including eclipseInterface .
+
+	var mastate : MState .	
+	var mstate : MState .
+
+    vars src tgt src2 tgt2 : Verts . 
+    vars e e2 : Event .
+    vars g g2 : Guard .
+    vars a af aj a2 af2 aj2 action : Actions .
+    vars A AF AJ A2 AF2 AJ2 actions : Actions .
+    vars lreg lreg2 : Vert .
+	
+
+
+    vars  ENA : EntryActions .
+    vars  EXA : ExitActions .
+
+    vars sm : StateMachine .
+    vars HC : HistoryConfs .
+    vars hc : HistoryConf .
+    vars C2 leaveStates enterStates : Verts . *** Konfiguration
+    vars fe : Event . *** event selected for this rtc step
+    vars E E2 : Events .
+    vars ES ES2 : EventSS .
+    vars C C' V V2 S : Verts .
+    vars T T1 T2 F : Compoundtransitions .
+    vars t t1 t2 : Compoundtransition .
+    vars sT sT1 sT2 sF : Transitions .
+    vars st st1 st2 : Transition .
+    vars S2 : Verts .
+    vars s : State .
+    vars s2 s3 ds1 ds2 : State .
+    vars V_vert V_vert2 v : Vert .
+    vars R : Verts .
+    vars r r2 r3 : Region .
+    vars c : CompositeID .
+    vars shn : HistShallowID .
+    vars dhn : HistDeepID .
+    vars D : Defaults .
+    vars d : Default .
+    vars SH : ShallowDefaults .
+    vars sh : ShallowDefault .
+    vars DH : DeepDefaults .
+    vars dh : DeepDefault .
+    vars str : String .
+    vars MN : Sets .
+
+	 
+ 
+			  		
+
+    *** ToDo: Currently events are NOT consumed 
+	crl [selectEventFSetESINT] : maState (stableC V HC) (e, ES) => 
+	maState (eventSelC V HC e) (ES, e) if e =/= empty .
+	crl [discardFSetESINT] : maState (eventSelC V HC e) (ES) => 
+		maState (stableC V HC) (ES) if 
+		(enabled V e) == empty .
+
+	crl [computeFSetESINT] : maState (eventSelC V HC e) (ES) => 
+		maState (fireC V HC 
+			(fireableSets 
+				(remLowPrio 
+					(enabled 
+						V 
+						e
+					)
+				)) 
+		) (ES) if 
+		(enabled V e) =/= empty .
+	rl [fireFSetESINT] : maState (fireC V HC (mm(T), MN)) ES => 
+		maState (unstableC V HC T (par nil)) ES .
+
+	rl [finishedRTCESINT] : maState (unstableC V HC empty (par A)) ES => 
+		maState (stableC V (succHC V HC)) ES .
+
+ *** started by maState (unstableC V HC (t, T) (par A)) ES => 
+ ***  maState ((leaveC V HC T t (inTrans t) (outTrans t) (leave V t) (par A)) ES 
+    crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
+     maState (leaveC (V \ v)  HC T t sT sT1 leaveStates (seq A (getExitAc v))) ES 
+     if (((intersection (leaveStates, (getSubVerts v))) == empty) and not(typeRegion v)) .
+    crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
+     maState (leaveC (V \ v)  HC T t sT sT1 leaveStates A)  ES 
+     if ((intersection (leaveStates, (getSubVerts v)) == empty) and (typeRegion v)) .
+    rl maState (leaveC V HC T t sT sT1 empty A) ES =>
+     maState (execTransC V  HC T t sT sT1 A) ES .
+    rl maState (execTransC V HC T t (st, sT) sT1 A) ES =>
+     maState (execTransC V  HC T t sT sT1 (seq A (action st))) ES .
+    rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
+     maState (execTransC V  HC T t empty sT1 (seq A (action st))) ES .
+    rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
+     maState (execTransC V  HC T t empty sT1 (seq A (action st))) ES .
+    rl maState (execTransC V HC T t empty empty A) ES =>
+    maState(enterC V HC T t (enterH HC t) A) ES .
+    crl maState (enterC V HC T t (v, enterStates) A) ES =>
+     maState (enterC (V, v) HC T t enterStates (seq A (getEntryAc v))) ES 
+     if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) .
+    crl maState (enterC V HC T t (v, enterStates) A) ES =>
+     maState (enterC (V, v)  HC T t enterStates A)  ES 
+     if ((intersection (enterStates, (start v)) == empty) and (typeRegion v)) .
+    rl maState (enterC V HC T t empty A) ES =>
+     maState (unstableC V HC T A) ES .
+
+    
+     
+
+
+
+endm
+***( 
+
+endm  
+)*** 		
+  

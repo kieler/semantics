@@ -1,0 +1,171 @@
+
+fmod TRANSITIONSYNTAX is
+  including EVENTSSYNTAX .
+  including VERTSSYNTAX .
+  including ACTIONSSYNTAX .
+
+  sorts Guard Transition Fireset .
+
+  op basicTrans_____ : String Vert Guard Action Vert -> 
+	  Transition [ctor] .
+  op ____ : Vert Guard Action Vert -> 
+      Transition [ctor] .
+  
+  
+	  
+  
+
+
+  *** guards are abstract	  
+  op Gd : -> Guard [ctor] .
+ 
+  op inStates_ : Verts -> Guard .
+  op notGd_ : Guard -> Guard . 
+  op _andGd_ : Guard Guard -> Guard .
+  op evalGuard__ : Guard Verts -> Bool .
+  eq evalGuard(notGd g) conf = not (evalGuard g conf) .
+  eq evalGuard(g andGd g1) conf = (evalGuard g conf) and (evalGuard g1 conf) .
+  eq evalGuard(inStates states) conf = states subset conf . 
+*** wofuer mache ich das?
+***  eq evalGuard g conf = g [owise] .
+     
+  vars src tgt conf states : Verts . 
+  vars g g1 : Guard .
+  vars lreg : Vert .
+  vars id strId : String .
+  
+  
+  
+endfm
+
+
+view Transition from TRIV to TRANSITIONSYNTAX is
+  sort Elt to Transition .
+endv
+
+fmod COMPOUNDTRANSITIONSYNTAX is
+  including EVENTSSYNTAX .
+  including VERTSSYNTAX .
+  including ACTIONSSYNTAX .
+  including SET{Transition} * (sort Set{Transition} to Transitions, sort NeSet{Transition} to NeTransitions) .
+  
+  sort Compoundtransition Menge .
+
+  vars g g1 : Guard .
+  var e : Event .
+  var t : Transition .
+  var T : Transitions .
+  var reg : Region .
+  var a : Action .
+  var src tgt : Vert .
+  var strid : String .
+  
+  op joinTrans____ : Event Transitions Transition Region -> Compoundtransition [ctor] .
+  op forkTrans____ : Event Transition Transitions Region -> Compoundtransition [ctor] .
+  op choiceTrans____ : Event Transition Transitions Region -> Compoundtransition [ctor] .
+  op simpleTrans___ : Event Transition Region -> Compoundtransition [ctor] .
+  
+  op joinTrans_____ : String Event Transitions Transition Region -> Compoundtransition [ctor] .
+  op forkTrans_____ : String Event Transition Transitions Region -> Compoundtransition [ctor] .
+  op choiceTrans_____ : String Event Transition Transitions Region -> Compoundtransition [ctor] .
+  op simpleTrans____ : String Event Transition Region -> Compoundtransition [ctor] .
+  
+
+  op action_ : Transition -> Action .
+  eq action (src g a tgt) = a .
+  eq action (basicTrans strid src g a tgt) = a .
+
+  op guard_ : Transitions -> Guard .
+  eq guard (t, T) = (guard t) andGd (guard T) .
+  eq guard (src g a tgt) = g .
+  eq guard (basicTrans strid src g a tgt) = g .
+
+  op guard_ : Compoundtransition -> Guard .
+  eq guard (simpleTrans e t reg) = (guard t) .
+  eq guard (forkTrans e t T reg) = (guard t) .  
+  *** how should choice guards be handeled
+  eq guard (choiceTrans e t T reg) = (guard t) .
+  eq guard (joinTrans e T t reg) = (guard t) .
+
+  eq guard (simpleTrans strid e t reg) = (guard t) .
+  eq guard (forkTrans strid e t T reg) = (guard t) .  
+  *** how should choice guards be handeled
+  eq guard (choiceTrans strid e t T reg) = (guard t) .
+  eq guard (joinTrans strid e T t reg) = (guard t) .
+
+
+  op source_ : Transitions -> Verts .
+  eq source (t, T) = (source t), (source T) .
+  eq source (basicTrans strid src g a tgt) = src .
+  eq source (src g a tgt) = src .
+
+  op source_ : Compoundtransition -> Vert .
+  eq source (simpleTrans e t reg) = (source t) .
+  eq source (forkTrans e t T reg) = (source t) .
+  eq source (choiceTrans e t T reg) = (source t) .
+  eq source (joinTrans e T t reg) = (source T) .
+
+  eq source (simpleTrans strid e t reg) = (source t) .
+  eq source (forkTrans strid e t T reg) = (source t) .
+  eq source (choiceTrans strid e t T reg) = (source t) .
+  eq source (joinTrans strid e T t reg) = (source T) .
+
+  op target_ : Transition -> Verts .
+  eq target (t, T) = (target t), (target T) .
+  eq target (src g a tgt) = tgt .
+  eq target (basicTrans strid src g a tgt) = tgt .
+
+  op target_ : Compoundtransition -> Vert .
+  eq target (simpleTrans e t reg) = (target t) .
+  eq target (forkTrans e t T reg) = (target T) .
+  eq target (choiceTrans e t T reg) = (target T) .
+  eq target (joinTrans e T t reg) = (target t) .
+
+  eq target (simpleTrans strid e t reg) = (target t) .
+  eq target (forkTrans strid e t T reg) = (target T) .
+  eq target (choiceTrans strid e t T reg) = (target T) .
+  eq target (joinTrans strid e T t reg) = (target t) .
+
+  op region _ : Compoundtransition -> Region .
+  eq region (simpleTrans e t reg) = reg .
+  eq region (forkTrans e t T reg) = reg .
+  eq region (choiceTrans e t T reg) = reg .
+  eq region (joinTrans e T t reg) = reg .
+
+  eq region (simpleTrans strid e t reg) = reg .
+  eq region (forkTrans strid e t T reg) = reg .
+  eq region (choiceTrans strid e t T reg) = reg .
+  eq region (joinTrans strid e T t reg) = reg .
+
+  
+  op event _ : Compoundtransition -> Event .
+  eq event (simpleTrans e t reg) = e .
+  eq event (forkTrans e t T reg) = e .
+  eq event (choiceTrans e t T reg) = e .
+  eq event (joinTrans e T t reg) = e .
+  
+  eq event (simpleTrans strid e t reg) = e .
+  eq event (forkTrans strid e t T reg) = e .
+  eq event (choiceTrans strid e t T reg) = e .
+  eq event (joinTrans strid e T t reg) = e .
+  
+  
+  
+endfm
+
+view Compoundtransition from TRIV to COMPOUNDTRANSITIONSYNTAX is
+  sort Elt to Compoundtransition .
+endv
+
+view Menge from TRIV to COMPOUNDTRANSITIONSYNTAX is
+  sort Elt to Menge .
+endv
+fmod COMPOUNDTRANSITIONSSYNTAX is
+  including COMPOUNDTRANSITIONSYNTAX .
+  including SET{Compoundtransition} * (sort Set{Compoundtransition} to Compoundtransitions, sort NeSet{Compoundtransition} to NeCompoundtransitions) .
+  including SET{Menge} * (sort Set{Menge} to Sets, sort NeSet{Menge} to NeSets) .
+  
+
+endfm
+
+
