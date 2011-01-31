@@ -24,6 +24,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
+import org.eclipse.gmf.runtime.draw2d.ui.internal.routers.OrthogonalRouter;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -160,6 +161,18 @@ public class SplineConnection extends PolylineConnectionEx {
         return DIMCHECK.equals(copied);
     }
 
+    /**
+     * true if edge corners should be rounded. Same as super method except it doesn't check 
+     * if edge routing is orthogonal.
+     */
+    @Override
+    public boolean isRoundingBendpoints() {
+        if (super.getRoundedBendpointsRadius() > 0 && getSmoothness() == 0) {
+                return true;
+        }
+        return false;
+    }
+    
     /**
      * Calculate and store the tolerance value for determining whether the line contains a point or
      * not.
