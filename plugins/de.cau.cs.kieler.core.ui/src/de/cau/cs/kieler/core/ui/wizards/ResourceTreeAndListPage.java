@@ -106,7 +106,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Remembers all the checked list items for a given tree viewer item. This map
      * must be cleared when the tree viewer's input object changes.
      */
-    private Multimap<Object, Object> checkedListItems = new HashMultimap<Object, Object>();
+    private Multimap<Object, Object> checkedListItems = HashMultimap.create();
     
     /**
      * Set of tree items that have been visited. A tree item gets visited when it
