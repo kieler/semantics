@@ -1,9 +1,0 @@
-
-load model-checker.maude
-load STATES
-load EVENTS
-load ACTIONS
-load TRANS
-load SM
-load STEPSEM
-	
