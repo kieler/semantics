@@ -20,13 +20,6 @@ import java.util.ListIterator;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.draw2d.IFigure;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.edit.domain.EditingDomain;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gef.editparts.ZoomManager;
-import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerNotSupportedException;
@@ -68,116 +61,9 @@ public final class GraphicalFrameworkService {
         return instance;
     }
 
-    /**
-     * A graphical framework bridge implementation that switches between all available bridges to
-     * retrieve requested elements.
-     */
-    private class MultiplexingBridge implements IGraphicalFrameworkBridge {
-
-        /**
-         * {@inheritDoc}
-         */
-        public boolean supports(final Object object) {
-            return false;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public EObject getElement(final Object object) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                EObject result = entry.getFirst().getElement(object);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public EditPart getEditPart(final Object object) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                EditPart result = entry.getFirst().getEditPart(object);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public EditPart getEditPart(final IEditorPart editorPart, final Object object) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                EditPart result = entry.getFirst().getEditPart(editorPart, object);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public EditingDomain getEditingDomain(final Object object) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                EditingDomain result = entry.getFirst().getEditingDomain(object);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public IFigure getDrawingLayer(final EditPart editPart) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                IFigure result = entry.getFirst().getDrawingLayer(editPart);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public ZoomManager getZoomManager(final EditPart editPart) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                ZoomManager result = entry.getFirst().getZoomManager(editPart);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public ISelection getSelection(final IEditorPart editorPart) {
-            for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
-                ISelection result = entry.getFirst().getSelection(editorPart);
-                if (result != null) {
-                    return result;
-                }
-            }
-            return null;
-        }
-
-    }
-
     /** the sorted list of registered graphical framework bridges. */
-    private List<Pair<IGraphicalFrameworkBridge, Integer>> bridgeList = new LinkedList<Pair<IGraphicalFrameworkBridge, Integer>>();
-    /** the multiplexing bridge that is returned if no bridge directly supports an object. */
-    private MultiplexingBridge multiplexingBridge = new MultiplexingBridge();
+    private List<Pair<IGraphicalFrameworkBridge, Integer>> bridgeList
+            = new LinkedList<Pair<IGraphicalFrameworkBridge, Integer>>();
 
     /**
      * Inserts a given graphical framework bridge into the sorted list.

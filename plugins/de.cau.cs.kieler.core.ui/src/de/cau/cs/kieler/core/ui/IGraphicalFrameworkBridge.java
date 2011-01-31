@@ -19,7 +19,7 @@ import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
 /**
  * Interface for bridges to graphical editing frameworks. This can be used to connect code that
@@ -63,12 +63,12 @@ public interface IGraphicalFrameworkBridge {
      * Returns the relevant edit part for the given object. If a model element is passed,
      * the most relevant edit part in the given editor is returned.
      * 
-     * @param editorPart an editor part
+     * @param editorPart a workbench part containing a diagram
      * @param object an edit part, notational object, or model element
      * @return the relevant edit part, or {@code null} if the passed object cannot
      *     be handled
      */
-    EditPart getEditPart(IEditorPart editorPart, Object object);
+    EditPart getEditPart(IWorkbenchPart editorPart, Object object);
     
     /**
      * Retrieve the editing domain for model changes of the given object.
@@ -98,10 +98,10 @@ public interface IGraphicalFrameworkBridge {
     /**
      * Returns the current selection for the given editor part.
      * 
-     * @param editorPart an editor part
+     * @param workbenchPart a workbench part containing a diagram
      * @return the current selection, or {@code null} if the selection cannot
      *     be determined
      */
-    ISelection getSelection(IEditorPart editorPart);
+    ISelection getSelection(IWorkbenchPart workbenchPart);
     
 }

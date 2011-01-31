@@ -33,7 +33,7 @@ import org.eclipse.graphiti.ui.internal.editor.GraphitiScrollingGraphicalViewer;
 import org.eclipse.graphiti.ui.internal.parts.IPictogramElementEditPart;
 import org.eclipse.graphiti.ui.internal.util.gef.ScalableRootEditPartAnimated;
 import org.eclipse.jface.viewers.ISelection;
-import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 
@@ -113,10 +113,10 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
-    public EditPart getEditPart(final IEditorPart editorPart,
+    public EditPart getEditPart(final IWorkbenchPart workbenchPart,
             final Object object) {
-        if (editorPart instanceof DiagramEditor) {
-            DiagramEditor de = (DiagramEditor) editorPart;
+        if (workbenchPart instanceof DiagramEditor) {
+            DiagramEditor de = (DiagramEditor) workbenchPart;
             Collection<?> col =
                     de.getGraphicalViewer().getEditPartRegistry().values();
             for (Object o : col) {
@@ -206,9 +206,9 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
-    public ISelection getSelection(final IEditorPart editorPart) {
-        if (editorPart instanceof DiagramEditor) {
-            return ((DiagramEditor) editorPart).getGraphicalViewer()
+    public ISelection getSelection(final IWorkbenchPart workbenchPart) {
+        if (workbenchPart instanceof DiagramEditor) {
+            return ((DiagramEditor) workbenchPart).getGraphicalViewer()
                     .getSelection();
         }
         return null;

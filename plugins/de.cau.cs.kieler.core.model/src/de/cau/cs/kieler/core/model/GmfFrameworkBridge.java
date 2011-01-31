@@ -33,6 +33,7 @@ import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
@@ -182,9 +183,9 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
-    public EditPart getEditPart(final IEditorPart editorPart, final Object object) {
-        if (editorPart instanceof DiagramEditor) {
-            DiagramEditor diagramEditor = (DiagramEditor) editorPart;
+    public EditPart getEditPart(final IWorkbenchPart workbenchPart, final Object object) {
+        if (workbenchPart instanceof DiagramEditor) {
+            DiagramEditor diagramEditor = (DiagramEditor) workbenchPart;
             if (object instanceof View) {
                 return getEditPart(diagramEditor.getDiagramEditPart(), (View) object);
             } else if (object instanceof EObject) {
@@ -237,9 +238,9 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
-    public ISelection getSelection(final IEditorPart editorPart) {
-        if (editorPart instanceof DiagramEditor) {
-            return ((DiagramEditor) editorPart).getDiagramGraphicalViewer().getSelection();
+    public ISelection getSelection(final IWorkbenchPart workbenchPart) {
+        if (workbenchPart instanceof DiagramEditor) {
+            return ((DiagramEditor) workbenchPart).getDiagramGraphicalViewer().getSelection();
         }
         return null;
     }
