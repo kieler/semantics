@@ -18,6 +18,7 @@ fmod TRANSITIONSYNTAX is
 
   *** guards are abstract	  
   op Gd : -> Guard [ctor] .
+  op true -> Guard [ctor] .
  
   op inStates_ : Verts -> Guard .
   op notGd_ : Guard -> Guard . 
