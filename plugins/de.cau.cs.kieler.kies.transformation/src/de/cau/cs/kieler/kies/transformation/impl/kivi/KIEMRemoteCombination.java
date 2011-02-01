@@ -24,7 +24,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
-import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
@@ -41,8 +41,6 @@ import de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataCompo
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -61,28 +59,26 @@ public class KIEMRemoteCombination extends AbstractCombination {
             + "SyncchartsDiagramEditorID";
     private static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.kies.Esterel";
 
-    private static final Map<String, Boolean> BUTTON_ENABLEING = ImmutableMap.of(BUTTON_STEP, true,
-            BUTTON_EXPAND, true, BUTTON_EXPAND_OPTIMIZE, true, BUTTON_STEP_BACK, true);
+    private final Map<String, Boolean> buttonEnabling = Maps.newHashMap();
 
-    private enum TStatus {
-        NONE, FINISHED, RUNNING
+    private enum StepType {
+        STEP, STEP_BACK, EXPAND, EXPAND_OPTIMIZE
     };
 
-    private TStatus transformationStatus = TStatus.NONE;
-    private TStatus optimizationStatus = TStatus.NONE;
-
     private AbstractTransformationDataComponent currentDataComponent;
-
     private IWorkbenchPart currentlyActiveEditor;
     private CommandStack currentCommandStack;
 
-    private boolean scheduleOptimization = false;
-    private boolean dynamicButtonEnabling = true;
+    private StepType lastStepType = StepType.STEP;
 
     /**
      * Default Constructor, setting up all needed buttons.
      */
     public KIEMRemoteCombination() {
+        buttonEnabling.put(BUTTON_STEP, true);
+        buttonEnabling.put(BUTTON_EXPAND, true);
+        buttonEnabling.put(BUTTON_EXPAND_OPTIMIZE, true);
+        buttonEnabling.put(BUTTON_STEP_BACK, true);
 
         // #### back
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
@@ -133,11 +129,24 @@ public class KIEMRemoteCombination extends AbstractCombination {
         if (transformationState.getSequenceNumber() > buttonState.getSequenceNumber()
                 && transformationState.getSequenceNumber() > editorState.getSequenceNumber()) {
             System.out.println("finished state");
-            // activate / deactivate back button.
-            if (dynamicButtonEnabling && currentCommandStack != null) {
-                enableStepBack(currentCommandStack.canUndo());
+
+            if (lastStepType == StepType.EXPAND_OPTIMIZE) {
+                // optimization is performed the same manner line expand just with different data
+                // component.
+                process(StepType.EXPAND);
+                setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
+            } else if (lastStepType == StepType.EXPAND) {
+                currentDataComponent.doPostTransformation();
+                setButtonState(false, BUTTON_EXPAND);
             }
+
+            // activate / deactivate back button.
+            if (currentCommandStack != null) {
+                buttonEnabling.put(BUTTON_STEP_BACK, currentCommandStack.canUndo());
+            }
+
             setButtonEnabling(true);
+
             return;
         }
 
@@ -146,7 +155,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 && buttonState.getSequenceNumber() > transformationState.getSequenceNumber()) {
             System.out.println("button state");
 
-            if (!BUTTON_ENABLEING.keySet().contains(buttonState.getButtonId())) {
+            if (!buttonEnabling.keySet().contains(buttonState.getButtonId())) {
                 // not interested in that button
                 return;
             }
@@ -162,48 +171,17 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 }
             }
 
-            if (currentDataComponent instanceof SyncChartsOptimizationDataComponent) {
-                EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent();
-                try {
-                    dc.initialize();
-                } catch (KiemInitializationException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                if (dc.getNextTransformation() != null) {
-                    currentDataComponent = null;
-                    optimizationStatus = TStatus.NONE;
-                    transformationStatus = TStatus.NONE;
-                }
-            }
-
-            if (currentDataComponent == null) {
-                if (transformationStatus != TStatus.FINISHED) {
-                    currentDataComponent = new EsterelToSyncChartDataComponent();
-                } else if (currentDataComponent == null) {
-                    currentDataComponent = new SyncChartsOptimizationDataComponent();
-                }
-                try {
-                    currentDataComponent.initialize();
-                } catch (KiemInitializationException e) {
-                    e.printStackTrace();
-                }
-            }
-
             String id = buttonState.getButtonId();
             if (id.equals(BUTTON_STEP)) {
-                System.out.println("step");
-                step();
+                process(StepType.STEP);
             } else if (id.equals(BUTTON_STEP_BACK)) {
-                System.out.println("back");
-                back();
+                process(StepType.STEP_BACK);
             } else if (id.equals(BUTTON_EXPAND)) {
-                expand();
+                process(StepType.EXPAND);
             } else if (id.equals(BUTTON_EXPAND_OPTIMIZE)) {
-                expandAndOptimize();
+                process(StepType.EXPAND_OPTIMIZE);
             }
-
-            setButtonEnabling(false);
+            setButtonEnabling(true);
         }
 
         return;
@@ -212,6 +190,8 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private boolean initializeTransformation() {
         // first check if there is anything to transform!
         // TODO
+        setButtonState(true, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_EXPAND);
+        setButtonState(false, BUTTON_STEP_BACK);
 
         // get the current editor
         IEditorPart editor = TransformationUtil.getActiveEditor();
@@ -234,70 +214,46 @@ public class KIEMRemoteCombination extends AbstractCombination {
         return false;
     }
 
-    private void step() {
-        setRecursive(false);
+    private void process(StepType type) {
+        lastStepType = type;
+
+        if (type == StepType.STEP_BACK) {
+            back();
+            return;
+        }
+
+        // initialize the correct datacomponent
+        if (isTransformable()) {
+            currentDataComponent = new EsterelToSyncChartDataComponent();
+        } else {
+            currentDataComponent = new SyncChartsOptimizationDataComponent();
+        }
+        try {
+            currentDataComponent.initialize();
+        } catch (KiemInitializationException e) {
+            e.printStackTrace();
+        }
+
+        // determine proceeding
+        switch (type) {
+        case STEP:
+            setRecursive(false);
+            break;
+        case EXPAND:
+            setRecursive(true);
+            break;
+        case EXPAND_OPTIMIZE:
+            setRecursive(true);
+            break;
+        default:
+        }
+
+        // perform step
         try {
             initiateStep();
-            this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, true));
         } catch (KiemExecutionException e) {
-            if (currentDataComponent instanceof EsterelToSyncChartDataComponent) {
-                transformationStatus = TStatus.FINISHED;
-                currentDataComponent = null;
-            }
-        }
-    }
-
-    private void expand() {
-        setRecursive(true);
-        try {
-            try {
-                initiateStep();
-            } catch (KiemExecutionException e) {
-                e.printStackTrace();
-            }
-            currentDataComponent.wrapup();
-            currentDataComponent = null;
-            transformationStatus = TStatus.FINISHED;
-            this.schedule(new MenuItemEnableStateEffect(BUTTON_EXPAND, false));
-            // currentDataComponent.step(null);
-        } catch (Exception e) {
             e.printStackTrace();
-        }
-
-    }
-
-    private void expandAndOptimize() {
-        try {
-            if (currentDataComponent instanceof EsterelToSyncChartDataComponent) {
-                setRecursive(true);
-                try {
-                    initiateStep();
-                } catch (Exception e) {
-                    System.err.println("finished");
-                }
-                try {
-                    currentDataComponent.wrapup();
-                } catch (Exception e) {
-                    System.err.println("finished2");
-                }
-                scheduleOptimization = true;
-            } // else {
-              // Thread.sleep(3000);
-            currentDataComponent = new SyncChartsOptimizationDataComponent();
-            try {
-                currentDataComponent.initialize();
-                setRecursive(true);
-                initiateStep();
-                initiateStep();
-                initiateStep();
-                currentDataComponent.wrapup();
-            } catch (Exception e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            System.out.println("Finished");
         }
     }
 
@@ -308,7 +264,6 @@ public class KIEMRemoteCombination extends AbstractCombination {
         if (currentCommandStack != null) {
             enableStepBack(currentCommandStack.canUndo());
         }
-
     }
 
     private void setRecursive(final boolean bool) {
@@ -322,10 +277,16 @@ public class KIEMRemoteCombination extends AbstractCombination {
         this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, bool));
     }
 
+    private void setButtonState(boolean enabled, String... buttons) {
+        for (String button : buttons) {
+            buttonEnabling.put(button, enabled);
+        }
+    }
+
     private void setButtonEnabling(boolean bool) {
-        for (String button : BUTTON_ENABLEING.keySet()) {
+        for (String button : buttonEnabling.keySet()) {
             this.schedule(new MenuItemEnableStateEffect(button, !bool ? false
-                    : (Boolean) BUTTON_ENABLEING.get(button)));
+                    : (Boolean) buttonEnabling.get(button)));
         }
     }
 
@@ -348,9 +309,17 @@ public class KIEMRemoteCombination extends AbstractCombination {
         } else {
             currentCommandStack = null;
         }
+    }
 
-        optimizationStatus = TStatus.NONE;
-        transformationStatus = TStatus.NONE;
-        scheduleOptimization = false;
+    private boolean isTransformable() {
+        EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent();
+        try {
+            dc.initialize();
+        } catch (KiemInitializationException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        Object next = dc.getNextTransformation();
+        return next != null;
     }
 }
