@@ -1,0 +1,18 @@
+fmod PRIORITY is
+  including VERTS .
+  including COMPOUNDTRANSITIONSSYNTAX .
+ 
+  vars t t2 : Compoundtransition .
+  var T : Compoundtransitions .
+  vars V V2 : Verts .
+ 
+ 
+  *** what kind of priority is this precisely?
+  op noHigherPrio__ : Compoundtransition Compoundtransitions -> Bool .
+  eq noHigherPrio t t2 = $noHigherPrio (downset (source t)) (downset (source t2)) .
+  eq noHigherPrio t empty = true .
+  eq noHigherPrio t (T ,  t2) = (noHigherPrio t t2) and (noHigherPrio t T) .
+
+  op $noHigherPrio__ : Verts Verts -> Bool .
+  eq $noHigherPrio V V2 = ((V2 \ V) == empty) and (V2 =/= V) . 
+endfm  
