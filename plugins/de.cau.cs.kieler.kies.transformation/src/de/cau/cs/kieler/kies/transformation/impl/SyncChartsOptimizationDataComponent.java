@@ -128,8 +128,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         }
 
         // initialize facade
-        facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
-                getBasePackages(), globalVars);
+        facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
+                globalVars);
 
         // get current models' root element
         IEditorPart editor = TransformationUtil.getActiveEditor();

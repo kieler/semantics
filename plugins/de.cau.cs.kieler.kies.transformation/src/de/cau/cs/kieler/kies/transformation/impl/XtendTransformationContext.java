@@ -36,7 +36,7 @@ import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
- * @author chicken
+ * @author uru
  * 
  */
 public class XtendTransformationContext implements TransformationContext {
@@ -45,15 +45,21 @@ public class XtendTransformationContext implements TransformationContext {
 
     private XtendFacade xtendFacade;
     private TransactionalEditingDomain editingDomain;
-
     private TransformationDescriptor descriptor;
-
     private Semaphore lock;
 
     private Object result = null;
-    
+
     /**
-     * 
+     * @param facade
+     *            {@link XtendFacade} responsible for calling the extensions.
+     * @param theDescriptor
+     *            {@link TransformationDescriptor} containing the name and parameters of the current
+     *            transformation.
+     * @param theEditingDomain
+     *            editing domain on which the current transformation is executed.
+     * @param aLock
+     *            a semaphore that is released as soon as the transformation finished.
      */
     public XtendTransformationContext(final XtendFacade facade,
             final TransformationDescriptor theDescriptor,
@@ -65,6 +71,9 @@ public class XtendTransformationContext implements TransformationContext {
         this.lock = aLock;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void executeCurrent() {
         // FIXME workaround to avoid deadlock with FireOnceTriggerListener
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
@@ -76,8 +85,8 @@ public class XtendTransformationContext implements TransformationContext {
                 // for some reason it is important to do this in a separate command!
                 CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
 
-                XtendTransformationCommand command = new XtendTransformationCommand(xtendFacade, descriptor,
-                        editingDomain);
+                XtendTransformationCommand command = new XtendTransformationCommand(xtendFacade,
+                        descriptor, editingDomain);
                 cc.append(command);
                 cc.append(new RefreshGMFElementsCommand(editingDomain));
 
@@ -94,27 +103,27 @@ public class XtendTransformationContext implements TransformationContext {
     }
 
     /**
-     * @param xtendFacade
+     * @param theXtendFacade
      *            the xtendFacade to set
      */
-    public void setXtendFacade(XtendFacade xtendFacade) {
-        this.xtendFacade = xtendFacade;
+    public void setXtendFacade(final XtendFacade theXtendFacade) {
+        this.xtendFacade = theXtendFacade;
     }
 
     /**
-     * @param editingDomain
+     * @param theEditingDomain
      *            the editingDomain to set
      */
-    public void setEditingDomain(TransactionalEditingDomain editingDomain) {
-        this.editingDomain = editingDomain;
+    public void setEditingDomain(final TransactionalEditingDomain theEditingDomain) {
+        this.editingDomain = theEditingDomain;
     }
 
     /**
-     * @param descriptor
+     * @param theDescriptor
      *            the descriptor to set
      */
-    public void setDescriptor(TransformationDescriptor descriptor) {
-        this.descriptor = descriptor;
+    public void setDescriptor(final TransformationDescriptor theDescriptor) {
+        this.descriptor = theDescriptor;
     }
 
     /**

@@ -85,7 +85,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         globalVars.get(GLOBVAR_REC).setValue(recursive);
 
         // initialize facade
-        facade = AbstractTransformationDataComponent.initializeFacade(TRANSFORMATION_FILE,
+        facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE,
                 getBasePackages(), globalVars);
 
         // fetch the root model element
