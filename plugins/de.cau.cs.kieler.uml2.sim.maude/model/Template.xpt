@@ -111,7 +111,8 @@ fmod eclipseInterface is
 *******************
 *** compound transitions op declaration
 *******************      
-  ops «FOREACH this.getTransitions().select(e|e.isBasicCompound())  AS transition SEPARATOR "  "-»ctr«transition.getId()-»«ENDFOREACH-»
+  ops «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
+  «FOREACH this.getTransitions().select(e|e.isBasicCompound())  AS transition SEPARATOR "  "-»ctr«transition.getId()-»«ENDFOREACH-»
       : -> Compoundtransition .
 
       
@@ -141,7 +142,7 @@ fmod eclipseInterface is
    
   «ENDREM»
   
-  op allTrans : -> Transitions .
+  op allTrans : -> Compoundtransitions .
   eq allTrans = «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
   				«IF this.getTransitions().select(e|e.isBasicCompound()).size > 0-»,«ENDIF-»
 				«FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR ", "-»ctr«transition.getId()-»«ENDFOREACH-»
@@ -151,7 +152,7 @@ fmod eclipseInterface is
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
   op SMINT : -> StateMachine .
   ***// ToDo: add entry/exit actions//
-  eq SMINT = (SM allVerts allDefs allSHDefs allDHDefs (empty).EntryActions (empty).ExitActions allTrans) .
+  eq SMINT = (allVerts allDefs allSHDefs allDHDefs (empty).EntryActions (empty).ExitActions allTrans) .
 
 endfm
 

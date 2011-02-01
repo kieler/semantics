@@ -42,7 +42,8 @@ fmod ACTIONSSYNTAX is
   op par_ : Actions -> Action .
   
   sort Expression .
-  subsort Int VarID < Expression .
+  subsort VarID < Expression .
+  subsort Int < Expression .
     
   vars int1 int2 : Int .
   vars exp1 exp2 : Expression .
