@@ -181,6 +181,13 @@ Set[Pseudostate] getHistoryStates(StateMachine sm):
  ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((((Vertex)e).isDH())||((Vertex)e).isSH())))
 ;
 
+// Get all choice, join and fork states of the sate machine 
+Set[Pseudostate] getRelevantPseudotates(StateMachine sm):
+ ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == Pseudostate && ((((Vertex)e).isChoice()||((Vertex)e).isJoin()||((Vertex)e).isFork()))))
+;
+
+
+
 // get all regions of the state machine
 Set[Region] getRegions(StateMachine sm):
  ((Set[Region])sm.eAllContents.select(e|e.metaType == Region))
@@ -223,6 +230,12 @@ Set[String] getHistoryMaudeStates(StateMachine sm):
  ((Set[Pseudostate])sm.getHistoryStates()).fullyHistoryHelp()
 ;
 
+// Get qualified history maude states for template
+Set[String] getPseudoMaudeStates(StateMachine sm):
+ ((Set[Pseudostate])sm.getRelevantPseudotates()).fullyPseudoHelp()
+;
+
+
 //-----------------------------------------------------------------------------
 
 // INTERNAL: Helpermethod to get the fully qualified name of a region
@@ -245,6 +258,19 @@ String fullyHistoryHelp(Pseudostate n):
  else
  '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : H'
 ;
+
+
+// INTERNAL: Helpermethod to get the fully qualified name of a pseudostate
+String fullyPseudoHelp(Pseudostate n):
+ //'op C'+n.getId()+' : -> ModState .\n'+
+  if (n.isChoice()) then
+ '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : choice "'+n.getId()+'"'
+  else if (n.isFork()) then
+ '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : fork "'+n.getId()+'"'
+  else if (n.isJoin()) then
+ '    eq '+n.getId()+' = '+ ((Region)n.getParent()).fullyQualifiedName() + ' : join "'+n.getId()+'"'
+;
+
 
 // INTERNAL: Helpermethod to get the fully qualified name of a region
 String fullyQualifiedName(Region n) : n.getParent().metaType == StateMachine ? 'root(R "'+n.getId()+'")' :
@@ -300,6 +326,8 @@ Element getElementParent(Element me) :
 // source guard Action target 
 String genMaudeBasicCompound(Transition n):
  '   eq ctr'+n.getId()+ ' = simpleTrans "ctr'+n.getId()+'" '+
+ // Triggerevent
+ n.trigger2() + ' ' +
 // transition
  'tr'+n.getId()+' '+
 // containingRegion

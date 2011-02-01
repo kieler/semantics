@@ -52,10 +52,17 @@ fmod eclipseInterface is
   	
 «REM»also generate history and deep history states«ENDREM» 
 ***// PseudoStates //
+*** history
   «IF  this.getHistoryStates().size > 0-»
   ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> State .	
 	«FOREACH this.getHistoryMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
   «ENDIF-»
+*** choice
+  «IF  this.getRelevantPseudotates().size > 0-»
+  ops «FOREACH this.getRelevantPseudotates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> State .	
+	«FOREACH this.getPseudoMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
+  «ENDIF-»
+
   	
 ***// Regions //
   ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«region.getId()-»«ENDFOREACH-» : -> Region .
