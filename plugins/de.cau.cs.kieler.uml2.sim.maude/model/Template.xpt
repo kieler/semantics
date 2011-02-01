@@ -98,7 +98,7 @@ fmod eclipseInterface is
 *** basic transitions op declaration
 *******************      
 *** ToDo: Add trigger statt noevent!!
-  ops «FOREACH this.getTransitions()  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
+  ops «FOREACH this.getTransitions().select(e|e.isBasicTrans())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
       : -> Transition .
 
 *******************
@@ -114,7 +114,7 @@ fmod eclipseInterface is
   «FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR '\n'-»«transition.genMaudeBasicCompound()-»«ENDFOREACH-»
 
 
-  «FOREACH this.getTransitions() AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
+  «FOREACH this.getTransitions().select(e|e.isBasicTrans()) AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
 
   «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
   «resetPseudostates()-»
@@ -135,11 +135,12 @@ fmod eclipseInterface is
   «ENDREM»
   
   op allTrans : -> Transitions .
-  eq allTrans = «FOREACH this.getTransitions().select(e|e.isConsidered())  AS transition SEPARATOR ",  "-»tr«transition.getId()-»«ENDFOREACH-»
-  				«IF getPseudostates().size > 0-»,«ENDIF-»
-                «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-» .
+  eq allTrans = «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
+  				«IF this.getTransitions().select(e|e.isBasicCompound()).size > 0-»,«ENDIF-»
+				«FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR ", "-»ctr«transition.getId()-»«ENDFOREACH-»
+ 				.
 
-
+ 				
 ***/// A state machine consits of Vertices Defaultsstatesfunction ShallowDefaultstatesfunction DeepDefaultstatesfunction EntryActionsfunction ExitActionsFunction Transitions 
   op SMINT : -> StateMachine .
   ***// ToDo: add entry/exit actions//

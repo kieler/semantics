@@ -407,12 +407,22 @@ Boolean isConsidered(Transition transition):
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-// Checks whether a transition does not involve pseudostates
-// i.e. it is a basic compound transition 
+// Checks whether a transition does not involve pseudostates,
+// i.e., it is a basic compound transition 
 Boolean isBasicCompound(Transition transition):
   let source = transition.source:
   let target = transition.target:
-  !(source.isPseudo() || target.isPseudo())
+  !(source.isPseudo() || (target.isPseudo() && !(target.isDH() || target.isSH())) ) 
+;
+
+//-----------------------------------------------------------------------------
+
+// Checks whether a transition should appear as a basicTrans.
+// This is not the case for initial, deep/shallow history default transitions
+Boolean isBasicTrans(Transition transition):
+  let source = transition.source:
+  let target = transition.target:
+  !(source.isInitial() || source.isDH() || source.isSH()) 
 ;
 
 //-----------------------------------------------------------------------------
