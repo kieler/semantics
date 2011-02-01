@@ -64,8 +64,8 @@ Void recursiveRule(List[State] states):
 ;
 
 
-/**
-	rule1 : Remove unnecessary conditional state 
+/** !- 
+	(rule1) : Remove unnecessary conditional state 
 		if conditional, one plain outgoing transition
 */
 Boolean rule1applies(State s):
@@ -86,8 +86,8 @@ Void rule1(State s):
 	s.removeStateFromRegion()
 ;
 
-/**
-	rule2 : Remove unnecessary plain states
+/** !- 
+	(rule2) : Remove unnecessary plain states
 		if simplestate, is not final nor initial, has only one outgoing transition
 		with trigger = #tick
 */
@@ -119,8 +119,8 @@ Void rule2(State s):
 	s.parentRegion.states.remove(s)
 ;
 
-/**
- *	rule3 : remove unnecessary plain states 
+/** !- 
+ *	(rule3) : remove unnecessary plain states 
  *		if incoming and outgoing transitions have the same trigger (not immediate)
  */
 Boolean rule3applies(State s):
@@ -144,8 +144,8 @@ Void rule3(State s):
 ;
 
 
-/**
-	rule4: Remove simple final states if there is more than one and bend their transitions
+/** !- 
+	(rule4) : Remove simple final states if there is more than one and bend their transitions
 		to one simple final state
 */
 Boolean rule4applies(State s):
@@ -180,8 +180,8 @@ Void bendAndRemove(Transition t, State to):
 	oldTarget.removeStateFromRegion()
 ;
 
-/**
-	rule5 : Remove unnecessary normal terminations
+/** !- 
+	(rule5) : Remove unnecessary normal terminations
 		macro state with no final states and outgoing transition
 		care: do not remove loopstates
 */
@@ -206,8 +206,8 @@ Void removeTransAndPossiblyState(Transition t):
 		removeStateFromRegion(target)
 ;
 
-/**
-	rule6 : remove unnecessary macro states
+/** !-
+	(rule6) : remove unnecessary macro states
 		if no outgoing weak/strong abortions, no signals or variables, 
 		is no parallel macro state, has a parent macro state 
 */
@@ -269,9 +269,8 @@ Void rule6(State s, List[State] states):
 	s.removeStateFromRegion()
 ;
 
-/**
-	rule7 : remove macrostates which have only two substates
-		if
+/** !- 
+	(rule7) : remove macrostates which have only two substates
 */
 Boolean rule7applies(State s):
 	switch {
@@ -297,8 +296,8 @@ Void rule7(State s):
 	s.removeStateFromRegion()
 ; 
 
-/**
-	rule8 : test the final character of a macrostate
+/** !- 
+	(rule8) : test the final character of a macrostate
 		if final, is macrostate, has no final states as children 
 */
 Boolean rule8applies(State s):
