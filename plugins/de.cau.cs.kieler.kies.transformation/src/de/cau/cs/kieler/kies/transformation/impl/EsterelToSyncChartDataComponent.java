@@ -85,8 +85,8 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         globalVars.get(GLOBVAR_REC).setValue(recursive);
 
         // initialize facade
-        facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE,
-                getBasePackages(), globalVars);
+        facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
+                globalVars);
 
         // fetch the root model element
         IEditorPart editor = TransformationUtil.getActiveEditor();
@@ -278,5 +278,12 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      */
     public void setRootState(final State theRootState) {
         this.rootState = theRootState;
+    }
+
+    /**
+     * @return the rootState
+     */
+    public State getRootState() {
+        return rootState;
     }
 }

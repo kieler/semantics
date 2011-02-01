@@ -1,5 +1,5 @@
 /*
- * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+9 * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -50,23 +50,24 @@ public class TransformationCombination extends AbstractCombination {
             final EffectTriggerState<TransformationEffect> transformationTrigger) {
 
         if (transformationTrigger.getSequenceNumber() > state.getSequenceNumber()) {
-            System.out.println("effect has been executed" + effect.getResult());
+            if (effect != null)
+                System.out.println("effect has been executed" + effect.getResult());
         } else {
             System.out.println("standard execution");
             // start the transformation
             effect = new TransformationEffect(state.getContext());
-            effect.schedule();
+            this.schedule(effect);
 
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();
             if (activeEditor instanceof SyncchartsDiagramEditor) {
                 // refresh GMF edit policies
                 RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
                         (SyncchartsDiagramEditor) activeEditor);
-                gmfEffect.schedule();
+                this.schedule(gmfEffect);
 
                 // apply automatic layout by triggering the trigger (null layouts whole diagram)
-                LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
-                layoutEffect.schedule();
+                // LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
+                // layoutEffect.schedule();
             }
         }
     }

@@ -57,13 +57,17 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     private TransactionalEditingDomain domain;
     private Shell shell;
 
-    private static final int STEP_TIMEOUT = 2;
+    private static final int STEP_TIMEOUT = 10;
     private Semaphore semaphore;
 
     protected XtendFacade facade;
     protected Map<String, Variable> globalVars;
 
     private int skipSteps = 0;
+
+    private boolean finished = false;
+
+    private TransformationContext currentContext;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -83,6 +87,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        finished = false;
         domain = getActiveEditorEditingDomain();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
@@ -138,6 +143,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
         // do next transformation
         TransformationDescriptor descriptor = getNextTransformation();
+        currentContext = null;
         if (descriptor != null) {
             System.out.println("Trigger");
             if (TransformationTrigger.getInstance() != null) {
@@ -150,9 +156,12 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 // else execute Transformation
                 TransformationContext context = new XtendTransformationContext(facade, descriptor,
                         domain, semaphore);
-                TransformationTrigger.getInstance().step(context);
+                currentContext = context;
+                semaphore.release();
+                //TransformationTrigger.getInstance().step(context);
             }
         } else {
+            finished = true;
             doPostTransformation();
             PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                 public void run() {
@@ -160,6 +169,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                             "Transformation finished. No further elements to process.");
                 }
             });
+            semaphore.release();
             throw new KiemExecutionException("No Further Transformations", true, false, true, null);
         }
         return null;
@@ -277,6 +287,20 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public TransactionalEditingDomain getDomain() {
         return domain;
+    }
+
+    /**
+     * @return the finished
+     */
+    public boolean isFinished() {
+        return finished;
+    }
+
+    /**
+     * @return the currentContext
+     */
+    public TransformationContext getCurrentContext() {
+        return currentContext;
     }
 
 }

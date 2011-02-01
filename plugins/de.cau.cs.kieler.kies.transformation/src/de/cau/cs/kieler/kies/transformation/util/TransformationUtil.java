@@ -361,8 +361,9 @@ public final class TransformationUtil {
      * 
      * @param kixsFile
      *            file location
+     * @return true if the synccharts was created, false otherwhise.
      */
-    public static void createSyncchartDiagram(final IFile kixsFile) {
+    public static IFile createSyncchartDiagram(final IFile kixsFile) {
         try {
             IFile newKixsFile = kixsFile;
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -373,11 +374,16 @@ public final class TransformationUtil {
                 InputDialog inputdiag = new InputDialog(shell, "Existing File.",
                         "File already exists. Overwrite or choose a new name.", currentName,
                         new KixsInputValidator());
+                boolean accepted = false;
                 if (inputdiag.open() == InputDialog.OK) {
+                    accepted = true;
                     String newName = inputdiag.getValue();
                     IPath newPath = new Path(kixsFile.getFullPath().removeLastSegments(1)
                             .append(newName).toString());
                     newKixsFile = workspace.getRoot().getFile(newPath);
+                }
+                if (!accepted) {
+                    return null;
                 }
             }
 
@@ -429,16 +435,19 @@ public final class TransformationUtil {
             };
             // run
             op.run(null);
+            return newKixsFile;
         } catch (Exception e) {
             e.printStackTrace();
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem creating a new SyncChartsDiagram.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
+        return null;
     }
 
-    public static void strlToKixsAndOpen(final IFile strlFile) {
+    public static boolean strlToKixsAndOpen(final IFile strlFile) {
 
+        final Maybe<Boolean> createdKixs = new Maybe<Boolean>();
         // start with a progress dialog as parsing and opening might take some time
         Display.getDefault().syncExec(new Runnable() {
 
@@ -472,7 +481,17 @@ public final class TransformationUtil {
                                     // create all the elements
                                     long start = System.currentTimeMillis();
                                     System.out.println("Start: " + start);
-                                    TransformationUtil.createSyncchartDiagram(kixsFile);
+                                    IFile created = TransformationUtil
+                                            .createSyncchartDiagram(kixsFile);
+                                    if (created == null) {
+                                        createdKixs.set(false);
+                                        return;
+                                    } else {
+                                        createdKixs.set(true);
+                                        kixsFile = created;
+                                        kidsFile = workspaceRoot.getFile(kixsFile.getFullPath()
+                                                .removeFileExtension().addFileExtension("kids"));
+                                    }
                                     long opened = System.currentTimeMillis();
                                     System.out.println("Opened: " + opened);
                                     uiMonitor.worked(40);
@@ -518,7 +537,7 @@ public final class TransformationUtil {
                 }
             }
         });
-
+        return createdKixs.get();
     }
 
     /**
