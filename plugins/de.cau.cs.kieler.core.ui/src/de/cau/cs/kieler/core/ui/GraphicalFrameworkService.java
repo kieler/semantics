@@ -20,6 +20,8 @@ import java.util.ListIterator;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.gef.EditPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerNotSupportedException;
@@ -61,6 +63,27 @@ public final class GraphicalFrameworkService {
         return instance;
     }
 
+    /**
+     * Tests whether the GraphicalFrameworkService instance can obtain Diagram data from the given
+     * WorkBenchPart (Editor or View).
+     * 
+     * @author haf
+     * @param part
+     *            the corresponding WorkBenchPart, an Editor or View
+     * @return true iff a GraphicalFrameworkBridge is registered for the part and an EditPart can be
+     *         obtained.
+     */
+    public static boolean containsDiagram(final IWorkbenchPart part) {
+        try {
+            EditPart ep = GraphicalFrameworkService.getInstance().getBridge(part).getEditPart(part);
+            if (ep != null) {
+                return true;
+            }
+        } catch (KielerNotSupportedException e) {
+            /* nothing, fallthrough. */
+        }
+        return false;
+}
     /** the sorted list of registered graphical framework bridges. */
     private List<Pair<IGraphicalFrameworkBridge, Integer>> bridgeList
             = new LinkedList<Pair<IGraphicalFrameworkBridge, Integer>>();

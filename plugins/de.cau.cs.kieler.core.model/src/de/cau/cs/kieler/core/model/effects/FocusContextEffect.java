@@ -83,40 +83,80 @@ public class FocusContextEffect implements ICompoundEffect {
 
     /**
      * Add one element to the focus. All ancestors of focus objects will also be in the focus. Other
-     * objects will be the context.
+     * objects will be the context. Descendants will be also added if the corresponding
+     * parameter is true. It will add all deeply nested children.
      * 
      * @param focusedObject
      *            the object to add to the focus
+     * @param addDescendants
+     *            true if all descendants (all deeply nested children) should also be added
      */
-    public void addFocus(final EObject focusedObject, final boolean addChildren) {
+    public void addFocus(final EObject focusedObject, final boolean addDescendants) {
+        this.addFocus(focusedObject, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Add one element to the focus. Ancestors of focus objects will also be in the focus. Other
+     * objects will be the context. Descendants will be also added if the corresponding
+     * childrenLevel parameter is greater than 0. It will add all children to the given level, i.e.
+     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and
+     * all of their direct children, etc.
+     * 
+     * @param focusedObject
+     *            the object to add to the focus
+     * @param childrenLevel
+     *            adds children up to this given hierarchy level
+     */
+    public void addFocus(final EObject focusedObject, final int childrenLevel) {
         if (focus != null) {
             this.focus.add(focusedObject);
         }
-        // also set all children of the selection to the focus
-        if (addChildren) {
-            TreeIterator<EObject> iterator = focusedObject.eAllContents();
-            while (iterator.hasNext()) {
-                EObject child = iterator.next();
-                this.focus.add(child);
+        // also set children of the selection to the focus
+        if(childrenLevel > 0){
+            List<EObject> children = focusedObject.eContents();
+            for (EObject child : children) {
+                this.addFocus(child, (childrenLevel - 1));
             }
         }
     }
-
+    
     /**
      * Add multiple elements to the focus. All ancestors of focus objects will also be in the focus.
      * Other objects will be the context.
      * 
      * @param focusedObjects
      *            the objects to add to the focus
+     * @param addDescendants
+     *            true if all descendants (all deeply nested children) should also be added
      */
-    public void addFocus(final Collection<EObject> focusedObjects, final boolean addChildren) {
+    public void addFocus(final Collection<EObject> focusedObjects, final boolean addDescendants) {
         if (focusedObjects != null) {
             for (EObject focusedObject : focusedObjects) {
-                addFocus(focusedObject, addChildren);
+                addFocus(focusedObject, addDescendants);
             }
         }
     }
 
+    /**
+     * Add multiple elements to the focus. All ancestors of focus objects will also be in the focus.
+     * Other objects will be the context. Descendants will be also added if the corresponding
+     * childrenLevel parameter is greater than 0. It will add all children to the given level, i.e.
+     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and
+     * all of their direct children, etc.
+     * 
+     * @param focusedObject
+     *            the object to add to the focus
+     * @param childrenLevel
+     *            adds children up to this given hierarchy level
+     */
+    public void addFocus(final Collection<EObject> focusedObjects, final int childrenLevel) {
+        if (focusedObjects != null) {
+            for (EObject focusedObject : focusedObjects) {
+                addFocus(focusedObject, childrenLevel);
+            }
+        }
+    }
+    
     /*
      * Iterate all elements in the model and add all ancestors of a focus element to the focus and
      * all other elements to the context.

@@ -1,0 +1,206 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+package de.cau.cs.kieler.core.model.trigger;
+
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gef.EditPart;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbenchPart;
+
+import de.cau.cs.kieler.core.KielerNotSupportedException;
+import de.cau.cs.kieler.core.kivi.AbstractTrigger;
+import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
+import de.cau.cs.kieler.core.kivi.ITrigger;
+import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
+import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+
+/**
+ * A Trigger for supported diagrams. It will fire a DiagramState to the KIELER View Management if an
+ * Eclipse Editor or View has been activated that contains a diagram for which a compatible
+ * IGraphicalFrameworkBridge is available.
+ * 
+ * @author haf
+ */
+public class DiagramTrigger extends AbstractTrigger implements IPartListener {
+
+    private IWorkbenchPart currentEditor;
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void register() {
+        CombinedWorkbenchListener.addPartListener(this);
+        // test the active editor
+        // else the initially open editor will not send events until the editor changes
+        MonitoredOperation.runInUI(new Runnable() {
+            public void run() {
+                IEditorPart part = EditorUtils.getLastActiveEditor();
+                currentEditor = part;
+                tryTrigger(currentEditor);
+
+            }
+        }, false);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void unregister() {
+        CombinedWorkbenchListener.removePartListener(this);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partActivated(final IWorkbenchPart part) {
+        // Eclipse might activate the same part multiple times
+        if (part != currentEditor) {
+            currentEditor = part;
+            tryTrigger(currentEditor);
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partBroughtToTop(final IWorkbenchPart part) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partClosed(final IWorkbenchPart part) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partDeactivated(final IWorkbenchPart part) {
+        // TODO Auto-generated method stub
+
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public void partOpened(final IWorkbenchPart part) {
+        // TODO Auto-generated method stub
+
+    }
+
+    private void tryTrigger(final IWorkbenchPart part) {
+        try {
+            DiagramState state = new DiagramState(part);
+            this.trigger(state);
+        } catch (KielerNotSupportedException e) {
+            /* nothing, ignore if the part is not supported */
+        }
+    }
+
+    /**
+     * A TriggerState that contains a diagram that can be processed with the KIELER View Management.
+     * Currently the diagram will be represented by an IWorkBenchPart (i.e. an Eclipse Editor or
+     * View). From this the corresponding information can be obtained by registered
+     * IGraphicalFrameworkBridge instances.
+     * <p>
+     * If you want to support another diagram or workbench part type, a new framework bridge has to
+     * be implemented for that part.
+     * 
+     * @author haf
+     */
+    public static class DiagramState extends AbstractTriggerState {
+
+        // the Eclipse editor or view that contains a diagram
+        private IWorkbenchPart diagramPart;
+        // a cache for the bridge
+        private IGraphicalFrameworkBridge bridge;
+
+        /**
+         * Default constructor creating an invalid DiagramState
+         */
+        public DiagramState() {
+        }
+
+        /**
+         * 
+         * @param diagram
+         */
+        public DiagramState(final IWorkbenchPart diagram) {
+            this.diagramPart = diagram;
+            // initialize framework bridge. Will throw KielerNotSupportedException if
+            // no bridge for this part is available. This guarantees that always a valid bridge is
+            // there
+            getGraphicalFrameworkBridge();
+        }
+
+        /**
+         * Get the WorkBenchPart (Editor/View) that contains a diagram. It was already checked that
+         * a GraphicalFrameworkBridge is available for this part, so this is guaranteed here.
+         * 
+         * @return an Eclipse WorkBenchPart containing a diagram.
+         */
+        public IWorkbenchPart getDiagramPart() {
+            return diagramPart;
+        }
+
+        /**
+         * Get the GraphicalFrameworkBridge corresponding to the current diagram. This should be
+         * used to obtain model or diagram information in a generic fashion.
+         * 
+         * @return the registered IGraphicalFrameworkBridge for this diagram
+         */
+        public IGraphicalFrameworkBridge getGraphicalFrameworkBridge() {
+            if (bridge == null) {
+                bridge = GraphicalFrameworkService.getInstance().getBridge(diagramPart);
+            }
+            return bridge;
+        }
+
+        /**
+         * Get the semantic model in shape of the root EObject that corresponds to the diagram. May
+         * throw a KielerNotSupportedException if no semantic model can be found. So this method
+         * never returns null.
+         * 
+         * @return EObject model corresponding to the diagram
+         */
+        public EObject getSemanticModel() {
+            EditPart rootEditPart = getGraphicalFrameworkBridge().getEditPart(diagramPart);
+            EObject model = getGraphicalFrameworkBridge().getElement(rootEditPart);
+            if (model == null) {
+                throw new KielerNotSupportedException("getSemanticModel",
+                        "For the active diagram workbench part no semantic model can be found.",
+                        diagramPart);
+            }
+            return model;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        public Class<? extends ITrigger> getTriggerClass() {
+            return DiagramTrigger.class;
+        }
+
+    }
+}
