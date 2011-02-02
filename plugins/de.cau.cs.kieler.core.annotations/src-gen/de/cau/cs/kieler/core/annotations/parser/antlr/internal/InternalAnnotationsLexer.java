@@ -12,17 +12,17 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalAnnotationsLexer extends Lexer {
-    public static final int RULE_ML_COMMENT=7;
     public static final int RULE_ID=5;
-    public static final int RULE_WS=10;
-    public static final int EOF=-1;
-    public static final int RULE_INT=8;
     public static final int RULE_STRING=6;
-    public static final int RULE_COMMENT_ANNOTATION=4;
-    public static final int T12=12;
-    public static final int Tokens=13;
     public static final int RULE_ANY_OTHER=11;
+    public static final int RULE_INT=8;
+    public static final int T12=12;
+    public static final int RULE_WS=10;
+    public static final int Tokens=13;
     public static final int RULE_SL_COMMENT=9;
+    public static final int EOF=-1;
+    public static final int RULE_COMMENT_ANNOTATION=4;
+    public static final int RULE_ML_COMMENT=7;
     public InternalAnnotationsLexer() {;} 
     public InternalAnnotationsLexer(CharStream input) {
         super(input);
@@ -732,26 +732,26 @@ public class InternalAnnotationsLexer extends Lexer {
 
     private int mTokensHelper002() throws RecognitionException {
         switch ( input.LA(2) ) {
-        case '/':
-            {
-            return 7;
-            }
         case '*':
             {
-            int LA13_12 = input.LA(3);
+            int LA13_11 = input.LA(3);
 
-            if ( (LA13_12=='*') ) {
+            if ( (LA13_11=='*') ) {
                 return 2;
             }
-            else if ( ((LA13_12>='\u0000' && LA13_12<=')')||(LA13_12>='+' && LA13_12<='\uFFFE')) ) {
+            else if ( ((LA13_11>='\u0000' && LA13_11<=')')||(LA13_11>='+' && LA13_11<='\uFFFE')) ) {
                 return 3;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("1:1: Tokens : ( T12 | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_ID | RULE_INT | RULE_STRING | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );", 13, 12, input);
+                    new NoViableAltException("1:1: Tokens : ( T12 | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_ID | RULE_INT | RULE_STRING | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );", 13, 11, input);
 
                 throw nvae;
             }
+            }
+        case '/':
+            {
+            return 7;
             }
         default:
             return 9;}

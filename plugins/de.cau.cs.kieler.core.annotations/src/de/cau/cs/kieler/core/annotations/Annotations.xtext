@@ -24,7 +24,7 @@ CommentAnnotation returns StringAnnotation:
 
 // e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
 KeyValueAnnotation returns StringAnnotation:
-	'@' name=ID value=EString;
+	'@' name=ID (value=EString)?;
 
 
 // needed for importing other resources

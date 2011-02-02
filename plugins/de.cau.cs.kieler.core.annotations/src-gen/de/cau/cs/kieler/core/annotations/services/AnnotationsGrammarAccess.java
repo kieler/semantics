@@ -71,10 +71,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
 		//KeyValueAnnotation returns StringAnnotation:
-		//	"@" name=ID value=EString;
+		//	"@" name=ID value=EString?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ID value=EString
+		//"@" name=ID value=EString?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -86,7 +86,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//value=EString
+		//value=EString?
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
 		//EString
@@ -198,7 +198,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
 	//KeyValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString;
+	//	"@" name=ID value=EString?;
 	public KeyValueAnnotationElements getKeyValueAnnotationAccess() {
 		return (pKeyValueAnnotation != null) ? pKeyValueAnnotation : (pKeyValueAnnotation = new KeyValueAnnotationElements());
 	}
