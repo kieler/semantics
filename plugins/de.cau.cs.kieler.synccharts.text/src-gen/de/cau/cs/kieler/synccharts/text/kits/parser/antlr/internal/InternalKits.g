@@ -5627,7 +5627,7 @@ ruleKeyValueAnnotation returns [EObject current=null]
 	    }
 
 )
-))
+)?)
 ;
 
 

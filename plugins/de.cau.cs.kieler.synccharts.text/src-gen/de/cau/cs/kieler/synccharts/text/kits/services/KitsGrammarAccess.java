@@ -1933,7 +1933,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
 	//KeyValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString;
+	//	"@" name=ID value=EString?;
 	public AnnotationsGrammarAccess.KeyValueAnnotationElements getKeyValueAnnotationAccess() {
 		return gaActions.getKeyValueAnnotationAccess();
 	}
