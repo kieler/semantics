@@ -76,6 +76,7 @@ fmod VERTSSYNTAX is
   op _:_ : Region FinalID -> Final [ctor] .
 ***  op _:_ : Region DefaultID -> Default [ctor] .
   op _:_ : Region HistShallowID -> HistShallow [ctor] .
+  op _:_ : Region HistDeepID -> HistDeep [ctor] .
   op _:_ : Region JoinID  -> Join [ctor] .
   op _:_ : Region ForkID -> Fork [ctor] .
   op _:_ : Region ChoiceID -> Choice [ctor] .

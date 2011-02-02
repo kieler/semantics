@@ -46,9 +46,6 @@ fmod SMGETTER is
   vars V V2 src tgt C src2 tgt2 smAllVerts curVerts tgtStates curVert : Verts .  
   vars v v2 lreg lreg2 : Vert .
   
-  op SMINT : -> StateMachine .
-  eq SMINT = SMINTERFACE .
-
   op $$getEntryAc__ : EntryActions Vert -> Action [format (g o d d)] .
   eq $$getEntryAc ((entryAc v a), ENA) v = a .
   eq $$getEntryAc ENA v = nil [owise] .  

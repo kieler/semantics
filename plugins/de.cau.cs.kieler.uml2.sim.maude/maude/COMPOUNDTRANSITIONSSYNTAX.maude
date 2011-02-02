@@ -61,15 +61,15 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   var src tgt : Vert .
   var strid : String .
   
-  op joinTrans____ : Event Transitions Transition Region -> Compoundtransition [ctor] .
-  op forkTrans____ : Event Transition Transitions Region -> Compoundtransition [ctor] .
-  op choiceTrans____ : Event Transition Transitions Region -> Compoundtransition [ctor] .
-  op simpleTrans___ : Event Transition Region -> Compoundtransition [ctor] .
+  op joinTrans____ : Event Transitions Transition Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op forkTrans____ : Event Transition Transitions Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op choiceTrans____ : Event Transition Transitions Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op simpleTrans___ : Event Transition Region -> Compoundtransition [format (d d d d n) ctor] .
   
-  op joinTrans_____ : String Event Transitions Transition Region -> Compoundtransition [ctor] .
-  op forkTrans_____ : String Event Transition Transitions Region -> Compoundtransition [ctor] .
-  op choiceTrans_____ : String Event Transition Transitions Region -> Compoundtransition [ctor] .
-  op simpleTrans____ : String Event Transition Region -> Compoundtransition [ctor] .
+  op joinTrans_____ : String Event Transitions Transition Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op forkTrans_____ : String Event Transition Transitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op choiceTrans_____ : String Event Transition Transitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op simpleTrans____ : String Event Transition Region -> Compoundtransition [format (d d d d d n) ctor] .
   
 
   op action_ : Transition -> Action .

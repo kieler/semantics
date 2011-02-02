@@ -158,37 +158,29 @@ endfm
 
 «REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
 
-«REM»
-load «((String)(GLOBALVAR maudebasecode))»STEPSEM
+load model-checker
+*** next we need getter functions for the SM
+load «((String)(GLOBALVAR maudebasecode))»SMGETTER
+load «((String)(GLOBALVAR maudebasecode))»VERTS .
+load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
+*** so far there is no need for event semantics
+load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
 
 mod INIT is
-	including STEPSEM .
+	including SEMANTICS .
 	including SATISFACTION .
 	including LTL .
 	including MODEL-CHECKER .
 	including LTL-SIMPLIFIER .
 	
 	
-	vars msst mastate : MState .
-	vars V V2 : Verts .
-	var ac ac2 : Actions .
-	var T : Transitions .
-	var ES : EventSS .
-	var mode : String .
-	vars HC : HistoryConfs .
-	
 	subsort MState < State .
 	
-	op aCf : Actions -> Prop .
-	op inC : Verts -> Prop .
-	eq maState mode ($stableC V HC) ES |= inC(V2) = (prettyVerts V2) subset V  .
-	eq maState mode ($unstableC V HC T ac) ES |= aCf(ac2) = actionConflict par (ac ac2) .
-	eq maState mode ($unstableC V HC T ac) ES |= aCf(nil) = actionConflict ac .
-	
-	op isDone_ : MState -> Bool .
-	eq isDone (maState mode ($doneC V HC) empty) = true .
-	eq isDone msst = false [owise] .
 endm
+«REM»
 
 ***(
 set break on .
