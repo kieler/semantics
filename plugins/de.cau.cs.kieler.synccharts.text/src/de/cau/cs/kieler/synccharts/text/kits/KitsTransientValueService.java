@@ -21,6 +21,7 @@ import org.eclipse.xtext.util.Strings;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.Signal;
@@ -208,8 +209,19 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                     ((Annotatable) owner).getAnnotations().get(index))) {
                 return false;
             }
-            return !AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
-                    ((Annotatable) owner).getAnnotations().get(index));
+            if (!AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index))) {
+                return true;
+            }
+            else {
+                StringAnnotation a = (StringAnnotation) ((Annotatable)  owner).getAnnotations().get(index);
+                return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValue());
+            }
+        }
+        
+        if (AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(owner)
+                && feature == AnnotationsPackage.eINSTANCE.getNamedObject_Name()) {
+            return Strings.isEmpty(((StringAnnotation) owner).getName());
         }
 
         

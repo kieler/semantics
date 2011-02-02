@@ -78,7 +78,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//SingleRegion returns synccharts::Region:
 	//	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 	//	bodyText+=TextualCode*)? states+=State*;
@@ -91,7 +90,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//TextualCode returns kexpressions::TextualCode:
 	//	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
 	public KitsGrammarAccess.TextualCodeElements getTextualCodeAccess() {
@@ -114,7 +112,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//State returns synccharts::State:
 	//	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
 	//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
@@ -130,7 +127,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Transition returns synccharts::Transition:
 	//	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
 	//	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
@@ -144,7 +140,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Signal returns kexpressions::Signal:
 	//	annotations+=StringAnnotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)?
 	//	(":" (type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
@@ -158,7 +153,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Variable returns kexpressions::Variable:
 	//	annotations+=StringAnnotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
 	public KitsGrammarAccess.VariableElements getVariableAccess() {
@@ -170,7 +164,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Substitution returns synccharts::Substitution:
 	//	actual=ID "/" formal=ID;
 	public KitsGrammarAccess.SubstitutionElements getSubstitutionAccess() {
@@ -182,7 +175,6 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//enum StateType returns synccharts::StateType:
 	//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
 	public KitsGrammarAccess.StateTypeElements getStateTypeAccess() {
@@ -828,7 +820,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
 	//KeyValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString;
+	//	"@" name=ID value=EString?;
 	public AnnotationsGrammarAccess.KeyValueAnnotationElements getKeyValueAnnotationAccess() {
 		return gaKits.getKeyValueAnnotationAccess();
 	}

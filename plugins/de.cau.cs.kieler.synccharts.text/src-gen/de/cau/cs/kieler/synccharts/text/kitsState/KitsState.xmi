@@ -1588,7 +1588,7 @@
         <elements xsi:type="xtext:Assignment" feature="name" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/5/@rules.0"/>
         </elements>
-        <elements xsi:type="xtext:Assignment" feature="value" operator="=">
+        <elements xsi:type="xtext:Assignment" cardinality="?" feature="value" operator="=">
           <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.4"/>
         </elements>
       </alternatives>

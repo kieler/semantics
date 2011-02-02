@@ -629,7 +629,6 @@ protected class RootRegion_StatesAssignment_2 extends AssignmentToken  {
 /************ begin Rule SingleRegion ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * SingleRegion returns synccharts::Region:
  * 	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
  * 	bodyText+=TextualCode*)? states+=State*;
@@ -1074,7 +1073,6 @@ protected class SingleRegion_StatesAssignment_1 extends AssignmentToken  {
 /************ begin Rule TextualCode ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * TextualCode returns kexpressions::TextualCode:
  * 	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
  *
@@ -1735,7 +1733,6 @@ protected class Region_StatesAssignment_7 extends AssignmentToken  {
 /************ begin Rule State ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * State returns synccharts::State:
  * 	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
  * 	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
@@ -3290,7 +3287,6 @@ protected class State_OutgoingTransitionsAssignment_7 extends AssignmentToken  {
 /************ begin Rule Transition ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * Transition returns synccharts::Transition:
  * 	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
  * 	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
@@ -3959,7 +3955,6 @@ protected class Transition_IsHistoryAssignment_5 extends AssignmentToken  {
 /************ begin Rule Signal ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * Signal returns kexpressions::Signal:
  * 	annotations+=StringAnnotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)?
  * 	(":" (type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
@@ -4696,7 +4691,6 @@ protected class Signal_HostCombineOperatorAssignment_6_1_4_1 extends AssignmentT
 /************ begin Rule Variable ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * Variable returns kexpressions::Variable:
  * 	annotations+=StringAnnotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
  *
@@ -5034,7 +5028,6 @@ protected class Variable_HostTypeAssignment_5_1 extends AssignmentToken  {
 /************ begin Rule Substitution ****************
  *
  * // ---------------------------------------------------------------------------------------------------
- * 
  * Substitution returns synccharts::Substitution:
  * 	actual=ID "/" formal=ID;
  *
@@ -12950,11 +12943,11 @@ protected class CommentAnnotation_ValueAssignment extends AssignmentToken  {
  *
  * // e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
  * KeyValueAnnotation returns StringAnnotation:
- * 	"@" name=ID value=EString;
+ * 	"@" name=ID value=EString?;
  *
  **/
 
-// "@" name=ID value=EString
+// "@" name=ID value=EString?
 protected class KeyValueAnnotation_Group extends GroupToken {
 	
 	public KeyValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -12970,6 +12963,7 @@ protected class KeyValueAnnotation_Group extends GroupToken {
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new KeyValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new KeyValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}
@@ -13038,7 +13032,7 @@ protected class KeyValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 
 }
 
-// value=EString
+// value=EString?
 protected class KeyValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 	
 	public KeyValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -13060,7 +13054,7 @@ protected class KeyValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("value",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
 		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
