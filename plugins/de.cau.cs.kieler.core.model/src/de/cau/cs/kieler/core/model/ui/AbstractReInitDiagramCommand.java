@@ -325,7 +325,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                         IEditorPart newEditor =
                                 reinitializeDiagram(kixsPath, kidsPath, monitor);
 
-                        performPostOperationAction(path, partners, monitor);
+                        performPostOperationAction(path, partners, monitor,
+                                newEditor);
 
                         ReInitDiagramDoneTrigger.triggerAll(newEditor);
                     }
@@ -351,10 +352,13 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      *            the partner files
      * @param monitor
      *            the progress monitor
+     * @param newEditor
+     *            the newly opened editor
      */
     @SuppressWarnings("unused")
     protected void performPostOperationAction(final IFile path,
-            final List<IFile> partners, final IProgressMonitor monitor) {
+            final List<IFile> partners, final IProgressMonitor monitor,
+            final IEditorPart newEditor) {
     }
 
     /**
