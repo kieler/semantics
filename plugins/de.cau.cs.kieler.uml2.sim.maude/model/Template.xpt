@@ -178,6 +178,15 @@ mod INIT is
 	
 	
 	subsort MState < State .
+
+	vars msst : MState .
+	vars V : Verts .
+	vars HC : HistoryConfs .
+
+
+	op isDone_ : MState -> Bool .
+	eq isDone (maState (doneC V HC) empty) = true .
+	eq isDone msst = false [owise] .
 	
 endm
 «REM»

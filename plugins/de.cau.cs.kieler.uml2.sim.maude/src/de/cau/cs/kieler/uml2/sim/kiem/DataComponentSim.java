@@ -30,7 +30,9 @@ public class DataComponentSim extends DataComponent implements
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search
      * for.
      */
-    private static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+	//FIXME: the has to be adapted to the new syntax -> check
+	// 
+    private static final String MAUDEPARSESTATESTARTER = "--> maState  doneC (C";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";
@@ -105,6 +107,7 @@ public class DataComponentSim extends DataComponent implements
                 maudeResult = maudeResult.substring(firstSolutionStartIndex
                         + MAUDEPARSESTATESTARTER.length());
 
+                //FIXME: this has to be adapted to the new syntax
                 /*
                  * Maude output looks like this:
                  * 
@@ -166,7 +169,7 @@ public class DataComponentSim extends DataComponent implements
      */
     @Override
     public String[] extractActions(final String maudeResult) {
-        // TODO: this seems not yes possible.
+        // TODO: this seems not yet possible.
         String[] returnArray = new String[1];
         return returnArray;
     }
@@ -219,12 +222,14 @@ public class DataComponentSim extends DataComponent implements
             currentStatesQuery += currentState;
         }
 
-        // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
+        
+        //FIXME: this has to be adapted to the new synatx 
+        // search (maState (stableC (prettyVerts (R-990928836 ,
         // susp441237549)) empty) (res,
         // ee1)) =>* mastate such that isDone mastate .
-        String queryRequest = "search (maState \"UML\" ($stableC (prettyVerts ("
+        String queryRequest = "search (maState (stableC ("
                 + currentStatesQuery
-                + ")) empty) ("
+                + ") empty) ("
                 + triggerEventsQuery
                 + ")) =>* mastate such that isDone mastate . \n";
 
