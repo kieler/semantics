@@ -150,7 +150,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @see de.cau.cs.kieler.sim.kiem.ui.views.KiemView
      */
     public KiemPlugin() {
-        dataComponentList = this.getRegisteredDataComponentList();
+        //dataComponentList = this.getRegisteredDataComponentList();
         // By default an empty list
         // dataComponentWrapperList = getDefaultComponentWrapperList();
         dataComponentWrapperList = new LinkedList<DataComponentWrapper>();
