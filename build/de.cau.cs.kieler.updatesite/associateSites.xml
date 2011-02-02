@@ -1,6 +1,7 @@
 <associateSites>
     <associateSite label="Helios" url="http://download.eclipse.org/releases/helios" />
     <associateSite label="The Eclipse Project Updates" url="http://download.eclipse.org/eclipse/updates/3.6" />
+    <associateSite label="Google Guava Libraries" url="http://guava-osgi.googlecode.com/svn/trunk/repository/" />
     <associateSite label="MDT/Papyrus Modeling Tools" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases" />
     <associateSite label="MDT/Papyrus Modeling Tools" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/helios" />
     <associateSite label="Ptolemy II" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy" />
