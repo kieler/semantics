@@ -99,11 +99,13 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public void partActivated(final IWorkbenchPart part) {
-        if (isDiagram(part)) {
-            currentEditor = part;
-            getEditingDomain(currentEditor).addResourceSetListener(this);
+        if (!part.equals(currentEditor)) {
+            if (isDiagram(part)) {
+                currentEditor = part;
+                getEditingDomain(currentEditor).addResourceSetListener(this);
+            }
+            trigger(new ActiveEditorState(currentEditor, currentEditor, null));
         }
-        trigger(new ActiveEditorState(currentEditor, currentEditor, null));
     }
 
     /**
@@ -133,7 +135,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        trigger(new ActiveEditorState(null, part, null));
+        //trigger(new ActiveEditorState(null, part, null));
     }
 
     /**
