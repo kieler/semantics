@@ -8,7 +8,7 @@ import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
 	(modules+=Module)*;
 
-	// module consists of interface and body
+	// a module consists of an interface and a body
 // !-(module)
 Module:
 	"module" name=ID ":" (interface=ModuleInterface)? body=ModuleBody end=EndModule;
@@ -38,14 +38,14 @@ ChannelDescription:
 	| ("(" type=EsterelTypeIdentifier ")")
 	| (":=" expression=Expression ":" type=EsterelTypeIdentifier);
 
-	// overwrite to allow function references for signal declarationd
+	// overwrite to allow function references for signal declarations
 EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
 	type=ValueType
 	| typeID=ID
 	| {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function|ID] |
 	operator=CombineOperator));
 
-	// overwrite to allow types defined in a specific module
+	// overwrite to allow type definitions in a specific module
 TypeIdentifier:
 	type=ValueType
 	| typeID=ID
