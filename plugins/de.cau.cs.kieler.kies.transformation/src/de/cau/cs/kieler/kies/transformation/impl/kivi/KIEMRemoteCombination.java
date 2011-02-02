@@ -73,7 +73,6 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private CommandStack currentCommandStack;
 
     private StepType lastStepType = StepType.STEP;
-    private TransformationContext lastContext;
 
     /**
      * Default Constructor, setting up all needed buttons.
@@ -132,10 +131,8 @@ public class KIEMRemoteCombination extends AbstractCombination {
         // transformation state
         if (transformationState.getSequenceNumber() > buttonState.getSequenceNumber()
                 && transformationState.getSequenceNumber() > editorState.getSequenceNumber()) {
-            if (lastContext != null) {
-                System.out.println("\t #### FINISHED with result: "
-                        + transformationState.getEffect().getResult());
-            }
+            System.out.println("\t #### FINISHED with result: "
+                    + transformationState.getEffect().getResult());
 
             if (lastStepType == StepType.EXPAND_OPTIMIZE) {
                 // optimization is performed the same manner line expand just with different data
@@ -313,14 +310,11 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private void initiateStep() throws KiemExecutionException {
         if (currentDataComponent != null) {
             currentDataComponent.step(null);
-            lastContext = currentDataComponent.getCurrentContext();
+            TransformationContext lastContext = currentDataComponent.getCurrentContext();
             if (lastContext != null) {
                 this.schedule(new TransformationEffect(lastContext));
             }
-        } else {
-            lastContext = null;
         }
-
     }
 
     private void editorStateChanged(ActiveEditorState editorState) {
