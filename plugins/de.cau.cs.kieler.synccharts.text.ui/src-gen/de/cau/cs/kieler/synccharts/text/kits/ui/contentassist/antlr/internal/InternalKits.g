@@ -11058,7 +11058,7 @@ rule__KeyValueAnnotation__Group__2__Impl
 :
 (
 { before(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2()); }
-(rule__KeyValueAnnotation__ValueAssignment_2)
+(rule__KeyValueAnnotation__ValueAssignment_2)?
 { after(grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2()); }
 )
 
