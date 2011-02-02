@@ -52,6 +52,7 @@ Boolean ruleAll(List[State] states):
 	) ->
 	
 	recursiveRule(states)
+	-> states.size
 ;
 
 /**

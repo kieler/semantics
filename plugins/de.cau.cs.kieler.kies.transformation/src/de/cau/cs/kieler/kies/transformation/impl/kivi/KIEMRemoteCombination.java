@@ -31,14 +31,17 @@ import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
+import de.cau.cs.kieler.core.model.trigger.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -70,6 +73,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private CommandStack currentCommandStack;
 
     private StepType lastStepType = StepType.STEP;
+    private TransformationContext lastContext;
 
     /**
      * Default Constructor, setting up all needed buttons.
@@ -105,7 +109,8 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID,
                 ESTEREL_EDITOR_ID);
 
-        this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false));
+        MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
+        ef.schedule();
     }
 
     /**
@@ -118,8 +123,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
             EffectTriggerState<TransformationEffect> transformationState) {
 
         // editor state
-        if (editorState.getSequenceNumber() > buttonState.getSequenceNumber()
-                && editorState.getSequenceNumber() > transformationState.getSequenceNumber()) {
+        if (getTriggerState() instanceof ActiveEditorState) {
             System.out.println("editor state");
             editorStateChanged(editorState);
             return;
@@ -128,7 +132,10 @@ public class KIEMRemoteCombination extends AbstractCombination {
         // transformation state
         if (transformationState.getSequenceNumber() > buttonState.getSequenceNumber()
                 && transformationState.getSequenceNumber() > editorState.getSequenceNumber()) {
-            System.out.println("finished state");
+            if (lastContext != null) {
+                System.out.println("\t #### FINISHED with result: "
+                        + transformationState.getEffect().getResult());
+            }
 
             if (lastStepType == StepType.EXPAND_OPTIMIZE) {
                 // optimization is performed the same manner line expand just with different data
@@ -136,7 +143,9 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 process(StepType.EXPAND);
                 setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
             } else if (lastStepType == StepType.EXPAND) {
-                currentDataComponent.doPostTransformation();
+                if (currentDataComponent != null) {
+                    currentDataComponent.doPostTransformation();
+                }
                 setButtonState(false, BUTTON_EXPAND);
             }
 
@@ -146,6 +155,17 @@ public class KIEMRemoteCombination extends AbstractCombination {
             }
 
             setButtonEnabling(true);
+
+            if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
+                // refresh GMF edit policies
+                RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                        (SyncchartsDiagramEditor) currentlyActiveEditor);
+                this.schedule(gmfEffect);
+
+                // apply automatic layout by triggering the trigger (null layouts whole diagram)
+                LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
+                layoutEffect.schedule();
+            }
 
             return;
         }
@@ -293,11 +313,14 @@ public class KIEMRemoteCombination extends AbstractCombination {
     private void initiateStep() throws KiemExecutionException {
         if (currentDataComponent != null) {
             currentDataComponent.step(null);
-            TransformationContext ctx = currentDataComponent.getCurrentContext();
-            if (ctx != null) {
-                this.schedule(new TransformationEffect(ctx));
+            lastContext = currentDataComponent.getCurrentContext();
+            if (lastContext != null) {
+                this.schedule(new TransformationEffect(lastContext));
             }
+        } else {
+            lastContext = null;
         }
+
     }
 
     private void editorStateChanged(ActiveEditorState editorState) {
