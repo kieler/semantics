@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
@@ -44,8 +43,18 @@ public class NewAnnotationDialog extends Dialog {
     private AnnotationType annotationType;
     /** the text for entering a name. */
     private Text nameText;
+    /** the text for entering a value. */
+    private Text valueText;
+    /** the text for entering a type, for typed string annotations. */
+    private Text stypeText;
+    /** the typed string type group. */
+    private Group stypeGroup;
     /** the value of the annotation name. */
     private String annotationName;
+    /** the value of the annotation value. */
+    private String annotationValue;
+    /** the value of the annotation type. */
+    private String stypeValue;
     
     /**
      * Creates a new annotation dialog.
@@ -71,6 +80,8 @@ public class NewAnnotationDialog extends Dialog {
     @Override
     public boolean close() {
         annotationName = nameText.getText();
+        annotationValue = valueText.getText();
+        stypeValue = stypeText.getText();
         return super.close();
     }
     
@@ -87,6 +98,9 @@ public class NewAnnotationDialog extends Dialog {
         Composite composite = (Composite) super.createDialogArea(parent);
         createTypeGroup(composite);
         createNameGroup(composite);
+        createValueGroup(composite);
+        createSTypeGroup(composite);
+        stypeGroup.setEnabled(false);
         return composite;
     }
     
@@ -105,7 +119,7 @@ public class NewAnnotationDialog extends Dialog {
      */
     private void createTypeGroup(final Composite parent) {
         Group group = new Group(parent, SWT.NONE);
-        group.setText("Select type of annotation");
+        group.setText("Select Type of Annotation");
         GridLayout layout = new GridLayout(1, false);
         layout.horizontalSpacing = HORIZONTAL_GAP;
         group.setLayout(layout);
@@ -117,7 +131,7 @@ public class NewAnnotationDialog extends Dialog {
             radio.setData(labelAndValue[1]);
             radio.addSelectionListener(new SelectionAdapter() {
                 public void widgetSelected(final SelectionEvent event) {
-                    annotationType = AnnotationType.valueOf((String) event.widget.getData());
+                    fireTypeSelected((String) event.widget.getData());
                 }
             });
         }
@@ -128,18 +142,58 @@ public class NewAnnotationDialog extends Dialog {
     }
     
     /**
+     * Fired when an annotation type was selected.
+     * 
+     * @param typeString the string representing the new annotation type
+     */
+    private void fireTypeSelected(final String typeString) {
+        annotationType = AnnotationType.valueOf(typeString);
+        stypeGroup.setEnabled(annotationType == AnnotationType.TYPED_STRING);
+    }
+    
+    /**
      * Create group for the annotation name.
      * 
      * @param parent the parent control
      */
     private void createNameGroup(final Composite parent) {
         Group group = new Group(parent, SWT.NONE);
-        group.setText("Enter a name for the annotation");
+        group.setText("Annotation Name:");
         group.setLayout(new FillLayout());
         nameText = new Text(group, SWT.SINGLE | SWT.BORDER);
         GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
         gridData.minimumWidth = MINIMUM_WIDTH;
         group.setLayoutData(gridData);
+    }
+    
+    /**
+     * Create group for the annotation value.
+     * 
+     * @param parent the parent control
+     */
+    private void createValueGroup(final Composite parent) {
+        Group group = new Group(parent, SWT.NONE);
+        group.setText("Annotation Value");
+        group.setLayout(new FillLayout());
+        valueText = new Text(group, SWT.SINGLE | SWT.BORDER);
+        GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
+        gridData.minimumWidth = MINIMUM_WIDTH;
+        group.setLayoutData(gridData);
+    }
+    
+    /**
+     * Create group for the annotation type, in case of typed string annotations.
+     * 
+     * @param parent the parent control
+     */
+    private void createSTypeGroup(final Composite parent) {
+        stypeGroup = new Group(parent, SWT.NONE);
+        stypeGroup.setText("Type Value (for typed string annotations)");
+        stypeGroup.setLayout(new FillLayout());
+        stypeText = new Text(stypeGroup, SWT.SINGLE | SWT.BORDER);
+        GridData gridData = new GridData(SWT.FILL, SWT.TOP, true, false);
+        gridData.minimumWidth = MINIMUM_WIDTH;
+        stypeGroup.setLayoutData(gridData);
     }
     
     /**
@@ -150,12 +204,9 @@ public class NewAnnotationDialog extends Dialog {
     public Annotation createAnnotation() {
         Annotation annotation = annotationType.create();
         annotation.setName(annotationName);
-        if (annotationType == AnnotationType.TYPED_STRING) {
-            InputDialog inputDialog = new InputDialog(getShell(), "Typed Annotation",
-                    "Enter a type for the typed string annotation.", null, null);
-            if (inputDialog.open() == InputDialog.OK) {
-                ((TypedStringAnnotation) annotation).setType(inputDialog.getValue());
-            }
+        AnnotationType.setValue(annotation, annotationValue);
+        if (annotation instanceof TypedStringAnnotation) {
+            ((TypedStringAnnotation) annotation).setType(stypeValue);
         }
         return annotation;
     }

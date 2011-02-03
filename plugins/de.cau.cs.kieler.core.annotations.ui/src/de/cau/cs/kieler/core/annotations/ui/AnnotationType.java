@@ -16,6 +16,10 @@ package de.cau.cs.kieler.core.annotations.ui;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsFactory;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
+import de.cau.cs.kieler.core.annotations.FloatAnnotation;
+import de.cau.cs.kieler.core.annotations.IntAnnotation;
+import de.cau.cs.kieler.core.annotations.StringAnnotation;
 
 /**
  * Enumeration of annotation types and utility methods for conversion.
@@ -65,6 +69,55 @@ public enum AnnotationType {
             return CONTAINMENT;
         default:
             return NONE;
+        }
+    }
+    
+    /**
+     * Set a new annotation value from the given object. If the value cannot be
+     * interpreted correctly, the method does nothing.
+     * 
+     * @param annotation an annotation
+     * @param value a value in serialized or non-serialized form
+     */
+    public static void setValue(final Annotation annotation, final Object value) {
+        switch (AnnotationType.of(annotation)) {
+        case STRING:
+        case TYPED_STRING:
+            if (value instanceof String) {
+                ((StringAnnotation) annotation).setValue((String) value);
+            }
+            break;
+        case INT:
+            if (value instanceof String) {
+                try {
+                    ((IntAnnotation) annotation).setValue(Integer.parseInt((String) value));
+                } catch (NumberFormatException exception) {
+                    // ignore exception
+                }
+            } else if (value instanceof Integer) {
+                ((IntAnnotation) annotation).setValue((Integer) value);
+            }
+            break;
+        case FLOAT:
+            if (value instanceof String) {
+                try {
+                    ((FloatAnnotation) annotation).setValue(Float.parseFloat((String) value));
+                } catch (NumberFormatException exception) {
+                    // ignore exception
+                }
+            } else if (value instanceof Float) {
+                ((FloatAnnotation) annotation).setValue((Float) value);
+            }
+            break;
+        case BOOLEAN:
+            if (value instanceof String) {
+                ((BooleanAnnotation) annotation).setValue(Boolean.parseBoolean((String) value));
+            } else if (value instanceof Integer) {
+                ((BooleanAnnotation) annotation).setValue(((Integer) value) != 0);
+            } else if (value instanceof Boolean) {
+                ((BooleanAnnotation) annotation).setValue((Boolean) value);
+            }
+            break;
         }
     }
     

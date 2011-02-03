@@ -84,31 +84,35 @@ public class AddAnnotationAction extends Action {
         // offer a dialog to select an annotation type and a name
         NewAnnotationDialog annotationDialog = new NewAnnotationDialog(shell);
         if (annotationDialog.open() == NewAnnotationDialog.OK) {
-            final Annotation annotation = annotationDialog.createAnnotation();
+            final Annotation newAnnotation = annotationDialog.createAnnotation();
             TransactionalEditingDomain editingDomain = (TransactionalEditingDomain)
                     propertySection.getEditingDomain();
             if (editingDomain != null) {
-                editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
-                        "Add Annotation") {
-                    protected void doExecute() {
-                        Annotatable annotatable = null;
-                        switch (how) {
-                        case TOP_LEVEL:
-                            annotatable = propertySection.getAnnotatable();
-                            break;
-                        case SUB_ANNOT:
-                            annotatable = propertySection.getTableSelection();
-                            if (annotatable == null) {
-                                annotatable = propertySection.getAnnotatable();
-                            }
-                            break;
-                        }
-                        if (annotatable != null) {
-                            annotatable.getAnnotations().add(annotation);
-                        }
+                Annotatable annotatable = null;
+                switch (how) {
+                case TOP_LEVEL:
+                    annotatable = propertySection.getAnnotatable();
+                    break;
+                case SUB_ANNOT:
+                    annotatable = propertySection.getTableSelection();
+                    if (annotatable == null) {
+                        annotatable = propertySection.getAnnotatable();
                     }
-                });
-                propertySection.refresh();
+                    break;
+                }
+                if (annotatable != null) {
+                    final Annotatable parent = annotatable;
+                    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
+                        "Add Annotation") {
+                        protected void doExecute() {
+                            parent.getAnnotations().add(newAnnotation);
+                        }
+                    });
+                    propertySection.refresh();
+                    if (how == AddHow.SUB_ANNOT && parent instanceof Annotation) {
+                        propertySection.expand((Annotation) parent);
+                    }
+                }
             } else {
                 IStatus status = new Status(IStatus.ERROR, AnnotationsUiPlugin.PLUGIN_ID,
                         "No transactional editing domain is availabe for the current selection.");

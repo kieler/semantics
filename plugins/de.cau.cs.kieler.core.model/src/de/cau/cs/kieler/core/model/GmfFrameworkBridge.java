@@ -204,6 +204,11 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
         } else if (object instanceof IAdaptable) {
             IAdaptable adaptable = (IAdaptable) object;
             return (EditingDomain) adaptable.getAdapter(TransactionalEditingDomain.class);
+        } else {
+            EditPart editPart = getEditPart(object);
+            if (editPart instanceof IGraphicalEditPart) {
+                return ((IGraphicalEditPart) editPart).getEditingDomain();
+            }
         }
         return null;
     }

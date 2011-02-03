@@ -146,29 +146,7 @@ public class AnnotationsEditingSupport extends EditingSupport {
             editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain,
                     "Modify Annotation") {
                 protected void doExecute() {
-                    switch (AnnotationType.of((Annotation) element)) {
-                    case STRING:
-                    case TYPED_STRING:
-                        ((StringAnnotation) element).setValue((String) value);
-                        break;
-                    case INT:
-                        try {
-                            ((IntAnnotation) element).setValue(Integer.parseInt((String) value));
-                        } catch (NumberFormatException exception) {
-                            // ignore exception
-                        }
-                        break;
-                    case FLOAT:
-                        try {
-                            ((FloatAnnotation) element).setValue(Float.parseFloat((String) value));
-                        } catch (NumberFormatException exception) {
-                            // ignore exception
-                        }
-                        break;
-                    case BOOLEAN:
-                        ((BooleanAnnotation) element).setValue(((Integer) value) == 1);
-                        break;
-                    }
+                    AnnotationType.setValue((Annotation) element, value);
                 }
             });
             getViewer().refresh(element);

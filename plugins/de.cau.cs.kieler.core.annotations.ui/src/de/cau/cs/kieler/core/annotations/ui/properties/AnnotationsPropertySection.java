@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -22,6 +23,8 @@ import org.eclipse.jface.viewers.TreeViewerColumn;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.events.ControlListener;
+import org.eclipse.swt.events.MenuAdapter;
+import org.eclipse.swt.events.MenuEvent;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.widgets.Composite;
@@ -94,9 +97,18 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
         // create context menu for the tree viewer
         MenuManager menuManager = new MenuManager("#PopupMenu");
         menuManager.add(new AddAnnotationAction(this, AddHow.TOP_LEVEL));
-        menuManager.add(new AddAnnotationAction(this, AddHow.SUB_ANNOT));
-        menuManager.add(new RemoveAnnotationAction(this));
+        final Action subAnnotAction = new AddAnnotationAction(this, AddHow.SUB_ANNOT);
+        menuManager.add(subAnnotAction);
+        final Action removeAnnotAction = new RemoveAnnotationAction(this);
+        menuManager.add(removeAnnotAction);
         Menu menu = menuManager.createContextMenu(viewer.getControl());
+        menu.addMenuListener(new MenuAdapter() {
+            public void menuShown(final MenuEvent event) {
+                boolean selected = !viewer.getSelection().isEmpty();
+                subAnnotAction.setEnabled(selected);
+                removeAnnotAction.setEnabled(selected);
+            }
+        });
         viewer.getControl().setMenu(menu);
     }
 
@@ -201,6 +213,15 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
                 /* haf: nothing. Cannot refresh, if there is no diagram available. */
             }
         }
+    }
+    
+    /**
+     * Expands the tree at the given annotation.
+     * 
+     * @param annotation an annotation that is displayed in the tree viewer
+     */
+    public void expand(final Annotation annotation) {
+        viewer.setExpandedState(annotation, true);
     }
 
     /**
