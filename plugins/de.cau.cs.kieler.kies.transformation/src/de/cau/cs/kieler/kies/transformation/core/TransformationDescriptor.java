@@ -14,6 +14,9 @@
 package de.cau.cs.kieler.kies.transformation.core;
 
 /**
+ * A TransformationDescriptor holds information about the name of a transformation method and the
+ * parameters that should be passed to this method.
+ * 
  * @author uru
  * 
  */
@@ -23,13 +26,15 @@ public class TransformationDescriptor {
     private Object[] parameters;
 
     /**
-     * @param transformationName
-     * @param parameters
+     * @param theTransformationName
+     *            the name of the transformation method.
+     * @param theParameters
+     *            the parameters that are passed to the method.
      */
-    public TransformationDescriptor(String transformationName, Object[] parameters) {
+    public TransformationDescriptor(final String theTransformationName, final Object[] theParameters) {
         super();
-        this.transformationName = transformationName;
-        this.parameters = parameters;
+        this.transformationName = theTransformationName;
+        this.parameters = theParameters;
     }
 
     /**
@@ -40,26 +45,10 @@ public class TransformationDescriptor {
     }
 
     /**
-     * @param transformationName
-     *            the transformationName to set
-     */
-    public void setTransformationName(String transformationName) {
-        this.transformationName = transformationName;
-    }
-
-    /**
      * @return the parameters
      */
     public Object[] getParameters() {
         return parameters;
-    }
-
-    /**
-     * @param parameters
-     *            the parameters to set
-     */
-    public void setParameters(Object[] parameters) {
-        this.parameters = parameters;
     }
 
 }

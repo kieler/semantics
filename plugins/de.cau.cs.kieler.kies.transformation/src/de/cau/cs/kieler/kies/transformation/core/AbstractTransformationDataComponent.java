@@ -27,6 +27,7 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.XtendFacade;
@@ -36,9 +37,12 @@ import org.json.JSONObject;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
+import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationTrigger;
 import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -69,18 +73,24 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     private TransformationContext currentContext;
 
+    private boolean kiviMode;
+
     /**
      * Any extending class has to provide a map with global Variables.
      * 
      * @param globVars
      *            Map with global Variables for the XtendFacade.
+     * @param abusemode
+     *            pass {@code true} if this data component is used in a way that does not use KIEM.
      */
-    public AbstractTransformationDataComponent(final Map<String, Variable> globVars) {
+    public AbstractTransformationDataComponent(final Map<String, Variable> globVars,
+            final boolean abusemode) {
         if (globVars != null) {
             globalVars = globVars;
         } else {
             globalVars = Collections.emptyMap();
         }
+        this.kiviMode = abusemode;
     }
 
     /**
@@ -129,17 +139,17 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         }
         System.out.println("Non History");
 
-        try {
-            boolean aquired = semaphore.tryAcquire(STEP_TIMEOUT, TimeUnit.SECONDS);
-            System.out.println("Aquire");
-            if (!aquired) {
-                System.out.println("Problem occured");
-                throw new KiemExecutionException("Timeout, could not aquire semaphore.", true,
-                        false, true, null);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        // if used normally by kiem
+        // if(!abuseMode){
+        // try {
+        // boolean aquired = semaphore.tryAcquire(STEP_TIMEOUT, TimeUnit.SECONDS);
+        // if (!aquired) {
+        // throw new KiemExecutionException("Timeout, could not aquire semaphore.", true,
+        // false, true, null);
+        // }
+        // } catch (InterruptedException e) {
+        // e.printStackTrace();
+        // }}
 
         // do next transformation
         TransformationDescriptor descriptor = getNextTransformation();
@@ -158,7 +168,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                         domain, semaphore);
                 currentContext = context;
                 semaphore.release();
-                //TransformationTrigger.getInstance().step(context);
+
+                // if normally used by kiem execute the transformation
+                if (!kiviMode) {
+                    System.out.println("NO ABUSEEEEEEEEEEEEEEEEEEEEEEEE");
+                    processTransformation();
+                }
+                // TransformationTrigger.getInstance().step(context);
             }
         } else {
             finished = true;
@@ -303,4 +319,17 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return currentContext;
     }
 
+    private void processTransformation() {
+        TransformationEffect effect = new TransformationEffect(currentContext);
+        effect.execute();
+        effect.getResult();
+        IWorkbenchPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
+        RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                (SyncchartsDiagramEditor) currentlyActiveEditor);
+        gmfEffect.execute();
+
+        // apply automatic layout by triggering the trigger (null layouts whole diagram)
+        LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
+        layoutEffect.execute();
+    }
 }

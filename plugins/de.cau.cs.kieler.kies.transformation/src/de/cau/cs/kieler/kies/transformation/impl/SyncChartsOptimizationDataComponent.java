@@ -84,10 +84,15 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public static final String GLOBALVAR_RULE7 = "rule7";
     public static final String GLOBALVAR_RULE8 = "rule8";
 
-    /**
-     * 
-     */
     public SyncChartsOptimizationDataComponent() {
+        this(false);
+    }
+
+    /**
+     * @param abusemode
+     *            pass {@code true} if this data component is used in a way that does not use KIEM.
+     */
+    public SyncChartsOptimizationDataComponent(final boolean abusemode) {
         super(new ImmutableMap.Builder<String, Variable>()
                 .put(GLOBALVAR_REC, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE1, TransformationUtil.getXtendVarBoolean(true))
@@ -97,7 +102,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 .put(GLOBALVAR_RULE5, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE6, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE7, TransformationUtil.getXtendVarBoolean(true))
-                .put(GLOBALVAR_RULE8, TransformationUtil.getXtendVarBoolean(true)).build());
+                .put(GLOBALVAR_RULE8, TransformationUtil.getXtendVarBoolean(true)).build(),
+                abusemode);
     }
 
     /**

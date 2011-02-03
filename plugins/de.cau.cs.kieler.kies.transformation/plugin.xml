@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <!--extension
+   <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
             class="de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent"
@@ -16,7 +16,7 @@
             id="de.cau.cs.kieler.kies.transformation.Optimization"
             name="SyncCharts Optimization">
       </content>
-   </extension-->
+   </extension>
   
 
    <extension

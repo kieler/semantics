@@ -69,7 +69,15 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      * transformation should be executed recursively or not.
      */
     public EsterelToSyncChartDataComponent() {
-        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)));
+        this(false);
+    }
+
+    /**
+     * @param abusemode
+     *            pass {@code true} if this data component is used in a way that does not use KIEM.
+     */
+    public EsterelToSyncChartDataComponent(final boolean abusemode) {
+        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)), abusemode);
     }
 
     /**

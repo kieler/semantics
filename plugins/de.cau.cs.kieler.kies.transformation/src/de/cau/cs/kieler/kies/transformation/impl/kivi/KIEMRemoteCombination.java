@@ -220,7 +220,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 return false;
             }
 
-            currentDataComponent = new EsterelToSyncChartDataComponent();
+            currentDataComponent = new EsterelToSyncChartDataComponent(true);
             try {
                 currentDataComponent.initialize();
             } catch (KiemInitializationException e) {
@@ -241,9 +241,9 @@ public class KIEMRemoteCombination extends AbstractCombination {
 
         // initialize the correct datacomponent
         if (isTransformable()) {
-            currentDataComponent = new EsterelToSyncChartDataComponent();
+            currentDataComponent = new EsterelToSyncChartDataComponent(true);
         } else {
-            currentDataComponent = new SyncChartsOptimizationDataComponent();
+            currentDataComponent = new SyncChartsOptimizationDataComponent(true);
         }
         try {
             currentDataComponent.initialize();
@@ -329,7 +329,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
     }
 
     private boolean isTransformable() {
-        EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent();
+        EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
         try {
             dc.initialize();
         } catch (KiemInitializationException e) {

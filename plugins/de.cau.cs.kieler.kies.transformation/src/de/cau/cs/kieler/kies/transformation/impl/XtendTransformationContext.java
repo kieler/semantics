@@ -36,6 +36,8 @@ import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
+ * {@link TransformationContext} for the execution of Xtend transformations.
+ * 
  * @author uru
  * 
  */

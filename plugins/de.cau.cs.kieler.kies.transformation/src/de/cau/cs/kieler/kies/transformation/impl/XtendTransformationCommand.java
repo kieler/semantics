@@ -23,6 +23,10 @@ import org.eclipse.xtend.XtendFacade;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 
 /**
+ * A command executing an xtend transformation. To support undo functionality it's important that
+ * this is a RecordingCommand. The result of the transformation is stored and can be retrieved after
+ * execution.
+ * 
  * @author uru
  * 
  */
@@ -30,20 +34,21 @@ public class XtendTransformationCommand extends RecordingCommand {
 
     private XtendFacade xtendFacade;
     private TransformationDescriptor descriptor;
-
-    private Collection<Object> result;
+    private Collection<Object> result = null;
 
     /**
-     * 
-     * @param xtendFacade
+     * @param theXtendFacade
+     *            the facade used to execute the transformation
      * @param theDescriptor
+     *            information about which transformation to execute
      * @param editingDomain
+     *            {@link TransactionalEditingDomain} on which the transformation takes place.
      */
-    public XtendTransformationCommand(final XtendFacade xtendFacade,
+    public XtendTransformationCommand(final XtendFacade theXtendFacade,
             final TransformationDescriptor theDescriptor,
             final TransactionalEditingDomain editingDomain) {
         super(editingDomain);
-        this.xtendFacade = xtendFacade;
+        this.xtendFacade = theXtendFacade;
         this.descriptor = theDescriptor;
     }
 
@@ -63,7 +68,8 @@ public class XtendTransformationCommand extends RecordingCommand {
     }
 
     /**
-     * {@inheritDoc}
+     * @return the result of the execution as first element of a collection. In case the execution
+     *         has not been executed yet, {@code null} is returned.
      */
     @Override
     public Collection<Object> getResult() {
