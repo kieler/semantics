@@ -196,6 +196,20 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         }
 
         /**
+         * Get the type ID of the diagram. I.e. in an editor it is the same as the Editor ID. TODO:
+         * should be adopted to views if views get supported
+         * 
+         * @return String ID of the diagram type
+         */
+        public String getDiagramType() {
+            try {
+                return diagramPart.getSite().getId();
+            } catch (NullPointerException e) {
+                return "";
+            }
+        }
+
+        /**
          * {@inheritDoc}
          */
         public Class<? extends ITrigger> getTriggerClass() {
