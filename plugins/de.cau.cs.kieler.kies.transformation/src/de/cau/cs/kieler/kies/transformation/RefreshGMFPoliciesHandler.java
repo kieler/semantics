@@ -24,9 +24,15 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
 
+/**
+ * An abstract handler for testing purposes only.
+ * 
+ * @author uru
+ * 
+ */
 public class RefreshGMFPoliciesHandler extends AbstractHandler {
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {

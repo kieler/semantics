@@ -31,7 +31,6 @@ import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
-import de.cau.cs.kieler.core.model.trigger.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
@@ -50,7 +49,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * @author uru
  * 
  */
-public class KIEMRemoteCombination extends AbstractCombination {
+public class E2STransformationCombination extends AbstractCombination {
 
     private static final String BUTTON_STEP = "de.cau.cs.kieler.kies.transformation.step";
     private static final String BUTTON_STEP_BACK = "de.cau.cs.kieler.kies.transformation.stepBack";
@@ -64,20 +63,16 @@ public class KIEMRemoteCombination extends AbstractCombination {
 
     private final Map<String, Boolean> buttonEnabling = Maps.newHashMap();
 
-    private enum StepType {
-        STEP, STEP_BACK, EXPAND, EXPAND_OPTIMIZE
-    };
-
     private AbstractTransformationDataComponent currentDataComponent;
     private IWorkbenchPart currentlyActiveEditor;
     private CommandStack currentCommandStack;
 
-    private StepType lastStepType = StepType.STEP;
+    private String lastStepType = BUTTON_STEP;
 
     /**
      * Default Constructor, setting up all needed buttons.
      */
-    public KIEMRemoteCombination() {
+    public E2STransformationCombination() {
         buttonEnabling.put(BUTTON_STEP, true);
         buttonEnabling.put(BUTTON_EXPAND, true);
         buttonEnabling.put(BUTTON_EXPAND_OPTIMIZE, true);
@@ -117,59 +112,33 @@ public class KIEMRemoteCombination extends AbstractCombination {
      * 
      * @param buttonState
      *            contains information which buttons where pressed.
+     * @param editorState
+     *            informs about the change of the current editor.
+     * @param transformationState
+     *            informs about the completion of a transformation.
      */
     public void execute(final ButtonState buttonState, final ActiveEditorState editorState,
-            EffectTriggerState<TransformationEffect> transformationState) {
+            final EffectTriggerState<TransformationEffect> transformationState) {
 
-        // editor state
+        dontUndo();
+
+        // editor state, remember the currently active editor
         if (getTriggerState() instanceof ActiveEditorState) {
-            System.out.println("editor state");
             editorStateChanged(editorState);
             return;
         }
 
         // transformation state
-        if (transformationState.getSequenceNumber() > buttonState.getSequenceNumber()
-                && transformationState.getSequenceNumber() > editorState.getSequenceNumber()) {
+        if ((getTriggerState() instanceof EffectTriggerState)
+                && transformationState.getEffect() instanceof TransformationEffect) {
             System.out.println("\t #### FINISHED with result: "
                     + transformationState.getEffect().getResult());
-
-            if (lastStepType == StepType.EXPAND_OPTIMIZE) {
-                // optimization is performed the same manner line expand just with different data
-                // component.
-                process(StepType.EXPAND);
-                setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
-            } else if (lastStepType == StepType.EXPAND) {
-                if (currentDataComponent != null) {
-                    currentDataComponent.doPostTransformation();
-                }
-                setButtonState(false, BUTTON_EXPAND);
-            }
-
-            // activate / deactivate back button.
-            if (currentCommandStack != null) {
-                buttonEnabling.put(BUTTON_STEP_BACK, currentCommandStack.canUndo());
-            }
-
-            setButtonEnabling(true);
-
-            if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
-                // refresh GMF edit policies
-                RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
-                        (SyncchartsDiagramEditor) currentlyActiveEditor);
-                this.schedule(gmfEffect);
-
-                // apply automatic layout by triggering the trigger (null layouts whole diagram)
-                LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
-                layoutEffect.schedule();
-            }
-
+            postTransformation();
             return;
         }
 
         // button state
-        if (buttonState.getSequenceNumber() > editorState.getSequenceNumber()
-                && buttonState.getSequenceNumber() > transformationState.getSequenceNumber()) {
+        if (getTriggerState() instanceof ButtonState) {
             System.out.println("button state");
 
             if (!buttonEnabling.keySet().contains(buttonState.getButtonId())) {
@@ -177,27 +146,21 @@ public class KIEMRemoteCombination extends AbstractCombination {
                 return;
             }
 
+            // in case no editor change happened prior first execution, fetch the active one.
             if (currentlyActiveEditor == null) {
                 currentlyActiveEditor = TransformationUtil.getActiveEditor();
             }
-
             // if XtextEditor is opened the transformation has to be initialized.
             if (currentlyActiveEditor instanceof XtextEditor) {
-                if (!initializeTransformation()) {
-                    return;
-                }
+                initializeTransformation();
+                return;
+//                if (!initializeTransformation()) {
+//                    return;
+//                }
             }
 
-            String id = buttonState.getButtonId();
-            if (id.equals(BUTTON_STEP)) {
-                process(StepType.STEP);
-            } else if (id.equals(BUTTON_STEP_BACK)) {
-                process(StepType.STEP_BACK);
-            } else if (id.equals(BUTTON_EXPAND)) {
-                process(StepType.EXPAND);
-            } else if (id.equals(BUTTON_EXPAND_OPTIMIZE)) {
-                process(StepType.EXPAND_OPTIMIZE);
-            }
+            process(buttonState.getButtonId());
+
             setButtonEnabling(true);
         }
 
@@ -206,7 +169,7 @@ public class KIEMRemoteCombination extends AbstractCombination {
 
     private boolean initializeTransformation() {
         // first check if there is anything to transform!
-        // TODO
+
         setButtonState(true, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_EXPAND);
         setButtonState(false, BUTTON_STEP_BACK);
 
@@ -231,11 +194,13 @@ public class KIEMRemoteCombination extends AbstractCombination {
         return false;
     }
 
-    private void process(StepType type) {
+    private void process(final String type) {
         lastStepType = type;
 
-        if (type == StepType.STEP_BACK) {
+        if (type.equals(BUTTON_STEP_BACK)) {
             back();
+            LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
+            layoutEffect.schedule();
             return;
         }
 
@@ -252,22 +217,21 @@ public class KIEMRemoteCombination extends AbstractCombination {
         }
 
         // determine proceeding
-        switch (type) {
-        case STEP:
+        if (type.equals(BUTTON_EXPAND) || type.equals(BUTTON_EXPAND_OPTIMIZE)) {
+            setRecursive(true);
+        }
+        if (type.equals(BUTTON_STEP)) {
             setRecursive(false);
-            break;
-        case EXPAND:
-            setRecursive(true);
-            break;
-        case EXPAND_OPTIMIZE:
-            setRecursive(true);
-            break;
-        default:
         }
 
         // perform step
         try {
-            initiateStep();
+            currentDataComponent.step(null);
+            TransformationContext lastContext = currentDataComponent.getCurrentContext();
+            if (lastContext != null) {
+                TransformationEffect effect = new TransformationEffect(lastContext);
+                effect.schedule();
+            }
         } catch (KiemExecutionException e) {
             e.printStackTrace();
             System.out.println("Finished");
@@ -294,30 +258,21 @@ public class KIEMRemoteCombination extends AbstractCombination {
         this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, bool));
     }
 
-    private void setButtonState(boolean enabled, String... buttons) {
+    private void setButtonState(final boolean enabled, final String... buttons) {
         for (String button : buttons) {
             buttonEnabling.put(button, enabled);
         }
     }
 
-    private void setButtonEnabling(boolean bool) {
+    private void setButtonEnabling(final boolean bool) {
         for (String button : buttonEnabling.keySet()) {
-            this.schedule(new MenuItemEnableStateEffect(button, !bool ? false
-                    : (Boolean) buttonEnabling.get(button)));
+            System.out.println(button + " " + bool);
+            // this.schedule(new MenuItemEnableStateEffect(button, !bool ? false
+            // : (Boolean) buttonEnabling.get(button)));
         }
     }
 
-    private void initiateStep() throws KiemExecutionException {
-        if (currentDataComponent != null) {
-            currentDataComponent.step(null);
-            TransformationContext lastContext = currentDataComponent.getCurrentContext();
-            if (lastContext != null) {
-                this.schedule(new TransformationEffect(lastContext));
-            }
-        }
-    }
-
-    private void editorStateChanged(ActiveEditorState editorState) {
+    private void editorStateChanged(final ActiveEditorState editorState) {
         currentlyActiveEditor = editorState.getLastActiveEditor();
         currentDataComponent = null;
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
@@ -328,12 +283,43 @@ public class KIEMRemoteCombination extends AbstractCombination {
         }
     }
 
+    private void postTransformation() {
+        if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
+            // optimization is performed the same manner line expand just with different data
+            // component.
+            process(BUTTON_EXPAND);
+            setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
+        } else if (lastStepType.equals(BUTTON_EXPAND)) {
+            if (currentDataComponent != null) {
+                currentDataComponent.doPostTransformation();
+            }
+            setButtonState(false, BUTTON_EXPAND);
+        }
+
+        // activate / deactivate back button.
+        if (currentCommandStack != null) {
+            buttonEnabling.put(BUTTON_STEP_BACK, currentCommandStack.canUndo());
+        }
+
+        setButtonEnabling(true);
+
+        if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
+            // refresh GMF edit policies
+            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                    (SyncchartsDiagramEditor) currentlyActiveEditor);
+            gmfEffect.schedule();
+
+            // apply automatic layout by triggering the trigger (null layouts whole diagram)
+            LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
+            layoutEffect.schedule();
+        }
+    }
+
     private boolean isTransformable() {
         EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
         try {
             dc.initialize();
         } catch (KiemInitializationException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         Object next = dc.getNextTransformation();

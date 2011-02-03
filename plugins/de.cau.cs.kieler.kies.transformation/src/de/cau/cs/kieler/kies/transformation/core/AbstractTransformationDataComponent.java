@@ -156,38 +156,40 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         currentContext = null;
         if (descriptor != null) {
             System.out.println("Trigger");
-            if (TransformationTrigger.getInstance() != null) {
-                if (facade == null) {
-                    Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
-                            "XtendFacade has not been initialized properly!");
-                    StatusManager.getManager().handle(status);
-                    return null;
-                }
-                // else execute Transformation
-                TransformationContext context = new XtendTransformationContext(facade, descriptor,
-                        domain, semaphore);
-                currentContext = context;
-                semaphore.release();
 
-                // if normally used by kiem execute the transformation
-                if (!kiviMode) {
-                    System.out.println("NO ABUSEEEEEEEEEEEEEEEEEEEEEEEE");
-                    processTransformation();
-                }
-                // TransformationTrigger.getInstance().step(context);
+            if (facade == null) {
+                Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                        "XtendFacade has not been initialized properly!");
+                StatusManager.getManager().handle(status);
+                return null;
             }
-        } else {
-            finished = true;
-            doPostTransformation();
-            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    MessageDialog.openInformation(shell, "Done",
-                            "Transformation finished. No further elements to process.");
-                }
-            });
+            // else execute Transformation
+            TransformationContext context = new XtendTransformationContext(facade, descriptor,
+                    domain, semaphore);
+            currentContext = context;
             semaphore.release();
-            throw new KiemExecutionException("No Further Transformations", true, false, true, null);
+
+            // if normally used by kiem execute the transformation
+            if (!kiviMode) {
+                System.out.println("NO ABUSEEEEEEEEEEEEEEEEEEEEEEEE");
+                processTransformation();
+            }
+            // TransformationTrigger.getInstance().step(context);
         }
+
+        // TODO stop the transformation if finished
+        // else {
+        // finished = true;
+        // doPostTransformation();
+        // PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+        // public void run() {
+        // MessageDialog.openInformation(shell, "Done",
+        // "Transformation finished. No further elements to process.");
+        // }
+        // });
+        // semaphore.release();
+        // throw new KiemExecutionException("No Further Transformations", true, false, true, null);
+        // }
         return null;
     }
 
