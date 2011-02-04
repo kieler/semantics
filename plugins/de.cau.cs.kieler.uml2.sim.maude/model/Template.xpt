@@ -207,6 +207,10 @@ break select finishedRTCESINT discardFSetESINT .
 #####################################################
 search (maState (stableC (State0-885791716,R-2027565592) empty) (d,a)) =>* mastate such that isDone mastate . 
 
+bzw. wenn die ID-String bei dir anders sind 
+
+search (maState (stableC (<Konfiguration>) <HistoryKonfiguration>) (<Events>)) =>* mastate such that isDone mastate . 
+
 
 - <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
   z.B: Rroot, Csusp (aus Test.maude)
