@@ -205,22 +205,17 @@ break select finishedRTCESINT discardFSetESINT .
 #####################################################
 ##          Interface     for     Eclipse          ##        
 #####################################################
-search (maState "UML" ($stableC prettyVerts(<Konfiguration>) prettyHc(<HistoryKonfiguration>)) <Events>) =>* mastate such that isDone mastate .
+search (maState (stableC (State0-885791716,R-2027565592) empty) (d,a)) =>* mastate such that isDone mastate . 
+
 
 - <Konfiguration>: eine durch "," getrennte Menge von Regionen und States. Diese muss den Anforderungen im Standard entsprechen.
   z.B: Rroot, Csusp (aus Test.maude)
 - <HistoryKonfiguration>: kann erstmal empty sein
 - <Events>: eine durch "," getrennte Menge von Events die abgearbeitet werden soll
 
-(Rroot = R-990928836 , Csusp = susp441237549)
-search (maState "UML" ($stableC (prettyVerts (R-990928836 , susp441237549)) empty) res) =>* mastate such that isDone mastate .
-multistep
-search (maState "UML" ($stableC (prettyVerts (R-990928836 , susp441237549)) empty) (res, ee1)) =>* mastate such that isDone mastate .
 
-search (maState "UML" ($stableC (prettyVerts (Rroot, Csusp)) empty) res) =>* mastate such that isDone mastate .
 
-red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1, ee2)), <> inC(b--181774032)) .
-red modelCheck ((maState "UML" ($stableC (prettyVerts (R-108097269 , R1010334332, a-1833692673, c--1034807852)) empty) (ee1,ee2)), <> inC(d--961763712)) .
+
 )***
 «ENDREM»
 
