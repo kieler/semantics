@@ -71,6 +71,8 @@ fmod eclipseInterface is
   op allVerts : -> Verts .
   eq allVerts = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«region.getId()-»«ENDFOREACH-» , «FOREACH this.getStates() AS state SEPARATOR ", "-»«((State)state).getId()-»«ENDFOREACH-» .
 	
+	
+  	«REM»FIXME: only consider regions containing initial states for ops and allDefs«ENDREM» 
 ***// defaults //
   ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"def"+region.getId()-»«ENDFOREACH-» : -> Default .
   «FOREACH this.getInitialTransitions() AS transition SEPARATOR ""-»«transition.genDefault()-»«ENDFOREACH-»
@@ -179,7 +181,7 @@ mod INIT is
 	
 	subsort MState < State .
 
-	vars msst : MState .
+	vars msst mastate : MState .
 	vars V : Verts .
 	vars HC : HistoryConfs .
 

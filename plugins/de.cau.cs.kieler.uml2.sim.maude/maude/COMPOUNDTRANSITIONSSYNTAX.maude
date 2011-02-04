@@ -95,28 +95,34 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq guard (joinTrans strid e T t reg) = (guard t) .
 
 
-  op source_ : Transitions -> Verts .
-  eq source (t, T) = (source t), (source T) .
-  eq source (basicTrans strid src g a tgt) = src .
-  eq source (src g a tgt) = src .
+  op $source_ : Transitions -> Verts .
+  eq $source (t, T) = ($$source t), ($source T) .
+  eq $source empty = empty .
 
-  op source_ : Compoundtransition -> Vert .
-  eq source (simpleTrans e t reg) = (source t) .
-  eq source (forkTrans e t T reg) = (source t) .
-  eq source (choiceTrans e t T reg) = (source t) .
-  eq source (joinTrans e T t reg) = (source T) .
+  op $$source_ : Transition -> Verts .
+  eq $$source (basicTrans strid src g a tgt) = src .
+  eq $$source (src g a tgt) = src .
 
-  eq source (simpleTrans strid e t reg) = (source t) .
-  eq source (forkTrans strid e t T reg) = (source t) .
-  eq source (choiceTrans strid e t T reg) = (source t) .
-  eq source (joinTrans strid e T t reg) = (source T) .
+  op source_ : Compoundtransition -> Verts .
+  eq source (simpleTrans e t reg) = ($$source t) .
+  eq source (forkTrans e t T reg) = ($$source t) .
+  eq source (choiceTrans e t T reg) = ($$source t) .
+  eq source (joinTrans e T t reg) = ($source T) .
 
-  op target_ : Transition -> Verts .
-  eq target (t, T) = (target t), (target T) .
-  eq target (src g a tgt) = tgt .
-  eq target (basicTrans strid src g a tgt) = tgt .
+  eq source (simpleTrans strid e t reg) = ($$source t) .
+  eq source (forkTrans strid e t T reg) = ($$source t) .
+  eq source (choiceTrans strid e t T reg) = ($$source t) .
+  eq source (joinTrans strid e T t reg) = ($source T) .
 
-  op target_ : Compoundtransition -> Vert .
+  op target_ : Transitions -> Verts .
+  eq target (t, T) = ($target t), (target T) .
+  eq target empty = empty .
+  
+  op $target_ : Transition -> Verts .
+  eq $target (src g a tgt) = tgt .
+  eq $target (basicTrans strid src g a tgt) = tgt .
+
+  op target_ : Compoundtransition -> Verts .
   eq target (simpleTrans e t reg) = (target t) .
   eq target (forkTrans e t T reg) = (target T) .
   eq target (choiceTrans e t T reg) = (target T) .
@@ -150,7 +156,30 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq event (choiceTrans strid e t T reg) = e .
   eq event (joinTrans strid e T t reg) = e .
   
+  op outTrans_ : Compoundtransition -> Transitions .
+  eq outTrans (simpleTrans e t reg) = t .
+  eq outTrans (forkTrans e t T reg) = T .  
+  *** how should choice outTranss be handeled
+  eq outTrans (choiceTrans e t T reg) = T .
+  eq outTrans (joinTrans e T t reg) = t .
+  eq outTrans (simpleTrans strid e t reg) = t .
+  eq outTrans (forkTrans strid e t T reg) = T .  
+  *** how should choice outTranss be handeled
+  eq outTrans (choiceTrans strid e t T reg) = T .
+  eq outTrans (joinTrans strid e T t reg) = t .
   
+  op inTrans_ : Compoundtransition -> Transitions .
+  eq inTrans (simpleTrans e t reg) = empty .
+  eq inTrans (forkTrans e t T reg) = t .  
+  *** how should choice inTranss be handeled
+  eq inTrans (choiceTrans e t T reg) = t .
+  eq inTrans (joinTrans e T t reg) = T .
+  eq inTrans (simpleTrans strid e t reg) = empty .
+  eq inTrans (forkTrans strid e t T reg) = t .  
+  *** how should choice inTranss be handeled
+  eq inTrans (choiceTrans strid e t T reg) = t .
+  eq inTrans (joinTrans strid e T t reg) = T .
+
   
 endfm
 
@@ -166,6 +195,13 @@ fmod COMPOUNDTRANSITIONSSYNTAX is
   including SET{Compoundtransition} * (sort Set{Compoundtransition} to Compoundtransitions, sort NeSet{Compoundtransition} to NeCompoundtransitions) .
   including SET{Menge} * (sort Set{Menge} to Sets, sort NeSet{Menge} to NeSets) .
   
+  var t : Compoundtransition .
+  var T : Compoundtransitions .
+  
+  
+  op src_ : Compoundtransitions -> Verts .
+  eq src (t, T) = (source t), (src T) .
+  eq src empty = empty .
 
 endfm
 

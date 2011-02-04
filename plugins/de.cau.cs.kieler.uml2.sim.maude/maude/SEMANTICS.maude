@@ -82,15 +82,20 @@ mod SEMANTICS is
 		) (ES) if 
 		(enabled V e) =/= empty .
 	rl [fireFSetESINT] : maState (fireC V HC (mm(T), MN)) ES => 
-		maState (unstableC V HC T (par nil)) ES .
+		maState (unstableC V HC T skip) ES .
 
 	rl [finishedRTCESINT] : maState (unstableC V HC empty (par A)) ES => 
 		maState (stableC V (succHC V HC)) ES .
 
+    rl [fireTrans] : maState (unstableC V HC (t, T) A) ES =>
+       maState (leaveC V HC T t (inTrans t) (outTrans t) (leave V t) A) ES .
+    rl [fireTrans] : maState (unstableC V HC t A) ES =>
+       maState (leaveC V HC empty t (inTrans t) (outTrans t) (leave V t) A) ES .
+
  *** started by maState (unstableC V HC (t, T) (par A)) ES => 
  ***  maState ((leaveC V HC T t (inTrans t) (outTrans t) (leave V t) (par A)) ES 
     crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
-     maState (leaveC (V \ v)  HC T t sT sT1 leaveStates (seq A (getExitAc v))) ES 
+     maState (leaveC (V \ v)  HC T t sT sT1 leaveStates A) ES 
      if (((intersection (leaveStates, (getSubVerts v))) == empty) and not(typeRegion v)) .
     crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
      maState (leaveC (V \ v)  HC T t sT sT1 leaveStates A)  ES 
@@ -98,15 +103,15 @@ mod SEMANTICS is
     rl maState (leaveC V HC T t sT sT1 empty A) ES =>
      maState (execTransC V  HC T t sT sT1 A) ES .
     rl maState (execTransC V HC T t (st, sT) sT1 A) ES =>
-     maState (execTransC V  HC T t sT sT1 (seq A (action st))) ES .
+     maState (execTransC V  HC T t sT sT1 A) ES .
     rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
-     maState (execTransC V  HC T t empty sT1 (seq A (action st))) ES .
+     maState (execTransC V  HC T t empty sT1 A) ES .
     rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
-     maState (execTransC V  HC T t empty sT1 (seq A (action st))) ES .
+     maState (execTransC V  HC T t empty sT1 A) ES .
     rl maState (execTransC V HC T t empty empty A) ES =>
     maState(enterC V HC T t (enterH HC t) A) ES .
     crl maState (enterC V HC T t (v, enterStates) A) ES =>
-     maState (enterC (V, v) HC T t enterStates (seq A (getEntryAc v))) ES 
+     maState (enterC (V, v) HC T t enterStates A) ES 
      if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) .
     crl maState (enterC V HC T t (v, enterStates) A) ES =>
      maState (enterC (V, v)  HC T t enterStates A)  ES 
