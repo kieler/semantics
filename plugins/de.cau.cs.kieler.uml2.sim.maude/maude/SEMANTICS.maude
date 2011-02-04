@@ -84,7 +84,7 @@ mod SEMANTICS is
 	rl [fireFSetESINT] : maState (fireC V HC (mm(T), MN)) ES => 
 		maState (unstableC V HC T skip) ES .
 
-	rl [finishedRTCESINT] : maState (unstableC V HC empty (par A)) ES => 
+	rl [finishedRTCESINT] : maState (doneC V HC) ES => 
 		maState (stableC V (succHC V HC)) ES .
 
     rl [fireTrans] : maState (unstableC V HC (t, T) A) ES =>
@@ -117,7 +117,7 @@ mod SEMANTICS is
      maState (enterC (V, v)  HC T t enterStates A)  ES 
      if ((intersection (enterStates, (start v)) == empty) and (typeRegion v)) .
     rl maState (enterC V HC T t empty A) ES =>
-     maState (unstableC V HC T A) ES .
+     maState (doneC V HC) ES .
 
     
      

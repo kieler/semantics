@@ -186,10 +186,11 @@ mod INIT is
 	vars msst mastate : MState .
 	vars V : Verts .
 	vars HC : HistoryConfs .
+	vars E : Events .
 
 
 	op isDone_ : MState -> Bool .
-	eq isDone (maState (doneC V HC) empty) = true .
+	eq isDone (maState (doneC V HC) E) = true .
 	eq isDone msst = false [owise] .
 	
 endm
