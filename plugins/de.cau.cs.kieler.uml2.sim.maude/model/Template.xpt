@@ -79,12 +79,14 @@ fmod eclipseInterface is
   op allDefs : -> Defaults .
   eq allDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"def"+region.getId()-»«ENDFOREACH-» .
   
+	«REM»FIXME: only consider regions containing history states with outgoing transitions for ops and allDefs«ENDREM» 
 ***// deep defaults //
   ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"dDef"+region.getId()-»«ENDFOREACH-» : -> DeepDefault .
   «FOREACH this.getDHDTransitions() AS transition SEPARATOR ""-»«transition.genDHDefault()-»«ENDFOREACH-»
   op allDHDefs : -> DeepDefaults .
   eq allDHDefs = «FOREACH this.getRegions() AS region SEPARATOR ", "-»«"dDef"+region.getId()-»«ENDFOREACH-» .
 
+	«REM»FIXME: only consider regions containing history states with outgoing transitions for ops and allDefs«ENDREM» 
 ***// shallow defaults //
   ops «FOREACH this.getRegions() AS region SEPARATOR " "-»«"sDef"+region.getId()-»«ENDFOREACH-» : -> ShallowDefault .
   «FOREACH this.getSHDTransitions() AS transition SEPARATOR ""-»«transition.genSHDefault()-»«ENDFOREACH-»
