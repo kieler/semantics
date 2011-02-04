@@ -67,7 +67,7 @@ mod SEMANTICS is
 	crl [selectEventFSetESINT] : maState (stableC V HC) (e, ES) => 
 	maState (eventSelC V HC e) (ES, e) if e =/= empty .
 	crl [discardFSetESINT] : maState (eventSelC V HC e) (ES) => 
-		maState (stableC V HC) (ES) if 
+		maState (doneC V HC) (ES) if 
 		(enabled V e) == empty .
 
 	crl [computeFSetESINT] : maState (eventSelC V HC e) (ES) => 

@@ -186,7 +186,7 @@ mod INIT is
 	vars msst mastate : MState .
 	vars V : Verts .
 	vars HC : HistoryConfs .
-	vars E : Events .
+	vars E : EventSS .
 
 
 	op isDone_ : MState -> Bool .
