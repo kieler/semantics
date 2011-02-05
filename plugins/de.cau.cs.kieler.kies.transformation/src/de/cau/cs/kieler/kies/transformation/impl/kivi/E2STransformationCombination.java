@@ -273,7 +273,7 @@ public class E2STransformationCombination extends AbstractCombination {
     }
 
     private void editorStateChanged(final ActiveEditorState editorState) {
-        currentlyActiveEditor = editorState.getLastActiveEditor();
+        currentlyActiveEditor = TransformationUtil.getActiveEditor();
         currentDataComponent = null;
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             currentCommandStack = ((DiagramEditor) currentlyActiveEditor).getEditingDomain()

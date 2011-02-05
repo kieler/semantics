@@ -19,7 +19,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * extracts the expression and immediate information of a esterel::DelayExpr
  * and adds them to the synccharts::Transition
  */
-Void addDelayToTrigger(synccharts::Transition t, DelayExpr delay):
+Void addTriggerToTransition(synccharts::Transition t, DelayExpr delay):
 	if delay.isImmediate then 
 		t.setIsImmediate(true) ->
 	// clone the expression as in should stay in esterel model too
@@ -235,6 +235,52 @@ Void collectStates(Region r, List[State] states):
 ;
 
 /**
+ * collects the number of already defined traphalt signals
+ */ 
+Integer getNumberOfTraphalts(State s):
+	s.parentRegion.parentState != null ?
+		getNumberOfTraphalts(s.parentRegion.parentState) :
+		getNumberOfTraphaltsFromRoot(s)
+;
+Integer getNumberOfTraphaltsFromRoot(State root):
+	let signals = root.eAllContents.select(e|Signal.isInstance(e)) :
+	let traphalts = signals.select(e|((Signal)e).name.contains("traphalt")):
+	traphalts.size
+;
+
+/**
+ * adds the trap as signal to the specified state.
+ */
+Void addTrapSignalToState(ISignal trap, State s):
+	addSignalToState((ISignal) clone(trap), s)
+;
+
+/**
+ * collect all traphalts in between an exit and the fired trap
+ */
+List[ISignal] findAndAddCorrespondingTraphalts(ISignal trap, State s, Transition t):
+	let found = (Collection[ISignal]) {}:
+	collectTrapHalts(trap, s, found) ->
+	found.addTrapHalt(t) ->
+	found
+;
+Void collectTrapHalts(ISignal trap, State s, Collection[ISignal] found):
+	if !(s.signals.containsSignalWithSameName(trap)) then
+		(let currentHalts = s.signals.select(e|e.name.contains("traphalt")):
+		 found.addAll(currentHalts) ->
+		 collectTrapHalts(trap, s.parentRegion.parentState, found))	
+;
+Void addTrapHalt(Signal traphalt, Transition t):
+	let emission = new Emission:
+	emission.setSignal(traphalt) ->
+	t.effects.add(emission)
+;
+Boolean containsSignalWithSameName(List[Signal] signals, Signal s2):
+	let sameName = signals.select(e|(e.name.matches(s2.name))):
+	!sameName.isEmpty
+;
+
+/**
  * returns a copy of the passed list, just the list is new, all elements
  * remain the same
  */
@@ -395,13 +441,6 @@ Boolean compareTrigger(Action t1, Action t2):
 	de.cau.cs.kieler.synccharts.Action) 
 ;
 
-
-Void debug(EObject obj):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
-;
-Void debug(Region r):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
-;
-Void debug(State s):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(org.eclipse.emf.ecore.EObject)
+Void debug(Object obj):
+	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(java.lang.Object)
 ;

@@ -663,7 +663,7 @@ public final class TransformationUtil {
      * @param obj
      *            any obj
      */
-    public static void debug(final EObject obj) {
+    public static void debug(final Object obj) {
         System.out.println("Debug: " + obj);
         if (obj instanceof Region) {
             System.out.println(((Region) obj).getParentState());

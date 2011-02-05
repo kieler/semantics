@@ -46,7 +46,7 @@ Void finalizeRule(State s, emf::EObject o):
 ;
 
 /**
- * Called at the beginning of every rule, currently just removes any bodytext and sets name
+ * Called at the beginning of each rule, currently just removes any bodytext and sets the name
  */
 Void initializeRule(State s, emf::EObject o):
 	removeBodyText(s) ->
@@ -122,7 +122,6 @@ Void rule(State s, Pause p):
 	let finalS = new State:
 	let t = new Transition:
 	initializeRule(s, p) ->
-	// setup states
 	s.regions.add(r) ->
 	r.states.add(initS) ->
 	r.states.add(finalS) ->
@@ -140,7 +139,7 @@ Void rule(State s, Abort a):
 	ruleAbort(s, a)
 ;
  
-// helping rule, to allow usual aborts as well as weak aborts to be handled
+// helping rule, to allow usual aborts to be handled as well as weak aborts
 Void ruleAbort(State s, Abort a):
   	let r = new Region:
  	let initState = new State:
@@ -195,7 +194,7 @@ Void handleAbortCaseSingle(Region parent, State source, Integer prio, DelayExpr 
 	trans.setPriority(prio) ->
 	
 	// handle delayexpr
-	trans.addDelayToTrigger(expr) ->
+	trans.addTriggerToTransition(expr) ->
 		
 	trans.connectTransition(source, caseState) ->
 	// care! the "do" body of abort might be null
@@ -226,7 +225,7 @@ Void rule(State s, esterel::Assignment assign):
 	// care to convert the expression prior adding it
 	if (assign.expr != null) then
 		(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
-	//add assignment to the transition
+	// add assignment to the transition
 	t.effects.add(sa)
 ;
 
@@ -266,7 +265,7 @@ Void handleAwaitCaseSingle(Region r, State previous, Integer prio, DelayExpr exp
  * rule 10 & 11 (do upto & watching)
  */
 Void rule(State s, Do d):
-	// end is either DoUpto or DoWatching and just effects the outgoing context.
+	// end is either DoUpto or DoWatching and just affects the outgoing context.
  	// hence we transform the "do" statement here and then decide
  	let r = new Region :
  	let initState = new State:
@@ -299,7 +298,7 @@ Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
 	
 	t.setType(TransitionType::WEAKABORT) ->
 	t.connectTransition(previous, finalS) ->
-	t.addDelayToTrigger(du.expr)
+	t.addTriggerToTransition(du.expr)
 ;
 
 /** !-
@@ -325,7 +324,7 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 	normalT.connectTransition(previous, normalF) ->
 	
 	// add delay
-	abortT.addDelayToTrigger(dw.delay) ->
+	abortT.addTriggerToTransition(dw.delay) ->
 	
 	// if timeout
 	if (dw.end != null) then
@@ -380,8 +379,8 @@ Void rule(State s, EveryDo e):
 	initT.connectTransition(initS, everyS) ->
 	everyT.connectTransition(everyS, everyS) ->
 	// add delays
-	initT.addDelayToTrigger(e.delay) ->
-	everyT.addDelayToTrigger(e.delay) ->
+	initT.addTriggerToTransition(e.delay) ->
+	everyT.addTriggerToTransition(e.delay) ->
 	// recursive
 	finalizeRule(everyS, e.statement)
 ;
@@ -501,7 +500,7 @@ Void rule(State s, Loop l):
 	// handle each case
 	if LoopEach.isInstance(l.end) then
  		(selfTrans.setType(TransitionType::STRONGABORT) ->
- 		 s) -> selfTrans.addDelayToTrigger(((LoopDelay)l.end).delay) ->
+ 		 s) -> selfTrans.addTriggerToTransition(((LoopDelay)l.end).delay) ->
  	
 	finalizeRule(loopState, l.body.statement)
 ;
@@ -566,14 +565,15 @@ Void rule(State s, Present p):
 	) ->
 	
 	if p.elsePart != null then
-		// TODO change 50! calculate the correct maximal priority
-		handleIfSingle(r, pS, 50, null, p.elsePart.statement)
+		// calculate the maximal priority. for a PresentEventBody this is 2 as no more cases can occur.
+		(let maxprio = (PresentCaseList.isInstance(p.body) ? ((PresentCaseList)p.body).cases.size + 1 : 2):
+		 handleIfSingle(r, pS, maxprio, null, p.elsePart.statement))
 ;
 
 Void handlePresentCases(Region parent, State previous, Integer prio, List[PresentCase] cases):
 	(cases.size > 1) ?
 		(handlePresentCaseSingle(parent, previous, prio, cases.first().event.expression, cases.first().statement) ->
-		handlePresentCases(parent, previous, prio, cases.withoutFirst()))
+		handlePresentCases(parent, previous, prio + 1, cases.withoutFirst()))
 		:
 		(handlePresentCaseSingle(parent, previous, prio, cases.first().event.expression, cases.first().statement)
 	)
@@ -582,6 +582,7 @@ Void handlePresentCases(Region parent, State previous, Integer prio, List[Presen
 Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expression e, Statement st):
 	let newS = new State:
 	let t = new Transition:
+	newS.setIsFinal(true) ->
 	parent.states.add(newS) ->
 	// transition
 	t.setPriority(prio) ->
@@ -678,7 +679,7 @@ Void rule(State s, Suspend sus):
 	susState.setIsInitial(true) ->
 	susState.setIsFinal(true) ->
 	// add suspension
-	act.addDelayToTrigger(sus.delay) ->
+	act.addTriggerToTransition(sus.delay) ->
 	susState.setSuspensionTrigger(act) ->
 	// recursive
 	finalizeRule(susState, sus.statement)
@@ -718,7 +719,7 @@ Void rule(State s, Trap t):
 	let normalT = new Transition:
 	let haltS = new State:
 	let haltT = new Transition:
-	let haltSig = new Signal:
+	let haltSig = new ISignal:
 	initializeRule(s, t) ->
 	// setup
 	s.regions.add(r) ->
@@ -734,7 +735,7 @@ Void rule(State s, Trap t):
 	// halt due to higher trap
 	trapS.setIsInitial(true) ->
 	// new signal to halt execution if higher trap fires
-	haltSig.setName("traphalt") ->
+	haltSig.setName("traphalt" + getNumberOfTraphalts(s)) ->
 	haltSig.addSignalToState(s) ->
 	haltT.connectTransition(trapS, haltS) ->
 	// immediate transition with traphalt signal
@@ -752,14 +753,21 @@ Void rule(State s, Trap t):
 	 handleState.setLabel("Trap Handler State") ->
 	 handleState.setIsFinal(true) ->
 	 r.states.add(handleState) ->
+	 // copy all traps as signals
+	 t.trapDeclList.trapDecls.addTrapSignalToState(s) ->
 	 // transition
-	 handleExpr.setOperator(OperatorType::OR) ->
 	 handleT.setIsImmediate(true) ->
 	 handleT.setPriority(2) ->
 	 handleT.connectTransition(trapS, handleState) ->
-	 // collect traps 
-	 t.trapDeclList.collectTraps(handleExpr) ->
-	 handleT.setTrigger(handleExpr) ->
+	 // collect traps
+	 (t.trapDeclList.trapDecls.size > 1 ? 
+	 	(t.trapDeclList.collectTraps(handleExpr) ->
+	 	 handleExpr.setOperator(OperatorType::OR) ->
+	 	 handleT.setTrigger(handleExpr))
+	 : (let valObjRef = new ValuedObjectReference:
+	 	valObjRef.setValuedObject(t.trapDeclList.trapDecls.first()) ->
+	 	handleT.setTrigger(valObjRef))
+	 ) ->
 	 // create handler if existing
 	 if !t.trapHandler.isEmpty then
 	 	handleTrapHandler(handleState, t.trapHandler)
@@ -827,6 +835,8 @@ Void rule(State s, Exit e):
 	emission.setSignal(e.trap) ->
 	emission.setNewValue(convertEsterelExpression((Expression)clone(e.expression))) ->
 	emitTrans.effects.add(emission) ->
+	// find and add corresponding traphalts
+	findAndAddCorrespondingTraphalts(e.trap, s, emitTrans) ->
 	// add transition to state
 	emitTrans.connectTransition(initS, finalS)
 ;
