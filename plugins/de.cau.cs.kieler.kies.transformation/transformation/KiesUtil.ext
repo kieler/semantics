@@ -30,12 +30,13 @@ Void addTriggerToTransition(synccharts::Transition t, DelayExpr delay):
 ;
 
 /**
- * extracts all signals from InterfaceSignalDecl and adds them to the state
+ * extracts all signals from the InterfaceSignalDecl and adds them to the state
  */
 Void extractSignals(InterfaceSignalDecl decl, State s):
 	let clonedDecl = (InterfaceSignalDecl) clone(decl):
 	let copy = (List[Signal]) copyList(clonedDecl.signals):
 	switch {
+		// clone loses the information
 		case Input.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(false))
 		case Output.isInstance(decl) : (copy.setIsInput(false) ->  copy.setIsOutput(true))
 		case InputOutput.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(true))
@@ -89,6 +90,15 @@ Void removeBodyText(State s):
  	s.setType(StateType::NORMAL)
 ;
 
+/** 
+ * clears bodycontents of EVERY child states of State s.
+ */
+Void clearBodyReferences(State s):
+	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
+	states.add(s) ->
+	states.setBodyReference(null)
+;
+
 /**
  * only sets the label if there's no previous label
  */
@@ -112,7 +122,6 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
  * esterel provides additional expression constructs which need to be converted 
  * into a synccharts adequate form.
  * These are: - FunctionExpression (replaced by hostcode)
- *			  - TrapExpression (replaced by hostcode)
  * 			  - ConstantExpression (replaced by corresponding primitive type)
  * 
  */
@@ -138,12 +147,6 @@ Expression convertEsterelExpressionRec(Expression e):
 Expression convertEsterelExpressionRec(FunctionExpression fe):
 	let textExpr = new TextExpression:
 	textExpr.setCode(fe.function.name + "(todo" + ")") ->
-	textExpr
-;
-// Trap expression
-Expression convertEsterelExpressionRec(TrapExpression te):
-	let textExpr = new TextExpression:
-	textExpr.setCode(te.trap.name + "(todo" + ")") ->
 	textExpr
 ;
 // Constant expression
@@ -417,15 +420,6 @@ Void setJavaBodyReference(State s, emf::EObject esterelElement):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
  
-/** 
- * clears bodycontents of EVERY child states of State s.
- */
-Void clearBodyReferences(State s):
-	let states = (Set[State]) s.eAllContents.select(e| State.isInstance(e) && ((State)e).bodyReference != null):
-	states.add(s) ->
-	states.setBodyReference(null)
-;
-
 /**
  * adds all elements of list2 to the front of list1.
  */

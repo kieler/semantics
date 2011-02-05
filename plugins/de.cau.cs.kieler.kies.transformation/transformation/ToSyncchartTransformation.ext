@@ -22,12 +22,13 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * - remember to pass the GLOBALVAR "recursive" to the XtendFacade
  * - add / remove bodytext!
  * - DO NOT use states.addAll{s1, s2}. this does NOT trigger the listener for unique ids!
+ * - there is NO specific return value. it depends on the last call of each rule.
  *
  * @author uru
  */
  
 /**
- * Recursive rule used to specify wheter the control flow should be passed
+ * Recursive rule used to specify whether the control flow should be passed
  * back to the java implementation or if xtend should keep on transforming
  */
 Void recursiveRule(State s, emf::EObject e):
@@ -850,7 +851,7 @@ Void rule(State s, WeakAbort wa):
 
 /** !- 
  * rule (block)
- * omit the block, theres a parallel in it!
+ * omit the block, there's a parallel in it!
  */
 Void rule(State s, Block b):
 	rule(s, (Parallel) b.statement)
