@@ -42,7 +42,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  */
 public class EsterelToSyncChartDataComponent extends AbstractTransformationDataComponent {
 
-    // base packages and xpand transformation file.
+    /** base packages. */
     private static final String SYNCCHARTS_PACKAGE = "de.cau.cs.kieler.synccharts.SyncchartsPackage";
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
             + "KExpressionsPackage";
@@ -72,11 +72,11 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     }
 
     /**
-     * @param abusemode
+     * @param kiviMode
      *            pass {@code true} if this data component is used in a way that does not use KIEM.
      */
-    public EsterelToSyncChartDataComponent(final boolean abusemode) {
-        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)), abusemode);
+    public EsterelToSyncChartDataComponent(final boolean kiviMode) {
+        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)), kiviMode);
     }
 
     /**
@@ -84,6 +84,15 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      */
     @Override
     public void initialize() throws KiemInitializationException {
+
+        // assure that a SyncCharts editor is opened.
+        IEditorPart activeEditor = TransformationUtil.getActiveEditor();
+        if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+            throw new KiemInitializationException(
+                    "Esterel To SyncCharts Transformation is only possible"
+                            + " in the context of an SynchChartsDiagramEditor.", true, null, false);
+        }
+
         super.initialize();
 
         // get recursive property
@@ -104,6 +113,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
             // programmatically select the root state
             viewer.select(rootEditPart);
 
+            // retrieve root region and top level state.
             @SuppressWarnings("unchecked")
             List<EditPart> selected = viewer.getSelectedEditParts();
             if (selected.size() == 1) {
@@ -153,6 +163,8 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
         // second case is non recursive execution
         State start = rootState;
+
+        // there might be a user selection, consider it!
         List<EObject> selected = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
         if (selected != null && !selected.isEmpty() && selected.size() == 1) {

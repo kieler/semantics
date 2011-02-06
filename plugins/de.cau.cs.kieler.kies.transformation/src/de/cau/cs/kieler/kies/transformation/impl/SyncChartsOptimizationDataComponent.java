@@ -109,7 +109,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      * @param rootState
      *            the rootState to set
      */
-    public void setRootState(State rootState) {
+    public void setRootState(final State rootState) {
         this.rootState = rootState;
     }
 
@@ -118,6 +118,13 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public void initialize() throws KiemInitializationException {
+        // assure that a SyncCharts editor is opened.
+        IEditorPart activeEditor = TransformationUtil.getActiveEditor();
+        if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+            throw new KiemInitializationException("Optimization of SyncCharts is only possible"
+                    + " in the context of an SynchChartsDiagramEditor.", true, null, false);
+        }
+
         super.initialize();
 
         // get recursive property

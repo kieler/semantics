@@ -22,10 +22,10 @@ import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
-import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.XtendFacade;
@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -59,19 +60,24 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     private TransactionalEditingDomain domain;
     private Shell shell;
 
-    private static final int STEP_TIMEOUT = 10;
     private Semaphore semaphore;
 
+    // CHECKSTYLEOFF VisibilityModifier - convenient use in extending classes
+    /** currently used facade. */
     protected XtendFacade facade;
-    protected Map<String, Variable> globalVars;
 
-    private int skipSteps = 0;
+    /** global variables for the certain transformation. */
+    protected Map<String, Variable> globalVars;
+    // CHECKSTYLEON VisibilityModifier
 
     private boolean finished = false;
 
-    private TransformationContext currentContext;
+    private long lastHistoryStep = -1;
+    private long lastStep = 0;
 
+    /** is the transformation executed by KiVi? */
     private boolean kiviMode;
+    private TransformationContext currentContext;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -96,6 +102,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public void initialize() throws KiemInitializationException {
         finished = false;
+        lastStep = 0;
+        lastHistoryStep = -1;
         domain = getActiveEditorEditingDomain();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
@@ -112,15 +120,23 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
-        if (skipSteps > 0) {
-            skipSteps--;
-            return null;
+        // TODO proper undo
+        TransformationUtil.logger.info("in dc: " + Thread.currentThread());
+        boolean test = false;
+        System.out.println("fooo: " + lastStep + " "
+                + KiemPlugin.getDefault().getExecution().getSteps());
+        if (lastHistoryStep != -1
+                && lastHistoryStep < KiemPlugin.getDefault().getExecution().getSteps()) {
+            System.out.println("keine history mehr !");
+            KiemPlugin.getDefault().getExecution().stepExecutionPause(lastStep + 1);
+            test = true;
         }
-
-        System.out.println("in dc: " + Thread.currentThread());
         // if undo ...
-        if (isHistoryStep()) {
-            System.out.println("History");
+        if (isHistoryStep() && !test) {
+
+            lastHistoryStep = (int) KiemPlugin.getDefault().getExecution().getSteps();
+
+            TransformationUtil.logger.info("History");
             IEditorPart editor = TransformationUtil.getActiveEditor();
             if (editor instanceof SyncchartsDiagramEditor) {
                 CommandStack stack = ((SyncchartsDiagramEditor) editor).getEditingDomain()
@@ -128,66 +144,52 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 if (stack.canUndo()) {
                     // System.out.println(stack.getMostRecentCommand().getLabel());
                     stack.undo();
-                }
-                if (!stack.canUndo()) {
-                    // TODO deactivate back button
+                    processLayout((SyncchartsDiagramEditor) editor);
                 }
             }
             return null;
         }
-        System.out.println("Non History");
 
-        // if used normally by kiem
-        // if(!abuseMode){
-        // try {
-        // boolean aquired = semaphore.tryAcquire(STEP_TIMEOUT, TimeUnit.SECONDS);
-        // if (!aquired) {
-        // throw new KiemExecutionException("Timeout, could not aquire semaphore.", true,
-        // false, true, null);
-        // }
-        // } catch (InterruptedException e) {
-        // e.printStackTrace();
-        // }}
+        lastHistoryStep = -1;
+        lastStep++;
+        TransformationUtil.logger.info("Non History ");
+        System.out.println("currentsteps " + KiemPlugin.getDefault().getExecution().getSteps());
 
-        // do next transformation
+        // perform next transformation
         TransformationDescriptor descriptor = getNextTransformation();
         currentContext = null;
         if (descriptor != null) {
-            System.out.println("Trigger");
-
+            TransformationUtil.logger.info("Trigger");
             if (facade == null) {
                 Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
                         "XtendFacade has not been initialized properly!");
                 StatusManager.getManager().handle(status);
                 return null;
             }
-            // else execute Transformation
+
+            // execute Transformation
             TransformationContext context = new XtendTransformationContext(facade, descriptor,
                     domain, semaphore);
             currentContext = context;
-            semaphore.release();
 
-            // if normally used by kiem execute the transformation
+            // if normally used by KIEM, execute the transformation
             if (!kiviMode) {
-                System.out.println("NO ABUSEEEEEEEEEEEEEEEEEEEEEEEE");
+                TransformationUtil.logger.info("Transformation in KIEM mode");
                 processTransformation();
             }
-            // TransformationTrigger.getInstance().step(context);
+        } else {
+            // stop the transformation, it is finished
+            finished = true;
+            doPostTransformation();
+            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+                public void run() {
+                    MessageDialog.openInformation(shell, "Done",
+                            "Transformation finished. No further elements to process.");
+                }
+            });
+            semaphore.release();
+            throw new KiemExecutionException("No Further Transformations", true, false, true, null);
         }
-
-        // TODO stop the transformation if finished
-        // else {
-        // finished = true;
-        // doPostTransformation();
-        // PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-        // public void run() {
-        // MessageDialog.openInformation(shell, "Done",
-        // "Transformation finished. No further elements to process.");
-        // }
-        // });
-        // semaphore.release();
-        // throw new KiemExecutionException("No Further Transformations", true, false, true, null);
-        // }
         return null;
     }
 
@@ -217,14 +219,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     @Override
     public boolean isHistoryObserver() {
         return true;
-    }
-
-    /**
-     * @param skipSteps
-     *            the skipSteps to set
-     */
-    public void setSkipSteps(int skipSteps) {
-        this.skipSteps = skipSteps;
     }
 
     /**
@@ -267,7 +261,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public abstract String getTransformationFile();
 
     /**
-     * @return either the next transformation or <code>null</code>.
+     * @return either the next transformation or <code>null</code> if nothing can be transformed
+     *         anymore.
      */
     public abstract TransformationDescriptor getNextTransformation();
 
@@ -319,17 +314,27 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         return currentContext;
     }
 
+    /**
+     * processes a transformation directly within the data component. A {@link TransformationEffect}
+     * is used to execute the transformation properly in order to support undo.
+     */
     private void processTransformation() {
         TransformationEffect effect = new TransformationEffect(currentContext);
         effect.execute();
         effect.getResult();
-        IWorkbenchPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
-        RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
-                (SyncchartsDiagramEditor) currentlyActiveEditor);
-        gmfEffect.execute();
+        IEditorPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
+        if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
+            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
+                    (SyncchartsDiagramEditor) currentlyActiveEditor);
+            gmfEffect.execute();
 
+            processLayout((SyncchartsDiagramEditor) currentlyActiveEditor);
+        }
+    }
+
+    private void processLayout(final SyncchartsDiagramEditor activeEditor) {
         // apply automatic layout by triggering the trigger (null layouts whole diagram)
-        LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
+        LayoutEffect layoutEffect = new LayoutEffect(activeEditor, null);
         layoutEffect.execute();
     }
 }
