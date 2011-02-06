@@ -62,20 +62,6 @@
       author="KIELER Workgroup"
       category="de.cau.cs.kieler.synccharts"
       contact="kieler@informatik.uni-kiel.de"
-      description="Shows the modeling of an dvd-player in SyncCharts."
-      generation_date="Tue Nov 02 21:00:27 CET 2010"
-      id="de.cau.cs.kieler.synccharts.dvd_player"
-      overview_pic="examples/dvd_player/dvdplayer.png"
-      root_directory="examples"
-      title="DVD Player">
-<resource direct_open="false" local_path="examples/dvd_player" resource_type="folder"/>
-<resource direct_open="true" local_path="examples/dvd_player/dvdplayer.kids" resource_type="file"/>
-<resource direct_open="false" local_path="examples/dvd_player/dvdplayer.kixs" resource_type="file"/>
-</example>
-<example
-      author="KIELER Workgroup"
-      category="de.cau.cs.kieler.synccharts"
-      contact="kieler@informatik.uni-kiel.de"
       description="This example contains of an elevator with two floors.&#13;&#10;The interacting of floors and the elevator door shows &#13;&#10;concurrency in synccharts."
       generation_date="Tue Nov 02 21:08:07 CET 2010"
       id="de.cau.cs.kieler.synccharts.elevator"
