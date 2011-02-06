@@ -35,7 +35,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
- * DataComponent for transforming an esterel program stepwise into a syncchart.
+ * DataComponent for transforming an esterel program step-wise into a SyncCharts.
  * 
  * @author uru
  * 
@@ -243,7 +243,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         return foundStates;
     }
 
-    private boolean isTransformable(State s) {
+    private boolean isTransformable(final State s) {
         return s.getBodyText().size() > 0;
     }
 
@@ -282,6 +282,9 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     @Override
     public void doPostTransformation() {
         try {
+
+            // serialize and parse transition labels in order to remove references to the original
+            // esterel document
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.SERIALIZE);
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,

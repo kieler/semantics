@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -31,8 +32,10 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.expression.Variable;
 import org.json.JSONObject;
 
+import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Multimaps;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
@@ -67,6 +70,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
     private HashSet<State> workedStates = new HashSet<State>();
     private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
+    private ArrayListMultimap<Integer, State> stateHierarchy2 = Multimaps.newArrayListMultimap();
     private LinkedList<State> flattenedStates = new LinkedList<State>();
 
     /**
@@ -183,6 +187,11 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
             for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
                 flattenedStates.addAll(stateHierarchy.get(i));
             }
+
+            LinkedList<State> flattened2 = Lists.newLinkedList(stateHierarchy2.values());
+            Collections.reverse(flattened2);
+            System.out.println(flattenedStates);
+            System.out.println(flattened2);
         }
     }
 
@@ -256,6 +265,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     }
 
     private void collectAllStatesRecursivley(final State parent, final int level) {
+
+        stateHierarchy2.put(level, parent);
 
         if (stateHierarchy.size() <= level || stateHierarchy.get(level) == null) {
             LinkedList<State> levelStates = new LinkedList<State>();

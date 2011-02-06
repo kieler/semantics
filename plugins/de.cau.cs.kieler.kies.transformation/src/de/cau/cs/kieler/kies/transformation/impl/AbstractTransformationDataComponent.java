@@ -18,7 +18,6 @@ import java.util.Map;
 import java.util.concurrent.Semaphore;
 
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -45,7 +44,6 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -121,39 +119,39 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
         // TODO proper undo
-        TransformationUtil.logger.info("in dc: " + Thread.currentThread());
-        boolean test = false;
-        System.out.println("fooo: " + lastStep + " "
-                + KiemPlugin.getDefault().getExecution().getSteps());
-        if (lastHistoryStep != -1
-                && lastHistoryStep < KiemPlugin.getDefault().getExecution().getSteps()) {
-            System.out.println("keine history mehr !");
-            KiemPlugin.getDefault().getExecution().stepExecutionPause(lastStep + 1);
-            test = true;
-        }
-        // if undo ...
-        if (isHistoryStep() && !test) {
-
-            lastHistoryStep = (int) KiemPlugin.getDefault().getExecution().getSteps();
-
-            TransformationUtil.logger.info("History");
-            IEditorPart editor = TransformationUtil.getActiveEditor();
-            if (editor instanceof SyncchartsDiagramEditor) {
-                CommandStack stack = ((SyncchartsDiagramEditor) editor).getEditingDomain()
-                        .getCommandStack();
-                if (stack.canUndo()) {
-                    // System.out.println(stack.getMostRecentCommand().getLabel());
-                    stack.undo();
-                    processLayout((SyncchartsDiagramEditor) editor);
-                }
-            }
-            return null;
-        }
-
-        lastHistoryStep = -1;
-        lastStep++;
-        TransformationUtil.logger.info("Non History ");
-        System.out.println("currentsteps " + KiemPlugin.getDefault().getExecution().getSteps());
+        // TransformationUtil.logger.info("in dc: " + Thread.currentThread());
+        // boolean test = false;
+        // System.out.println("fooo: " + lastStep + " "
+        // + KiemPlugin.getDefault().getExecution().getSteps());
+        // if (lastHistoryStep != -1
+        // && lastHistoryStep < KiemPlugin.getDefault().getExecution().getSteps()) {
+        // System.out.println("keine history mehr !");
+        // KiemPlugin.getDefault().getExecution().stepExecutionPause(lastStep + 1);
+        // test = true;
+        // }
+        // // if undo ...
+        // if (isHistoryStep() && !test) {
+        //
+        // lastHistoryStep = (int) KiemPlugin.getDefault().getExecution().getSteps();
+        //
+        // TransformationUtil.logger.info("History");
+        // IEditorPart editor = TransformationUtil.getActiveEditor();
+        // if (editor instanceof SyncchartsDiagramEditor) {
+        // CommandStack stack = ((SyncchartsDiagramEditor) editor).getEditingDomain()
+        // .getCommandStack();
+        // if (stack.canUndo()) {
+        // // System.out.println(stack.getMostRecentCommand().getLabel());
+        // stack.undo();
+        // processLayout((SyncchartsDiagramEditor) editor);
+        // }
+        // }
+        // return null;
+        // }
+        //
+        // lastHistoryStep = -1;
+        // lastStep++;
+        // TransformationUtil.logger.info("Non History ");
+        // System.out.println("currentsteps " + KiemPlugin.getDefault().getExecution().getSteps());
 
         // perform next transformation
         TransformationDescriptor descriptor = getNextTransformation();
