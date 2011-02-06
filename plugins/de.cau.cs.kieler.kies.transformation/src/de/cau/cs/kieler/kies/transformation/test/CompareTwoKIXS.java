@@ -41,7 +41,6 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
-import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationTrigger;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;

@@ -11,19 +11,17 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.core;
+package de.cau.cs.kieler.kies.transformation.impl;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
-import java.util.concurrent.TimeUnit;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbench;
@@ -37,10 +35,10 @@ import org.json.JSONObject;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
-import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationTrigger;
-import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;

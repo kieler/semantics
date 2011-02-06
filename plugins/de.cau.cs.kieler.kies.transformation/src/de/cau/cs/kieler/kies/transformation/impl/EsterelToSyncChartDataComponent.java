@@ -25,7 +25,6 @@ import org.eclipse.ui.IEditorPart;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.kies.transformation.core.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;

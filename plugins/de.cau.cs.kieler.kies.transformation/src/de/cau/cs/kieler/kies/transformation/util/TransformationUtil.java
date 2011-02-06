@@ -16,13 +16,10 @@ package de.cau.cs.kieler.kies.transformation.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Handler;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
@@ -74,6 +71,7 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 
+import com.google.common.collect.Lists;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.kexpressions.BooleanValue;
@@ -106,6 +104,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
  */
 public final class TransformationUtil {
 
+    /** KIES's own logger. */
     public static Logger logger = Logger.getLogger("kies");
 
     /** injector used for serialization. */
@@ -114,22 +113,23 @@ public final class TransformationUtil {
 
     /** utility class. */
     private TransformationUtil() {
-        logger.getHandlers()[0] = new Handler() {
-
-            @Override
-            public void publish(LogRecord record) {
-                System.out.println(record.getMessage());
-            }
-
-            @Override
-            public void flush() {
-
-            }
-
-            @Override
-            public void close() throws SecurityException {
-            }
-        };
+        // logger.setLevel(Level.OFF);
+        // logger.getHandlers()[0] = new Handler() {
+        //
+        // @Override
+        // public void publish(LogRecord record) {
+        // System.out.println(record.getMessage());
+        // }
+        //
+        // @Override
+        // public void flush() {
+        //
+        // }
+        //
+        // @Override
+        // public void close() throws SecurityException {
+        // }
+        // };
     }
 
     /**
@@ -140,9 +140,9 @@ public final class TransformationUtil {
      * @return serialized string
      */
     public static String getSerializedString(final EObject e) {
-        if (!EsterelPackage.eINSTANCE.eContents().contains(e.eClass())) {
+        if (!isEsterelElement(e)) {
             IStatus status = new Status(Status.WARNING, Activator.PLUGIN_ID,
-                    "In this context only serialization of esterel objects is possible");
+                    "In this context only serialization of Esterel objects is possible.");
             StatusManager.getManager().handle(status);
             return "";
         }
@@ -150,6 +150,7 @@ public final class TransformationUtil {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         OutputStreamWriter osw = new OutputStreamWriter(baos);
         try {
+            // serialize the element
             Serializer serializerUtil = injector.getInstance(Serializer.class);
             serializerUtil.serialize(e, osw, SaveOptions.defaultOptions());
         } catch (IOException ex) {
@@ -157,19 +158,31 @@ public final class TransformationUtil {
                     "A problem occured while trying to serialize " + e + ".", ex);
             StatusManager.getManager().handle(status);
         }
+        // return string representation
         return baos.toString();
     }
 
     /**
-     * Convenient method for setting the body reference for a state.
+     * @param obj
+     *            the {@link EObject} to test
+     * @return true if {@code obj} is an esterel element, false otherwise.
+     */
+    public static boolean isEsterelElement(final EObject obj) {
+        return EsterelPackage.eINSTANCE.eContents().contains(obj.eClass());
+    }
+
+    /**
+     * Convenient method for setting the body reference for a state. A new {@link TextualCode}
+     * element is created and added to the passed state. The state's type is set to
+     * {@link StateType.TEXTUAL}
      * 
      * @param s
-     *            state
+     *            the parent state
      * @param obj
-     *            any EObject
+     *            any {@link EObject}
      */
     public static void setBodyReference(final State s, final EObject obj) {
-        if (obj != null) {
+        if (obj != null && s != null) {
             s.setBodyReference(obj);
             TextualCode code = KExpressionsFactory.eINSTANCE.createTextualCode();
             s.setType(StateType.TEXTUAL);
@@ -245,11 +258,12 @@ public final class TransformationUtil {
         Action tmp2 = EcoreUtil.copy(t2);
         tmp2.setDelay(1);
         tmp2.getEffects().clear();
+        // use the ActionLabelSerializer in order to gain a string represantation.
         return ActionLabelSerializer.toString(tmp1).equals(ActionLabelSerializer.toString(tmp2));
     }
 
     /**
-     * Adds all elements of list2 to the fron of list1.
+     * Adds all elements of list2 to the front of list1.
      * 
      * @param list1
      *            - end of the new list
@@ -269,7 +283,6 @@ public final class TransformationUtil {
             public void run() {
                 IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage().getActiveEditor();
-                // EditorUtils.getLastActiveEditor();
                 if (editor != null) {
                     maybe.set(editor);
                 }
@@ -292,7 +305,7 @@ public final class TransformationUtil {
             // get the selection
             ISelection selection = viewer.getSelection();
             if (!selection.isEmpty()) {
-                selectedElements = new LinkedList<EObject>();
+                selectedElements = Lists.newLinkedList();
                 if (selection instanceof StructuredSelection) {
                     // append all elements to the list being returned
                     for (Object o : ((StructuredSelection) selection).toArray()) {
@@ -328,7 +341,7 @@ public final class TransformationUtil {
             SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
             Region rootRegion = (Region) resource.getContents().get(0);
             State rootState = sf.createState();
-            rootState.setId("rsstate");
+            rootState.setId("r0");
             rootRegion.getStates().add(rootState);
             rootState.setLabel("Esterel State");
             rootState.setType(StateType.TEXTUAL);
@@ -357,7 +370,7 @@ public final class TransformationUtil {
      * Creates a new synccharts diagram at the passed location. If the file already exists, a dialog
      * is opened asking the user if he wants to overwrite the file or specify a new name.
      * Furthermore, if the corresponding .kids file is already opened, it is closed and deleted
-     * first to avoid any graphical relicts.
+     * first in order to avoid any graphical relicts.
      * 
      * @param kixsFile
      *            file location
@@ -415,7 +428,7 @@ public final class TransformationUtil {
             final URI kixsURI = URI.createPlatformResourceURI(newKixsFile.getFullPath().toString(),
                     false);
 
-            System.out.println("Creating new SyncCharts Diagram.");
+            logger.info("Creating new SyncCharts Diagram.");
 
             // create a new SyncCharts Diagram.
             final IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
@@ -426,7 +439,7 @@ public final class TransformationUtil {
                     try {
                         diagram.save(null);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        logger.severe(e.fillInStackTrace().getLocalizedMessage());
                         Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                                 "Problem creating a new SyncChartsDiagram.", e);
                         StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -445,6 +458,14 @@ public final class TransformationUtil {
         return null;
     }
 
+    /**
+     * Performs initial transformation of the passed Esterel file into a SyncCharts. Opens the new
+     * .kids file afterwards.
+     * 
+     * @param strlFile
+     *            esterel file to transform
+     * @return true if an kixs file was created, false otherwise.
+     */
     public static boolean strlToKixsAndOpen(final IFile strlFile) {
 
         final Maybe<Boolean> createdKixs = new Maybe<Boolean>();
@@ -453,12 +474,12 @@ public final class TransformationUtil {
 
             public void run() {
                 try {
-                    // TODO Auto-generated method stub
-
                     PlatformUI.getWorkbench().getProgressService()
                             .run(false, true, new IRunnableWithProgress() {
                                 public void run(final IProgressMonitor uiMonitor) {
 
+                                    // measure the overall time
+                                    long start = System.currentTimeMillis();
                                     IFile kixsFile, kidsFile;
                                     IWorkspaceRoot workspaceRoot;
 
@@ -477,10 +498,8 @@ public final class TransformationUtil {
                                     kidsFile = workspaceRoot.getFile(kidsPath);
                                     kixsFile = workspaceRoot.getFile(kixsPath);
 
-                                    System.out.println(strlFile.toString());
+                                    logger.info(strlFile.toString());
                                     // create all the elements
-                                    long start = System.currentTimeMillis();
-                                    System.out.println("Start: " + start);
                                     IFile created = TransformationUtil
                                             .createSyncchartDiagram(kixsFile);
                                     if (created == null) {
@@ -492,19 +511,12 @@ public final class TransformationUtil {
                                         kidsFile = workspaceRoot.getFile(kixsFile.getFullPath()
                                                 .removeFileExtension().addFileExtension("kids"));
                                     }
-                                    long opened = System.currentTimeMillis();
-                                    System.out.println("Opened: " + opened);
                                     uiMonitor.worked(40);
                                     TransformationUtil.doInitialEsterelTransformation(strlFile,
                                             kixsFile);
-                                    long esterel = System.currentTimeMillis();
-                                    System.out.println("Esterel: " + esterel);
                                     uiMonitor.worked(60);
                                     TransformationUtil.refreshEditPolicies();
-                                    long refresh = System.currentTimeMillis();
-                                    System.out.println("Refresh: " + refresh);
                                     uiMonitor.worked(90);
-                                    // CHECKSTYLEON MagicNumber
 
                                     // open the editor with the kids file
                                     IWorkbenchPage page = PlatformUI.getWorkbench()
@@ -513,27 +525,22 @@ public final class TransformationUtil {
                                         page.openEditor(new FileEditorInput(kidsFile),
                                                 SyncchartsDiagramEditor.ID);
                                     } catch (PartInitException e) {
-                                        e.printStackTrace();
                                         Status myStatus = new Status(IStatus.ERROR,
                                                 Activator.PLUGIN_ID,
                                                 "Problem opening the SyncCharts Diagram.", e);
                                         StatusManager.getManager().handle(myStatus,
                                                 StatusManager.SHOW);
                                     }
-
-                                    long showing = System.currentTimeMillis();
-                                    System.out.println("Showing: " + showing);
-                                    long total = showing - start;
-                                    System.out.println("Total: " + total + " Sek: "
+                                    long total = System.currentTimeMillis() - start;
+                                    logger.info("Initial Transformation took: " + total + " Sek: "
                                             + (total / 1000f) + "s");
+                                    // CHECKSTYLEON MagicNumber
                                 }
                             });
-                } catch (InvocationTargetException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (InterruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
+                } catch (Exception e) {
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Problem occured during initial Transformation.", e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
         });
@@ -564,7 +571,12 @@ public final class TransformationUtil {
         }
     }
 
-    public static Variable getXtendVarBoolean(boolean bool) {
+    /**
+     * @param bool
+     *            desired value
+     * @return a new boolean xtend {@link Variable}.
+     */
+    public static Variable getXtendVarBoolean(final boolean bool) {
         return new Variable("boolean", bool);
     }
 
