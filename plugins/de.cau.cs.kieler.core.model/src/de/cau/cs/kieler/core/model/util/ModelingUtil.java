@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.InternalEObject;
-import org.eclipse.emf.ecore.plugin.RegistryReader;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
@@ -49,9 +48,6 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.annotations.NamedObject;
-import de.cau.cs.kieler.core.model.GmfFrameworkBridge;
-import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -639,19 +635,15 @@ public final class ModelingUtil {
     }
 
     /**
-     * Check whether a package class is registered in EMF or not
-     * @param packageClass
-     * @return
+     * Check whether a package class is registered in EMF or not.
+     * 
+     * @param packageClass name of the package class.
+     * @return {@code true} if it is registered, {@code false} otherwise.
      */
-    public static boolean packageExists(String packageClass) {
-       try{
+    public static boolean packageExists(final String packageClass) {
+       try {
             EPackage p = EcoreUtil2.getEPackageByClassName(packageClass);
-            if (p != null){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return p != null;
         } catch (Exception e) {
             return false;
         }
