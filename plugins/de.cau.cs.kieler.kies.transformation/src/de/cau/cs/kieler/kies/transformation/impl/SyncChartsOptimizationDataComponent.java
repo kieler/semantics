@@ -13,9 +13,6 @@
  */
 package de.cau.cs.kieler.kies.transformation.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -61,16 +58,14 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String EXPRESSIONS_PACKAGE = "de.cau.cs.kieler.core.kexpressions."
             + "KExpressionsPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
-    /** needed because KiesUtil.ext has to be evaluated!. */
+    /** necessary because KiesUtil.ext has to be evaluated!. */
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
 
     private State rootState;
     private Region rootRegion;
 
-    private HashSet<State> workedStates = new HashSet<State>();
-    private ArrayList<LinkedList<State>> stateHierarchy = new ArrayList<LinkedList<State>>(5);
-    private ArrayListMultimap<Integer, State> stateHierarchy2 = Multimaps.newArrayListMultimap();
+    private ArrayListMultimap<Integer, State> stateHierarchy = Multimaps.newArrayListMultimap();
     private LinkedList<State> flattenedStates = new LinkedList<State>();
 
     /**
@@ -78,6 +73,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      * everything is transformed within one step.
      */
     public static final String GLOBALVAR_REC = "recursive";
+    // CHECKSTYLEOFF Javadoc
     public static final String GLOBALVAR_RULE1 = "rule1";
     public static final String GLOBALVAR_RULE2 = "rule2";
     public static final String GLOBALVAR_RULE3 = "rule3";
@@ -87,15 +83,20 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public static final String GLOBALVAR_RULE7 = "rule7";
     public static final String GLOBALVAR_RULE8 = "rule8";
 
+    // CHECKSTYLEON Javadoc
+
+    /**
+     * default constructor.
+     */
     public SyncChartsOptimizationDataComponent() {
         this(false);
     }
 
     /**
-     * @param abusemode
+     * @param kivimode
      *            pass {@code true} if this data component is used in a way that does not use KIEM.
      */
-    public SyncChartsOptimizationDataComponent(final boolean abusemode) {
+    public SyncChartsOptimizationDataComponent(final boolean kivimode) {
         super(new ImmutableMap.Builder<String, Variable>()
                 .put(GLOBALVAR_REC, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE1, TransformationUtil.getXtendVarBoolean(true))
@@ -106,15 +107,15 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                 .put(GLOBALVAR_RULE6, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE7, TransformationUtil.getXtendVarBoolean(true))
                 .put(GLOBALVAR_RULE8, TransformationUtil.getXtendVarBoolean(true)).build(),
-                abusemode);
+                kivimode);
     }
 
     /**
-     * @param rootState
+     * @param theRootState
      *            the rootState to set
      */
-    public void setRootState(final State rootState) {
-        this.rootState = rootState;
+    public void setRootState(final State theRootState) {
+        this.rootState = theRootState;
     }
 
     /**
@@ -137,7 +138,9 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         globalVars.get(GLOBALVAR_REC).setValue(recursive);
 
         // get all rule properties
+        // CHECKSTYLEOFF MagicNumber - no matter what, there are 9 rules!
         for (int i = 1; i < 9; i++) {
+            // CHECKSTYLEON MagicNumber
             KiemProperty p = getProperties()[i];
             boolean ruleX = p.getValueAsBoolean();
             globalVars.get("rule" + i).setValue(ruleX);
@@ -182,16 +185,11 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         if (rootState != null) {
             // collect initial set of all possible states
-            collectAllStatesRecursivley(rootState, 0);
-            flattenedStates = new LinkedList<State>();
+            collectAllStatesHierarchically(rootState, 0);
+            flattenedStates = Lists.newLinkedList();
             for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
                 flattenedStates.addAll(stateHierarchy.get(i));
             }
-
-            LinkedList<State> flattened2 = Lists.newLinkedList(stateHierarchy2.values());
-            Collections.reverse(flattened2);
-            System.out.println(flattenedStates);
-            System.out.println(flattened2);
         }
     }
 
@@ -217,11 +215,13 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public TransformationDescriptor getNextTransformation() {
-
+        // if the list with flattened states was emptied during prior execution, there is no further
+        // optimization potential
         if (flattenedStates.isEmpty()) {
             return null;
         }
 
+        // fetch user selection
         State start = rootState;
         List<EObject> selection = TransformationUtil.getCurrentEditorSelection();
         // currently only for one selected item possible
@@ -235,7 +235,9 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
 
         // collect all possible states
         stateHierarchy.clear();
-        collectAllStatesRecursivley(start, 0);
+        collectAllStatesHierarchically(start, 0);
+
+        // flatten them
         flattenedStates = Lists.newLinkedList();
         for (int i = stateHierarchy.size() - 1; i >= 0; i--) {
             flattenedStates.addAll(stateHierarchy.get(i));
@@ -259,25 +261,17 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public void wrapup() throws KiemInitializationException {
         super.wrapup();
-        workedStates.clear();
         flattenedStates.clear();
         stateHierarchy.clear();
     }
 
-    private void collectAllStatesRecursivley(final State parent, final int level) {
+    private void collectAllStatesHierarchically(final State parent, final int level) {
 
-        stateHierarchy2.put(level, parent);
-
-        if (stateHierarchy.size() <= level || stateHierarchy.get(level) == null) {
-            LinkedList<State> levelStates = new LinkedList<State>();
-            stateHierarchy.add(level, levelStates);
-        }
-        LinkedList<State> levelStates = stateHierarchy.get(level);
-        levelStates.add(parent);
-
+        // add the current state to the corresponding level
+        stateHierarchy.put(level, parent);
         for (Region r : parent.getRegions()) {
             for (State s : r.getStates()) {
-                collectAllStatesRecursivley(s, level + 1);
+                collectAllStatesHierarchically(s, level + 1);
             }
         }
     }
@@ -331,7 +325,8 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                     ActionLabelProcessorWrapper.PARSE);
         } catch (Exception e) {
             Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
-                    "An error occured trying to serialize and parse Action labels after SyncCharts optimization.");
+                    "An error occured trying to serialize and"
+                            + " parse Action labels after SyncCharts optimization.");
             StatusManager.getManager().handle(status);
         }
     }
