@@ -32,7 +32,7 @@ public class DataComponentSim extends DataComponent implements
      */
 	//FIXME: the has to be adapted to the new syntax -> check
 	// 
-    private static final String MAUDEPARSESTATESTARTER = "--> maState  doneC (C";
+    private static final String MAUDEPARSESTATESTARTER = "--> maState  doneC (r";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";

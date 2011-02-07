@@ -25,6 +25,8 @@ fmod TRANSITIONSYNTAX is
   op true : -> Guard [ctor] .
  
   op inStates_ : Verts -> Guard .
+  op inState(_) : String -> Guard .
+  op choiceelse : -> Guard .
   op notGd_ : Guard -> Guard . 
   op _andGd_ : Guard Guard -> Guard .
   op evalGuard__ : Guard Verts -> Bool .

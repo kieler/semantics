@@ -10,6 +10,7 @@ fmod COMPOUNDTRANSITIONS is
   vars t t2 : Compoundtransition .
   vars src tgt src2 tgt2 C : Verts . 
   vars e e2 fe : Event .
+  vars E1 : EventSS .
   vars g g2 : Guard .
   vars A AF AJ A2 AF2 AJ2 actions : Actions .
   vars a af aj a2 af2 aj2 action : Action .
@@ -39,14 +40,14 @@ fmod COMPOUNDTRANSITIONS is
   eq $remLowPrio T (T2, t) = $remLowPrio T T2 [owise] .
   eq $remLowPrio T empty = T .
 
-  op enabled__ : Verts Event -> Compoundtransitions .    
-  eq enabled C e = $enabled C e (getTrans SMINT) .
+  op enabled__ : Verts EventSS -> Compoundtransitions .    
+  eq enabled C E1 = $enabled C E1 (getTrans SMINT) .
      
      
      *** optimize that   
-  op $enabled___ : Verts Event Compoundtransitions -> Compoundtransitions .
-  eq $enabled C e (T ,  t) = ($$enabled C e t) ,  ($enabled C e T) .
-  eq $enabled C e empty = empty .
+  op $enabled___ : Verts EventSS Compoundtransitions -> Compoundtransitions .
+  eq $enabled C E1 (T ,  t) = ($$enabled C E1 t) ,  ($enabled C E1 T) .
+  eq $enabled C E1 empty = empty .
   op $$enabled___ : Verts Event Compoundtransition -> Compoundtransition .
   ceq $$enabled C e t = t if ((source t) subset C) and (event t) == e . 
   eq $$enabled C e t = empty [owise] .
