@@ -73,10 +73,6 @@ public final class XtendTransformationUtil {
      *            transformation
      * 
      * @return the Status about success and errors and warnings
-     * 
-     *         TODO: maybe someone needs to register more than exactly 2
-     *         metamodels, so make the parameters a list instead of 2 fixed
-     *         parameters
      */
     public static XtendStatus model2ModelTransform(final KielerProgressMonitor monitor,
             final String xtendFile, final String startFunction, final URI inputModelURI,
