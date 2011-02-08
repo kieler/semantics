@@ -41,9 +41,13 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
     private int compartmentLevel = 0; // TODO implement compartment levels
     private List<IResizableCompartmentEditPart> targetEditParts;
+    private final EStructuralFeature featureToCollapse;
     private EObject targetNode;
     private boolean doCollapse;
     private boolean originalCollapseState;
+
+    private boolean initialized = false;
+
     private IWorkbenchPart targetEditor;
     private boolean justExecuted;
     private IGraphicalFrameworkBridge bridge;
@@ -55,7 +59,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      *            the DiagramEditor containing the EObject
      * @param node
      *            the EObject to doCollapse/expand
-     * @param featureToCollapse
+     * @param thefeatureToCollapse
      *            the feature of the EObject to doCollapse/expand
      * @param theCompartmentLevel
      *            hierarchy level. 0 means only exactly the given EditPart. Not implemented.
@@ -63,38 +67,51 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      *            true if collapsing, false if expanding
      */
     public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
-            final EStructuralFeature featureToCollapse, final int theCompartmentLevel,
+            final EStructuralFeature thefeatureToCollapse, final int theCompartmentLevel,
             final boolean collapse) {
         this.compartmentLevel = theCompartmentLevel;
         this.doCollapse = collapse;
         this.targetEditor = editor;
         this.targetNode = node;
         this.targetEditParts = new ArrayList<IResizableCompartmentEditPart>();
+        this.featureToCollapse = thefeatureToCollapse;
         this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
-        EditPart parentPart = bridge.getEditPart(node);
-        if (parentPart != null) {
-            outer: for (Object child : parentPart.getChildren()) {
-                if (child instanceof IResizableCompartmentEditPart) {
-                    // if no feature is given, collapse all child compartments
-                    if (featureToCollapse == null) {
-                        targetEditParts.add((IResizableCompartmentEditPart) child);
-                    } else {
-                        // search for a specific feature
-                        for (Object grandChild : ((IResizableCompartmentEditPart) child)
-                                .getChildren()) {
-                            if (grandChild instanceof EditPart) {
-                                EObject grandChildSemantic = bridge.getElement(grandChild);
-                                if (grandChildSemantic.eContainingFeature() == featureToCollapse) {
-                                    targetEditParts.add((IResizableCompartmentEditPart) child);
-                                    break outer;
+    }
+
+    /**
+     * Extracted the initialization into extra method that is NOT called in the constructor, because
+     * it accesses the EditParts (bridge.getEditPart), which runs in the UI thread. This could cause
+     * deadlocks if called outside the EffectsWorker Thread (in which the execute method gets
+     * called).
+     */
+    private void init() {
+        if (!initialized) {
+            this.initialized = true;
+            EditPart parentPart = bridge.getEditPart(this.targetNode);
+            if (parentPart != null) {
+                outer: for (Object child : parentPart.getChildren()) {
+                    if (child instanceof IResizableCompartmentEditPart) {
+                        // if no feature is given, collapse all child compartments
+                        if (featureToCollapse == null) {
+                            targetEditParts.add((IResizableCompartmentEditPart) child);
+                        } else {
+                            // search for a specific feature
+                            for (Object grandChild : ((IResizableCompartmentEditPart) child)
+                                    .getChildren()) {
+                                if (grandChild instanceof EditPart) {
+                                    EObject grandChildSemantic = bridge.getElement(grandChild);
+                                    if (grandChildSemantic.eContainingFeature() == featureToCollapse) {
+                                        targetEditParts.add((IResizableCompartmentEditPart) child);
+                                        break outer;
+                                    }
                                 }
                             }
                         }
                     }
                 }
             }
+            originalCollapseState = isCollapsed();
         }
-        originalCollapseState = isCollapsed();
     }
 
     /**
@@ -112,6 +129,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     }
 
     private boolean apply(final boolean collapse) {
+        init();
         boolean changed = false;
         for (IResizableCompartmentEditPart targetEditPart : targetEditParts) {
             if (targetEditPart != null
@@ -121,10 +139,10 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 // only do something if necessary
                 if (f.isExpanded() == collapse) {
                     if (collapse) {
-                      //  System.out.println("Collapsing " + targetEditPart);
+                        // System.out.println("Collapsing " + targetEditPart);
                         f.setCollapsed();
                     } else {
-                      //  System.out.println("Expanding " + targetEditPart);
+                        // System.out.println("Expanding " + targetEditPart);
                         f.setExpanded();
                     }
                     changed = true;
@@ -160,6 +178,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
     @Override
     public IEffect merge(final IEffect otherEffect) {
+        init();
         if (otherEffect instanceof CompartmentCollapseExpandEffect) {
             CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
             if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
@@ -170,7 +189,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
             IEffect undo = ((UndoEffect) otherEffect).getEffect();
             if (undo instanceof CompartmentCollapseExpandEffect) {
                 CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) undo;
-                if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
+                if (other.targetEditor == targetEditor
+                        && other.targetEditParts.equals(targetEditParts)) {
                     originalCollapseState = other.originalCollapseState;
                     return this;
                 }
@@ -212,6 +232,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
     public String toString() {
         StringBuffer b = new StringBuffer();
+        b.append(super.toString());
         if (this.doCollapse) {
             b.append("Collapse: ");
         } else {

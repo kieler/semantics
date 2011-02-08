@@ -28,7 +28,9 @@ import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
+import de.cau.cs.kieler.core.model.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
@@ -138,11 +140,12 @@ public class SyncChartsCombination extends AbstractCombination {
             return;
         }
 
-        if (isFC()) {
-            // initially collapse all states
-            collapseAll(activeStates.getDiagramEditor());
-        }
+        // if (isFC()) {
+        // // initially collapse all states
+        // collapseAll(activeStates.getDiagramEditor());
+        // }
 
+        // highlight active states
         EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
         for (Iterator<EObject> i = root.eAllContents(); i.hasNext();) {
             EObject current = i.next();
@@ -156,6 +159,7 @@ public class SyncChartsCombination extends AbstractCombination {
             }
         }
 
+        // highlight history states
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
@@ -169,11 +173,17 @@ public class SyncChartsCombination extends AbstractCombination {
                             activeStates.getActiveStates().size()), getBackgroundColor(i,
                             activeStates.getActiveStates().size())));
                 }
-                if (isFC()) {
-                    schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(),
-                            e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, false));
-                }
+                // if (isFC()) {
+                // schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(),
+                // e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, false));
+                // }
             }
+        }
+
+        if (isFC()) {
+            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
+            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
+            this.schedule(focusEffect);
         }
     }
 

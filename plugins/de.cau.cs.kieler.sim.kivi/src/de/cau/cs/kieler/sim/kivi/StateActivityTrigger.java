@@ -18,6 +18,9 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.draw2d.ui.figures.ListScrollBar;
+
+import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
@@ -96,9 +99,11 @@ public class StateActivityTrigger extends AbstractTrigger {
         }
 
         /**
-         * Get the list of active states.
+         * Get the list of states that were active in a
+         * specific step, i.e. a list of lists. The
+         * outer list corresponds to the steps.
          * 
-         * @return the list of active states
+         * @return the list of lists of active states
          */
         public List<List<EObject>> getActiveStates() {
             if (activeStates != null) {
@@ -106,6 +111,32 @@ public class StateActivityTrigger extends AbstractTrigger {
             } else {
                 return new ArrayList<List<EObject>>();
             }
+        }
+        
+        /**
+         * Get list of currently active states in this step.
+         * @return list of active states
+         */
+        public List<EObject> getCurrentActiveStates(){
+            List<List<EObject>> all = getActiveStates();
+            if(!all.isEmpty()){
+                return all.get(0);
+            }else{
+                return new ArrayList<EObject>();
+            }
+        }
+        
+        /**
+         * Get list of all states that are active or that have been active.
+         * @return list of active and history states
+         */
+        public List<EObject> getHistoryStates(){
+            List<List<EObject>> all = getActiveStates();
+            List<EObject> history = Lists.newArrayList();
+            for(List<EObject> list : all){
+                history.addAll(list);
+            }
+            return history;
         }
 
         /**
