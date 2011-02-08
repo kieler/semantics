@@ -307,8 +307,6 @@ public class DataComponentSim extends DataComponent implements
 			e.printStackTrace();
 		}
 		
-		System.out.println("BLAAAAAAAAAAAAAAAAAAAAKOTZ");
-
 		// no actions can be extracted so far
 		return returnObj;
 	}
