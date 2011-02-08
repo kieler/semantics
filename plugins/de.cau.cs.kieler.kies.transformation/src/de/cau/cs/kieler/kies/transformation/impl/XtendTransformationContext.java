@@ -131,7 +131,6 @@ public class XtendTransformationContext implements TransformationContext {
     /**
      * {@inheritDoc}
      */
-    @Override
     public Object getLastResult() {
         return result;
     }
