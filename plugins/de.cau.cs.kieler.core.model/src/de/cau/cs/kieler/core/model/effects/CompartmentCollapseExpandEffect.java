@@ -234,11 +234,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         StringBuffer b = new StringBuffer();
         b.append(super.toString());
         if (this.doCollapse) {
-            b.append("Collapse: ");
+            b.append("Collapse ");
         } else {
-            b.append("Expand: ");
+            b.append("Expand ");
         }
-        b.append(targetNode);
+        //b.append(targetNode);
         return b.toString();
     }
 }
