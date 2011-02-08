@@ -137,48 +137,51 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return null;
         }
-        JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
-        long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
+        // only do this if execution is currently active
+        if (KiemPlugin.getDefault().getExecution() != null) {
+            JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
+            long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
 
-        List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
-        List<EObject> currentStepObjects = new ArrayList<EObject>();
-        JSONObject currentJSONObject = jSONObject;
-        try {
-            for (int i = 0; i <= steps; i++) {
-                if (currentJSONObject.has(stateKey)) {
-                    String stateString = currentJSONObject.get(stateKey).toString();
-                    String[] states = stateString.replaceAll("\\s", "").split(",");
-                    for (String state : states) {
-                        if (state.length() > 1) {
-                            EObject active = resource.getEObject(state);
-                            if (active != null) {
-                                if (!contains(statesByStep, active)) { // filter out newer
-                                    currentStepObjects.add(active);
+            List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
+            List<EObject> currentStepObjects = new ArrayList<EObject>();
+            JSONObject currentJSONObject = jSONObject;
+            try {
+                for (int i = 0; i <= steps; i++) {
+                    if (currentJSONObject.has(stateKey)) {
+                        String stateString = currentJSONObject.get(stateKey).toString();
+                        String[] states = stateString.replaceAll("\\s", "").split(",");
+                        for (String state : states) {
+                            if (state.length() > 1) {
+                                EObject active = resource.getEObject(state);
+                                if (active != null) {
+                                    if (!contains(statesByStep, active)) { // filter out newer
+                                        currentStepObjects.add(active);
+                                    }
                                 }
                             }
                         }
+                        statesByStep.add(currentStepObjects);
+                        currentStepObjects = new ArrayList<EObject>();
                     }
-                    statesByStep.add(currentStepObjects);
-                    currentStepObjects = new ArrayList<EObject>();
+                    long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
+                    currentJSONObject = pool.getData(null, index);
                 }
-                long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
-                currentJSONObject = pool.getData(null, index);
-            }
-            if (StateActivityTrigger.getInstance() != null) {
-                /*
-                 * Synchronized to avoid wrapup() finishing while step() still is running. This
-                 * would lead to bad highlighting order: wrapup() undos all highlights, then step()
-                 * executes a couple of new highlights that will remain active until the next
-                 * simulation starts.
-                 */
-                synchronized (this) {
-                    if (!wrapupDone) {
-                        StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                if (StateActivityTrigger.getInstance() != null) {
+                    /*
+                     * Synchronized to avoid wrapup() finishing while step() still is running. This
+                     * would lead to bad highlighting order: wrapup() undos all highlights, then step()
+                     * executes a couple of new highlights that will remain active until the next
+                     * simulation starts.
+                     */
+                    synchronized (this) {
+                        if (!wrapupDone) {
+                            StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                        }
                     }
                 }
+            } catch (JSONException e) {
+                // never happens because JSON.get() is checked by JSON.has()
             }
-        } catch (JSONException e) {
-            // never happens because JSON.get() is checked by JSON.has()
         }
         return null;
     }
