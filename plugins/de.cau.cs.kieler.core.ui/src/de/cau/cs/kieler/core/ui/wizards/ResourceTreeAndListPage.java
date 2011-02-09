@@ -34,6 +34,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.ITreeViewerListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeExpansionEvent;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -304,10 +305,19 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Creates the tree and list and registers the necessary listeners.
      */
     private void createResourceGroup() {
+        // UI code is allowed to use magic numbers.
+        // CHECKSTYLEOFF MagicNumber
+        
+        GridData gd;
+        
         // Resource Tree
         resourceTree = new Tree(composite,
                 SWT.SINGLE | SWT.CHECK | SWT.FULL_SELECTION | SWT.BORDER);
-        resourceTree.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd.heightHint = 250;
+        gd.widthHint = 200;
+        resourceTree.setLayoutData(gd);
         
         resourceTreeContentProvider = getResourceTreeContentProvider();
         resourceTreeLabelProvider = getResourceTreeLabelProvider();
@@ -322,7 +332,11 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         // Resource Table
         resourceList = new Table(composite,
                 SWT.SINGLE | SWT.CHECK | SWT.FULL_SELECTION | SWT.BORDER);
-        resourceList.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true));
+        
+        gd = new GridData(SWT.FILL, SWT.FILL, true, true);
+        gd.heightHint = 250;
+        gd.widthHint = 200;
+        resourceList.setLayoutData(gd);
         
         resourceListContentProvider = getResourceListContentProvider();
         resourceListLabelProvider = getResourceListLabelProvider();
@@ -389,12 +403,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 });
             }
         });
+        
+        // CHECKSTYLEON MagicNumber
     }
     
     /**
      * Called after the controls were created and the settings restored. Subclasses
      * may override and can use this method to do any initialization tasks that
-     * might be left. The default implementation does nothing.
+     * might be left, like preselecting resources. The default implementation does
+     * nothing.
      */
     protected void initializeControls() {
         // Do nothing
@@ -992,6 +1009,93 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      */
     protected void restoreDialogSettings() {
         // Do nothing.
+    }
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////
+    // Selection Services
+    
+    /**
+     * Tries to find the given element and selects it, as well as expanding
+     * the path leading to it.
+     * 
+     * There is one condition that must be met for this to work: The tree
+     * content provider must be able to return the element's ancestors
+     * without them having been visited before. This especially means that
+     * the tree content provider must know what to do with the element.
+     * 
+     * @param element the element to select and reveal.
+     * @param listElement {@code true} if this is an element in the resource
+     *                    list, {@code false} if it is an element in the
+     *                    resource tree.
+     * @return {@code true} if the element was selected, {@code false}
+     *         otherwise.
+     */
+    protected final boolean selectAndRevealElement(final Object element,
+            final boolean listElement) {
+        
+        // The element's path, in reverse order. This is filled using the
+        // content providers and then used to reveal the path elements
+        List<Object> elementPath = new ArrayList<Object>();
+        
+        // Find the element's immediate ancestor using the list content provider
+        Object parent = resourceTreeContentProvider.getParent(element);
+        if (parent == null) {
+            return false;
+        }
+        
+        // Go up the ancestor hierarchy until we've reached the tree viewer's
+        // input element or until there's no ancestor any more
+        Object treeViewerInput = resourceTreeViewer.getInput();
+        Object currentAncestor = parent;
+        while (currentAncestor != null && currentAncestor != treeViewerInput) {
+            currentAncestor = resourceTreeContentProvider.getParent(currentAncestor);
+            
+            if (currentAncestor != null) {
+                elementPath.add(currentAncestor);
+            }
+        }
+        
+        // We now need to visit and reveal all items in the list, except
+        // for the element to be selected; we'll handle that below. Remember
+        // that we didn't put the element's direct parent in the list. We'll
+        // handle the parent below.
+        Object currentPathElement = null;
+        for (int i = elementPath.size() - 2; i >= 0; i--) {
+            currentPathElement = elementPath.get(i);
+            
+            visitTreeItem(currentPathElement, false);
+            resourceTreeViewer.reveal(currentPathElement);
+        }
+        
+        // There's different methods of selecting the element, depending on
+        // whether it's a tree element or a list element
+        if (listElement) {
+            // Select and reveal the element's parent
+            visitTreeItem(parent, true);
+            resourceTreeViewer.reveal(parent);
+            resourceTreeViewer.setSelection(new StructuredSelection(parent));
+            
+            // Select the list item
+            listCheckStateChanged(element, true);
+            
+            // Update the list to reflect the selection changes
+            visitTreeItem(parent, true);
+        } else {
+            // Reveal the element's parent, then select and reveal the element
+            // itself
+            visitTreeItem(parent, false);
+            resourceTreeViewer.reveal(parent);
+
+            visitTreeItem(element, true);
+            resourceTreeViewer.reveal(element);
+            resourceTreeViewer.setSelection(new StructuredSelection(element));
+            
+            // Apply a new check state to the tree item
+            applyNewTreeItemCheckState(element, true, false, true, true);
+        }
+        
+        return true;
     }
     
     

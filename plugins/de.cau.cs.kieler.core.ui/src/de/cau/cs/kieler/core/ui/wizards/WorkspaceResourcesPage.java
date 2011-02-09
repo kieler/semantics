@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.ui.wizards;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
@@ -27,6 +28,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.widgets.Composite;
@@ -61,6 +63,11 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
      */
     private String[] extensions = null;
     
+    /**
+     * The selection on which the wizard was invoked.
+     */
+    private IStructuredSelection selection = null;
+    
     // UI WIDGETS
     private ComboHistoryManager targetComboHistoryManager;
     
@@ -75,9 +82,10 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
      *                        workspace to import to.
      * @param fileExtensions array of allowed file name extensions without
      *                       preceding dot. May be {@code null}.
+     * @param selection the selection on which the wizard was invoked.
      */
     public WorkspaceResourcesPage(final String pageName, final boolean showTargetGroup,
-            final String[] fileExtensions) {
+            final String[] fileExtensions, final IStructuredSelection selection) {
         
         super(pageName);
         
@@ -85,6 +93,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
         setMessage(Messages.WorkspaceResourcesPage_message);
         
         this.showTargetGroup = showTargetGroup;
+        this.selection = selection;
         
         // Save extensions
         if (fileExtensions != null) {
@@ -110,11 +119,11 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
      * @return the list of selected files.
      */
     public List<IResource> getResources(final IProgressMonitor monitor) {
-        Collection<Object> selection = getSelectedElements(monitor);
-        List<IResource> files = new ArrayList<IResource>(selection.size());
+        Collection<Object> selectedElements = getSelectedElements(monitor);
+        List<IResource> files = new ArrayList<IResource>(selectedElements.size());
         
         // Extract the files from all selection elements
-        for (Object o : selection) {
+        for (Object o : selectedElements) {
             files.add((IResource) o);
         }
         
@@ -140,6 +149,19 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
     
     
     ///////////////////////////////////////////////////////////////////////////////
+    // Selection Stuff
+    
+    /**
+     * Returns the selection the wizard was invoked on.
+     * 
+     * @return selection the wizard was invoked on.
+     */
+    protected IStructuredSelection getWorkspaceSelection() {
+        return selection;
+    }
+    
+    
+    ///////////////////////////////////////////////////////////////////////////////
     // UI Stuff
     
     /**
@@ -148,6 +170,20 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
     @Override
     protected void initializeControls() {
         setResourceTreeInput(ResourcesPlugin.getWorkspace().getRoot());
+        
+        // Try to show and select the elements the wizard was invoked on
+        Iterator<?> iterator = selection.iterator();
+        
+        while (iterator.hasNext()) {
+            Object o = iterator.next();
+            
+            // We can only select files
+            if (o instanceof IFile) {
+                selectAndRevealElement(o, true);
+            } else {
+                selectAndRevealElement(o, false);
+            }
+        }
     }
     
     
