@@ -185,10 +185,15 @@ mod INIT is
 
 	vars msst mastate : MState .
 	vars V : Verts .
+	var ES : EventSS .
 	vars HC : HistoryConfs .
-	vars E : EventSS .
-
-
+	
+	subsort MState < State .
+	
+	op aCf : Actions -> Prop .
+	op inC : Verts -> Prop .
+	eq maState (stableC V HC) ES |= inC(V2) = V2 subset V  .
+	
 	op isDone_ : MState -> Bool .
 	eq isDone (maState (doneC V HC) E) = true .
 	eq isDone msst = false [owise] .
