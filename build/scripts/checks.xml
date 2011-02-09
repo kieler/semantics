@@ -122,9 +122,6 @@
 		<module name="FileContentsHolder" />
 
 
-
-
-
 		<!-- Checks for Javadoc comments.                     -->
 		<!-- See http://checkstyle.sf.net/config_javadoc.html -->
 		<module name="JavadocMethod">
@@ -232,7 +229,14 @@
 		<module name="DoubleCheckedLocking" />    <!-- MY FAVOURITE -->
 		<module name="EmptyStatement" />
 		<module name="EqualsHashCode" />
-		<module name="HiddenField" />
+        <!--
+            cds: allow parameters of constructors and setters to have the
+            same name as member variables.
+        -->
+		<module name="HiddenField">
+            <property name="ignoreConstructorParameter" value="true" />
+            <property name="ignoreSetter" value="true" />
+        </module>
 		<module name="InnerAssignment" />
 		<module name="MagicNumber" />
 		<!--
