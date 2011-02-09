@@ -244,6 +244,8 @@ public class JavaEscape {
 
     // Get Alias of a Vertex for better traceability
     public static String getAlias(Vertex vertex) {
+//    	if (vertex == null)
+//    		return "";
         if (isInitial(vertex))
             return "I";
         if (isFinal(vertex))
