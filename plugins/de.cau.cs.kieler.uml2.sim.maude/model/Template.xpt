@@ -148,7 +148,7 @@ fmod eclipseInterface is
   
   op allTrans : -> Compoundtransitions .
   eq allTrans = «FOREACH getPseudostates()  AS pseudostate SEPARATOR ",  "-»ctr«pseudostate.getId()-»«ENDFOREACH-»
-  				«IF this.getTransitions().select(e|e.isBasicCompound()).size > 0-»,«ENDIF-»
+  				«IF (getPseudostates().size > 0 && this.getTransitions().select(e|e.isBasicCompound()).size > 0)-»,«ENDIF-»
 				«FOREACH this.getTransitions().select(e|e.isBasicCompound()) AS transition SEPARATOR ", "-»ctr«transition.getId()-»«ENDFOREACH-»
  				.
 
