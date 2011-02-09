@@ -47,16 +47,16 @@ public class TreeViewerCheckStateManager {
     /**
      * Constructs a new instance managing the given tree viewer.
      * 
-     * @param viewer the tree viewer to be managed.
+     * @param treeViewer the tree viewer to be managed.
      */
-    public TreeViewerCheckStateManager(final CheckboxTreeViewer viewer) {
-        if (viewer == null) {
+    public TreeViewerCheckStateManager(final CheckboxTreeViewer treeViewer) {
+        if (treeViewer == null) {
             throw new IllegalArgumentException("viewer may not be null.");
         }
         
         // Hook up for selection changes
-        treeViewer = viewer;
-        treeViewer.addCheckStateListener(new ICheckStateListener() {
+        this.treeViewer = treeViewer;
+        this.treeViewer.addCheckStateListener(new ICheckStateListener() {
             public void checkStateChanged(final CheckStateChangedEvent event) {
                 onCheckStateChanged(event.getElement(), event.getChecked());
             }

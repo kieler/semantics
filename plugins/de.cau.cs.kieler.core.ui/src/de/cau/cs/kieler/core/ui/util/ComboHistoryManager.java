@@ -47,20 +47,20 @@ public class ComboHistoryManager {
      * Constructs a new instance for the given combo box with the given
      * history size.
      * 
-     * @param theCombo the combo box whose history to manage.
-     * @param theHistorySize size of the history.
+     * @param combo the combo box whose history to manage.
+     * @param historySize size of the history.
      */
-    public ComboHistoryManager(final Combo theCombo, final int theHistorySize) {
-        if (theCombo == null) {
+    public ComboHistoryManager(final Combo combo, final int historySize) {
+        if (combo == null) {
             throw new NullPointerException("combo cannot be null.");
         }
         
-        if (theHistorySize <= 0) {
+        if (historySize <= 0) {
             throw new NullPointerException("size must be >0.");
         }
         
-        combo = theCombo;
-        historySize = theHistorySize;
+        this.combo = combo;
+        this.historySize = historySize;
     }
     
     

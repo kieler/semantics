@@ -37,13 +37,13 @@ public class ExtendedFileSystemElement extends FileSystemElement {
     /**
      * Constructs a new instance.
      * 
-     * @param theFile the file represented by this object..
+     * @param file the file represented by this object..
      * @param parent the parent, if any.
      */
-    public ExtendedFileSystemElement(final File theFile, final FileSystemElement parent) {
-        super(theFile.getName(), parent, theFile.isDirectory());
+    public ExtendedFileSystemElement(final File file, final FileSystemElement parent) {
+        super(file.getName(), parent, file.isDirectory());
         
-        setFileSystemObject(theFile);
+        setFileSystemObject(file);
     }
     
     

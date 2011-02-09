@@ -240,13 +240,13 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      * 
      * @param pageName name of the page. Used as part of the IDs the dialog
      *                 settings are saved as.
-     * @param workspaceTargetGroup if {@code true}, a target group is created
-     *                             where the user can select a folder in the
-     *                             workspace to import to.
+     * @param showTargetGroup if {@code true}, a target group is created
+     *                        where the user can select a folder in the
+     *                        workspace to import to.
      * @param fileExtensions array of allowed file name extensions without
      *                       preceding dot. May be {@code null}.
      */
-    public FileSystemResourcesPage(final String pageName, final boolean workspaceTargetGroup,
+    public FileSystemResourcesPage(final String pageName, final boolean showTargetGroup,
             final String[] fileExtensions) {
         
         super(pageName);
@@ -254,7 +254,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         setTitle(Messages.FileSystemResourcesPage_title);
         setMessage(Messages.FileSystemResourcesPage_message);
         
-        showTargetGroup = workspaceTargetGroup;
+        this.showTargetGroup = showTargetGroup;
         
         // Save extensions
         if (fileExtensions != null) {
