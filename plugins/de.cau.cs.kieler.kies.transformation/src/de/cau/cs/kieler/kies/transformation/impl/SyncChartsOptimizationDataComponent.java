@@ -266,7 +266,6 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     }
 
     private void collectAllStatesHierarchically(final State parent, final int level) {
-
         // add the current state to the corresponding level
         stateHierarchy.put(level, parent);
         for (Region r : parent.getRegions()) {
@@ -318,17 +317,17 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public void doPostTransformation() {
         // assure that all references to old esterel signals are remove.
         // currently this is done by just applying a serialization and parsing of the action labels.
-        try {
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.SERIALIZE);
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.PARSE);
-        } catch (Exception e) {
-            Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
-                    "An error occured trying to serialize and"
-                            + " parse Action labels after SyncCharts optimization.");
-            StatusManager.getManager().handle(status);
-        }
+        // try {
+        // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+        // ActionLabelProcessorWrapper.SERIALIZE);
+        // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+        // ActionLabelProcessorWrapper.PARSE);
+        // } catch (Exception e) {
+        // Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+        // "An error occured trying to serialize and"
+        // + " parse Action labels after SyncCharts optimization.");
+        // StatusManager.getManager().handle(status);
+        // }
     }
 
 }

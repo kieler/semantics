@@ -17,7 +17,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
@@ -104,26 +103,16 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
                 globalVars);
 
-        // fetch the root model element
+        // fetch the root model elements
         IEditorPart editor = TransformationUtil.getActiveEditor();
         if (editor instanceof SyncchartsDiagramEditor) {
             EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-            EditPartViewer viewer = rootEditPart.getViewer();
 
-            // programmatically select the root state
-            viewer.select(rootEditPart);
-
-            // retrieve root region and top level state.
-            @SuppressWarnings("unchecked")
-            List<EditPart> selected = viewer.getSelectedEditParts();
-            if (selected.size() == 1) {
-                EditPart selPart = selected.get(0);
-                Object selView = selPart.getModel();
-                EObject selModel = ((View) selView).getElement();
-                rootRegion = (Region) selModel;
-                State root = ((Region) selModel).getStates().get(0);
-                rootState = root;
-            }
+            Object selView = rootEditPart.getModel();
+            EObject selModel = ((View) selView).getElement();
+            rootRegion = (Region) selModel;
+            State root = ((Region) selModel).getStates().get(0);
+            rootState = root;
         }
         TransformationUtil.logger.info("Added First Statement");
     }

@@ -94,7 +94,10 @@ public class XtendTransformationContext implements TransformationContext {
 
                 CommandStack stack = editingDomain.getCommandStack();
                 stack.execute(cc);
-                result = command.getResult();
+                if (command.getResult() != null) {
+                    // the result is either the first element of a collection or null!
+                    result = (command.getResult().iterator().next());
+                }
 
                 if (lock != null) {
                     System.out.println("Release");

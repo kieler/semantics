@@ -320,7 +320,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         TransformationEffect effect = new TransformationEffect(currentContext);
         effect.execute();
         effect.getResult();
-        IEditorPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
+        final IEditorPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
                     (SyncchartsDiagramEditor) currentlyActiveEditor);

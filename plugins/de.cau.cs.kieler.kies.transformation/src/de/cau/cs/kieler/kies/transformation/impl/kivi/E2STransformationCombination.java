@@ -17,21 +17,27 @@ import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.KiVi;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.kivi.triggers.EffectTrigger.EffectTriggerState;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
+import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
@@ -43,6 +49,7 @@ import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -105,6 +112,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
+        KiVi.getInstance().setDebug(true);
     }
 
     /**
@@ -133,7 +141,7 @@ public class E2STransformationCombination extends AbstractCombination {
                 && transformationState.getEffect() instanceof TransformationEffect) {
             System.out.println("\t #### FINISHED with result: "
                     + transformationState.getEffect().getResult());
-            postTransformation();
+            postTransformation(transformationState.getEffect());
             return;
         }
 
@@ -153,10 +161,14 @@ public class E2STransformationCombination extends AbstractCombination {
             // if XtextEditor is opened the transformation has to be initialized.
             if (currentlyActiveEditor instanceof XtextEditor) {
                 initializeTransformation();
+                if (buttonState.getButtonId() == BUTTON_EXPAND
+                        || buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE) {
+                    process(buttonState.getButtonId());
+                }
                 return;
-//                if (!initializeTransformation()) {
-//                    return;
-//                }
+                // if (!initializeTransformation()) {
+                // return;
+                // }
             }
 
             process(buttonState.getButtonId());
@@ -283,7 +295,7 @@ public class E2STransformationCombination extends AbstractCombination {
         }
     }
 
-    private void postTransformation() {
+    private void postTransformation(TransformationEffect effect) {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
             // optimization is performed the same manner line expand just with different data
             // component.
@@ -312,6 +324,27 @@ public class E2STransformationCombination extends AbstractCombination {
             // apply automatic layout by triggering the trigger (null layouts whole diagram)
             LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
             layoutEffect.schedule();
+        }
+
+        // set a new selection in case xtext passed one
+        if (effect.getResult() instanceof State) {
+            State selection = (State) effect.getResult();
+            IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(
+                    currentlyActiveEditor);
+            if (bridge != null) {
+                final EditPart p = bridge.getEditPart(selection);
+                if (p != null) {
+                    // a selection has to be performed on the UI thread.
+                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+
+                        public void run() {
+                            ((IEditorPart) currentlyActiveEditor).getEditorSite()
+                                    .getSelectionProvider()
+                                    .setSelection(new StructuredSelection(p));
+                        }
+                    });
+                }
+            }
         }
     }
 
