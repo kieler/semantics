@@ -32,8 +32,10 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  * back to the java implementation or if xtend should keep on transforming
  */
 Void recursiveRule(State s, emf::EObject e):
-	if ((boolean) GLOBALVAR recursive) then
+	 ((boolean) GLOBALVAR recursive) ?
 		rule(s, e)
+	 :
+	 s
 ;
 
 /**
@@ -99,7 +101,8 @@ Void rule(State s, Nothing n):
 	s.regions.add(r) ->
 	r.states.add(nState) ->
 	nState.setIsFinal(true) ->
-	nState.setIsInitial(true)
+	nState.setIsInitial(true) ->
+	nState
 ;
 
 /** !-
@@ -111,7 +114,8 @@ Void rule(State s, Halt h):
 	initializeRule(s, h) ->
 	s.regions.add(r) ->
 	r.states.add(ns) ->
-	ns.setIsInitial(true)
+	ns.setIsInitial(true) ->
+	ns
 ;
  
 /** !-
@@ -130,7 +134,8 @@ Void rule(State s, Pause p):
 	finalS.setIsFinal(true) ->
 	// add transition
 	t.setType(TransitionType::WEAKABORT) ->
-	t.connectTransition(initS, finalS)
+	t.connectTransition(initS, finalS) ->
+	initS
 ;
 
 /** !-
@@ -227,7 +232,8 @@ Void rule(State s, esterel::Assignment assign):
 	if (assign.expr != null) then
 		(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
 	// add assignment to the transition
-	t.effects.add(sa)
+	t.effects.add(sa) ->
+	initS
 ;
 
 /** !-
@@ -244,12 +250,13 @@ Void rule(State s, Await a):
  	r.states.add(initState) ->
 
  	// just one instance or cases?
-	AwaitInstance.isInstance(a.body)?
+	(AwaitInstance.isInstance(a.body)?
 		handleAwaitCaseSingle(r, initState, 1, 
 			((AwaitInstance)a.body).delay, 
 			((AwaitInstance)a.body).statement)
 	:
-		handleAwaitCases(r, initState, 1, ((AwaitCase)a.body).cases)
+		handleAwaitCases(r, initState, 1, ((AwaitCase)a.body).cases))
+	-> initState
 ;
  
 // as abort and await cases are equal, we use AbortCaseSingles 
@@ -356,7 +363,8 @@ Void rule(State s, Emit e):
 	emission.setNewValue(convertEsterelExpression((Expression)clone(e.expr))) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
-	emitTrans.connectTransition(initS, finalS)
+	emitTrans.connectTransition(initS, finalS) ->
+	initS
 ;
 
 /** !-
@@ -613,7 +621,8 @@ Void rule(State s, ProcCall c):
 	
 	// create call statement
 	textEffect.setCode(c.createCallStatement()) ->
-	t.effects.add(textEffect) 
+	t.effects.add(textEffect) ->
+	initS
 ;
 
 String createCallStatement(ProcCall c):
@@ -707,7 +716,8 @@ Void rule(State s, Sustain sus):
 	emission.setSignal(sus.signal) ->
 	emission.setNewValue(convertEsterelExpression((Expression) clone(sus.expression))) ->
 	initT.effects.add(emission) ->
-	sustT.effects.add((Emission) clone(emission))
+	sustT.effects.add((Emission) clone(emission)) ->
+	initS
 ;
 
 /** !-
@@ -839,7 +849,8 @@ Void rule(State s, Exit e):
 	// find and add corresponding traphalts
 	findAndAddCorrespondingTraphalts(e.trap, s, emitTrans) ->
 	// add transition to state
-	emitTrans.connectTransition(initS, finalS)
+	emitTrans.connectTransition(initS, finalS) ->
+	initS
 ;
 
 /** !-

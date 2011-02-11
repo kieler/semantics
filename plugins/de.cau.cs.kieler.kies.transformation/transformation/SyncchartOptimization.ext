@@ -23,7 +23,7 @@ extension org::eclipse::xtend::util::stdlib::cloning;
  *	rule 2 & 3 just need to be applied to simple states
  *	rule 7 & 8 can just be applied if the state still exists
  */
-Boolean ruleAll(List[State] states):
+Integer ruleAll(List[State] states):
 
 	if states.size > 0 then 
 	(
