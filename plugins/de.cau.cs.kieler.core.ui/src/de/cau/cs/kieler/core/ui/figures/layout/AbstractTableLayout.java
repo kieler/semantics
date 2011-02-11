@@ -216,8 +216,11 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 /* get the the layout-cell and its associated figure */
                 Cell cell = table[row][column];
                 child = children.get(cell.figure);
-                if (child instanceof WrappingLabel && ((WrappingLabel) child).getFont().isDisposed()) {
-                    ((WrappingLabel) child).setFont(null);
+                if (child instanceof WrappingLabel) {
+                    WrappingLabel label = (WrappingLabel) child;
+                    if (label.getFont() != null && label.getFont().isDisposed()) {
+                        label.setFont(null);
+                    }
                 }
 
                 /*
