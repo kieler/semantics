@@ -112,8 +112,7 @@
          point="org.eclipse.ui.newWizards">
       <category
             id="de.cau.cs.kieler"
-            name="KIELER"
-            parentCategory="org.eclipse.ui.Examples">
+            name="KIELER">
       </category>
    </extension>
    <extension
