@@ -30,7 +30,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.core.model.util.XpandTransformationUtil;
+import de.cau.cs.kieler.core.model.xtend.util.XpandTransformationUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
 

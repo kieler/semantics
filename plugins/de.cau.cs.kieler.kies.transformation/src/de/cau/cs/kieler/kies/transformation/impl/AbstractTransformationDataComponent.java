@@ -33,11 +33,13 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Maps;
 
+import de.cau.cs.kieler.core.model.effects.RefreshGMFEditPoliciesEffect;
+import de.cau.cs.kieler.core.model.effects.TransformationEffect;
+import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
+import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
+import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
-import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFEditPoliciesEffect;
-import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -234,7 +236,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         }
         var.setValue(value);
         // make sure the facade is set properly
-        facade = TransformationUtil.initializeFacade(getTransformationFile(), getBasePackages(),
+        facade = XtendTransformationUtil.initializeFacade(getTransformationFile(), getBasePackages(),
                 Maps.newHashMap(globalVars));
         return true;
     }

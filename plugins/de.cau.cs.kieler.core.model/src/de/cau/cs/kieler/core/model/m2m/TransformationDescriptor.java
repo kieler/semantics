@@ -11,14 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.core;
+package de.cau.cs.kieler.core.model.m2m;
 
 /**
  * A TransformationDescriptor holds information about the name of a transformation method and the
  * parameters that should be passed to this method.
  * 
  * @author uru
- * 
+ * @kieler.rating 2011-02-14 proposed yellow uru
  */
 public class TransformationDescriptor {
 

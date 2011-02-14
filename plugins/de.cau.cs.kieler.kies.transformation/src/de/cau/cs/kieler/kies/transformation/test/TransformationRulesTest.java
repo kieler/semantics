@@ -40,11 +40,11 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
-import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
+import de.cau.cs.kieler.core.model.effects.TransformationEffect;
+import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
+import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;

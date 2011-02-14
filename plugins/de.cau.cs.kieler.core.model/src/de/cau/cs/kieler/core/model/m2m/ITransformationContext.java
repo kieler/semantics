@@ -11,13 +11,14 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.core;
+package de.cau.cs.kieler.core.model.m2m;
 
 /**
  * A TransformationContext is supposed to hold all information that is necessary to execute a
  * transformation.
  * 
  * @author uru
+ * @kieler.rating 2011-02-14 proposed yellow uru
  */
 public interface ITransformationContext {
 

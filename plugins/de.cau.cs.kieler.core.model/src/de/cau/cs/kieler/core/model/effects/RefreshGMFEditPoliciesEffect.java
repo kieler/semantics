@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.core.kivi;
+package de.cau.cs.kieler.core.model.effects;
 
 import java.util.List;
 
@@ -34,6 +34,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * 
  * @author uru
  * 
+ * @kieler.rating 2011-02-14 proposed yellow uru
  */
 public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
 
@@ -96,11 +97,13 @@ public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
      */
     private class RefreshGMFEditPoliciesCommand extends RecordingCommand {
 
+        private static final String COMMAND_NAME = "Refresh Edit Policies";
+
         /**
          * @param domain
          */
         public RefreshGMFEditPoliciesCommand(final TransactionalEditingDomain domain) {
-            super(domain, "Refresh Edit Policies");
+            super(domain, COMMAND_NAME);
         }
 
         @Override

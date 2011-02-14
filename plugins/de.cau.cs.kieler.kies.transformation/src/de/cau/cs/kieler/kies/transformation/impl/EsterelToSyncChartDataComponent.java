@@ -24,7 +24,8 @@ import org.eclipse.ui.IEditorPart;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 
-import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -100,7 +101,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         globalVars.get(GLOBVAR_REC).setValue(recursive);
 
         // initialize facade
-        facade = TransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
+        facade = XtendTransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
                 globalVars);
 
         // fetch the root model elements
