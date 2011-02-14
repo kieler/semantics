@@ -350,6 +350,12 @@ public final class TransformationUtil {
             // save the resource
             resource.save(null);
 
+            xtextResource.save(null);
+            
+            // t est
+            resource.delete(null);
+            xtextResource.delete(null);
+
         } catch (Exception e) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem parsing the Esterel file.", e);

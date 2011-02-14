@@ -67,7 +67,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
 public class TransformationRulesTest {
 
     // FIXME
-    private String pathToWS = "/../eclipseWS4/";
+    private String pathToWS = "/../eclipse WS/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
 
@@ -168,6 +168,7 @@ public class TransformationRulesTest {
 
         try {
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
+            edc.setHeadless(true);
 
             ResourceSet resourceSet = new ResourceSetImpl();
             Resource resource = resourceSet.getResource(kixsURI, true);

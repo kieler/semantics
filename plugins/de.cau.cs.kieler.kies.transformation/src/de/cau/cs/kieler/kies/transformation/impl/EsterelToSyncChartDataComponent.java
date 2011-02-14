@@ -85,12 +85,15 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     @Override
     public void initialize() throws KiemInitializationException {
 
-        // assure that a SyncCharts editor is opened.
-        IEditorPart activeEditor = TransformationUtil.getActiveEditor();
-        if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
-            throw new KiemInitializationException(
-                    "Esterel To SyncCharts Transformation is only possible"
-                            + " in the context of an SynchChartsDiagramEditor.", true, null, false);
+        if (!headless) {
+            // assure that a SyncCharts editor is opened.
+            IEditorPart activeEditor = TransformationUtil.getActiveEditor();
+            if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+                throw new KiemInitializationException(
+                        "Esterel To SyncCharts Transformation is only possible"
+                                + " in the context of an SynchChartsDiagramEditor.", true, null,
+                        false);
+            }
         }
 
         super.initialize();

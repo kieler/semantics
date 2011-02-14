@@ -70,6 +70,9 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     protected boolean kiviMode;
     protected ITransformationContext currentContext;
     protected TransformationDescriptor currentDescriptor;
+
+    /** headless execution omits checks for an opened editor. */
+    protected boolean headless = false;
     // CHECKSTYLEON VisibilityModifier
 
     private boolean finished = false;
@@ -176,16 +179,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         } else {
             if (!kiviMode) {
                 // stop the transformation if it is finished
-                finished = true;
-                doPostTransformation();
-                PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-                    public void run() {
-                        MessageDialog.openInformation(shell, "Done",
-                                "Transformation finished. No further elements to process.");
-                    }
-                });
-                throw new KiemExecutionException("No Further Transformations", true, false, true,
-                        null);
+                finished();
             }
         }
         return null;
@@ -270,6 +264,18 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public abstract void doPostTransformation();
 
+    protected void finished() throws KiemExecutionException {
+        finished = true;
+        doPostTransformation();
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+            public void run() {
+                MessageDialog.openInformation(shell, "Done",
+                        "Transformation finished. No further elements to process.");
+            }
+        });
+        throw new KiemExecutionException("No Further Transformations", true, false, true, null);
+    }
+
     /**
      * @return currently active editor's editing domain
      */
@@ -317,6 +323,14 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public TransformationDescriptor getCurrentDescriptor() {
         return currentDescriptor;
+    }
+
+    /**
+     * @param headless
+     *            the headless to set
+     */
+    public void setHeadless(boolean headless) {
+        this.headless = headless;
     }
 
     /**

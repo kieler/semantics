@@ -123,11 +123,14 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public void initialize() throws KiemInitializationException {
-        // assure that a SyncCharts editor is opened.
-        IEditorPart activeEditor = TransformationUtil.getActiveEditor();
-        if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
-            throw new KiemInitializationException("Optimization of SyncCharts is only possible"
-                    + " in the context of an SynchChartsDiagramEditor.", true, null, false);
+
+        if (!headless) {
+            // assure that a SyncCharts editor is opened.
+            IEditorPart activeEditor = TransformationUtil.getActiveEditor();
+            if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+                throw new KiemInitializationException("Optimization of SyncCharts is only possible"
+                        + " in the context of an SynchChartsDiagramEditor.", true, null, false);
+            }
         }
 
         super.initialize();
@@ -217,9 +220,9 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public TransformationDescriptor getNextTransformation() {
         // if the list with flattened states was emptied during prior execution, there is no further
         // optimization potential
-//        if (flattenedStates.isEmpty()) {
-//            return null;
-//        }
+        // if (flattenedStates.isEmpty()) {
+        // return null;
+        // }
 
         // fetch user selection
         State start = rootState;
@@ -280,9 +283,10 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
-        if (!kiviMode && currentDescriptor.getResult() instanceof Integer
-                && (Integer) currentDescriptor.getResult() == 0) {
-            System.out.println("DONE");
+        if (!kiviMode && (currentDescriptor != null)
+                && (currentDescriptor.getResult() instanceof Long)
+                && ((Long) currentDescriptor.getResult()).equals(0L)) {
+            finished();
         }
         try {
             super.step(arg0);
