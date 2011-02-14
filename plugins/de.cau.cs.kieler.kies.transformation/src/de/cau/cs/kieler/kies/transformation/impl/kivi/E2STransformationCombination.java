@@ -113,7 +113,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
-        //KiVi.getInstance().setDebug(true);
+        // KiVi.getInstance().setDebug(true);
     }
 
     /**

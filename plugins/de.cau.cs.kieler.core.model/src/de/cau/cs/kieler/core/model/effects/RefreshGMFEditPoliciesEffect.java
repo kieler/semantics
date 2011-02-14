@@ -106,9 +106,20 @@ public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
             super(domain, COMMAND_NAME);
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         protected void doExecute() {
             refreshPolicies();
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @Override
+        public boolean canExecute() {
+            return true;
         }
     }
 }

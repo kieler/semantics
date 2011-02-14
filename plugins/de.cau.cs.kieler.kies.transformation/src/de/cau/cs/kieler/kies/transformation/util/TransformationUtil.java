@@ -16,10 +16,8 @@ package de.cau.cs.kieler.kies.transformation.util;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
@@ -34,12 +32,10 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.mwe.core.ConfigurationException;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
@@ -47,13 +43,11 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.internal.xtend.xtend.XtendFile;
 import org.eclipse.jface.dialogs.IInputValidator;
 import org.eclipse.jface.dialogs.InputDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -63,11 +57,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.eclipse.xtend.XtendFacade;
-import org.eclipse.xtend.expression.ExecutionContextImpl;
 import org.eclipse.xtend.expression.Variable;
-import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 
@@ -81,6 +71,7 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
 import de.cau.cs.kieler.kies.esterel.ConstantExpression;
@@ -258,7 +249,7 @@ public final class TransformationUtil {
         Action tmp2 = EcoreUtil.copy(t2);
         tmp2.setDelay(1);
         tmp2.getEffects().clear();
-        // use the ActionLabelSerializer in order to gain a string represantation.
+        // use the ActionLabelSerializer in order to gain a string representation.
         return ActionLabelSerializer.toString(tmp1).equals(ActionLabelSerializer.toString(tmp2));
     }
 
@@ -279,7 +270,7 @@ public final class TransformationUtil {
      */
     public static IEditorPart getActiveEditor() {
         final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
-        Display.getDefault().syncExec(new Runnable() {
+        MonitoredOperation.runInUI(new Runnable() {
             public void run() {
                 IEditorPart editor = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                         .getActivePage().getActiveEditor();
@@ -287,7 +278,7 @@ public final class TransformationUtil {
                     maybe.set(editor);
                 }
             }
-        });
+        }, true);
         return maybe.get();
     }
 
@@ -405,7 +396,7 @@ public final class TransformationUtil {
                     newKixsFile.getFullPath().removeFileExtension().addFileExtension("kids"));
             if (possibleKidsFile.exists()) {
                 // in case the .kids is currently opened, close it first
-                PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                MonitoredOperation.runInUI(new Runnable() {
                     public void run() {
                         IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                                 .getActivePage();
@@ -418,7 +409,7 @@ public final class TransformationUtil {
                             }
                         }
                     }
-                });
+                }, true);
                 possibleKidsFile.delete(true, null);
             }
 
@@ -470,7 +461,7 @@ public final class TransformationUtil {
 
         final Maybe<Boolean> createdKixs = new Maybe<Boolean>();
         // start with a progress dialog as parsing and opening might take some time
-        Display.getDefault().syncExec(new Runnable() {
+        MonitoredOperation.runInUI(new Runnable() {
 
             public void run() {
                 try {
@@ -543,7 +534,7 @@ public final class TransformationUtil {
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                 }
             }
-        });
+        }, true);
         return createdKixs.get();
     }
 
@@ -560,10 +551,10 @@ public final class TransformationUtil {
         if (activeEditor instanceof IDiagramWorkbenchPart) {
             EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor).getDiagramEditPart()
                     .getModel()).getElement();
-            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                nextEditPolicy.refresh();
+            List<CanonicalEditPolicy> editPolicies = CanonicalEditPolicy
+                    .getRegisteredEditPolicies(obj);
+            for (CanonicalEditPolicy editPolicy : editPolicies) {
+                editPolicy.refresh();
             }
             IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
                     .getDiagramGraphicalViewer();
