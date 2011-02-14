@@ -43,17 +43,17 @@ Void recursiveRule(State s, emf::EObject e):
  * properly. This means that any further statement is passed as body reference and the
  * recursive rule is called.
  */
-Void finalizeRule(State s, emf::EObject o):
-	setJavaBodyReference(s, o) ->
-	recursiveRule(s, o)
+Void finalizeRule(State s, emf::EObject esterelObject):
+	setJavaBodyReference(s, esterelObject) ->
+	recursiveRule(s, esterelObject)
 ;
 
 /**
  * Called at the beginning of each rule, currently just removes any bodytext and sets the name
  */
-Void initializeRule(State s, emf::EObject o):
+Void initializeRule(State s, emf::EObject esterelObject):
 	removeBodyText(s) ->
-	s.setLabelIfEmpty(o.metaType.name.replaceAll("esterel::", "") + " State")
+	s.setLabelIfEmpty(esterelObject.metaType.name.replaceAll("esterel::", "") + " State")
 ;
  
 // rule for the case an unknown object should be transformed
@@ -384,7 +384,7 @@ Void rule(State s, EveryDo e):
 	initS.setIsInitial(true) ->
 	// init transitions
 	initT.setType(TransitionType::WEAKABORT) ->
-	everyT.setType(TransitionType::WEAKABORT) ->
+	everyT.setType(TransitionType::STRONGABORT) ->
 	initT.connectTransition(initS, everyS) ->
 	everyT.connectTransition(everyS, everyS) ->
 	// add delays
@@ -826,7 +826,6 @@ Void handleTrapHandlerSingle(State handleState, TrapHandler handler):
 
 /** !-
  * rule 27 (exit) 
- * TODO: add traphalts of possible parent traps
  */
 Void rule(State s, Exit e):
 	let initS = new State:

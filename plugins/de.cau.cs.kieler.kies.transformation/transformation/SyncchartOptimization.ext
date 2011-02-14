@@ -258,7 +258,6 @@ Void rule6(State s, List[State] states):
 	(let copyStates = r.states.copyListTrans():
 	s.parentRegion.states.addAll(copyStates) ->
 	// add the inner states to the list, as there might be new optimization potential
-	//states.addAll(copyStates)
 	states.addToFrontOfList(copyStates)
 	) 
 	

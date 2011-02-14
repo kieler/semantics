@@ -6,7 +6,7 @@ import utilities;
 import esterel; 
 
 extension feature;
-extension org::eclipse::xtend::util::stdlib::cloning;
+extension org::eclipse::xtend::util::stdlib::cloning; // provides clone functionality
 
  /*
   * #################################################################################
