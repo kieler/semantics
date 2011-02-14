@@ -29,7 +29,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  * but not all children are checked) Similarly, it goes down the hierarchy
  * marking all children as checked.
  * 
- * If items should be checked programmatically, this should happen through
+ * <p>If items should be checked programmatically, this should happen through
  * the methods of this class to be able to update the ancestor and child
  * elements. Since programmatically triggered changes on the check state of
  * an element do not trigger events, the check state manager cannot cope with

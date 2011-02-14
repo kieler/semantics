@@ -69,33 +69,33 @@ import de.cau.cs.kieler.core.ui.Messages;
  * flexible version of {@code org.eclipse.ui.dialogs.WizardResourceImportPage}.
  * This class is intended to be subclassed by clients.
  * 
- * To customize the tree and list views, subclasses may override diverse methods
+ * <p>To customize the tree and list views, subclasses may override diverse methods
  * that return a content provider, label provider, comparator and filters. To
  * set the input that should be fed into the tree's content provider, call
  * {@link #setResourceTreeInput(Object)}. The list's content provider's input
  * is automatically set to the element currently selected in the tree.
  * 
- * The source group, if present, usually provides a way to select some kind of
+ * <p>The source group, if present, usually provides a way to select some kind of
  * source directory, often also providing a history of previously entered values.
  * You can use {@link #createDefaultSourceGroup(Composite, String, String)} to
  * have a default source group with a combo box and a browse button created.
  * 
- * The target group, if present, usually provides a way to select some kind of
+ * <p>The target group, if present, usually provides a way to select some kind of
  * target container or directory, often also providing a history of previously
  * selected values. As with the source group, you can use
  * {@link #createDefaultTargetGroup(Composite, String, String) to have a default
  * target group with a combo box and a browse button created.
  * 
- * The button bar, if present, usually provides a way to select and deselect all
+ * <p>The button bar, if present, usually provides a way to select and deselect all
  * list items. By default, such a group is created. Subclasses can change this
  * by overriding {@link #createButtonBar(Composite)}.
  * 
- * Finally, the options group, if present, usually allows the user to influence
+ * <p>Finally, the options group, if present, usually allows the user to influence
  * some parameters of the actions to be performed. There is no way to have a
  * default options group created, since there is no way to know which options
  * might be needed.
  * 
- * There are currently two specializations of this class. {@link FileSystemResourcesPage}
+ * <p>There are currently two specializations of this class. {@link FileSystemResourcesPage}
  * specializes in file system imports while {@link WorkspaceResourcesPage}
  * specializes in workspace imports.
  * 
@@ -212,7 +212,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * by the user and only those resource tree children that are checked or
      * grayed are recursively visited.
      * 
-     * All elements added to the list are required to pass the installed filters
+     * <p>All elements added to the list are required to pass the installed filters
      * first.
      * 
      * @param monitor progress monitor.
@@ -463,8 +463,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * method is only called once, upon the resource tree's creation. Subclasses
      * may override. The default implementation returns an empty array.
      * 
-     * Note: This could be made more flexible to allow changeing the list of
-     * active filters after creation.
+     * <p><emph>Note:</emph> This could be made more flexible to allow changeing
+     * the list of active filters after creation.
      * 
      * @return array of filters.
      */
@@ -513,8 +513,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * method is only called once, upon the resource list's creation. Subclasses
      * may override. The default implementation returns an empty array.
      * 
-     * Note: This could be made more flexible to allow changeing the list of
-     * active filters after creation.
+     * <p><emph>Note:</emph> This could be made more flexible to allow changeing
+     * the list of active filters after creation.
      * 
      * @return array of filters.
      */
@@ -591,7 +591,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Creates the source group. This method is intended to be implemented by
      * subclasses.
      * 
-     * Subclasses may call {@link #createDefaultSourceGroup(Composite, String, String)}
+     * <p>Subclasses may call {@link #createDefaultSourceGroup(Composite, String, String)}
      * to have a default source group with a label, a combo box and a browse
      * button created. In this case, it should also implement {@link #applyNewSource(String)}
      * and {@link #doBrowseSource()}. While access to the combo box and the browse
@@ -685,7 +685,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * default source group, it should implement this method to react to the user
      * entering a new source. The default implementation does nothing.
      * 
-     * After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.
      * 
      * @param text the combo's current text.
      */
@@ -698,7 +698,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * the default source group, it should implement this method to pop up some
      * kind of browse dialog. The default implementation does nothing.
      * 
-     * After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.
      */
     protected void doBrowseSource() {
         // Do nothing
@@ -803,7 +803,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Creates the target group. This method is intended to be implemented by
      * subclasses.
      * 
-     * Subclasses may call {@link #createDefaultTargetGroup(Composite, String, String)}
+     * <p>Subclasses may call {@link #createDefaultTargetGroup(Composite, String, String)}
      * to have a default target group with a label, a combo box and a browse
      * button created. In this case, it should also implement {@link #applyNewTarget(String)}
      * and {@link #doBrowseTarget()}. While access to the combo box and the browse
@@ -897,7 +897,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * default target group, it should implement this method to react to the user
      * entering a new target. The default implementation does nothing.
      * 
-     * After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.
      * 
      * @param text the combo's current text.
      */
@@ -910,7 +910,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * the default target group, it should implement this method to pop up some
      * kind of browse dialog. The default implementation does nothing.
      * 
-     * After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.
      */
     protected void doBrowseTarget() {
         // Do nothing
@@ -1019,7 +1019,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Tries to find the given element and selects it, as well as expanding
      * the path leading to it.
      * 
-     * There is one condition that must be met for this to work: The tree
+     * <p>There is one condition that must be met for this to work: The tree
      * content provider must be able to return the element's ancestors
      * without them having been visited before. This especially means that
      * the tree content provider must know what to do with the element.
@@ -1160,7 +1160,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * as the list's new input, if any. The list viewer's check state is then
      * restored.
      * 
-     * Does not validate the page.
+     * <p>Does not validate the page.
      * 
      * @param element the element to be visited.
      * @param updateList {@code true} if the list's input should be set to the
@@ -1194,7 +1194,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Applies a tree item's new check state. Updates any children we may know about
      * and its ancestors, if any.
      * 
-     * This method updates the check state in the tree viewer, but is also called
+     * <p>This method updates the check state in the tree viewer, but is also called
      * as a response to the tree viewer's check state change event. This is no
      * problem, however, since the check state applied to the element in this method
      * is no different from the check state communicated in the event. Furthermore,
