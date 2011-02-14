@@ -217,9 +217,9 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public TransformationDescriptor getNextTransformation() {
         // if the list with flattened states was emptied during prior execution, there is no further
         // optimization potential
-        if (flattenedStates.isEmpty()) {
-            return null;
-        }
+//        if (flattenedStates.isEmpty()) {
+//            return null;
+//        }
 
         // fetch user selection
         State start = rootState;
@@ -280,9 +280,12 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
-        JSONObject o = null;
+        if (!kiviMode && currentDescriptor.getResult() instanceof Integer
+                && (Integer) currentDescriptor.getResult() == 0) {
+            System.out.println("DONE");
+        }
         try {
-            o = super.step(arg0);
+            super.step(arg0);
         } catch (StackOverflowError soe) {
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "A stackoverflow occured. As the optimization of large diagrams "
@@ -290,7 +293,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
                             + "may solve the problem.", soe);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
         }
-        return o;
+        return null;
     }
 
     /**

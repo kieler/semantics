@@ -55,10 +55,9 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  */
 public abstract class AbstractTransformationDataComponent extends JSONObjectDataComponent {
     // JSON needed?
+
     private TransactionalEditingDomain domain;
     private Shell shell;
-
-    private Semaphore semaphore;
 
     // CHECKSTYLEOFF VisibilityModifier - convenient use in extending classes
     /** currently used facade. */
@@ -66,17 +65,17 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     /** global variables for the certain transformation. */
     protected Map<String, Variable> globalVars;
+
+    /** is the transformation executed by KiVi? */
+    protected boolean kiviMode;
+    protected ITransformationContext currentContext;
+    protected TransformationDescriptor currentDescriptor;
     // CHECKSTYLEON VisibilityModifier
 
     private boolean finished = false;
 
     private long lastHistoryStep = -1;
     private long lastStep = 0;
-
-    /** is the transformation executed by KiVi? */
-    private boolean kiviMode;
-    private ITransformationContext currentContext;
-    private TransformationDescriptor currentDescriptor;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -111,7 +110,6 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 shell = wb.getActiveWorkbenchWindow().getShell();
             }
         });
-        semaphore = new Semaphore(1);
     }
 
     /**
@@ -176,17 +174,19 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
                 processTransformation();
             }
         } else {
-            // stop the transformation, it is finished
-            finished = true;
-            doPostTransformation();
-            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-                public void run() {
-                    MessageDialog.openInformation(shell, "Done",
-                            "Transformation finished. No further elements to process.");
-                }
-            });
-            semaphore.release();
-            throw new KiemExecutionException("No Further Transformations", true, false, true, null);
+            if (!kiviMode) {
+                // stop the transformation if it is finished
+                finished = true;
+                doPostTransformation();
+                PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+                    public void run() {
+                        MessageDialog.openInformation(shell, "Done",
+                                "Transformation finished. No further elements to process.");
+                    }
+                });
+                throw new KiemExecutionException("No Further Transformations", true, false, true,
+                        null);
+            }
         }
         return null;
     }
@@ -236,8 +236,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         }
         var.setValue(value);
         // make sure the facade is set properly
-        facade = XtendTransformationUtil.initializeFacade(getTransformationFile(), getBasePackages(),
-                Maps.newHashMap(globalVars));
+        facade = XtendTransformationUtil.initializeFacade(getTransformationFile(),
+                getBasePackages(), Maps.newHashMap(globalVars));
         return true;
     }
 

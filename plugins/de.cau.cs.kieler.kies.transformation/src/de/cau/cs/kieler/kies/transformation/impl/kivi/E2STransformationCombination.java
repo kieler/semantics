@@ -16,6 +16,7 @@ package de.cau.cs.kieler.kies.transformation.impl.kivi;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -25,6 +26,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.collect.Maps;
@@ -70,6 +72,9 @@ public class E2STransformationCombination extends AbstractCombination {
     private static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.kies.Esterel";
 
     private final Map<String, Boolean> buttonEnabling = Maps.newHashMap();
+
+    private EsterelToSyncChartDataComponent transformingDataComponent;
+    private SyncChartsOptimizationDataComponent optimizingDataComponent;
 
     private AbstractTransformationDataComponent currentDataComponent;
     private IWorkbenchPart currentlyActiveEditor;
@@ -220,16 +225,18 @@ public class E2STransformationCombination extends AbstractCombination {
         long start = System.currentTimeMillis();
         // initialize the correct datacomponent
         if (isTransformable()) {
-            currentDataComponent = new EsterelToSyncChartDataComponent(true);
+            // currentDataComponent = new EsterelToSyncChartDataComponent(true);
+            currentDataComponent = transformingDataComponent;
         } else {
-            currentDataComponent = new SyncChartsOptimizationDataComponent(true);
+            currentDataComponent = optimizingDataComponent;
+            // currentDataComponent = new SyncChartsOptimizationDataComponent(true);
         }
-        try {
-            currentDataComponent.initialize();
-
-        } catch (KiemInitializationException e) {
-            e.printStackTrace();
-        }
+        // try {
+        // currentDataComponent.initialize();
+        //
+        // } catch (KiemInitializationException e) {
+        // e.printStackTrace();
+        // }
 
         // determine proceeding
         if (type.equals(BUTTON_EXPAND) || type.equals(BUTTON_EXPAND_OPTIMIZE)) {
@@ -299,12 +306,27 @@ public class E2STransformationCombination extends AbstractCombination {
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             currentCommandStack = ((DiagramEditor) currentlyActiveEditor).getEditingDomain()
                     .getCommandStack();
+
+            // init datacomponents
+            try {
+                transformingDataComponent = new EsterelToSyncChartDataComponent(true);
+                transformingDataComponent.initialize();
+                optimizingDataComponent = new SyncChartsOptimizationDataComponent(true);
+                optimizingDataComponent.initialize();
+            } catch (KiemInitializationException e) {
+                Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                        "An error occured during the setup of the DataComponents.");
+                StatusManager.getManager().handle(s);
+            }
+
         } else {
             currentCommandStack = null;
+            transformingDataComponent = null;
+            optimizingDataComponent = null;
         }
     }
 
-    private void postTransformation(TransformationEffect effect) {
+    private void postTransformation(final TransformationEffect effect) {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
             // optimization is performed the same manner line expand just with different data
             // component.
@@ -362,6 +384,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
     private boolean isTransformable() {
         EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
+        //dc = transformingDataComponent;
         try {
             dc.initialize();
         } catch (KiemInitializationException e) {
