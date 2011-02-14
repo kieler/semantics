@@ -18,6 +18,7 @@ import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 
 import java.util.Collection;
+import java.util.Iterator;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 
@@ -89,15 +90,13 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
 
     /**
      * <!-- begin-user-doc -->
-     * Search an Annotation object for this Annotatable with the given String name.
-     * @param name the name of the Annotation, does not need to be unique
-     * @returns the first Annotation that matches the name
+     * {@inheritDoc}
      * <!-- end-user-doc -->
      * @generated NOT
      */
     public Annotation getAnnotation(String name) {
-        for (Annotation annotation : this.getAnnotations()) {
-            if(annotation.getName().equals(name)){
+        for (Annotation annotation : getAnnotations()) {
+            if (name.equals(annotation.getName())){
                 return annotation;
             }
         }
@@ -106,20 +105,34 @@ public abstract class AnnotatableImpl extends EObjectImpl implements Annotatable
 
     /**
      * <!-- begin-user-doc -->
-     * Search all Annotation objects for this Annotatable with the given String name.
-     * @param name the name of the Annotations, does not need to be unique
-     * @returns a list of all Annotations that match the name
+     * {@inheritDoc}
      * <!-- end-user-doc -->
      * @generated NOT
      */
     public EList<Annotation> getAllAnnotations(String name) {
         EList<Annotation> list = new BasicEList<Annotation>();
-        for (Annotation annotation : this.getAnnotations()) {
-            if(annotation.getName().equals(name)){
+        for (Annotation annotation : getAnnotations()) {
+            if (name.equals(annotation.getName())){
                 list.add(annotation);
             }
         }
         return list;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * {@inheritDoc}
+     * <!-- end-user-doc -->
+     * @generated NOT
+     */
+    public void removeAllAnnotations(String name) {
+        Iterator<Annotation> annotationIter = getAnnotations().iterator();
+        while (annotationIter.hasNext()) {
+            Annotation annotation = annotationIter.next();
+            if (name.equals(annotation.getName())) {
+                annotationIter.remove();
+            }
+        }
     }
 
     /**

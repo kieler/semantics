@@ -464,11 +464,6 @@
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
-            class="de.cau.cs.kieler.synccharts.Action"
-            option="de.cau.cs.kieler.layout.options.noLayout"
-            value="true">
-      </option>
-      <option
             class="de.cau.cs.kieler.core.kexpressions.Signal"
             option="de.cau.cs.kieler.layout.options.noLayout"
             value="true">
@@ -504,12 +499,12 @@
             value="1.0">
       </option>
       <option
-            class="de.cau.cs.kieler.core.kexpressions.ISignal"
+            class="de.cau.cs.kieler.core.kexpressions.IVariable"
             option="de.cau.cs.kieler.layout.options.noLayout"
             value="true">
       </option>
       <option
-            class="de.cau.cs.kieler.core.kexpressions.IVariable"
+            class="de.cau.cs.kieler.core.kexpressions.ISignal"
             option="de.cau.cs.kieler.layout.options.noLayout"
             value="true">
       </option>

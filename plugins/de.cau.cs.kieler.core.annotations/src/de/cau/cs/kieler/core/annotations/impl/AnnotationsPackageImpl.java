@@ -494,6 +494,9 @@ public class AnnotationsPackageImpl extends EPackageImpl implements AnnotationsP
         g1.getETypeArguments().add(g2);
         initEOperation(op, g1);
 
+        op = addEOperation(annotatableEClass, null, "removeAllAnnotations", 0, 1, IS_UNIQUE, IS_ORDERED);
+        addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+
         initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
         initEClass(stringAnnotationEClass, StringAnnotation.class, "StringAnnotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
