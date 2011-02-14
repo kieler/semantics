@@ -24,11 +24,41 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.ICompoundEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 
 /**
+ * A FocusContextEffect implements the Focus & Context behavior for graphical models for their diagrams
+ * in the KIELER View Management.
+ * After creating the effect, it allows to add semantical {@link EObject}s to the <b>focus</b>. These
+ * elements will be shown with most detail. Other objects will form the <b>context</b> and will be shown
+ * with the least detail. Currently full detail means that all compartments of the element are
+ * expanded while less detail means that all compartments get collapsed.
+ * <p>
+ * In the future this could be extended to also support multiple levels of focus and/or context
+ * and even different ways of reducing the level of detail. This could include complete
+ * hiding of elements (i.e. use only a subset of elements as the context to reduce overall size
+ * of a model) or to hide text labels, e.g. at connections or nodes.
+ * <p> 
+ * Next to an object added to the focus it can be specified how many containment levels of this
+ * particular object should be added to the focus, e.g. none, all (i.e. adding the complete
+ * children hierarchy of this object) or a specific level.
+ * <p>
+ * In opposite to the children hierarchy the parent hierarchy is always added completely for one element.
+ * Therefore for one element, all of its ancestors will be added to the focus. Only after the
+ * whole focus has been set, this transitive focus gets calculated and the context will be set as
+ * its complement.
+ * <p>
+ * This class implements {@link ICompoundEffect} as it is composed out of many 
+ * {@link CompartmentCollapseExpandEffect}s and in future may also contain other effects. While
+ * an {@link ICompoundEffect} itself is no {@link IEffect}, it can be asked for a list of
+ * the primitive effects by {@link #getPrimitiveEffects()}. An {@link AbstractCombination} is able
+ * to schedule an {@link ICompoundEffect} just like it can schedule an {@link IEffect}. However, 
+ * this is just some convenience function to schedule all primitive effects successively.
+ * 
+ * 
  * @author haf
  * 
  */
@@ -83,8 +113,8 @@ public class FocusContextEffect implements ICompoundEffect {
 
     /**
      * Add one element to the focus. All ancestors of focus objects will also be in the focus. Other
-     * objects will be the context. Descendants will be also added if the corresponding
-     * parameter is true. It will add all deeply nested children.
+     * objects will be the context. Descendants will be also added if the corresponding parameter is
+     * true. It will add all deeply nested children.
      * 
      * @param focusedObject
      *            the object to add to the focus
@@ -99,8 +129,8 @@ public class FocusContextEffect implements ICompoundEffect {
      * Add one element to the focus. Ancestors of focus objects will also be in the focus. Other
      * objects will be the context. Descendants will be also added if the corresponding
      * childrenLevel parameter is greater than 0. It will add all children to the given level, i.e.
-     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and
-     * all of their direct children, etc.
+     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and all
+     * of their direct children, etc.
      * 
      * @param focusedObject
      *            the object to add to the focus
@@ -112,14 +142,14 @@ public class FocusContextEffect implements ICompoundEffect {
             this.focus.add(focusedObject);
         }
         // also set children of the selection to the focus
-        if(childrenLevel > 0){
+        if (childrenLevel > 0) {
             List<EObject> children = focusedObject.eContents();
             for (EObject child : children) {
                 this.addFocus(child, (childrenLevel - 1));
             }
         }
     }
-    
+
     /**
      * Add multiple elements to the focus. All ancestors of focus objects will also be in the focus.
      * Other objects will be the context.
@@ -141,11 +171,11 @@ public class FocusContextEffect implements ICompoundEffect {
      * Add multiple elements to the focus. All ancestors of focus objects will also be in the focus.
      * Other objects will be the context. Descendants will be also added if the corresponding
      * childrenLevel parameter is greater than 0. It will add all children to the given level, i.e.
-     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and
-     * all of their direct children, etc.
+     * a level of 0 adds no children, 1 adds all direct children, 2 adds all direct children and all
+     * of their direct children, etc.
      * 
-     * @param focusedObject
-     *            the object to add to the focus
+     * @param focusedObjects
+     *            the objects to add to the focus
      * @param childrenLevel
      *            adds children up to this given hierarchy level
      */
@@ -156,7 +186,7 @@ public class FocusContextEffect implements ICompoundEffect {
             }
         }
     }
-    
+
     /*
      * Iterate all elements in the model and add all ancestors of a focus element to the focus and
      * all other elements to the context.

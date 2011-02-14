@@ -137,12 +137,13 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         private IGraphicalFrameworkBridge bridge;
 
         /**
-         * Default constructor creating an invalid DiagramState
+         * Default constructor creating an invalid DiagramState.
          */
         public DiagramState() {
         }
 
         /**
+         * Constructor taking the corresponding {@link IWorkbenchPart} that contains the diagram.
          * 
          * @param diagram
          */
