@@ -24,6 +24,7 @@ public class TransformationDescriptor {
 
     private String transformationName;
     private Object[] parameters;
+    private Object result;
 
     /**
      * @param theTransformationName
@@ -32,7 +33,6 @@ public class TransformationDescriptor {
      *            the parameters that are passed to the method.
      */
     public TransformationDescriptor(final String theTransformationName, final Object[] theParameters) {
-        super();
         this.transformationName = theTransformationName;
         this.parameters = theParameters;
     }
@@ -49,6 +49,22 @@ public class TransformationDescriptor {
      */
     public Object[] getParameters() {
         return parameters;
+    }
+
+    /**
+     * @param result
+     *            the result to set
+     */
+    public void setResult(final Object result) {
+        this.result = result;
+    }
+
+    /**
+     * @return the result of the executed transformation. If the transformation was not executed
+     *         yet, {@code null} is returned.
+     */
+    public Object getResult() {
+        return result;
     }
 
 }

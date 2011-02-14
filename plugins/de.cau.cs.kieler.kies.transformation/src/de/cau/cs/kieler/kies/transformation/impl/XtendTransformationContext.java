@@ -13,98 +13,93 @@
  */
 package de.cau.cs.kieler.kies.transformation.impl;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.Semaphore;
+import java.util.Map;
 
 import org.eclipse.emf.common.command.CommandStack;
-import org.eclipse.emf.common.command.CompoundCommand;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
-import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
-import org.eclipse.gmf.runtime.notation.View;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
+import org.eclipse.xtend.expression.Variable;
 
-import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
- * {@link TransformationContext} for the execution of Xtend transformations.
+ * {@link ITransformationContext} for the execution of Xtend transformations.
  * 
  * @author uru
  * 
  */
-public class XtendTransformationContext implements TransformationContext {
-
-    private static final String COMMAND_NAME = "Transformation Command";
+public class XtendTransformationContext implements ITransformationContext {
 
     private XtendFacade xtendFacade;
     private TransactionalEditingDomain editingDomain;
-    private TransformationDescriptor descriptor;
-    private Semaphore lock;
-
-    private Object result = null;
 
     /**
      * @param facade
      *            {@link XtendFacade} responsible for calling the extensions.
-     * @param theDescriptor
-     *            {@link TransformationDescriptor} containing the name and parameters of the current
-     *            transformation.
+     */
+    public XtendTransformationContext(final XtendFacade facade) {
+        this.xtendFacade = facade;
+    }
+
+    /**
+     * @param facade
+     *            {@link XtendFacade} responsible for calling the extensions.
      * @param theEditingDomain
      *            editing domain on which the current transformation is executed.
-     * @param aLock
-     *            a semaphore that is released as soon as the transformation finished.
-     */
+     * */
     public XtendTransformationContext(final XtendFacade facade,
-            final TransformationDescriptor theDescriptor,
-            final TransactionalEditingDomain theEditingDomain, final Semaphore aLock) {
-        super();
+            final TransactionalEditingDomain theEditingDomain) {
         this.xtendFacade = facade;
-        this.descriptor = theDescriptor;
         this.editingDomain = theEditingDomain;
-        this.lock = aLock;
+
+    }
+
+    /**
+     * @param extensionFile
+     *            the file (*.ext) containing the used extensions.
+     * @param basePackages
+     *            the base packages used by this transformation
+     * @param globalVars
+     *            A {@link Map} with global variables used by xtend. may be {@code null}.
+     * @param editingDomain
+     *            editing domain on which the current transformation is executed. may be
+     *            {@code null}.
+     */
+    public XtendTransformationContext(final String extensionFile, final String[] basePackages,
+            final Map<String, Variable> globalVars, final TransactionalEditingDomain editingDomain) {
+        this(TransformationUtil.initializeFacade(extensionFile, basePackages, globalVars),
+                editingDomain);
     }
 
     /**
      * {@inheritDoc}
      */
-    public void executeCurrent() {
-        // FIXME workaround to avoid deadlock with FireOnceTriggerListener
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+    public void execute(final TransformationDescriptor descriptor) {
 
-            public void run() {
+        if (editingDomain != null) {
+            // FIXME workaround to avoid deadlock with FireOnceTriggerListener
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
-                // create a compound command to make sure all gmf elements are refreshed
-                // after the transformation was executed
-                // for some reason it is important to do this in a separate command!
-                CompoundCommand cc = new CompoundCommand(COMMAND_NAME);
+                public void run() {
+                    XtendTransformationCommand command = new XtendTransformationCommand(
+                            xtendFacade, descriptor, editingDomain);
+                    CommandStack stack = editingDomain.getCommandStack();
+                    stack.execute(command);
+                    if (command.getResult() != null) {
+                        // the result is either the first element of a collection or null!
+                        descriptor.setResult(command.getResult().iterator().next());
+                    }
 
-                XtendTransformationCommand command = new XtendTransformationCommand(xtendFacade,
-                        descriptor, editingDomain);
-                cc.append(command);
-                cc.append(new RefreshGMFElementsCommand(editingDomain));
-
-                CommandStack stack = editingDomain.getCommandStack();
-                stack.execute(cc);
-                if (command.getResult() != null) {
-                    // the result is either the first element of a collection or null!
-                    result = (command.getResult().iterator().next());
                 }
-
-                if (lock != null) {
-                    System.out.println("Release");
-                    lock.release();
-                }
-            }
-        });
+            });
+        } else {
+            Object o = xtendFacade.call(descriptor.getTransformationName(),
+                    descriptor.getParameters());
+            descriptor.setResult(o);
+        }
     }
 
     /**
@@ -123,55 +118,4 @@ public class XtendTransformationContext implements TransformationContext {
         this.editingDomain = theEditingDomain;
     }
 
-    /**
-     * @param theDescriptor
-     *            the descriptor to set
-     */
-    public void setDescriptor(final TransformationDescriptor theDescriptor) {
-        this.descriptor = theDescriptor;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public Object getLastResult() {
-        return result;
-    }
-
-    /**
-     * inner class refreshing the GMF edit policies.
-     * 
-     * @author uru
-     * 
-     */
-    private class RefreshGMFElementsCommand extends RecordingCommand {
-
-        /**
-         * @param domain
-         */
-        public RefreshGMFElementsCommand(final TransactionalEditingDomain domain) {
-            super(domain);
-        }
-
-        @Override
-        protected void doExecute() {
-            final IEditorPart activeEditor = TransformationUtil.getActiveEditor();
-            Display.getDefault().syncExec(new Runnable() {
-                public void run() {
-                    if (activeEditor instanceof IDiagramWorkbenchPart) {
-                        EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramEditPart().getModel()).getElement();
-                        List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(obj);
-                        for (Iterator<?> it = editPolicies.iterator(); it.hasNext();) {
-                            CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy) it.next();
-                            nextEditPolicy.refresh();
-                        }
-                        IDiagramGraphicalViewer graphViewer = ((IDiagramWorkbenchPart) activeEditor)
-                                .getDiagramGraphicalViewer();
-                        graphViewer.flush();
-                    }
-                }
-            });
-        }
-    }
 }

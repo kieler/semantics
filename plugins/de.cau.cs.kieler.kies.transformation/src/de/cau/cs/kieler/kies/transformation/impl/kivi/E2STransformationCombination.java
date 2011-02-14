@@ -39,8 +39,9 @@ import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
-import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
+import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
+import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.impl.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
@@ -112,7 +113,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
-        KiVi.getInstance().setDebug(true);
+        //KiVi.getInstance().setDebug(true);
     }
 
     /**
@@ -216,6 +217,7 @@ public class E2STransformationCombination extends AbstractCombination {
             return;
         }
 
+        long start = System.currentTimeMillis();
         // initialize the correct datacomponent
         if (isTransformable()) {
             currentDataComponent = new EsterelToSyncChartDataComponent(true);
@@ -224,6 +226,7 @@ public class E2STransformationCombination extends AbstractCombination {
         }
         try {
             currentDataComponent.initialize();
+
         } catch (KiemInitializationException e) {
             e.printStackTrace();
         }
@@ -239,19 +242,25 @@ public class E2STransformationCombination extends AbstractCombination {
         // perform step
         try {
             currentDataComponent.step(null);
-            TransformationContext lastContext = currentDataComponent.getCurrentContext();
+            ITransformationContext lastContext = currentDataComponent.getCurrentContext();
+            TransformationDescriptor lastDescriptor = currentDataComponent.getCurrentDescriptor();
             if (lastContext != null) {
-                TransformationEffect effect = new TransformationEffect(lastContext);
+                TransformationEffect effect = new TransformationEffect(lastContext, lastDescriptor);
+                long end = System.currentTimeMillis();
+
+                System.out.println("\t ##### Initialize Time: " + (end - start));
                 effect.schedule();
             }
         } catch (KiemExecutionException e) {
             e.printStackTrace();
             System.out.println("Finished");
         }
+
     }
 
     private void back() {
         if (currentCommandStack != null && currentCommandStack.canUndo()) {
+            currentCommandStack.undo();
             currentCommandStack.undo();
         }
         if (currentCommandStack != null) {
@@ -299,6 +308,9 @@ public class E2STransformationCombination extends AbstractCombination {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
             // optimization is performed the same manner line expand just with different data
             // component.
+            if (currentDataComponent != null) {
+                currentDataComponent.doPostTransformation();
+            }
             process(BUTTON_EXPAND);
             setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
         } else if (lastStepType.equals(BUTTON_EXPAND)) {
@@ -317,32 +329,32 @@ public class E2STransformationCombination extends AbstractCombination {
 
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             // refresh GMF edit policies
-            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
-                    (SyncchartsDiagramEditor) currentlyActiveEditor);
+            RefreshGMFEditPoliciesEffect gmfEffect = new RefreshGMFEditPoliciesEffect(
+                    (SyncchartsDiagramEditor) currentlyActiveEditor, true);
             gmfEffect.schedule();
 
             // apply automatic layout by triggering the trigger (null layouts whole diagram)
             LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
             layoutEffect.schedule();
-        }
 
-        // set a new selection in case xtext passed one
-        if (effect.getResult() instanceof State) {
-            State selection = (State) effect.getResult();
-            IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(
-                    currentlyActiveEditor);
-            if (bridge != null) {
-                final EditPart p = bridge.getEditPart(selection);
-                if (p != null) {
-                    // a selection has to be performed on the UI thread.
-                    PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            // set a new selection in case xtext passed one
+            if (effect.getResult() instanceof State) {
+                State selection = (State) effect.getResult();
+                IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance()
+                        .getBridge(currentlyActiveEditor);
+                if (bridge != null) {
+                    final EditPart p = bridge.getEditPart(selection);
+                    if (p != null) {
+                        // a selection has to be performed on the UI thread.
+                        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
-                        public void run() {
-                            ((IEditorPart) currentlyActiveEditor).getEditorSite()
-                                    .getSelectionProvider()
-                                    .setSelection(new StructuredSelection(p));
-                        }
-                    });
+                            public void run() {
+                                ((IEditorPart) currentlyActiveEditor).getEditorSite()
+                                        .getSelectionProvider()
+                                        .setSelection(new StructuredSelection(p));
+                            }
+                        });
+                    }
                 }
             }
         }

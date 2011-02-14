@@ -13,140 +13,84 @@
  */
 package de.cau.cs.kieler.kies.transformation.core.kivi;
 
-import java.util.Map;
-import java.util.concurrent.Semaphore;
-
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.xtend.XtendFacade;
-import org.eclipse.xtend.expression.Variable;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.kies.transformation.impl.XtendTransformationContext;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 
 /**
+ * A KiVi effect that executes a specific transformation.
+ * 
  * @author uru
  * 
  */
 public class TransformationEffect extends AbstractEffect {
 
-    private TransformationContext context;
-    private Object result;
+    private ITransformationContext context;
+    private TransformationDescriptor descriptor;
 
     /**
-     * @param theContext
-     *            {@link TransformationContext} containing all necessary information in order to
+     * default constructor.
+     */
+    public TransformationEffect() {
+    }
+
+    /**
+     * @param context
+     *            {@link ITransformationContext} containing all necessary information in order to
      *            execute the transformation.
+     * @param descriptor
+     *            The transformation's {@link TransformationDescriptor}
      */
-    public TransformationEffect(final TransformationContext theContext) {
-        this.context = theContext;
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param extentionFile
-     *            the path to the file containing the extensions.
-     * @param basePackages
-     *            all meta models that are required to execute this transformation.
-     * @param theDescriptor
-     *            {@link TransformationDescriptor} containing the name of the transformation to be
-     *            executed and all parameters which should be passed.
-     * @param theEditingDomain
-     *            {@link TransactionalEditingDomain} in which the transformation should be executed.
-     */
-    public TransformationEffect(final String extentionFile, final String[] basePackages,
-            final TransformationDescriptor theDescriptor,
-            final TransactionalEditingDomain theEditingDomain) {
-        this(extentionFile, basePackages, theDescriptor, theEditingDomain, null, null);
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param extentionFile
-     *            the path to the file containing the extensions.
-     * @param basePackages
-     *            all meta models that are required to execute this transformation.
-     * @param theDescriptor
-     *            {@link TransformationDescriptor} containing the name of the transformation to be
-     *            executed and all parameters which should be passed.
-     * @param theEditingDomain
-     *            {@link TransactionalEditingDomain} in which the transformation should be executed.
-     * @param lock
-     *            A semaphore that is released as soon as the transformation was executed.
-     */
-    public TransformationEffect(final String extentionFile, final String[] basePackages,
-            final TransformationDescriptor theDescriptor,
-            final TransactionalEditingDomain theEditingDomain, final Semaphore lock) {
-        this(extentionFile, basePackages, theDescriptor, theEditingDomain, null, lock);
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param extentionFile
-     *            the path to the file containing the extensions.
-     * @param basePackages
-     *            all meta models that are required to execute this transformation.
-     * @param theDescriptor
-     *            {@link TransformationDescriptor} containing the name of the transformation to be
-     *            executed and all parameters which should be passed.
-     * @param theEditingDomain
-     *            {@link TransactionalEditingDomain} in which the transformation should be executed.
-     * @param globalVars
-     *            A {@link Map<String, Variable>} containing global variables.
-     */
-    public TransformationEffect(final String extentionFile, final String[] basePackages,
-            final TransformationDescriptor theDescriptor,
-            final TransactionalEditingDomain theEditingDomain,
-            final Map<String, Variable> globalVars) {
-        this(extentionFile, basePackages, theDescriptor, theEditingDomain, globalVars, null);
-    }
-
-    /**
-     * Constructor.
-     * 
-     * @param extentionFile
-     *            the path to the file containing the extensions.
-     * @param basePackages
-     *            all meta models that are required to execute this transformation.
-     * @param theDescriptor
-     *            {@link TransformationDescriptor} containing the name of the transformation to be
-     *            executed and all parameters which should be passed.
-     * @param theEditingDomain
-     *            {@link TransactionalEditingDomain} in which the transformation should be executed.
-     * @param globalVars
-     *            A {@link Map<String, Variable>} containing global variables.
-     * @param lock
-     *            A semaphore that is released as soon as the transformation was executed.
-     */
-    public TransformationEffect(final String extentionFile, final String[] basePackages,
-            final TransformationDescriptor theDescriptor,
-            final TransactionalEditingDomain theEditingDomain,
-            final Map<String, Variable> globalVars, final Semaphore lock) {
-
-        XtendFacade facade = TransformationUtil.initializeFacade(extentionFile, basePackages,
-                globalVars);
-        this.context = new XtendTransformationContext(facade, theDescriptor, theEditingDomain, lock);
+    public TransformationEffect(final ITransformationContext context,
+            final TransformationDescriptor descriptor) {
+        this.context = context;
+        this.descriptor = descriptor;
     }
 
     /**
      * {@inheritDoc}
      */
     public void execute() {
-        // execute the transformation
-        context.executeCurrent();
-        // retrieve result
-        result = context.getLastResult();
+        if (context != null && descriptor != null) {
+            // execute the transformation
+            long start = System.currentTimeMillis();
+            context.execute(descriptor);
+            long end = System.currentTimeMillis();
+            System.out.println("\t ##### Execution Time: " + (end - start));
+        } else {
+            Status status = new Status(
+                    Status.ERROR,
+                    Activator.PLUGIN_ID,
+                    "A TransformationEffect could not be executed. Either the "
+                            + "TransformationContext or the TransformationDescriptor has not been set.");
+            StatusManager.getManager().handle(status);
+        }
     }
 
     /**
-     * @return the result
+     * @return the result of the executed transformation.
      */
     public Object getResult() {
-        return result;
+        return descriptor.getResult();
+    }
+
+    /**
+     * @param context
+     *            the context to set
+     */
+    public void setContext(final ITransformationContext context) {
+        this.context = context;
+    }
+
+    /**
+     * @param descriptor
+     *            the descriptor to set
+     */
+    public void setDescriptor(final TransformationDescriptor descriptor) {
+        this.descriptor = descriptor;
     }
 }

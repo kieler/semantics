@@ -38,7 +38,7 @@ import org.eclipse.ui.IActionDelegate;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
@@ -105,9 +105,9 @@ public class CompareTwoKIXS implements IActionDelegate {
             TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
                     .createEditingDomain(resourceSet);
             SyncchartsContentUtil.addTriggerListeners(ted);
-            TransformationContext context = new XtendTransformationContext(edc.getXtendFacade(), td, ted,
-                    null);
-            TransformationEffect effect = new TransformationEffect(context);
+            ITransformationContext context = new XtendTransformationContext(edc.getXtendFacade(),
+                    ted);
+            TransformationEffect effect = new TransformationEffect(context, td);
             effect.execute();
             ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                     ActionLabelProcessorWrapper.SERIALIZE);

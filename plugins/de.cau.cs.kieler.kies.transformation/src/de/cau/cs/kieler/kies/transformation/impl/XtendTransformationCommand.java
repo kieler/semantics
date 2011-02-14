@@ -32,6 +32,8 @@ import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
  */
 public class XtendTransformationCommand extends RecordingCommand {
 
+    private static final String COMMAND_NAME = "Xtend Transformation Command";
+
     private XtendFacade xtendFacade;
     private TransformationDescriptor descriptor;
     private Collection<Object> result = null;
@@ -47,7 +49,7 @@ public class XtendTransformationCommand extends RecordingCommand {
     public XtendTransformationCommand(final XtendFacade theXtendFacade,
             final TransformationDescriptor theDescriptor,
             final TransactionalEditingDomain editingDomain) {
-        super(editingDomain);
+        super(editingDomain, COMMAND_NAME);
         this.xtendFacade = theXtendFacade;
         this.descriptor = theDescriptor;
     }

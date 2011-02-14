@@ -19,17 +19,16 @@ package de.cau.cs.kieler.kies.transformation.core;
  * 
  * @author uru
  */
-public interface TransformationContext {
+public interface ITransformationContext {
 
     /**
-     * This method executes the actual transformation. It is called by the
+     * Execute the actual transformation. This method will be called by the
      * {@link TransformationEffect}.
+     * 
+     * @param descriptor
+     *            The {@link TransformationDescriptor} containing information about the explicit
+     *            transformation to execute.
      */
-    void executeCurrent();
+    void execute(final TransformationDescriptor descriptor);
 
-    /**
-     * @return any result of the executed transformation. If the transformation was not executed
-     *         yet, {@code null} is returned.
-     */
-    Object getLastResult();
 }

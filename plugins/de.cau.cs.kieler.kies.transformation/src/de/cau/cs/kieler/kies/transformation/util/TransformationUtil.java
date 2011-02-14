@@ -583,15 +583,15 @@ public final class TransformationUtil {
     /**
      * initializes an XtendFacade and returns the instance.
      * 
-     * @param extentionFile
+     * @param extensionFile
      *            file containing the extentions.
      * @param basePackages
      *            emf packages needed within the transformation.
      * @return XtendFacade
      */
-    public static XtendFacade initializeFacade(final String extentionFile,
+    public static XtendFacade initializeFacade(final String extensionFile,
             final String[] basePackages) {
-        return initializeFacade(extentionFile, basePackages, null);
+        return initializeFacade(extensionFile, basePackages, null);
     }
 
     /**

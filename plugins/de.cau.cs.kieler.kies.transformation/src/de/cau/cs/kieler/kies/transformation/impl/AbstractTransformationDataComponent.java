@@ -34,13 +34,12 @@ import org.json.JSONObject;
 import com.google.common.collect.Maps;
 
 import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.core.TransformationContext;
+import de.cau.cs.kieler.kies.transformation.core.ITransformationContext;
 import de.cau.cs.kieler.kies.transformation.core.TransformationDescriptor;
-import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
+import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.kies.transformation.core.kivi.TransformationEffect;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
-import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -52,9 +51,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * @author uru
  * 
  */
-public abstract class AbstractTransformationDataComponent extends JSONObjectDataComponent implements
-        IJSONObjectDataComponent {
-
+public abstract class AbstractTransformationDataComponent extends JSONObjectDataComponent {
+    // JSON needed?
     private TransactionalEditingDomain domain;
     private Shell shell;
 
@@ -75,7 +73,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     /** is the transformation executed by KiVi? */
     private boolean kiviMode;
-    private TransformationContext currentContext;
+    private ITransformationContext currentContext;
+    private TransformationDescriptor currentDescriptor;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -154,9 +153,9 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         // System.out.println("currentsteps " + KiemPlugin.getDefault().getExecution().getSteps());
 
         // perform next transformation
-        TransformationDescriptor descriptor = getNextTransformation();
+        currentDescriptor = getNextTransformation();
         currentContext = null;
-        if (descriptor != null) {
+        if (currentDescriptor != null) {
             TransformationUtil.logger.info("Trigger");
             if (facade == null) {
                 Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
@@ -166,8 +165,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             }
 
             // execute Transformation
-            TransformationContext context = new XtendTransformationContext(facade, descriptor,
-                    domain, semaphore);
+            ITransformationContext context = new XtendTransformationContext(facade, domain);
             currentContext = context;
 
             // if normally used by KIEM, execute the transformation
@@ -308,8 +306,15 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     /**
      * @return the currentContext
      */
-    public TransformationContext getCurrentContext() {
+    public ITransformationContext getCurrentContext() {
         return currentContext;
+    }
+
+    /**
+     * @return the currentDescriptor
+     */
+    public TransformationDescriptor getCurrentDescriptor() {
+        return currentDescriptor;
     }
 
     /**
@@ -317,13 +322,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * is used to execute the transformation properly in order to support undo.
      */
     private void processTransformation() {
-        TransformationEffect effect = new TransformationEffect(currentContext);
+        TransformationEffect effect = new TransformationEffect(currentContext, currentDescriptor);
         effect.execute();
         effect.getResult();
         final IEditorPart currentlyActiveEditor = TransformationUtil.getActiveEditor();
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
-            RefreshGMFElementsEffect gmfEffect = new RefreshGMFElementsEffect(
-                    (SyncchartsDiagramEditor) currentlyActiveEditor);
+            RefreshGMFEditPoliciesEffect gmfEffect = new RefreshGMFEditPoliciesEffect(
+                    (SyncchartsDiagramEditor) currentlyActiveEditor, true);
             gmfEffect.execute();
 
             processLayout((SyncchartsDiagramEditor) currentlyActiveEditor);

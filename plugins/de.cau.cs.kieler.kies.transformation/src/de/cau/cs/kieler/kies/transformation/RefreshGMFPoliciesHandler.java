@@ -22,7 +22,7 @@ import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFElementsEffect;
+import de.cau.cs.kieler.kies.transformation.core.kivi.RefreshGMFEditPoliciesEffect;
 
 /**
  * An abstract handler for testing purposes only.
@@ -37,7 +37,8 @@ public class RefreshGMFPoliciesHandler extends AbstractHandler {
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
 
-        RefreshGMFElementsEffect gmf = new RefreshGMFElementsEffect(getActiveEditor());
+        RefreshGMFEditPoliciesEffect gmf = new RefreshGMFEditPoliciesEffect(getActiveEditor(),
+                false);
         gmf.execute();
         return null;
     }
