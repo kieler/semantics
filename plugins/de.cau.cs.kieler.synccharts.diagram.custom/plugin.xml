@@ -508,6 +508,10 @@
             option="de.cau.cs.kieler.layout.options.noLayout"
             value="true">
       </option>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Scope"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.HVLayoutConfig">
+      </semanticOption>
    </extension>
       <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
