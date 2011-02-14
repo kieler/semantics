@@ -10,7 +10,7 @@
        genModel = "de/cau/cs/kieler/kies/Esterel.genmodel" /> 
 	
   </extension>
-  <extension
+  <!--extension
         point="org.eclipse.ui.menus">
      <menuContribution
            locationURI="popup:de.cau.cs.kieler">
@@ -33,5 +33,5 @@
            </visibleWhen>
         </command>
      </menuContribution>
-  </extension>
+  </extension-->
 </plugin>
