@@ -500,57 +500,38 @@ public final class TransformationUtil {
         MonitoredOperation.runInUI(new Runnable() {
 
             public void run() {
-                try {
-                    PlatformUI.getWorkbench().getProgressService()
-                            .run(false, true, new IRunnableWithProgress() {
-                                public void run(final IProgressMonitor uiMonitor) {
+                // measure the overall time
+                long start = System.currentTimeMillis();
+                IFile kixsFile;
+                IWorkspaceRoot workspaceRoot;
 
-                                    // measure the overall time
-                                    long start = System.currentTimeMillis();
-                                    IFile kixsFile;
-                                    IWorkspaceRoot workspaceRoot;
+                // access workspace
+                IWorkspace workspace = ResourcesPlugin.getWorkspace();
+                workspaceRoot = workspace.getRoot();
 
-                                    // CHECKSTYLEOFF MagicNumber
-                                    // used some numbers to estimate work done
-                                    uiMonitor.beginTask("Initial Transformation", 100);
-                                    // access workspace
-                                    IWorkspace workspace = ResourcesPlugin.getWorkspace();
-                                    workspaceRoot = workspace.getRoot();
+                // get files relative to Workspace
+                IPath kixsPath = strlFile.getFullPath().removeFileExtension()
+                        .addFileExtension("kixs");
+                kixsFile = workspaceRoot.getFile(kixsPath);
 
-                                    // get files relative to Workspace
-                                    IPath kixsPath = strlFile.getFullPath().removeFileExtension()
-                                            .addFileExtension("kixs");
-                                    kixsFile = workspaceRoot.getFile(kixsPath);
-
-                                    logger.info(strlFile.toString());
-                                    // create all the elements
-                                    IFile created = TransformationUtil
-                                            .createSyncchartDiagram(kixsFile);
-                                    if (created == null) {
-                                        createdKixs.set(null);
-                                        return;
-                                    } else {
-                                        createdKixs.set(created);
-                                        kixsFile = created;
-                                    }
-                                    uiMonitor.worked(40);
-                                    TransformationUtil.doInitialEsterelTransformation(strlFile,
-                                            kixsFile);
-                                    uiMonitor.worked(60);
-                                    TransformationUtil.refreshEditPolicies();
-                                    uiMonitor.worked(90);
-
-                                    long total = System.currentTimeMillis() - start;
-                                    logger.info("Initial Transformation took: " + total + " Sek: "
-                                            + (total / 1000f) + "s");
-                                    // CHECKSTYLEON MagicNumber
-                                }
-                            });
-                } catch (Exception e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Problem occured during initial Transformation.", e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                logger.info(strlFile.toString());
+                // create all the elements
+                IFile created = TransformationUtil.createSyncchartDiagram(kixsFile);
+                if (created == null) {
+                    createdKixs.set(null);
+                    return;
+                } else {
+                    createdKixs.set(created);
+                    kixsFile = created;
                 }
+
+                TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
+                TransformationUtil.refreshEditPolicies();
+
+                long total = System.currentTimeMillis() - start;
+                logger.info("Initial Transformation took: " + total + " Sek: " + (total / 1000f)
+                        + "s");
+
             }
         }, true);
         return createdKixs.get();
@@ -635,10 +616,14 @@ public final class TransformationUtil {
             System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
 
             // process action labels
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.SERIALIZE);
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.PARSE);
+            try {
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.SERIALIZE);
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.PARSE);
+            } catch (Exception e) {
+                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+            }
 
             resource.save(null);
         } catch (Exception e) {

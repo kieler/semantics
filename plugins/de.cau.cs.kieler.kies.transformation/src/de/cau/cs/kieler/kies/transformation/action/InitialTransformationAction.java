@@ -14,13 +14,20 @@
 package de.cau.cs.kieler.kies.transformation.action;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IActionDelegate;
+import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 
 /**
  * @author uru
@@ -31,16 +38,49 @@ public class InitialTransformationAction implements IActionDelegate {
     private IFile strlFile;
 
     /**
-     * {@inheritDoc}
+     * In case an .strl file is selected perform a complete transformation and optimization and open
+     * the created .kids in the SyncCharts editor.
+     * 
+     * @param action
+     *            no need for this here
      */
     public void run(final IAction action) {
         if (strlFile == null || !strlFile.exists()) {
             return;
         }
-        IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
-        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
-        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT);
-        TransformationUtil.openKidsInEditor(kixsFile);
+        try {
+            PlatformUI.getWorkbench().getProgressService()
+                    .run(false, true, new IRunnableWithProgress() {
+                        public void run(final IProgressMonitor uiMonitor) {
+                            uiMonitor.beginTask("Initial Transformation", IProgressMonitor.UNKNOWN);
+                            IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
+                            uiMonitor.beginTask("Performing Esterel To SyncCharts Transformation",
+                                    IProgressMonitor.UNKNOWN);
+                            TransformationUtil.performHeadlessTransformation(kixsFile,
+                                    TransformationType.E2S);
+                            uiMonitor.beginTask("Performing SyncCharts Optimization",
+                                    IProgressMonitor.UNKNOWN);
+                            boolean success = TransformationUtil.performHeadlessTransformation(
+                                    kixsFile, TransformationType.SYNC_OPT);
+                            System.out.println("######## SUC" + success);
+                            uiMonitor.beginTask("Opening the Diagram", IProgressMonitor.UNKNOWN);
+                            try {
+                                Thread.sleep(10000);
+                            } catch (InterruptedException e) {
+                                // TODO Auto-generated catch block
+                                e.printStackTrace();
+                            }
+                            TransformationUtil.openKidsInEditor(kixsFile);
+                            LayoutEffect effect = new LayoutEffect(TransformationUtil
+                                    .getActiveEditor(), null);
+                            effect.schedule();
+                        }
+                    });
+        } catch (Exception e) {
+            Status s = new Status(Status.ERROR, Activator.PLUGIN_ID, "Could not transform "
+                    + strlFile.getName() + " into a SyncCharts.", e);
+            StatusManager.getManager().handle(s);
+        }
     }
 
     /**
