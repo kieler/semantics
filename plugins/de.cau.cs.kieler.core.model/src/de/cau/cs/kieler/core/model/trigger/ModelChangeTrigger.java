@@ -28,7 +28,6 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
@@ -76,8 +75,8 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         MonitoredOperation.runInUI(new Runnable() {
             public void run() {
                 IEditorPart part = EditorUtils.getLastActiveEditor();
+                currentEditor = part;
                 if (isDiagram(part)) {
-                    currentEditor = (DiagramEditor) part;
                     GraphicalFrameworkService.getInstance().getBridge(currentEditor)
                             .getEditingDomain(currentEditor);
                     getEditingDomain(currentEditor).addResourceSetListener(that);
@@ -100,8 +99,8 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      */
     public void partActivated(final IWorkbenchPart part) {
         if (!part.equals(currentEditor)) {
+            currentEditor = part;
             if (isDiagram(part)) {
-                currentEditor = part;
                 getEditingDomain(currentEditor).addResourceSetListener(this);
             }
             trigger(new ActiveEditorState(currentEditor, currentEditor, null));
@@ -135,7 +134,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        //trigger(new ActiveEditorState(null, part, null));
+        // trigger(new ActiveEditorState(null, part, null));
     }
 
     /**
