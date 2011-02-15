@@ -83,7 +83,7 @@ import de.cau.cs.kieler.core.ui.Messages;
  * <p>The target group, if present, usually provides a way to select some kind of
  * target container or directory, often also providing a history of previously
  * selected values. As with the source group, you can use
- * {@link #createDefaultTargetGroup(Composite, String, String) to have a default
+ * {@link #createDefaultTargetGroup(Composite, String, String)} to have a default
  * target group with a combo box and a browse button created.
  * 
  * <p>The button bar, if present, usually provides a way to select and deselect all
@@ -463,7 +463,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * method is only called once, upon the resource tree's creation. Subclasses
      * may override. The default implementation returns an empty array.
      * 
-     * <p><emph>Note:</emph> This could be made more flexible to allow changeing
+     * <p><em>Note:</em> This could be made more flexible to allow changeing
      * the list of active filters after creation.
      * 
      * @return array of filters.
@@ -513,7 +513,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * method is only called once, upon the resource list's creation. Subclasses
      * may override. The default implementation returns an empty array.
      * 
-     * <p><emph>Note:</emph> This could be made more flexible to allow changeing
+     * <p><em>Note:</em> This could be made more flexible to allow changeing
      * the list of active filters after creation.
      * 
      * @return array of filters.
