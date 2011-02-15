@@ -4,7 +4,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent"
+            class="de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent"
             id="de.cau.cs.kieler.kies.transformation.Transformation"
             name="Esterel to SyncCharts Transformation">
       </content>
@@ -12,7 +12,7 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent"
+            class="de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent"
             id="de.cau.cs.kieler.kies.transformation.Optimization"
             name="SyncCharts Optimization">
       </content>
@@ -23,7 +23,7 @@
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"
-            class="de.cau.cs.kieler.kies.transformation.impl.kivi.E2STransformationCombination"
+            class="de.cau.cs.kieler.kies.transformation.kivi.E2STransformationCombination"
             description="Performs an Esterel to SyncCharts Transformation"
             name="Esterel to Synccharts Combination">
       </combination>

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.impl;
+package de.cau.cs.kieler.kies.transformation;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -36,7 +36,6 @@ import com.google.common.collect.Multimaps;
 
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
-import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -44,6 +43,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * DataComponent optimizing an existing SyncCharts.
@@ -61,9 +61,6 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     /** necessary because KiesUtil.ext has to be evaluated!. */
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
-
-    private State rootState;
-    private Region rootRegion;
 
     private ArrayListMultimap<Integer, State> stateHierarchy = Multimaps.newArrayListMultimap();
     private LinkedList<State> flattenedStates = new LinkedList<State>();
@@ -324,17 +321,17 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     public void doPostTransformation() {
         // assure that all references to old esterel signals are remove.
         // currently this is done by just applying a serialization and parsing of the action labels.
-        // try {
-        // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-        // ActionLabelProcessorWrapper.SERIALIZE);
-        // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-        // ActionLabelProcessorWrapper.PARSE);
-        // } catch (Exception e) {
-        // Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
-        // "An error occured trying to serialize and"
-        // + " parse Action labels after SyncCharts optimization.");
-        // StatusManager.getManager().handle(status);
-        // }
+        try {
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.PARSE);
+        } catch (Exception e) {
+            Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "An error occured trying to serialize and"
+                            + " parse Action labels after SyncCharts optimization.");
+            StatusManager.getManager().handle(status);
+        }
     }
 
 }

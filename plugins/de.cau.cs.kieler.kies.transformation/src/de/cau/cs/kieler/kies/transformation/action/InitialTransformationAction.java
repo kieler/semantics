@@ -20,6 +20,7 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.ui.IActionDelegate;
 
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
 
 /**
  * @author uru
@@ -36,7 +37,10 @@ public class InitialTransformationAction implements IActionDelegate {
         if (strlFile == null || !strlFile.exists()) {
             return;
         }
-        TransformationUtil.strlToKixsAndOpen(strlFile);
+        IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT);
+        TransformationUtil.openKidsInEditor(kixsFile);
     }
 
     /**

@@ -36,7 +36,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.emf.ecore.xmi.XMIResource;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
@@ -73,12 +73,19 @@ import de.cau.cs.kieler.core.kexpressions.IntValue;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.TextExpression;
 import de.cau.cs.kieler.core.kexpressions.TextualCode;
+import de.cau.cs.kieler.core.model.effects.TransformationEffect;
+import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
+import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
 import de.cau.cs.kieler.kies.esterel.ConstantExpression;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
+import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -86,6 +93,8 @@ import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorUtil;
+import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
@@ -97,32 +106,29 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
  */
 public final class TransformationUtil {
 
+    // CHECKSTYLEOFF VisibilityModifier - convenience logger
     /** KIES's own logger. */
     public static Logger logger = Logger.getLogger("kies");
+    // CHECKSTYLEON
 
     /** injector used for serialization. */
     private static Injector injector = new EsterelStandaloneSetup()
             .createInjectorAndDoEMFRegistration();
 
+    /**
+     * The enumeration is used to determine which type of headless transformation should be
+     * performed.
+     */
+    public static enum TransformationType {
+        /** Esterel to SyncCharts transformation. */
+        E2S,
+        /** SyncCharts optimization. */
+        SYNC_OPT
+    };
+
     /** utility class. */
     private TransformationUtil() {
         // logger.setLevel(Level.OFF);
-        // logger.getHandlers()[0] = new Handler() {
-        //
-        // @Override
-        // public void publish(LogRecord record) {
-        // System.out.println(record.getMessage());
-        // }
-        //
-        // @Override
-        // public void flush() {
-        //
-        // }
-        //
-        // @Override
-        // public void close() throws SecurityException {
-        // }
-        // };
     }
 
     /**
@@ -346,10 +352,10 @@ public final class TransformationUtil {
 
             // Thread.sleep(5000);
 
-//            resource.unload();
-//            resource.delete(null);
+            // resource.unload();
+            // resource.delete(null);
             // kixsFile.delete(true, null);
-//            System.out.println("##################!!!!!!!! " + kixsFile.exists());
+            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
 
             // get the esterel code and add it as body reference
             XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
@@ -371,17 +377,16 @@ public final class TransformationUtil {
             // resource.delete(null);
             // xtextResource.delete(null);
 
-            
         } catch (Exception e) {
             e.printStackTrace();
 
-//            try {
-//                kixsFile.delete(true, null);
-//            } catch (CoreException e1) {
-//                // TODO Auto-generated catch block
-//                e1.printStackTrace();
-//            }
-//            System.out.println("##################!!!!!!!! " + kixsFile.exists());
+            // try {
+            // kixsFile.delete(true, null);
+            // } catch (CoreException e1) {
+            // // TODO Auto-generated catch block
+            // e1.printStackTrace();
+            // }
+            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem parsing the Esterel file.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -481,16 +486,16 @@ public final class TransformationUtil {
     }
 
     /**
-     * Performs initial transformation of the passed Esterel file into a SyncCharts. Opens the new
-     * .kids file afterwards.
+     * Performs initial transformation of the passed Esterel file into a SyncCharts.
      * 
      * @param strlFile
      *            esterel file to transform
-     * @return true if an kixs file was created, false otherwise.
+     * @return The created kixs {@link IFile}. {@code null} if nothing was created.
      */
-    public static boolean strlToKixsAndOpen(final IFile strlFile) {
+    public static IFile strlToKixs(final IFile strlFile) {
 
-        final Maybe<Boolean> createdKixs = new Maybe<Boolean>();
+        final Maybe<IFile> createdKixs = new Maybe<IFile>();
+        createdKixs.set(null);
         // start with a progress dialog as parsing and opening might take some time
         MonitoredOperation.runInUI(new Runnable() {
 
@@ -502,7 +507,7 @@ public final class TransformationUtil {
 
                                     // measure the overall time
                                     long start = System.currentTimeMillis();
-                                    IFile kixsFile, kidsFile;
+                                    IFile kixsFile;
                                     IWorkspaceRoot workspaceRoot;
 
                                     // CHECKSTYLEOFF MagicNumber
@@ -513,11 +518,8 @@ public final class TransformationUtil {
                                     workspaceRoot = workspace.getRoot();
 
                                     // get files relative to Workspace
-                                    IPath kidsPath = strlFile.getFullPath().removeFileExtension()
-                                            .addFileExtension("kids");
                                     IPath kixsPath = strlFile.getFullPath().removeFileExtension()
                                             .addFileExtension("kixs");
-                                    kidsFile = workspaceRoot.getFile(kidsPath);
                                     kixsFile = workspaceRoot.getFile(kixsPath);
 
                                     logger.info(strlFile.toString());
@@ -525,13 +527,11 @@ public final class TransformationUtil {
                                     IFile created = TransformationUtil
                                             .createSyncchartDiagram(kixsFile);
                                     if (created == null) {
-                                        createdKixs.set(false);
+                                        createdKixs.set(null);
                                         return;
                                     } else {
-                                        createdKixs.set(true);
+                                        createdKixs.set(created);
                                         kixsFile = created;
-                                        kidsFile = workspaceRoot.getFile(kixsFile.getFullPath()
-                                                .removeFileExtension().addFileExtension("kids"));
                                     }
                                     uiMonitor.worked(40);
                                     TransformationUtil.doInitialEsterelTransformation(strlFile,
@@ -540,19 +540,6 @@ public final class TransformationUtil {
                                     TransformationUtil.refreshEditPolicies();
                                     uiMonitor.worked(90);
 
-                                    // open the editor with the kids file
-                                    IWorkbenchPage page = PlatformUI.getWorkbench()
-                                            .getActiveWorkbenchWindow().getActivePage();
-                                    try {
-                                        page.openEditor(new FileEditorInput(kidsFile),
-                                                SyncchartsDiagramEditor.ID);
-                                    } catch (PartInitException e) {
-                                        Status myStatus = new Status(IStatus.ERROR,
-                                                Activator.PLUGIN_ID,
-                                                "Problem opening the SyncCharts Diagram.", e);
-                                        StatusManager.getManager().handle(myStatus,
-                                                StatusManager.SHOW);
-                                    }
                                     long total = System.currentTimeMillis() - start;
                                     logger.info("Initial Transformation took: " + total + " Sek: "
                                             + (total / 1000f) + "s");
@@ -591,6 +578,110 @@ public final class TransformationUtil {
                     .getDiagramGraphicalViewer();
             graphViewer.flush();
         }
+    }
+
+    /**
+     * Performs a headless transformation on the passed {@code kixsFile}. The transformation can
+     * either be a Esterel to SyncCharts transformation or a SyncCharts optimization depending on
+     * the {@code type} parameter.
+     * 
+     * @param kixsFile
+     *            the file to transform.
+     * @param type
+     *            {@link TransformationType} determining the type of this transformation.
+     * @return {@code true} if the transformation was successful, false otherwise.
+     */
+    public static boolean performHeadlessTransformation(final IFile kixsFile,
+            final TransformationType type) {
+        boolean success = true;
+
+        // retrieve the resource
+        URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+        ResourceSet rs = new ResourceSetImpl();
+        Resource resource = rs.getResource(kixsURI, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        State root = rootRegion.getStates().get(0);
+
+        // create an artificial editing domain and register trigger listener
+        TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
+                .createEditingDomain(rs);
+        SyncchartsContentUtil.addTriggerListeners(ted);
+
+        try {
+            // set up the data component in headless mode
+            AbstractTransformationDataComponent dc = null;
+            if (type == TransformationType.E2S) {
+                dc = new EsterelToSyncChartDataComponent(false);
+                dc.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC, true);
+            } else if (type == TransformationType.SYNC_OPT) {
+                dc = new SyncChartsOptimizationDataComponent(false);
+                dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
+            }
+
+            dc.setHeadless(true);
+            dc.initialize();
+            dc.setRootState(root);
+
+            // retrieve transformation description
+            TransformationDescriptor td = dc.getNextTransformation();
+            ITransformationContext context = new XtendTransformationContext(dc.getXtendFacade(),
+                    ted);
+
+            // execute the transformation
+            TransformationEffect effect = new TransformationEffect(context, td);
+            long start = System.currentTimeMillis();
+            effect.execute();
+            long end = System.currentTimeMillis();
+            System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
+
+            // process action labels
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.SERIALIZE);
+            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                    ActionLabelProcessorWrapper.PARSE);
+
+            resource.save(null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            success = false;
+        }
+
+        // cleanup
+        ted.dispose();
+
+        return success;
+    }
+
+    /**
+     * @param file
+     *            the {@link IFile} that should be opened in a new SyncCharts editor. Either the
+     *            *.kids <strong>or</strong> the *.kixs file can be passed. In case the *.kixs file
+     *            is passed, a kids file with the same name is tried to be opened.
+     */
+    public static void openKidsInEditor(final IFile file) {
+        MonitoredOperation.runInUI(new Runnable() {
+            public void run() {
+                IFile fileToOpen = file;
+                if (file.getFileExtension().equals("kixs")) {
+                    IWorkspaceRoot workspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+                    IPath kidsPath = file.getFullPath().removeFileExtension()
+                            .addFileExtension("kids");
+                    fileToOpen = workspaceRoot.getFile(kidsPath);
+                }
+
+                // open the editor with the kids file
+                IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getActivePage();
+                try {
+                    page.openEditor(new FileEditorInput(fileToOpen), SyncchartsDiagramEditor.ID);
+                } catch (PartInitException e) {
+                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
+                            "Problem opening the SyncCharts Diagram.", e);
+                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+                }
+            }
+        }, true);
     }
 
     /**

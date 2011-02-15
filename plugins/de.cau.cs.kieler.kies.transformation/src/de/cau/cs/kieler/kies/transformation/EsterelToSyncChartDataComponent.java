@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.impl;
+package de.cau.cs.kieler.kies.transformation;
 
 import java.util.List;
 
@@ -20,6 +20,7 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -61,7 +62,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      * global variable determining whether the transformation should be run recursively, hence
      * everything is transformed within one step.
      */
-    public static final String GLOBVAR_REC = "recursive";
+    public static final String GLOBALVAR_REC = "recursive";
 
     /**
      * default constructor providing one global variable. Namely GLOBALVAR_REC, determining whether
@@ -76,7 +77,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      *            pass {@code true} if this data component is used in a way that does not use KIEM.
      */
     public EsterelToSyncChartDataComponent(final boolean kiviMode) {
-        super(ImmutableMap.of(GLOBVAR_REC, TransformationUtil.getXtendVarBoolean(true)), kiviMode);
+        super(ImmutableMap.of(GLOBALVAR_REC, TransformationUtil.getXtendVarBoolean(true)), kiviMode);
     }
 
     /**
@@ -86,9 +87,11 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     public void initialize() throws KiemInitializationException {
 
         if (!headless) {
-            // assure that a SyncCharts editor is opened.
+            // assure that a SyncCharts editor is opened. (Xtext is also valid as the first
+            // transformation is started in the esterel editor)
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();
-            if (!(activeEditor instanceof SyncchartsDiagramEditor)) {
+            if (!(activeEditor instanceof SyncchartsDiagramEditor)
+                    && !(activeEditor instanceof XtextEditor)) {
                 throw new KiemInitializationException(
                         "Esterel To SyncCharts Transformation is only possible"
                                 + " in the context of an SynchChartsDiagramEditor.", true, null,
@@ -101,7 +104,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
         // get recursive property
         KiemProperty prop = getProperties()[0];
         boolean recursive = prop.getValueAsBoolean();
-        globalVars.get(GLOBVAR_REC).setValue(recursive);
+        globalVars.get(GLOBALVAR_REC).setValue(recursive);
 
         // initialize facade
         facade = XtendTransformationUtil.initializeFacade(TRANSFORMATION_FILE, getBasePackages(),
@@ -128,7 +131,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     public TransformationDescriptor getNextTransformation() {
 
         // first case is that we demand recursive execution
-        if (((Boolean) globalVars.get(GLOBVAR_REC).getValue())) {
+        if (((Boolean) globalVars.get(GLOBALVAR_REC).getValue())) {
             List<State> states;
             // either fetch the root state or any child state that has not been transformed yet
             if (isTransformable(rootState)) {

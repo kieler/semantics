@@ -60,7 +60,7 @@ import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
@@ -92,9 +92,9 @@ public class TimeMeasurement {
     private Multimap<String, Long> times = Multimaps.newHashMultimap();
 
     private ImmutableList<String> badFiles = ImmutableList.of("test-all1.strl",
-            "test-atds-100-smaller.strl", "test-counter16b.strl", "test-counter16d.strl",
-            "test-mca200-nofunc.strl", "test-mca200.strl", "test-mejia2-forvm.strl",
-            "test-mejia2.strl");
+            "test-atds-100-smaller.strl", "test-counter16b.strl", "test-counter16a.strl",
+            "test-counter16.strl", "test-counter16d.strl", "test-mca200-nofunc.strl",
+            "test-mca200.strl", "test-mejia2-forvm.strl", "test-mejia2.strl", "test-abcd.strl");
     TransactionalEditingDomain ted;
     ResourceSet rs;
 
@@ -240,6 +240,7 @@ public class TimeMeasurement {
                     kixs.delete(true, null);
                     deleted = true;
                 } catch (Exception e) {
+                    System.gc();
                     System.out.println("Deletion try " + i++);
                 }
             }
@@ -267,7 +268,7 @@ public class TimeMeasurement {
 
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
             edc.setHeadless(true);
-
+            
             Resource resource = rs.getResource(kixsURI, true);
 
             Region rootRegion = (Region) resource.getContents().get(0);

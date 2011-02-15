@@ -11,11 +11,10 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.impl;
+package de.cau.cs.kieler.kies.transformation;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.concurrent.Semaphore;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -39,12 +38,13 @@ import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
-import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
@@ -68,17 +68,23 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
     /** is the transformation executed by KiVi? */
     protected boolean kiviMode;
+    /** the current transformation context. */
     protected ITransformationContext currentContext;
+    /** the current transformation descriptor. */
     protected TransformationDescriptor currentDescriptor;
 
     /** headless execution omits checks for an opened editor. */
     protected boolean headless = false;
+    /** root state of the current resource. */
+    protected State rootState;
+    /** root region of the current resource. */
+    protected Region rootRegion;
     // CHECKSTYLEON VisibilityModifier
 
     private boolean finished = false;
 
-    private long lastHistoryStep = -1;
-    private long lastStep = 0;
+    // private long lastHistoryStep = -1;
+    // private long lastStep = 0;
 
     /**
      * Any extending class has to provide a map with global Variables.
@@ -103,8 +109,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public void initialize() throws KiemInitializationException {
         finished = false;
-        lastStep = 0;
-        lastHistoryStep = -1;
+        // lastStep = 0;
+        // lastHistoryStep = -1;
         domain = getActiveEditorEditingDomain();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
@@ -264,6 +270,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public abstract void doPostTransformation();
 
+    /**
+     * mark this transformation finished and throw a new {@link KiemExecutionException} in order to
+     * terminate the current execution.
+     * 
+     * @throws KiemExecutionException
+     *             a exception letting the user know that the current execution finished.
+     */
     protected void finished() throws KiemExecutionException {
         finished = true;
         doPostTransformation();
@@ -329,8 +342,16 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      * @param headless
      *            the headless to set
      */
-    public void setHeadless(boolean headless) {
+    public void setHeadless(final boolean headless) {
         this.headless = headless;
+    }
+
+    /**
+     * @param rootState
+     *            the rootState to set
+     */
+    public void setRootState(final State rootState) {
+        this.rootState = rootState;
     }
 
     /**

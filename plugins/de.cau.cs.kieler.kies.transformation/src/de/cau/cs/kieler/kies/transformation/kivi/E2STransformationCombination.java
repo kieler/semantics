@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.impl.kivi;
+package de.cau.cs.kieler.kies.transformation.kivi;
 
 import java.util.Map;
 
@@ -44,10 +44,10 @@ import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.impl.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.kies.transformation.impl.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.impl.SyncChartsOptimizationDataComponent;
+import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -138,6 +138,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         // editor state, remember the currently active editor
         if (getTriggerState() instanceof ActiveEditorState) {
+            System.out.println("changed");
             editorStateChanged(editorState);
             return;
         }
@@ -165,6 +166,8 @@ public class E2STransformationCombination extends AbstractCombination {
                 currentlyActiveEditor = TransformationUtil.getActiveEditor();
             }
             // if XtextEditor is opened the transformation has to be initialized.
+            // (checking for xtext editor is sufficient as the buttons are only displayed for the
+            // esterel editor.)
             if (currentlyActiveEditor instanceof XtextEditor) {
                 initializeTransformation();
                 if (buttonState.getButtonId() == BUTTON_EXPAND
@@ -195,9 +198,10 @@ public class E2STransformationCombination extends AbstractCombination {
         IEditorPart editor = TransformationUtil.getActiveEditor();
         if (editor instanceof XtextEditor) {
             IFile strlFile = (IFile) editor.getEditorInput().getAdapter(IFile.class);
-            boolean created = TransformationUtil.strlToKixsAndOpen(strlFile);
+            IFile created = TransformationUtil.strlToKixs(strlFile);
+            TransformationUtil.openKidsInEditor(created);
 
-            if (!created) {
+            if (created == null) {
                 return false;
             }
 
@@ -277,7 +281,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
     private void setRecursive(final boolean bool) {
         if (currentDataComponent != null) {
-            currentDataComponent.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBVAR_REC,
+            currentDataComponent.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC,
                     bool);
         }
     }
@@ -295,8 +299,9 @@ public class E2STransformationCombination extends AbstractCombination {
     private void setButtonEnabling(final boolean bool) {
         for (String button : buttonEnabling.keySet()) {
             System.out.println(button + " " + bool);
-            // this.schedule(new MenuItemEnableStateEffect(button, !bool ? false
-            // : (Boolean) buttonEnabling.get(button)));
+            MenuItemEnableStateEffect effect = new MenuItemEnableStateEffect(button, !bool ? false
+                    : (Boolean) buttonEnabling.get(button));
+            effect.schedule();
         }
     }
 
@@ -320,15 +325,21 @@ public class E2STransformationCombination extends AbstractCombination {
                 StatusManager.getManager().handle(s);
             }
             // activate all buttons
-            setButtonState(true, BUTTON_EXPAND, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP);
+            setButtonState(true, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP);
+            setButtonState(isTransformable(), BUTTON_EXPAND);
             setButtonState(currentCommandStack.canUndo(), BUTTON_STEP_BACK);
-            setButtonEnabling(true);
 
         } else {
+            if (currentlyActiveEditor instanceof XtextEditor) {
+                setButtonState(true, BUTTON_EXPAND, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP);
+                setButtonState(false, BUTTON_STEP_BACK);
+            }
+
             currentCommandStack = null;
             transformingDataComponent = null;
             optimizingDataComponent = null;
         }
+        setButtonEnabling(true);
     }
 
     private void postTransformation(final TransformationEffect effect) {
@@ -339,7 +350,6 @@ public class E2STransformationCombination extends AbstractCombination {
                 currentDataComponent.doPostTransformation();
             }
             process(BUTTON_EXPAND);
-            setButtonState(false, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP, BUTTON_STEP_BACK);
         } else if (lastStepType.equals(BUTTON_EXPAND)) {
             if (currentDataComponent != null) {
                 currentDataComponent.doPostTransformation();
@@ -349,7 +359,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         // activate / deactivate back button.
         if (currentCommandStack != null) {
-            buttonEnabling.put(BUTTON_STEP_BACK, currentCommandStack.canUndo());
+            setButtonState(currentCommandStack.canUndo(), BUTTON_STEP_BACK);
         }
 
         setButtonEnabling(true);
