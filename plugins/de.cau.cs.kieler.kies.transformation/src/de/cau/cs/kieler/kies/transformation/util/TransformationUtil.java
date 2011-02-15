@@ -36,6 +36,7 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMIResource;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPartViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
@@ -60,6 +61,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.expression.Variable;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
+import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.common.collect.Lists;
 import com.google.inject.Injector;
@@ -100,7 +102,7 @@ public final class TransformationUtil {
 
     /** injector used for serialization. */
     private static Injector injector = new EsterelStandaloneSetup()
-            .createInjectorAndDoEMFRegistration();;
+            .createInjectorAndDoEMFRegistration();
 
     /** utility class. */
     private TransformationUtil() {
@@ -327,6 +329,9 @@ public final class TransformationUtil {
             final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
                     false);
 
+            // kixsFile.delete(true, null);
+            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
+
             // setup initial syncchart with one state in the global region
             Resource resource = resourceSet.getResource(kixsURI, true);
             SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
@@ -337,8 +342,19 @@ public final class TransformationUtil {
             rootState.setLabel("Esterel State");
             rootState.setType(StateType.TEXTUAL);
 
+            resource.save(null);
+
+            // Thread.sleep(5000);
+
+//            resource.unload();
+//            resource.delete(null);
+            // kixsFile.delete(true, null);
+//            System.out.println("##################!!!!!!!! " + kixsFile.exists());
+
             // get the esterel code and add it as body reference
-            Resource xtextResource = resourceSet.getResource(strlURI, true);
+            XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+
+            Resource xtextResource = xtextResourceSet.getResource(strlURI, true);
             EObject esterelModule = xtextResource.getContents().get(0);
             rootState.setBodyReference(esterelModule);
 
@@ -349,14 +365,23 @@ public final class TransformationUtil {
 
             // save the resource
             resource.save(null);
-
             xtextResource.save(null);
-            
-            // t est
-            resource.delete(null);
-            xtextResource.delete(null);
 
+            // // t est
+            // resource.delete(null);
+            // xtextResource.delete(null);
+
+            
         } catch (Exception e) {
+            e.printStackTrace();
+
+//            try {
+//                kixsFile.delete(true, null);
+//            } catch (CoreException e1) {
+//                // TODO Auto-generated catch block
+//                e1.printStackTrace();
+//            }
+//            System.out.println("##################!!!!!!!! " + kixsFile.exists());
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem parsing the Esterel file.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);

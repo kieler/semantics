@@ -303,6 +303,7 @@ public class E2STransformationCombination extends AbstractCombination {
     private void editorStateChanged(final ActiveEditorState editorState) {
         currentlyActiveEditor = TransformationUtil.getActiveEditor();
         currentDataComponent = null;
+
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             currentCommandStack = ((DiagramEditor) currentlyActiveEditor).getEditingDomain()
                     .getCommandStack();
@@ -318,6 +319,10 @@ public class E2STransformationCombination extends AbstractCombination {
                         "An error occured during the setup of the DataComponents.");
                 StatusManager.getManager().handle(s);
             }
+            // activate all buttons
+            setButtonState(true, BUTTON_EXPAND, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP);
+            setButtonState(currentCommandStack.canUndo(), BUTTON_STEP_BACK);
+            setButtonEnabling(true);
 
         } else {
             currentCommandStack = null;
@@ -384,7 +389,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
     private boolean isTransformable() {
         EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
-        //dc = transformingDataComponent;
+        // dc = transformingDataComponent;
         try {
             dc.initialize();
         } catch (KiemInitializationException e) {

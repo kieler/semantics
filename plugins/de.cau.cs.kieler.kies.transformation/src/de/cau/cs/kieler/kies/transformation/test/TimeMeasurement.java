@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -48,10 +49,12 @@ import org.junit.Test;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 
+import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction;
 import de.cau.cs.kieler.core.model.effects.TransformationEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
@@ -80,7 +83,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
 public class TimeMeasurement {
 
     // FIXME
-    private String pathToWS = "/../eclipse WS/";
+    private String pathToWS = "/../eclipseWS4/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
 
@@ -92,6 +95,8 @@ public class TimeMeasurement {
             "test-atds-100-smaller.strl", "test-counter16b.strl", "test-counter16d.strl",
             "test-mca200-nofunc.strl", "test-mca200.strl", "test-mejia2-forvm.strl",
             "test-mejia2.strl");
+    TransactionalEditingDomain ted;
+    ResourceSet rs;
 
     /**
      * get the workspace root and open a project to work with.
@@ -104,6 +109,11 @@ public class TimeMeasurement {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         workspaceRoot = workspace.getRoot();
         project = workspaceRoot.getProject("Testing Project");
+
+        rs = new ResourceSetImpl();
+        ted = TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(rs);
+
+        SyncchartsContentUtil.addTriggerListeners(ted);
 
         // always create a clean project.
         // if (project.exists()) {
@@ -135,20 +145,26 @@ public class TimeMeasurement {
 
     @Test
     public void test() throws Exception {
-
+        TransformationUtil.logger.setLevel(Level.OFF);
+        fw = new FileWriter(outputFile);
         for (File f : filesTest) {
+            System.gc();
             if (badFiles.contains(f.getName())) {
                 continue;
             }
-            System.out.println("#####" + f);
+            System.out.println("##### " + f);
 
             for (int i = 0; i < 10; i++) {
                 performTest(f, i);
+
+                List<Resource> l2 = Lists.newLinkedList(rs.getResources());
+                for (Resource r : l2) {
+                    r.delete(null);
+                }
             }
             // if( i> 100) break;
         }
 
-        fw = new FileWriter(outputFile);
         for (String s : times.keySet()) {
             fw.write("\n" + s);
             for (Long lo : times.get(s)) {
@@ -207,50 +223,52 @@ public class TimeMeasurement {
                 + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
 
         IFile strl = project.getFile(path.lastSegment());
-        // IFile kixsExp = project.getFile(pathExp.lastSegment());
-        // create the actual links
-
-        if (strl.exists()) {
-            strl.delete(true, null);
-        }
-
         strl.createLink(path, IResource.NONE, null);
 
         // kixsExp.createLink(pathExp, IResource.NONE, null);
 
-        // transform and compare
+        // transform
         final IFile kixs = transformToSyncchart(strl, time);
-        // compare(kixs, kixsExp);
+
+        Thread.sleep(200);
+        System.gc();
+        if (kixs.exists()) {
+            boolean deleted = false;
+            int i = 0;
+            while (!deleted) {
+                try {
+                    kixs.delete(true, null);
+                    deleted = true;
+                } catch (Exception e) {
+                    System.out.println("Deletion try " + i++);
+                }
+            }
+
+        }
+        if (strl.exists()) {
+            strl.delete(true, null);
+        }
+        System.gc();
+
+        System.out.println("##################!!!!!!!! " + kixs.exists());
     }
 
     private IFile transformToSyncchart(final IFile strlFile, int time) {
         IPath kixsPath = strlFile.getFullPath().removeFileExtension()
-        //.append(String.valueOf(time))
+        // .append(String.valueOf(time))
                 .addFileExtension("kixs");
+
         final IFile kixsFile = workspaceRoot.getFile(kixsPath);
-
         final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
-        MonitoredOperation.runInUI(new Runnable() {
 
-            public void run() {
-                TransformationUtil.createSyncchartDiagram(kixsFile);
-                TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
-
-                try {
-                    kixsFile.delete(true, null);
-                } catch (CoreException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }, true);
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
         try {
 
-            long start = System.currentTimeMillis();
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
             edc.setHeadless(true);
-            ResourceSet resourceSet = new ResourceSetImpl();
-            Resource resource = resourceSet.getResource(kixsURI, true);
+
+            Resource resource = rs.getResource(kixsURI, true);
 
             Region rootRegion = (Region) resource.getContents().get(0);
             final State root = rootRegion.getStates().get(0);
@@ -259,32 +277,32 @@ public class TimeMeasurement {
             edc.setRootState(root);
 
             TransformationDescriptor td = edc.getNextTransformation();
-            TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
-                    .createEditingDomain(resourceSet);
-
-            SyncchartsContentUtil.addTriggerListeners(ted);
             ITransformationContext context = new XtendTransformationContext(edc.getXtendFacade(),
                     ted);
             TransformationEffect effect = new TransformationEffect(context, td);
+
+            long start = System.currentTimeMillis();
             effect.execute();
             long end = System.currentTimeMillis();
-            times.put(strlFile.getName(), end - start);
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.SERIALIZE);
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.PARSE);
+            // times.put(strlFile.getName(), end - start);
+            fw.write("\n" + strlFile.getName() + " " + (end - start));
+
+            // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+            // ActionLabelProcessorWrapper.SERIALIZE);
+            // ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+            // ActionLabelProcessorWrapper.PARSE);
             // System.out.println("Parsed the labels");
 
-            ted.getCommandStack().execute(new RecordingCommand(ted) {
-
-                @Override
-                protected void doExecute() {
-                    removeReferences(root);
-                }
-            });
+            // ted.getCommandStack().execute(new RecordingCommand(ted) {
+            //
+            // @Override
+            // protected void doExecute() {
+            // removeReferences(root);
+            // }
+            // });
 
             resource.save(null);
-            resource.unload();
+            // resource.delete(null);
 
         } catch (Exception e) {
             e.printStackTrace();
