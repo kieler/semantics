@@ -41,7 +41,7 @@ public class SerializerListener extends FireOnceTriggerListener {
         Action action = null;
         if (notification.getNotifier() instanceof State) {
             if (notification.getEventType() == Notification.ADD) {
-                System.out.println("Resource Set Changed: " + notification);
+                // System.out.println("Resource Set Changed: " + notification);
                 action = (Action) notification.getNewValue();
             }
         } else {
