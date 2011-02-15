@@ -110,7 +110,52 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </url>
 
    <requires>
-      <import plugin="de.cau.cs.kieler.core.model"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="org.eclipse.xtext" version="0.8.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.util" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.generator" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.antlr.runtime"/>
+      <import plugin="org.eclipse.ui" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.runtime" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.resources" version="3.5.2" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.mwe2.launch" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core" version="0.5.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.annotations" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.kexpressions" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.kexpressions.ui" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.text" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.junit4" version="4.8.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.junit" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui.shared"/>
+      <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.eclipse.gmf" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui.resources.editor" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui" version="1.2.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.ui" version="1.0.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.model" version="0.3.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.sim.kiem" version="0.3.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.kiml.ui" version="0.3.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts" version="0.3.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.kies" version="0.1.2" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.kivi" version="0.1.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.core.expressions" version="3.4.200" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend.typesystem.emf" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.diagram" version="0.3.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtend.util.stdlib" version="1.0.1" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.synccharts.ksbase" version="0.4.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.compare" version="1.1.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.compare.diff" version="1.1.1" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.compare.match" version="1.1.1" match="greaterOrEqual"/>
+      <import plugin="org.junit" version="4.8.1" match="greaterOrEqual"/>
+      <import plugin="com.google.guava" version="8.0.0" match="greaterOrEqual"/>
+      <import plugin="de.cau.cs.kieler.core.model.xtend" version="0.1.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -122,6 +167,13 @@ This Agreement is governed by the laws of the State of New York and the intellec
 
    <plugin
          id="de.cau.cs.kieler.kies.ui"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kies.transformation"
          download-size="0"
          install-size="0"
          version="0.0.0"
