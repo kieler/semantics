@@ -42,7 +42,7 @@
                menubarPath="de.cau.cs.kieler">
          </action>
       </objectContribution>
-      <objectContribution
+      <!--objectContribution
             adaptable="false"
             id="de.cau.cs.kieler.kies.transformation.compare"
             nameFilter="*.kixs"
@@ -53,7 +53,7 @@
                label="Compare"
                menubarPath="de.cau.cs.kieler">
          </action>
-      </objectContribution>
+      </objectContribution-->
    </extension>
    <!--extension
          point="org.eclipse.ui.commands">

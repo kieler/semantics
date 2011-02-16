@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
@@ -64,6 +65,7 @@ import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.kexpressions.BooleanValue;
@@ -151,7 +153,8 @@ public final class TransformationUtil {
         try {
             // serialize the element
             Serializer serializerUtil = injector.getInstance(Serializer.class);
-            serializerUtil.serialize(e, osw, SaveOptions.defaultOptions());
+            SaveOptions saveOptions = SaveOptions.newBuilder().noValidation().getOptions();
+            serializerUtil.serialize(e, osw, saveOptions);
         } catch (IOException ex) {
             IStatus status = new Status(Status.WARNING, Activator.PLUGIN_ID,
                     "A problem occured while trying to serialize " + e + ".", ex);
@@ -327,19 +330,20 @@ public final class TransformationUtil {
      * @param kixsFile
      *            synccharts model file
      */
+    @SuppressWarnings("unchecked")
     public static void doInitialEsterelTransformation(final IFile strlFile, final IFile kixsFile) {
         try {
-            ResourceSet resourceSet = new ResourceSetImpl();
+
+            // get the esterel code and add it as body reference
+            XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
+            // ResourceSet resourceSet = new ResourceSetImpl();
             final URI strlURI = URI.createPlatformResourceURI(strlFile.getFullPath().toString(),
                     true);
             final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(),
                     false);
 
-            // kixsFile.delete(true, null);
-            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
-
             // setup initial syncchart with one state in the global region
-            Resource resource = resourceSet.getResource(kixsURI, true);
+            Resource resource = xtextResourceSet.getResource(kixsURI, true);
             SyncchartsFactory sf = SyncchartsFactory.eINSTANCE;
             Region rootRegion = (Region) resource.getContents().get(0);
             State rootState = sf.createState();
@@ -347,18 +351,6 @@ public final class TransformationUtil {
             rootRegion.getStates().add(rootState);
             rootState.setLabel("Esterel State");
             rootState.setType(StateType.TEXTUAL);
-
-            resource.save(null);
-
-            // Thread.sleep(5000);
-
-            // resource.unload();
-            // resource.delete(null);
-            // kixsFile.delete(true, null);
-            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
-
-            // get the esterel code and add it as body reference
-            XtextResourceSet xtextResourceSet = injector.getInstance(XtextResourceSet.class);
 
             Resource xtextResource = xtextResourceSet.getResource(strlURI, true);
             EObject esterelModule = xtextResource.getContents().get(0);
@@ -369,24 +361,14 @@ public final class TransformationUtil {
             rootState.getBodyText().add(code);
             code.setCode(TransformationUtil.getSerializedString(esterelModule));
 
+            @SuppressWarnings("rawtypes")
+            Map saveOptions = Maps.newHashMap();
+            SaveOptions.newBuilder().noValidation().getOptions().addTo(saveOptions);
             // save the resource
-            resource.save(null);
+            resource.save(saveOptions);
             xtextResource.save(null);
 
-            // // t est
-            // resource.delete(null);
-            // xtextResource.delete(null);
-
         } catch (Exception e) {
-            e.printStackTrace();
-
-            // try {
-            // kixsFile.delete(true, null);
-            // } catch (CoreException e1) {
-            // // TODO Auto-generated catch block
-            // e1.printStackTrace();
-            // }
-            // System.out.println("##################!!!!!!!! " + kixsFile.exists());
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem parsing the Esterel file.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -526,11 +508,9 @@ public final class TransformationUtil {
                 }
 
                 TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
-                TransformationUtil.refreshEditPolicies();
 
                 long total = System.currentTimeMillis() - start;
-                logger.info("Initial Transformation took: " + total + " Sek: " + (total / 1000f)
-                        + "s");
+                logger.info("Initial Transformation took: " + total + " Sek: " + total + "ms");
 
             }
         }, true);

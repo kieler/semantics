@@ -18,9 +18,7 @@ import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 
 import org.eclipse.core.resources.IFile;
@@ -33,28 +31,18 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.compare.diff.metamodel.DiffModel;
-import org.eclipse.emf.compare.diff.service.DiffService;
-import org.eclipse.emf.compare.match.metamodel.MatchModel;
-import org.eclipse.emf.compare.match.service.MatchService;
-import org.eclipse.emf.compare.util.ModelUtils;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multimaps;
 
-import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction;
 import de.cau.cs.kieler.core.model.effects.TransformationEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
@@ -62,10 +50,10 @@ import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * This JUnit tests serves as a kind of regression test for Esterel to SyncChart transformations. It
@@ -82,6 +70,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  */
 public class TimeMeasurement {
 
+    // CHECKSTYLEOFF VisibilityModifier
     // FIXME
     private String pathToWS = "/../eclipseWS4/";
     private IWorkspaceRoot workspaceRoot;
@@ -94,7 +83,8 @@ public class TimeMeasurement {
     private ImmutableList<String> badFiles = ImmutableList.of("test-all1.strl",
             "test-atds-100-smaller.strl", "test-counter16b.strl", "test-counter16a.strl",
             "test-counter16.strl", "test-counter16d.strl", "test-mca200-nofunc.strl",
-            "test-mca200.strl", "test-mejia2-forvm.strl", "test-mejia2.strl", "test-abcd.strl");
+            "test-mca200.strl", "test-mejia2-forvm.strl", "test-mejia2.strl", "test-abcd.strl",
+            "test-chorus.strl");
     TransactionalEditingDomain ted;
     ResourceSet rs;
 
@@ -140,13 +130,14 @@ public class TimeMeasurement {
 
     }
 
-    File outputFile = new File("testResults.txt");
+    File outputFile = new File("testHierarchs.txt");
     FileWriter fw;
 
-    @Test
+    // @Test
     public void test() throws Exception {
         TransformationUtil.logger.setLevel(Level.OFF);
         fw = new FileWriter(outputFile);
+
         for (File f : filesTest) {
             System.gc();
             if (badFiles.contains(f.getName())) {
@@ -172,6 +163,116 @@ public class TimeMeasurement {
             }
         }
         fw.close();
+    }
+
+    @Test
+    public void calLevels() throws Exception {
+        TransformationUtil.logger.setLevel(Level.OFF);
+        List<File> reversed = Lists.newArrayList(filesTest);
+        Collections.reverse(reversed);
+        for (final File f : reversed) {
+            if (badFiles.contains(f.getName())) {
+                continue;
+            }
+
+            Thread t = new Thread(new Runnable() {
+
+                public void run() {
+                    MonitoredOperation.runInUI(new Runnable() {
+
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            compareHierarchyLevels(f);
+                        }
+                    }, false);
+                }
+            });
+            t.start();
+            try {
+                t.join(50000);
+                if (t.isAlive()) {
+                    t.suspend();
+
+                } else {
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
+
+    public void compareHierarchyLevels(final File strlFile) {
+        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+
+        IFile strl = project.getFile(path.lastSegment());
+        try {
+            strl.createLink(path, IResource.NONE, null);
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+
+        IPath kixsPath = strl.getFullPath().removeFileExtension()
+        // .append(String.valueOf(time))
+                .addFileExtension("kixs");
+
+        final IFile kixsFile = workspaceRoot.getFile(kixsPath);
+        final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
+
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
+
+        Resource resource = rs.getResource(kixsURI, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        maxlevel = 0;
+        levels.clear();
+        addLevel(rootRegion, 0);
+
+        try {
+            fw = new FileWriter(outputFile, true);
+            fw.write("\n" + strl.getName() + ";");
+            fw.write(maxlevel + ";");
+            fw.write(levels.values().size() + ";");
+            fw.close();
+            resource.save(null);
+            resource.unload();
+            System.gc();
+
+            TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT);
+
+            ResourceSet foo = new ResourceSetImpl();
+            resource = foo.getResource(kixsURI, true);
+            rootRegion = (Region) resource.getContents().get(0);
+            maxlevel = 0;
+            levels.clear();
+            addLevel(rootRegion, 0);
+            fw = new FileWriter(outputFile, true);
+            fw.write(maxlevel + ";");
+            fw.write(levels.values().size() + "");
+            fw.close();
+            resource.save(null);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    Multimap<Integer, State> levels = Multimaps.newHashMultimap();
+    int maxlevel = 0;
+
+    private void addLevel(Region r, int level) {
+        if (level > maxlevel)
+            maxlevel = level;
+        for (State s : r.getStates()) {
+            levels.put(level, s);
+            for (Region rinner : s.getRegions()) {
+                addLevel(rinner, level + 1);
+            }
+        }
     }
 
     // javadoc just lengthens this file and does not increase the understanding of these methods
@@ -268,7 +369,7 @@ public class TimeMeasurement {
 
             EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
             edc.setHeadless(true);
-            
+
             Resource resource = rs.getResource(kixsURI, true);
 
             Region rootRegion = (Region) resource.getContents().get(0);

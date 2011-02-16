@@ -55,30 +55,42 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
+ * A KiVi Combination controlling the Esterel To SyncCharts Transformation. Several buttons are
+ * contributed to eclipse's gui. These buttons are used in order to control the transformation. The
+ * transformation is executed by using a {@link TransformationEffect}.
+ * 
  * @author uru
  * 
  */
 public class E2STransformationCombination extends AbstractCombination {
 
+    // contributed button ids
     private static final String BUTTON_STEP = "de.cau.cs.kieler.kies.transformation.step";
     private static final String BUTTON_STEP_BACK = "de.cau.cs.kieler.kies.transformation.stepBack";
     private static final String BUTTON_EXPAND = "de.cau.cs.kieler.kies.transformation.expand";
     private static final String BUTTON_EXPAND_OPTIMIZE = "de.cau.cs.kieler.kies.transformation."
             + "expandAndOptimize";
 
+    // editor ids
     private static final String SYNCCHARTS_EDITOR_ID = "de.cau.cs.kieler.synccharts.diagram.part."
             + "SyncchartsDiagramEditorID";
     private static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.kies.Esterel";
 
+    // map holding the information whether a button should be active or not.
     private final Map<String, Boolean> buttonEnabling = Maps.newHashMap();
 
+    // the data components used for transformations
     private EsterelToSyncChartDataComponent transformingDataComponent;
     private SyncChartsOptimizationDataComponent optimizingDataComponent;
 
+    // currently used data component
     private AbstractTransformationDataComponent currentDataComponent;
+
+    // currently active editor and its command stack
     private IWorkbenchPart currentlyActiveEditor;
     private CommandStack currentCommandStack;
 
+    // the type of the last performed step
     private String lastStepType = BUTTON_STEP;
 
     /**
@@ -174,9 +186,6 @@ public class E2STransformationCombination extends AbstractCombination {
                     process(buttonState.getButtonId());
                 }
                 return;
-                // if (!initializeTransformation()) {
-                // return;
-                // }
             }
 
             process(buttonState.getButtonId());
@@ -186,6 +195,11 @@ public class E2STransformationCombination extends AbstractCombination {
 
         return;
     }
+
+    /*
+     * /////////////////////////////////////////////////////////////////////////////////////////
+     * Initial Transformation to a SyncCharts
+     */
 
     private boolean initializeTransformation() {
         // first check if there is anything to transform!
@@ -215,6 +229,10 @@ public class E2STransformationCombination extends AbstractCombination {
         return false;
     }
 
+    /*
+     * /////////////////////////////////////////////////////////////////////////////////////////
+     * Reaction upon a button click
+     */
     private void process(final String type) {
         lastStepType = type;
 
@@ -225,21 +243,17 @@ public class E2STransformationCombination extends AbstractCombination {
             return;
         }
 
+        if (transformingDataComponent == null || optimizingDataComponent == null) {
+            initializeDataComponents();
+        }
+
         long start = System.currentTimeMillis();
         // initialize the correct datacomponent
         if (isTransformable()) {
-            // currentDataComponent = new EsterelToSyncChartDataComponent(true);
             currentDataComponent = transformingDataComponent;
         } else {
             currentDataComponent = optimizingDataComponent;
-            // currentDataComponent = new SyncChartsOptimizationDataComponent(true);
         }
-        // try {
-        // currentDataComponent.initialize();
-        //
-        // } catch (KiemInitializationException e) {
-        // e.printStackTrace();
-        // }
 
         // determine proceeding
         if (type.equals(BUTTON_EXPAND) || type.equals(BUTTON_EXPAND_OPTIMIZE)) {
@@ -273,37 +287,19 @@ public class E2STransformationCombination extends AbstractCombination {
             currentCommandStack.undo();
             currentCommandStack.undo();
         }
+        // very important to refresh the policies at this point as well!
+        RefreshGMFEditPoliciesEffect gmfEffect = new RefreshGMFEditPoliciesEffect(
+                (SyncchartsDiagramEditor) currentlyActiveEditor, false);
+        gmfEffect.schedule();
         if (currentCommandStack != null) {
             enableStepBack(currentCommandStack.canUndo());
         }
     }
 
-    private void setRecursive(final boolean bool) {
-        if (currentDataComponent != null) {
-            currentDataComponent.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC,
-                    bool);
-        }
-    }
-
-    private void enableStepBack(final boolean bool) {
-        this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, bool));
-    }
-
-    private void setButtonState(final boolean enabled, final String... buttons) {
-        for (String button : buttons) {
-            buttonEnabling.put(button, enabled);
-        }
-    }
-
-    private void setButtonEnabling(final boolean bool) {
-        for (String button : buttonEnabling.keySet()) {
-            System.out.println(button + " " + bool);
-            MenuItemEnableStateEffect effect = new MenuItemEnableStateEffect(button, !bool ? false
-                    : (Boolean) buttonEnabling.get(button));
-            effect.schedule();
-        }
-    }
-
+    /*
+     * /////////////////////////////////////////////////////////////////////////////////////////
+     * Editor changed.
+     */
     private void editorStateChanged(final ActiveEditorState editorState) {
         currentlyActiveEditor = TransformationUtil.getActiveEditor();
         currentDataComponent = null;
@@ -313,16 +309,8 @@ public class E2STransformationCombination extends AbstractCombination {
                     .getCommandStack();
 
             // init datacomponents
-            try {
-                transformingDataComponent = new EsterelToSyncChartDataComponent(true);
-                transformingDataComponent.initialize();
-                optimizingDataComponent = new SyncChartsOptimizationDataComponent(true);
-                optimizingDataComponent.initialize();
-            } catch (KiemInitializationException e) {
-                Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
-                        "An error occured during the setup of the DataComponents.");
-                StatusManager.getManager().handle(s);
-            }
+            initializeDataComponents();
+
             // activate all buttons
             setButtonState(true, BUTTON_EXPAND_OPTIMIZE, BUTTON_STEP);
             setButtonState(isTransformable(), BUTTON_EXPAND);
@@ -341,6 +329,10 @@ public class E2STransformationCombination extends AbstractCombination {
         setButtonEnabling(true);
     }
 
+    /*
+     * /////////////////////////////////////////////////////////////////////////////////////////
+     * Reaction upon a finished TransformationEffect.
+     */
     private void postTransformation(final TransformationEffect effect) {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
             // optimization is performed the same manner line expand just with different data
@@ -396,9 +388,55 @@ public class E2STransformationCombination extends AbstractCombination {
         }
     }
 
+    /*
+     * /////////////////////////////////////////////////////////////////////////////////////////
+     * Convenient Methods.
+     */
+
+    private void setRecursive(final boolean bool) {
+        if (currentDataComponent != null) {
+            currentDataComponent.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC,
+                    bool);
+        }
+    }
+
+    private void enableStepBack(final boolean bool) {
+        this.schedule(new MenuItemEnableStateEffect(BUTTON_STEP_BACK, bool));
+    }
+
+    private void setButtonState(final boolean enabled, final String... buttons) {
+        for (String button : buttons) {
+            buttonEnabling.put(button, enabled);
+        }
+    }
+
+    private void setButtonEnabling(final boolean bool) {
+        for (String button : buttonEnabling.keySet()) {
+            System.out.println(button + " " + bool);
+            MenuItemEnableStateEffect effect = new MenuItemEnableStateEffect(button, !bool ? false
+                    : (Boolean) buttonEnabling.get(button));
+            effect.schedule();
+        }
+    }
+
+    private void initializeDataComponents() {
+        try {
+            transformingDataComponent = new EsterelToSyncChartDataComponent(true);
+            transformingDataComponent.initialize();
+            optimizingDataComponent = new SyncChartsOptimizationDataComponent(true);
+            optimizingDataComponent.initialize();
+        } catch (KiemInitializationException e) {
+            Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "An error occured during the setup of the DataComponents.");
+            StatusManager.getManager().handle(s);
+        }
+    }
+
+    /**
+     * @return true if the currently opened model is transformable.
+     */
     private boolean isTransformable() {
         EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
-        // dc = transformingDataComponent;
         try {
             dc.initialize();
         } catch (KiemInitializationException e) {

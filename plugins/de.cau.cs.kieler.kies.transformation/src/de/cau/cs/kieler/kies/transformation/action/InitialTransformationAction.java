@@ -64,12 +64,6 @@ public class InitialTransformationAction implements IActionDelegate {
                                     kixsFile, TransformationType.SYNC_OPT);
                             System.out.println("######## SUC" + success);
                             uiMonitor.beginTask("Opening the Diagram", IProgressMonitor.UNKNOWN);
-                            try {
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e) {
-                                // TODO Auto-generated catch block
-                                e.printStackTrace();
-                            }
                             TransformationUtil.openKidsInEditor(kixsFile);
                             LayoutEffect effect = new LayoutEffect(TransformationUtil
                                     .getActiveEditor(), null);
