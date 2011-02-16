@@ -25,6 +25,18 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
         // mandatory! otherwise if (1=1) serializes to if1=1
         c.setSpace(" ").after(g.getIfTestAccess().getIfKeyword_0());
 
+        // testing
+       c.setSpace(" ").after(g.getPauseAccess().getPauseKeyword_0());
+
+        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_1_1());
+        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_2());
+        c.setLinewrap().after(g.getSequenceRule());
+
+        c.setLinewrap(1).after(g.getModuleAccess().getColonKeyword_2());
+
+        c.setSpace(" ").after(g.getModuleAccess().getModuleKeyword_0());
+        c.setSpace(" ").before(g.getModuleRule());
+
         // de.cau.cs.kieler.esterel.services.EsterelGrammarAccess f =
         // (de.cau.cs.kieler.esterel.services.EsterelGrammarAccess) getGrammarAccess();
         // Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f

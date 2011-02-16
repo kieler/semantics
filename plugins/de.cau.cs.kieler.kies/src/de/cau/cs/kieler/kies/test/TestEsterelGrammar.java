@@ -64,6 +64,7 @@ public class TestEsterelGrammar extends AbstractXtextTests {
     /** contains test files that are supposed to pass. */
     private File[] filesTest = null;
     /** contains several other test files. */
+    @SuppressWarnings("unused")
     private File[] filesRest = null;
     /** injector for the parser. */
     private Injector injector;
