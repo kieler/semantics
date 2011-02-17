@@ -48,12 +48,15 @@ import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
+import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
+import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
 
 /**
  * This JUnit tests serves as a kind of regression test for Esterel to SyncChart transformations. It
@@ -84,7 +87,7 @@ public class TimeMeasurement {
             "test-atds-100-smaller.strl", "test-counter16b.strl", "test-counter16a.strl",
             "test-counter16.strl", "test-counter16d.strl", "test-mca200-nofunc.strl",
             "test-mca200.strl", "test-mejia2-forvm.strl", "test-mejia2.strl", "test-abcd.strl",
-            "test-chorus.strl");
+            "test-chorus.strl", "test-tcint-noint.strl", "test-tcint.strl");
     TransactionalEditingDomain ted;
     ResourceSet rs;
 
@@ -130,8 +133,8 @@ public class TimeMeasurement {
 
     }
 
-    File outputFile = new File("testHierarchs.txt");
-    FileWriter fw;
+    static File outputFile = new File("testMeasure.txt");
+    static FileWriter fw;
 
     // @Test
     public void test() throws Exception {
@@ -166,10 +169,391 @@ public class TimeMeasurement {
     }
 
     @Test
+    public void measureTime() throws Exception {
+        
+        fw = new FileWriter(outputFile);
+        fw.write("Whole setup(resource, ted...) ; just recursive execution ; recursive + dc setup ; just stepwise execution ");
+        fw.close();
+        
+        TransformationUtil.logger.setLevel(Level.OFF);
+        List<File> reversed = Lists.newArrayList(filesTest);
+        // Collections.reverse(reversed);
+        for (final File f : reversed) {
+            if (badFiles.contains(f.getName())) {
+                continue;
+            }
+
+            Thread t = new Thread(new Runnable() {
+
+                public void run() {
+                    MonitoredOperation.runInUI(new Runnable() {
+
+                        public void run() {
+                            // TODO Auto-generated method stub
+                            measure(f);
+                        }
+                    }, false);
+                }
+            });
+            t.start();
+            try {
+                t.join(50000);
+                if (t.isAlive()) {
+                    t.suspend();
+
+                } else {
+                }
+            } catch (Exception e) {
+
+            }
+
+        }
+    }
+
+    private void measure(final File strlFile) {
+        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+
+        IFile strl = project.getFile(path.lastSegment());
+        try {
+            strl.createLink(path, IResource.NONE, null);
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+
+        IPath kixsPath = strl.getFullPath().removeFileExtension()
+        // .append(String.valueOf(time))
+                .addFileExtension("kixs");
+
+        final IFile kixsFile = workspaceRoot.getFile(kixsPath);
+        final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
+
+        long start = System.currentTimeMillis();
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
+        long end = System.currentTimeMillis();
+
+        try {
+            fw = new FileWriter(outputFile, true);
+            fw.write("\n" + strlFile.getName() + ";");
+            fw.write((end - start) + ";");
+            fw.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        while (kixsFile.exists()) {
+            try {
+                kixsFile.delete(true, null);
+            } catch (Exception e) {
+                System.gc();
+            }
+        }
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
+
+        performHeadlessTransformation(kixsFile, TransformationType.E2S);
+
+        while (kixsFile.exists()) {
+            try {
+                kixsFile.delete(true, null);
+            } catch (Exception e) {
+                System.gc();
+            }
+        }
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
+        performHeadlessTransformationWithSetup(kixsFile, TransformationType.E2S);
+        
+        while (kixsFile.exists()) {
+            try {
+                kixsFile.delete(true, null);
+            } catch (Exception e) {
+                System.gc();
+            }
+        }
+        TransformationUtil.createSyncchartDiagram(kixsFile);
+        TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
+        performHeadlessTransformationStep(kixsFile, TransformationType.E2S);
+        //
+        // TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
+        //
+
+    }
+
+    /**
+     * Performs a headless transformation on the passed {@code kixsFile}. The transformation can
+     * either be a Esterel to SyncCharts transformation or a SyncCharts optimization depending on
+     * the {@code type} parameter.
+     * 
+     * @param kixsFile
+     *            the file to transform.
+     * @param type
+     *            {@link TransformationType} determining the type of this transformation.
+     * @return {@code true} if the transformation was successful, false otherwise.
+     */
+    public static boolean performHeadlessTransformation(final IFile kixsFile,
+            final TransformationType type) {
+        boolean success = true;
+
+        // retrieve the resource
+        URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+        ResourceSet rs = new ResourceSetImpl();
+        Resource resource = rs.getResource(kixsURI, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        State root = rootRegion.getStates().get(0);
+
+        // create an artificial editing domain and register trigger listener
+        TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
+                .createEditingDomain(rs);
+        SyncchartsContentUtil.addTriggerListeners(ted);
+
+        try {
+            // set up the data component in headless mode
+            AbstractTransformationDataComponent dc = null;
+            if (type == TransformationType.E2S) {
+                dc = new EsterelToSyncChartDataComponent(false);
+                dc.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC, true);
+            } else if (type == TransformationType.SYNC_OPT) {
+                dc = new SyncChartsOptimizationDataComponent(false);
+                dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
+            }
+
+            dc.setHeadless(true);
+            dc.initialize();
+            dc.setRootState(root);
+
+            // retrieve transformation description
+            TransformationDescriptor td = dc.getNextTransformation();
+            ITransformationContext context = new XtendTransformationContext(dc.getXtendFacade(),
+                    ted);
+
+            // execute the transformation
+            TransformationEffect effect = new TransformationEffect(context, td);
+            long start = System.currentTimeMillis();
+            effect.execute();
+            long end = System.currentTimeMillis();
+            // System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
+
+            try {
+                fw = new FileWriter(outputFile, true);
+                fw.write((end - start) + ";");
+                fw.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // process action labels
+            try {
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.SERIALIZE);
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.PARSE);
+            } catch (Exception e) {
+                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+            }
+
+            resource.save(null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            success = false;
+        }
+
+        // cleanup
+        ted.dispose();
+
+        return success;
+    }
+
+    /**
+     * Performs a headless transformation on the passed {@code kixsFile}. The transformation can
+     * either be a Esterel to SyncCharts transformation or a SyncCharts optimization depending on
+     * the {@code type} parameter.
+     * 
+     * @param kixsFile
+     *            the file to transform.
+     * @param type
+     *            {@link TransformationType} determining the type of this transformation.
+     * @return {@code true} if the transformation was successful, false otherwise.
+     */
+    public static boolean performHeadlessTransformationWithSetup(final IFile kixsFile,
+            final TransformationType type) {
+        boolean success = true;
+
+        // retrieve the resource
+        URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+        ResourceSet rs = new ResourceSetImpl();
+        Resource resource = rs.getResource(kixsURI, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        State root = rootRegion.getStates().get(0);
+
+        // create an artificial editing domain and register trigger listener
+        TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
+                .createEditingDomain(rs);
+        SyncchartsContentUtil.addTriggerListeners(ted);
+
+        long start = System.currentTimeMillis();
+        try {
+            // set up the data component in headless mode
+            AbstractTransformationDataComponent dc = null;
+            if (type == TransformationType.E2S) {
+                dc = new EsterelToSyncChartDataComponent(false);
+                dc.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC, true);
+            } else if (type == TransformationType.SYNC_OPT) {
+                dc = new SyncChartsOptimizationDataComponent(false);
+                dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
+            }
+
+            dc.setHeadless(true);
+            dc.initialize();
+            dc.setRootState(root);
+
+            // retrieve transformation description
+            TransformationDescriptor td = dc.getNextTransformation();
+            ITransformationContext context = new XtendTransformationContext(dc.getXtendFacade(),
+                    ted);
+
+            // execute the transformation
+            TransformationEffect effect = new TransformationEffect(context, td);
+            effect.execute();
+            long end = System.currentTimeMillis();
+            // System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
+
+            try {
+                fw = new FileWriter(outputFile, true);
+                fw.write((end - start) + ";");
+                fw.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // process action labels
+            try {
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.SERIALIZE);
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.PARSE);
+            } catch (Exception e) {
+                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+            }
+
+            resource.save(null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            success = false;
+        }
+
+        // cleanup
+        ted.dispose();
+
+        return success;
+    }
+
+    
+    /**
+     * Performs a headless transformation on the passed {@code kixsFile}. The transformation can
+     * either be a Esterel to SyncCharts transformation or a SyncCharts optimization depending on
+     * the {@code type} parameter.
+     * 
+     * @param kixsFile
+     *            the file to transform.
+     * @param type
+     *            {@link TransformationType} determining the type of this transformation.
+     * @return {@code true} if the transformation was successful, false otherwise.
+     */
+    public static boolean performHeadlessTransformationStep(final IFile kixsFile,
+            final TransformationType type) {
+        boolean success = true;
+
+        // retrieve the resource
+        URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+        ResourceSet rs = new ResourceSetImpl();
+        Resource resource = rs.getResource(kixsURI, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        State root = rootRegion.getStates().get(0);
+
+        // create an artificial editing domain and register trigger listener
+        TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
+                .createEditingDomain(rs);
+        SyncchartsContentUtil.addTriggerListeners(ted);
+
+        try {
+            // set up the data component in headless mode
+            AbstractTransformationDataComponent dc = null;
+            if (type == TransformationType.E2S) {
+                dc = new EsterelToSyncChartDataComponent(false);
+                dc.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC, true);
+            } else if (type == TransformationType.SYNC_OPT) {
+                dc = new SyncChartsOptimizationDataComponent(false);
+                dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
+            }
+
+            dc.setHeadless(true);
+            dc.initialize();
+            dc.setRootState(root);
+            dc.setGlobalVariable(EsterelToSyncChartDataComponent.GLOBALVAR_REC, false);
+
+            long start = System.currentTimeMillis();
+            while (!dc.isFinished()) {
+                // retrieve transformation description
+                TransformationDescriptor td = dc.getNextTransformation();
+                ITransformationContext context = new XtendTransformationContext(
+                        dc.getXtendFacade(), ted);
+                // execute the transformation
+                if (td != null && context != null) {
+                    TransformationEffect effect = new TransformationEffect(context, td);
+                    effect.execute();
+                } else {
+                    break;
+                }
+            }
+            long end = System.currentTimeMillis();
+            // System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
+
+            try {
+                fw = new FileWriter(outputFile, true);
+                fw.write((end - start) + "");
+                fw.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+            // process action labels
+            try {
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.SERIALIZE);
+                ActionLabelProcessorWrapper.processActionLabels(rootRegion,
+                        ActionLabelProcessorWrapper.PARSE);
+            } catch (Exception e) {
+                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+            }
+
+            resource.save(null);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            success = false;
+        }
+
+        // cleanup
+        ted.dispose();
+
+        return success;
+    }
+
+    // @Test
     public void calLevels() throws Exception {
         TransformationUtil.logger.setLevel(Level.OFF);
         List<File> reversed = Lists.newArrayList(filesTest);
-        Collections.reverse(reversed);
+        // Collections.reverse(reversed);
         for (final File f : reversed) {
             if (badFiles.contains(f.getName())) {
                 continue;
