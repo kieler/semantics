@@ -195,12 +195,12 @@ public class PropertiesView extends ViewPart implements IPropertyListener, ISele
      * {@inheritDoc}
      */
     public void triggerPropertyListChanged() {
-        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-            public void run() {
-                tableViewer.setInput(RuntimeConfiguration.getInstance()
-                        .getReferedProperties(currentlySelectedParts));
-                }
-        });
+//        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+//            public void run() {
+//                tableViewer.setInput(RuntimeConfiguration.getInstance()
+//                        .getReferedProperties(currentlySelectedParts));
+//                }
+//        });
     }
 
     /**
