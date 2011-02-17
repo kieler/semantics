@@ -243,7 +243,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * @return the string[]
      */
     private String[] extractStates(String rawValue) {
-        // consume "maState "UML" $stableC (" or similar
+        // consume "maState stableC (" or similar
         rawValue = rawValue.substring(rawValue.indexOf("("));
 
         LinkedList<String> stringList = new LinkedList<String>();
@@ -431,17 +431,19 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             }
 
             // Consider no-consume option
-            boolean noConsume = this.getProperties()[3].getValueAsBoolean();
-            String noConsumeString = "";
-            if (noConsume) {
-                noConsumeString = " noConsume";
-            }
+            // TODO: Select/load different modules on simulation run/model checking
+//            boolean noConsume = this.getProperties()[3].getValueAsBoolean();
+//            String noConsumeString = "";
+//            if (noConsume) {
+//                noConsumeString = " noConsume";
+//            }
 
-            // search (maState "UML" ($stableC (prettyVerts (R-990928836 ,
+            // search (maState (stableC ((R-990928836 ,
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
-            String queryRequest = "red modelCheck ((maState \"UML" + noConsumeString
-                    + "\" ($stableC (prettyVerts (" + currentStatesQuery + ")) empty) ("
+            //TODO: empty == history conf string
+            String queryRequest = "red modelCheck ((maState (stableC ((" + 
+                    currentStatesQuery + ")) empty) ("
                     + triggerEventsQuery + ")), " + checkingRule + ") . \n";
 
             // Debug output query request

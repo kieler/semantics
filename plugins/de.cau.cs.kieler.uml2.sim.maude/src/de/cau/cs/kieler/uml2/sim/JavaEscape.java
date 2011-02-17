@@ -266,6 +266,44 @@ public class JavaEscape {
     }
 
     // ------------------------------------------------------------------------
+    
+    // Get an ID of the form: 
+    //      root R "R-51917016" : C "Think3--1914260458" 
+    public static String getFullyQualifiedId(Vertex vertex) {
+    	if (vertex.eContainer() == null) {
+    		return "root C \""+getId(vertex)+ "\""; 
+    	}
+    	else {
+    		return getFullyQualifiedId(vertex.eContainer()) + " : C \""+getId(vertex)+ "\"";
+    	}
+    }
+
+    // ------------------------------------------------------------------------
+
+    // Get an ID of the form: 
+    //      root R "R-51917016" : C "Think3--1914260458" 
+    public static String getFullyQualifiedId(Region region) {
+    	if (region.eContainer() == null) {
+    		return "root R \""+getId(region)+ "\""; 
+    	}
+    	else {
+    		return getFullyQualifiedId(region.eContainer()) + " : R \""+getId(region)+ "\"";
+    	}
+    }
+    
+    // ------------------------------------------------------------------------
+
+    // Should not happen 
+    public static String getFullyQualifiedId(EObject eobject) {
+    	if (eobject.eContainer() == null) {
+    		return ""; 
+    	}
+    	else {
+    		return getFullyQualifiedId(eobject.eContainer());
+    	}
+    }
+    
+    // ------------------------------------------------------------------------
 
     // Get Class Identifier of a Vertex for new compound transition definition
     public static String getClassIdentifier(Vertex vertex) {
