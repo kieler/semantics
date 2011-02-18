@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.core.model.effects;
 
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.statushandlers.StatusManager;
 
@@ -20,6 +22,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * A KiVi effect that executes a specific transformation.
@@ -31,6 +34,7 @@ public class TransformationEffect extends AbstractEffect {
 
     private ITransformationContext context;
     private TransformationDescriptor descriptor;
+    private boolean monitored = false;
 
     /**
      * default constructor.
@@ -47,8 +51,23 @@ public class TransformationEffect extends AbstractEffect {
      */
     public TransformationEffect(final ITransformationContext context,
             final TransformationDescriptor descriptor) {
+        this(context, descriptor, false);
+    }
+
+    /**
+     * @param context
+     *            {@link ITransformationContext} containing all necessary information in order to
+     *            execute the transformation.
+     * @param descriptor
+     *            The transformation's {@link TransformationDescriptor}.
+     * @param monitored
+     *            Determines whether the execution should be processed as a monitored operation.
+     */
+    public TransformationEffect(final ITransformationContext context,
+            final TransformationDescriptor descriptor, final boolean monitored) {
         this.context = context;
         this.descriptor = descriptor;
+        this.monitored = monitored;
     }
 
     /**
@@ -58,8 +77,21 @@ public class TransformationEffect extends AbstractEffect {
         if (context != null && descriptor != null) {
             // execute the transformation
             long start = System.currentTimeMillis();
-            context.execute(descriptor);
+            if (monitored) {
+                MonitoredOperation operation = new MonitoredOperation() {
+
+                    @Override
+                    protected IStatus execute(final IProgressMonitor monitor) {
+                        context.execute(descriptor);
+                        return null;
+                    }
+                };
+                operation.runMonitored();
+            } else {
+                context.execute(descriptor);
+            }
             long end = System.currentTimeMillis();
+            
             System.out.println("\t ##### Execution Time: " + (end - start));
         } else {
             Status status = new Status(
