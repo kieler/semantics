@@ -866,3 +866,13 @@ Void rule(State s, WeakAbort wa):
 Void rule(State s, Block b):
 	rule(s, (Parallel) b.statement)
 ;
+
+Void rule(State s, Exec e):
+	initializeRule(s, e) ->
+	s.setLabel("Exec was omitted")
+;
+
+Void rule(State s, Repeat r):
+	initializeRule(s, r) ->
+	s.setLabel("Repeat was omitted")
+;
