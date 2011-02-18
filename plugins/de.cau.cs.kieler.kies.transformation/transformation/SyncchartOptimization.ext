@@ -274,7 +274,8 @@ Void rule6(State s, List[State] states):
 */
 Boolean rule7applies(State s):
 	switch {
-		case !isSimpleState(s) && s.hasParentMacroState() && s.hasNumberOfSubStates(1):
+		case !isSimpleState(s) && s.hasParentMacroState() && s.hasNumberOfSubStates(1) 
+			&& !hasSignalsVariables(s):
 				true
 		default: false
 	}
