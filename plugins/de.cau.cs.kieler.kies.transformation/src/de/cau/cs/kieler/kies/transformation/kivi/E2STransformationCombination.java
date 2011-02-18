@@ -301,8 +301,19 @@ public class E2STransformationCombination extends AbstractCombination {
      * Editor changed.
      */
     private void editorStateChanged(final ActiveEditorState editorState) {
-        currentlyActiveEditor = TransformationUtil.getActiveEditor();
+        currentlyActiveEditor = editorState.getLastActiveEditor();
         currentDataComponent = null;
+
+        IWorkbenchPart currentEditor = editorState.getLastActiveEditor();
+        if (currentEditor == null || currentEditor.getSite() == null) {
+            currentlyActiveEditor = null;
+            return;
+        }
+        String editorId = currentEditor.getSite().getId();
+        if (!(editorId.equals(ESTEREL_EDITOR_ID) || editorId.equals(SYNCCHARTS_EDITOR_ID))) {
+            // not interested in that specific editor
+            return;
+        }
 
         if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
             currentCommandStack = ((DiagramEditor) currentlyActiveEditor).getEditingDomain()
