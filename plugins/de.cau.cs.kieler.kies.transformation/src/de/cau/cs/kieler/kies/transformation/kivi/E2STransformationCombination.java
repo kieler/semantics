@@ -247,7 +247,6 @@ public class E2STransformationCombination extends AbstractCombination {
             initializeDataComponents();
         }
 
-        long start = System.currentTimeMillis();
         // initialize the correct datacomponent
         if (isTransformable()) {
             currentDataComponent = transformingDataComponent;
@@ -258,28 +257,32 @@ public class E2STransformationCombination extends AbstractCombination {
         // determine proceeding
         if (type.equals(BUTTON_EXPAND) || type.equals(BUTTON_EXPAND_OPTIMIZE)) {
             setRecursive(true);
+            startTransformation(true);
         }
         if (type.equals(BUTTON_STEP)) {
             setRecursive(false);
+            startTransformation(false);
         }
+    }
 
-        // perform step
+    private void startTransformation(final boolean monitored) {
         try {
+            long start = System.currentTimeMillis();
             currentDataComponent.step(null);
             ITransformationContext lastContext = currentDataComponent.getCurrentContext();
             TransformationDescriptor lastDescriptor = currentDataComponent.getCurrentDescriptor();
             if (lastContext != null) {
-                TransformationEffect effect = new TransformationEffect(lastContext, lastDescriptor);
+                TransformationEffect effect = new TransformationEffect(lastContext, lastDescriptor,
+                        monitored);
                 long end = System.currentTimeMillis();
-
-                System.out.println("\t ##### Initialize Time: " + (end - start));
+                TransformationUtil.logger.info("\t ##### Initialize Time: " + (end - start));
                 effect.schedule();
             }
         } catch (KiemExecutionException e) {
-            e.printStackTrace();
-            System.out.println("Finished");
+            Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                    "A problem occured during transformation.", e);
+            StatusManager.getManager().handle(s);
         }
-
     }
 
     private void back() {

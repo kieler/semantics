@@ -435,6 +435,10 @@ Boolean compareTrigger(Action t1, Action t2):
 	de.cau.cs.kieler.synccharts.Action) 
 ;
 
+Void informUser(String s):
+	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.raiseStatus(java.lang.String)
+;
+
 Void debug(Object obj):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(java.lang.Object)
 ;

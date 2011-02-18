@@ -680,6 +680,18 @@ public final class TransformationUtil {
     }
 
     /**
+     * call this method from xtend in order to open a new status information window.
+     * 
+     * @param message
+     *            the message to display
+     */
+    public static void raiseStatus(final String message) {
+        Status s = new Status(Status.WARNING, Activator.PLUGIN_ID, StatusManager.SHOW, message,
+                null);
+        StatusManager.getManager().handle(s, StatusManager.SHOW);
+    }
+
+    /**
      * may be used to print some debug information.
      * 
      * @param obj

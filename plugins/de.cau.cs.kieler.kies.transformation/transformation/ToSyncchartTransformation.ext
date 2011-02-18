@@ -869,10 +869,18 @@ Void rule(State s, Block b):
 
 Void rule(State s, Exec e):
 	initializeRule(s, e) ->
-	s.setLabel("Exec was omitted")
+	s.setLabel("Exec was omitted") ->
+	informUser("The exec statement cannot be transformed to an equivalent SyncCharts element.")
 ;
 
 Void rule(State s, Repeat r):
 	initializeRule(s, r) ->
-	s.setLabel("Repeat was omitted")
+	s.setLabel("Repeat was omitted") ->
+	informUser("Repeat is currently not supported.")
+;
+
+Void rule(State s, Run r):
+	initializeRule(s, r) ->
+	s.setLabel("Run was omitted") ->
+	informUser("The run statement is not yet supported.")
 ;
