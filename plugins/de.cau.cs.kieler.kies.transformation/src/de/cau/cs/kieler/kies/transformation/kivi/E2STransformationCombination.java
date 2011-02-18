@@ -208,9 +208,9 @@ public class E2STransformationCombination extends AbstractCombination {
         setButtonState(false, BUTTON_STEP_BACK);
 
         // get the current editor
-        IEditorPart editor = TransformationUtil.getActiveEditor();
-        if (editor instanceof XtextEditor) {
-            IFile strlFile = (IFile) editor.getEditorInput().getAdapter(IFile.class);
+        if (currentlyActiveEditor instanceof XtextEditor) {
+            IFile strlFile = (IFile) ((IEditorPart) currentlyActiveEditor).getEditorInput()
+                    .getAdapter(IFile.class);
             IFile created = TransformationUtil.strlToKixs(strlFile);
             TransformationUtil.openKidsInEditor(created);
 
