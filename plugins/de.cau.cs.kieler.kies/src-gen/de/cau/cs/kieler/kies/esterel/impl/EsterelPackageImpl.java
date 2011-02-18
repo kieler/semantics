@@ -34,6 +34,7 @@ import de.cau.cs.kieler.kies.esterel.DoWatchingEnd;
 import de.cau.cs.kieler.kies.esterel.ElsIf;
 import de.cau.cs.kieler.kies.esterel.ElsePart;
 import de.cau.cs.kieler.kies.esterel.Emit;
+import de.cau.cs.kieler.kies.esterel.EndLoop;
 import de.cau.cs.kieler.kies.esterel.EsterelFactory;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.EsterelType;
@@ -505,6 +506,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass loopEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass endLoopEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -2373,9 +2381,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getLoop_End1()
+  public EReference getLoop_End1()
   {
-    return (EAttribute)loopEClass.getEStructuralFeatures().get(1);
+    return (EReference)loopEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2386,6 +2394,26 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getLoop_End()
   {
     return (EReference)loopEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEndLoop()
+  {
+    return endLoopEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEndLoop_EndOpt()
+  {
+    return (EAttribute)endLoopEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2613,9 +2641,29 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getPresentEvent_Tick()
+  public EAttribute getPresentEvent_FB()
   {
     return (EAttribute)presentEventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPresentEvent_EB()
+  {
+    return (EAttribute)presentEventEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPresentEvent_Tick()
+  {
+    return (EAttribute)presentEventEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -3256,6 +3304,26 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getDelayEvent_Expr()
   {
     return (EReference)delayEventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDelayEvent_FB()
+  {
+    return (EAttribute)delayEventEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDelayEvent_EB()
+  {
+    return (EAttribute)delayEventEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -3917,8 +3985,11 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     loopEClass = createEClass(LOOP);
     createEReference(loopEClass, LOOP__BODY);
-    createEAttribute(loopEClass, LOOP__END1);
+    createEReference(loopEClass, LOOP__END1);
     createEReference(loopEClass, LOOP__END);
+
+    endLoopEClass = createEClass(END_LOOP);
+    createEAttribute(endLoopEClass, END_LOOP__END_OPT);
 
     loopEachEClass = createEClass(LOOP_EACH);
 
@@ -3952,6 +4023,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     presentEventEClass = createEClass(PRESENT_EVENT);
     createEReference(presentEventEClass, PRESENT_EVENT__EXPRESSION);
+    createEAttribute(presentEventEClass, PRESENT_EVENT__FB);
+    createEAttribute(presentEventEClass, PRESENT_EVENT__EB);
     createEAttribute(presentEventEClass, PRESENT_EVENT__TICK);
 
     repeatEClass = createEClass(REPEAT);
@@ -4036,6 +4109,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     delayEventEClass = createEClass(DELAY_EVENT);
     createEAttribute(delayEventEClass, DELAY_EVENT__TICK);
     createEReference(delayEventEClass, DELAY_EVENT__EXPR);
+    createEAttribute(delayEventEClass, DELAY_EVENT__FB);
+    createEAttribute(delayEventEClass, DELAY_EVENT__EB);
 
     execEClass = createEClass(EXEC);
     createEReference(execEClass, EXEC__TASK);
@@ -4383,8 +4458,11 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLoop_Body(), this.getLoopBody(), null, "body", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getLoop_End1(), ecorePackage.getEString(), "end1", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLoop_End1(), this.getEndLoop(), null, "end1", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLoop_End(), this.getLoopEach(), null, "end", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(endLoopEClass, EndLoop.class, "EndLoop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEndLoop_EndOpt(), ecorePackage.getEString(), "endOpt", null, 0, 1, EndLoop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(loopEachEClass, LoopEach.class, "LoopEach", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4418,6 +4496,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(presentEventEClass, PresentEvent.class, "PresentEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPresentEvent_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, PresentEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPresentEvent_FB(), ecorePackage.getEString(), "fB", null, 0, 1, PresentEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPresentEvent_EB(), ecorePackage.getEString(), "eB", null, 0, 1, PresentEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getPresentEvent_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, PresentEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(repeatEClass, Repeat.class, "Repeat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4502,6 +4582,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(delayEventEClass, DelayEvent.class, "DelayEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getDelayEvent_Tick(), ecorePackage.getEString(), "tick", null, 0, 1, DelayEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDelayEvent_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, DelayEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDelayEvent_FB(), ecorePackage.getEString(), "fB", null, 0, 1, DelayEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDelayEvent_EB(), ecorePackage.getEString(), "eB", null, 0, 1, DelayEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(execEClass, Exec.class, "Exec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExec_Task(), this.getTask(), null, "task", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

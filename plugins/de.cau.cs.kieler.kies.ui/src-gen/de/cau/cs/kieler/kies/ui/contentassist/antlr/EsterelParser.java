@@ -445,6 +445,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getLoopAccess().getBodyAssignment_1(), "rule__Loop__BodyAssignment_1");
 					put(grammarAccess.getLoopAccess().getEnd1Assignment_2_0(), "rule__Loop__End1Assignment_2_0");
 					put(grammarAccess.getLoopAccess().getEndAssignment_2_1(), "rule__Loop__EndAssignment_2_1");
+					put(grammarAccess.getEndLoopAccess().getEndOptAssignment_2(), "rule__EndLoop__EndOptAssignment_2");
 					put(grammarAccess.getLoopDelayAccess().getDelayAssignment(), "rule__LoopDelay__DelayAssignment");
 					put(grammarAccess.getLoopBodyAccess().getStatementAssignment(), "rule__LoopBody__StatementAssignment");
 					put(grammarAccess.getPresentAccess().getBodyAssignment_1(), "rule__Present__BodyAssignment_1");
@@ -457,7 +458,9 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getPresentCaseAccess().getEventAssignment_1(), "rule__PresentCase__EventAssignment_1");
 					put(grammarAccess.getPresentCaseAccess().getStatementAssignment_2_1(), "rule__PresentCase__StatementAssignment_2_1");
 					put(grammarAccess.getPresentEventAccess().getExpressionAssignment_0(), "rule__PresentEvent__ExpressionAssignment_0");
+					put(grammarAccess.getPresentEventAccess().getFBAssignment_1_0(), "rule__PresentEvent__FBAssignment_1_0");
 					put(grammarAccess.getPresentEventAccess().getExpressionAssignment_1_1(), "rule__PresentEvent__ExpressionAssignment_1_1");
+					put(grammarAccess.getPresentEventAccess().getEBAssignment_1_2(), "rule__PresentEvent__EBAssignment_1_2");
 					put(grammarAccess.getPresentEventAccess().getTickAssignment_2(), "rule__PresentEvent__TickAssignment_2");
 					put(grammarAccess.getRepeatAccess().getPositiveAssignment_0(), "rule__Repeat__PositiveAssignment_0");
 					put(grammarAccess.getRepeatAccess().getExpressionAssignment_2(), "rule__Repeat__ExpressionAssignment_2");
@@ -540,7 +543,9 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getDelayExprAccess().getEventAssignment_2_1(), "rule__DelayExpr__EventAssignment_2_1");
 					put(grammarAccess.getDelayEventAccess().getTickAssignment_0(), "rule__DelayEvent__TickAssignment_0");
 					put(grammarAccess.getDelayEventAccess().getExprAssignment_1(), "rule__DelayEvent__ExprAssignment_1");
+					put(grammarAccess.getDelayEventAccess().getFBAssignment_2_0(), "rule__DelayEvent__FBAssignment_2_0");
 					put(grammarAccess.getDelayEventAccess().getExprAssignment_2_1(), "rule__DelayEvent__ExprAssignment_2_1");
+					put(grammarAccess.getDelayEventAccess().getEBAssignment_2_2(), "rule__DelayEvent__EBAssignment_2_2");
 					put(grammarAccess.getExecAccess().getTaskAssignment_0_0_1(), "rule__Exec__TaskAssignment_0_0_1");
 					put(grammarAccess.getExecAccess().getBodyAssignment_0_0_2(), "rule__Exec__BodyAssignment_0_0_2");
 					put(grammarAccess.getExecAccess().getRetSignalAssignment_0_0_4(), "rule__Exec__RetSignalAssignment_0_0_4");

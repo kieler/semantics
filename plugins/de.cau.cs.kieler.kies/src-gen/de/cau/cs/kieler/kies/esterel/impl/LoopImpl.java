@@ -6,6 +6,7 @@
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
+import de.cau.cs.kieler.kies.esterel.EndLoop;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.Loop;
 import de.cau.cs.kieler.kies.esterel.LoopBody;
@@ -47,24 +48,14 @@ public class LoopImpl extends StatementImpl implements Loop
   protected LoopBody body;
 
   /**
-   * The default value of the '{@link #getEnd1() <em>End1</em>}' attribute.
+   * The cached value of the '{@link #getEnd1() <em>End1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getEnd1()
    * @generated
    * @ordered
    */
-  protected static final String END1_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEnd1() <em>End1</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEnd1()
-   * @generated
-   * @ordered
-   */
-  protected String end1 = END1_EDEFAULT;
+  protected EndLoop end1;
 
   /**
    * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
@@ -150,7 +141,7 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getEnd1()
+  public EndLoop getEnd1()
   {
     return end1;
   }
@@ -160,12 +151,37 @@ public class LoopImpl extends StatementImpl implements Loop
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setEnd1(String newEnd1)
+  public NotificationChain basicSetEnd1(EndLoop newEnd1, NotificationChain msgs)
   {
-    String oldEnd1 = end1;
+    EndLoop oldEnd1 = end1;
     end1 = newEnd1;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, oldEnd1, end1));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, oldEnd1, newEnd1);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnd1(EndLoop newEnd1)
+  {
+    if (newEnd1 != end1)
+    {
+      NotificationChain msgs = null;
+      if (end1 != null)
+        msgs = ((InternalEObject)end1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END1, null, msgs);
+      if (newEnd1 != null)
+        msgs = ((InternalEObject)newEnd1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOOP__END1, null, msgs);
+      msgs = basicSetEnd1(newEnd1, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOOP__END1, newEnd1, newEnd1));
   }
 
   /**
@@ -228,6 +244,8 @@ public class LoopImpl extends StatementImpl implements Loop
     {
       case EsterelPackage.LOOP__BODY:
         return basicSetBody(null, msgs);
+      case EsterelPackage.LOOP__END1:
+        return basicSetEnd1(null, msgs);
       case EsterelPackage.LOOP__END:
         return basicSetEnd(null, msgs);
     }
@@ -268,7 +286,7 @@ public class LoopImpl extends StatementImpl implements Loop
         setBody((LoopBody)newValue);
         return;
       case EsterelPackage.LOOP__END1:
-        setEnd1((String)newValue);
+        setEnd1((EndLoop)newValue);
         return;
       case EsterelPackage.LOOP__END:
         setEnd((LoopEach)newValue);
@@ -291,7 +309,7 @@ public class LoopImpl extends StatementImpl implements Loop
         setBody((LoopBody)null);
         return;
       case EsterelPackage.LOOP__END1:
-        setEnd1(END1_EDEFAULT);
+        setEnd1((EndLoop)null);
         return;
       case EsterelPackage.LOOP__END:
         setEnd((LoopEach)null);
@@ -313,28 +331,11 @@ public class LoopImpl extends StatementImpl implements Loop
       case EsterelPackage.LOOP__BODY:
         return body != null;
       case EsterelPackage.LOOP__END1:
-        return END1_EDEFAULT == null ? end1 != null : !END1_EDEFAULT.equals(end1);
+        return end1 != null;
       case EsterelPackage.LOOP__END:
         return end != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (end1: ");
-    result.append(end1);
-    result.append(')');
-    return result.toString();
   }
 
 } //LoopImpl

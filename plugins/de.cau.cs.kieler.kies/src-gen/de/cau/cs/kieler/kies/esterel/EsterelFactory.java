@@ -513,6 +513,15 @@ public interface EsterelFactory extends EFactory
   Loop createLoop();
 
   /**
+   * Returns a new object of class '<em>End Loop</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>End Loop</em>'.
+   * @generated
+   */
+  EndLoop createEndLoop();
+
+  /**
    * Returns a new object of class '<em>Loop Each</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

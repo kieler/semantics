@@ -29,6 +29,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DelayEventImpl#getTick <em>Tick</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DelayEventImpl#getExpr <em>Expr</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DelayEventImpl#getFB <em>FB</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DelayEventImpl#getEB <em>EB</em>}</li>
  * </ul>
  * </p>
  *
@@ -65,6 +67,46 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
    * @ordered
    */
   protected Expression expr;
+
+  /**
+   * The default value of the '{@link #getFB() <em>FB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFB()
+   * @generated
+   * @ordered
+   */
+  protected static final String FB_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFB() <em>FB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFB()
+   * @generated
+   * @ordered
+   */
+  protected String fB = FB_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getEB() <em>EB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEB()
+   * @generated
+   * @ordered
+   */
+  protected static final String EB_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEB() <em>EB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEB()
+   * @generated
+   * @ordered
+   */
+  protected String eB = EB_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -163,6 +205,52 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
    * <!-- end-user-doc -->
    * @generated
    */
+  public String getFB()
+  {
+    return fB;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setFB(String newFB)
+  {
+    String oldFB = fB;
+    fB = newFB;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EVENT__FB, oldFB, fB));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getEB()
+  {
+    return eB;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEB(String newEB)
+  {
+    String oldEB = eB;
+    eB = newEB;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DELAY_EVENT__EB, oldEB, eB));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -188,6 +276,10 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
         return getTick();
       case EsterelPackage.DELAY_EVENT__EXPR:
         return getExpr();
+      case EsterelPackage.DELAY_EVENT__FB:
+        return getFB();
+      case EsterelPackage.DELAY_EVENT__EB:
+        return getEB();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -207,6 +299,12 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
         return;
       case EsterelPackage.DELAY_EVENT__EXPR:
         setExpr((Expression)newValue);
+        return;
+      case EsterelPackage.DELAY_EVENT__FB:
+        setFB((String)newValue);
+        return;
+      case EsterelPackage.DELAY_EVENT__EB:
+        setEB((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -228,6 +326,12 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
       case EsterelPackage.DELAY_EVENT__EXPR:
         setExpr((Expression)null);
         return;
+      case EsterelPackage.DELAY_EVENT__FB:
+        setFB(FB_EDEFAULT);
+        return;
+      case EsterelPackage.DELAY_EVENT__EB:
+        setEB(EB_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -246,6 +350,10 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
         return TICK_EDEFAULT == null ? tick != null : !TICK_EDEFAULT.equals(tick);
       case EsterelPackage.DELAY_EVENT__EXPR:
         return expr != null;
+      case EsterelPackage.DELAY_EVENT__FB:
+        return FB_EDEFAULT == null ? fB != null : !FB_EDEFAULT.equals(fB);
+      case EsterelPackage.DELAY_EVENT__EB:
+        return EB_EDEFAULT == null ? eB != null : !EB_EDEFAULT.equals(eB);
     }
     return super.eIsSet(featureID);
   }
@@ -263,6 +371,10 @@ public class DelayEventImpl extends MinimalEObjectImpl.Container implements Dela
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (tick: ");
     result.append(tick);
+    result.append(", fB: ");
+    result.append(fB);
+    result.append(", eB: ");
+    result.append(eB);
     result.append(')');
     return result.toString();
   }

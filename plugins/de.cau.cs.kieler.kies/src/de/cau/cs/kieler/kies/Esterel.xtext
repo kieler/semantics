@@ -290,7 +290,7 @@ Loop:
 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
 
 EndLoop:
-	"end" "loop"?;
+	{EndLoop} "end" (endOpt="loop")?;
 
 LoopEach:
 	"each" LoopDelay;
@@ -329,7 +329,7 @@ PresentCase:
 	"case" event=PresentEvent ("do" statement=Statement)?;
 
 PresentEvent:
-	expression=SignalExpression | "[" expression=SignalExpression "]" | tick=Tick;
+	expression=SignalExpression | fB="[" expression=SignalExpression eB="]" | tick=Tick;
 	// -!
 
 // --> B.4.18 repeat: Iterate a Fixed Number of Times
@@ -477,7 +477,7 @@ DelayExpr:
 	(expr=Expression event=DelayEvent) | event=DelayEvent | (isImmediate?="immediate" event=DelayEvent);
 
 DelayEvent:
-	tick=Tick | expr=SignalReferenceExpr | "[" expr=SignalExpression "]";
+	tick=Tick | expr=SignalReferenceExpr | fB="[" expr=SignalExpression eB="]";
 
 	// --> Exec
 // -------------------------------------

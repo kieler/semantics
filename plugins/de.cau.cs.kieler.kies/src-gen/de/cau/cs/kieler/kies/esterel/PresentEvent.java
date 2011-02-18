@@ -19,6 +19,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getExpression <em>Expression</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getFB <em>FB</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getEB <em>EB</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getTick <em>Tick</em>}</li>
  * </ul>
  * </p>
@@ -54,6 +56,58 @@ public interface PresentEvent extends EObject
    * @generated
    */
   void setExpression(Expression value);
+
+  /**
+   * Returns the value of the '<em><b>FB</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>FB</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>FB</em>' attribute.
+   * @see #setFB(String)
+   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getPresentEvent_FB()
+   * @model
+   * @generated
+   */
+  String getFB();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getFB <em>FB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>FB</em>' attribute.
+   * @see #getFB()
+   * @generated
+   */
+  void setFB(String value);
+
+  /**
+   * Returns the value of the '<em><b>EB</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>EB</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>EB</em>' attribute.
+   * @see #setEB(String)
+   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getPresentEvent_EB()
+   * @model
+   * @generated
+   */
+  String getEB();
+
+  /**
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.PresentEvent#getEB <em>EB</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>EB</em>' attribute.
+   * @see #getEB()
+   * @generated
+   */
+  void setEB(String value);
 
   /**
    * Returns the value of the '<em><b>Tick</b></em>' attribute.

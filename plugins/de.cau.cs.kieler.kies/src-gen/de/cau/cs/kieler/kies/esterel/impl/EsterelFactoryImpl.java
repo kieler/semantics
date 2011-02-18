@@ -122,6 +122,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.THEN_PART: return createThenPart();
       case EsterelPackage.ELSE_PART: return createElsePart();
       case EsterelPackage.LOOP: return createLoop();
+      case EsterelPackage.END_LOOP: return createEndLoop();
       case EsterelPackage.LOOP_EACH: return createLoopEach();
       case EsterelPackage.LOOP_DELAY: return createLoopDelay();
       case EsterelPackage.LOOP_BODY: return createLoopBody();
@@ -767,6 +768,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     LoopImpl loop = new LoopImpl();
     return loop;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EndLoop createEndLoop()
+  {
+    EndLoopImpl endLoop = new EndLoopImpl();
+    return endLoop;
   }
 
   /**

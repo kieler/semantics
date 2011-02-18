@@ -54,30 +54,30 @@ public interface Loop extends Statement
   void setBody(LoopBody value);
 
   /**
-   * Returns the value of the '<em><b>End1</b></em>' attribute.
+   * Returns the value of the '<em><b>End1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>End1</em>' attribute isn't clear,
+   * If the meaning of the '<em>End1</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>End1</em>' attribute.
-   * @see #setEnd1(String)
+   * @return the value of the '<em>End1</em>' containment reference.
+   * @see #setEnd1(EndLoop)
    * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getLoop_End1()
-   * @model
+   * @model containment="true"
    * @generated
    */
-  String getEnd1();
+  EndLoop getEnd1();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Loop#getEnd1 <em>End1</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Loop#getEnd1 <em>End1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>End1</em>' attribute.
+   * @param value the new value of the '<em>End1</em>' containment reference.
    * @see #getEnd1()
    * @generated
    */
-  void setEnd1(String value);
+  void setEnd1(EndLoop value);
 
   /**
    * Returns the value of the '<em><b>End</b></em>' containment reference.
