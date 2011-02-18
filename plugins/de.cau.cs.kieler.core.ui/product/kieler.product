@@ -30,7 +30,8 @@ openFile</programArgsMac>
 -Xmn256m
 -Xmx1024m 
 -XX:PermSize=128m
--XX:MaxPermSize=256m</vmArgs>
+-XX:MaxPermSize=256m
+-Xss2m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
