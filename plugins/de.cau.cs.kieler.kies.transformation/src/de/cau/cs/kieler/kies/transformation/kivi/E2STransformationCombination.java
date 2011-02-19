@@ -41,6 +41,7 @@ import de.cau.cs.kieler.core.model.effects.TransformationEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
@@ -213,6 +214,7 @@ public class E2STransformationCombination extends AbstractCombination {
                     .getAdapter(IFile.class);
             IFile created = TransformationUtil.strlToKixs(strlFile);
             TransformationUtil.openKidsInEditor(created);
+            ValidationManager.disableAll();
 
             if (created == null) {
                 return false;
