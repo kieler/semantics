@@ -210,8 +210,10 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                 /* do not serialized the implicit 'tick' signal! */
                 return ((Region) owner).getSignals().get(index).getName().equals("tick");
             }
+            
+            // what an evil hack ... :-(
             if (((EList<Signal>) owner.eGet(feature)).get(index).eClass().getName()
-                    .equals("TrapDecl")) {
+                    .startsWith("T")) {
                 return true;
             } else {
                 return false;
