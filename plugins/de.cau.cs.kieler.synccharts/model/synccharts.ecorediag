@@ -407,9 +407,6 @@
     <layoutConstraint xmi:type="notation:Bounds" xmi:id="_Cnx7Qp4bEd-sWucCFBfbjQ" x="747" y="9"/>
   </children>
   <styles xmi:type="notation:DiagramStyle" xmi:id="_MOJEcHIcEd-MzIgE3mnJQg"/>
-  <styles xmi:type="layoutoptions:LayoutOptionStyle" xmi:id="_dchEQMppEd-F5fOYU8LhsA">
-    <options xmi:type="klayoutdata:KFloatOption" xmi:id="_dchEQcppEd-F5fOYU8LhsA" key="de.cau.cs.kieler.layout.options.aspectRatio" value="0.1"/>
-  </styles>
   <element xmi:type="ecore:EPackage" href="synccharts.ecore#/"/>
   <edges xmi:type="notation:Edge" xmi:id="_MqsdkHIcEd-MzIgE3mnJQg" type="3002" source="_MkVW4HIcEd-MzIgE3mnJQg" target="_Mp4lSHIcEd-MzIgE3mnJQg">
     <children xmi:type="notation:Node" xmi:id="_MqtrsHIcEd-MzIgE3mnJQg" type="4011">

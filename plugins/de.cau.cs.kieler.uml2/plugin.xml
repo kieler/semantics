@@ -7,22 +7,22 @@
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="org.eclipse.uml2.diagram.clazz.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.classDiagram">
       </option>
       <option
             class="org.eclipse.uml2.uml.Generalization"
-            option="de.cau.cs.kieler.layout.options.edgeType"
+            option="de.cau.cs.kieler.edgeType"
             value="GENERALIZATION">
       </option>
       <option
             class="org.eclipse.uml2.uml.Association"
-            option="de.cau.cs.kieler.layout.options.edgeType"
+            option="de.cau.cs.kieler.edgeType"
             value="ASSOCIATION">
       </option>
       <option
             class="org.eclipse.uml2.uml.Dependency"
-            option="de.cau.cs.kieler.layout.options.edgeType"
+            option="de.cau.cs.kieler.edgeType"
             value="DEPENDENCY">
       </option>
    </extension>
@@ -32,27 +32,27 @@
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="org.eclipse.uml2.diagram.activity.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
             class="org.eclipse.uml2.uml.Activity"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.stateMachine">
       </option>
       <option
             class="org.eclipse.uml2.uml.Activity"
-            option="de.cau.cs.kieler.layout.options.layoutDirection"
+            option="de.cau.cs.kieler.direction"
             value="DOWN">
       </option>
       <option
             class="org.eclipse.uml2.uml.Activity"
-            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            option="de.cau.cs.kieler.borderSpacing"
             value="20.0">
       </option>
       <option
             class="org.eclipse.uml2.uml.Activity"
-            option="de.cau.cs.kieler.layout.options.minSpacing"
+            option="de.cau.cs.kieler.spacing"
             value="25.0">
       </option>
    </extension>
@@ -62,17 +62,17 @@
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.usecaseDiagram">
       </option>
       <option
             class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.minSpacing"
+            option="de.cau.cs.kieler.spacing"
             value="40.0">
       </option>
       <option
             class="org.eclipse.uml2.diagram.usecase.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            option="de.cau.cs.kieler.borderSpacing"
             value="20.0">
       </option>
    </extension>
@@ -82,37 +82,37 @@
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="org.eclipse.uml2.diagram.statemachine.edit.parts.PackageEditPart"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
             class="org.eclipse.uml2.uml.StateMachine"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
             class="org.eclipse.uml2.uml.StateMachine"
-            option="de.cau.cs.kieler.layout.options.minSpacing"
+            option="de.cau.cs.kieler.spacing"
             value="1.0">
       </option>
       <option
             class="org.eclipse.uml2.uml.StateMachine"
-            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
       </option>
       <option
             class="org.eclipse.uml2.uml.StateMachine"
-            option="de.cau.cs.kieler.layout.options.expandNodes"
+            option="de.cau.cs.kieler.expandNodes"
             value="true">
       </option>
       <option
             class="org.eclipse.uml2.uml.Region"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.stateMachine">
       </option>
       <option
             class="org.eclipse.uml2.uml.Region"
-            option="de.cau.cs.kieler.layout.options.layoutDirection"
+            option="de.cau.cs.kieler.direction"
             value="RIGHT">
       </option>
    </extension>

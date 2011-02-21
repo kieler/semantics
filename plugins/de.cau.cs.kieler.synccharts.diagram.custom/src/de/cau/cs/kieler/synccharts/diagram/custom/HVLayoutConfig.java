@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.LayoutServices;
 import de.cau.cs.kieler.kiml.SemanticLayoutConfig;
-import de.cau.cs.kieler.kiml.options.LayoutDirection;
+import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
@@ -69,7 +69,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     protected List<LayoutOptionData<?>> getOptionData(final EObject semanticElem) {
         if (semanticElem instanceof Scope && getHVDistance((Scope) semanticElem) >= 0) {
             LayoutOptionData<?> optionData = LayoutServices.getInstance()
-                    .getOptionData(LayoutOptions.LAYOUT_DIRECTION_ID);
+                    .getOptionData(LayoutOptions.DIRECTION_ID);
             List<LayoutOptionData<?>> list = new ArrayList<LayoutOptionData<?>>(1);
             list.add(optionData);
             return list;
@@ -84,13 +84,13 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     protected Object getSemanticProperty(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption) {
         if (semanticElem instanceof Scope && layoutOption.getId()
-                .equals(LayoutOptions.LAYOUT_DIRECTION_ID)) {
+                .equals(LayoutOptions.DIRECTION_ID)) {
             int dist = getHVDistance((Scope) semanticElem);
             if (dist >= 0) {
                 if (dist % 2 == 0) {
-                    return LayoutDirection.RIGHT;
+                    return Direction.RIGHT;
                 } else {
-                    return LayoutDirection.DOWN;
+                    return Direction.DOWN;
                 }
             }
         }

@@ -455,57 +455,57 @@
          point="de.cau.cs.kieler.kiml.layoutInfo">
       <option
             class="de.cau.cs.kieler.synccharts.Region"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.stateMachine">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.layout.options.diagramType"
+            option="de.cau.cs.kieler.diagramType"
             value="de.cau.cs.kieler.layout.diagrams.boxes">
       </option>
       <option
             class="de.cau.cs.kieler.core.kexpressions.Signal"
-            option="de.cau.cs.kieler.layout.options.noLayout"
+            option="de.cau.cs.kieler.noLayout"
             value="true">
       </option>
       <option
             class="de.cau.cs.kieler.core.kexpressions.Variable"
-            option="de.cau.cs.kieler.layout.options.noLayout"
+            option="de.cau.cs.kieler.noLayout"
             value="true">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.layout.options.minSpacing"
+            option="de.cau.cs.kieler.spacing"
             value="1.0">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.layout.options.fixedSize"
+            option="de.cau.cs.kieler.fixedSize"
             value="false">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.layout.options.expandNodes"
+            option="de.cau.cs.kieler.expandNodes"
             value="true">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.Region"
-            option="de.cau.cs.kieler.layout.options.borderSpacing"
+            option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
       </option>
       <option
             class="de.cau.cs.kieler.core.kexpressions.IVariable"
-            option="de.cau.cs.kieler.layout.options.noLayout"
+            option="de.cau.cs.kieler.noLayout"
             value="true">
       </option>
       <option
             class="de.cau.cs.kieler.core.kexpressions.ISignal"
-            option="de.cau.cs.kieler.layout.options.noLayout"
+            option="de.cau.cs.kieler.noLayout"
             value="true">
       </option>
       <semanticOption
