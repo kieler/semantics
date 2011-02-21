@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="loopModule" label="loopModule">
+    <signals xsi:type="kexpressions:ISignal" name="O" isOutput="true"/>
+    <regions id="">
+      <states id="Sequence_State2" label="Sequence State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="Emit_State2" label="Emit State" isInitial="true">
+            <regions id="">
+              <states id="_" isInitial="true">
+                <outgoingTransitions isImmediate="true" label="#  / O" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+                </outgoingTransitions>
+              </states>
+              <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+            </regions>
+            <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1"/>
+          </states>
+          <states id="Nothing_State2" label="Nothing State" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+            <regions id="">
+              <states id="_" isInitial="true" isFinal="true"/>
+            </regions>
+          </states>
+        </regions>
+      </states>
+    </regions>
+    <regions id="">
+      <states id="Nothing_State2" label="Nothing State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="_" isInitial="true" isFinal="true"/>
+        </regions>
+      </states>
+    </regions>
+    <regions id="">
+      <states id="Nothing_State2" label="Nothing State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="_" isInitial="true" isFinal="true"/>
+        </regions>
+      </states>
+    </regions>
+    <regions id="">
+      <states id="Nothing_State2" label="Nothing State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="_" isInitial="true" isFinal="true"/>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

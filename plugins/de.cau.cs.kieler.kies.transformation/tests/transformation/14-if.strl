@@ -1,0 +1,23 @@
+module ifModule:
+input A,B,C;
+
+	if A then emit A
+	elsif B 
+		then emit B
+	elsif C 
+		then emit C
+	elsif A and B
+			else 
+		nothing 
+	end if
+	||
+	if A then 
+		nothing
+	end if
+	||
+	if A then 
+		emit A
+	else 
+		nothing
+	end if	
+end module

@@ -304,7 +304,7 @@ Void handleDoUpto(State parent, State previous, Region parentR, DoUpto du):
 	parentR.states.add(finalS) ->
 	finalS.setIsFinal(true) ->
 	
-	t.setType(TransitionType::WEAKABORT) ->
+	t.setType(TransitionType::STRONGABORT) ->
 	t.connectTransition(previous, finalS) ->
 	t.addTriggerToTransition(du.expr)
 ;
@@ -326,7 +326,7 @@ Void handleDoWatching(State parent, State previous, Region parentR, DoWatching d
 	abortF.setIsFinal(true) ->
 	
 	// transitions
-	abortT.setType(TransitionType::WEAKABORT) ->
+	abortT.setType(TransitionType::STRONGABORT) ->
 	normalT.setType(TransitionType::NORMALTERMINATION) ->
 	abortT.connectTransition(previous, abortF) ->
 	normalT.connectTransition(previous, normalF) ->
@@ -597,8 +597,14 @@ Void handlePresentCaseSingle(Region parent, State previous, Integer prio, Expres
 	t.setPriority(prio) ->
 	t.setTrigger(convertEsterelExpression((Expression) clone(e))) ->
 	t.connectTransition(previous, newS) ->
-	// recursive
-	finalizeRule(newS, st)
+	// if thenpart, recursive
+	if (st != null) then
+		finalizeRule(newS, st) ->
+		
+	// create artificial nothing
+	if (st == null) then 
+		(let n = new Nothing:
+		rule(newS, n))
 ;
 
 /** !-
@@ -681,7 +687,7 @@ Void ruleSequenceRecursive(Region region, State previous, List[Statement] statem
 Void rule(State s, Suspend sus):
 	let r = new Region:
 	let susState = new State:
-	let act = new synccharts::Transition:
+	let act = new synccharts::Action:
 	initializeRule(s, sus) ->
 	s.regions.add(r) ->
 	r.states.add(susState) ->

@@ -94,6 +94,8 @@ public class E2STransformationCombination extends AbstractCombination {
     // the type of the last performed step
     private String lastStepType = BUTTON_STEP;
 
+    private boolean initInProgess = false;
+
     /**
      * Default Constructor, setting up all needed buttons.
      */
@@ -213,6 +215,7 @@ public class E2STransformationCombination extends AbstractCombination {
             IFile strlFile = (IFile) ((IEditorPart) currentlyActiveEditor).getEditorInput()
                     .getAdapter(IFile.class);
             IFile created = TransformationUtil.strlToKixs(strlFile);
+            initInProgess = true;
             TransformationUtil.openKidsInEditor(created);
             ValidationManager.disableAll();
 
@@ -307,7 +310,12 @@ public class E2STransformationCombination extends AbstractCombination {
      */
     private void editorStateChanged(final ActiveEditorState editorState) {
         currentlyActiveEditor = editorState.getLastActiveEditor();
-        currentDataComponent = null;
+
+        if (!initInProgess) {
+            currentDataComponent = null;
+        } else {
+            initInProgess = false;
+        }
 
         IWorkbenchPart currentEditor = editorState.getLastActiveEditor();
         if (currentEditor == null || currentEditor.getSite() == null) {
@@ -351,17 +359,12 @@ public class E2STransformationCombination extends AbstractCombination {
      */
     private void postTransformation(final TransformationEffect effect) {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
-            // remember if anything is transformed in the first step, otherwise this would yiel two
-            // optimization steps
-            boolean transformable = isTransformable();
             // optimization is performed the same manner line expand just with different data
             // component.
             if (currentDataComponent != null) {
                 currentDataComponent.doPostTransformation();
             }
-            if (transformable) {
-                process(BUTTON_EXPAND);
-            }
+            process(BUTTON_EXPAND);
         } else if (lastStepType.equals(BUTTON_EXPAND)) {
             if (currentDataComponent != null) {
                 currentDataComponent.doPostTransformation();

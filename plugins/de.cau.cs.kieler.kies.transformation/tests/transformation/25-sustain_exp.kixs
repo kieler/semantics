@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esterel="http://www.cau.de/cs/kieler/kies/Esterel" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="sustainModule" label="sustainModule">
+    <signals xsi:type="kexpressions:ISignal" name="A" isInput="true"/>
+    <signals xsi:type="kexpressions:ISignal" name="B" isInput="true">
+      <channelDescr xsi:type="esterel:ChannelDescription">
+        <type type="int"/>
+      </channelDescr>
+    </signals>
+    <regions id="">
+      <states id="Sustain_State2" label="Sustain State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="_" isInitial="true">
+            <outgoingTransitions label="/ A" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+            </outgoingTransitions>
+          </states>
+          <states id="_2" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+            <outgoingTransitions label="/ A" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+            </outgoingTransitions>
+          </states>
+        </regions>
+      </states>
+    </regions>
+    <regions id="">
+      <states id="Sustain_State2" label="Sustain State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="_" isInitial="true">
+            <outgoingTransitions label="/ B(5)" priority="1" targetState="//@states.0/@regions.1/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1">
+                <newValue xsi:type="kexpressions:IntValue" value="5"/>
+              </effects>
+            </outgoingTransitions>
+          </states>
+          <states id="_2" incomingTransitions="//@states.0/@regions.1/@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.1/@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+            <outgoingTransitions label="/ B(5)" priority="1" targetState="//@states.0/@regions.1/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1">
+                <newValue xsi:type="kexpressions:IntValue" value="5"/>
+              </effects>
+            </outgoingTransitions>
+          </states>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

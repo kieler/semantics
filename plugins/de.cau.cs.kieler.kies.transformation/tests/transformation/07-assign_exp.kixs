@@ -5,7 +5,7 @@
     <regions id="">
       <states id="Parallel_State2" label="Parallel State" isInitial="true" isFinal="true">
         <regions id="">
-          <states id="Assign_State2" label="Assign State" isInitial="true" isFinal="true">
+          <states id="Assignment_State2" label="Assignment State" isInitial="true" isFinal="true">
             <regions id="">
               <states id="_" isInitial="true">
                 <outgoingTransitions label="/ a:=4 + 6" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
@@ -22,10 +22,10 @@
           </states>
         </regions>
         <regions id="">
-          <states id="Localvariable_State2" label="Localvariable State" isInitial="true" isFinal="true">
+          <states id="LocalVariable_State2" label="LocalVariable State" isInitial="true" isFinal="true">
             <variables xsi:type="kexpressions:IVariable" name="b"/>
             <regions id="">
-              <states id="Assign_State2" label="Assign State" isInitial="true" isFinal="true">
+              <states id="Assignment_State2" label="Assignment State" isInitial="true" isFinal="true">
                 <regions id="">
                   <states id="_" isInitial="true">
                     <outgoingTransitions label="/ b:=4 - 0" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.1/@states.0/@regions.0/@states.0/@regions.0/@states.1">

@@ -36,7 +36,6 @@ import de.cau.cs.kieler.core.model.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.effects.TransformationEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
-import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.kies.transformation.kivi.KiesTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
@@ -110,6 +109,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public void initialize() throws KiemInitializationException {
         finished = false;
+        currentContext = null;
+        currentDescriptor = null;
         // lastStep = 0;
         // lastHistoryStep = -1;
         domain = getActiveEditorEditingDomain();

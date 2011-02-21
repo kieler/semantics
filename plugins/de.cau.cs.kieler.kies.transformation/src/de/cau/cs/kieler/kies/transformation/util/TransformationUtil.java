@@ -593,7 +593,7 @@ public final class TransformationUtil {
             long start = System.currentTimeMillis();
             effect.execute();
             long end = System.currentTimeMillis();
-            System.out.println("time: " + kixsFile.getName() + ": " + (end - start));
+            TransformationUtil.logger.info("time: " + kixsFile.getName() + ": " + (end - start));
 
             // process action labels
             try {
@@ -607,7 +607,6 @@ public final class TransformationUtil {
 
             resource.save(null);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             success = false;
         }

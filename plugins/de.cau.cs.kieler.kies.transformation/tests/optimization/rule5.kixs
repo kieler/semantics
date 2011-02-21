@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="rule5" label="rule5">
+    <signals name="a"/>
+    <regions id="">
+      <states id="_2" isInitial="true"/>
+    </regions>
+  </states>
+</synccharts:Region>

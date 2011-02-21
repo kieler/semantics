@@ -33,23 +33,13 @@ import org.eclipse.emf.compare.match.metamodel.MatchModel;
 import org.eclipse.emf.compare.match.service.MatchService;
 import org.eclipse.emf.compare.util.ModelUtils;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
 
-import de.cau.cs.kieler.core.model.effects.TransformationEffect;
-import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
-import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
-import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
-import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
+import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
 
 /**
  * This JUnit tests serves as a kind of regression test for Esterel to SyncChart transformations. It
@@ -83,11 +73,6 @@ public class TransformationRulesTest {
         workspaceRoot = workspace.getRoot();
         project = workspaceRoot.getProject("Testing Project");
 
-        // always create a clean project.
-        // if (project.exists()) {
-        // project.delete(true, null);
-        // }
-        // project.create(null);
         if (!project.exists()) {
             project.create(null);
         }
@@ -100,32 +85,129 @@ public class TransformationRulesTest {
     // CHECKSTYLEOFF JavadocMethod
     @Test
     public void testNothing() throws Exception {
-        performTest("02-nothing.strl", "_exp");
+        performTransformation("02-nothing.strl", "_exp");
     }
 
     @Test
     public void testHalt() throws Exception {
-        performTest("03-halt.strl", "_exp");
+        performTransformation("03-halt.strl", "_exp");
     }
 
     @Test
     public void testPause() throws Exception {
-        performTest("04-pause.strl", "_exp");
+        performTransformation("04-pause.strl", "_exp");
     }
 
     @Test
     public void testAbort() throws Exception {
-        performTest("05-abort.strl", "_exp");
+        performTransformation("05-abort.strl", "_exp");
     }
 
     @Test
     public void testAssign() throws Exception {
-        performTest("07-assign.strl", "_exp");
+        performTransformation("07-assign.strl", "_exp");
     }
 
     @Test
-    public void testAwait() throws Exception {
-        performTest("08-await.strl", "_exp");
+    public void testDoupto() throws Exception {
+        performTransformation("10-doupto.strl", "_exp");
+    }
+
+    @Test
+    public void testDowatching() throws Exception {
+        performTransformation("11-dowatching.strl", "_exp");
+    }
+
+    @Test
+    public void testEmit() throws Exception {
+        performTransformation("12-emit.strl", "_exp");
+    }
+
+    @Test
+    public void testEvery() throws Exception {
+        performTransformation("13-every.strl", "_exp");
+    }
+
+    @Test
+    public void testIf() throws Exception {
+        performTransformation("14-if.strl", "_exp");
+    }
+
+    @Test
+    public void testLocalsignal() throws Exception {
+        performTransformation("15-localsignal.strl", "_exp");
+    }
+
+    @Test
+    public void testLocalvariable() throws Exception {
+        performTransformation("16-localvariable.strl", "_exp");
+    }
+
+    @Test
+    public void testLoop() throws Exception {
+        performTransformation("17-loop.strl", "_exp");
+    }
+
+    @Test
+    public void testLoopeach() throws Exception {
+        performTransformation("18-loopeach.strl", "_exp");
+    }
+
+    @Test
+    public void testParallel() throws Exception {
+        performTransformation("19-parallel.strl", "_exp");
+    }
+
+    @Test
+    public void testPresent() throws Exception {
+        performTransformation("20-present.strl", "_exp");
+    }
+
+    @Test
+    public void testCall() throws Exception {
+        performTransformation("22-call.strl", "_exp");
+    }
+
+    @Test
+    public void testSequence() throws Exception {
+        performTransformation("23-sequence.strl", "_exp");
+    }
+
+    @Test
+    public void testSuspend() throws Exception {
+        performTransformation("24-suspend.strl", "_exp");
+    }
+
+    @Test
+    public void testSustain() throws Exception {
+        performTransformation("25-sustain.strl", "_exp");
+    }
+
+    @Test
+    public void testTrap() throws Exception {
+        performTransformation("26-trap.strl", "_exp");
+    }
+
+    @Test
+    public void testExit() throws Exception {
+        performTransformation("27-exit.strl", "_exp");
+    }
+
+    // /////////////////////////////////////////////////////////////////////////////////////////////
+    // Optimization tests
+    @Test
+    public void testOptRule1() throws Exception {
+        performOptimization("rule1.kixs", "_exp");
+    }
+    
+    @Test
+    public void testOptRule4() throws Exception {
+        performOptimization("rule4.kixs", "_exp");
+    }
+    
+    @Test
+    public void testOptRule5() throws Exception {
+        performOptimization("rule5.kixs", "_exp");
     }
 
     // CHECKSTYLEON JavadocMethod
@@ -140,7 +222,8 @@ public class TransformationRulesTest {
      * @throws Exception
      *             if test fails
      */
-    private void performTest(final String strlName, final String expectedSuffix) throws Exception {
+    private void performTransformation(final String strlName, final String expectedSuffix)
+            throws Exception {
         // create links to the testfiles in the test project folder
         IPath path = new Path(workspaceRoot.getLocation() + pathToWS
                 + "de.cau.cs.kieler.kies.transformation/tests/transformation/" + strlName);
@@ -154,52 +237,58 @@ public class TransformationRulesTest {
         kixsExp.createLink(pathExp, IResource.NONE, null);
 
         // transform and compare
-        IFile kixs = transformToSyncchart(strl);
+        IFile kixs = transformToSyncChart(strl);
         compare(kixs, kixsExp);
     }
 
-    private IFile transformToSyncchart(final IFile strlFile) {
+    private IFile transformToSyncChart(final IFile strlFile) {
         IPath kixsPath = strlFile.getFullPath().removeFileExtension().addFileExtension("kixs");
         IFile kixsFile = workspaceRoot.getFile(kixsPath);
-        final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
 
         TransformationUtil.createSyncchartDiagram(kixsFile);
         TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
-
-        try {
-            EsterelToSyncChartDataComponent edc = new EsterelToSyncChartDataComponent();
-            edc.setHeadless(true);
-
-            ResourceSet resourceSet = new ResourceSetImpl();
-            Resource resource = resourceSet.getResource(kixsURI, true);
-            Region rootRegion = (Region) resource.getContents().get(0);
-            State root = rootRegion.getStates().get(0);
-
-            edc.initialize();
-            edc.setRootState(root);
-
-            TransformationDescriptor td = edc.getNextTransformation();
-
-            TransactionalEditingDomain ted = TransactionalEditingDomain.Factory.INSTANCE
-                    .createEditingDomain(resourceSet);
-            SyncchartsContentUtil.addTriggerListeners(ted);
-            ITransformationContext context = new XtendTransformationContext(edc.getXtendFacade(),
-                    ted);
-            TransformationEffect effect = new TransformationEffect(context, td);
-            effect.execute();
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.SERIALIZE);
-            ActionLabelProcessorWrapper.processActionLabels(rootRegion,
-                    ActionLabelProcessorWrapper.PARSE);
-
-            resource.save(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.E2S);
 
         return kixsFile;
     }
 
+    /**
+     * Performs the transformation an comparison of the passed file.
+     * 
+     * @param kixsName
+     *            name of the synccharts diagram to optimize
+     * @param expectedSuffix
+     *            suffix of the expected .kixs file (e.g. "_exp")
+     * @throws Exception
+     *             if test fails
+     */
+    private void performOptimization(final String kixsName, final String expectedSuffix)
+            throws Exception {
+        // create links to the testfiles in the test project folder
+        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+                + "de.cau.cs.kieler.kies.transformation/tests/optimization/" + kixsName);
+        IPath pathExp = new Path(workspaceRoot.getLocation() + pathToWS
+                + "de.cau.cs.kieler.kies.transformation/tests/optimization/"
+                + kixsName.substring(0, kixsName.lastIndexOf('.')) + expectedSuffix + ".kixs");
+        IFile kixsOrig = project.getFile(path.lastSegment());
+        IFile kixsExp = project.getFile(pathExp.lastSegment());
+        // create the actual links
+        kixsOrig.createLink(path, IResource.NONE, null);
+        kixsExp.createLink(pathExp, IResource.NONE, null);
+
+        // transform and compare
+        IFile kixs = optimizeSyncChart(kixsOrig);
+        compare(kixs, kixsExp);
+    }
+
+    private IFile optimizeSyncChart(final IFile kixsFile) {
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT);
+        return kixsFile;
+    }
+
+    /**
+     * compares the two passed files by using EMF Compare.
+     */
     private void compare(final IFile transformed, final IFile expected) throws Exception {
         final URI kixsURI = URI.createPlatformResourceURI(transformed.getFullPath().toString(),
                 true);

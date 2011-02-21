@@ -19,7 +19,7 @@ extension org::eclipse::xtend::util::stdlib::cloning; // provides clone function
  * extracts the expression and immediate information of a esterel::DelayExpr
  * and adds them to the synccharts::Transition
  */
-Void addTriggerToTransition(synccharts::Transition t, DelayExpr delay):
+Void addTriggerToTransition(synccharts::Action t, DelayExpr delay):
 	if delay.isImmediate then 
 		t.setIsImmediate(true) ->
 	// clone the expression as in should stay in esterel model too

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esterel="http://www.cau.de/cs/kieler/kies/Esterel" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="emitModule" label="emitModule">
+    <signals xsi:type="kexpressions:ISignal" name="O" isOutput="true"/>
+    <signals xsi:type="kexpressions:ISignal" name="R" isOutput="true">
+      <channelDescr xsi:type="esterel:ChannelDescription">
+        <type type="int"/>
+      </channelDescr>
+    </signals>
+    <regions id="">
+      <states id="Emit_State4" label="Emit State" isInitial="true">
+        <regions id="">
+          <states id="_" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#  / O" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.0"/>
+            </outgoingTransitions>
+          </states>
+          <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+        <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="Emit_State3" label="Emit State" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="">
+          <states id="_" isInitial="true">
+            <outgoingTransitions isImmediate="true" label="#  / R(4)" priority="1" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
+              <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1">
+                <newValue xsi:type="kexpressions:IntValue" value="4"/>
+              </effects>
+            </outgoingTransitions>
+          </states>
+          <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

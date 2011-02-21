@@ -240,6 +240,9 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     }
 
     private boolean isTransformable(final State s) {
+        if (s == null) {
+            return false;
+        }
         return s.getBodyText().size() > 0;
     }
 
