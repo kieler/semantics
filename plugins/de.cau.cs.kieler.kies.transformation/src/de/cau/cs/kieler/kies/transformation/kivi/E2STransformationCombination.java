@@ -351,12 +351,17 @@ public class E2STransformationCombination extends AbstractCombination {
      */
     private void postTransformation(final TransformationEffect effect) {
         if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
+            // remember if anything is transformed in the first step, otherwise this would yiel two
+            // optimization steps
+            boolean transformable = isTransformable();
             // optimization is performed the same manner line expand just with different data
             // component.
             if (currentDataComponent != null) {
                 currentDataComponent.doPostTransformation();
             }
-            process(BUTTON_EXPAND);
+            if (transformable) {
+                process(BUTTON_EXPAND);
+            }
         } else if (lastStepType.equals(BUTTON_EXPAND)) {
             if (currentDataComponent != null) {
                 currentDataComponent.doPostTransformation();
