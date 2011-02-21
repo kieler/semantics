@@ -219,6 +219,9 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                     if (element instanceof IFile) {
                         IFile file = (IFile) element;
                         String fileExtension = file.getFileExtension();
+                        if (fileExtension == null) {
+                            fileExtension = "";
+                        }
                         
                         // Iterate through the list of allowed file filters
                         for (String ext : extensions) {
