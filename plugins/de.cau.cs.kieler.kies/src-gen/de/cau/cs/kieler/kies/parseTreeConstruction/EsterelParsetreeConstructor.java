@@ -169,10 +169,14 @@ protected class ThisRootNode extends RootToken {
 			case 135: return new InterfaceVariableDecl_Group(this, this, 135, inst);
 			case 136: return new VariableDecl_Group(this, this, 136, inst);
 			case 137: return new IVariable_Group(this, this, 137, inst);
-			case 138: return new StringAnnotation_Alternatives(this, this, 138, inst);
+			case 138: return new Annotation_Alternatives(this, this, 138, inst);
 			case 139: return new CommentAnnotation_ValueAssignment(this, this, 139, inst);
-			case 140: return new KeyValueAnnotation_Group(this, this, 140, inst);
-			case 141: return new ImportAnnotation_Group(this, this, 141, inst);
+			case 140: return new TagAnnotation_Group(this, this, 140, inst);
+			case 141: return new KeyStringValueAnnotation_Group(this, this, 141, inst);
+			case 142: return new KeyBooleanValueAnnotation_Group(this, this, 142, inst);
+			case 143: return new KeyIntValueAnnotation_Group(this, this, 143, inst);
+			case 144: return new KeyFloatValueAnnotation_Group(this, this, 144, inst);
+			case 145: return new ImportAnnotation_Group(this, this, 145, inst);
 			default: return null;
 		}	
 	}	
@@ -182,7 +186,6 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Program ****************
  *
  * //	root rule. an esterel file can contain multiple modules
- * 
  * Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
  * 	modules+=Module*;
  *
@@ -240,9 +243,7 @@ protected class Program_ModulesAssignment extends AssignmentToken  {
 /************ begin Rule Module ****************
  *
  * // a module consists of an interface and a body
- * 
  * // !-(module)
- * 
  * Module:
  * 	"module" name=ID ":" interface=ModuleInterface? body=ModuleBody end=EndModule;
  *
@@ -546,11 +547,8 @@ protected class ModuleBody_StatementsAssignment extends AssignmentToken  {
 /************ begin Rule ModuleInterface ****************
  *
  * // -!
- * 
  * //            Interface Declarations
- * 
  * // ----------------------------------------------
- * 
  * ModuleInterface:
  * 	(intSignalDecls+=InterfaceSignalDecl | intTypeDecls+=TypeDecl | intSensorDecls+=SensorDecl |
  * 	intConstantDecls+=ConstantDecls | intRelationDecls+=RelationDecl | intTaskDecls+=TaskDecl |
@@ -964,7 +962,6 @@ protected class ModuleInterface_IntProcedureDeclsAssignment_7 extends Assignment
 /************ begin Rule ChannelDescription ****************
  *
  * // overwrite to add the EsterelTypeIdentifier
- * 
  * ChannelDescription:
  * 	":" type=EsterelTypeIdentifier | "(" type=EsterelTypeIdentifier ")" | ":=" expression=Expression ":"
  * 	type=EsterelTypeIdentifier;
@@ -1370,7 +1367,6 @@ protected class ChannelDescription_TypeAssignment_2_3 extends AssignmentToken  {
 /************ begin Rule EsterelTypeIdentifier ****************
  *
  * // overwrite to allow function references for signal declarations
- * 
  * EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
  * 	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
  * 	operator=CombineOperator));
@@ -1797,7 +1793,6 @@ protected class EsterelTypeIdentifier_OperatorAssignment_2_1_3_1 extends Assignm
 /************ begin Rule TypeIdentifier ****************
  *
  * // overwrite to allow type definitions in a specific module
- * 
  * TypeIdentifier:
  * 	type=ValueType | typeID=ID | "combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator | {EsterelType}
  * 	estType=[Type];
@@ -2207,9 +2202,7 @@ protected class TypeIdentifier_EstTypeAssignment_3_1 extends AssignmentToken  {
 /************ begin Rule LocalSignalDecl ****************
  *
  * // ==> Local Signal Declaration
- * 
  * // !-(localsignal) -------------------------------------
- * 
  * LocalSignalDecl:
  * 	"signal" signalList=LocalSignalList "in" statement=Statement "end" optEnd="signal"?;
  *
@@ -2648,11 +2641,8 @@ protected class LocalSignalList_SignalAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule SensorDecl ****************
  *
  * // -!
- * 
  * // ==> Sensor
- * 
  * // -------------------------------------
- * 
  * SensorDecl:
  * 	"sensor" sensors+=SensorWithType ("," sensors+=SensorWithType)* ";";
  *
@@ -3279,9 +3269,7 @@ protected class Sensor_NameAssignment extends AssignmentToken  {
 /************ begin Rule RelationDecl ****************
  *
  * // ==> Relations
- * 
  * // -------------------------------------
- * 
  * RelationDecl:
  * 	{Relation} "relation" relations+=RelationType ("," relations+=RelationType)* ";";
  *
@@ -4024,9 +4012,7 @@ protected class RelationIncompatibility_IncompAssignment_3_1 extends AssignmentT
 /************ begin Rule TypeDecl ****************
  *
  * // ==> Types
- * 
  * // -------------------------------------
- * 
  * TypeDecl:
  * 	"type" types+=Type ("," types+=Type)* ";";
  *
@@ -4295,9 +4281,7 @@ protected class Type_NameAssignment extends AssignmentToken  {
 /************ begin Rule ConstantDecls ****************
  *
  * // ==> Constants
- * 
  * // -------------------------------------
- * 
  * ConstantDecls:
  * 	"constant" constants+=OneTypeConstantDecls ("," constants+=OneTypeConstantDecls)* ";";
  *
@@ -5034,9 +5018,7 @@ protected class Constant_NameAssignment_1 extends AssignmentToken  {
 /************ begin Rule FunctionDecl ****************
  *
  * // ==> Functions
- * 
  * // -------------------------------------
- * 
  * FunctionDecl:
  * 	"function" functions+=Function ("," functions+=Function)* ";";
  *
@@ -5608,7 +5590,6 @@ protected class Function_TypeAssignment_5 extends AssignmentToken  {
 /************ begin Rule ProcedureDecl ****************
  *
  * // ==> Procedures
- * 
  * ProcedureDecl:
  * 	"procedure" procedures+=Procedure ("," procedures+=Procedure)* ";";
  *
@@ -6321,7 +6302,6 @@ protected class Procedure_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule TaskDecl ****************
  *
  * // ==> Tasks
- * 
  * TaskDecl:
  * 	"task" tasks+=Task ("," tasks+=Task)* ";";
  *
@@ -7034,13 +7014,9 @@ protected class Task_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule Statement ****************
  *
  * // ==============================================
- * 
  * // ===            B.4 Statements              ===
- * 
  * // ==============================================
- * 
  * // !-(parallel)
- * 
  * Statement:
  * 	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
  *
@@ -7298,7 +7274,6 @@ protected class Statement_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule AtomicStatement ****************
  *
  * // -!
- * 
  * AtomicStatement returns Statement:
  * 	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
  * 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort;
@@ -8290,9 +8265,7 @@ protected class AtomicStatement_WeakAbortParserRuleCall_24 extends RuleCallToken
 /************ begin Rule Sequence ****************
  *
  * // --> B.4.1 Control Flow Operators <--	
- * 
  * // !-(sequence)
- * 
  * Sequence returns Statement:
  * 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
  *
@@ -8548,7 +8521,6 @@ protected class Sequence_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule Block ****************
  *
  * // -!
- * 
  * Block:
  * 	"[" statement=Statement "]";
  *
@@ -8736,9 +8708,7 @@ protected class VarStatement_VardeclAssignment extends AssignmentToken  {
 /************ begin Rule Assignment ****************
  *
  * // Assignment
- * 
  * // !-(assign) -------------------------------------
- * 
  * Assignment:
  * 	var=[kexpressions::IVariable] ":=" expr=Expression;
  *
@@ -8884,11 +8854,8 @@ protected class Assignment_ExprAssignment_2 extends AssignmentToken  {
 /************ begin Rule Abort ****************
  *
  * // -!
- * 
  * // !-(abort) --> B.4.2 abort: Strong Preemption
- * 
  * // -------------------------------------
- * 
  * Abort:
  * 	"abort" statement=Statement "when" body=AbortBody;
  *
@@ -9802,11 +9769,8 @@ protected class AbortCaseSingle_StatementAssignment_2_1 extends AssignmentToken 
 /************ begin Rule WeakAbort ****************
  *
  * // -!
- * 
  * // --> B.4.25 weak abort: Weak Preemption
- * 
  * // -------------------------------------
- * 
  * WeakAbort returns Abort:
  * 	{WeakAbort} "weak" "abort" statement=Statement "when" body=WeakAbortBody;
  *
@@ -10844,9 +10808,7 @@ protected class WeakAbortCase_EndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Await ****************
  *
  * // --> B.4.3 await: Strong Preemption
- * 
  * // !-(await) -------------------------------------
- * 
  * Await:
  * 	"await" body=AwaitBody;
  *
@@ -11448,11 +11410,8 @@ protected class AwaitCase_EndAssignment_2 extends AssignmentToken  {
 /************ begin Rule ProcCall ****************
  *
  * // -!
- * 
  * // --> B.4.4 call: Procedure Call
- * 
  * // -------------------------------------
- * 
  * ProcCall:
  * 	"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
  * 	(kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
@@ -11950,11 +11909,8 @@ protected class ProcCall_RightParenthesisKeyword_7 extends KeywordToken  {
 /************ begin Rule Do ****************
  *
  * // --> B.4.5 do-upto: Conditional Iteration (deprecated)
- * 
  * // --> B.4.6 do-watching: Strong Preemption (deprecated)
- * 
  * // !-(doupto) -------------------------------------
- * 
  * Do:
  * 	"do" statement=Statement (end=DoUpto | end=DoWatching);
  *
@@ -12604,11 +12560,8 @@ protected class DoWatchingEnd_OptEndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Emit ****************
  *
  * // -!
- * 
  * // --> B.4.7 emit: Signal Emission <--
- * 
  * // !-(emit)2 -------------------------------------
- * 
  * Emit:
  * 	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
  *
@@ -12880,11 +12833,8 @@ protected class Emit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule EveryDo ****************
  *
  * // -!
- * 
  * // --> B.4.8 every-do: Conditional Iteration
- * 
  * // !-(every)-------------------------------------
- * 
  * EveryDo:
  * 	"every" delay=DelayExpr "do" statement=Statement "end" optEnd="every"?;
  *
@@ -13118,11 +13068,8 @@ protected class EveryDo_OptEndAssignment_5 extends AssignmentToken  {
 /************ begin Rule Exit ****************
  *
  * // -!
- * 
  * // --> B.4.10 exit: Trap Exit
- * 
  * // !-(exit) -------------------------------------
- * 
  * Exit:
  * 	"exit" trap=[TrapDecl] ("(" expression=Expression ")")?;
  *
@@ -13336,11 +13283,8 @@ protected class Exit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Halt ****************
  *
  * // -!
- * 
  * // --> B.4.11 halt: Wait Forever
- * 
  * // !-(halt) -------------------------------------
- * 
  * Halt:
  * 	{Halt} "halt";
  *
@@ -13430,11 +13374,8 @@ protected class Halt_HaltKeyword_1 extends KeywordToken  {
 /************ begin Rule IfTest ****************
  *
  * // -!
- * 
  * // --> B.4.12: if: Conditional for Data
- * 
  * // !-(if)-------------------------------------
- * 
  * IfTest:
  * 	"if" expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
  *
@@ -14113,13 +14054,9 @@ protected class ElsePart_StatementAssignment_1 extends AssignmentToken  {
 /************ begin Rule Loop ****************
  *
  * // -!
- * 
  * // --> B.4.13 loop: Infinite Loop
- * 
  * // --> B.4.14 loop-each: Condition Iteration
- * 
  * // !-(loop)-------------------------------------
- * 
  * Loop:
  * 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
  *
@@ -14677,11 +14614,8 @@ protected class LoopBody_StatementAssignment extends AssignmentToken  {
 /************ begin Rule Nothing ****************
  *
  * // -!
- * 
  * // --> B.4.15 nothing: No Operation
- * 
  * // !-(nothing) -------------------------------------
- * 
  * Nothing:
  * 	"nothing" {Nothing};
  *
@@ -14771,11 +14705,8 @@ protected class Nothing_NothingAction_1 extends ActionToken  {
 /************ begin Rule Pause ****************
  *
  * // -!
- * 
  * // --> B.4.16 pause: Unit Delay
- * 
  * // !-(pause) -------------------------------------
- * 
  * Pause:
  * 	"pause" {Pause};
  *
@@ -14865,11 +14796,8 @@ protected class Pause_PauseAction_1 extends ActionToken  {
 /************ begin Rule Present ****************
  *
  * // -!
- * 
  * // --> B.4.17 present: Conditional for Signals
- * 
  * // !-(present) -------------------------------------
- * 
  * Present:
  * 	"present" body=PresentBody elsePart=ElsePart? "end" optEnd="present"?;
  *
@@ -15916,11 +15844,8 @@ protected class PresentEvent_TickAssignment_2 extends AssignmentToken  {
 /************ begin Rule Repeat ****************
  *
  * // -!
- * 
  * // --> B.4.18 repeat: Iterate a Fixed Number of Times
- * 
  * // -------------------------------------
- * 
  * Repeat:
  * 	positive?="positive"? "repeat" expression=Expression "times" statement=Statement "end" optEnd="repeat"?;
  *
@@ -16188,11 +16113,8 @@ protected class Repeat_OptEndAssignment_6 extends AssignmentToken  {
 /************ begin Rule Run ****************
  *
  * // --> B.4.19 run: Module Instantiation
- * 
  * // -------------------------------------
- * 
  * //deprecated
- * 
  * Run:
  * 	"run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
  * 	"]")?;
@@ -16645,9 +16567,7 @@ protected class Run_RightSquareBracketKeyword_1_2_2 extends KeywordToken  {
 /************ begin Rule ModuleRenaming ****************
  *
  * // Renamings
- * 
  * // -------------------------------------
- * 
  * ModuleRenaming:
  * 	module=[Module] | newName=ID "/" module=[Module];
  *
@@ -19195,9 +19115,7 @@ protected class SignalRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule Suspend ****************
  *
  * // --> B.4.21 suspend: Preemption with State Freeze
- * 
  * // !-(suspend)-------------------------------------
- * 
  * Suspend:
  * 	"suspend" statement=Statement "when" delay=DelayExpr;
  *
@@ -19374,11 +19292,8 @@ protected class Suspend_DelayAssignment_3 extends AssignmentToken  {
 /************ begin Rule Sustain ****************
  *
  * // -!
- * 
  * // --> B.4.22 sustain: Emit a Signal Indefinitely
- * 
  * // !-(sustain) -------------------------------------
- * 
  * Sustain:
  * 	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expression=Expression ")")?;
  *
@@ -19650,11 +19565,8 @@ protected class Sustain_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Trap ****************
  *
  * // -!
- * 
  * // --> B.4.23 trap: TrapDeclaration and Handling
- * 
  * // !-(trap)-------------------------------------
- * 
  * Trap:
  * 	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandler+=TrapHandler* "end" optEnd="trap"?;
  *
@@ -20436,11 +20348,8 @@ protected class TrapHandler_StatementAssignment_3 extends AssignmentToken  {
 /************ begin Rule LocalVariable ****************
  *
  * // -!
- * 
  * // --> B.4.24 var: Local Variable Declaration
- * 
  * // !-(localvariable) -------------------------------------
- * 
  * LocalVariable:
  * 	var=InterfaceVariableDecl "in" statement=Statement "end" optEnd="var"?;
  *
@@ -20652,17 +20561,11 @@ protected class LocalVariable_OptEndAssignment_4 extends AssignmentToken  {
 /************ begin Rule AtomicExpression ****************
  *
  * // -!
- * 
  * // ==============================================
- * 
  * // ===            B.3 Expressions             ===
- * 
  * // ==============================================
- * 
  * // esterel is a bit richer than what is provided by kexpressions. These rules are introduced here
- * 
  * // care about order of the rules! 
- * 
  * AtomicExpression returns kexpressions::Expression:
  * 	FunctionExpression | TrapExpression | BooleanValue | ValuedObjectTestExpression | TextExpression | "("
  * 	BooleanExpression ")" | ConstantExpression;
@@ -21632,9 +21535,7 @@ protected class ConstantExpression_ValueAssignment_1_1 extends AssignmentToken  
 /************ begin Rule TrapExpr ****************
  *
  * // --> B.3.5 Trap Expressions <--
- * 
  * // -------------------------------------
- * 
  * TrapExpr returns kexpressions::Expression:
  * 	SignalExpression;
  *
@@ -21684,9 +21585,7 @@ protected class TrapExpr_SignalExpressionParserRuleCall extends RuleCallToken {
 /************ begin Rule SignalExpression ****************
  *
  * // --> B.3.3 Signal Expressions <--
- * 
  * // -------------------------------------
- * 
  * SignalExpression returns kexpressions::Expression:
  * 	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=OrOperator
  * 	subExpressions+=SignalAndExpression)*;
@@ -22340,13 +22239,11 @@ protected class SignalNotExpression_SignalAtomicExpressionParserRuleCall_1 exten
  *
  * SignalAtomicExpression returns kexpressions::Expression:
  * 	SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // maybe place this somewhere else 
- * 
  * 	TrapReferenceExpr;
  *
  **/
 
 // SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // maybe place this somewhere else 
-// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_Alternatives extends AlternativesToken {
 
@@ -22555,7 +22452,6 @@ protected class SignalAtomicExpression_SignalPreExprParserRuleCall_2 extends Rul
 }
 
 // // maybe place this somewhere else 
-// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_TrapReferenceExprParserRuleCall_3 extends RuleCallToken {
 	
@@ -22940,9 +22836,7 @@ protected class TrapReferenceExpr_ValuedObjectAssignment_1 extends AssignmentTok
 /************ begin Rule DelayExpr ****************
  *
  * // --> B.3.4 Delay Expressions <--
- * 
  * // -------------------------------------
- * 
  * DelayExpr:
  * 	expr=Expression event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
  *
@@ -23503,9 +23397,7 @@ protected class DelayEvent_EBAssignment_2_2 extends AssignmentToken  {
 /************ begin Rule Exec ****************
  *
  * // --> Exec
- * 
  * // -------------------------------------
- * 
  * Exec:
  * 	("exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
  * 	execCaseList+=ExecCase execCaseList+=ExecCase*) "end" optEnd="exec"?;
@@ -30490,43 +30382,51 @@ protected class IVariable_ExpressionAssignment_1_1 extends AssignmentToken  {
 /************ end Rule IVariable ****************/
 
 
-/************ begin Rule StringAnnotation ****************
+/************ begin Rule Annotation ****************
  *
  * // --------------------------
  * //
- * //   EXPRESSIONS
+ * //   ANNOTATIONS
  * //
  * // --------------------------
- * // introduction of parsing rules for annotations
- * StringAnnotation returns Annotation:
- * 	CommentAnnotation | KeyValueAnnotation;
+ * Annotation:
+ * 	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+ * 	KeyFloatValueAnnotation;
  *
  **/
 
-// CommentAnnotation | KeyValueAnnotation
-protected class StringAnnotation_Alternatives extends AlternativesToken {
+// CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+// KeyFloatValueAnnotation
+protected class Annotation_Alternatives extends AlternativesToken {
 
-	public StringAnnotation_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Alternatives getGrammarElement() {
-		return grammarAccess.getStringAnnotationAccess().getAlternatives();
+		return grammarAccess.getAnnotationAccess().getAlternatives();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new StringAnnotation_CommentAnnotationParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new StringAnnotation_KeyValueAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new Annotation_CommentAnnotationParserRuleCall_0(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Annotation_TagAnnotationParserRuleCall_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Annotation_KeyStringValueAnnotationParserRuleCall_2(lastRuleCallOrigin, this, 2, inst);
+			case 3: return new Annotation_KeyBooleanValueAnnotationParserRuleCall_3(lastRuleCallOrigin, this, 3, inst);
+			case 4: return new Annotation_KeyIntValueAnnotationParserRuleCall_4(lastRuleCallOrigin, this, 4, inst);
+			case 5: return new Annotation_KeyFloatValueAnnotationParserRuleCall_5(lastRuleCallOrigin, this, 5, inst);
 			default: return null;
 		}	
 	}
 
     @Override
 	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getKeyValueAnnotationRule().getType().getClassifier())
+		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier() && 
+		   getEObject().eClass() != grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -30534,15 +30434,15 @@ protected class StringAnnotation_Alternatives extends AlternativesToken {
 }
 
 // CommentAnnotation
-protected class StringAnnotation_CommentAnnotationParserRuleCall_0 extends RuleCallToken {
+protected class Annotation_CommentAnnotationParserRuleCall_0 extends RuleCallToken {
 	
-	public StringAnnotation_CommentAnnotationParserRuleCall_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_CommentAnnotationParserRuleCall_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getStringAnnotationAccess().getCommentAnnotationParserRuleCall_0();
+		return grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0();
 	}
 
     @Override
@@ -30555,6 +30455,8 @@ protected class StringAnnotation_CommentAnnotationParserRuleCall_0 extends RuleC
 
     @Override
 	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getCommentAnnotationRule().getType().getClassifier())
+			return null;
 		if(checkForRecursion(CommentAnnotation_ValueAssignment.class, eObjectConsumer)) return null;
 		return eObjectConsumer;
 	}
@@ -30567,29 +30469,175 @@ protected class StringAnnotation_CommentAnnotationParserRuleCall_0 extends RuleC
 	}	
 }
 
-// KeyValueAnnotation
-protected class StringAnnotation_KeyValueAnnotationParserRuleCall_1 extends RuleCallToken {
+// TagAnnotation
+protected class Annotation_TagAnnotationParserRuleCall_1 extends RuleCallToken {
 	
-	public StringAnnotation_KeyValueAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Annotation_TagAnnotationParserRuleCall_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getStringAnnotationAccess().getKeyValueAnnotationParserRuleCall_1();
+		return grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyValueAnnotation_Group(this, this, 0, inst);
+			case 0: return new TagAnnotation_Group(this, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override
 	public IEObjectConsumer tryConsume() {
-		if(checkForRecursion(KeyValueAnnotation_Group.class, eObjectConsumer)) return null;
+		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(TagAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// KeyStringValueAnnotation
+protected class Annotation_KeyStringValueAnnotationParserRuleCall_2 extends RuleCallToken {
+	
+	public Annotation_KeyStringValueAnnotationParserRuleCall_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(KeyStringValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// KeyBooleanValueAnnotation
+protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_3 extends RuleCallToken {
+	
+	public Annotation_KeyBooleanValueAnnotationParserRuleCall_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyBooleanValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(KeyBooleanValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// KeyIntValueAnnotation
+protected class Annotation_KeyIntValueAnnotationParserRuleCall_4 extends RuleCallToken {
+	
+	public Annotation_KeyIntValueAnnotationParserRuleCall_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyIntValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(KeyIntValueAnnotation_Group.class, eObjectConsumer)) return null;
+		return eObjectConsumer;
+	}
+	
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
+		}	
+	}	
+}
+
+// KeyFloatValueAnnotation
+protected class Annotation_KeyFloatValueAnnotationParserRuleCall_5 extends RuleCallToken {
+	
+	public Annotation_KeyFloatValueAnnotationParserRuleCall_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public RuleCall getGrammarElement() {
+		return grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_5();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyFloatValueAnnotation_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier())
+			return null;
+		if(checkForRecursion(KeyFloatValueAnnotation_Group.class, eObjectConsumer)) return null;
 		return eObjectConsumer;
 	}
 	
@@ -30602,11 +30650,16 @@ protected class StringAnnotation_KeyValueAnnotationParserRuleCall_1 extends Rule
 }
 
 
-/************ end Rule StringAnnotation ****************/
+/************ end Rule Annotation ****************/
 
 
 /************ begin Rule CommentAnnotation ****************
  *
+ * // introduction of parsing rules for annotations
+ * //StringAnnotation returns Annotation:
+ * //	CommentAnnotation
+ * //	| KeyStringValueAnnotation
+ * //	;
  * // e.g.: / ** semantic comment * /
  * CommentAnnotation returns StringAnnotation:
  * 	value=COMMENT_ANNOTATION;
@@ -30651,38 +30704,37 @@ protected class CommentAnnotation_ValueAssignment extends AssignmentToken  {
 /************ end Rule CommentAnnotation ****************/
 
 
-/************ begin Rule KeyValueAnnotation ****************
+/************ begin Rule TagAnnotation ****************
  *
- * // e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
- * KeyValueAnnotation returns StringAnnotation:
- * 	"@" name=ID value=EString?;
+ * // e.g.: @HVlayout
+ * TagAnnotation returns StringAnnotation:
+ * 	"@" name=ID;
  *
  **/
 
-// "@" name=ID value=EString?
-protected class KeyValueAnnotation_Group extends GroupToken {
+// "@" name=ID
+protected class TagAnnotation_Group extends GroupToken {
 	
-	public KeyValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public TagAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Group getGrammarElement() {
-		return grammarAccess.getKeyValueAnnotationAccess().getGroup();
+		return grammarAccess.getTagAnnotationAccess().getGroup();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new KeyValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new TagAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override
 	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getKeyValueAnnotationRule().getType().getClassifier())
+		if(getEObject().eClass() != grammarAccess.getTagAnnotationRule().getType().getClassifier())
 			return null;
 		return eObjectConsumer;
 	}
@@ -30690,15 +30742,15 @@ protected class KeyValueAnnotation_Group extends GroupToken {
 }
 
 // "@"
-protected class KeyValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
+protected class TagAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 	
-	public KeyValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public TagAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getKeyValueAnnotationAccess().getCommercialAtKeyword_0();
+		return grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0();
 	}
 
     @Override
@@ -30711,21 +30763,21 @@ protected class KeyValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 }
 
 // name=ID
-protected class KeyValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
-	public KeyValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public TagAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getKeyValueAnnotationAccess().getNameAssignment_1();
+		return grammarAccess.getTagAnnotationAccess().getNameAssignment_1();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyValueAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new TagAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -30734,9 +30786,9 @@ protected class KeyValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+			element = grammarAccess.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -30744,33 +30796,129 @@ protected class KeyValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 
 }
 
-// value=EString?
-protected class KeyValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
+
+/************ end Rule TagAnnotation ****************/
+
+
+/************ begin Rule KeyStringValueAnnotation ****************
+ *
+ * // e.g.: @layouter dot;   
+ * KeyStringValueAnnotation returns StringAnnotation:
+ * 	"@" name=ID value=EString;
+ *
+ **/
+
+// "@" name=ID value=EString
+protected class KeyStringValueAnnotation_Group extends GroupToken {
 	
-	public KeyValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public KeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getKeyValueAnnotationAccess().getValueAssignment_2();
+	public Group getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getGroup();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new KeyValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new KeyStringValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "@"
+protected class KeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
+	
+	public KeyStringValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ID
+protected class KeyStringValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public KeyStringValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("value",false)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// value=EString
+protected class KeyStringValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
+	
+	public KeyStringValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyStringValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0();
+			element = grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -30779,7 +30927,397 @@ protected class KeyValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 }
 
 
-/************ end Rule KeyValueAnnotation ****************/
+/************ end Rule KeyStringValueAnnotation ****************/
+
+
+/************ begin Rule KeyBooleanValueAnnotation ****************
+ *
+ * // e.g.: @visible true;
+ * KeyBooleanValueAnnotation returns BooleanAnnotation:
+ * 	"@" name=ID value=Boolean;
+ *
+ **/
+
+// "@" name=ID value=Boolean
+protected class KeyBooleanValueAnnotation_Group extends GroupToken {
+	
+	public KeyBooleanValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyBooleanValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "@"
+protected class KeyBooleanValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
+	
+	public KeyBooleanValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ID
+protected class KeyBooleanValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public KeyBooleanValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyBooleanValueAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// value=Boolean
+protected class KeyBooleanValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
+	
+	public KeyBooleanValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyBooleanValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule KeyBooleanValueAnnotation ****************/
+
+
+/************ begin Rule KeyIntValueAnnotation ****************
+ *
+ * // e.g.: @minSpace 10;    
+ * KeyIntValueAnnotation returns IntAnnotation:
+ * 	"@" name=ID value=INT;
+ *
+ **/
+
+// "@" name=ID value=INT
+protected class KeyIntValueAnnotation_Group extends GroupToken {
+	
+	public KeyIntValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getKeyIntValueAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyIntValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "@"
+protected class KeyIntValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
+	
+	public KeyIntValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ID
+protected class KeyIntValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public KeyIntValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyIntValueAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyIntValueAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// value=INT
+protected class KeyIntValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
+	
+	public KeyIntValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyIntValueAnnotationAccess().getValueAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyIntValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule KeyIntValueAnnotation ****************/
+
+
+/************ begin Rule KeyFloatValueAnnotation ****************
+ *
+ * // e.g.: @minSpace 10.0;    
+ * KeyFloatValueAnnotation returns FloatAnnotation:
+ * 	"@" name=ID value=Float;
+ *
+ **/
+
+// "@" name=ID value=Float
+protected class KeyFloatValueAnnotation_Group extends GroupToken {
+	
+	public KeyFloatValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getKeyFloatValueAnnotationAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyFloatValueAnnotation_ValueAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "@"
+protected class KeyFloatValueAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
+	
+	public KeyFloatValueAnnotation_CommercialAtKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// name=ID
+protected class KeyFloatValueAnnotation_NameAssignment_1 extends AssignmentToken  {
+	
+	public KeyFloatValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyFloatValueAnnotationAccess().getNameAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyFloatValueAnnotation_CommercialAtKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// value=Float
+protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
+	
+	public KeyFloatValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKeyFloatValueAnnotationAccess().getValueAssignment_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new KeyFloatValueAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule KeyFloatValueAnnotation ****************/
 
 
 /************ begin Rule ImportAnnotation ****************

@@ -1899,11 +1899,11 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_ESTEREL_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ESTEREL_SL_COMMENT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match('%'); 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:31: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:31: (~ ( ( '\\n' | '\\r' ) ) )*
             loop1:
             do {
                 int alt1=2;
@@ -1916,7 +1916,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:31: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -1937,7 +1937,7 @@ public class InternalEsterelLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:47: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:47: ( ( '\\r' )? '\\n' )?
             int alt3=2;
             int LA3_0 = input.LA(1);
 
@@ -1946,9 +1946,9 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt3) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:48: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:48: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:48: ( '\\r' )?
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:48: ( '\\r' )?
                     int alt2=2;
                     int LA2_0 = input.LA(1);
 
@@ -1957,7 +1957,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt2) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30446:48: '\\r'
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31008:48: '\\r'
                             {
                             match('\r'); 
 
@@ -1987,12 +1987,12 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_ESTEREL_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ESTEREL_ML_COMMENT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30448:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30448:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31010:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31010:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
             {
             match('%'); 
             match('{'); 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30448:35: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31010:35: ( options {greedy=false; } : . )*
             loop4:
             do {
                 int alt4=2;
@@ -2017,7 +2017,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30448:63: .
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31010:63: .
             	    {
             	    matchAny(); 
 
@@ -2045,11 +2045,11 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_STRING() throws RecognitionException {
         try {
             int _type = RULE_STRING;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30450:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30450:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31012:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31012:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30450:19: (~ ( '\"' ) | '\"' '\"' )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31012:19: (~ ( '\"' ) | '\"' '\"' )*
             loop5:
             do {
                 int alt5=3;
@@ -2071,7 +2071,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30450:20: ~ ( '\"' )
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31012:20: ~ ( '\"' )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -2087,7 +2087,7 @@ public class InternalEsterelLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30450:27: '\"' '\"'
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31012:27: '\"' '\"'
             	    {
             	    match('\"'); 
             	    match('\"'); 
@@ -2111,23 +2111,222 @@ public class InternalEsterelLexer extends Lexer {
     }
     // $ANTLR end RULE_STRING
 
+    // $ANTLR start RULE_HOSTCODE
+    public final void mRULE_HOSTCODE() throws RecognitionException {
+        try {
+            int _type = RULE_HOSTCODE;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31014:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31014:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            {
+            match('\''); 
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31014:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            loop6:
+            do {
+                int alt6=3;
+                int LA6_0 = input.LA(1);
+
+                if ( (LA6_0=='\\') ) {
+                    alt6=1;
+                }
+                else if ( ((LA6_0>='\u0000' && LA6_0<='&')||(LA6_0>='(' && LA6_0<='[')||(LA6_0>=']' && LA6_0<='\uFFFE')) ) {
+                    alt6=2;
+                }
+
+
+                switch (alt6) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31014:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    {
+            	    match('\\'); 
+            	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
+            	        input.consume();
+
+            	    }
+            	    else {
+            	        MismatchedSetException mse =
+            	            new MismatchedSetException(null,input);
+            	        recover(mse);    throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+            	case 2 :
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31014:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
+            	        input.consume();
+
+            	    }
+            	    else {
+            	        MismatchedSetException mse =
+            	            new MismatchedSetException(null,input);
+            	        recover(mse);    throw mse;
+            	    }
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop6;
+                }
+            } while (true);
+
+            match('\''); 
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_HOSTCODE
+
+    // $ANTLR start RULE_COMMENT_ANNOTATION
+    public final void mRULE_COMMENT_ANNOTATION() throws RecognitionException {
+        try {
+            int _type = RULE_COMMENT_ANNOTATION;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31016:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31016:27: '/**' ( options {greedy=false; } : . )* '*/'
+            {
+            match("/**"); 
+
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31016:33: ( options {greedy=false; } : . )*
+            loop7:
+            do {
+                int alt7=2;
+                int LA7_0 = input.LA(1);
+
+                if ( (LA7_0=='*') ) {
+                    int LA7_1 = input.LA(2);
+
+                    if ( (LA7_1=='/') ) {
+                        alt7=2;
+                    }
+                    else if ( ((LA7_1>='\u0000' && LA7_1<='.')||(LA7_1>='0' && LA7_1<='\uFFFE')) ) {
+                        alt7=1;
+                    }
+
+
+                }
+                else if ( ((LA7_0>='\u0000' && LA7_0<=')')||(LA7_0>='+' && LA7_0<='\uFFFE')) ) {
+                    alt7=1;
+                }
+
+
+                switch (alt7) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31016:61: .
+            	    {
+            	    matchAny(); 
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop7;
+                }
+            } while (true);
+
+            match("*/"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_COMMENT_ANNOTATION
+
+    // $ANTLR start RULE_ML_COMMENT
+    public final void mRULE_ML_COMMENT() throws RecognitionException {
+        try {
+            int _type = RULE_ML_COMMENT;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31018:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31018:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            {
+            match("/*"); 
+
+            if ( (input.LA(1)>='\u0000' && input.LA(1)<=')')||(input.LA(1)>='+' && input.LA(1)<='\uFFFE') ) {
+                input.consume();
+
+            }
+            else {
+                MismatchedSetException mse =
+                    new MismatchedSetException(null,input);
+                recover(mse);    throw mse;
+            }
+
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31018:31: ( options {greedy=false; } : . )*
+            loop8:
+            do {
+                int alt8=2;
+                int LA8_0 = input.LA(1);
+
+                if ( (LA8_0=='*') ) {
+                    int LA8_1 = input.LA(2);
+
+                    if ( (LA8_1=='/') ) {
+                        alt8=2;
+                    }
+                    else if ( ((LA8_1>='\u0000' && LA8_1<='.')||(LA8_1>='0' && LA8_1<='\uFFFE')) ) {
+                        alt8=1;
+                    }
+
+
+                }
+                else if ( ((LA8_0>='\u0000' && LA8_0<=')')||(LA8_0>='+' && LA8_0<='\uFFFE')) ) {
+                    alt8=1;
+                }
+
+
+                switch (alt8) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31018:59: .
+            	    {
+            	    matchAny(); 
+
+            	    }
+            	    break;
+
+            	default :
+            	    break loop8;
+                }
+            } while (true);
+
+            match("*/"); 
+
+
+            }
+
+            this.type = _type;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end RULE_ML_COMMENT
+
     // $ANTLR start RULE_INT
     public final void mRULE_INT() throws RecognitionException {
         try {
             int _type = RULE_INT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:10: ( ( '-' )? ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:12: ( '-' )? ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:10: ( ( '-' )? ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:12: ( '-' )? ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:12: ( '-' )?
-            int alt6=2;
-            int LA6_0 = input.LA(1);
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:12: ( '-' )?
+            int alt9=2;
+            int LA9_0 = input.LA(1);
 
-            if ( (LA6_0=='-') ) {
-                alt6=1;
+            if ( (LA9_0=='-') ) {
+                alt9=1;
             }
-            switch (alt6) {
+            switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:12: '-'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:12: '-'
                     {
                     match('-'); 
 
@@ -2136,21 +2335,21 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:17: ( '0' .. '9' )+
-            int cnt7=0;
-            loop7:
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:17: ( '0' .. '9' )+
+            int cnt10=0;
+            loop10:
             do {
-                int alt7=2;
-                int LA7_0 = input.LA(1);
+                int alt10=2;
+                int LA10_0 = input.LA(1);
 
-                if ( ((LA7_0>='0' && LA7_0<='9')) ) {
-                    alt7=1;
+                if ( ((LA10_0>='0' && LA10_0<='9')) ) {
+                    alt10=1;
                 }
 
 
-                switch (alt7) {
+                switch (alt10) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30452:18: '0' .. '9'
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31020:18: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -2158,12 +2357,12 @@ public class InternalEsterelLexer extends Lexer {
             	    break;
 
             	default :
-            	    if ( cnt7 >= 1 ) break loop7;
+            	    if ( cnt10 >= 1 ) break loop10;
                         EarlyExitException eee =
-                            new EarlyExitException(7, input);
+                            new EarlyExitException(10, input);
                         throw eee;
                 }
-                cnt7++;
+                cnt10++;
             } while (true);
 
 
@@ -2180,26 +2379,26 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_FLOAT() throws RecognitionException {
         try {
             int _type = RULE_FLOAT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:12: ( ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' ) )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:12: ( ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' ) )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
             {
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
-            int alt17=2;
-            alt17 = dfa17.predict(input);
-            switch (alt17) {
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
+            int alt20=2;
+            alt20 = dfa20.predict(input);
+            switch (alt20) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:15: ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:15: ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:15: ( '-' )?
-                    int alt8=2;
-                    int LA8_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:15: ( '-' )?
+                    int alt11=2;
+                    int LA11_0 = input.LA(1);
 
-                    if ( (LA8_0=='-') ) {
-                        alt8=1;
+                    if ( (LA11_0=='-') ) {
+                        alt11=1;
                     }
-                    switch (alt8) {
+                    switch (alt11) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:15: '-'
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:15: '-'
                             {
                             match('-'); 
 
@@ -2208,21 +2407,21 @@ public class InternalEsterelLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:20: ( '0' .. '9' )+
-                    int cnt9=0;
-                    loop9:
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:20: ( '0' .. '9' )+
+                    int cnt12=0;
+                    loop12:
                     do {
-                        int alt9=2;
-                        int LA9_0 = input.LA(1);
+                        int alt12=2;
+                        int LA12_0 = input.LA(1);
 
-                        if ( ((LA9_0>='0' && LA9_0<='9')) ) {
-                            alt9=1;
+                        if ( ((LA12_0>='0' && LA12_0<='9')) ) {
+                            alt12=1;
                         }
 
 
-                        switch (alt9) {
+                        switch (alt12) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:21: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:21: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2230,29 +2429,29 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt9 >= 1 ) break loop9;
+                    	    if ( cnt12 >= 1 ) break loop12;
                                 EarlyExitException eee =
-                                    new EarlyExitException(9, input);
+                                    new EarlyExitException(12, input);
                                 throw eee;
                         }
-                        cnt9++;
+                        cnt12++;
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:36: ( '0' .. '9' )*
-                    loop10:
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:36: ( '0' .. '9' )*
+                    loop13:
                     do {
-                        int alt10=2;
-                        int LA10_0 = input.LA(1);
+                        int alt13=2;
+                        int LA13_0 = input.LA(1);
 
-                        if ( ((LA10_0>='0' && LA10_0<='9')) ) {
-                            alt10=1;
+                        if ( ((LA13_0>='0' && LA13_0<='9')) ) {
+                            alt13=1;
                         }
 
 
-                        switch (alt10) {
+                        switch (alt13) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:37: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:37: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2260,20 +2459,20 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    break loop10;
+                    	    break loop13;
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
-                    int alt13=2;
-                    int LA13_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
+                    int alt16=2;
+                    int LA16_0 = input.LA(1);
 
-                    if ( (LA13_0=='E'||LA13_0=='e') ) {
-                        alt13=1;
+                    if ( (LA16_0=='E'||LA16_0=='e') ) {
+                        alt16=1;
                     }
-                    switch (alt13) {
+                    switch (alt16) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:49: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:49: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -2285,14 +2484,14 @@ public class InternalEsterelLexer extends Lexer {
                                 recover(mse);    throw mse;
                             }
 
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:59: ( '+' | '-' )?
-                            int alt11=2;
-                            int LA11_0 = input.LA(1);
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:59: ( '+' | '-' )?
+                            int alt14=2;
+                            int LA14_0 = input.LA(1);
 
-                            if ( (LA11_0=='+'||LA11_0=='-') ) {
-                                alt11=1;
+                            if ( (LA14_0=='+'||LA14_0=='-') ) {
+                                alt14=1;
                             }
-                            switch (alt11) {
+                            switch (alt14) {
                                 case 1 :
                                     // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:
                                     {
@@ -2312,21 +2511,21 @@ public class InternalEsterelLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:70: ( '0' .. '9' )+
-                            int cnt12=0;
-                            loop12:
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:70: ( '0' .. '9' )+
+                            int cnt15=0;
+                            loop15:
                             do {
-                                int alt12=2;
-                                int LA12_0 = input.LA(1);
+                                int alt15=2;
+                                int LA15_0 = input.LA(1);
 
-                                if ( ((LA12_0>='0' && LA12_0<='9')) ) {
-                                    alt12=1;
+                                if ( ((LA15_0>='0' && LA15_0<='9')) ) {
+                                    alt15=1;
                                 }
 
 
-                                switch (alt12) {
+                                switch (alt15) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:71: '0' .. '9'
+                            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:71: '0' .. '9'
                             	    {
                             	    matchRange('0','9'); 
 
@@ -2334,12 +2533,12 @@ public class InternalEsterelLexer extends Lexer {
                             	    break;
 
                             	default :
-                            	    if ( cnt12 >= 1 ) break loop12;
+                            	    if ( cnt15 >= 1 ) break loop15;
                                         EarlyExitException eee =
-                                            new EarlyExitException(12, input);
+                                            new EarlyExitException(15, input);
                                         throw eee;
                                 }
-                                cnt12++;
+                                cnt15++;
                             } while (true);
 
 
@@ -2348,16 +2547,16 @@ public class InternalEsterelLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:84: ( 'f' )?
-                    int alt14=2;
-                    int LA14_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:84: ( 'f' )?
+                    int alt17=2;
+                    int LA17_0 = input.LA(1);
 
-                    if ( (LA14_0=='f') ) {
-                        alt14=1;
+                    if ( (LA17_0=='f') ) {
+                        alt17=1;
                     }
-                    switch (alt14) {
+                    switch (alt17) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:84: 'f'
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:84: 'f'
                             {
                             match('f'); 
 
@@ -2370,18 +2569,18 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:89: ( '-' )? ( '0' .. '9' )+ 'f'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:89: ( '-' )? ( '0' .. '9' )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:89: ( '-' )?
-                    int alt15=2;
-                    int LA15_0 = input.LA(1);
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:89: ( '-' )?
+                    int alt18=2;
+                    int LA18_0 = input.LA(1);
 
-                    if ( (LA15_0=='-') ) {
-                        alt15=1;
+                    if ( (LA18_0=='-') ) {
+                        alt18=1;
                     }
-                    switch (alt15) {
+                    switch (alt18) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:89: '-'
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:89: '-'
                             {
                             match('-'); 
 
@@ -2390,21 +2589,21 @@ public class InternalEsterelLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:94: ( '0' .. '9' )+
-                    int cnt16=0;
-                    loop16:
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:94: ( '0' .. '9' )+
+                    int cnt19=0;
+                    loop19:
                     do {
-                        int alt16=2;
-                        int LA16_0 = input.LA(1);
+                        int alt19=2;
+                        int LA19_0 = input.LA(1);
 
-                        if ( ((LA16_0>='0' && LA16_0<='9')) ) {
-                            alt16=1;
+                        if ( ((LA19_0>='0' && LA19_0<='9')) ) {
+                            alt19=1;
                         }
 
 
-                        switch (alt16) {
+                        switch (alt19) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30454:95: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31022:95: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2412,12 +2611,12 @@ public class InternalEsterelLexer extends Lexer {
                     	    break;
 
                     	default :
-                    	    if ( cnt16 >= 1 ) break loop16;
+                    	    if ( cnt19 >= 1 ) break loop19;
                                 EarlyExitException eee =
-                                    new EarlyExitException(16, input);
+                                    new EarlyExitException(19, input);
                                 throw eee;
                         }
-                        cnt16++;
+                        cnt19++;
                     } while (true);
 
                     match('f'); 
@@ -2441,28 +2640,28 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_BOOLEAN() throws RecognitionException {
         try {
             int _type = RULE_BOOLEAN;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30456:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30456:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31024:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31024:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30456:16: ( 'true' | 'false' )
-            int alt18=2;
-            int LA18_0 = input.LA(1);
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31024:16: ( 'true' | 'false' )
+            int alt21=2;
+            int LA21_0 = input.LA(1);
 
-            if ( (LA18_0=='t') ) {
-                alt18=1;
+            if ( (LA21_0=='t') ) {
+                alt21=1;
             }
-            else if ( (LA18_0=='f') ) {
-                alt18=2;
+            else if ( (LA21_0=='f') ) {
+                alt21=2;
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("30456:16: ( 'true' | 'false' )", 18, 0, input);
+                    new NoViableAltException("31024:16: ( 'true' | 'false' )", 21, 0, input);
 
                 throw nvae;
             }
-            switch (alt18) {
+            switch (alt21) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30456:17: 'true'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31024:17: 'true'
                     {
                     match("true"); 
 
@@ -2470,7 +2669,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30456:24: 'false'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31024:24: 'false'
                     {
                     match("false"); 
 
@@ -2490,213 +2689,14 @@ public class InternalEsterelLexer extends Lexer {
     }
     // $ANTLR end RULE_BOOLEAN
 
-    // $ANTLR start RULE_HOSTCODE
-    public final void mRULE_HOSTCODE() throws RecognitionException {
-        try {
-            int _type = RULE_HOSTCODE;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30458:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30458:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
-            {
-            match('\''); 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30458:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
-            loop19:
-            do {
-                int alt19=3;
-                int LA19_0 = input.LA(1);
-
-                if ( (LA19_0=='\\') ) {
-                    alt19=1;
-                }
-                else if ( ((LA19_0>='\u0000' && LA19_0<='&')||(LA19_0>='(' && LA19_0<='[')||(LA19_0>=']' && LA19_0<='\uFFFE')) ) {
-                    alt19=2;
-                }
-
-
-                switch (alt19) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30458:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
-            	    {
-            	    match('\\'); 
-            	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
-            	        input.consume();
-
-            	    }
-            	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-            	case 2 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30458:64: ~ ( ( '\\\\' | '\\'' ) )
-            	    {
-            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
-            	        input.consume();
-
-            	    }
-            	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop19;
-                }
-            } while (true);
-
-            match('\''); 
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end RULE_HOSTCODE
-
-    // $ANTLR start RULE_COMMENT_ANNOTATION
-    public final void mRULE_COMMENT_ANNOTATION() throws RecognitionException {
-        try {
-            int _type = RULE_COMMENT_ANNOTATION;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30460:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30460:27: '/**' ( options {greedy=false; } : . )* '*/'
-            {
-            match("/**"); 
-
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30460:33: ( options {greedy=false; } : . )*
-            loop20:
-            do {
-                int alt20=2;
-                int LA20_0 = input.LA(1);
-
-                if ( (LA20_0=='*') ) {
-                    int LA20_1 = input.LA(2);
-
-                    if ( (LA20_1=='/') ) {
-                        alt20=2;
-                    }
-                    else if ( ((LA20_1>='\u0000' && LA20_1<='.')||(LA20_1>='0' && LA20_1<='\uFFFE')) ) {
-                        alt20=1;
-                    }
-
-
-                }
-                else if ( ((LA20_0>='\u0000' && LA20_0<=')')||(LA20_0>='+' && LA20_0<='\uFFFE')) ) {
-                    alt20=1;
-                }
-
-
-                switch (alt20) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30460:61: .
-            	    {
-            	    matchAny(); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop20;
-                }
-            } while (true);
-
-            match("*/"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end RULE_COMMENT_ANNOTATION
-
-    // $ANTLR start RULE_ML_COMMENT
-    public final void mRULE_ML_COMMENT() throws RecognitionException {
-        try {
-            int _type = RULE_ML_COMMENT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30462:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30462:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
-            {
-            match("/*"); 
-
-            if ( (input.LA(1)>='\u0000' && input.LA(1)<=')')||(input.LA(1)>='+' && input.LA(1)<='\uFFFE') ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse =
-                    new MismatchedSetException(null,input);
-                recover(mse);    throw mse;
-            }
-
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30462:31: ( options {greedy=false; } : . )*
-            loop21:
-            do {
-                int alt21=2;
-                int LA21_0 = input.LA(1);
-
-                if ( (LA21_0=='*') ) {
-                    int LA21_1 = input.LA(2);
-
-                    if ( (LA21_1=='/') ) {
-                        alt21=2;
-                    }
-                    else if ( ((LA21_1>='\u0000' && LA21_1<='.')||(LA21_1>='0' && LA21_1<='\uFFFE')) ) {
-                        alt21=1;
-                    }
-
-
-                }
-                else if ( ((LA21_0>='\u0000' && LA21_0<=')')||(LA21_0>='+' && LA21_0<='\uFFFE')) ) {
-                    alt21=1;
-                }
-
-
-                switch (alt21) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30462:59: .
-            	    {
-            	    matchAny(); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop21;
-                }
-            } while (true);
-
-            match("*/"); 
-
-
-            }
-
-            this.type = _type;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end RULE_ML_COMMENT
-
     // $ANTLR start RULE_ID
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30464:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30464:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31026:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31026:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30464:11: ( '^' )?
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31026:11: ( '^' )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -2705,7 +2705,7 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt22) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30464:11: '^'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31026:11: '^'
                     {
                     match('^'); 
 
@@ -2724,7 +2724,7 @@ public class InternalEsterelLexer extends Lexer {
                 recover(mse);    throw mse;
             }
 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30464:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31026:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop23:
             do {
                 int alt23=2;
@@ -2772,12 +2772,12 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop24:
             do {
                 int alt24=2;
@@ -2790,7 +2790,7 @@ public class InternalEsterelLexer extends Lexer {
 
                 switch (alt24) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
             	        input.consume();
@@ -2811,7 +2811,7 @@ public class InternalEsterelLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:40: ( ( '\\r' )? '\\n' )?
             int alt26=2;
             int LA26_0 = input.LA(1);
 
@@ -2820,9 +2820,9 @@ public class InternalEsterelLexer extends Lexer {
             }
             switch (alt26) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:41: ( '\\r' )?
                     int alt25=2;
                     int LA25_0 = input.LA(1);
 
@@ -2831,7 +2831,7 @@ public class InternalEsterelLexer extends Lexer {
                     }
                     switch (alt25) {
                         case 1 :
-                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30466:41: '\\r'
+                            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31028:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2861,10 +2861,10 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30468:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30468:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31030:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31030:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30468:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31030:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt27=0;
             loop27:
             do {
@@ -2917,8 +2917,8 @@ public class InternalEsterelLexer extends Lexer {
     public final void mRULE_ANY_OTHER() throws RecognitionException {
         try {
             int _type = RULE_ANY_OTHER;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30470:16: ( . )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30470:18: .
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31032:16: ( . )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31032:18: .
             {
             matchAny(); 
 
@@ -2932,7 +2932,7 @@ public class InternalEsterelLexer extends Lexer {
     // $ANTLR end RULE_ANY_OTHER
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:8: ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:8: ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
         int alt28=107;
         alt28 = dfa28.predict(input);
         switch (alt28) {
@@ -3616,44 +3616,44 @@ public class InternalEsterelLexer extends Lexer {
                 }
                 break;
             case 98 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:457: RULE_INT
-                {
-                mRULE_INT(); 
-
-                }
-                break;
-            case 99 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:466: RULE_FLOAT
-                {
-                mRULE_FLOAT(); 
-
-                }
-                break;
-            case 100 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:477: RULE_BOOLEAN
-                {
-                mRULE_BOOLEAN(); 
-
-                }
-                break;
-            case 101 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:490: RULE_HOSTCODE
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:457: RULE_HOSTCODE
                 {
                 mRULE_HOSTCODE(); 
 
                 }
                 break;
-            case 102 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:504: RULE_COMMENT_ANNOTATION
+            case 99 :
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:471: RULE_COMMENT_ANNOTATION
                 {
                 mRULE_COMMENT_ANNOTATION(); 
 
                 }
                 break;
-            case 103 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:528: RULE_ML_COMMENT
+            case 100 :
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:495: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
+
+                }
+                break;
+            case 101 :
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:511: RULE_INT
+                {
+                mRULE_INT(); 
+
+                }
+                break;
+            case 102 :
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:520: RULE_FLOAT
+                {
+                mRULE_FLOAT(); 
+
+                }
+                break;
+            case 103 :
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:531: RULE_BOOLEAN
+                {
+                mRULE_BOOLEAN(); 
 
                 }
                 break;
@@ -3691,66 +3691,66 @@ public class InternalEsterelLexer extends Lexer {
     }
 
 
-    protected DFA17 dfa17 = new DFA17(this);
+    protected DFA20 dfa20 = new DFA20(this);
     protected DFA28 dfa28 = new DFA28(this);
-    static final String DFA17_eotS =
+    static final String DFA20_eotS =
         "\5\uffff";
-    static final String DFA17_eofS =
+    static final String DFA20_eofS =
         "\5\uffff";
-    static final String DFA17_minS =
+    static final String DFA20_minS =
         "\1\55\1\60\1\56\2\uffff";
-    static final String DFA17_maxS =
+    static final String DFA20_maxS =
         "\2\71\1\146\2\uffff";
-    static final String DFA17_acceptS =
-        "\3\uffff\1\1\1\2";
-    static final String DFA17_specialS =
+    static final String DFA20_acceptS =
+        "\3\uffff\1\2\1\1";
+    static final String DFA20_specialS =
         "\5\uffff}>";
-    static final String[] DFA17_transitionS = {
+    static final String[] DFA20_transitionS = {
             "\1\1\2\uffff\12\2",
             "\12\2",
-            "\1\3\1\uffff\12\2\54\uffff\1\4",
+            "\1\4\1\uffff\12\2\54\uffff\1\3",
             "",
             ""
     };
 
-    static final short[] DFA17_eot = DFA.unpackEncodedString(DFA17_eotS);
-    static final short[] DFA17_eof = DFA.unpackEncodedString(DFA17_eofS);
-    static final char[] DFA17_min = DFA.unpackEncodedStringToUnsignedChars(DFA17_minS);
-    static final char[] DFA17_max = DFA.unpackEncodedStringToUnsignedChars(DFA17_maxS);
-    static final short[] DFA17_accept = DFA.unpackEncodedString(DFA17_acceptS);
-    static final short[] DFA17_special = DFA.unpackEncodedString(DFA17_specialS);
-    static final short[][] DFA17_transition;
+    static final short[] DFA20_eot = DFA.unpackEncodedString(DFA20_eotS);
+    static final short[] DFA20_eof = DFA.unpackEncodedString(DFA20_eofS);
+    static final char[] DFA20_min = DFA.unpackEncodedStringToUnsignedChars(DFA20_minS);
+    static final char[] DFA20_max = DFA.unpackEncodedStringToUnsignedChars(DFA20_maxS);
+    static final short[] DFA20_accept = DFA.unpackEncodedString(DFA20_acceptS);
+    static final short[] DFA20_special = DFA.unpackEncodedString(DFA20_specialS);
+    static final short[][] DFA20_transition;
 
     static {
-        int numStates = DFA17_transitionS.length;
-        DFA17_transition = new short[numStates][];
+        int numStates = DFA20_transitionS.length;
+        DFA20_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA17_transition[i] = DFA.unpackEncodedString(DFA17_transitionS[i]);
+            DFA20_transition[i] = DFA.unpackEncodedString(DFA20_transitionS[i]);
         }
     }
 
-    class DFA17 extends DFA {
+    class DFA20 extends DFA {
 
-        public DFA17(BaseRecognizer recognizer) {
+        public DFA20(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 17;
-            this.eot = DFA17_eot;
-            this.eof = DFA17_eof;
-            this.min = DFA17_min;
-            this.max = DFA17_max;
-            this.accept = DFA17_accept;
-            this.special = DFA17_special;
-            this.transition = DFA17_transition;
+            this.decisionNumber = 20;
+            this.eot = DFA20_eot;
+            this.eof = DFA20_eof;
+            this.min = DFA20_min;
+            this.max = DFA20_max;
+            this.accept = DFA20_accept;
+            this.special = DFA20_special;
+            this.transition = DFA20_transition;
         }
         public String getDescription() {
-            return "30454:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )";
+            return "31022:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )";
         }
     }
     static final String DFA28_eotS =
-        "\1\uffff\5\64\1\uffff\1\101\1\uffff\1\64\1\110\1\112\1\uffff\1\115"+
+        "\1\uffff\5\64\1\uffff\1\100\1\uffff\1\64\1\110\1\112\1\uffff\1\115"+
         "\1\120\1\122\7\64\1\144\1\64\2\uffff\2\64\2\uffff\1\64\1\uffff\1"+
-        "\56\2\uffff\2\64\1\uffff\1\177\1\56\1\u0081\2\56\3\uffff\5\64\1"+
-        "\uffff\4\64\1\u0091\5\64\1\uffff\1\u0081\2\uffff\3\64\15\uffff\4"+
+        "\56\2\uffff\2\64\1\uffff\1\177\2\56\1\u0082\1\56\3\uffff\5\64\1"+
+        "\uffff\4\64\1\u0091\5\64\2\uffff\1\u0082\1\uffff\3\64\15\uffff\4"+
         "\64\1\u00a3\1\u00a4\3\64\1\u00a9\6\64\2\uffff\6\64\2\uffff\6\64"+
         "\2\uffff\2\64\4\uffff\2\64\1\uffff\1\177\6\uffff\10\64\1\u00d4\3"+
         "\64\1\uffff\1\64\1\u00d9\3\64\1\u00de\1\u00e0\1\u00e1\1\u00e2\2"+
@@ -3761,7 +3761,7 @@ public class InternalEsterelLexer extends Lexer {
         "\1\uffff\1\u0133\1\64\1\u0135\1\u0136\1\64\1\u0138\1\u0139\3\64"+
         "\1\u013d\1\u013e\1\u013f\1\64\1\u0141\1\u0142\3\64\1\uffff\1\u0146"+
         "\1\uffff\1\177\3\uffff\1\u0147\1\64\4\uffff\3\64\1\uffff\1\u014c"+
-        "\1\64\1\u014e\1\u014f\1\uffff\4\64\1\uffff\2\64\1\u0157\1\u010f"+
+        "\1\64\1\u014e\1\u014f\1\uffff\4\64\1\uffff\2\64\1\u0157\1\u010e"+
         "\1\u0158\7\64\1\uffff\1\64\2\uffff\1\u0161\2\uffff\1\u0162\2\uffff"+
         "\3\64\3\uffff\1\64\2\uffff\3\64\2\uffff\4\64\1\uffff\1\u016e\2\uffff"+
         "\1\64\1\u0170\5\64\2\uffff\1\64\1\u0177\1\u0178\1\u0179\1\u017a"+
@@ -3777,13 +3777,13 @@ public class InternalEsterelLexer extends Lexer {
         "\1\0\2\141\1\162\1\142\1\157\1\uffff\1\60\1\uffff\1\141\1\52\1\77"+
         "\1\uffff\1\76\2\75\1\157\1\156\1\146\1\141\1\157\1\145\1\141\1\75"+
         "\1\141\2\uffff\2\141\2\uffff\1\145\1\uffff\1\174\2\uffff\1\157\1"+
-        "\141\1\uffff\1\173\1\0\1\56\1\0\1\101\3\uffff\1\141\1\143\1\163"+
-        "\1\160\1\145\1\uffff\1\163\1\145\1\162\1\165\1\60\1\164\1\144\1"+
-        "\141\1\157\1\156\1\uffff\1\56\2\uffff\1\144\1\156\1\170\1\0\14\uffff"+
-        "\1\157\1\163\1\164\1\155\2\60\1\154\1\157\1\156\1\60\1\162\1\156"+
-        "\1\147\2\163\1\154\2\uffff\1\144\1\151\1\145\1\143\1\163\1\145\2"+
-        "\uffff\1\155\1\154\2\164\1\141\1\145\2\uffff\1\154\1\156\4\uffff"+
-        "\1\157\1\162\1\uffff\1\0\6\uffff\1\160\2\145\2\153\1\145\1\156\1"+
+        "\141\1\uffff\1\173\2\0\1\56\1\101\3\uffff\1\141\1\143\1\163\1\160"+
+        "\1\145\1\uffff\1\163\1\145\1\162\1\165\1\60\1\164\1\144\1\141\1"+
+        "\157\1\156\2\uffff\1\56\1\uffff\1\144\1\156\1\170\1\0\14\uffff\1"+
+        "\157\1\163\1\164\1\155\2\60\1\154\1\157\1\156\1\60\1\162\1\156\1"+
+        "\147\2\163\1\154\2\uffff\1\144\1\151\1\145\1\143\1\163\1\145\2\uffff"+
+        "\1\155\1\154\2\164\1\141\1\145\2\uffff\1\154\1\156\4\uffff\1\157"+
+        "\1\162\1\uffff\1\0\6\uffff\1\145\1\160\1\145\2\153\1\145\1\156\1"+
         "\151\1\60\1\143\1\145\1\163\1\uffff\1\160\1\60\1\151\1\162\1\145"+
         "\4\60\2\uffff\1\154\1\151\1\157\2\145\1\165\2\uffff\1\163\1\141"+
         "\1\143\1\142\1\uffff\1\151\1\163\1\156\1\160\1\164\1\144\1\164\1"+
@@ -3810,17 +3810,17 @@ public class InternalEsterelLexer extends Lexer {
         "\1\ufffe\1\171\2\165\1\167\1\157\1\uffff\1\71\1\uffff\1\157\1\57"+
         "\1\77\1\uffff\2\76\1\75\1\157\1\160\1\156\1\165\1\157\1\165\1\157"+
         "\1\75\1\170\2\uffff\1\157\1\151\2\uffff\1\165\1\uffff\1\174\2\uffff"+
-        "\1\157\1\141\1\uffff\1\173\1\ufffe\1\146\1\ufffe\1\172\3\uffff\1"+
-        "\165\1\155\1\163\1\160\1\145\1\uffff\1\163\1\157\1\162\1\165\1\172"+
-        "\1\164\1\144\1\141\1\157\1\164\1\uffff\1\146\2\uffff\1\144\1\156"+
-        "\1\170\1\ufffe\14\uffff\1\157\1\163\1\164\1\155\2\172\1\154\1\157"+
-        "\1\156\1\172\1\162\1\156\1\147\2\163\1\156\2\uffff\1\144\1\151\1"+
-        "\145\1\143\1\163\1\151\2\uffff\1\160\1\163\2\164\1\141\1\145\2\uffff"+
-        "\1\164\1\156\4\uffff\1\157\1\162\1\uffff\1\ufffe\6\uffff\1\160\2"+
-        "\145\2\153\1\145\1\156\1\151\1\172\1\143\1\145\1\163\1\uffff\1\160"+
-        "\1\172\1\151\1\162\1\145\4\172\2\uffff\1\154\1\151\1\157\2\145\1"+
-        "\165\2\uffff\1\163\1\141\1\143\1\142\1\uffff\1\151\1\163\1\156\2"+
-        "\164\1\144\1\164\1\172\1\164\1\162\1\150\1\151\1\164\1\143\1\142"+
+        "\1\157\1\141\1\uffff\1\173\2\ufffe\1\146\1\172\3\uffff\1\165\1\155"+
+        "\1\163\1\160\1\145\1\uffff\1\163\1\157\1\162\1\165\1\172\1\164\1"+
+        "\144\1\141\1\157\1\164\2\uffff\1\146\1\uffff\1\144\1\156\1\170\1"+
+        "\ufffe\14\uffff\1\157\1\163\1\164\1\155\2\172\1\154\1\157\1\156"+
+        "\1\172\1\162\1\156\1\147\2\163\1\156\2\uffff\1\144\1\151\1\145\1"+
+        "\143\1\163\1\151\2\uffff\1\160\1\163\2\164\1\141\1\145\2\uffff\1"+
+        "\164\1\156\4\uffff\1\157\1\162\1\uffff\1\ufffe\6\uffff\1\145\1\160"+
+        "\1\145\2\153\1\145\1\156\1\151\1\172\1\143\1\145\1\163\1\uffff\1"+
+        "\160\1\172\1\151\1\162\1\145\4\172\2\uffff\1\154\1\151\1\157\2\145"+
+        "\1\165\2\uffff\1\163\1\141\1\143\1\142\1\uffff\1\151\1\163\1\156"+
+        "\2\164\1\144\1\164\1\172\1\164\1\162\1\150\1\151\1\164\1\143\1\142"+
         "\1\163\1\171\1\154\1\145\1\150\1\143\1\153\1\156\1\145\1\165\1\141"+
         "\1\172\1\160\1\172\4\ufffe\2\172\1\163\4\172\1\164\1\145\1\uffff"+
         "\1\145\1\172\1\145\1\165\1\uffff\2\164\1\172\1\151\1\uffff\1\154"+
@@ -3843,14 +3843,14 @@ public class InternalEsterelLexer extends Lexer {
     static final String DFA28_acceptS =
         "\6\uffff\1\6\1\uffff\1\10\3\uffff\1\14\14\uffff\1\41\1\42\2\uffff"+
         "\1\50\1\52\1\uffff\1\54\1\uffff\1\63\1\64\2\uffff\1\133\5\uffff"+
-        "\1\150\1\152\1\153\5\uffff\1\150\12\uffff\1\6\1\uffff\1\7\1\10\4"+
+        "\1\150\1\152\1\153\5\uffff\1\150\12\uffff\1\6\1\7\1\uffff\1\10\4"+
         "\uffff\1\151\1\12\1\124\1\13\1\14\1\134\1\15\1\21\1\16\1\20\1\22"+
         "\1\17\20\uffff\1\43\1\37\6\uffff\1\41\1\42\6\uffff\1\50\1\52\2\uffff"+
-        "\1\54\1\62\1\63\1\64\2\uffff\1\133\1\uffff\1\137\1\141\1\142\1\143"+
-        "\1\145\1\152\14\uffff\1\3\11\uffff\1\147\1\146\6\uffff\1\47\1\103"+
+        "\1\54\1\62\1\63\1\64\2\uffff\1\133\1\uffff\1\137\1\141\1\142\1\145"+
+        "\1\146\1\152\14\uffff\1\3\11\uffff\1\143\1\144\6\uffff\1\47\1\103"+
         "\4\uffff\1\67\52\uffff\1\2\4\uffff\1\4\4\uffff\1\5\1\uffff\1\11"+
         "\1\35\1\34\22\uffff\1\40\23\uffff\1\116\1\uffff\1\132\1\uffff\1"+
-        "\140\1\122\1\144\2\uffff\1\1\1\61\1\55\1\105\3\uffff\1\23\4\uffff"+
+        "\140\1\147\1\122\2\uffff\1\1\1\61\1\55\1\105\3\uffff\1\23\4\uffff"+
         "\1\33\4\uffff\1\74\14\uffff\1\32\1\uffff\1\102\1\77\1\uffff\1\110"+
         "\1\106\1\uffff\1\101\1\125\3\uffff\1\73\1\70\1\45\1\uffff\1\71\1"+
         "\66\3\uffff\1\107\1\115\4\uffff\1\112\1\uffff\1\72\1\65\7\uffff"+
@@ -3863,7 +3863,7 @@ public class InternalEsterelLexer extends Lexer {
         "\u01a8\uffff}>";
     static final String[] DFA28_transitionS = {
             "\11\56\2\55\2\56\1\55\22\56\1\55\1\56\1\50\1\40\1\56\1\47\1"+
-            "\56\1\52\1\31\1\32\1\10\1\6\1\35\1\7\1\14\1\12\12\51\1\27\1"+
+            "\56\1\51\1\31\1\32\1\10\1\6\1\35\1\7\1\14\1\12\12\52\1\27\1"+
             "\36\1\16\1\15\1\17\1\13\1\46\32\54\1\42\1\56\1\43\1\53\1\54"+
             "\1\56\1\4\1\20\1\33\1\24\1\30\1\23\1\54\1\26\1\22\2\54\1\44"+
             "\1\11\1\5\1\3\1\2\1\54\1\37\1\25\1\1\1\21\1\45\1\34\3\54\1\56"+
@@ -3874,7 +3874,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\75\13\uffff\1\73\10\uffff\1\74",
             "\1\76",
             "",
-            "\12\100",
+            "\12\101",
             "",
             "\1\105\7\uffff\1\104\5\uffff\1\103",
             "\1\106\4\uffff\1\107",
@@ -3908,13 +3908,13 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "\1\176",
             "\uffff\u0080",
-            "\1\u0082\1\uffff\12\100\54\uffff\1\u0082",
-            "\uffff\u0083",
+            "\uffff\u0081",
+            "\1\u0083\1\uffff\12\101\54\uffff\1\u0083",
             "\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
             "",
             "",
-            "\1\u0085\23\uffff\1\u0086",
+            "\1\u0086\23\uffff\1\u0085",
             "\1\u0088\11\uffff\1\u0087",
             "\1\u0089",
             "\1\u008a",
@@ -3931,13 +3931,13 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0095",
             "\1\u0096\5\uffff\1\u0097",
             "",
-            "\1\u0082\1\uffff\12\100\54\uffff\1\u0082",
             "",
+            "\1\u0083\1\uffff\12\101\54\uffff\1\u0083",
             "",
             "\1\u0098",
             "\1\u0099",
             "\1\u009a",
-            "\52\u009b\1\u009c\uffd4\u009b",
+            "\52\u009c\1\u009b\uffd4\u009c",
             "",
             "",
             "",
@@ -4325,7 +4325,7 @@ public class InternalEsterelLexer extends Lexer {
             this.transition = DFA28_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
         }
     }
  

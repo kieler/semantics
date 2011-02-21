@@ -45,7 +45,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
         public InternalEsterelParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[543+1];
+            ruleMemo = new HashMap[550+1];
          }
         
 
@@ -3895,11 +3895,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             if ( (LA16_0==RULE_ID) ) {
                 int LA16_1 = input.LA(2);
 
-                if ( (LA16_1==33) ) {
-                    alt16=2;
-                }
-                else if ( (LA16_1==32) ) {
+                if ( (LA16_1==32) ) {
                     alt16=1;
+                }
+                else if ( (LA16_1==33) ) {
+                    alt16=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
@@ -7947,7 +7947,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             int LA38_44 = input.LA(5);
 
                             if ( (LA38_44==RULE_ID) ) {
-                                int LA38_70 = input.LA(6);
+                                int LA38_68 = input.LA(6);
 
                                 if ( (synpred52()) ) {
                                     alt38=2;
@@ -7958,7 +7958,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 70, input);
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 68, input);
 
                                     throw nvae;
                                 }
@@ -7999,9 +7999,80 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 switch ( input.LA(6) ) {
                                 case 98:
                                     {
+                                    int LA38_79 = input.LA(7);
+
+                                    if ( (LA38_79==21) ) {
+                                        int LA38_88 = input.LA(8);
+
+                                        if ( (synpred52()) ) {
+                                            alt38=2;
+                                        }
+                                        else if ( (synpred74()) ) {
+                                            alt38=24;
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 88, input);
+
+                                            throw nvae;
+                                        }
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 79, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 99:
+                                    {
+                                    int LA38_80 = input.LA(7);
+
+                                    if ( (LA38_80==RULE_ID) ) {
+                                        int LA38_89 = input.LA(8);
+
+                                        if ( (LA38_89==22) ) {
+                                            int LA38_90 = input.LA(9);
+
+                                            if ( (synpred52()) ) {
+                                                alt38=2;
+                                            }
+                                            else if ( (synpred74()) ) {
+                                                alt38=24;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return current;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 90, input);
+
+                                                throw nvae;
+                                            }
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 89, input);
+
+                                            throw nvae;
+                                        }
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 80, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_ID:
+                                    {
                                     int LA38_81 = input.LA(7);
 
-                                    if ( (LA38_81==21) ) {
+                                    if ( (LA38_81==22) ) {
                                         int LA38_90 = input.LA(8);
 
                                         if ( (synpred52()) ) {
@@ -8027,81 +8098,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                     }
                                     }
                                     break;
-                                case 99:
-                                    {
-                                    int LA38_82 = input.LA(7);
-
-                                    if ( (LA38_82==RULE_ID) ) {
-                                        int LA38_91 = input.LA(8);
-
-                                        if ( (LA38_91==22) ) {
-                                            int LA38_92 = input.LA(9);
-
-                                            if ( (synpred52()) ) {
-                                                alt38=2;
-                                            }
-                                            else if ( (synpred74()) ) {
-                                                alt38=24;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return current;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 92, input);
-
-                                                throw nvae;
-                                            }
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 91, input);
-
-                                            throw nvae;
-                                        }
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 82, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_ID:
-                                    {
-                                    int LA38_83 = input.LA(7);
-
-                                    if ( (LA38_83==22) ) {
-                                        int LA38_92 = input.LA(8);
-
-                                        if ( (synpred52()) ) {
-                                            alt38=2;
-                                        }
-                                        else if ( (synpred74()) ) {
-                                            alt38=24;
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 92, input);
-
-                                            throw nvae;
-                                        }
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 83, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
                                 default:
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 71, input);
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 69, input);
 
                                     throw nvae;
                                 }
@@ -8121,7 +8121,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             int LA38_47 = input.LA(5);
 
                             if ( (LA38_47==RULE_ID) ) {
-                                int LA38_72 = input.LA(6);
+                                int LA38_70 = input.LA(6);
 
                                 if ( (synpred52()) ) {
                                     alt38=2;
@@ -8132,7 +8132,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 72, input);
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 70, input);
 
                                     throw nvae;
                                 }
@@ -8327,9 +8327,80 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             switch ( input.LA(5) ) {
                             case 98:
                                 {
+                                int LA38_71 = input.LA(6);
+
+                                if ( (LA38_71==21) ) {
+                                    int LA38_82 = input.LA(7);
+
+                                    if ( (synpred52()) ) {
+                                        alt38=2;
+                                    }
+                                    else if ( (synpred74()) ) {
+                                        alt38=24;
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 82, input);
+
+                                        throw nvae;
+                                    }
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 71, input);
+
+                                    throw nvae;
+                                }
+                                }
+                                break;
+                            case 99:
+                                {
+                                int LA38_72 = input.LA(6);
+
+                                if ( (LA38_72==RULE_ID) ) {
+                                    int LA38_83 = input.LA(7);
+
+                                    if ( (LA38_83==22) ) {
+                                        int LA38_84 = input.LA(8);
+
+                                        if ( (synpred52()) ) {
+                                            alt38=2;
+                                        }
+                                        else if ( (synpred74()) ) {
+                                            alt38=24;
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 84, input);
+
+                                            throw nvae;
+                                        }
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 83, input);
+
+                                        throw nvae;
+                                    }
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 72, input);
+
+                                    throw nvae;
+                                }
+                                }
+                                break;
+                            case RULE_ID:
+                                {
                                 int LA38_73 = input.LA(6);
 
-                                if ( (LA38_73==21) ) {
+                                if ( (LA38_73==22) ) {
                                     int LA38_84 = input.LA(7);
 
                                     if ( (synpred52()) ) {
@@ -8355,81 +8426,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 }
                                 }
                                 break;
-                            case 99:
-                                {
-                                int LA38_74 = input.LA(6);
-
-                                if ( (LA38_74==RULE_ID) ) {
-                                    int LA38_85 = input.LA(7);
-
-                                    if ( (LA38_85==22) ) {
-                                        int LA38_86 = input.LA(8);
-
-                                        if ( (synpred52()) ) {
-                                            alt38=2;
-                                        }
-                                        else if ( (synpred74()) ) {
-                                            alt38=24;
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 86, input);
-
-                                            throw nvae;
-                                        }
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 85, input);
-
-                                        throw nvae;
-                                    }
-                                }
-                                else {
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 74, input);
-
-                                    throw nvae;
-                                }
-                                }
-                                break;
-                            case RULE_ID:
-                                {
-                                int LA38_75 = input.LA(6);
-
-                                if ( (LA38_75==22) ) {
-                                    int LA38_86 = input.LA(7);
-
-                                    if ( (synpred52()) ) {
-                                        alt38=2;
-                                    }
-                                    else if ( (synpred74()) ) {
-                                        alt38=24;
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 86, input);
-
-                                        throw nvae;
-                                    }
-                                }
-                                else {
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 75, input);
-
-                                    throw nvae;
-                                }
-                                }
-                                break;
                             default:
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 54, input);
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 53, input);
 
                                 throw nvae;
                             }
@@ -8449,7 +8449,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         int LA38_35 = input.LA(4);
 
                         if ( (LA38_35==RULE_ID) ) {
-                            int LA38_55 = input.LA(5);
+                            int LA38_54 = input.LA(5);
 
                             if ( (synpred52()) ) {
                                 alt38=2;
@@ -8460,7 +8460,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 55, input);
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 54, input);
 
                                 throw nvae;
                             }
@@ -8517,7 +8517,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         switch ( input.LA(4) ) {
                         case 82:
                             {
-                            int LA38_57 = input.LA(5);
+                            int LA38_55 = input.LA(5);
 
                             if ( (synpred52()) ) {
                                 alt38=2;
@@ -8528,13 +8528,62 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 57, input);
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 55, input);
 
                                 throw nvae;
                             }
                             }
                             break;
                         case RULE_ID:
+                            {
+                            int LA38_56 = input.LA(5);
+
+                            if ( (synpred52()) ) {
+                                alt38=2;
+                            }
+                            else if ( (synpred74()) ) {
+                                alt38=24;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 56, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 90:
+                            {
+                            int LA38_57 = input.LA(5);
+
+                            if ( (LA38_57==RULE_ID) ) {
+                                int LA38_75 = input.LA(6);
+
+                                if ( (synpred52()) ) {
+                                    alt38=2;
+                                }
+                                else if ( (synpred74()) ) {
+                                    alt38=24;
+                                }
+                                else {
+                                    if (backtracking>0) {failed=true; return current;}
+                                    NoViableAltException nvae =
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 75, input);
+
+                                    throw nvae;
+                                }
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 57, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case RULE_BOOLEAN:
                             {
                             int LA38_58 = input.LA(5);
 
@@ -8553,66 +8602,88 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             }
                             break;
-                        case 90:
+                        case 98:
                             {
                             int LA38_59 = input.LA(5);
 
-                            if ( (LA38_59==RULE_ID) ) {
-                                int LA38_77 = input.LA(6);
-
-                                if ( (synpred52()) ) {
-                                    alt38=2;
-                                }
-                                else if ( (synpred74()) ) {
-                                    alt38=24;
-                                }
-                                else {
-                                    if (backtracking>0) {failed=true; return current;}
-                                    NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 77, input);
-
-                                    throw nvae;
-                                }
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 59, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case RULE_BOOLEAN:
-                            {
-                            int LA38_60 = input.LA(5);
-
-                            if ( (synpred52()) ) {
-                                alt38=2;
-                            }
-                            else if ( (synpred74()) ) {
-                                alt38=24;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 60, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case 98:
-                            {
-                            int LA38_61 = input.LA(5);
-
-                            if ( (LA38_61==21) ) {
+                            if ( (LA38_59==21) ) {
                                 switch ( input.LA(6) ) {
                                 case 98:
                                     {
+                                    int LA38_85 = input.LA(7);
+
+                                    if ( (LA38_85==21) ) {
+                                        int LA38_92 = input.LA(8);
+
+                                        if ( (synpred52()) ) {
+                                            alt38=2;
+                                        }
+                                        else if ( (synpred74()) ) {
+                                            alt38=24;
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 92, input);
+
+                                            throw nvae;
+                                        }
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 85, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case 99:
+                                    {
+                                    int LA38_86 = input.LA(7);
+
+                                    if ( (LA38_86==RULE_ID) ) {
+                                        int LA38_93 = input.LA(8);
+
+                                        if ( (LA38_93==22) ) {
+                                            int LA38_94 = input.LA(9);
+
+                                            if ( (synpred52()) ) {
+                                                alt38=2;
+                                            }
+                                            else if ( (synpred74()) ) {
+                                                alt38=24;
+                                            }
+                                            else {
+                                                if (backtracking>0) {failed=true; return current;}
+                                                NoViableAltException nvae =
+                                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 94, input);
+
+                                                throw nvae;
+                                            }
+                                        }
+                                        else {
+                                            if (backtracking>0) {failed=true; return current;}
+                                            NoViableAltException nvae =
+                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 93, input);
+
+                                            throw nvae;
+                                        }
+                                    }
+                                    else {
+                                        if (backtracking>0) {failed=true; return current;}
+                                        NoViableAltException nvae =
+                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 86, input);
+
+                                        throw nvae;
+                                    }
+                                    }
+                                    break;
+                                case RULE_ID:
+                                    {
                                     int LA38_87 = input.LA(7);
 
-                                    if ( (LA38_87==21) ) {
+                                    if ( (LA38_87==22) ) {
                                         int LA38_94 = input.LA(8);
 
                                         if ( (synpred52()) ) {
@@ -8638,81 +8709,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                     }
                                     }
                                     break;
-                                case 99:
-                                    {
-                                    int LA38_88 = input.LA(7);
-
-                                    if ( (LA38_88==RULE_ID) ) {
-                                        int LA38_95 = input.LA(8);
-
-                                        if ( (LA38_95==22) ) {
-                                            int LA38_96 = input.LA(9);
-
-                                            if ( (synpred52()) ) {
-                                                alt38=2;
-                                            }
-                                            else if ( (synpred74()) ) {
-                                                alt38=24;
-                                            }
-                                            else {
-                                                if (backtracking>0) {failed=true; return current;}
-                                                NoViableAltException nvae =
-                                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 96, input);
-
-                                                throw nvae;
-                                            }
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 95, input);
-
-                                            throw nvae;
-                                        }
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 88, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
-                                case RULE_ID:
-                                    {
-                                    int LA38_89 = input.LA(7);
-
-                                    if ( (LA38_89==22) ) {
-                                        int LA38_96 = input.LA(8);
-
-                                        if ( (synpred52()) ) {
-                                            alt38=2;
-                                        }
-                                        else if ( (synpred74()) ) {
-                                            alt38=24;
-                                        }
-                                        else {
-                                            if (backtracking>0) {failed=true; return current;}
-                                            NoViableAltException nvae =
-                                                new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 96, input);
-
-                                            throw nvae;
-                                        }
-                                    }
-                                    else {
-                                        if (backtracking>0) {failed=true; return current;}
-                                        NoViableAltException nvae =
-                                            new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 89, input);
-
-                                        throw nvae;
-                                    }
-                                    }
-                                    break;
                                 default:
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 78, input);
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 76, input);
 
                                     throw nvae;
                                 }
@@ -8721,7 +8721,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             else {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 61, input);
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 59, input);
 
                                 throw nvae;
                             }
@@ -8729,10 +8729,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             break;
                         case 99:
                             {
-                            int LA38_62 = input.LA(5);
+                            int LA38_60 = input.LA(5);
 
-                            if ( (LA38_62==RULE_ID) ) {
-                                int LA38_79 = input.LA(6);
+                            if ( (LA38_60==RULE_ID) ) {
+                                int LA38_77 = input.LA(6);
 
                                 if ( (synpred52()) ) {
                                     alt38=2;
@@ -8743,10 +8743,48 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
                                     NoViableAltException nvae =
-                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 79, input);
+                                        new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 77, input);
 
                                     throw nvae;
                                 }
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 60, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case RULE_HOSTCODE:
+                            {
+                            int LA38_61 = input.LA(5);
+
+                            if ( (synpred52()) ) {
+                                alt38=2;
+                            }
+                            else if ( (synpred74()) ) {
+                                alt38=24;
+                            }
+                            else {
+                                if (backtracking>0) {failed=true; return current;}
+                                NoViableAltException nvae =
+                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 61, input);
+
+                                throw nvae;
+                            }
+                            }
+                            break;
+                        case 21:
+                            {
+                            int LA38_62 = input.LA(5);
+
+                            if ( (synpred52()) ) {
+                                alt38=2;
+                            }
+                            else if ( (synpred74()) ) {
+                                alt38=24;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -8757,7 +8795,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             }
                             break;
-                        case RULE_HOSTCODE:
+                        case RULE_INT:
                             {
                             int LA38_63 = input.LA(5);
 
@@ -8776,7 +8814,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             }
                             break;
-                        case 21:
+                        case RULE_FLOAT:
                             {
                             int LA38_64 = input.LA(5);
 
@@ -8795,7 +8833,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                             }
                             }
                             break;
-                        case RULE_INT:
+                        case RULE_STRING:
                             {
                             int LA38_65 = input.LA(5);
 
@@ -8809,44 +8847,6 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                                 if (backtracking>0) {failed=true; return current;}
                                 NoViableAltException nvae =
                                     new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 65, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case RULE_FLOAT:
-                            {
-                            int LA38_66 = input.LA(5);
-
-                            if ( (synpred52()) ) {
-                                alt38=2;
-                            }
-                            else if ( (synpred74()) ) {
-                                alt38=24;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 66, input);
-
-                                throw nvae;
-                            }
-                            }
-                            break;
-                        case RULE_STRING:
-                            {
-                            int LA38_67 = input.LA(5);
-
-                            if ( (synpred52()) ) {
-                                alt38=2;
-                            }
-                            else if ( (synpred74()) ) {
-                                alt38=24;
-                            }
-                            else {
-                                if (backtracking>0) {failed=true; return current;}
-                                NoViableAltException nvae =
-                                    new NoViableAltException("3232:1: (this_Abort_0= ruleAbort | this_Assignment_1= ruleAssignment | this_Await_2= ruleAwait | this_Block_3= ruleBlock | this_ProcCall_4= ruleProcCall | this_Do_5= ruleDo | this_Emit_6= ruleEmit | this_EveryDo_7= ruleEveryDo | this_Exit_8= ruleExit | this_Exec_9= ruleExec | this_Halt_10= ruleHalt | this_IfTest_11= ruleIfTest | this_LocalSignalDecl_12= ruleLocalSignalDecl | this_Loop_13= ruleLoop | this_Nothing_14= ruleNothing | this_Pause_15= rulePause | this_Present_16= rulePresent | this_Repeat_17= ruleRepeat | this_Run_18= ruleRun | this_Suspend_19= ruleSuspend | this_Sustain_20= ruleSustain | this_Trap_21= ruleTrap | this_LocalVariable_22= ruleLocalVariable | this_VarStatement_23= ruleVarStatement | this_WeakAbort_24= ruleWeakAbort )", 38, 67, input);
 
                                 throw nvae;
                             }
@@ -28777,11 +28777,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         if ( (LA129_33==22) ) {
                             int LA129_42 = input.LA(5);
 
-                            if ( (LA129_42==36||LA129_42==71||(LA129_42>=73 && LA129_42<=81)) ) {
-                                alt129=1;
-                            }
-                            else if ( (LA129_42==EOF||LA129_42==RULE_ID||(LA129_42>=18 && LA129_42<=20)||LA129_42==22||LA129_42==28||LA129_42==30||(LA129_42>=40 && LA129_42<=42)||LA129_42==44||LA129_42==46||(LA129_42>=50 && LA129_42<=51)||(LA129_42>=58 && LA129_42<=60)||LA129_42==62||LA129_42==68||LA129_42==72||(LA129_42>=83 && LA129_42<=84)||LA129_42==88) ) {
+                            if ( (LA129_42==EOF||LA129_42==RULE_ID||(LA129_42>=18 && LA129_42<=20)||LA129_42==22||LA129_42==28||LA129_42==30||(LA129_42>=40 && LA129_42<=42)||LA129_42==44||LA129_42==46||(LA129_42>=50 && LA129_42<=51)||(LA129_42>=58 && LA129_42<=60)||LA129_42==62||LA129_42==68||LA129_42==72||(LA129_42>=83 && LA129_42<=84)||LA129_42==88) ) {
                                 alt129=2;
+                            }
+                            else if ( (LA129_42==36||LA129_42==71||(LA129_42>=73 && LA129_42<=81)) ) {
+                                alt129=1;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -28806,21 +28806,6 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
                         throw nvae;
                     }
-                    }
-                    break;
-                case 36:
-                case 71:
-                case 73:
-                case 74:
-                case 75:
-                case 76:
-                case 77:
-                case 78:
-                case 79:
-                case 80:
-                case 81:
-                    {
-                    alt129=1;
                     }
                     break;
                 case EOF:
@@ -28851,6 +28836,21 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     alt129=2;
                     }
                     break;
+                case 36:
+                case 71:
+                case 73:
+                case 74:
+                case 75:
+                case 76:
+                case 77:
+                case 78:
+                case 79:
+                case 80:
+                case 81:
+                    {
+                    alt129=1;
+                    }
+                    break;
                 default:
                     if (backtracking>0) {failed=true; return current;}
                     NoViableAltException nvae =
@@ -28865,11 +28865,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                 {
                 int LA129_11 = input.LA(2);
 
-                if ( (LA129_11==EOF||LA129_11==RULE_ID||(LA129_11>=18 && LA129_11<=20)||LA129_11==22||LA129_11==28||LA129_11==30||(LA129_11>=40 && LA129_11<=42)||LA129_11==44||LA129_11==46||(LA129_11>=50 && LA129_11<=51)||(LA129_11>=58 && LA129_11<=60)||LA129_11==62||LA129_11==68||LA129_11==72||(LA129_11>=83 && LA129_11<=84)||LA129_11==88) ) {
-                    alt129=2;
-                }
-                else if ( (LA129_11==36||LA129_11==71||(LA129_11>=73 && LA129_11<=81)) ) {
+                if ( (LA129_11==36||LA129_11==71||(LA129_11>=73 && LA129_11<=81)) ) {
                     alt129=1;
+                }
+                else if ( (LA129_11==EOF||LA129_11==RULE_ID||(LA129_11>=18 && LA129_11<=20)||LA129_11==22||LA129_11==28||LA129_11==30||(LA129_11>=40 && LA129_11<=42)||LA129_11==44||LA129_11==46||(LA129_11>=50 && LA129_11<=51)||(LA129_11>=58 && LA129_11<=60)||LA129_11==62||LA129_11==68||LA129_11==72||(LA129_11>=83 && LA129_11<=84)||LA129_11==88) ) {
+                    alt129=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
@@ -29220,16 +29220,6 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                         }
                         }
                         break;
-                    case 36:
-                    case 77:
-                    case 78:
-                    case 79:
-                    case 80:
-                    case 81:
-                        {
-                        alt129=1;
-                        }
-                        break;
                     case EOF:
                     case RULE_ID:
                     case 18:
@@ -29256,6 +29246,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     case 88:
                         {
                         alt129=2;
+                        }
+                        break;
+                    case 36:
+                    case 77:
+                    case 78:
+                    case 79:
+                    case 80:
+                    case 81:
+                        {
+                        alt129=1;
                         }
                         break;
                     default:
@@ -29291,11 +29291,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     {
                     int LA129_27 = input.LA(3);
 
-                    if ( (LA129_27==36||(LA129_27>=77 && LA129_27<=81)) ) {
-                        alt129=1;
-                    }
-                    else if ( (LA129_27==EOF||LA129_27==RULE_ID||(LA129_27>=18 && LA129_27<=20)||LA129_27==22||LA129_27==28||LA129_27==30||(LA129_27>=40 && LA129_27<=42)||LA129_27==44||LA129_27==46||(LA129_27>=50 && LA129_27<=51)||(LA129_27>=58 && LA129_27<=60)||LA129_27==62||LA129_27==68||LA129_27==72||(LA129_27>=83 && LA129_27<=84)||LA129_27==88) ) {
+                    if ( (LA129_27==EOF||LA129_27==RULE_ID||(LA129_27>=18 && LA129_27<=20)||LA129_27==22||LA129_27==28||LA129_27==30||(LA129_27>=40 && LA129_27<=42)||LA129_27==44||LA129_27==46||(LA129_27>=50 && LA129_27<=51)||(LA129_27>=58 && LA129_27<=60)||LA129_27==62||LA129_27==68||LA129_27==72||(LA129_27>=83 && LA129_27<=84)||LA129_27==88) ) {
                         alt129=2;
+                    }
+                    else if ( (LA129_27==36||(LA129_27>=77 && LA129_27<=81)) ) {
+                        alt129=1;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -29310,11 +29310,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     {
                     int LA129_28 = input.LA(3);
 
-                    if ( (LA129_28==EOF||LA129_28==RULE_ID||(LA129_28>=18 && LA129_28<=20)||LA129_28==22||LA129_28==28||LA129_28==30||(LA129_28>=40 && LA129_28<=42)||LA129_28==44||LA129_28==46||(LA129_28>=50 && LA129_28<=51)||(LA129_28>=58 && LA129_28<=60)||LA129_28==62||LA129_28==68||LA129_28==72||(LA129_28>=83 && LA129_28<=84)||LA129_28==88) ) {
-                        alt129=2;
-                    }
-                    else if ( (LA129_28==36||(LA129_28>=77 && LA129_28<=81)) ) {
+                    if ( (LA129_28==36||(LA129_28>=77 && LA129_28<=81)) ) {
                         alt129=1;
+                    }
+                    else if ( (LA129_28==EOF||LA129_28==RULE_ID||(LA129_28>=18 && LA129_28<=20)||LA129_28==22||LA129_28==28||LA129_28==30||(LA129_28>=40 && LA129_28<=42)||LA129_28==44||LA129_28==46||(LA129_28>=50 && LA129_28<=51)||(LA129_28>=58 && LA129_28<=60)||LA129_28==62||LA129_28==68||LA129_28==72||(LA129_28>=83 && LA129_28<=84)||LA129_28==88) ) {
+                        alt129=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -29329,11 +29329,11 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     {
                     int LA129_29 = input.LA(3);
 
-                    if ( (LA129_29==36||(LA129_29>=77 && LA129_29<=81)) ) {
-                        alt129=1;
-                    }
-                    else if ( (LA129_29==EOF||LA129_29==RULE_ID||(LA129_29>=18 && LA129_29<=20)||LA129_29==22||LA129_29==28||LA129_29==30||(LA129_29>=40 && LA129_29<=42)||LA129_29==44||LA129_29==46||(LA129_29>=50 && LA129_29<=51)||(LA129_29>=58 && LA129_29<=60)||LA129_29==62||LA129_29==68||LA129_29==72||(LA129_29>=83 && LA129_29<=84)||LA129_29==88) ) {
+                    if ( (LA129_29==EOF||LA129_29==RULE_ID||(LA129_29>=18 && LA129_29<=20)||LA129_29==22||LA129_29==28||LA129_29==30||(LA129_29>=40 && LA129_29<=42)||LA129_29==44||LA129_29==46||(LA129_29>=50 && LA129_29<=51)||(LA129_29>=58 && LA129_29<=60)||LA129_29==62||LA129_29==68||LA129_29==72||(LA129_29>=83 && LA129_29<=84)||LA129_29==88) ) {
                         alt129=2;
+                    }
+                    else if ( (LA129_29==36||(LA129_29>=77 && LA129_29<=81)) ) {
+                        alt129=1;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -34848,29 +34848,29 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     // $ANTLR end ruleCommentAnnotation
 
 
-    // $ANTLR start entryRuleKeyValueAnnotation
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13234:1: entryRuleKeyValueAnnotation returns [EObject current=null] : iv_ruleKeyValueAnnotation= ruleKeyValueAnnotation EOF ;
-    public final EObject entryRuleKeyValueAnnotation() throws RecognitionException {
+    // $ANTLR start entryRuleTagAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13234:1: entryRuleTagAnnotation returns [EObject current=null] : iv_ruleTagAnnotation= ruleTagAnnotation EOF ;
+    public final EObject entryRuleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
-        EObject iv_ruleKeyValueAnnotation = null;
+        EObject iv_ruleTagAnnotation = null;
 
 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13235:2: (iv_ruleKeyValueAnnotation= ruleKeyValueAnnotation EOF )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13236:2: iv_ruleKeyValueAnnotation= ruleKeyValueAnnotation EOF
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13235:2: (iv_ruleTagAnnotation= ruleTagAnnotation EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13236:2: iv_ruleTagAnnotation= ruleTagAnnotation EOF
             {
             if ( backtracking==0 ) {
-               currentNode = createCompositeNode(grammarAccess.getKeyValueAnnotationRule(), currentNode); 
+               currentNode = createCompositeNode(grammarAccess.getTagAnnotationRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleKeyValueAnnotation_in_entryRuleKeyValueAnnotation22985);
-            iv_ruleKeyValueAnnotation=ruleKeyValueAnnotation();
+            pushFollow(FOLLOW_ruleTagAnnotation_in_entryRuleTagAnnotation22985);
+            iv_ruleTagAnnotation=ruleTagAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
-               current =iv_ruleKeyValueAnnotation; 
+               current =iv_ruleTagAnnotation; 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyValueAnnotation22995); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleTagAnnotation22995); if (failed) return current;
 
             }
 
@@ -34884,31 +34884,29 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end entryRuleKeyValueAnnotation
+    // $ANTLR end entryRuleTagAnnotation
 
 
-    // $ANTLR start ruleKeyValueAnnotation
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13243:1: ruleKeyValueAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )? ) ;
-    public final EObject ruleKeyValueAnnotation() throws RecognitionException {
+    // $ANTLR start ruleTagAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13243:1: ruleTagAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ) ;
+    public final EObject ruleTagAnnotation() throws RecognitionException {
         EObject current = null;
 
         Token lv_name_1_0=null;
-        AntlrDatatypeRuleToken lv_value_2_0 = null;
-
 
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13248:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )? ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )? )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13248:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )? )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )?
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13249:3: '@' ( (lv_name_1_0= RULE_ID ) )
             {
-            match(input,97,FOLLOW_97_in_ruleKeyValueAnnotation23030); if (failed) return current;
+            match(input,97,FOLLOW_97_in_ruleTagAnnotation23030); if (failed) return current;
             if ( backtracking==0 ) {
 
-                      createLeafNode(grammarAccess.getKeyValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+                      createLeafNode(grammarAccess.getTagAnnotationAccess().getCommercialAtKeyword_0(), null); 
                   
             }
             // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13253:1: ( (lv_name_1_0= RULE_ID ) )
@@ -34918,16 +34916,16 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13255:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeyValueAnnotation23047); if (failed) return current;
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleTagAnnotation23047); if (failed) return current;
             if ( backtracking==0 ) {
 
-              			createLeafNode(grammarAccess.getKeyValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              			createLeafNode(grammarAccess.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
               		
             }
             if ( backtracking==0 ) {
 
               	        if (current==null) {
-              	            current = factory.create(grammarAccess.getKeyValueAnnotationRule().getType().getClassifier());
+              	            current = factory.create(grammarAccess.getTagAnnotationRule().getType().getClassifier());
               	            associateNodeWithAstElement(currentNode, current);
               	        }
               	        try {
@@ -34945,57 +34943,6 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
             }
 
-
-            }
-
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13277:2: ( (lv_value_2_0= ruleEString ) )?
-            int alt151=2;
-            int LA151_0 = input.LA(1);
-
-            if ( (LA151_0==RULE_ID||LA151_0==RULE_STRING) ) {
-                alt151=1;
-            }
-            switch (alt151) {
-                case 1 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13278:1: (lv_value_2_0= ruleEString )
-                    {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13278:1: (lv_value_2_0= ruleEString )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13279:3: lv_value_2_0= ruleEString
-                    {
-                    if ( backtracking==0 ) {
-                       
-                      	        currentNode=createCompositeNode(grammarAccess.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), currentNode); 
-                      	    
-                    }
-                    pushFollow(FOLLOW_ruleEString_in_ruleKeyValueAnnotation23073);
-                    lv_value_2_0=ruleEString();
-                    _fsp--;
-                    if (failed) return current;
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getKeyValueAnnotationRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode.getParent(), current);
-                      	        }
-                      	        try {
-                      	       		set(
-                      	       			current, 
-                      	       			"value",
-                      	        		lv_value_2_0, 
-                      	        		"EString", 
-                      	        		currentNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	        currentNode = currentNode.getParent();
-                      	    
-                    }
-
-                    }
-
-
-                    }
-                    break;
 
             }
 
@@ -35020,11 +34967,655 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
         }
         return current;
     }
-    // $ANTLR end ruleKeyValueAnnotation
+    // $ANTLR end ruleTagAnnotation
+
+
+    // $ANTLR start entryRuleKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13285:1: entryRuleKeyStringValueAnnotation returns [EObject current=null] : iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF ;
+    public final EObject entryRuleKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleKeyStringValueAnnotation = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13286:2: (iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13287:2: iv_ruleKeyStringValueAnnotation= ruleKeyStringValueAnnotation EOF
+            {
+            if ( backtracking==0 ) {
+               currentNode = createCompositeNode(grammarAccess.getKeyStringValueAnnotationRule(), currentNode); 
+            }
+            pushFollow(FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation23088);
+            iv_ruleKeyStringValueAnnotation=ruleKeyStringValueAnnotation();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+               current =iv_ruleKeyStringValueAnnotation; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation23098); if (failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleKeyStringValueAnnotation
+
+
+    // $ANTLR start ruleKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13294:1: ruleKeyStringValueAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) ) ) ;
+    public final EObject ruleKeyStringValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_name_1_0=null;
+        AntlrDatatypeRuleToken lv_value_2_0 = null;
+
+
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13299:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13300:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) ) )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13300:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13300:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= ruleEString ) )
+            {
+            match(input,97,FOLLOW_97_in_ruleKeyStringValueAnnotation23133); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13304:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13305:1: (lv_name_1_0= RULE_ID )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13305:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13306:3: lv_name_1_0= RULE_ID
+            {
+            lv_name_1_0=(Token)input.LT(1);
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeyStringValueAnnotation23150); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"name",
+              	        		lv_name_1_0, 
+              	        		"ID", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13328:2: ( (lv_value_2_0= ruleEString ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13329:1: (lv_value_2_0= ruleEString )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13329:1: (lv_value_2_0= ruleEString )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13330:3: lv_value_2_0= ruleEString
+            {
+            if ( backtracking==0 ) {
+               
+              	        currentNode=createCompositeNode(grammarAccess.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0(), currentNode); 
+              	    
+            }
+            pushFollow(FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation23176);
+            lv_value_2_0=ruleEString();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyStringValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode.getParent(), current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"value",
+              	        		lv_value_2_0, 
+              	        		"EString", 
+              	        		currentNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	        currentNode = currentNode.getParent();
+              	    
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleKeyStringValueAnnotation
+
+
+    // $ANTLR start entryRuleKeyBooleanValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13360:1: entryRuleKeyBooleanValueAnnotation returns [EObject current=null] : iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF ;
+    public final EObject entryRuleKeyBooleanValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleKeyBooleanValueAnnotation = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13361:2: (iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13362:2: iv_ruleKeyBooleanValueAnnotation= ruleKeyBooleanValueAnnotation EOF
+            {
+            if ( backtracking==0 ) {
+               currentNode = createCompositeNode(grammarAccess.getKeyBooleanValueAnnotationRule(), currentNode); 
+            }
+            pushFollow(FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation23212);
+            iv_ruleKeyBooleanValueAnnotation=ruleKeyBooleanValueAnnotation();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+               current =iv_ruleKeyBooleanValueAnnotation; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation23222); if (failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleKeyBooleanValueAnnotation
+
+
+    // $ANTLR start ruleKeyBooleanValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13369:1: ruleKeyBooleanValueAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) ;
+    public final EObject ruleKeyBooleanValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_name_1_0=null;
+        Token lv_value_2_0=null;
+
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13374:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13375:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13375:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13375:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) )
+            {
+            match(input,97,FOLLOW_97_in_ruleKeyBooleanValueAnnotation23257); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13379:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13380:1: (lv_name_1_0= RULE_ID )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13380:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13381:3: lv_name_1_0= RULE_ID
+            {
+            lv_name_1_0=(Token)input.LT(1);
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation23274); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"name",
+              	        		lv_name_1_0, 
+              	        		"ID", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13403:2: ( (lv_value_2_0= RULE_BOOLEAN ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13404:1: (lv_value_2_0= RULE_BOOLEAN )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13404:1: (lv_value_2_0= RULE_BOOLEAN )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13405:3: lv_value_2_0= RULE_BOOLEAN
+            {
+            lv_value_2_0=(Token)input.LT(1);
+            match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation23296); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0(), "value"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyBooleanValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"value",
+              	        		lv_value_2_0, 
+              	        		"Boolean", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleKeyBooleanValueAnnotation
+
+
+    // $ANTLR start entryRuleKeyIntValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13435:1: entryRuleKeyIntValueAnnotation returns [EObject current=null] : iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF ;
+    public final EObject entryRuleKeyIntValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleKeyIntValueAnnotation = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13436:2: (iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13437:2: iv_ruleKeyIntValueAnnotation= ruleKeyIntValueAnnotation EOF
+            {
+            if ( backtracking==0 ) {
+               currentNode = createCompositeNode(grammarAccess.getKeyIntValueAnnotationRule(), currentNode); 
+            }
+            pushFollow(FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation23337);
+            iv_ruleKeyIntValueAnnotation=ruleKeyIntValueAnnotation();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+               current =iv_ruleKeyIntValueAnnotation; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation23347); if (failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleKeyIntValueAnnotation
+
+
+    // $ANTLR start ruleKeyIntValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13444:1: ruleKeyIntValueAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ) ;
+    public final EObject ruleKeyIntValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_name_1_0=null;
+        Token lv_value_2_0=null;
+
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13449:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13450:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13450:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13450:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) )
+            {
+            match(input,97,FOLLOW_97_in_ruleKeyIntValueAnnotation23382); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13454:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13455:1: (lv_name_1_0= RULE_ID )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13455:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13456:3: lv_name_1_0= RULE_ID
+            {
+            lv_name_1_0=(Token)input.LT(1);
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation23399); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"name",
+              	        		lv_name_1_0, 
+              	        		"ID", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13478:2: ( (lv_value_2_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13479:1: (lv_value_2_0= RULE_INT )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13479:1: (lv_value_2_0= RULE_INT )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13480:3: lv_value_2_0= RULE_INT
+            {
+            lv_value_2_0=(Token)input.LT(1);
+            match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation23421); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0(), "value"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyIntValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"value",
+              	        		lv_value_2_0, 
+              	        		"INT", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleKeyIntValueAnnotation
+
+
+    // $ANTLR start entryRuleKeyFloatValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13510:1: entryRuleKeyFloatValueAnnotation returns [EObject current=null] : iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF ;
+    public final EObject entryRuleKeyFloatValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleKeyFloatValueAnnotation = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13511:2: (iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13512:2: iv_ruleKeyFloatValueAnnotation= ruleKeyFloatValueAnnotation EOF
+            {
+            if ( backtracking==0 ) {
+               currentNode = createCompositeNode(grammarAccess.getKeyFloatValueAnnotationRule(), currentNode); 
+            }
+            pushFollow(FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation23462);
+            iv_ruleKeyFloatValueAnnotation=ruleKeyFloatValueAnnotation();
+            _fsp--;
+            if (failed) return current;
+            if ( backtracking==0 ) {
+               current =iv_ruleKeyFloatValueAnnotation; 
+            }
+            match(input,EOF,FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation23472); if (failed) return current;
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end entryRuleKeyFloatValueAnnotation
+
+
+    // $ANTLR start ruleKeyFloatValueAnnotation
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13519:1: ruleKeyFloatValueAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ) ;
+    public final EObject ruleKeyFloatValueAnnotation() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_name_1_0=null;
+        Token lv_value_2_0=null;
+
+         EObject temp=null; setCurrentLookahead(); resetLookahead(); 
+            
+        try {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13524:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13525:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13525:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13525:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) )
+            {
+            match(input,97,FOLLOW_97_in_ruleKeyFloatValueAnnotation23507); if (failed) return current;
+            if ( backtracking==0 ) {
+
+                      createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
+                  
+            }
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13529:1: ( (lv_name_1_0= RULE_ID ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13530:1: (lv_name_1_0= RULE_ID )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13530:1: (lv_name_1_0= RULE_ID )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13531:3: lv_name_1_0= RULE_ID
+            {
+            lv_name_1_0=(Token)input.LT(1);
+            match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation23524); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"name",
+              	        		lv_name_1_0, 
+              	        		"ID", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13553:2: ( (lv_value_2_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13554:1: (lv_value_2_0= RULE_FLOAT )
+            {
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13554:1: (lv_value_2_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13555:3: lv_value_2_0= RULE_FLOAT
+            {
+            lv_value_2_0=(Token)input.LT(1);
+            match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation23546); if (failed) return current;
+            if ( backtracking==0 ) {
+
+              			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0(), "value"); 
+              		
+            }
+            if ( backtracking==0 ) {
+
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getKeyFloatValueAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"value",
+              	        		lv_value_2_0, 
+              	        		"Float", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
+
+            }
+
+
+            }
+
+
+            }
+
+
+            }
+
+            if ( backtracking==0 ) {
+               resetLookahead(); 
+                  	lastConsumedNode = currentNode;
+                  
+            }
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end ruleKeyFloatValueAnnotation
 
 
     // $ANTLR start entryRuleEString
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13311:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13587:1: entryRuleEString returns [String current=null] : iv_ruleEString= ruleEString EOF ;
     public final String entryRuleEString() throws RecognitionException {
         String current = null;
 
@@ -35032,20 +35623,20 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13312:2: (iv_ruleEString= ruleEString EOF )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13313:2: iv_ruleEString= ruleEString EOF
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13588:2: (iv_ruleEString= ruleEString EOF )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13589:2: iv_ruleEString= ruleEString EOF
             {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getEStringRule(), currentNode); 
             }
-            pushFollow(FOLLOW_ruleEString_in_entryRuleEString23113);
+            pushFollow(FOLLOW_ruleEString_in_entryRuleEString23590);
             iv_ruleEString=ruleEString();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleEString.getText(); 
             }
-            match(input,EOF,FOLLOW_EOF_in_entryRuleEString23124); if (failed) return current;
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEString23601); if (failed) return current;
 
             }
 
@@ -35063,7 +35654,7 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleEString
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13320:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13596:1: ruleEString returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()] : (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) ;
     public final AntlrDatatypeRuleToken ruleEString() throws RecognitionException {
         AntlrDatatypeRuleToken current = new AntlrDatatypeRuleToken();
 
@@ -35073,32 +35664,32 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
          setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13325:6: ( (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13326:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13601:6: ( (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13602:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13326:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
-            int alt152=2;
-            int LA152_0 = input.LA(1);
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13602:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
+            int alt151=2;
+            int LA151_0 = input.LA(1);
 
-            if ( (LA152_0==RULE_STRING) ) {
-                alt152=1;
+            if ( (LA151_0==RULE_STRING) ) {
+                alt151=1;
             }
-            else if ( (LA152_0==RULE_ID) ) {
-                alt152=2;
+            else if ( (LA151_0==RULE_ID) ) {
+                alt151=2;
             }
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("13326:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 152, 0, input);
+                    new NoViableAltException("13602:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 151, 0, input);
 
                 throw nvae;
             }
-            switch (alt152) {
+            switch (alt151) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13326:6: this_STRING_0= RULE_STRING
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13602:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)input.LT(1);
-                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleEString23164); if (failed) return current;
+                    match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleEString23641); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_STRING_0);
@@ -35113,10 +35704,10 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13334:10: this_ID_1= RULE_ID
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13610:10: this_ID_1= RULE_ID
                     {
                     this_ID_1=(Token)input.LT(1);
-                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleEString23190); if (failed) return current;
+                    match(input,RULE_ID,FOLLOW_RULE_ID_in_ruleEString23667); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_ID_1);
@@ -35155,64 +35746,64 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleCompareOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13349:1: ruleCompareOperator returns [Enumerator current=null] : ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13625:1: ruleCompareOperator returns [Enumerator current=null] : ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) ) ;
     public final Enumerator ruleCompareOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13353:6: ( ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13354:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13629:6: ( ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13354:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
-            int alt153=6;
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
+            int alt152=6;
             switch ( input.LA(1) ) {
             case 36:
                 {
-                alt153=1;
+                alt152=1;
                 }
                 break;
             case 79:
                 {
-                alt153=2;
+                alt152=2;
                 }
                 break;
             case 80:
                 {
-                alt153=3;
+                alt152=3;
                 }
                 break;
             case 78:
                 {
-                alt153=4;
+                alt152=4;
                 }
                 break;
             case 81:
                 {
-                alt153=5;
+                alt152=5;
                 }
                 break;
             case 77:
                 {
-                alt153=6;
+                alt152=6;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("13354:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 153, 0, input);
+                    new NoViableAltException("13630:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 152, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt153) {
+            switch (alt152) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13354:2: ( '=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:2: ( '=' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13354:2: ( '=' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13354:4: '='
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:2: ( '=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:4: '='
                     {
-                    match(input,36,FOLLOW_36_in_ruleCompareOperator23247); if (failed) return current;
+                    match(input,36,FOLLOW_36_in_ruleCompareOperator23724); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -35226,12 +35817,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13360:6: ( '<' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:6: ( '<' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13360:6: ( '<' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13360:8: '<'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:6: ( '<' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:8: '<'
                     {
-                    match(input,79,FOLLOW_79_in_ruleCompareOperator23262); if (failed) return current;
+                    match(input,79,FOLLOW_79_in_ruleCompareOperator23739); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -35245,12 +35836,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13366:6: ( '<=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:6: ( '<=' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13366:6: ( '<=' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13366:8: '<='
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:6: ( '<=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:8: '<='
                     {
-                    match(input,80,FOLLOW_80_in_ruleCompareOperator23277); if (failed) return current;
+                    match(input,80,FOLLOW_80_in_ruleCompareOperator23754); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -35264,12 +35855,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13372:6: ( '>' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:6: ( '>' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13372:6: ( '>' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13372:8: '>'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:6: ( '>' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:8: '>'
                     {
-                    match(input,78,FOLLOW_78_in_ruleCompareOperator23292); if (failed) return current;
+                    match(input,78,FOLLOW_78_in_ruleCompareOperator23769); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -35283,12 +35874,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13378:6: ( '>=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13654:6: ( '>=' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13378:6: ( '>=' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13378:8: '>='
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13654:6: ( '>=' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13654:8: '>='
                     {
-                    match(input,81,FOLLOW_81_in_ruleCompareOperator23307); if (failed) return current;
+                    match(input,81,FOLLOW_81_in_ruleCompareOperator23784); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -35302,12 +35893,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13384:6: ( '<>' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13660:6: ( '<>' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13384:6: ( '<>' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13384:8: '<>'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13660:6: ( '<>' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13660:8: '<>'
                     {
-                    match(input,77,FOLLOW_77_in_ruleCompareOperator23322); if (failed) return current;
+                    match(input,77,FOLLOW_77_in_ruleCompareOperator23799); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -35345,19 +35936,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start rulePreOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13394:1: rulePreOperator returns [Enumerator current=null] : ( 'pre' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13670:1: rulePreOperator returns [Enumerator current=null] : ( 'pre' ) ;
     public final Enumerator rulePreOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13398:6: ( ( 'pre' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13399:1: ( 'pre' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13674:6: ( ( 'pre' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13675:1: ( 'pre' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13399:1: ( 'pre' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13399:3: 'pre'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13675:1: ( 'pre' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13675:3: 'pre'
             {
-            match(input,98,FOLLOW_98_in_rulePreOperator23364); if (failed) return current;
+            match(input,98,FOLLOW_98_in_rulePreOperator23841); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35389,19 +35980,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleOrOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13409:1: ruleOrOperator returns [Enumerator current=null] : ( 'or' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13685:1: ruleOrOperator returns [Enumerator current=null] : ( 'or' ) ;
     public final Enumerator ruleOrOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13413:6: ( ( 'or' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13414:1: ( 'or' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13689:6: ( ( 'or' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13690:1: ( 'or' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13414:1: ( 'or' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13414:3: 'or'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13690:1: ( 'or' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13690:3: 'or'
             {
-            match(input,84,FOLLOW_84_in_ruleOrOperator23405); if (failed) return current;
+            match(input,84,FOLLOW_84_in_ruleOrOperator23882); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35433,19 +36024,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleAndOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13424:1: ruleAndOperator returns [Enumerator current=null] : ( 'and' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13700:1: ruleAndOperator returns [Enumerator current=null] : ( 'and' ) ;
     public final Enumerator ruleAndOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13428:6: ( ( 'and' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13429:1: ( 'and' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13704:6: ( ( 'and' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13705:1: ( 'and' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13429:1: ( 'and' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13429:3: 'and'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13705:1: ( 'and' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13705:3: 'and'
             {
-            match(input,83,FOLLOW_83_in_ruleAndOperator23446); if (failed) return current;
+            match(input,83,FOLLOW_83_in_ruleAndOperator23923); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35477,19 +36068,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleNotOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13439:1: ruleNotOperator returns [Enumerator current=null] : ( 'not' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13715:1: ruleNotOperator returns [Enumerator current=null] : ( 'not' ) ;
     public final Enumerator ruleNotOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13443:6: ( ( 'not' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13444:1: ( 'not' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13719:6: ( ( 'not' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13720:1: ( 'not' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13444:1: ( 'not' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13444:3: 'not'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13720:1: ( 'not' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13720:3: 'not'
             {
-            match(input,82,FOLLOW_82_in_ruleNotOperator23487); if (failed) return current;
+            match(input,82,FOLLOW_82_in_ruleNotOperator23964); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35521,19 +36112,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleAddOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13454:1: ruleAddOperator returns [Enumerator current=null] : ( '+' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13730:1: ruleAddOperator returns [Enumerator current=null] : ( '+' ) ;
     public final Enumerator ruleAddOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13458:6: ( ( '+' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13459:1: ( '+' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13734:6: ( ( '+' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13735:1: ( '+' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13459:1: ( '+' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13459:3: '+'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13735:1: ( '+' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13735:3: '+'
             {
-            match(input,74,FOLLOW_74_in_ruleAddOperator23528); if (failed) return current;
+            match(input,74,FOLLOW_74_in_ruleAddOperator24005); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAddOperatorAccess().getADDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35565,19 +36156,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleSubOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13469:1: ruleSubOperator returns [Enumerator current=null] : ( '-' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13745:1: ruleSubOperator returns [Enumerator current=null] : ( '-' ) ;
     public final Enumerator ruleSubOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13473:6: ( ( '-' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13474:1: ( '-' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13749:6: ( ( '-' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13750:1: ( '-' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13474:1: ( '-' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13474:3: '-'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13750:1: ( '-' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13750:3: '-'
             {
-            match(input,75,FOLLOW_75_in_ruleSubOperator23569); if (failed) return current;
+            match(input,75,FOLLOW_75_in_ruleSubOperator24046); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getSubOperatorAccess().getSUBEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35609,19 +36200,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleMultOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13484:1: ruleMultOperator returns [Enumerator current=null] : ( '*' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13760:1: ruleMultOperator returns [Enumerator current=null] : ( '*' ) ;
     public final Enumerator ruleMultOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13488:6: ( ( '*' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13489:1: ( '*' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13764:6: ( ( '*' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13765:1: ( '*' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13489:1: ( '*' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13489:3: '*'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13765:1: ( '*' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13765:3: '*'
             {
-            match(input,73,FOLLOW_73_in_ruleMultOperator23610); if (failed) return current;
+            match(input,73,FOLLOW_73_in_ruleMultOperator24087); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35653,19 +36244,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleModOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13499:1: ruleModOperator returns [Enumerator current=null] : ( 'mod' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13775:1: ruleModOperator returns [Enumerator current=null] : ( 'mod' ) ;
     public final Enumerator ruleModOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13503:6: ( ( 'mod' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13504:1: ( 'mod' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13779:6: ( ( 'mod' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13780:1: ( 'mod' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13504:1: ( 'mod' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13504:3: 'mod'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13780:1: ( 'mod' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13780:3: 'mod'
             {
-            match(input,76,FOLLOW_76_in_ruleModOperator23651); if (failed) return current;
+            match(input,76,FOLLOW_76_in_ruleModOperator24128); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35697,19 +36288,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleDivOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13514:1: ruleDivOperator returns [Enumerator current=null] : ( '/' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13790:1: ruleDivOperator returns [Enumerator current=null] : ( '/' ) ;
     public final Enumerator ruleDivOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13518:6: ( ( '/' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13519:1: ( '/' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13794:6: ( ( '/' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13795:1: ( '/' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13519:1: ( '/' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13519:3: '/'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13795:1: ( '/' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13795:3: '/'
             {
-            match(input,71,FOLLOW_71_in_ruleDivOperator23692); if (failed) return current;
+            match(input,71,FOLLOW_71_in_ruleDivOperator24169); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35741,19 +36332,19 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleValueTestOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13529:1: ruleValueTestOperator returns [Enumerator current=null] : ( '?' ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13805:1: ruleValueTestOperator returns [Enumerator current=null] : ( '?' ) ;
     public final Enumerator ruleValueTestOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13533:6: ( ( '?' ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13534:1: ( '?' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13809:6: ( ( '?' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13810:1: ( '?' )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13534:1: ( '?' )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13534:3: '?'
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13810:1: ( '?' )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13810:3: '?'
             {
-            match(input,99,FOLLOW_99_in_ruleValueTestOperator23733); if (failed) return current;
+            match(input,99,FOLLOW_99_in_ruleValueTestOperator24210); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getValueTestOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -35785,74 +36376,74 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleValueType
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13544:1: ruleValueType returns [Enumerator current=null] : ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13820:1: ruleValueType returns [Enumerator current=null] : ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) ) ;
     public final Enumerator ruleValueType() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13548:6: ( ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13549:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13824:6: ( ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13825:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13549:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
-            int alt154=8;
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13825:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
+            int alt153=8;
             switch ( input.LA(1) ) {
             case 100:
                 {
-                alt154=1;
+                alt153=1;
                 }
                 break;
             case 101:
                 {
-                alt154=2;
+                alt153=2;
                 }
                 break;
             case 102:
                 {
-                alt154=3;
+                alt153=3;
                 }
                 break;
             case 103:
                 {
-                alt154=4;
+                alt153=4;
                 }
                 break;
             case 104:
                 {
-                alt154=5;
+                alt153=5;
                 }
                 break;
             case 105:
                 {
-                alt154=6;
+                alt153=6;
                 }
                 break;
             case 106:
                 {
-                alt154=7;
+                alt153=7;
                 }
                 break;
             case 107:
                 {
-                alt154=8;
+                alt153=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("13549:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 154, 0, input);
+                    new NoViableAltException("13825:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 153, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt154) {
+            switch (alt153) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13549:2: ( 'pure' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13825:2: ( 'pure' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13549:2: ( 'pure' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13549:4: 'pure'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13825:2: ( 'pure' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13825:4: 'pure'
                     {
-                    match(input,100,FOLLOW_100_in_ruleValueType23775); if (failed) return current;
+                    match(input,100,FOLLOW_100_in_ruleValueType24252); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -35866,12 +36457,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13555:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13831:6: ( 'boolean' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13555:6: ( 'boolean' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13555:8: 'boolean'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13831:6: ( 'boolean' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13831:8: 'boolean'
                     {
-                    match(input,101,FOLLOW_101_in_ruleValueType23790); if (failed) return current;
+                    match(input,101,FOLLOW_101_in_ruleValueType24267); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -35885,12 +36476,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13561:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13837:6: ( 'unsigned' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13561:6: ( 'unsigned' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13561:8: 'unsigned'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13837:6: ( 'unsigned' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13837:8: 'unsigned'
                     {
-                    match(input,102,FOLLOW_102_in_ruleValueType23805); if (failed) return current;
+                    match(input,102,FOLLOW_102_in_ruleValueType24282); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -35904,12 +36495,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13567:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13843:6: ( 'integer' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13567:6: ( 'integer' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13567:8: 'integer'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13843:6: ( 'integer' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13843:8: 'integer'
                     {
-                    match(input,103,FOLLOW_103_in_ruleValueType23820); if (failed) return current;
+                    match(input,103,FOLLOW_103_in_ruleValueType24297); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -35923,12 +36514,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13573:6: ( 'float' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13849:6: ( 'float' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13573:6: ( 'float' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13573:8: 'float'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13849:6: ( 'float' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13849:8: 'float'
                     {
-                    match(input,104,FOLLOW_104_in_ruleValueType23835); if (failed) return current;
+                    match(input,104,FOLLOW_104_in_ruleValueType24312); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -35942,12 +36533,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13579:6: ( 'double' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13855:6: ( 'double' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13579:6: ( 'double' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13579:8: 'double'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13855:6: ( 'double' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13855:8: 'double'
                     {
-                    match(input,105,FOLLOW_105_in_ruleValueType23850); if (failed) return current;
+                    match(input,105,FOLLOW_105_in_ruleValueType24327); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getDOUBLEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -35961,12 +36552,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13585:6: ( 'string' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13861:6: ( 'string' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13585:6: ( 'string' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13585:8: 'string'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13861:6: ( 'string' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13861:8: 'string'
                     {
-                    match(input,106,FOLLOW_106_in_ruleValueType23865); if (failed) return current;
+                    match(input,106,FOLLOW_106_in_ruleValueType24342); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -35980,12 +36571,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13591:6: ( 'host' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13867:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13591:6: ( 'host' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13591:8: 'host'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13867:6: ( 'host' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13867:8: 'host'
                     {
-                    match(input,107,FOLLOW_107_in_ruleValueType23880); if (failed) return current;
+                    match(input,107,FOLLOW_107_in_ruleValueType24357); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -36023,74 +36614,74 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleCombineOperator
-    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13601:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) ) ;
+    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13877:1: ruleCombineOperator returns [Enumerator current=null] : ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) ) ;
     public final Enumerator ruleCombineOperator() throws RecognitionException {
         Enumerator current = null;
 
          setCurrentLookahead(); resetLookahead(); 
         try {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13605:6: ( ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) ) )
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13606:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13881:6: ( ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) ) )
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13882:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
             {
-            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13606:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
-            int alt155=8;
+            // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13882:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
+            int alt154=8;
             switch ( input.LA(1) ) {
             case 108:
                 {
-                alt155=1;
+                alt154=1;
                 }
                 break;
             case 74:
                 {
-                alt155=2;
+                alt154=2;
                 }
                 break;
             case 73:
                 {
-                alt155=3;
+                alt154=3;
                 }
                 break;
             case 109:
                 {
-                alt155=4;
+                alt154=4;
                 }
                 break;
             case 110:
                 {
-                alt155=5;
+                alt154=5;
                 }
                 break;
             case 84:
                 {
-                alt155=6;
+                alt154=6;
                 }
                 break;
             case 83:
                 {
-                alt155=7;
+                alt154=7;
                 }
                 break;
             case 107:
                 {
-                alt155=8;
+                alt154=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("13606:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 155, 0, input);
+                    new NoViableAltException("13882:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 154, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt155) {
+            switch (alt154) {
                 case 1 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13606:2: ( 'none' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13882:2: ( 'none' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13606:2: ( 'none' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13606:4: 'none'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13882:2: ( 'none' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13882:4: 'none'
                     {
-                    match(input,108,FOLLOW_108_in_ruleCombineOperator23923); if (failed) return current;
+                    match(input,108,FOLLOW_108_in_ruleCombineOperator24400); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -36104,12 +36695,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13612:6: ( '+' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13888:6: ( '+' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13612:6: ( '+' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13612:8: '+'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13888:6: ( '+' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13888:8: '+'
                     {
-                    match(input,74,FOLLOW_74_in_ruleCombineOperator23938); if (failed) return current;
+                    match(input,74,FOLLOW_74_in_ruleCombineOperator24415); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -36123,12 +36714,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13618:6: ( '*' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13894:6: ( '*' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13618:6: ( '*' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13618:8: '*'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13894:6: ( '*' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13894:8: '*'
                     {
-                    match(input,73,FOLLOW_73_in_ruleCombineOperator23953); if (failed) return current;
+                    match(input,73,FOLLOW_73_in_ruleCombineOperator24430); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -36142,12 +36733,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13624:6: ( 'max' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13900:6: ( 'max' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13624:6: ( 'max' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13624:8: 'max'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13900:6: ( 'max' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13900:8: 'max'
                     {
-                    match(input,109,FOLLOW_109_in_ruleCombineOperator23968); if (failed) return current;
+                    match(input,109,FOLLOW_109_in_ruleCombineOperator24445); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -36161,12 +36752,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 5 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:6: ( 'min' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13906:6: ( 'min' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:6: ( 'min' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13630:8: 'min'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13906:6: ( 'min' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13906:8: 'min'
                     {
-                    match(input,110,FOLLOW_110_in_ruleCombineOperator23983); if (failed) return current;
+                    match(input,110,FOLLOW_110_in_ruleCombineOperator24460); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -36180,12 +36771,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 6 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:6: ( 'or' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13912:6: ( 'or' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:6: ( 'or' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13636:8: 'or'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13912:6: ( 'or' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13912:8: 'or'
                     {
-                    match(input,84,FOLLOW_84_in_ruleCombineOperator23998); if (failed) return current;
+                    match(input,84,FOLLOW_84_in_ruleCombineOperator24475); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -36199,12 +36790,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 7 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:6: ( 'and' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13918:6: ( 'and' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:6: ( 'and' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13642:8: 'and'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13918:6: ( 'and' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13918:8: 'and'
                     {
-                    match(input,83,FOLLOW_83_in_ruleCombineOperator24013); if (failed) return current;
+                    match(input,83,FOLLOW_83_in_ruleCombineOperator24490); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -36218,12 +36809,12 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
                     }
                     break;
                 case 8 :
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:6: ( 'host' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13924:6: ( 'host' )
                     {
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:6: ( 'host' )
-                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13648:8: 'host'
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13924:6: ( 'host' )
+                    // ../de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/parser/antlr/internal/InternalEsterel.g:13924:8: 'host'
                     {
-                    match(input,107,FOLLOW_107_in_ruleCombineOperator24028); if (failed) return current;
+                    match(input,107,FOLLOW_107_in_ruleCombineOperator24505); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -37724,47 +38315,66 @@ public class InternalEsterelParser extends AbstractInternalAntlrParser {
     public static final BitSet FOLLOW_ruleCommentAnnotation_in_entryRuleCommentAnnotation22894 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuleCommentAnnotation22904 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_COMMENT_ANNOTATION_in_ruleCommentAnnotation22945 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleKeyValueAnnotation_in_entryRuleKeyValueAnnotation22985 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleKeyValueAnnotation22995 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_97_in_ruleKeyValueAnnotation23030 = new BitSet(new long[]{0x0000000000000010L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleKeyValueAnnotation23047 = new BitSet(new long[]{0x0000000000000112L});
-    public static final BitSet FOLLOW_ruleEString_in_ruleKeyValueAnnotation23073 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruleEString_in_entryRuleEString23113 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRuleEString23124 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_STRING_in_ruleEString23164 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ID_in_ruleEString23190 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_36_in_ruleCompareOperator23247 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_79_in_ruleCompareOperator23262 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_80_in_ruleCompareOperator23277 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_78_in_ruleCompareOperator23292 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_81_in_ruleCompareOperator23307 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_77_in_ruleCompareOperator23322 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_98_in_rulePreOperator23364 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_84_in_ruleOrOperator23405 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_83_in_ruleAndOperator23446 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_82_in_ruleNotOperator23487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_ruleAddOperator23528 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_75_in_ruleSubOperator23569 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_ruleMultOperator23610 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_76_in_ruleModOperator23651 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_71_in_ruleDivOperator23692 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_99_in_ruleValueTestOperator23733 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_100_in_ruleValueType23775 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_101_in_ruleValueType23790 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_102_in_ruleValueType23805 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_103_in_ruleValueType23820 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_104_in_ruleValueType23835 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_105_in_ruleValueType23850 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_106_in_ruleValueType23865 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_107_in_ruleValueType23880 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_108_in_ruleCombineOperator23923 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_74_in_ruleCombineOperator23938 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_73_in_ruleCombineOperator23953 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_109_in_ruleCombineOperator23968 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_110_in_ruleCombineOperator23983 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_84_in_ruleCombineOperator23998 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_83_in_ruleCombineOperator24013 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_107_in_ruleCombineOperator24028 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleTagAnnotation_in_entryRuleTagAnnotation22985 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleTagAnnotation22995 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleTagAnnotation23030 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleTagAnnotation23047 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation23088 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation23098 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleKeyStringValueAnnotation23133 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleKeyStringValueAnnotation23150 = new BitSet(new long[]{0x0000000000000110L});
+    public static final BitSet FOLLOW_ruleEString_in_ruleKeyStringValueAnnotation23176 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation23212 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation23222 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleKeyBooleanValueAnnotation23257 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation23274 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation23296 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation23337 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation23347 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleKeyIntValueAnnotation23382 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation23399 = new BitSet(new long[]{0x0000000000000020L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation23421 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation23462 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation23472 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_97_in_ruleKeyFloatValueAnnotation23507 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation23524 = new BitSet(new long[]{0x0000000000000040L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation23546 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEString_in_entryRuleEString23590 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEString23601 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleEString23641 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ID_in_ruleEString23667 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_36_in_ruleCompareOperator23724 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_79_in_ruleCompareOperator23739 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_80_in_ruleCompareOperator23754 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_78_in_ruleCompareOperator23769 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_81_in_ruleCompareOperator23784 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_77_in_ruleCompareOperator23799 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_98_in_rulePreOperator23841 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_84_in_ruleOrOperator23882 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_83_in_ruleAndOperator23923 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_82_in_ruleNotOperator23964 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_ruleAddOperator24005 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_75_in_ruleSubOperator24046 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_ruleMultOperator24087 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_76_in_ruleModOperator24128 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_71_in_ruleDivOperator24169 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_99_in_ruleValueTestOperator24210 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_100_in_ruleValueType24252 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_101_in_ruleValueType24267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_102_in_ruleValueType24282 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_103_in_ruleValueType24297 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_104_in_ruleValueType24312 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_105_in_ruleValueType24327 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_106_in_ruleValueType24342 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_107_in_ruleValueType24357 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_108_in_ruleCombineOperator24400 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_74_in_ruleCombineOperator24415 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_73_in_ruleCombineOperator24430 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_109_in_ruleCombineOperator24445 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_110_in_ruleCombineOperator24460 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_84_in_ruleCombineOperator24475 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_83_in_ruleCombineOperator24490 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_107_in_ruleCombineOperator24505 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ID_in_synpred191425 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleAssignment_in_synpred525410 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruleVarStatement_in_synpred746070 = new BitSet(new long[]{0x0000000000000002L});

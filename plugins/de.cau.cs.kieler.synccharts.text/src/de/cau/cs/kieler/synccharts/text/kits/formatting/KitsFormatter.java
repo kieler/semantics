@@ -109,7 +109,7 @@ public class KitsFormatter extends ActionsFormatter {
                 f.getStateAccess().getStateKeyword_3());
 
         
-        // does not work!
+        // does not work :-(!
         c.setLinewrap(2, 2, 2).between(f.getRegionAccess().getStatesAssignment_7(),
                 f.getRegionAccess().getStatesAssignment_7());
         
@@ -117,10 +117,34 @@ public class KitsFormatter extends ActionsFormatter {
         
         c.setLinewrap().after(f.getSignalRule());
         // c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
+        
+        // an alternative formulation of the formatting instructions
+        c.setLinewrap().before(f.getASignalAccess().getIsInputInputKeyword_1_0());
+        c.setLinewrap().before(f.getASignalAccess().getIsOutputOutputKeyword_2_0());
+        c.setLinewrap().before(f.getASignalAccess().getSignalKeyword_3());
+        c.setNoLinewrap().between(f.getASignalAccess().getIsInputInputKeyword_1_0(),
+                f.getASignalAccess().getIsOutputOutputKeyword_2_0());
+        c.setNoLinewrap().between(f.getASignalAccess().getIsInputInputKeyword_1_0(),
+                f.getASignalAccess().getSignalKeyword_3());
+        c.setNoLinewrap().between(f.getASignalAccess().getIsOutputOutputKeyword_2_0(),
+                f.getASignalAccess().getSignalKeyword_3());
+        
+        c.setLinewrap().before(f.getISignalAccess().getIsInputInputKeyword_1_0());
+        c.setLinewrap().before(f.getISignalAccess().getIsOutputOutputKeyword_2_0());
+        c.setLinewrap().before(f.getISignalAccess().getSignalKeyword_3());
+        c.setNoLinewrap().between(f.getISignalAccess().getIsInputInputKeyword_1_0(),
+                f.getISignalAccess().getIsOutputOutputKeyword_2_0());
+        c.setNoLinewrap().between(f.getISignalAccess().getIsInputInputKeyword_1_0(),
+                f.getISignalAccess().getSignalKeyword_3());
+        c.setNoLinewrap().between(f.getISignalAccess().getIsOutputOutputKeyword_2_0(),
+                f.getISignalAccess().getSignalKeyword_3());
+        
 
         c.setLinewrap().after(f.getVariableRule());
         // c.setLinewrap().after(f.getVariableAccess().getSemicolonKeyword_4());
-        c.setLinewrap().before(f.getVariableAccess().getVarKeyword_1());
+        c.setLinewrap().before(f.getAVariableAccess().getVarKeyword_1());
+        c.setLinewrap().before(f.getIVariableAccess().getVarKeyword_1());
+
 
         c.setLinewrap().after(f.getActionRule());
         c.setLinewrap().before(f.getStateAccess().getOnentryKeyword_6_1_1_0_2_0());

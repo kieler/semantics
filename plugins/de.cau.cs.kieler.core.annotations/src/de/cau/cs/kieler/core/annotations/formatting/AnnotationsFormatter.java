@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.annotations.formatting;
 
+import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
@@ -44,15 +45,26 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
             c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
             
-            c.setLinewrap().after(f.getStringAnnotationRule());
-            c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
-            c.setLinewrap().after(f.getKeyValueAnnotationRule());
-            
+            c.setLinewrap().after(f.getImportAnnotationRule());
             c.setLinewrap(2).before(f.getCOMMENT_ANNOTATIONRule());
             
-            c.setNoSpace().after(f.getKeyValueAnnotationAccess().getCommercialAtKeyword_0());
-            c.setLinewrap().after(f.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
+            c.setLinewrap(2).before(f.getAnnotationRule());
+            c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
+            c.setLinewrap().after(f.getTagAnnotationRule());
+            c.setLinewrap().after(f.getKeyStringValueAnnotationRule());
+            c.setLinewrap().after(f.getKeyBooleanValueAnnotationRule());
+            c.setLinewrap().after(f.getKeyIntValueAnnotationRule());
+            c.setLinewrap().after(f.getKeyFloatValueAnnotationRule());
             
-            c.setLinewrap().after(f.getImportAnnotationRule());
+            c.setLinewrap().after(f.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0());
+            c.setLinewrap().after(f.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0());
+            c.setLinewrap().after(f.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
+            c.setLinewrap().after(f.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0());
+            c.setLinewrap().after(f.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0());
+            c.setLinewrap().after(f.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0());
+            
+            for (Keyword at : f.findKeywords("@")) {            	
+            	c.setNoSpace().after(at);
+            }            
 	}
 }

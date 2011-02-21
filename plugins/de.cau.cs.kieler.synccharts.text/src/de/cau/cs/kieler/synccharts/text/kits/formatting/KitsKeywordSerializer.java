@@ -50,6 +50,7 @@ public class KitsKeywordSerializer extends KeywordSerializer {
             Region region = (Region) context;
             if (Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
+                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
                     && (region.getSignals() == null || region.getSignals().isEmpty())
                     && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;
@@ -62,6 +63,7 @@ public class KitsKeywordSerializer extends KeywordSerializer {
                     && ((State) region.eContainer()).getRegions().size() == 1
                     && Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
+                    && (region.getAnnotations() == null || region.getAnnotations().isEmpty())
                     && (region.getSignals() == null || region.getSignals().isEmpty())
                     && (region.getVariables() == null || region.getVariables().isEmpty())) {
                 return null;

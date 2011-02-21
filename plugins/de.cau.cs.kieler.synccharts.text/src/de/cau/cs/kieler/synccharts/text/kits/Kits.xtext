@@ -9,7 +9,7 @@ import "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.ecore" a
 RootRegion returns synccharts::Region:
     (annotations+=ImportAnnotation)*
     (
-      (annotations += StringAnnotation)*
+      (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
       (variables+=Variable|signals+=Signal)*
       (bodyText+=TextualCode)* 
@@ -20,7 +20,7 @@ RootRegion returns synccharts::Region:
 
 SingleRegion returns synccharts::Region:
     (
-      (annotations += StringAnnotation)*
+      (annotations += Annotation)*
       'region' (id=ID)? (label=STRING)? ':'
       (variables+=Variable|signals+=Signal)*
       (bodyText+=TextualCode)*
@@ -33,7 +33,7 @@ TextualCode returns kexpressions::TextualCode:
     'textual' 'code' ( '(' type = ID ')')? ':' code = STRING;
 
 Region returns synccharts::Region:
-    (annotations += StringAnnotation)*
+    (annotations += Annotation)*
     'region' (id=ID)? (label=STRING)? ':'
     (variables+=Variable|signals+=Signal)*
     (bodyText+=TextualCode)* 
@@ -42,7 +42,7 @@ Region returns synccharts::Region:
 // ---------------------------------------------------------------------------------------------------
 
 State returns synccharts::State:
-    (annotations += StringAnnotation)*
+    (annotations += Annotation)*
     (
       ((isInitial?='init') (isFinal?='final')?)
      |
@@ -76,7 +76,7 @@ State returns synccharts::State:
 // ---------------------------------------------------------------------------------------------------
 
 Transition returns synccharts::Transition:
-    (annotations += StringAnnotation)*
+    (annotations += Annotation)*
 	type=TransitionType (priority=INT)? targetState=[synccharts::State|ID] 
 	( 'with'
 	 (
@@ -90,7 +90,22 @@ Transition returns synccharts::Transition:
 // ---------------------------------------------------------------------------------------------------
 
 Signal returns kexpressions::Signal:
-    (annotations+=StringAnnotation)*
+    aSignal
+    | ISignal;
+
+aSignal returns kexpressions::Signal:
+    (annotations+=Annotation)*
+    (isInput?='input')?
+	(isOutput?='output')?
+	'signal' name=ID (':=' initialValue=AnyType)?
+    ((':' (type = ValueType | hostType = STRING))
+      |
+     (':' 'combine' (type = ValueType | hostType = STRING) 'with'
+        (combineOperator = CombineOperator | hostCombineOperator = STRING))
+    )?;
+
+ISignal returns kexpressions::ISignal:
+    (annotations+=Annotation)*
     (isInput?='input')?
 	(isOutput?='output')?
 	'signal' name=ID (':=' initialValue=AnyType)?
@@ -103,7 +118,15 @@ Signal returns kexpressions::Signal:
 // ---------------------------------------------------------------------------------------------------
 
 Variable returns kexpressions::Variable:
-    (annotations += StringAnnotation)*
+    aVariable
+    | IVariable;
+    
+aVariable returns kexpressions::Variable:
+    (annotations += Annotation)*
+    'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
+
+IVariable returns kexpressions::IVariable:
+    (annotations += Annotation)*
     'var' name=ID (':=' initialValue=AnyType)? ':' (type = ValueType | hostType = STRING);
 
 // ---------------------------------------------------------------------------------------------------

@@ -44,16 +44,22 @@ public class KitsSemanticHighlightingCalculator implements
 		for (AbstractNode node : allNodes) {
 			grammarElement = node.getGrammarElement();
 			
-			// color '@' keywords like 'ANNOTATION_KEY' config
-			if (grammarElement == g.getKeyValueAnnotationAccess().getCommercialAtKeyword_0()) {
+			// color '@' keywords and annotation keys (names) like 'layouter' config 
+			if (grammarElement == g.getTagAnnotationAccess().getCommercialAtKeyword_0()
+				|| grammarElement == g.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()
+                || grammarElement == g.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()
+                || grammarElement == g.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0()
+                || grammarElement == g.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
+                || grammarElement == g.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()) {
 				acceptor.addPosition(node.getOffset(), node.getLength(), KitsHighlightingConfiguration.ANNOTATION_KEY);
 			}
-			// color annotation keys (names) like 'ANNOTATION_KEY' config 
-			if (grammarElement == g.getKeyValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()) {
-				acceptor.addPosition(node.getOffset(), node.getLength(), KitsHighlightingConfiguration.ANNOTATION_KEY);
-			}
-			// color the annotation values like 'COMMENT_ANNOTATION' config 
-			if (grammarElement == g.getKeyValueAnnotationAccess().getValueEStringParserRuleCall_2_0()) {
+			
+			// color the annotation values like 'true' or '/** comment */' 
+			if (grammarElement == g.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()) {
 				acceptor.addPosition(node.getOffset(), node.getLength(), KitsHighlightingConfiguration.COMMENT_ANNOTATION);
 			}
 			

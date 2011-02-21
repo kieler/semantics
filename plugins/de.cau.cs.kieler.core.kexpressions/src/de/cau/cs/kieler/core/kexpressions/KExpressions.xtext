@@ -258,26 +258,6 @@ enum CombineOperator returns CombineOperator:
 	MIN="min" | OR="or" | AND="and" | HOST="host";
 
 
-// redefine INT terminal to allow negative numbers
-terminal INT returns ecore::EInt:
-    '-'?('0'..'9')+;
-
-//// redefine INT terminal to allow negative numbers
-//terminal NINT returns ecore::EInt:
-//    '-'?('0'..'9')+;
-
-
-// make sure the Float rule does not shadow the INT rule
-terminal Float returns ecore::EFloatObject :
- '-'?('0'..'9')+ ("."('0'..'9')*) (("e"|"E")("+"|"-")?('0'..'9')+)? "f"? |
- '-'?('0'..'9')+"f";
-    
-    
-// introduce boolean values
-terminal Boolean returns ecore::EBooleanObject :
-    "true" | "false";
-
-
 // custom terminal rule allowing to save transition label string as they are
 terminal STRING returns ecore::EString: 
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';

@@ -17,30 +17,47 @@ import org.eclipse.xtext.common.services.TerminalsGrammarAccess;
 public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
-	public class StringAnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StringAnnotation");
+	public class AnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Annotation");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cKeyValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTagAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cKeyBooleanValueAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cKeyIntValueAnnotationParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		
 		//// --------------------------
 		////
-		////   EXPRESSIONS
+		////   ANNOTATIONS
 		////
 		//// --------------------------
-		//// introduction of parsing rules for annotations
-		//StringAnnotation returns Annotation:
-		//	CommentAnnotation | KeyValueAnnotation;
+		//Annotation:
+		//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+		//	KeyFloatValueAnnotation;
 		public ParserRule getRule() { return rule; }
 
-		//CommentAnnotation | KeyValueAnnotation
+		//CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+		//KeyFloatValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//CommentAnnotation
 		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
 
-		//KeyValueAnnotation
-		public RuleCall getKeyValueAnnotationParserRuleCall_1() { return cKeyValueAnnotationParserRuleCall_1; }
+		//TagAnnotation
+		public RuleCall getTagAnnotationParserRuleCall_1() { return cTagAnnotationParserRuleCall_1; }
+
+		//KeyStringValueAnnotation
+		public RuleCall getKeyStringValueAnnotationParserRuleCall_2() { return cKeyStringValueAnnotationParserRuleCall_2; }
+
+		//KeyBooleanValueAnnotation
+		public RuleCall getKeyBooleanValueAnnotationParserRuleCall_3() { return cKeyBooleanValueAnnotationParserRuleCall_3; }
+
+		//KeyIntValueAnnotation
+		public RuleCall getKeyIntValueAnnotationParserRuleCall_4() { return cKeyIntValueAnnotationParserRuleCall_4; }
+
+		//KeyFloatValueAnnotation
+		public RuleCall getKeyFloatValueAnnotationParserRuleCall_5() { return cKeyFloatValueAnnotationParserRuleCall_5; }
 	}
 
 	public class CommentAnnotationElements extends AbstractParserRuleElementFinder {
@@ -48,6 +65,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
 		private final RuleCall cValueCOMMENT_ANNOTATIONTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
+		//// introduction of parsing rules for annotations
+		////StringAnnotation returns Annotation:
+		////	CommentAnnotation
+		////	| KeyStringValueAnnotation
+		////	;
 		//// e.g.: / ** semantic comment * /
 		//CommentAnnotation returns StringAnnotation:
 		//	value=COMMENT_ANNOTATION;
@@ -60,8 +82,33 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getValueCOMMENT_ANNOTATIONTerminalRuleCall_0() { return cValueCOMMENT_ANNOTATIONTerminalRuleCall_0; }
 	}
 
-	public class KeyValueAnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyValueAnnotation");
+	public class TagAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TagAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		
+		//// e.g.: @HVlayout
+		//TagAnnotation returns StringAnnotation:
+		//	"@" name=ID;
+		public ParserRule getRule() { return rule; }
+
+		//"@" name=ID
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+	}
+
+	public class KeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -69,12 +116,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cValueEStringParserRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		
-		//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
-		//KeyValueAnnotation returns StringAnnotation:
-		//	"@" name=ID value=EString?;
+		//// e.g.: @layouter dot;   
+		//KeyStringValueAnnotation returns StringAnnotation:
+		//	"@" name=ID value=EString;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ID value=EString?
+		//"@" name=ID value=EString
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -86,11 +133,110 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//value=EString?
+		//value=EString
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
 		//EString
 		public RuleCall getValueEStringParserRuleCall_2_0() { return cValueEStringParserRuleCall_2_0; }
+	}
+
+	public class KeyBooleanValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyBooleanValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueBooleanTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//// e.g.: @visible true;
+		//KeyBooleanValueAnnotation returns BooleanAnnotation:
+		//	"@" name=ID value=Boolean;
+		public ParserRule getRule() { return rule; }
+
+		//"@" name=ID value=Boolean
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//value=Boolean
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//Boolean
+		public RuleCall getValueBooleanTerminalRuleCall_2_0() { return cValueBooleanTerminalRuleCall_2_0; }
+	}
+
+	public class KeyIntValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyIntValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueINTTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//// e.g.: @minSpace 10;    
+		//KeyIntValueAnnotation returns IntAnnotation:
+		//	"@" name=ID value=INT;
+		public ParserRule getRule() { return rule; }
+
+		//"@" name=ID value=INT
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//value=INT
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_2_0() { return cValueINTTerminalRuleCall_2_0; }
+	}
+
+	public class KeyFloatValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "KeyFloatValueAnnotation");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cValueFloatTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		
+		//// e.g.: @minSpace 10.0;    
+		//KeyFloatValueAnnotation returns FloatAnnotation:
+		//	"@" name=ID value=Float;
+		public ParserRule getRule() { return rule; }
+
+		//"@" name=ID value=Float
+		public Group getGroup() { return cGroup; }
+
+		//"@"
+		public Keyword getCommercialAtKeyword_0() { return cCommercialAtKeyword_0; }
+
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+
+		//value=Float
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
+
+		//Float
+		public RuleCall getValueFloatTerminalRuleCall_2_0() { return cValueFloatTerminalRuleCall_2_0; }
 	}
 
 	public class ImportAnnotationElements extends AbstractParserRuleElementFinder {
@@ -140,13 +286,20 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	
-	private StringAnnotationElements pStringAnnotation;
+	private AnnotationElements pAnnotation;
 	private CommentAnnotationElements pCommentAnnotation;
-	private KeyValueAnnotationElements pKeyValueAnnotation;
+	private TagAnnotationElements pTagAnnotation;
+	private KeyStringValueAnnotationElements pKeyStringValueAnnotation;
+	private KeyBooleanValueAnnotationElements pKeyBooleanValueAnnotation;
+	private KeyIntValueAnnotationElements pKeyIntValueAnnotation;
+	private KeyFloatValueAnnotationElements pKeyFloatValueAnnotation;
 	private ImportAnnotationElements pImportAnnotation;
 	private EStringElements pEString;
 	private TerminalRule tCOMMENT_ANNOTATION;
 	private TerminalRule tML_COMMENT;
+	private TerminalRule tINT;
+	private TerminalRule tFloat;
+	private TerminalRule tBoolean;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -171,20 +324,25 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	//// --------------------------
 	////
-	////   EXPRESSIONS
+	////   ANNOTATIONS
 	////
 	//// --------------------------
-	//// introduction of parsing rules for annotations
-	//StringAnnotation returns Annotation:
-	//	CommentAnnotation | KeyValueAnnotation;
-	public StringAnnotationElements getStringAnnotationAccess() {
-		return (pStringAnnotation != null) ? pStringAnnotation : (pStringAnnotation = new StringAnnotationElements());
+	//Annotation:
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+	//	KeyFloatValueAnnotation;
+	public AnnotationElements getAnnotationAccess() {
+		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
 	}
 	
-	public ParserRule getStringAnnotationRule() {
-		return getStringAnnotationAccess().getRule();
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
 	}
 
+	//// introduction of parsing rules for annotations
+	////StringAnnotation returns Annotation:
+	////	CommentAnnotation
+	////	| KeyStringValueAnnotation
+	////	;
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
@@ -196,15 +354,59 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
-	//KeyValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString?;
-	public KeyValueAnnotationElements getKeyValueAnnotationAccess() {
-		return (pKeyValueAnnotation != null) ? pKeyValueAnnotation : (pKeyValueAnnotation = new KeyValueAnnotationElements());
+	//// e.g.: @HVlayout
+	//TagAnnotation returns StringAnnotation:
+	//	"@" name=ID;
+	public TagAnnotationElements getTagAnnotationAccess() {
+		return (pTagAnnotation != null) ? pTagAnnotation : (pTagAnnotation = new TagAnnotationElements());
 	}
 	
-	public ParserRule getKeyValueAnnotationRule() {
-		return getKeyValueAnnotationAccess().getRule();
+	public ParserRule getTagAnnotationRule() {
+		return getTagAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @layouter dot;   
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ID value=EString;
+	public KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
+		return (pKeyStringValueAnnotation != null) ? pKeyStringValueAnnotation : (pKeyStringValueAnnotation = new KeyStringValueAnnotationElements());
+	}
+	
+	public ParserRule getKeyStringValueAnnotationRule() {
+		return getKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @visible true;
+	//KeyBooleanValueAnnotation returns BooleanAnnotation:
+	//	"@" name=ID value=Boolean;
+	public KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
+		return (pKeyBooleanValueAnnotation != null) ? pKeyBooleanValueAnnotation : (pKeyBooleanValueAnnotation = new KeyBooleanValueAnnotationElements());
+	}
+	
+	public ParserRule getKeyBooleanValueAnnotationRule() {
+		return getKeyBooleanValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @minSpace 10;    
+	//KeyIntValueAnnotation returns IntAnnotation:
+	//	"@" name=ID value=INT;
+	public KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
+		return (pKeyIntValueAnnotation != null) ? pKeyIntValueAnnotation : (pKeyIntValueAnnotation = new KeyIntValueAnnotationElements());
+	}
+	
+	public ParserRule getKeyIntValueAnnotationRule() {
+		return getKeyIntValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @minSpace 10.0;    
+	//KeyFloatValueAnnotation returns FloatAnnotation:
+	//	"@" name=ID value=Float;
+	public KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
+		return (pKeyFloatValueAnnotation != null) ? pKeyFloatValueAnnotation : (pKeyFloatValueAnnotation = new KeyFloatValueAnnotationElements());
+	}
+	
+	public ParserRule getKeyFloatValueAnnotationRule() {
+		return getKeyFloatValueAnnotationAccess().getRule();
 	}
 
 	//// needed for importing other resources
@@ -229,6 +431,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringAccess().getRule();
 	}
 
+	//// --------------------------
+	////
+	////  Terminals...
+	////
+	//// --------------------------
+	//// custom terminals
 	//// custom terminal rule introducing semantic comments
 	//terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
@@ -244,16 +452,35 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		return (tML_COMMENT != null) ? tML_COMMENT : (tML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ML_COMMENT"));
 	} 
 
+	//// generic terminals
+	//// redefine INT terminal to allow negative numbers
+	//terminal INT returns ecore::EInt:
+	//	"-"? "0".."9"+;
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
+	////// redefine INT terminal to allow negative numbers
+	////terminal NINT returns ecore::EInt:
+	////    '-'?('0'..'9')+;
+	//// make sure the Float rule does not shadow the INT rule
+	//terminal Float returns ecore::EFloatObject:
+	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
+	public TerminalRule getFloatRule() {
+		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
+	} 
+
+	//// introduce boolean values
+	//terminal Boolean returns ecore::EBooleanObject:
+	//	"true" | "false";
+	public TerminalRule getBooleanRule() {
+		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
+	} 
+
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;
 	public TerminalRule getIDRule() {
 		return gaTerminals.getIDRule();
-	} 
-
-	//terminal INT returns ecore::EInt:
-	//	"0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaTerminals.getINTRule();
 	} 
 
 	//terminal STRING:

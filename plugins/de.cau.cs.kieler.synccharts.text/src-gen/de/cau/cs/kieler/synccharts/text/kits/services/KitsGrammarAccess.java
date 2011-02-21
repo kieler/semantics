@@ -26,7 +26,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cAnnotationsImportAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_1_0_0 = (RuleCall)cAnnotationsAssignment_1_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0_0 = (RuleCall)cAnnotationsAssignment_1_0.eContents().get(0);
 		private final Keyword cRegionKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
 		private final Assignment cIdAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
 		private final RuleCall cIdIDTerminalRuleCall_1_2_0 = (RuleCall)cIdAssignment_1_2.eContents().get(0);
@@ -44,11 +44,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_2_0 = (RuleCall)cStatesAssignment_2.eContents().get(0);
 		
 		//RootRegion returns synccharts::Region:
-		//	annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable
-		//	| signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
+		//	annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+		//	signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+		//annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
 		//signals+=Signal)* bodyText+=TextualCode*)? states+=State*
 		public Group getGroup() { return cGroup; }
 
@@ -58,15 +58,15 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		//ImportAnnotation
 		public RuleCall getAnnotationsImportAnnotationParserRuleCall_0_0() { return cAnnotationsImportAnnotationParserRuleCall_0_0; }
 
-		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//bodyText+=TextualCode*)?
 		public Group getGroup_1() { return cGroup_1; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_1_0() { return cAnnotationsAssignment_1_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_1_0_0() { return cAnnotationsStringAnnotationParserRuleCall_1_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0_0() { return cAnnotationsAnnotationParserRuleCall_1_0_0; }
 
 		//"region"
 		public Keyword getRegionKeyword_1_1() { return cRegionKeyword_1_1; }
@@ -119,7 +119,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_0_0 = (Assignment)cGroup_0.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0_0 = (RuleCall)cAnnotationsAssignment_0_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0_0 = (RuleCall)cAnnotationsAssignment_0_0.eContents().get(0);
 		private final Keyword cRegionKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
 		private final Assignment cIdAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
 		private final RuleCall cIdIDTerminalRuleCall_0_2_0 = (RuleCall)cIdAssignment_0_2.eContents().get(0);
@@ -137,25 +137,24 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_1_0 = (RuleCall)cStatesAssignment_1.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//SingleRegion returns synccharts::Region:
-		//	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//	(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//	bodyText+=TextualCode*)? states+=State*;
 		public ParserRule getRule() { return rule; }
 
-		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//bodyText+=TextualCode*)? states+=State*
 		public Group getGroup() { return cGroup; }
 
-		//(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//bodyText+=TextualCode*)?
 		public Group getGroup_0() { return cGroup_0; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0_0() { return cAnnotationsAssignment_0_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0_0; }
 
 		//"region"
 		public Keyword getRegionKeyword_0_1() { return cRegionKeyword_0_1; }
@@ -218,7 +217,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCodeSTRINGTerminalRuleCall_4_0 = (RuleCall)cCodeAssignment_4.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//TextualCode returns kexpressions::TextualCode:
 		//	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
 		public ParserRule getRule() { return rule; }
@@ -261,7 +259,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Region");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cRegionKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cIdAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cIdIDTerminalRuleCall_2_0 = (RuleCall)cIdAssignment_2.eContents().get(0);
@@ -279,19 +277,19 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_7_0 = (RuleCall)cStatesAssignment_7.eContents().get(0);
 		
 		//Region returns synccharts::Region:
-		//	annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//	annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//	bodyText+=TextualCode* states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+		//annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 		//bodyText+=TextualCode* states+=State+
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//"region"
 		public Keyword getRegionKeyword_1() { return cRegionKeyword_1; }
@@ -343,7 +341,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "State");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Alternatives cAlternatives_1 = (Alternatives)cGroup.eContents().get(1);
 		private final Group cGroup_1_0 = (Group)cAlternatives_1.eContents().get(0);
 		private final Assignment cIsInitialAssignment_1_0_0 = (Assignment)cGroup_1_0.eContents().get(0);
@@ -413,27 +411,26 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cOutgoingTransitionsTransitionParserRuleCall_7_0 = (RuleCall)cOutgoingTransitionsAssignment_7.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//State returns synccharts::State:
-		//	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-		//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
+		//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
+		//	"state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
 		//	renamings+=Substitution)* "]")? | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action |
 		//	"oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
 		//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-		//type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
+		//annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
+		//"state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
 		//renamings+=Substitution)* "]")? | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action |
 		//"oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
 		//bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//(isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
 		public Alternatives getAlternatives_1() { return cAlternatives_1; }
@@ -649,7 +646,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cTypeAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cTypeTransitionTypeEnumRuleCall_1_0 = (RuleCall)cTypeAssignment_1.eContents().get(0);
 		private final Assignment cPriorityAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -681,23 +678,22 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cIsHistoryHistoryKeyword_5_0 = (Keyword)cIsHistoryAssignment_5.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//Transition returns synccharts::Transition:
-		//	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
-		//	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
-		//	label=STRING))? isHistory?="history"?;
+		//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with" (isImmediate?="#"?
+		//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+		//	isHistory?="history"?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
-		//(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
-		//label=STRING))? isHistory?="history"?
+		//annotations+=Annotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with" (isImmediate?="#"?
+		//delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+		//isHistory?="history"?
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//type=TransitionType
 		public Assignment getTypeAssignment_1() { return cTypeAssignment_1; }
@@ -790,9 +786,30 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Signal");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cASignalParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cISignalParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// ---------------------------------------------------------------------------------------------------
+		//Signal returns kexpressions::Signal:
+		//	aSignal | ISignal;
+		public ParserRule getRule() { return rule; }
+
+		//aSignal | ISignal
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//aSignal
+		public RuleCall getASignalParserRuleCall_0() { return cASignalParserRuleCall_0; }
+
+		//ISignal
+		public RuleCall getISignalParserRuleCall_1() { return cISignalParserRuleCall_1; }
+	}
+
+	public class ASignalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "aSignal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
 		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
@@ -827,24 +844,179 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cHostCombineOperatorAssignment_6_1_4_1 = (Assignment)cAlternatives_6_1_4.eContents().get(1);
 		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_6_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_6_1_4_1.eContents().get(0);
 		
-		//// ---------------------------------------------------------------------------------------------------
-		//
-		//Signal returns kexpressions::Signal:
-		//	annotations+=StringAnnotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)?
-		//	(":" (type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+		//aSignal returns kexpressions::Signal:
+		//	annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+		//	(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
 		//	(combineOperator=CombineOperator | hostCombineOperator=STRING))?;
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+		//annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
 		//(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
 		//(combineOperator=CombineOperator | hostCombineOperator=STRING))?
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//isInput?="input"?
+		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
+
+		//"input"
+		public Keyword getIsInputInputKeyword_1_0() { return cIsInputInputKeyword_1_0; }
+
+		//isOutput?="output"?
+		public Assignment getIsOutputAssignment_2() { return cIsOutputAssignment_2; }
+
+		//"output"
+		public Keyword getIsOutputOutputKeyword_2_0() { return cIsOutputOutputKeyword_2_0; }
+
+		//"signal"
+		public Keyword getSignalKeyword_3() { return cSignalKeyword_3; }
+
+		//name=ID
+		public Assignment getNameAssignment_4() { return cNameAssignment_4; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_4_0() { return cNameIDTerminalRuleCall_4_0; }
+
+		//(":=" initialValue=AnyType)?
+		public Group getGroup_5() { return cGroup_5; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_5_0() { return cColonEqualsSignKeyword_5_0; }
+
+		//initialValue=AnyType
+		public Assignment getInitialValueAssignment_5_1() { return cInitialValueAssignment_5_1; }
+
+		//AnyType
+		public RuleCall getInitialValueAnyTypeParserRuleCall_5_1_0() { return cInitialValueAnyTypeParserRuleCall_5_1_0; }
+
+		//(":" (type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+		//(combineOperator=CombineOperator | hostCombineOperator=STRING))?
+		public Alternatives getAlternatives_6() { return cAlternatives_6; }
+
+		//":" (type=ValueType | hostType=STRING)
+		public Group getGroup_6_0() { return cGroup_6_0; }
+
+		//":"
+		public Keyword getColonKeyword_6_0_0() { return cColonKeyword_6_0_0; }
+
+		//type=ValueType | hostType=STRING
+		public Alternatives getAlternatives_6_0_1() { return cAlternatives_6_0_1; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_6_0_1_0() { return cTypeAssignment_6_0_1_0; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_6_0_1_0_0() { return cTypeValueTypeEnumRuleCall_6_0_1_0_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_6_0_1_1() { return cHostTypeAssignment_6_0_1_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_6_0_1_1_0() { return cHostTypeSTRINGTerminalRuleCall_6_0_1_1_0; }
+
+		//":" "combine" (type=ValueType | hostType=STRING) "with" (combineOperator=CombineOperator | hostCombineOperator=STRING)
+		public Group getGroup_6_1() { return cGroup_6_1; }
+
+		//":"
+		public Keyword getColonKeyword_6_1_0() { return cColonKeyword_6_1_0; }
+
+		//"combine"
+		public Keyword getCombineKeyword_6_1_1() { return cCombineKeyword_6_1_1; }
+
+		//type=ValueType | hostType=STRING
+		public Alternatives getAlternatives_6_1_2() { return cAlternatives_6_1_2; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_6_1_2_0() { return cTypeAssignment_6_1_2_0; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_6_1_2_0_0() { return cTypeValueTypeEnumRuleCall_6_1_2_0_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_6_1_2_1() { return cHostTypeAssignment_6_1_2_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_6_1_2_1_0() { return cHostTypeSTRINGTerminalRuleCall_6_1_2_1_0; }
+
+		//"with"
+		public Keyword getWithKeyword_6_1_3() { return cWithKeyword_6_1_3; }
+
+		//combineOperator=CombineOperator | hostCombineOperator=STRING
+		public Alternatives getAlternatives_6_1_4() { return cAlternatives_6_1_4; }
+
+		//combineOperator=CombineOperator
+		public Assignment getCombineOperatorAssignment_6_1_4_0() { return cCombineOperatorAssignment_6_1_4_0; }
+
+		//CombineOperator
+		public RuleCall getCombineOperatorCombineOperatorEnumRuleCall_6_1_4_0_0() { return cCombineOperatorCombineOperatorEnumRuleCall_6_1_4_0_0; }
+
+		//hostCombineOperator=STRING
+		public Assignment getHostCombineOperatorAssignment_6_1_4_1() { return cHostCombineOperatorAssignment_6_1_4_1; }
+
+		//STRING
+		public RuleCall getHostCombineOperatorSTRINGTerminalRuleCall_6_1_4_1_0() { return cHostCombineOperatorSTRINGTerminalRuleCall_6_1_4_1_0; }
+	}
+
+	public class ISignalElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ISignal");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Assignment cIsInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cIsInputInputKeyword_1_0 = (Keyword)cIsInputAssignment_1.eContents().get(0);
+		private final Assignment cIsOutputAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsOutputOutputKeyword_2_0 = (Keyword)cIsOutputAssignment_2.eContents().get(0);
+		private final Keyword cSignalKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cNameAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cNameIDTerminalRuleCall_4_0 = (RuleCall)cNameAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cColonEqualsSignKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cInitialValueAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cInitialValueAnyTypeParserRuleCall_5_1_0 = (RuleCall)cInitialValueAssignment_5_1.eContents().get(0);
+		private final Alternatives cAlternatives_6 = (Alternatives)cGroup.eContents().get(6);
+		private final Group cGroup_6_0 = (Group)cAlternatives_6.eContents().get(0);
+		private final Keyword cColonKeyword_6_0_0 = (Keyword)cGroup_6_0.eContents().get(0);
+		private final Alternatives cAlternatives_6_0_1 = (Alternatives)cGroup_6_0.eContents().get(1);
+		private final Assignment cTypeAssignment_6_0_1_0 = (Assignment)cAlternatives_6_0_1.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_6_0_1_0_0 = (RuleCall)cTypeAssignment_6_0_1_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_6_0_1_1 = (Assignment)cAlternatives_6_0_1.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_6_0_1_1_0 = (RuleCall)cHostTypeAssignment_6_0_1_1.eContents().get(0);
+		private final Group cGroup_6_1 = (Group)cAlternatives_6.eContents().get(1);
+		private final Keyword cColonKeyword_6_1_0 = (Keyword)cGroup_6_1.eContents().get(0);
+		private final Keyword cCombineKeyword_6_1_1 = (Keyword)cGroup_6_1.eContents().get(1);
+		private final Alternatives cAlternatives_6_1_2 = (Alternatives)cGroup_6_1.eContents().get(2);
+		private final Assignment cTypeAssignment_6_1_2_0 = (Assignment)cAlternatives_6_1_2.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_6_1_2_0_0 = (RuleCall)cTypeAssignment_6_1_2_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_6_1_2_1 = (Assignment)cAlternatives_6_1_2.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_6_1_2_1_0 = (RuleCall)cHostTypeAssignment_6_1_2_1.eContents().get(0);
+		private final Keyword cWithKeyword_6_1_3 = (Keyword)cGroup_6_1.eContents().get(3);
+		private final Alternatives cAlternatives_6_1_4 = (Alternatives)cGroup_6_1.eContents().get(4);
+		private final Assignment cCombineOperatorAssignment_6_1_4_0 = (Assignment)cAlternatives_6_1_4.eContents().get(0);
+		private final RuleCall cCombineOperatorCombineOperatorEnumRuleCall_6_1_4_0_0 = (RuleCall)cCombineOperatorAssignment_6_1_4_0.eContents().get(0);
+		private final Assignment cHostCombineOperatorAssignment_6_1_4_1 = (Assignment)cAlternatives_6_1_4.eContents().get(1);
+		private final RuleCall cHostCombineOperatorSTRINGTerminalRuleCall_6_1_4_1_0 = (RuleCall)cHostCombineOperatorAssignment_6_1_4_1.eContents().get(0);
+		
+		//ISignal returns kexpressions::ISignal:
+		//	annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+		//	(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+		//	(combineOperator=CombineOperator | hostCombineOperator=STRING))?;
+		public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+		//(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+		//(combineOperator=CombineOperator | hostCombineOperator=STRING))?
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//isInput?="input"?
 		public Assignment getIsInputAssignment_1() { return cIsInputAssignment_1; }
@@ -949,9 +1121,30 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	public class VariableElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Variable");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cAVariableParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cIVariableParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//// ---------------------------------------------------------------------------------------------------
+		//Variable returns kexpressions::Variable:
+		//	aVariable | IVariable;
+		public ParserRule getRule() { return rule; }
+
+		//aVariable | IVariable
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//aVariable
+		public RuleCall getAVariableParserRuleCall_0() { return cAVariableParserRuleCall_0; }
+
+		//IVariable
+		public RuleCall getIVariableParserRuleCall_1() { return cIVariableParserRuleCall_1; }
+	}
+
+	public class AVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "aVariable");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cAnnotationsStringAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
 		private final Keyword cVarKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
 		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
@@ -966,20 +1159,90 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cHostTypeAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
 		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cHostTypeAssignment_5_1.eContents().get(0);
 		
-		//// ---------------------------------------------------------------------------------------------------
-		//
-		//Variable returns kexpressions::Variable:
-		//	annotations+=StringAnnotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
+		//aVariable returns kexpressions::Variable:
+		//	annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
 		public ParserRule getRule() { return rule; }
 
-		//annotations+=StringAnnotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING)
+		//annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING)
 		public Group getGroup() { return cGroup; }
 
-		//annotations+=StringAnnotation*
+		//annotations+=Annotation*
 		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 
-		//StringAnnotation
-		public RuleCall getAnnotationsStringAnnotationParserRuleCall_0_0() { return cAnnotationsStringAnnotationParserRuleCall_0_0; }
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
+
+		//"var"
+		public Keyword getVarKeyword_1() { return cVarKeyword_1; }
+
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+
+		//(":=" initialValue=AnyType)?
+		public Group getGroup_3() { return cGroup_3; }
+
+		//":="
+		public Keyword getColonEqualsSignKeyword_3_0() { return cColonEqualsSignKeyword_3_0; }
+
+		//initialValue=AnyType
+		public Assignment getInitialValueAssignment_3_1() { return cInitialValueAssignment_3_1; }
+
+		//AnyType
+		public RuleCall getInitialValueAnyTypeParserRuleCall_3_1_0() { return cInitialValueAnyTypeParserRuleCall_3_1_0; }
+
+		//":"
+		public Keyword getColonKeyword_4() { return cColonKeyword_4; }
+
+		//type=ValueType | hostType=STRING
+		public Alternatives getAlternatives_5() { return cAlternatives_5; }
+
+		//type=ValueType
+		public Assignment getTypeAssignment_5_0() { return cTypeAssignment_5_0; }
+
+		//ValueType
+		public RuleCall getTypeValueTypeEnumRuleCall_5_0_0() { return cTypeValueTypeEnumRuleCall_5_0_0; }
+
+		//hostType=STRING
+		public Assignment getHostTypeAssignment_5_1() { return cHostTypeAssignment_5_1; }
+
+		//STRING
+		public RuleCall getHostTypeSTRINGTerminalRuleCall_5_1_0() { return cHostTypeSTRINGTerminalRuleCall_5_1_0; }
+	}
+
+	public class IVariableElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "IVariable");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cVarKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cColonEqualsSignKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cInitialValueAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cInitialValueAnyTypeParserRuleCall_3_1_0 = (RuleCall)cInitialValueAssignment_3_1.eContents().get(0);
+		private final Keyword cColonKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Alternatives cAlternatives_5 = (Alternatives)cGroup.eContents().get(5);
+		private final Assignment cTypeAssignment_5_0 = (Assignment)cAlternatives_5.eContents().get(0);
+		private final RuleCall cTypeValueTypeEnumRuleCall_5_0_0 = (RuleCall)cTypeAssignment_5_0.eContents().get(0);
+		private final Assignment cHostTypeAssignment_5_1 = (Assignment)cAlternatives_5.eContents().get(1);
+		private final RuleCall cHostTypeSTRINGTerminalRuleCall_5_1_0 = (RuleCall)cHostTypeAssignment_5_1.eContents().get(0);
+		
+		//IVariable returns kexpressions::IVariable:
+		//	annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
+		public ParserRule getRule() { return rule; }
+
+		//annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING)
+		public Group getGroup() { return cGroup; }
+
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_0_0() { return cAnnotationsAnnotationParserRuleCall_0_0; }
 
 		//"var"
 		public Keyword getVarKeyword_1() { return cVarKeyword_1; }
@@ -1031,7 +1294,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cFormalIDTerminalRuleCall_2_0 = (RuleCall)cFormalAssignment_2.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//Substitution returns synccharts::Substitution:
 		//	actual=ID "/" formal=ID;
 		public ParserRule getRule() { return rule; }
@@ -1069,7 +1331,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cTEXTUALTextualKeyword_3_0 = (Keyword)cTEXTUALEnumLiteralDeclaration_3.eContents().get(0);
 		
 		//// ---------------------------------------------------------------------------------------------------
-		//
 		//enum StateType returns synccharts::StateType:
 		//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
 		public EnumRule getRule() { return rule; }
@@ -1145,7 +1406,11 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	private StateElements pState;
 	private TransitionElements pTransition;
 	private SignalElements pSignal;
+	private ASignalElements pASignal;
+	private ISignalElements pISignal;
 	private VariableElements pVariable;
+	private AVariableElements pAVariable;
+	private IVariableElements pIVariable;
 	private SubstitutionElements pSubstitution;
 	private StateTypeElements unknownRuleStateType;
 	private TransitionTypeElements unknownRuleTransitionType;
@@ -1172,8 +1437,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//RootRegion returns synccharts::Region:
-	//	annotations+=ImportAnnotation* (annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable
-	//	| signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
+	//	annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+	//	signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 	public RootRegionElements getRootRegionAccess() {
 		return (pRootRegion != null) ? pRootRegion : (pRootRegion = new RootRegionElements());
 	}
@@ -1183,9 +1448,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//SingleRegion returns synccharts::Region:
-	//	(annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+	//	(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 	//	bodyText+=TextualCode*)? states+=State*;
 	public SingleRegionElements getSingleRegionAccess() {
 		return (pSingleRegion != null) ? pSingleRegion : (pSingleRegion = new SingleRegionElements());
@@ -1196,7 +1460,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//TextualCode returns kexpressions::TextualCode:
 	//	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
 	public TextualCodeElements getTextualCodeAccess() {
@@ -1208,7 +1471,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Region returns synccharts::Region:
-	//	annotations+=StringAnnotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
+	//	annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
 	//	bodyText+=TextualCode* states+=State+;
 	public RegionElements getRegionAccess() {
 		return (pRegion != null) ? pRegion : (pRegion = new RegionElements());
@@ -1219,10 +1482,9 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//State returns synccharts::State:
-	//	annotations+=StringAnnotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)?
-	//	type=StateType? "state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
+	//	annotations+=Annotation* (isInitial?="init" isFinal?="final"? | isFinal?="final" isInitial?="init"?)? type=StateType?
+	//	"state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
 	//	renamings+=Substitution)* "]")? | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action |
 	//	"oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
 	//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*;
@@ -1235,11 +1497,10 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Transition returns synccharts::Transition:
-	//	annotations+=StringAnnotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with"
-	//	(isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? |
-	//	label=STRING))? isHistory?="history"?;
+	//	annotations+=Annotation* type=TransitionType priority=INT? targetState=[synccharts::State] ("with" (isImmediate?="#"?
+	//	delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)? | label=STRING))?
+	//	isHistory?="history"?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -1249,11 +1510,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Signal returns kexpressions::Signal:
-	//	annotations+=StringAnnotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)?
-	//	(":" (type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
-	//	(combineOperator=CombineOperator | hostCombineOperator=STRING))?;
+	//	aSignal | ISignal;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -1262,10 +1520,33 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
+	//aSignal returns kexpressions::Signal:
+	//	annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+	//	(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+	//	(combineOperator=CombineOperator | hostCombineOperator=STRING))?;
+	public ASignalElements getASignalAccess() {
+		return (pASignal != null) ? pASignal : (pASignal = new ASignalElements());
+	}
+	
+	public ParserRule getASignalRule() {
+		return getASignalAccess().getRule();
+	}
+
+	//ISignal returns kexpressions::ISignal:
+	//	annotations+=Annotation* isInput?="input"? isOutput?="output"? "signal" name=ID (":=" initialValue=AnyType)? (":"
+	//	(type=ValueType | hostType=STRING) | ":" "combine" (type=ValueType | hostType=STRING) "with"
+	//	(combineOperator=CombineOperator | hostCombineOperator=STRING))?;
+	public ISignalElements getISignalAccess() {
+		return (pISignal != null) ? pISignal : (pISignal = new ISignalElements());
+	}
+	
+	public ParserRule getISignalRule() {
+		return getISignalAccess().getRule();
+	}
+
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Variable returns kexpressions::Variable:
-	//	annotations+=StringAnnotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
+	//	aVariable | IVariable;
 	public VariableElements getVariableAccess() {
 		return (pVariable != null) ? pVariable : (pVariable = new VariableElements());
 	}
@@ -1274,8 +1555,27 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getVariableAccess().getRule();
 	}
 
+	//aVariable returns kexpressions::Variable:
+	//	annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
+	public AVariableElements getAVariableAccess() {
+		return (pAVariable != null) ? pAVariable : (pAVariable = new AVariableElements());
+	}
+	
+	public ParserRule getAVariableRule() {
+		return getAVariableAccess().getRule();
+	}
+
+	//IVariable returns kexpressions::IVariable:
+	//	annotations+=Annotation* "var" name=ID (":=" initialValue=AnyType)? ":" (type=ValueType | hostType=STRING);
+	public IVariableElements getIVariableAccess() {
+		return (pIVariable != null) ? pIVariable : (pIVariable = new IVariableElements());
+	}
+	
+	public ParserRule getIVariableRule() {
+		return getIVariableAccess().getRule();
+	}
+
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//Substitution returns synccharts::Substitution:
 	//	actual=ID "/" formal=ID;
 	public SubstitutionElements getSubstitutionAccess() {
@@ -1287,7 +1587,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//
 	//enum StateType returns synccharts::StateType:
 	//	NORMAL="normal" | CONDITIONAL="conditional" | REFERENCE="reference" | TEXTUAL="textual";
 	public StateTypeElements getStateTypeAccess() {
@@ -1664,16 +1963,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getInterfaceDeclarationAccess().getRule();
 	}
 
-	//ISignal:
-	//	name=ID channelDescr=ChannelDescription?;
-	public KExpressionsGrammarAccess.ISignalElements getISignalAccess() {
-		return gaActions.getISignalAccess();
-	}
-	
-	public ParserRule getISignalRule() {
-		return getISignalAccess().getRule();
-	}
-
 	//InterfaceSignalDecl:
 	//	{Input} "input" signals+=ISignal ("," signals+=ISignal)* ";" | {Output} "output" signals+=ISignal (","
 	//	signals+=ISignal)* ";" | {InputOutput} "inputoutput" signals+=ISignal ("," signals+=ISignal)* ";" | {Return} "return"
@@ -1715,16 +2004,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getVariableDeclRule() {
 		return getVariableDeclAccess().getRule();
-	}
-
-	//IVariable:
-	//	name=ID (":=" expression=Expression)?;
-	public KExpressionsGrammarAccess.IVariableElements getIVariableAccess() {
-		return gaActions.getIVariableAccess();
-	}
-	
-	public ParserRule getIVariableRule() {
-		return getIVariableAccess().getRule();
 	}
 
 	//// transform ID to hostcode
@@ -1866,30 +2145,6 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCombineOperatorAccess().getRule();
 	}
 
-	//// redefine INT terminal to allow negative numbers
-	//terminal INT returns ecore::EInt:
-	//	"-"? "0".."9"+;
-	public TerminalRule getINTRule() {
-		return gaActions.getINTRule();
-	} 
-
-	////// redefine INT terminal to allow negative numbers
-	////terminal NINT returns ecore::EInt:
-	////    '-'?('0'..'9')+;
-	//// make sure the Float rule does not shadow the INT rule
-	//terminal Float returns ecore::EFloatObject:
-	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
-	public TerminalRule getFloatRule() {
-		return gaActions.getFloatRule();
-	} 
-
-	//// introduce boolean values
-	//terminal Boolean returns ecore::EBooleanObject:
-	//	"true" | "false";
-	public TerminalRule getBooleanRule() {
-		return gaActions.getBooleanRule();
-	} 
-
 	//// custom terminal rule allowing to save transition label string as they are
 	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
@@ -1906,20 +2161,25 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// --------------------------
 	////
-	////   EXPRESSIONS
+	////   ANNOTATIONS
 	////
 	//// --------------------------
-	//// introduction of parsing rules for annotations
-	//StringAnnotation returns Annotation:
-	//	CommentAnnotation | KeyValueAnnotation;
-	public AnnotationsGrammarAccess.StringAnnotationElements getStringAnnotationAccess() {
-		return gaActions.getStringAnnotationAccess();
+	//Annotation:
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
+	//	KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
+		return gaActions.getAnnotationAccess();
 	}
 	
-	public ParserRule getStringAnnotationRule() {
-		return getStringAnnotationAccess().getRule();
+	public ParserRule getAnnotationRule() {
+		return getAnnotationAccess().getRule();
 	}
 
+	//// introduction of parsing rules for annotations
+	////StringAnnotation returns Annotation:
+	////	CommentAnnotation
+	////	| KeyStringValueAnnotation
+	////	;
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
@@ -1931,15 +2191,59 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getCommentAnnotationAccess().getRule();
 	}
 
-	//// e.g.: @layouter dot; @layoutOptions "margin 5, dir top-down";    
-	//KeyValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString?;
-	public AnnotationsGrammarAccess.KeyValueAnnotationElements getKeyValueAnnotationAccess() {
-		return gaActions.getKeyValueAnnotationAccess();
+	//// e.g.: @HVlayout
+	//TagAnnotation returns StringAnnotation:
+	//	"@" name=ID;
+	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
+		return gaActions.getTagAnnotationAccess();
 	}
 	
-	public ParserRule getKeyValueAnnotationRule() {
-		return getKeyValueAnnotationAccess().getRule();
+	public ParserRule getTagAnnotationRule() {
+		return getTagAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @layouter dot;   
+	//KeyStringValueAnnotation returns StringAnnotation:
+	//	"@" name=ID value=EString;
+	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
+		return gaActions.getKeyStringValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyStringValueAnnotationRule() {
+		return getKeyStringValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @visible true;
+	//KeyBooleanValueAnnotation returns BooleanAnnotation:
+	//	"@" name=ID value=Boolean;
+	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
+		return gaActions.getKeyBooleanValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyBooleanValueAnnotationRule() {
+		return getKeyBooleanValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @minSpace 10;    
+	//KeyIntValueAnnotation returns IntAnnotation:
+	//	"@" name=ID value=INT;
+	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
+		return gaActions.getKeyIntValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyIntValueAnnotationRule() {
+		return getKeyIntValueAnnotationAccess().getRule();
+	}
+
+	//// e.g.: @minSpace 10.0;    
+	//KeyFloatValueAnnotation returns FloatAnnotation:
+	//	"@" name=ID value=Float;
+	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
+		return gaActions.getKeyFloatValueAnnotationAccess();
+	}
+	
+	public ParserRule getKeyFloatValueAnnotationRule() {
+		return getKeyFloatValueAnnotationAccess().getRule();
 	}
 
 	//// needed for importing other resources
@@ -1964,6 +2268,12 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 		return getEStringAccess().getRule();
 	}
 
+	//// --------------------------
+	////
+	////  Terminals...
+	////
+	//// --------------------------
+	//// custom terminals
 	//// custom terminal rule introducing semantic comments
 	//terminal COMMENT_ANNOTATION:
 	//	"/ **"->"* /";
@@ -1977,6 +2287,31 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 	//	"/ *" !"*"->"* /";
 	public TerminalRule getML_COMMENTRule() {
 		return gaActions.getML_COMMENTRule();
+	} 
+
+	//// generic terminals
+	//// redefine INT terminal to allow negative numbers
+	//terminal INT returns ecore::EInt:
+	//	"-"? "0".."9"+;
+	public TerminalRule getINTRule() {
+		return gaActions.getINTRule();
+	} 
+
+	////// redefine INT terminal to allow negative numbers
+	////terminal NINT returns ecore::EInt:
+	////    '-'?('0'..'9')+;
+	//// make sure the Float rule does not shadow the INT rule
+	//terminal Float returns ecore::EFloatObject:
+	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
+	public TerminalRule getFloatRule() {
+		return gaActions.getFloatRule();
+	} 
+
+	//// introduce boolean values
+	//terminal Boolean returns ecore::EBooleanObject:
+	//	"true" | "false";
+	public TerminalRule getBooleanRule() {
+		return gaActions.getBooleanRule();
 	} 
 
 	//terminal ID:

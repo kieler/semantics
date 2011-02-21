@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
@@ -57,9 +58,10 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
             return true;
         }
-        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
-                && SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-                && owner.eContainer() == null) {
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()) {
+            // check all signals in order to prevent attempts to serialize trapdecls (kies)
+//                && SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+//                && owner.eContainer() == null) {
             return true;
         }
         return false;
@@ -101,7 +103,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyContents()) {
             return true;
         }
-        
+
         if (feature == SyncchartsPackage.eINSTANCE.getScope_BodyReference()) {
             return true;
         }
@@ -121,6 +123,13 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         /* suppress the 'normal' attribute of a state */
         if (feature == SyncchartsPackage.eINSTANCE.getState_Type()) {
             return owner.eGet(feature).equals(StateType.NORMAL);
+        }
+        
+        
+        /* suppress the additions introduced by uru's ISignal/IVariable classes */
+        if (feature == KExpressionsPackage.eINSTANCE.getISignal_ChannelDescr()
+                || feature == KExpressionsPackage.eINSTANCE.getIVariable_Expression()) {
+            return true;
         }
         
         
@@ -195,13 +204,19 @@ public class KitsTransientValueService extends DefaultTransientValueService {
         }
 
         
-        /* do not serialized the implicit 'tick' signal! */
-        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()
-                && SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
-                && owner.eContainer() == null) {
-            return ((Region) owner).getSignals().get(index).getName().equals("tick");
+        if (feature == SyncchartsPackage.eINSTANCE.getScope_Signals()) {
+            if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
+                    && owner.eContainer() == null) {
+                /* do not serialized the implicit 'tick' signal! */
+                return ((Region) owner).getSignals().get(index).getName().equals("tick");
+            }
+            if (((EList<Signal>) owner.eGet(feature)).get(index).eClass().getName()
+                    .equals("TrapDecl")) {
+                return true;
+            } else {
+                return false;
+            }
         }
-
         
         /* try not to serialize annotations that are of type unequal to StringAnnotations */
         if (feature == AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations()) {
@@ -209,14 +224,24 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                     ((Annotatable) owner).getAnnotations().get(index))) {
                 return false;
             }
-            if (!AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
+            if (AnnotationsPackage.eINSTANCE.getBooleanAnnotation().isInstance(
                     ((Annotatable) owner).getAnnotations().get(index))) {
-                return true;
+                return false;
             }
-            else {
+            if (AnnotationsPackage.eINSTANCE.getIntAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index))) {
+                return false;
+            }
+            if (AnnotationsPackage.eINSTANCE.getFloatAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index))) {
+                return false;
+            }
+            if (AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(
+                    ((Annotatable) owner).getAnnotations().get(index))) {
                 StringAnnotation a = (StringAnnotation) ((Annotatable)  owner).getAnnotations().get(index);
                 return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValue());
             }
+            return true;            
         }
         
         if (AnnotationsPackage.eINSTANCE.getStringAnnotation().isInstance(owner)

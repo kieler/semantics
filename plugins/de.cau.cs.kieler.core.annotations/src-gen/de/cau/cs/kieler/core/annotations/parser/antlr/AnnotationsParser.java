@@ -42,7 +42,7 @@ public class AnnotationsParser extends org.eclipse.xtext.parser.antlr.AbstractAn
 	
 	@Override 
 	protected String getDefaultRuleName() {
-		return "StringAnnotation";
+		return "Annotation";
 	}
 	
 	public AnnotationsGrammarAccess getGrammarAccess() {
