@@ -19,6 +19,7 @@ import java.io.OutputStreamWriter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.eclipse.core.resources.IFile;
@@ -128,9 +129,13 @@ public final class TransformationUtil {
         SYNC_OPT
     };
 
+    static {
+        // turn off logging
+        logger.setLevel(Level.OFF);
+    }
+
     /** utility class. */
     private TransformationUtil() {
-        // logger.setLevel(Level.OFF);
     }
 
     /**

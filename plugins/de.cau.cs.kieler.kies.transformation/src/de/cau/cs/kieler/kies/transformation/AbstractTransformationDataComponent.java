@@ -15,6 +15,7 @@ package de.cau.cs.kieler.kies.transformation;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.logging.Level;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -43,6 +44,7 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -128,6 +130,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
 
+        if (isHistoryStep()) {
+            Status status = new Status(Status.WARNING, Activator.PLUGIN_ID,
+                    "History steps are not supported! Use the respective control "
+                            + "buttons in order to gain the possibility to perform back steps.");
+            StatusManager.getManager().handle(status, StatusManager.SHOW);
+            return null;
+        }
         // TODO proper undo
         // TransformationUtil.logger.info("in dc: " + Thread.currentThread());
         // boolean test = false;

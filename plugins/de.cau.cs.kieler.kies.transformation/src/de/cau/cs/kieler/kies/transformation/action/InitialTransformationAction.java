@@ -62,7 +62,6 @@ public class InitialTransformationAction implements IActionDelegate {
                                     IProgressMonitor.UNKNOWN);
                             boolean success = TransformationUtil.performHeadlessTransformation(
                                     kixsFile, TransformationType.SYNC_OPT);
-                            System.out.println("######## SUC" + success);
                             uiMonitor.beginTask("Opening the Diagram", IProgressMonitor.UNKNOWN);
                             TransformationUtil.openKidsInEditor(kixsFile);
                             LayoutEffect effect = new LayoutEffect(TransformationUtil

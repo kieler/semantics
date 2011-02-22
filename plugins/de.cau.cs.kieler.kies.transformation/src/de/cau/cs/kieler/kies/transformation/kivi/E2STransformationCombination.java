@@ -132,7 +132,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
-        // KiVi.getInstance().setDebug(true);
+        //KiVi.getInstance().setDebug(true);
     }
 
     /**
@@ -152,7 +152,6 @@ public class E2STransformationCombination extends AbstractCombination {
 
         // editor state, remember the currently active editor
         if (getTriggerState() instanceof ActiveEditorState) {
-            System.out.println("changed");
             editorStateChanged(editorState);
             return;
         }
@@ -160,7 +159,7 @@ public class E2STransformationCombination extends AbstractCombination {
         // transformation state
         if ((getTriggerState() instanceof EffectTriggerState)
                 && transformationState.getEffect() instanceof TransformationEffect) {
-            System.out.println("\t #### FINISHED with result: "
+            TransformationUtil.logger.info("\t #### Transformation finished with result: "
                     + transformationState.getEffect().getResult());
             postTransformation(transformationState.getEffect());
             return;
@@ -168,8 +167,6 @@ public class E2STransformationCombination extends AbstractCombination {
 
         // button state
         if (getTriggerState() instanceof ButtonState) {
-            System.out.println("button state");
-
             if (!buttonEnabling.keySet().contains(buttonState.getButtonId())) {
                 // not interested in that button
                 return;
@@ -436,7 +433,6 @@ public class E2STransformationCombination extends AbstractCombination {
 
     private void setButtonEnabling(final boolean bool) {
         for (String button : buttonEnabling.keySet()) {
-            System.out.println(button + " " + bool);
             MenuItemEnableStateEffect effect = new MenuItemEnableStateEffect(button, !bool ? false
                     : (Boolean) buttonEnabling.get(button));
             effect.schedule();
