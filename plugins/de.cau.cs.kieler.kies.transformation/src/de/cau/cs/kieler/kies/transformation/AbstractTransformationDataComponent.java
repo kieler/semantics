@@ -15,12 +15,14 @@ package de.cau.cs.kieler.kies.transformation;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.logging.Level;
 
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -44,7 +46,6 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -171,6 +172,11 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         // lastStep++;
         // TransformationUtil.logger.info("Non History ");
         // System.out.println("currentsteps " + KiemPlugin.getDefault().getExecution().getSteps());
+
+        // check if root region was already selected
+        if (rootRegion == null || rootState == null) {
+            fetchRootRegionAndState();
+        }
 
         // perform next transformation
         currentDescriptor = getNextTransformation();
@@ -319,6 +325,25 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
      */
     protected TransactionalEditingDomain getEditingDomainForResourceSet(final ResourceSet rs) {
         return TransactionalEditingDomain.Factory.INSTANCE.createEditingDomain(rs);
+    }
+
+    /**
+     * fetches the root region and root state of the currently active synccharts editor.
+     */
+    protected void fetchRootRegionAndState() {
+        // fetch the root model elements
+        IEditorPart editor = TransformationUtil.getActiveEditor();
+        if (editor instanceof SyncchartsDiagramEditor) {
+            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
+
+            Object selView = rootEditPart.getModel();
+            EObject selModel = ((View) selView).getElement();
+            rootRegion = (Region) selModel;
+            if (rootRegion != null) {
+                State root = ((Region) selModel).getStates().get(0);
+                rootState = root;
+            }
+        }
     }
 
     /**

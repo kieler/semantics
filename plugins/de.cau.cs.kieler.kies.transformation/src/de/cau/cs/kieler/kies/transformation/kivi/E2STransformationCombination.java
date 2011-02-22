@@ -132,7 +132,7 @@ public class E2STransformationCombination extends AbstractCombination {
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
-        //KiVi.getInstance().setDebug(true);
+        // KiVi.getInstance().setDebug(true);
     }
 
     /**
@@ -447,8 +447,8 @@ public class E2STransformationCombination extends AbstractCombination {
             optimizingDataComponent.initialize();
         } catch (KiemInitializationException e) {
             Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
-                    "An error occured during the setup of the DataComponents.");
-            StatusManager.getManager().handle(s);
+                    "An error occured during the setup of the DataComponents.", e);
+            StatusManager.getManager().handle(s, StatusManager.SHOW);
         }
     }
 

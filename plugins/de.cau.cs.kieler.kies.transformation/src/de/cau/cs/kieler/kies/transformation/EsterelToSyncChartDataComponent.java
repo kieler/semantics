@@ -16,9 +16,6 @@ package de.cau.cs.kieler.kies.transformation;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
@@ -53,10 +50,6 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
     /** first transformation being executed. */
     public static final String INITIAL_TRANSFORMATION = "rule";
-
-    /** current syncchart's root state. */
-    private State rootState;
-    private Region rootRegion;
 
     /**
      * global variable determining whether the transformation should be run recursively, hence
@@ -111,16 +104,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
                 globalVars);
 
         // fetch the root model elements
-        IEditorPart editor = TransformationUtil.getActiveEditor();
-        if (editor instanceof SyncchartsDiagramEditor) {
-            EditPart rootEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-
-            Object selView = rootEditPart.getModel();
-            EObject selModel = ((View) selView).getElement();
-            rootRegion = (Region) selModel;
-            State root = ((Region) selModel).getStates().get(0);
-            rootState = root;
-        }
+        fetchRootRegionAndState();
         TransformationUtil.logger.info("Added First Statement");
     }
 
@@ -129,6 +113,13 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
      */
     @Override
     public TransformationDescriptor getNextTransformation() {
+
+        if (rootState == null) {
+            fetchRootRegionAndState();
+            if (rootState == null) {
+                return null;
+            }
+        }
 
         // first case is that we demand recursive execution
         if (((Boolean) globalVars.get(GLOBALVAR_REC).getValue())) {
