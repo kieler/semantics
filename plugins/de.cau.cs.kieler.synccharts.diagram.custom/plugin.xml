@@ -474,16 +474,6 @@
             value="true">
       </option>
       <option
-            class="de.cau.cs.kieler.core.kexpressions.ISignal"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </option>
-      <option
-            class="de.cau.cs.kieler.core.kexpressions.IVariable"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </option>
-      <option
             class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.spacing"
             value="1.0">
@@ -516,6 +506,10 @@
       <semanticOption
             class="de.cau.cs.kieler.synccharts.Scope"
             config="de.cau.cs.kieler.synccharts.diagram.custom.HVLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Action"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.ActionLayoutConfig">
       </semanticOption>
    </extension>
       <extension

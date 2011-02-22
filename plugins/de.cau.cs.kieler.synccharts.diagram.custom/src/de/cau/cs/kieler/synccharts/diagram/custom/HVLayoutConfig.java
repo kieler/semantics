@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
-import de.cau.cs.kieler.kiml.LayoutServices;
 import de.cau.cs.kieler.kiml.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -68,11 +66,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     @Override
     protected List<LayoutOptionData<?>> getOptionData(final EObject semanticElem) {
         if (semanticElem instanceof Scope && getHVDistance((Scope) semanticElem) >= 0) {
-            LayoutOptionData<?> optionData = LayoutServices.getInstance()
-                    .getOptionData(LayoutOptions.DIRECTION_ID);
-            List<LayoutOptionData<?>> list = new ArrayList<LayoutOptionData<?>>(1);
-            list.add(optionData);
-            return list;
+            return makeList(LayoutOptions.DIRECTION_ID);
         }
         return Collections.emptyList();
     }
