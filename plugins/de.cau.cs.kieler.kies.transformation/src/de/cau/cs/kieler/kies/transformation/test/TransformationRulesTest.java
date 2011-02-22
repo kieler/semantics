@@ -38,6 +38,8 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.collect.Maps;
+
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
 
@@ -57,9 +59,12 @@ import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.Transformati
 public class TransformationRulesTest {
 
     // FIXME
-    private String pathToWS = "/../eclipse WS/";
+    private String pathToWS = "/../eclipseWS4/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
+
+    // used for optimization
+    private Map<String, Boolean> optimizationVars;
 
     /**
      * get the workspace root and open a project to work with.
@@ -78,6 +83,11 @@ public class TransformationRulesTest {
         }
         if (!project.isOpen()) {
             project.open(null);
+        }
+        final int numberOfProps = 9;
+        optimizationVars = Maps.newHashMap();
+        for (int i = 0; i < numberOfProps; i++) {
+            optimizationVars.put("rule" + i, false);
         }
     }
 
@@ -199,15 +209,35 @@ public class TransformationRulesTest {
     public void testOptRule1() throws Exception {
         performOptimization("rule1.kixs", "_exp");
     }
-    
+
+    @Test
+    public void testOptRule2() throws Exception {
+        performOptimization("rule2.kixs", "_exp");
+    }
+
+    @Test
+    public void testOptRule3() throws Exception {
+        performOptimization("rule3.kixs", "_exp");
+    }
+
     @Test
     public void testOptRule4() throws Exception {
         performOptimization("rule4.kixs", "_exp");
     }
-    
+
     @Test
     public void testOptRule5() throws Exception {
         performOptimization("rule5.kixs", "_exp");
+    }
+
+    @Test
+    public void testOptRule7() throws Exception {
+        performOptimization("rule7.kixs", "_exp");
+    }
+
+    @Test
+    public void testOptRule8() throws Exception {
+        performOptimization("rule8.kixs", "_exp");
     }
 
     // CHECKSTYLEON JavadocMethod
@@ -282,7 +312,17 @@ public class TransformationRulesTest {
     }
 
     private IFile optimizeSyncChart(final IFile kixsFile) {
-        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT);
+        final int numberOfProps = 9;
+        // set up global vars. just the tested rule should be applied.
+        for (int i = 1; i < numberOfProps; i++) {
+            String rule = kixsFile.getName().substring(0, kixsFile.getName().lastIndexOf("."));
+            boolean value = (rule.equals("rule" + i)) ? true : false;
+            optimizationVars.put("rule" + i, value);
+            System.out.println(i + " " + value + " " + kixsFile);
+        }
+
+        TransformationUtil.performHeadlessTransformation(kixsFile, TransformationType.SYNC_OPT,
+                optimizationVars);
         return kixsFile;
     }
 

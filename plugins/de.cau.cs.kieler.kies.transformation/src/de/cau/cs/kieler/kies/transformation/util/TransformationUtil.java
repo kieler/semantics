@@ -559,6 +559,25 @@ public final class TransformationUtil {
      */
     public static boolean performHeadlessTransformation(final IFile kixsFile,
             final TransformationType type) {
+        return performHeadlessTransformation(kixsFile, type, null);
+    }
+
+    /**
+     * Performs a headless transformation on the passed {@code kixsFile}. The transformation can
+     * either be a Esterel to SyncCharts transformation or a SyncCharts optimization depending on
+     * the {@code type} parameter.
+     * 
+     * @param kixsFile
+     *            the file to transform.
+     * @param type
+     *            {@link TransformationType} determining the type of this transformation.
+     * @param globalVars
+     *            a map containing global variables that are me passed to the created data
+     *            component.
+     * @return {@code true} if the transformation was successful, false otherwise.
+     */
+    public static boolean performHeadlessTransformation(final IFile kixsFile,
+            final TransformationType type, final Map<String, Boolean> globalVars) {
         boolean success = true;
 
         // retrieve the resource
@@ -583,10 +602,17 @@ public final class TransformationUtil {
                 dc = new SyncChartsOptimizationDataComponent(false);
                 dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
             }
-
+ 
+            // then initialize
             dc.setHeadless(true);
             dc.initialize();
             dc.setRootState(root);
+            // set global variables
+            if (globalVars != null) {
+                for (String var : globalVars.keySet()) {
+                    dc.setGlobalVariable(var, globalVars.get(var));
+                }
+            }
 
             // retrieve transformation description
             TransformationDescriptor td = dc.getNextTransformation();

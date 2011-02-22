@@ -339,8 +339,8 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
             Object selView = rootEditPart.getModel();
             EObject selModel = ((View) selView).getElement();
             rootRegion = (Region) selModel;
-            if (rootRegion != null) {
-                State root = ((Region) selModel).getStates().get(0);
+            if (rootRegion != null && rootRegion.getStates().size() > 0) {
+                State root = rootRegion.getStates().get(0);
                 rootState = root;
             }
         }
