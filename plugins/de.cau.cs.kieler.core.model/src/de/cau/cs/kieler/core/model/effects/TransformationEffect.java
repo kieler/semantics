@@ -76,7 +76,6 @@ public class TransformationEffect extends AbstractEffect {
     public void execute() {
         if (context != null && descriptor != null) {
             // execute the transformation
-            long start = System.currentTimeMillis();
             if (monitored) {
                 MonitoredOperation operation = new MonitoredOperation() {
 
@@ -90,9 +89,6 @@ public class TransformationEffect extends AbstractEffect {
             } else {
                 context.execute(descriptor);
             }
-            long end = System.currentTimeMillis();
-            
-            System.out.println("\t ##### Execution Time: " + (end - start));
         } else {
             Status status = new Status(
                     Status.ERROR,
