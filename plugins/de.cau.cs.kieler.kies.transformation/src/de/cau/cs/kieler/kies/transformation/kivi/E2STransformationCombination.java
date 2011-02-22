@@ -283,7 +283,7 @@ public class E2STransformationCombination extends AbstractCombination {
         } catch (KiemExecutionException e) {
             Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
                     "A problem occured during transformation.", e);
-            StatusManager.getManager().handle(s);
+            StatusManager.getManager().handle(s, StatusManager.SHOW);
         }
     }
 
@@ -387,7 +387,8 @@ public class E2STransformationCombination extends AbstractCombination {
             layoutEffect.schedule();
 
             // set a new selection in case xtext passed one
-            if (effect.getResult() instanceof State) {
+            if (currentDataComponent instanceof EsterelToSyncChartDataComponent
+                    && effect.getResult() instanceof State) {
                 State selection = (State) effect.getResult();
                 IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance()
                         .getBridge(currentlyActiveEditor);

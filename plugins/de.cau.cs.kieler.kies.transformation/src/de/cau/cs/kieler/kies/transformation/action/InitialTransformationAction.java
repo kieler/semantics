@@ -24,6 +24,7 @@ import org.eclipse.ui.IActionDelegate;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
@@ -52,27 +53,52 @@ public class InitialTransformationAction implements IActionDelegate {
             PlatformUI.getWorkbench().getProgressService()
                     .run(false, true, new IRunnableWithProgress() {
                         public void run(final IProgressMonitor uiMonitor) {
-                            uiMonitor.beginTask("Initial Transformation", IProgressMonitor.UNKNOWN);
-                            IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
-                            uiMonitor.beginTask("Performing Esterel To SyncCharts Transformation",
-                                    IProgressMonitor.UNKNOWN);
-                            TransformationUtil.performHeadlessTransformation(kixsFile,
-                                    TransformationType.E2S);
-                            uiMonitor.beginTask("Performing SyncCharts Optimization",
-                                    IProgressMonitor.UNKNOWN);
-                            boolean success = TransformationUtil.performHeadlessTransformation(
-                                    kixsFile, TransformationType.SYNC_OPT);
-                            uiMonitor.beginTask("Opening the Diagram", IProgressMonitor.UNKNOWN);
-                            TransformationUtil.openKidsInEditor(kixsFile);
-                            LayoutEffect effect = new LayoutEffect(TransformationUtil
-                                    .getActiveEditor(), null);
-                            effect.schedule();
+                            try {
+                                uiMonitor.beginTask("Initial Transformation",
+                                        IProgressMonitor.UNKNOWN);
+                                IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
+                                uiMonitor.beginTask(
+                                        "Performing Esterel To SyncCharts Transformation",
+                                        IProgressMonitor.UNKNOWN);
+                                if (kixsFile == null) {
+                                    throw new KielerException(strlFile
+                                            + " could not be transformed "
+                                            + "initially into a SyncCharts.");
+                                }
+                                boolean success = false;
+                                success = TransformationUtil.performHeadlessTransformation(
+                                        kixsFile, TransformationType.E2S);
+                                uiMonitor.beginTask("Performing SyncCharts Optimization",
+                                        IProgressMonitor.UNKNOWN);
+                                if (!success) {
+                                    throw new KielerException(strlFile
+                                            + ": Transformating Esterel elements "
+                                            + "to their SyncCharts equivalent failed.");
+                                }
+                                success = TransformationUtil.performHeadlessTransformation(
+                                        kixsFile, TransformationType.SYNC_OPT);
+                                if (!success) {
+                                    throw new KielerException(strlFile
+                                            + ": Optimizing the transformed SyncCharts failed.");
+                                }
+                                uiMonitor
+                                        .beginTask("Opening the Diagram", IProgressMonitor.UNKNOWN);
+                                TransformationUtil.openKidsInEditor(kixsFile);
+                                LayoutEffect effect = new LayoutEffect(TransformationUtil
+                                        .getActiveEditor(), null);
+                                effect.schedule();
+                            } catch (KielerException ke) {
+                                Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
+                                        "Could not transform " + strlFile.getName()
+                                                + " into a SyncCharts.", ke);
+                                StatusManager.getManager().handle(s, StatusManager.SHOW);
+                            }
                         }
                     });
         } catch (Exception e) {
             Status s = new Status(Status.ERROR, Activator.PLUGIN_ID, "Could not transform "
                     + strlFile.getName() + " into a SyncCharts.", e);
-            StatusManager.getManager().handle(s);
+            StatusManager.getManager().handle(s, StatusManager.SHOW);
         }
     }
 
