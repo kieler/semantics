@@ -15,7 +15,7 @@
             generation_date="de.cau.cs.kieler.kies.example.example2"
             id="de.cau.cs.kieler.kies.abro"
             root_directory="examples/"
-            title="ABRO_Esterel">
+            title="ABRO">
          <resource
                direct_open="true"
                local_path="examples/abro.strl"
