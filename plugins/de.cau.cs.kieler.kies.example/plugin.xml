@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.kex">
+      <category
+            id="de.cau.cs.kieler.kies"
+            title="Esterel">
+      </category>
+      <example
+            author="KIELER Workgroup"
+            category="de.cau.cs.kieler.kies"
+            contact="kieler@informatik.uni-kiel.de"
+            description="ABRO The hello world of synchronous languages"
+            generation_date="de.cau.cs.kieler.kies.example.example2"
+            id="de.cau.cs.kieler.kies.abro"
+            root_directory="examples/"
+            title="ABRO">
+         <resource
+               direct_open="true"
+               local_path="examples/abro.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="(KIELER Workgroup)"
+            category="de.cau.cs.kieler.kies"
+            contact="kieler@informatik.uni-kiel.de"
+            description="The wristwatch example"
+            generation_date="de.cau.cs.kieler.kies.example.example4"
+            id="de.cau.cs.kieler.kies.ww"
+            root_directory="examples/"
+            title="Wristwatch">
+         <resource
+               direct_open="true"
+               local_path="examples/ww.strl"
+               resource_type="file">
+         </resource>
+      </example>
+      <example
+            author="(KIELER Workgroup)"
+            category="de.cau.cs.kieler.kies"
+            contact="kieler@informatik.uni-kiel.de"
+            description="The wristwatch example in expanded form."
+            generation_date="de.cau.cs.kieler.kies.example.example3"
+            id="de.cau.cs.kieler.kies.ww_expanded"
+            root_directory="examples/"
+            title="Wristwatch Expanded">
+         <resource
+               direct_open="true"
+               local_path="examples/ww_expanded.strl"
+               resource_type="file">
+         </resource>
+      </example>
+   </extension>
+
+</plugin>

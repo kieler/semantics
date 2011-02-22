@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Esterel Examples
+Bundle-SymbolicName: de.cau.cs.kieler.kies.example;singleton:=true
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.kies.example.EsterelExamplesPlugin
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.kex;bundle-version="0.1.0",
+ de.cau.cs.kieler.kex.ui;bundle-version="0.1.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
