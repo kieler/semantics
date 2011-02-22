@@ -11,6 +11,7 @@ org.eclipse.platform
 --launcher.defaultAction
 openFile
 -vmargs
+-Xss4m
 -Xms512m
 -Xmn256m
 -Xmx1024m

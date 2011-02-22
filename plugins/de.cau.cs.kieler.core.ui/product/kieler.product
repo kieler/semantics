@@ -26,12 +26,12 @@ Copyright 2010 by Christian-Albrechts-University of Kiel, Department of Computer
 org.eclipse.platform
 --launcher.defaultAction
 openFile</programArgsMac>
-      <vmArgs>-Xms512m
+      <vmArgs>-Xss4m
+-Xms512m
 -Xmn256m
 -Xmx1024m 
 -XX:PermSize=128m
--XX:MaxPermSize=256m
--Xss4m</vmArgs>
+-XX:MaxPermSize=256m</vmArgs>
       <vmArgsMac>-XstartOnFirstThread
 -Dorg.eclipse.swt.internal.carbon.smallFonts
 -Dosgi.requiredJavaVersion=1.5
