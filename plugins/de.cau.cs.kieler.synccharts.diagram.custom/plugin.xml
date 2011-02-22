@@ -474,6 +474,16 @@
             value="true">
       </option>
       <option
+            class="de.cau.cs.kieler.core.kexpressions.ISignal"
+            option="de.cau.cs.kieler.noLayout"
+            value="true">
+      </option>
+      <option
+            class="de.cau.cs.kieler.core.kexpressions.IVariable"
+            option="de.cau.cs.kieler.noLayout"
+            value="true">
+      </option>
+      <option
             class="de.cau.cs.kieler.synccharts.State"
             option="de.cau.cs.kieler.spacing"
             value="1.0">
@@ -494,19 +504,14 @@
             value="true">
       </option>
       <option
+            class="de.cau.cs.kieler.synccharts.State"
+            option="de.cau.cs.kieler.interactive"
+            value="true">
+      </option>
+      <option
             class="de.cau.cs.kieler.synccharts.Region"
             option="de.cau.cs.kieler.borderSpacing"
             value="1.0">
-      </option>
-      <option
-            class="de.cau.cs.kieler.core.kexpressions.IVariable"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
-      </option>
-      <option
-            class="de.cau.cs.kieler.core.kexpressions.ISignal"
-            option="de.cau.cs.kieler.noLayout"
-            value="true">
       </option>
       <semanticOption
             class="de.cau.cs.kieler.synccharts.Scope"
