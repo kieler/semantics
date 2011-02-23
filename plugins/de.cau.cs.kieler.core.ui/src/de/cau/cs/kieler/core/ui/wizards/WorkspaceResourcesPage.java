@@ -184,6 +184,11 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                 selectAndRevealElement(o, false);
             }
         }
+        
+        // If resources were selected, the page needs to be validated
+        if (!selection.isEmpty()) {
+            validate();
+        }
     }
     
     
