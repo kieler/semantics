@@ -77,25 +77,23 @@
 			value="^/\\*\n.*KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client.*\n" />
 	</module>
 
-	<!--
-		Checks that a package-info.java file exists for each package.
-	-->
+	<!-- Checks that a package-info.java file exists for each package. -->
 	<!-- See http://checkstyle.sf.net/config_javadoc.html#JavadocPackage -->
 	<module name="JavadocPackage" />
 
+	<!-- Checks whether files end with a new line. -->
+	<!-- See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile -->
 	<!--
-		Checks whether files end with a new line.
+		cds: disabled, because doesn't work correctly on Windows.
+        <module name="NewlineAtEndOfFile" />
 	-->
-	<!--
-		See http://checkstyle.sf.net/config_misc.html#NewlineAtEndOfFile
-	-->
-	<module name="NewlineAtEndOfFile" />
 
 	<!-- Checks that property files contain the same keys.         -->
 	<!-- See http://checkstyle.sf.net/config_misc.html#Translation -->
 	<!--
 		haf: disabled, because conflicting with other properties files of
-		Eclipse <module name="Translation"/>
+		Eclipse
+        <module name="Translation"/>
 	-->
 
 	<!-- Checks for Size Violations.                    -->
@@ -130,7 +128,12 @@
 		<module name="JavadocVariable">
 			<property name="scope" value="protected" />
 		</module>
-		<module name="JavadocStyle" />
+		<!--
+			cds: removed HTML checks because they don't give correct results.
+		-->
+		<module name="JavadocStyle">
+            <property name="checkHtml" value="false" />
+        </module>
 		<module name="JavadocType">
 			<property name="authorFormat" value="\S*" />
 		</module>
