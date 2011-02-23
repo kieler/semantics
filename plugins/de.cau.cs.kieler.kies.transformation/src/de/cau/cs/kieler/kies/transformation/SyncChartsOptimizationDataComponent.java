@@ -313,3 +313,4 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     }
 
 }
+

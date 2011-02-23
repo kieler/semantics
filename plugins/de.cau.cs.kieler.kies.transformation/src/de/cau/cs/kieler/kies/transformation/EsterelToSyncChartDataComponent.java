@@ -231,10 +231,10 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     }
 
     private boolean isTransformable(final State s) {
-        if (s == null) {
+        if (s == null || s.getBodyReference() == null) {
             return false;
         }
-        return s.getBodyText().size() > 0;
+        return TransformationUtil.isEsterelElement(s.getBodyReference());
     }
 
     /**

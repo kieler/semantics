@@ -389,6 +389,13 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
     public void setRootState(final State rootState) {
         this.rootState = rootState;
     }
+    
+    /**
+     * @return the rootState
+     */
+    public State getRootState() {
+        return rootState;
+    }
 
     /**
      * processes a transformation directly within the data component. A {@link TransformationEffect}

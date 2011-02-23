@@ -172,9 +172,13 @@ public final class TransformationUtil {
     /**
      * @param obj
      *            the {@link EObject} to test
-     * @return true if {@code obj} is an esterel element, false otherwise.
+     * @return true if {@code obj} is an esterel element, false otherwise. Passing {@code null} will
+     *         result in false being returned.
      */
     public static boolean isEsterelElement(final EObject obj) {
+        if (obj == null) {
+            return false;
+        }
         return EsterelPackage.eINSTANCE.eContents().contains(obj.eClass());
     }
 
@@ -602,7 +606,7 @@ public final class TransformationUtil {
                 dc = new SyncChartsOptimizationDataComponent(false);
                 dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
             }
- 
+
             // then initialize
             dc.setHeadless(true);
             dc.initialize();

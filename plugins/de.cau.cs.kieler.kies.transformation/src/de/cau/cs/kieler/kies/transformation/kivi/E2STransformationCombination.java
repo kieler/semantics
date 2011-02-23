@@ -18,14 +18,16 @@ import java.util.Map;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.CommandStack;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 
@@ -44,6 +46,7 @@ import de.cau.cs.kieler.core.model.trigger.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
@@ -52,6 +55,7 @@ import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -387,24 +391,33 @@ public class E2STransformationCombination extends AbstractCombination {
             layoutEffect.schedule();
 
             // set a new selection in case xtext passed one
-            if (currentDataComponent instanceof EsterelToSyncChartDataComponent
-                    && effect.getResult() instanceof State) {
-                State selection = (State) effect.getResult();
-                IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance()
+            if (currentDataComponent instanceof EsterelToSyncChartDataComponent) {
+                final IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance()
                         .getBridge(currentlyActiveEditor);
                 if (bridge != null) {
-                    final EditPart p = bridge.getEditPart(selection);
-                    if (p != null) {
-                        // a selection has to be performed on the UI thread.
-                        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+                    // a selection has to be performed on the UI thread.
+                    MonitoredOperation.runInUI(new Runnable() {
 
-                            public void run() {
+                        public void run() {
+                            if (isTransformable() && effect.getResult() instanceof State) {
+                                State selection = (State) effect.getResult();
+                                final EditPart p = bridge.getEditPart(selection);
+                                if (p != null) {
+                                    ((IEditorPart) currentlyActiveEditor).getEditorSite()
+                                            .getSelectionProvider()
+                                            .setSelection(new StructuredSelection(p));
+                                }
+                            } else {
+                                // if nothing is transformable anymore, clear the current
+                                // selection
+                                EditPart root = bridge.getEditPart(currentDataComponent
+                                        .getRootState());
                                 ((IEditorPart) currentlyActiveEditor).getEditorSite()
                                         .getSelectionProvider()
-                                        .setSelection(new StructuredSelection(p));
+                                        .setSelection(new StructuredSelection(root));
                             }
-                        });
-                    }
+                        }
+                    }, false);
                 }
             }
         }
@@ -457,13 +470,24 @@ public class E2STransformationCombination extends AbstractCombination {
      * @return true if the currently opened model is transformable.
      */
     private boolean isTransformable() {
-        EsterelToSyncChartDataComponent dc = new EsterelToSyncChartDataComponent(true);
-        try {
-            dc.initialize();
-        } catch (KiemInitializationException e) {
-            e.printStackTrace();
+        if (currentlyActiveEditor instanceof SyncchartsDiagramEditor) {
+            // fetch the root part of the current diagram
+            EditPart rootEditPart = ((DiagramEditor) currentlyActiveEditor).getDiagramEditPart();
+            Object selView = rootEditPart.getModel();
+            EObject selModel = ((View) selView).getElement();
+            Region rootRegion = (Region) selModel;
+
+            // check if any state exists with a body reference to an esterel element
+            TreeIterator<EObject> contents = rootRegion.eAllContents();
+            while (contents.hasNext()) {
+                EObject current = contents.next();
+                if (current instanceof State) {
+                    if (TransformationUtil.isEsterelElement(((State) current).getBodyReference())) {
+                        return true;
+                    }
+                }
+            }
         }
-        Object next = dc.getNextTransformation();
-        return next != null;
+        return false;
     }
 }
