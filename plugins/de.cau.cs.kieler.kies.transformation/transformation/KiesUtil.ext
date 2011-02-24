@@ -171,11 +171,12 @@ State findInitialState(Region r):
 /**
  * creates an immediate weakly aborting transition between the two passed states.
  */
-Void createImmediateWeakAbortTo(State from, State to):
+Void createImmediateWeakAbortTo(State from, State to, Transition original):
 	let t = new Transition:
 	from.outgoingTransitions.add(t) ->
 	t.setSourceState(from) ->
 	t.setTargetState(to) ->
+	t.addEffects(original.effects) ->
 	to.incomingTransitions.add(t) ->
 	
 	t.setType(TransitionType::WEAKABORT) ->

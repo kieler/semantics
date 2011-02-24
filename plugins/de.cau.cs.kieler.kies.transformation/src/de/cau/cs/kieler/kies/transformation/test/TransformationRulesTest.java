@@ -229,6 +229,11 @@ public class TransformationRulesTest {
     public void testOptRule5() throws Exception {
         performOptimization("rule5.kixs", "_exp");
     }
+    
+    @Test
+    public void testOptRule6() throws Exception {
+        performOptimization("rule6.kixs", "_exp");
+    }
 
     @Test
     public void testOptRule7() throws Exception {

@@ -219,17 +219,18 @@ public class E2STransformationCombination extends AbstractCombination {
             initInProgess = true;
             TransformationUtil.openKidsInEditor(created);
             ValidationManager.disableAll();
+            currentlyActiveEditor = TransformationUtil.getActiveEditor();
 
             if (created == null) {
                 return false;
             }
 
-            currentDataComponent = new EsterelToSyncChartDataComponent(true);
-            try {
-                currentDataComponent.initialize();
-            } catch (KiemInitializationException e) {
-                e.printStackTrace();
-            }
+//            currentDataComponent = new EsterelToSyncChartDataComponent(true);
+//            try {
+//                currentDataComponent.initialize();
+//            } catch (KiemInitializationException e) {
+//                e.printStackTrace();
+//            }
             return true;
         }
         return false;

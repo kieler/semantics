@@ -247,7 +247,8 @@ Void rule6(State s, List[State] states):
 	// final simples become nonfinal
 	finalSimples.setIsFinal(false) ->
 	
-	finalSimples.createImmediateWeakAbortTo(s.outgoingTransitions.get(0).targetState) ->
+	finalSimples.createImmediateWeakAbortTo(s.outgoingTransitions.get(0).targetState, 
+		s.outgoingTransitions.get(0)) ->
 	if !normalTerms.isEmpty then
 		finalMacros.copyNormalTransitionFrom(normalTerms.get(0))
 	)
