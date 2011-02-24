@@ -4,18 +4,20 @@
     <signals name="a"/>
     <signals name="b"/>
     <regions id="">
-      <states id="_3" incomingTransitions="//@states.0/@regions.0/@states.1/@outgoingTransitions.0">
+      <states id="_" isInitial="true">
+        <regions id="">
+          <states id="_" isInitial="true" isFinal="true"/>
+        </regions>
+        <outgoingTransitions label="a / b" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+      </states>
+      <states id="_3" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
         <signals name="t"/>
         <regions id="">
           <states id="_" isInitial="true"/>
         </regions>
-      </states>
-      <states id="_" isInitial="true">
-        <signals name="f"/>
-        <outgoingTransitions label="a / b" priority="1" targetState="//@states.0/@regions.0/@states.0">
-          <effects xsi:type="synccharts:Emission" signal="//@states.0/@signals.1"/>
-          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
-        </outgoingTransitions>
       </states>
     </regions>
   </states>
