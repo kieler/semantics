@@ -256,7 +256,10 @@ Integer getNumberOfTraphaltsFromRoot(State root):
  * adds the trap as signal to the specified state.
  */
 Void addTrapSignalToState(ISignal trap, State s):
-	addSignalToState((ISignal) clone(trap), s)
+	let sig = new ISignal:
+	sig.setName(trap.name) ->
+	sig.setChannelDescr((ChannelDescription) clone(trap.channelDescr)) ->
+	addSignalToState(sig, s)
 ;
 
 /**

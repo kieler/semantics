@@ -225,12 +225,12 @@ public class E2STransformationCombination extends AbstractCombination {
                 return false;
             }
 
-//            currentDataComponent = new EsterelToSyncChartDataComponent(true);
-//            try {
-//                currentDataComponent.initialize();
-//            } catch (KiemInitializationException e) {
-//                e.printStackTrace();
-//            }
+            // currentDataComponent = new EsterelToSyncChartDataComponent(true);
+            // try {
+            // currentDataComponent.initialize();
+            // } catch (KiemInitializationException e) {
+            // e.printStackTrace();
+            // }
             return true;
         }
         return false;
@@ -243,11 +243,17 @@ public class E2STransformationCombination extends AbstractCombination {
     private void process(final String type) {
         lastStepType = type;
 
-        if (type.equals(BUTTON_STEP_BACK)) {
+        if (lastStepType.equals(BUTTON_STEP_BACK)) {
             back();
             LayoutEffect layoutEffect = new LayoutEffect(currentlyActiveEditor, null);
             layoutEffect.schedule();
             return;
+        }
+
+        boolean isTransformable = isTransformable();
+        if (lastStepType.equals(BUTTON_EXPAND_OPTIMIZE) && !isTransformable) {
+            // do not perform two optimizations if already expanded completely
+            lastStepType = BUTTON_EXPAND;
         }
 
         if (transformingDataComponent == null || optimizingDataComponent == null) {
@@ -255,18 +261,18 @@ public class E2STransformationCombination extends AbstractCombination {
         }
 
         // initialize the correct datacomponent
-        if (isTransformable()) {
+        if (isTransformable) {
             currentDataComponent = transformingDataComponent;
         } else {
             currentDataComponent = optimizingDataComponent;
         }
 
         // determine proceeding
-        if (type.equals(BUTTON_EXPAND) || type.equals(BUTTON_EXPAND_OPTIMIZE)) {
+        if (lastStepType.equals(BUTTON_EXPAND) || lastStepType.equals(BUTTON_EXPAND_OPTIMIZE)) {
             setRecursive(true);
             startTransformation(true);
         }
-        if (type.equals(BUTTON_STEP)) {
+        if (lastStepType.equals(BUTTON_STEP)) {
             setRecursive(false);
             startTransformation(false);
         }

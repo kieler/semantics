@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:esterel="http://www.cau.de/cs/kieler/kies/Esterel" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
   <states id="trapModule" label="trapModule">
     <signals xsi:type="kexpressions:ISignal" name="A" isInput="true"/>
     <signals xsi:type="kexpressions:ISignal" name="traphalt0"/>
-    <signals xsi:type="esterel:TrapDecl" name="parentTrap"/>
+    <signals xsi:type="kexpressions:ISignal" name="parentTrap"/>
     <regions id="">
       <states id="Trap_State2" label="Trap State" isInitial="true">
         <signals xsi:type="kexpressions:ISignal" name="traphalt1"/>
-        <signals xsi:type="esterel:TrapDecl" name="t1"/>
-        <signals xsi:type="esterel:TrapDecl" name="t2"/>
+        <signals xsi:type="kexpressions:ISignal" name="t1"/>
+        <signals xsi:type="kexpressions:ISignal" name="t2"/>
         <regions id="">
           <states id="Parallel_State2" label="Parallel State" isInitial="true">
             <regions id="">
