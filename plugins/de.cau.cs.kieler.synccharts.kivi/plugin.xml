@@ -23,17 +23,18 @@
             name="SyncCharts Signal Flow Combination"
             active="true">
       </combination>
-      <combination
+  <!--    <combination
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterCollapseCombination"
             description="Performs automatic layout after a node has been collapsed or expanded."
             name="Layout After CollapseEffect Combination"
             active="true">
       </combination>
+      -->
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterModelChangedCombination"
-            description="Performs automatic layout after the model has been changed."
+            description="Performs automatic layout after the model has been changed, e.g. a String label has been changed or a compartment has been collapsed or expanded."
             name="SyncCharts Layout After Model Changed"
-            active="true">
+            active="false">
       </combination>
    </extension>
 </plugin>

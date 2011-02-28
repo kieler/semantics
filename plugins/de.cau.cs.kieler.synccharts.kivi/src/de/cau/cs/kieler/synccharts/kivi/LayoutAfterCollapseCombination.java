@@ -21,6 +21,10 @@ import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 /**
  * Performs layout after a collapse or expand effect has been executed.
  * 
+ * @deprecated (haf) this does not work well as it only reacts on collapse-expand-EFFECTS
+ *             and not on manually collapsing or expanding compartments. So far removed this 
+ *             combination from the extension point. 
+ * 
  * @author mmu
  * 
  */

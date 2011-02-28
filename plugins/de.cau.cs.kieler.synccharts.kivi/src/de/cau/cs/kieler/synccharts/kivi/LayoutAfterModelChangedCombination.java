@@ -28,6 +28,11 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 /**
  * Applies automatic layout after the model has been changed.
  * 
+ * @deprecated (haf) this combination might trigger layout very often, i.e. at every
+ *             small model change. This calls layout even during a more complex model
+ *             change that involves multiple small changes. Running layout during model
+ *             changes sometimes result ConcurrentModificationExceptions.
+ * 
  * @author mmu
  * 
  */
