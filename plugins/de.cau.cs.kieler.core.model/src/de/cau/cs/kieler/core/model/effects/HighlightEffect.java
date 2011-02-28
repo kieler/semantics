@@ -25,6 +25,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
@@ -77,7 +78,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor) {
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor) {
         EditPart editPart =
                 GraphicalFrameworkService.getInstance().getBridge(editor)
                         .getEditPart(editor, eObject);
@@ -100,7 +101,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final int lineStyle) {
         this(eObject, editor);
         style = lineStyle;
@@ -119,7 +120,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final int lineStyle) {
         this(eObject, editor, highlightColor);
         style = lineStyle;
@@ -139,7 +140,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background,
             final int lineStyle) {
         this(eObject, editor, highlightColor, lineStyle);
@@ -156,7 +157,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param highlightColor
      *            the color to highlight the state with
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor) {
         this(eObject, editor);
         color = highlightColor;
@@ -174,7 +175,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param background
      *            the color to use for painting the background
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background) {
         this(eObject, editor, highlightColor);
         backgroundColor = background;
@@ -193,7 +194,7 @@ public class HighlightEffect extends AbstractEffect {
      *            true if labels should be highlighted in the given color as
      *            well
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final boolean children) {
         this(eObject, editor, highlightColor);
         highlightChildren = children;
@@ -214,7 +215,7 @@ public class HighlightEffect extends AbstractEffect {
      *            true if labels should be highlighted in the given color as
      *            well
      */
-    public HighlightEffect(final EObject eObject, final DiagramEditor editor,
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background,
             final boolean children) {
         this(eObject, editor, highlightColor, children);
