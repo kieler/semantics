@@ -60,5 +60,14 @@
             class="de.cau.cs.kieler.core.model.GmfFrameworkBridge">
       </bridge>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.core.model.combinations.ShowHierarchyCombination"
+            description="Show the hierarchy levels of a diagram by painting each level in a different color."
+            name="Show Hierarchy Levels">
+      </combination>
+   </extension>
 
 </plugin>
