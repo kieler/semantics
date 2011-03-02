@@ -30,6 +30,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.KielerNotSupportedException;
@@ -362,7 +363,38 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
     }
 
     /**
-     * A state about the model viewers currently visible, e.g. the current active editor
+     * <p>
+     * A state about the model viewers currently visible, e.g. the current active editor or active
+     * view. It contains lists of all active {@link IWorkbenchPart}s and a list of all such parts
+     * that contain a diagram, i.e. are compatible with the {@link GraphicalFrameworkService}. Note
+     * that the parts can be either {@link IViewPart}s or {@link IEditorPart}s.
+     * </p>
+     * <p>
+     * A scenario is to use the last opened editor or view of a specific kind. You can obtain the
+     * lists of currently open parts or diagram parts by
+     * {@link ActiveEditorState#getOpenWorkbenchParts()} resp.
+     * {@link ActiveEditorState#getOpenDiagrams()}. As the lists are ordered by the order in which
+     * the parts were activated (freshest part is the first), they can be iterated with choosing the
+     * first part that matches the right ID, e.g. by comparing their string IDs with
+     * {@link IWorkbenchPart#getSite()} and {@link IWorkbenchPartSite#getID()}. This ensures to (1)
+     * avoid doing something on a not supported editor or view and (2) to also be able to do
+     * something when some other editor or view is in the focus. Note that this might also do
+     * something on an editor that is not on top, i.e. not actually visible.
+     * </p>
+     * 
+     * <pre>
+     *  String relevantID = "my.editor.id";
+     *  IWorkbenchPart myPart = null;
+     *  for(IWorkbenchPart part : activeEditorState.getOpenDiagrams()){
+     *     if(relevantID.equals(part.getSite().getID()){
+     *          myPart = part;
+     *          break;
+     *     }
+     *  }
+     *  if(myPart != null){
+     *  ...
+     *  }
+     * </pre>
      * 
      * @author haf
      */
@@ -371,9 +403,12 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         private IWorkbenchPart lastActiveDiagramEditor;
         private IWorkbenchPart closedEditor;
 
+        // only diagram editors/views
         private List<IWorkbenchPart> openDiagramEditors = new ArrayList<IWorkbenchPart>();
+        // any view or editor
+        private List<IWorkbenchPart> openWorkbenchParts = new ArrayList<IWorkbenchPart>();
 
-        /** Default Constructor that can be used as a default state */
+        /** Default Constructor that can be used as a default state. */
         public ActiveEditorState() {
         }
 
@@ -397,27 +432,77 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
                 this.lastActiveDiagramEditor = focused;
                 this.openDiagramEditors.add(focused);
             }
+            this.openWorkbenchParts.add(focused);
         }
 
         /**
          * @return the lastActiveEditor
+         * @deprecated use {@link #getLastActiveWorkbenchPart()} instead
          */
         public IWorkbenchPart getLastActiveEditor() {
             return lastActiveEditor;
         }
 
         /**
+         * Get the most recently opened editor or view. Maybe null if there is no such.
+         * 
+         * @return editor or view
+         */
+        public IWorkbenchPart getLastActiveWorkbenchPart() {
+            return lastActiveEditor;
+        }
+
+        /**
          * @return the lastActiveDiagramEditor
+         * @deprecated use {@link #getLastActiveDiagram()}
          */
         public IWorkbenchPart getLastActiveDiagramEditor() {
             return lastActiveDiagramEditor;
         }
 
         /**
+         * Get the most recently opened editor or view that contains a diagram supported by the
+         * {@link GraphicalFrameworkService}. Maybe null if there is no such.
+         * 
+         * @return the last active diagram editor or view
+         */
+        public IWorkbenchPart getLastActiveDiagram() {
+            return lastActiveDiagramEditor;
+        }
+
+        /**
+         * Get a list of all IWorkbenchParts (editors and views) that contain a diagram supported by
+         * the {@link GraphicalFrameworkService}. The order in the list is starting with the last
+         * activated part. It will include all currently active parts.
+         * 
+         * @deprecated use {@link #getOpenDiagrams()} instead
          * @return the openDiagramEditors
          */
         public List<IWorkbenchPart> getOpenDiagramEditors() {
             return openDiagramEditors;
+        }
+
+        /**
+         * Get a list of all IWorkbenchParts (editors and views) that contain a diagram supported by
+         * the {@link GraphicalFrameworkService}. The order in the list is starting with the last
+         * activated part. It will include all currently active parts.
+         * 
+         * @return the open diagrams {@link IViewPart} or {@link IEditorPart}
+         */
+        public List<IWorkbenchPart> getOpenDiagrams() {
+            return openDiagramEditors;
+        }
+
+        /**
+         * Get a list of any active IWorkbenchParts. This may include views and editors. The order
+         * in the list is starting with the last activated part. It will include all currently
+         * active parts.
+         * 
+         * @return list of currently active IWorkbenchParts, i.e. {@link IViewPart} or
+         *         {@link IEditorPart}
+         */
+        public List<IWorkbenchPart> getOpenWorkbenchParts() {
+            return openWorkbenchParts;
         }
 
         /**
@@ -438,15 +523,21 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         }
 
         /**
-         * Update the list of open diagram editors. {@inheritDoc}
+         * Update the list of open diagram editors and views. {@inheritDoc}
          */
         @Override
-        public void merge(ITriggerState previous) {
+        public void merge(final ITriggerState previous) {
             if (previous instanceof ActiveEditorState) {
+                IWorkbenchPart lastOpenWorkbenchPart = null;
+                if (!this.openWorkbenchParts.isEmpty()) {
+                    lastOpenWorkbenchPart = this.openWorkbenchParts.get(0);
+                }
                 this.openDiagramEditors.addAll(((ActiveEditorState) previous).openDiagramEditors);
+                this.openWorkbenchParts.addAll(((ActiveEditorState) previous).openWorkbenchParts);
                 // remove any closed editor
                 if (this.closedEditor != null) {
                     this.openDiagramEditors.remove(this.closedEditor);
+                    this.openWorkbenchParts.remove(this.closedEditor);
                 }
                 // make sure the currently focused editor is the first in the list
                 if (this.lastActiveDiagramEditor != null) {
@@ -454,6 +545,13 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
                     this.openDiagramEditors.remove(lastActiveDiagramEditor);
                     this.openDiagramEditors.remove(lastActiveDiagramEditor);
                     this.openDiagramEditors.add(0, this.lastActiveDiagramEditor);
+                }
+                // make sure the currently focused view is the first in the list
+                if (lastOpenWorkbenchPart != null) {
+                    // note that initially the view might be in the list twice
+                    this.openWorkbenchParts.remove(lastOpenWorkbenchPart);
+                    this.openWorkbenchParts.remove(lastOpenWorkbenchPart);
+                    this.openWorkbenchParts.add(0, lastOpenWorkbenchPart);
                 }
             }
         }
