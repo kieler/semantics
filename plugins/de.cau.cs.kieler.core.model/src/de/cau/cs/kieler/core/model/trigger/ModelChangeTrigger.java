@@ -201,8 +201,8 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * Test if the given WorkbenchPart (Editor/View) contains a Model supported by this Trigger.
      * Uses the GraphicalFrameworkService to test if there can be a root EditPart obtained.
      * 
-     * @param part
-     * @return
+     * @param part part to check
+     * @return true if part is supported by the {@link GraphicalFrameworkService}
      */
     protected static boolean isDiagram(final IWorkbenchPart part) {
         try {
