@@ -229,9 +229,16 @@ public final class SyncchartsContentUtil {
      * @return a new unique priority
      */
     public static int getUniquePrio(final Transition transition) {
+        if(transition == null){
+            return 1;
+        }
         int currentPrio = transition.getPriority();
         if (currentPrio == 0) {
             currentPrio = 1; // Prios should start at 1
+        }
+        // corner case
+        if(transition.getSourceState() == null){
+            return 1;
         }
         EList<Transition> transitions = transition.getSourceState().getOutgoingTransitions();
         // if multiple transitions have same priority, set the current prio to a
