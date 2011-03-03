@@ -308,7 +308,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 					}
 				}
 
-                // add only if not allready inside the activeStatesChoices list
+                // add only if not already inside the activeStatesChoices list
                 boolean foundInList = false;
                 for (Object object: activeStatesChoices) {
                 	if (object instanceof String[]) {
