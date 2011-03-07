@@ -188,6 +188,10 @@ public class E2STransformationCombination extends AbstractCombination {
                 initializeTransformation();
                 if (buttonState.getButtonId() == BUTTON_EXPAND
                         || buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE) {
+                    // FIXME the editor was changed by the initializeTransformation method, but the
+                    // editorState wasn't processed yet. Therefore, it is necessary to fetch the new
+                    // editor.
+                    currentlyActiveEditor = TransformationUtil.getActiveEditor();
                     process(buttonState.getButtonId());
                 }
                 return;
@@ -217,21 +221,13 @@ public class E2STransformationCombination extends AbstractCombination {
             IFile strlFile = (IFile) ((IEditorPart) currentlyActiveEditor).getEditorInput()
                     .getAdapter(IFile.class);
             IFile created = TransformationUtil.strlToKixs(strlFile);
-            initInProgess = true;
-            TransformationUtil.openKidsInEditor(created);
-            ValidationManager.disableAll();
-            currentlyActiveEditor = TransformationUtil.getActiveEditor();
-
+            // if the user canceled the action, return!
             if (created == null) {
                 return false;
             }
-
-            // currentDataComponent = new EsterelToSyncChartDataComponent(true);
-            // try {
-            // currentDataComponent.initialize();
-            // } catch (KiemInitializationException e) {
-            // e.printStackTrace();
-            // }
+            initInProgess = true;
+            TransformationUtil.openKidsInEditor(created);
+            ValidationManager.disableAll();
             return true;
         }
         return false;

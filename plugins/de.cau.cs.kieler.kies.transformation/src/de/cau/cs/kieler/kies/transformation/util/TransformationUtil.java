@@ -392,7 +392,7 @@ public final class TransformationUtil {
      * 
      * @param kixsFile
      *            file location
-     * @return true if the synccharts was created, false otherwhise.
+     * @return the created kixsFile, or {@code null} in case the action was canceled by the user.
      */
     public static IFile createSyncchartDiagram(final IFile kixsFile) {
         try {
