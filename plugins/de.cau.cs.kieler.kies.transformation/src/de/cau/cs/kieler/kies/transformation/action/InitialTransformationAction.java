@@ -20,11 +20,16 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IActionDelegate;
+import org.eclipse.ui.IEditorSite;
+import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
@@ -56,7 +61,8 @@ public class InitialTransformationAction implements IActionDelegate {
                             try {
                                 uiMonitor.beginTask("Initial Transformation",
                                         IProgressMonitor.UNKNOWN);
-                                IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
+                                final long start = System.currentTimeMillis();
+                                final IFile kixsFile = TransformationUtil.strlToKixs(strlFile);
                                 uiMonitor.beginTask(
                                         "Performing Esterel To SyncCharts Transformation",
                                         IProgressMonitor.UNKNOWN);
@@ -87,6 +93,21 @@ public class InitialTransformationAction implements IActionDelegate {
                                 LayoutEffect effect = new LayoutEffect(TransformationUtil
                                         .getActiveEditor(), null);
                                 effect.schedule();
+                                final long end = System.currentTimeMillis();
+
+                                MonitoredOperation.runInUI(new Runnable() {
+
+                                    public void run() {
+                                        IWorkbenchPart editor = TransformationUtil
+                                                .getActiveEditor();
+                                        IWorkbenchPartSite site = editor.getSite();
+                                        IActionBars bars = ((IEditorSite) site).getActionBars();
+                                        bars.getStatusLineManager().setMessage(
+                                                "Transformed SyncCharts from " + strlFile.getName()
+                                                        + " (" + (end - start) + "ms)");
+                                    }
+                                }, false);
+
                             } catch (KielerException ke) {
                                 Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
                                         "Could not transform " + strlFile.getName()
