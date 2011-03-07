@@ -13,7 +13,7 @@ fmod TRANSITIONSYNTAX is
   
   
 	  
-  
+  var bv : Bool .
   vars src tgt conf states : Verts . 
   vars g g1 : Guard .
   vars lreg : Vert .
@@ -27,11 +27,15 @@ fmod TRANSITIONSYNTAX is
   op choiceelse : -> Guard .
   op notGd_ : Guard -> Guard . 
   op _andGd_ : Guard Guard -> Guard .
+  eq (true).Guard andGd g = g .
+  eq g andGd (true).Guard = g .
   op evalGuard__ : Guard Verts -> Bool .
   eq evalGuard(notGd g) conf = not (evalGuard g conf) .
   eq evalGuard(g andGd g1) conf = (evalGuard g conf) and (evalGuard g1 conf) .
   eq evalGuard(inStates states) conf = states subset conf . 
   eq evalGuard(inState states) conf = states subset conf . 
+  eq evalGuard true conf = true .
+  
   *** FIXME eq evalGuard g conf = g [owise] .
      
  
@@ -56,6 +60,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   var e : Event .
   var t : Transition .
   var T : Transitions .
+  var ct : Compoundtransition .
   var reg : Region .
   var a : Action .
   var src tgt : Vert .
@@ -77,14 +82,16 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq action (basicTrans strid src g a tgt) = a .
 
   op guard_ : Transitions -> Guard .
-  eq guard (t, T) = (guard t) andGd (guard T) .
-  eq guard (src g a tgt) = g .
-  eq guard (basicTrans strid src g a tgt) = g .
+  eq guard ((src g a tgt), T) = g andGd (guard T) .
+  eq guard ((basicTrans strid src g a tgt), T) = g andGd (guard T) .
+  eq guard empty = true .
+ 
 
   op guard_ : Compoundtransition -> Guard .
   eq guard (simpleTrans e t reg) = (guard t) .
   eq guard (forkTrans e t T reg) = (guard t) .  
   *** how should choice guards be handeled
+  *** only consider the incoming guard
   eq guard (choiceTrans e t T reg) = (guard t) .
   eq guard (joinTrans e T t reg) = (guard t) .
 
@@ -93,6 +100,20 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   *** how should choice guards be handeled
   eq guard (choiceTrans strid e t T reg) = (guard t) .
   eq guard (joinTrans strid e T t reg) = (guard t) .
+
+  op isChoice_ : Compoundtransition -> Bool .
+  eq isChoice (simpleTrans e t reg) = false .
+  eq isChoice (forkTrans e t T reg) = false .  
+  *** how should choice isChoices be handeled
+  eq isChoice (choiceTrans e t T reg) = true .
+  eq isChoice (joinTrans e T t reg) = false .
+
+  eq isChoice (simpleTrans strid e t reg) = false .
+  eq isChoice (forkTrans strid e t T reg) = false .  
+  *** how should choice isChoices be handeled
+  eq isChoice (choiceTrans strid e t T reg) = true .
+  eq isChoice (joinTrans strid e T t reg) = false .
+
 
 
   op $source_ : Transitions -> Verts .

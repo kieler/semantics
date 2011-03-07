@@ -35,7 +35,7 @@ mod SEMANTICS is
     vars C2 leaveStates enterStates : Verts . *** Konfiguration
     vars fe : Event . *** event selected for this rtc step
     vars E E2 : Events .
-    vars ES ES2 : EventSS .
+    vars ES ES2 : Events .
     vars C C' V V2 S : Verts .
     vars T T1 T2 F : Compoundtransitions .
     vars t t1 t2 : Compoundtransition .
@@ -64,60 +64,75 @@ mod SEMANTICS is
 			  		
 
     *** ToDo: Currently events are NOT consumed 
-	crl [selectEventFSetESINT] : maState (stableC V HC) (e, ES) => 
-	maState (eventSelC V HC e) (ES, e) if e =/= empty .
-	crl [discardFSetESINT] : maState (eventSelC V HC e) (ES) => 
+	crl [selectEventFSetESINT] : maState (stableC V HC) (e2, ES) => 
+	maState (eventSelC V HC e2) (ES, e2) if e2 =/= empty [print "selected " e2] .
+	crl [discardFSetESINT] : maState (eventSelC V HC e2) (ES) => 
 		maState (doneC V HC) (ES) if 
-		(enabled V e) == empty .
+		(enabled V e2) == empty [print "discarded " e2] .
 
-	crl [computeFSetESINT] : maState (eventSelC V HC e) (ES) => 
+	crl [computeFSetESINT] : maState (eventSelC V HC e2) (ES) => 
 		maState (fireC V HC 
 			(fireableSets 
 				(remLowPrio 
 					(enabled 
 						V 
-						e
+						e2
 					)
 				)) 
 		) (ES) if 
-		(enabled V e) =/= empty .
+		(enabled V e2) =/= empty 
+		*** [print "firesets for " e2] 
+		.
 	rl [fireFSetESINT] : maState (fireC V HC (mm(T), MN)) ES => 
-		maState (unstableC V HC T skip) ES .
+		maState (unstableC V HC T noac) ES 
+		[print "choosen " T] 
+		.
 
 	rl [finishedRTCESINT] : maState (doneC V HC) ES => 
-		maState (stableC V (succHC V HC)) ES .
+		maState (stableC V HC) ES .
 
     rl [fireTrans] : maState (unstableC V HC (t, T) A) ES =>
-       maState (leaveC V HC T t (inTrans t) (outTrans t) (leave V t) A) ES .
+       maState (leaveC V HC T t (inTrans t) (outTrans t) (leave V t) A) ES 
+       . 
+       *** [print "fire CTrans " t] .
     rl [fireTrans] : maState (unstableC V HC t A) ES =>
-       maState (leaveC V HC empty t (inTrans t) (outTrans t) (leave V t) A) ES .
+       maState (leaveC V HC empty t (inTrans t) (outTrans t) (leave V t) A) ES 
+       .
+       *** [print "fire CTrans " t] .
 
  *** started by maState (unstableC V HC (t, T) (par A)) ES => 
  ***  maState ((leaveC V HC T t (inTrans t) (outTrans t) (leave V t) (par A)) ES 
-    crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
+    crl [leaveState] : maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
      maState (leaveC (V \ v)  HC T t sT sT1 leaveStates A) ES 
-     if (((intersection (leaveStates, (getSubVerts v))) == empty) and not(typeRegion v)) .
-    crl maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
+     if (((intersection (leaveStates, (getSubVerts v))) == empty) and not(typeRegion v)) [print "leaving " v] .
+    crl [leaveState] : maState (leaveC V HC T t sT sT1 (v, leaveStates) A) ES =>
      maState (leaveC (V \ v)  HC T t sT sT1 leaveStates A)  ES 
-     if ((intersection (leaveStates, (getSubVerts v)) == empty) and (typeRegion v)) .
-    rl maState (leaveC V HC T t sT sT1 empty A) ES =>
-     maState (execTransC V  HC T t sT sT1 A) ES .
-    rl maState (execTransC V HC T t (st, sT) sT1 A) ES =>
-     maState (execTransC V  HC T t sT sT1 A) ES .
-    rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
-     maState (execTransC V  HC T t empty sT1 A) ES .
-    rl maState (execTransC V HC T t empty (st, sT1) A) ES =>
-     maState (execTransC V  HC T t empty sT1 A) ES .
-    rl maState (execTransC V HC T t empty empty A) ES =>
-    maState(enterC V HC T t (enterH HC t) A) ES .
-    crl maState (enterC V HC T t (v, enterStates) A) ES =>
+     if ((intersection (leaveStates, (getSubVerts v)) == empty) and (typeRegion v)) [print "leaving " v] .
+
+    rl [statesLeft] : maState (leaveC V HC T t sT sT1 empty A) ES => maState (execTransC V  HC T t sT sT1 A) ES [print "stateLeft for " t] .
+
+    *** add the effect of the transition to the actions, valuations
+    rl [execBTransincomingPstate] : maState (execTransC V HC T t (st, sT) sT1       A) ES => maState (execTransC V  HC T t sT sT1 A) ES .
+    crl [execBTrans2] : maState (execTransC V HC T t empty       sT1 A) ES => maState (execTransC V  HC T t empty empty A) ES if (isChoice t) .
+    crl [execBTrans2] : maState (execTransC V HC T t empty    (st, sT1) A) ES => maState (execTransC V  HC T t empty sT1 A) ES if not(isChoice t) .
+   
+
+
+    crl [enterState] : maState (execTransC V HC T t empty empty A) ES => 
+     maState(enterC V HC T t (enterH HC t) A) ES if not(isChoice t) .
+    crl [enterState] : maState (execTransC V HC T t empty empty A) ES => 
+     maState(enterC V HC T t (enterH HC (chooseChoice t V)) A) ES if (isChoice t) .
+
+    crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES => 
      maState (enterC (V, v) HC T t enterStates A) ES 
-     if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) .
-    crl maState (enterC V HC T t (v, enterStates) A) ES =>
+     if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) [print "entering " v] .
+
+    crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES =>
      maState (enterC (V, v)  HC T t enterStates A)  ES 
-     if ((intersection (enterStates, (start v)) == empty) and (typeRegion v)) .
-    rl maState (enterC V HC T t empty A) ES =>
-     maState (doneC V HC) ES .
+     if ((intersection (enterStates, (start v)) == empty) and (typeRegion v))  [print "entering " v] .
+
+    rl [doneExecSimpleTrans] : maState (enterC V HC T t empty A) ES =>
+     maState (doneC V (succHC V HC)) ES [print T t] .
 
     
      

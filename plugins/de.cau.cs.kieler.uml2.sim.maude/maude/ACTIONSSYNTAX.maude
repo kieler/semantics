@@ -19,7 +19,8 @@ fmod ACTION is
   protecting STRING .
   sorts Action .
   
-  op skip : -> Action [ctor] .
+  *** op skip : -> Action [ctor] .
+  op noac : -> Action .
   op ac:_ : String -> Action [ctor] .
 endfm
 

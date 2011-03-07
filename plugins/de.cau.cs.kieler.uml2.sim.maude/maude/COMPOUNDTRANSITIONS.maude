@@ -8,9 +8,11 @@ fmod COMPOUNDTRANSITIONS is
   vars T T2 F : Compoundtransitions .
   vars NeT : NeCompoundtransitions .
   vars t t2 : Compoundtransition .
+  vars sT sT2 sF : Transitions .
+  vars st st2 : Transition .
   vars src tgt src2 tgt2 C : Verts . 
   vars e e2 fe : Event .
-  vars E1 : EventSS .
+  vars E1 : Events .
   vars g g2 : Guard .
   vars A AF AJ A2 AF2 AJ2 actions : Actions .
   vars a af aj a2 af2 aj2 action : Action .
@@ -19,9 +21,23 @@ fmod COMPOUNDTRANSITIONS is
   vars M N : Menge .
   vars MN NN : Sets .
   vars NeMN : NeSets .
-  
+  var reg : Region .
    
   op mm_ : Compoundtransitions -> Menge .
+          
+     *** optimize that   
+     *** for choice only
+     *** add valuations
+
+
+  op chooseChoice__ : Compoundtransition Verts -> Compoundtransition .
+  eq chooseChoice (choiceTrans e st sT reg) C = (choiceTrans e st ($chooseChoice empty C sT) reg) .
+  
+  op $chooseChoice___ : Transition Verts Transitions -> Transition .
+  ceq $chooseChoice st C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
+  ceq $chooseChoice st C (st2, sT) = st2 if (evalGuard (guard st2) C) .
+  eq $chooseChoice st C empty = st .
+
   
     
   op conflict__ : Compoundtransition Compoundtransitions -> Bool .
@@ -40,17 +56,20 @@ fmod COMPOUNDTRANSITIONS is
   eq $remLowPrio T (T2, t) = $remLowPrio T T2 [owise] .
   eq $remLowPrio T empty = T .
 
-  op enabled__ : Verts EventSS -> Compoundtransitions .    
-  eq enabled C E1 = $enabled C E1 (getTrans SMINT) .
+
+  op enabled__ : Verts Event -> Compoundtransitions .    
+  eq enabled C e2 = $enabled C e2 (getTrans SMINT) .
      
      
      *** optimize that   
-  op $enabled___ : Verts EventSS Compoundtransitions -> Compoundtransitions .
-  eq $enabled C E1 (T ,  t) = ($$enabled C E1 t) ,  ($enabled C E1 T) .
-  eq $enabled C E1 empty = empty .
+  op $enabled___ : Verts Event Compoundtransitions -> Compoundtransitions .
+  eq $enabled C e2 (T ,  t) = ($$enabled C e2 t) ,  ($enabled C e2 T) .
+  eq $enabled C e2 empty = empty .
   op $$enabled___ : Verts Event Compoundtransition -> Compoundtransition .
-  ceq $$enabled C e t = t if ((source t) subset C) and (event t) == e . 
-  eq $$enabled C e t = empty [owise] .
+  ceq $$enabled C e2 t = t if ((source t) subset C) and (event t) == e2 
+  and (evalGuard (guard t) C) 
+  . 
+  eq $$enabled C e2 t = empty [owise] .
 
 
   op leave __ : Verts Compoundtransitions -> Verts .
