@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.kies.transformation.kivi;
 
+import java.util.List;
 import java.util.Map;
 
 import org.eclipse.core.resources.IFile;
@@ -317,7 +318,6 @@ public class E2STransformationCombination extends AbstractCombination {
      * Editor changed.
      */
     private void editorStateChanged(final ActiveEditorState editorState) {
-        currentlyActiveEditor = editorState.getLastActiveEditor();
 
         if (!initInProgess) {
             currentDataComponent = null;
@@ -325,14 +325,20 @@ public class E2STransformationCombination extends AbstractCombination {
             initInProgess = false;
         }
 
-        IWorkbenchPart currentEditor = editorState.getLastActiveEditor();
-        if (currentEditor == null || currentEditor.getSite() == null) {
-            currentlyActiveEditor = null;
-            return;
+        // set currently active editor null and look for the first matching editors within the
+        // opened workbenchparts
+        currentlyActiveEditor = null;
+        List<IWorkbenchPart> openWorkbenchParts = editorState.getOpenWorkbenchParts();
+        for (IWorkbenchPart part : openWorkbenchParts) {
+            if ((part instanceof XtextEditor && part.getSite().getId().equals(ESTEREL_EDITOR_ID))
+                    || part instanceof SyncchartsDiagramEditor) {
+                currentlyActiveEditor = part;
+                break;
+            }
         }
-        String editorId = currentEditor.getSite().getId();
-        if (!(editorId.equals(ESTEREL_EDITOR_ID) || editorId.equals(SYNCCHARTS_EDITOR_ID))) {
-            // not interested in that specific editor
+
+        // if neither esterel editor nor synccharts editor, we're not interested
+        if (currentlyActiveEditor == null) {
             return;
         }
 
