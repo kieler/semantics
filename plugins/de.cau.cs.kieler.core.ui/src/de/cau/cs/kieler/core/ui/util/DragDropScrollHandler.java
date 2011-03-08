@@ -107,6 +107,42 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
     }
     
 
+
+    /**
+     * Returns the horizontal scroll bar, if any.
+     * 
+     * @return the horizontal scroll bar.
+     */
+    protected ScrollBar getHorizontalBar() {
+        return horizontalBar;
+    }
+
+    /**
+     * Returns the vertical scroll bar, if any.
+     * 
+     * @return the vertical scroll bar.
+     */
+    protected ScrollBar getVerticalBar() {
+        return verticalBar;
+    }
+    
+    /**
+     * Sends out the event of a scroll bar's value having changed. May be overridden.
+     */
+    protected void notifiyOfValueChange() {
+        if (horizontalBar != null) {
+            Event event = new Event();
+            event.widget = horizontalBar;
+            horizontalBar.notifyListeners(SWT.Selection, event);
+        }
+
+        if (verticalBar != null) {
+            Event event = new Event();
+            event.widget = verticalBar;
+            verticalBar.notifyListeners(SWT.Selection, event);
+        }
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -115,10 +151,6 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
             Point mouseLocation = new Point(e.x, e.y);
             int value;
 
-            // This is the event we'll send to selection listeners
-            Event event = new Event();
-            event.widget = horizontalBar;
-            
             // Horizontal scrolling
             if (horizontalBar != null) {
                 value = barValues.x + origin.x - mouseLocation.x;
@@ -128,7 +160,6 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
                                 Math.min(
                                         horizontalBar.getMaximum(),
                                         value)));
-                horizontalBar.notifyListeners(SWT.Selection, event);
             }
             
             // Vertical scrolling
@@ -140,8 +171,9 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
                                 Math.min(
                                         verticalBar.getMaximum(),
                                         value)));
-                verticalBar.notifyListeners(SWT.Selection, event);
             }
+            
+            notifiyOfValueChange();
         }
     }
 
