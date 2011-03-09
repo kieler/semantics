@@ -51,7 +51,7 @@ fmod STATEMACHINE is
   vars t t1 t2 : Compoundtransition .
   vars c : CompositeID .
   var str : String .
-  vars HC : HistoryConfs .
+  vars HC HC1 : HistoryConfs .
   vars hc : HistoryConf .
   vars e e2 : Event .
   vars g g2 : Guard .
@@ -289,9 +289,22 @@ fmod STATEMACHINE is
   eq succC V D SH DH HC empty C = C [owise] .
   
   op succHC__ : Verts HistoryConfs -> HistoryConfs .
-  eq succHC (V, r) (HC, (historyconf r s)) = (succHC V HC), (historyconf r (getsub r V)) .
-  ceq succHC V (HC, (historyconf r s)) = (succHC V HC), (historyconf r s) if not(r in V) .
-  eq succHC (V, r) empty = (succHC V empty), (historyconf r (getsub r V)) .
-  eq succHC V empty = empty [owise] .
+  eq succHC V HC = $succHC V HC .
+*** add final
+  op $succHC__ : Verts HistoryConfs -> HistoryConfs . 
+  ceq $succHC (V, v) HC = ($succHC V ($$succHC v V HC)) if (typeRegion v) [print "setting " v] .
+  ceq $succHC (V, v) HC = ($succHC V HC) if not((typeRegion v) or ((start v) in V)) [print "removing " v] .
+  eq $succHC empty HC = HC .
+  
+
+  op $$succHC___ : Vert Verts HistoryConfs -> HistoryConfs .
+  eq $$succHC r V (HC, (historyconf r s)) = HC, (historyconf r (getsub r V)) .
+  eq $$succHC r V HC = HC, (historyconf r (getsub r V)) [owise] .
+
+***(
+  op $$$succHC____ : Vert Verts HistoryConfs HistoryConfs -> HistoryConfs .
+  eq $$$succHC r V HC1 (HC, (historyconf r s)) = HC, (historyconf r (getsub r V)) .
+  eq $$$succHC r V HC1 HC = HC, (historyconf r (getsub r V)) [owise] .
+)***
 
 endfm

@@ -17,7 +17,7 @@ fmod COMPOUNDTRANSITIONS is
   vars A AF AJ A2 AF2 AJ2 actions : Actions .
   vars a af aj a2 af2 aj2 action : Action .
   vars lreg lreg2 : Vert .
-  var str mode : String .  
+  var str strid mode : String .  
   vars M N : Menge .
   vars MN NN : Sets .
   vars NeMN : NeSets .
@@ -31,12 +31,16 @@ fmod COMPOUNDTRANSITIONS is
 
 
   op chooseChoice__ : Compoundtransition Verts -> Compoundtransition .
-  eq chooseChoice (choiceTrans e st sT reg) C = (choiceTrans e st ($chooseChoice empty C sT) reg) .
+  eq chooseChoice (choiceTrans strid e st sT reg) C = (choiceTrans strid e st ($chooseChoice empty C sT) reg) .
   
   op $chooseChoice___ : Transition Verts Transitions -> Transition .
   ceq $chooseChoice st C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
   ceq $chooseChoice st C (st2, sT) = st2 if (evalGuard (guard st2) C) .
-  eq $chooseChoice st C empty = st .
+  ceq $chooseChoice empty C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
+  ceq $chooseChoice empty C (st2, sT) = st2 if (evalGuard (guard st2) C) .
+  eq $chooseChoice empty C st2 = st2 .
+  eq $chooseChoice st C st2 = st2 if (evalGuard (guard st2) C) .
+  eq $chooseChoice st C st2 = st [owise] .
 
   
     

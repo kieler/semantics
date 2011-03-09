@@ -114,6 +114,11 @@ fmod VERTS is
   eq $containsSuper v (v2, V) = ((prefix v2 v) and v =/= v2) or ($containsSuper v  V) .
   eq $containsSuper v empty = false .
   
+  op orthogonal__ : Vert Vert -> Bool .
+  eq orthogonal v v2 = not(
+  	(v2 in (downset v)) or 
+  	(v in (downset v2))) . 
+
+
   
- 
 endfm

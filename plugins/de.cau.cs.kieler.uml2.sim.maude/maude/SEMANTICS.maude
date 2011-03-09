@@ -37,6 +37,7 @@ mod SEMANTICS is
     vars E E2 : Events .
     vars ES ES2 : Events .
     vars C C' V V2 S : Verts .
+    vars NeT : NeCompoundtransitions .    
     vars T T1 T2 F : Compoundtransitions .
     vars t t1 t2 : Compoundtransition .
     vars sT sT1 sT2 sF : Transitions .
@@ -83,9 +84,9 @@ mod SEMANTICS is
 		(enabled V e2) =/= empty 
 		*** [print "firesets for " e2] 
 		.
-	rl [fireFSetESINT] : maState (fireC V HC (mm(T), MN)) ES => 
-		maState (unstableC V HC T noac) ES 
-		[print "choosen " T] 
+	rl [fireFSetESINT] : maState (fireC V HC (mm(NeT), MN)) ES => 
+		maState (unstableC V HC NeT noac) ES 
+		[print "choosen " T " not considered " MN] 
 		.
 
 	rl [finishedRTCESINT] : maState (doneC V HC) ES => 
@@ -118,9 +119,9 @@ mod SEMANTICS is
    
 
 
-    crl [enterState] : maState (execTransC V HC T t empty empty A) ES => 
+    crl [enterStatesForNonChoiceTrans] : maState (execTransC V HC T t empty empty A) ES => 
      maState(enterC V HC T t (enterH HC t) A) ES if not(isChoice t) .
-    crl [enterState] : maState (execTransC V HC T t empty empty A) ES => 
+    crl [enterStatesForChoiceTrans] : maState (execTransC V HC T t empty empty A) ES => 
      maState(enterC V HC T t (enterH HC (chooseChoice t V)) A) ES if (isChoice t) .
 
     crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES => 
@@ -131,8 +132,9 @@ mod SEMANTICS is
      maState (enterC (V, v)  HC T t enterStates A)  ES 
      if ((intersection (enterStates, (start v)) == empty) and (typeRegion v))  [print "entering " v] .
 
-    rl [doneExecSimpleTrans] : maState (enterC V HC T t empty A) ES =>
-     maState (doneC V (succHC V HC)) ES [print T t] .
+    rl [doneExecTrans] : maState (enterC V HC T t empty A) ES =>
+***     maState (doneC V (succHC V HC)) ES .
+     maState (doneC V HC) ES .
 
     
      
