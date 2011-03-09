@@ -86,20 +86,24 @@ mod SEMANTICS is
 		.
 	rl [fireFSetESINT] : maState (fireC V HC (mm(NeT), MN)) ES => 
 		maState (unstableC V HC NeT noac) ES 
-		[print "choosen " T " not considered " MN] 
+		[print "choosen " NeT " not considered " MN] 
 		.
 
 	rl [finishedRTCESINT] : maState (doneC V HC) ES => 
 		maState (stableC V HC) ES .
 
+    rl [doneExecTrans] : maState (unstableC V HC empty A) ES =>
+     maState (doneC V (succHC V HC)) ES [print "done executing all transitions "] .
+***     maState (doneC V HC) ES [print "done executing all transitions "] .
+ 
     rl [fireTrans] : maState (unstableC V HC (t, T) A) ES =>
        maState (leaveC V HC T t (inTrans t) (outTrans t) (leave V t) A) ES 
-       . 
-       *** [print "fire CTrans " t] .
+       *** . 
+       [print "fire CTrans " t] .
     rl [fireTrans] : maState (unstableC V HC t A) ES =>
        maState (leaveC V HC empty t (inTrans t) (outTrans t) (leave V t) A) ES 
-       .
-       *** [print "fire CTrans " t] .
+       *** .
+       [print "fire CTrans " t] .
 
  *** started by maState (unstableC V HC (t, T) (par A)) ES => 
  ***  maState ((leaveC V HC T t (inTrans t) (outTrans t) (leave V t) (par A)) ES 
@@ -126,15 +130,15 @@ mod SEMANTICS is
 
     crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES => 
      maState (enterC (V, v) HC T t enterStates A) ES 
-     if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) [print "entering " v] .
+     if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) [print "entering state " v V] .
 
     crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES =>
      maState (enterC (V, v)  HC T t enterStates A)  ES 
-     if ((intersection (enterStates, (start v)) == empty) and (typeRegion v))  [print "entering " v] .
+     if ((intersection (enterStates, (start v)) == empty) and (typeRegion v))  [print "entering region " v V] .
 
     rl [doneExecTrans] : maState (enterC V HC T t empty A) ES =>
 ***     maState (doneC V (succHC V HC)) ES .
-     maState (doneC V HC) ES .
+     maState (unstableC V HC T A) ES [print "done executing " t] .
 
     
      
