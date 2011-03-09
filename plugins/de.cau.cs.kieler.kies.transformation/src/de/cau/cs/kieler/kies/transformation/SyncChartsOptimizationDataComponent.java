@@ -117,7 +117,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     @Override
     public void initialize() throws KiemInitializationException {
 
-        if (!headless) {
+        if (!headless && !kiviMode) {
             // assure that a SyncCharts editor is opened.
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();
             if (!(activeEditor instanceof SyncchartsDiagramEditor)) {

@@ -79,7 +79,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
     @Override
     public void initialize() throws KiemInitializationException {
 
-        if (!headless) {
+        if (!headless && !kiviMode) {
             // assure that a SyncCharts editor is opened. (Xtext is also valid as the first
             // transformation is started in the esterel editor)
             IEditorPart activeEditor = TransformationUtil.getActiveEditor();
