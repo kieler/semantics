@@ -33,13 +33,13 @@ import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
@@ -210,7 +210,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
             if (ep != null) {
                 return true;
             }
-        } catch (KielerNotSupportedException e) {
+        } catch (UnsupportedPartException e) {
             /* nothing, fallthrough. */
         }
         return false;
@@ -233,7 +233,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
                     return (TransactionalEditingDomain) d;
                 }
             }
-        } catch (KielerNotSupportedException e) {
+        } catch (UnsupportedPartException e) {
             /* nothing, fallthrough */
         }
         return null;

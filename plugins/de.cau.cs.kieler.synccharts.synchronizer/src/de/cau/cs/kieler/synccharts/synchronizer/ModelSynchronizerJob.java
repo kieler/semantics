@@ -48,7 +48,6 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
 
@@ -96,7 +95,7 @@ public class ModelSynchronizerJob extends Job {
             } catch (Exception e) {
                 return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                         ModelSynchronizer.MSG_NO_ACTIVE_EDITOR,
-                        new KielerRuntimeException(ModelSynchronizer.MSG_NO_ACTIVE_EDITOR));
+                        new RuntimeException(ModelSynchronizer.MSG_NO_ACTIVE_EDITOR, e));
             }
         }
 
@@ -206,7 +205,7 @@ public class ModelSynchronizerJob extends Job {
                     } catch (InterruptedException e) {
                         return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
                                 ModelSynchronizer.MSG_MATCH_FAILED,
-                                new KielerRuntimeException(ModelSynchronizer.MSG_MATCH_FAILED));
+                                new RuntimeException(ModelSynchronizer.MSG_MATCH_FAILED, e));
                     }
 
                     ModelSynchronizer.dumpMatch(matchModel, System.out);

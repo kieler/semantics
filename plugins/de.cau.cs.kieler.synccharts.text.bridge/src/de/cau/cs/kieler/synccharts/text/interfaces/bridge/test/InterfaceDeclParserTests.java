@@ -17,6 +17,7 @@ package de.cau.cs.kieler.synccharts.text.interfaces.bridge.test;
 import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.AssertionFailedException;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.xtext.parser.antlr.IAntlrParser;
 import org.junit.Before;
@@ -24,7 +25,6 @@ import org.junit.Test;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.Signal;
@@ -87,38 +87,38 @@ public class InterfaceDeclParserTests {
     }
 
     @Test
-    public void testParseSingle() throws Exception {
+    public void testParseSingle() throws IOException {
         parse("signal a;");
         for (Signal s : rootState.getSignals()) {
             if (s.getName().equals("a"))
                 return;
         }
-        throw new KielerException(
+        throw new IllegalStateException(
                 "There should be a Signal a, but there is not...");
     }
 
     @Test
-    public void testParseSome() throws Exception {
+    public void testParseSome() throws IOException {
         parse("signal a, b, c, d, e;");
         String[] names = { "a", "b", "c", "d", "e" };
         if (!searchSignals(rootState.getSignals(), names)) {
-            throw new KielerException("parsing some signals failed");
+            throw new IllegalStateException("parsing some signals failed");
         }
     }
 
     @Test
-    public void testSerializeSingle() throws Exception {
+    public void testSerializeSingle() throws IOException {
         Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
         sig.setName("IAMSPECIAL");
         rootState.getSignals().add(sig);
         String serialized = serialize(rootState);
         if (!serialized.contains("IAMSPECIAL")) {
-            throw new KielerException("serializing one signal failed");
+            throw new IllegalStateException("serializing one signal failed");
         }
     }
 
     @Test
-    public void testMoreSignals() throws Exception {
+    public void testMoreSignals() {
         String prefix = "magicTest";
         for (int i = A; i <= Z; i++) { // ASCII letters A to Z
             char[] letters = Character.toChars(i);
@@ -137,10 +137,10 @@ public class InterfaceDeclParserTests {
             // test if the current one has been added additionally to full test
             // below, should make it easier to find what went wrong
             if (rootState.getInterfaceDeclaration().indexOf(sig.getName()) < 0)
-                throw new KielerException("Missing signal " + sig.getName()
+                throw new IllegalStateException("Missing signal " + sig.getName()
                         + " in serialized String.");
             if (rootState.getInterfaceDeclaration().indexOf(var.getName()) < 0)
-                throw new KielerException("Missing var " + var.getName()
+                throw new IllegalStateException("Missing var " + var.getName()
                         + " in serialized String.");
         }
         // System.out.println(rootState.getInterfaceDeclaration());
@@ -149,11 +149,11 @@ public class InterfaceDeclParserTests {
             char[] letters = Character.toChars(i);
             String letter = String.copyValueOf(letters);
             if (rootState.getInterfaceDeclaration().indexOf(prefix + letter) < 0)
-                throw new KielerException("Missing signal " + prefix + letter
+                throw new IllegalStateException("Missing signal " + prefix + letter
                         + " in serialized String.");
             if (rootState.getInterfaceDeclaration().indexOf(
                     prefix + "var" + letter) < 0)
-                throw new KielerException("Missing var " + prefix + "var"
+                throw new IllegalStateException("Missing var " + prefix + "var"
                         + letter + " in serialized String.");
         }
     }
@@ -261,12 +261,12 @@ public class InterfaceDeclParserTests {
     }
 
     // since extends TestCase causes problems
-    private void assertEquals(int a, int b) throws Exception {
-        if (a != b) throw new KielerException(a + " != " + b);
+    private void assertEquals(int a, int b) {
+        if (a != b) throw new AssertionFailedException(a + " != " + b);
     }
     
-    private void asssertContains(String haystack, String needle) throws Exception {
-        if (haystack.indexOf(needle) < 0) throw new KielerException(needle + " not found in " + haystack);
+    private void asssertContains(String haystack, String needle) {
+        if (haystack.indexOf(needle) < 0) throw new AssertionFailedException(needle + " not found in " + haystack);
     }
     
     private Signal generateRandomSignal(String name) {
@@ -323,8 +323,7 @@ public class InterfaceDeclParserTests {
         return false;
     }
 
-    private void parse(final String stringToParse) throws KielerException,
-            IOException {
+    private void parse(final String stringToParse) throws IOException {
         rootState.setInterfaceDeclaration(stringToParse);
         Command parseCommand = idpw.getParseCommand(rootState);
         parseCommand.execute();

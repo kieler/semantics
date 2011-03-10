@@ -41,7 +41,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.core.kexpressions.Input;
 import de.cau.cs.kieler.kies.esterel.Module;
@@ -262,8 +261,6 @@ public class DataComponent extends JSONObjectDataComponent {
             error = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
         } catch (IOException e) {
-            throw new KiemInitializationException("Error compiling Esterel file", true, e);
-        } catch (KielerException e) {
             throw new KiemInitializationException("Error compiling Esterel file", true, e);
         } catch (InterruptedException e) {
             throw new KiemInitializationException("Error running Esterel file", true, e);

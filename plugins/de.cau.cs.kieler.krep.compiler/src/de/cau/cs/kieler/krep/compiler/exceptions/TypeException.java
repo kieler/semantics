@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.krep.compiler.exceptions;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.krep.compiler.lustre.Expression;
 
 /**
@@ -24,7 +23,7 @@ import de.cau.cs.kieler.krep.compiler.lustre.Expression;
  * 
  * @author ctr 
  */
-public class TypeException extends KielerException {
+public class TypeException extends Exception {
 
     private static final long serialVersionUID = 1L;
 

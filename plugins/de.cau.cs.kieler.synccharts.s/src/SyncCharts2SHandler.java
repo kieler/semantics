@@ -12,9 +12,9 @@ import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -51,19 +51,16 @@ public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
 
             XtendTransformationUtil.model2ModelTransform(transformation, fun,
                     input, output, p1, p2, p3, p4);
-        } catch (KielerException e) {
-            e.printStackTrace();
+        } catch (TransformException e) {
             myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Failed to transform SyncChart model into S model.", e);
         } catch (NullPointerException npe) {
-            npe.printStackTrace();
             myStatus = new Status(
                     IStatus.ERROR,
                     Activator.PLUGIN_ID,
                     "Failed to transform SyncChart model into S model. Could not determine input file.",
                     npe);
         } catch (ClassCastException cce) {
-            cce.printStackTrace();
             myStatus = new Status(
                     IStatus.WARNING,
                     Activator.PLUGIN_ID,

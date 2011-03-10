@@ -18,7 +18,6 @@ import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.edit.IDocumentEditor;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
 /**
@@ -63,7 +62,7 @@ public class InvokeXtextEditorSynchronizationRunnable implements Runnable {
             // for proper output as line break before enum keyword (o->) doesn't work otherwise.
             ((TextOperationAction) xtextEditor.getAction("Format")).run();
         } catch (Exception e) {
-            throw new KielerRuntimeException(ModelSynchronizer.MSG_XTEXT_REFRESH_FAILED);
+            throw new RuntimeException(ModelSynchronizer.MSG_XTEXT_REFRESH_FAILED, e);
         }
     }
 }

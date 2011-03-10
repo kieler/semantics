@@ -14,8 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem;
 
-import de.cau.cs.kieler.core.KielerException;
-
 /**
  * The Class KiemMasterException. This Exception is thrown by the DataComponent implementation if a
  * non-master DataComponent tries to access the master~ methods.
@@ -23,7 +21,7 @@ import de.cau.cs.kieler.core.KielerException;
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 yellow
  */
-public class KiemMasterException extends KielerException {
+public class KiemMasterException extends Exception {
 
     /** The Constant serialVersionUID. */
     private static final long serialVersionUID = 1645050957113020503L;

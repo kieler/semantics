@@ -28,7 +28,6 @@ import org.eclipse.ui.IWorkbenchPartSite;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.transformation.Activator;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
@@ -67,7 +66,7 @@ public class InitialTransformationAction implements IActionDelegate {
                                         "Performing Esterel To SyncCharts Transformation",
                                         IProgressMonitor.UNKNOWN);
                                 if (kixsFile == null) {
-                                    throw new KielerException(strlFile
+                                    throw new Exception(strlFile
                                             + " could not be transformed "
                                             + "initially into a SyncCharts.");
                                 }
@@ -77,14 +76,14 @@ public class InitialTransformationAction implements IActionDelegate {
                                 uiMonitor.beginTask("Performing SyncCharts Optimization",
                                         IProgressMonitor.UNKNOWN);
                                 if (!success) {
-                                    throw new KielerException(strlFile
+                                    throw new Exception(strlFile
                                             + ": Transformating Esterel elements "
                                             + "to their SyncCharts equivalent failed.");
                                 }
                                 success = TransformationUtil.performHeadlessTransformation(
                                         kixsFile, TransformationType.SYNC_OPT);
                                 if (!success) {
-                                    throw new KielerException(strlFile
+                                    throw new Exception(strlFile
                                             + ": Optimizing the transformed SyncCharts failed.");
                                 }
                                 uiMonitor
@@ -108,7 +107,7 @@ public class InitialTransformationAction implements IActionDelegate {
                                     }
                                 }, false);
 
-                            } catch (KielerException ke) {
+                            } catch (Exception ke) {
                                 Status s = new Status(Status.ERROR, Activator.PLUGIN_ID,
                                         "Could not transform " + strlFile.getName()
                                                 + " into a SyncCharts.", ke);

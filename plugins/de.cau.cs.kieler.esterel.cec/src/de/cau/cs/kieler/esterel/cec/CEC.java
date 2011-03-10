@@ -23,8 +23,6 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.KielerException;
-
 /**
  * Wrapper class to execute CEC executables.
  * 
@@ -110,27 +108,21 @@ public final class CEC {
      * @param input
      *            input stream for the compilation
      * @return result of the compilation
-     * @throws KielerException
+     * @throws IOException
      *             thrown for any execution error
      */
     public static InputStream exec(final MODULE module, final InputStream input)
-            throws KielerException {
+            throws IOException {
         Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
 
         if (fragments.length != 1) {
-            throw new KielerException("cec native fragment not found, "
+            throw new UnsupportedOperationException("cec native fragment not found, "
                     + "it seems that your platform is not supported by the CEC", null);
         }
         Bundle compiler = fragments[0];
 
         String path;
-        try {
-            path = FileLocator.getBundleFile(compiler).getAbsolutePath();
-            // path = FileLocator.toFileURL(FileLocator.find(compiler, new Path(""),
-            // null)).getPath();
-        } catch (IOException e) {
-            throw new KielerException("cec compiler not found", e);
-        }
+        path = FileLocator.getBundleFile(compiler).getAbsolutePath();
 
         String cmd = path + File.separator + "cec-" + module;
 
@@ -147,12 +139,10 @@ public final class CEC {
      *            output file for the C code
      * @return URI of the generated C file
      * @throws IOException
-     *             if file cannot be read/written
-     * @throws KielerException
-     *             thrown if compiler can not be executed or for compilation errors
+     *             if file cannot be read/written or compiler can not be executed or
+     *             for compilation errors
      */
-    public static URI run(final URI strlFile, final File outFile) throws IOException,
-            KielerException {
+    public static URI run(final URI strlFile, final File outFile) throws IOException {
 
         InputStream strl = new FileInputStream(strlFile.getPath());
         InputStream ast = exec(MODULE.STRLXML, strl);
@@ -185,11 +175,10 @@ public final class CEC {
      *            name of the input File.
      * @return URI of the generated C file
      * @throws IOException
-     *             if file cannot be read/written
-     * @throws KielerException
-     *             thrown if compiler can not be executed or for compilation errors
+     *             if file cannot be read/written or if compiler can not be executed
+     *             or for compilation errors
      */
-    public static URI run(final URI strlFile) throws IOException, KielerException {
+    public static URI run(final URI strlFile) throws IOException {
         File outFile = File.createTempFile("strl", ".c");
         return run(strlFile, outFile);
     }

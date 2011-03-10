@@ -30,7 +30,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.synccharts.State;
 
 /**
@@ -74,10 +73,10 @@ public class InterfaceDeclHandler extends AbstractHandler {
                 }
 
             } else if (selected.size() > 1) {
-                throw new KielerException(
+                throw new IllegalStateException(
                         "More than one element selected! - You need to select exactly one State");
             } else {
-                throw new KielerException("There was either nothing or no State selected! - "
+                throw new IllegalStateException("There was either nothing or no State selected! - "
                         + "You need to select exactly one State");
             }
 

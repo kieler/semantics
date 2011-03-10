@@ -24,7 +24,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
@@ -79,7 +78,7 @@ public final class GraphicalFrameworkService {
             if (ep != null) {
                 return true;
             }
-        } catch (KielerNotSupportedException e) {
+        } catch (UnsupportedPartException e) {
             /* nothing, fallthrough. */
         }
         return false;
@@ -143,17 +142,16 @@ public final class GraphicalFrameworkService {
      * @param object
      *            an edit part, editor part, or notational object
      * @return the first suitable bridge
-     * @throws KielerNotSupportedException
+     * @throws UnsupportedPartException
      *             if there is no bridge available for the given object
      */
-    public IGraphicalFrameworkBridge getBridge(final Object object)
-            throws KielerNotSupportedException {
+    public IGraphicalFrameworkBridge getBridge(final Object object) {
         for (Pair<IGraphicalFrameworkBridge, Integer> entry : bridgeList) {
             if (entry.getFirst().supports(object)) {
                 return entry.getFirst();
             }
         }
-        throw new KielerNotSupportedException("GraphicalFrameworkBridge",
+        throw new UnsupportedPartException("GraphicalFrameworkBridge",
                 "No bridge available for the given input.", object);
     }
 

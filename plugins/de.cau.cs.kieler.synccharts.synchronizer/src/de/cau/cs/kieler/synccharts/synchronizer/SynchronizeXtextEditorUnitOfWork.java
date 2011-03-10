@@ -23,8 +23,6 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
-
 /**
  * 
  * @author chsch
@@ -76,7 +74,7 @@ public class SynchronizeXtextEditorUnitOfWork extends Void<XtextResource> {
             }
             // System.out.println(" done!");
         } catch (Exception e) {
-            throw new KielerRuntimeException(ModelSynchronizer.MSG_XTEXT_REFRESH_FAILED);
+            throw new RuntimeException(ModelSynchronizer.MSG_XTEXT_REFRESH_FAILED, e);
         }
 
     }

@@ -27,7 +27,6 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.synccharts.Region;
 
 /**
@@ -62,7 +61,7 @@ public class ActionLabelParseHandler extends AbstractHandler {
                 ActionLabelProcessorWrapper.processActionLabels(rootModel,
                         ActionLabelProcessorWrapper.PARSE);
             } else {
-                throw new KielerException("Root model element is no Region");
+                throw new IllegalStateException("Root model element is no Region");
             }
             myStatus = new Status(IStatus.OK,
                     LabelParserBridgePlugin.PLUGIN_ID,

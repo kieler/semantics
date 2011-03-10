@@ -27,7 +27,6 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
@@ -75,7 +74,7 @@ public final class SyncchartsUtil {
                             .createRegion()));
             EcoreUtil.resolve(diagram.getElement(), diagram.eResource().getResourceSet());
             if (((InternalEObject) diagram.getElement()).eIsProxy()) {
-                throw new KielerRuntimeException(MSG_KITS_INIT_FAILED);
+                throw new IllegalStateException(MSG_KITS_INIT_FAILED);
             }
         }
     }
@@ -120,7 +119,7 @@ public final class SyncchartsUtil {
                 ActionLabelProcessorWrapper.processActionLabels(diagram.getElement(),
                         ActionLabelProcessorWrapper.SERIALIZE);
             } catch (Exception e) {
-                throw new KielerRuntimeException(MSG_LABEL_SERIAL_FAILED);
+                throw new RuntimeException(MSG_LABEL_SERIAL_FAILED, e);
             }
         }
     }

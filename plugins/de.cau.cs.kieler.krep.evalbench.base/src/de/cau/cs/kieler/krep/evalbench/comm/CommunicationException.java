@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.krep.evalbench.comm;
 
-import de.cau.cs.kieler.core.KielerException;
-
 /**
  * Exception used by the communication protocols.
  * 
@@ -23,7 +21,7 @@ import de.cau.cs.kieler.core.KielerException;
  * 
  * @author msp, ctr
  */
-public class CommunicationException extends KielerException {
+public class CommunicationException extends Exception {
 
     private static final long serialVersionUID = 2490080184709008581L;
 

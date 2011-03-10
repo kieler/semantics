@@ -35,10 +35,10 @@ import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.model.xtend.transformation.AbstractTransformation;
 import de.cau.cs.kieler.core.model.xtend.transformation.ITransformationFramework;
-import de.cau.cs.kieler.core.model.xtend.transformation.TransformationException;
 
 /**
  * An implementation of the ITransformationFramework interface for the use with the Xtend framework.
@@ -259,15 +259,15 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * 
      * @return The return value from XtendFacade.call()
      */
-    public Object executeTransformation() throws TransformationException {
+    public Object executeTransformation() throws TransformException {
         Object result = null;
         if (initalized) {
             try {
                 result = xtendFacade.call(extension, parameters);
             } catch (EvaluationException e0) {
-                throw new TransformationException(e0);
+                throw new TransformException(e0);
             } catch (IllegalArgumentException e0) {
-                throw new TransformationException(e0);
+                throw new TransformException(e0);
             }
         } else {
             CoreModelPlugin.getDefault().logError(

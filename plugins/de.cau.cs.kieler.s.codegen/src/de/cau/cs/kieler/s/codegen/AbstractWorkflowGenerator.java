@@ -6,8 +6,10 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -21,6 +23,7 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xpand2.output.PostProcessor;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -28,8 +31,8 @@ import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
+import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.xtend.util.XpandTransformationUtil;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -150,10 +153,14 @@ public abstract class AbstractWorkflowGenerator {
                     .getRoot()
                     .refreshLocal(IResource.DEPTH_INFINITE,
                             new NullProgressMonitor());
-        } catch (KielerException e0) {
-            e0.printStackTrace();
-        } catch (CoreException e0) {
-            e0.printStackTrace();
+        } catch (TransformException exception) {
+            IStatus status = new Status(IStatus.ERROR, SCodegenPlugin.PLUGIN_ID,
+                    "Transformation failed", exception);
+            StatusManager.getManager().handle(status);
+        } catch (CoreException exception) {
+            IStatus status = new Status(IStatus.ERROR, SCodegenPlugin.PLUGIN_ID,
+                    "Transformation failed", exception);
+            StatusManager.getManager().handle(status);
         }
 
     }

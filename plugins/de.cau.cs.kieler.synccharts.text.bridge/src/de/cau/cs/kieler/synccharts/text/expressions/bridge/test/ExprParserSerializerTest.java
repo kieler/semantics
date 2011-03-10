@@ -32,7 +32,6 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
@@ -622,13 +621,13 @@ public class ExprParserSerializerTest {
     /* ------------------------------------------------------------------------------ */
     
 
-    private void parseAndSerialize(final String inputString) throws KielerException, IOException {
+    private void parseAndSerialize(final String inputString) throws KielerModelException, IOException {
         Expression expr = parse(inputString);
         String serializedString = serialize(expr);
         if (inputString.equals(serializedString)) {
             return;
         } else {
-            throw new KielerException("Serialization failed. Input and output"
+            throw new IllegalStateException("Serialization failed. Input and output"
                     + "are not the same: Input: " + inputString + " Output: " + serializedString);
         }
     }
@@ -640,13 +639,13 @@ public class ExprParserSerializerTest {
      * 
      * @param textToParse
      *            String to be parsed
-     * @throws KielerException
+     * @throws KielerModelException
      *             the main exception if something failed
      * @throws IOException
      *             unlikely to be thrown, only if there are internal errors
      *             regarding the resource factories.
      */
-    private Expression parse(final String textToParse) throws KielerException, IOException {
+    private Expression parse(final String textToParse) throws KielerModelException, IOException {
     	
         ByteArrayInputStream stream = new ByteArrayInputStream(textToParse.getBytes());
 

@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.krep.evalbench.program;
 
-import de.cau.cs.kieler.core.KielerException;
-
 /**
  * Any exception that occurred while Parsing an Assembler file.
  * 
@@ -24,7 +22,7 @@ import de.cau.cs.kieler.core.KielerException;
  * @author ctr
  * 
  */
-public class ParseException extends KielerException {
+public class ParseException extends Exception {
 
     /**
      * @param cause

@@ -19,12 +19,12 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
@@ -113,7 +113,7 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         try {
             DiagramState state = new DiagramState(part);
             this.trigger(state);
-        } catch (KielerNotSupportedException e) {
+        } catch (UnsupportedPartException e) {
             /* nothing, ignore if the part is not supported */
         }
     }
@@ -145,14 +145,13 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         /**
          * Constructor taking the corresponding {@link IWorkbenchPart} that contains the diagram.
          * 
-         * @param diagram
+         * @param diagram a diagram editor part
          */
         public DiagramState(final IWorkbenchPart diagram) {
             this.diagramPart = diagram;
-            // initialize framework bridge. Will throw KielerNotSupportedException if
-            // no bridge for this part is available. This guarantees that always a valid bridge is
-            // there
-            getGraphicalFrameworkBridge();
+            // initialize framework bridge. Will throw UnsupportedPartException if no bridge
+            // for this part is available. This guarantees that there is always a valid bridge
+            bridge = GraphicalFrameworkService.getInstance().getBridge(diagram);
         }
 
         /**
@@ -172,24 +171,21 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return the registered IGraphicalFrameworkBridge for this diagram
          */
         public IGraphicalFrameworkBridge getGraphicalFrameworkBridge() {
-            if (bridge == null) {
-                bridge = GraphicalFrameworkService.getInstance().getBridge(diagramPart);
-            }
             return bridge;
         }
 
         /**
          * Get the semantic model in shape of the root EObject that corresponds to the diagram. May
-         * throw a KielerNotSupportedException if no semantic model can be found. So this method
-         * never returns null.
+         * throw an {@link UnsupportedPartException} if no semantic model can be found. So this method
+         * never returns {@code null}.
          * 
          * @return EObject model corresponding to the diagram
          */
         public EObject getSemanticModel() {
-            EditPart rootEditPart = getGraphicalFrameworkBridge().getEditPart(diagramPart);
-            EObject model = getGraphicalFrameworkBridge().getElement(rootEditPart);
+            EditPart rootEditPart = bridge.getEditPart(diagramPart);
+            EObject model = bridge.getElement(rootEditPart);
             if (model == null) {
-                throw new KielerNotSupportedException("getSemanticModel",
+                throw new UnsupportedPartException("getSemanticModel",
                         "For the active diagram workbench part no semantic model can be found.",
                         diagramPart);
             }

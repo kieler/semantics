@@ -45,7 +45,7 @@ import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
-import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.model.xtend.Activator;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
@@ -166,7 +166,7 @@ public final class XtendTransformationUtil {
             workflow.invoke(wfx, m2mMonitor, issues);
         } catch (WorkflowInterruptedException we) {
             if (we.getMessage().contains("UnknownHostException")) {
-                e = new KielerException("Failed loading Ptolemy file. "
+                e = new TransformException("Failed loading Ptolemy file. "
                         + "Could not resolve the Ptolemy DTD. Unfortunately the parser"
                         + " currently requires an Internet connection.", we);
             } else {
@@ -234,7 +234,7 @@ public final class XtendTransformationUtil {
      * @param involvedMetamodels
      *            EPackages of metamodels that need to be known to the transformation
      * 
-     * @throws KielerException
+     * @throws TransformException
      *             if something fails
      * 
      * @return the Status about success and errors and warnings
@@ -242,7 +242,7 @@ public final class XtendTransformationUtil {
      */
     public static IStatus model2ModelTransform(final String xtendFile, final String startFunction,
             final URI inputModelURI, final URI outputModelURI, final EPackage... involvedMetamodels)
-            throws KielerException {
+            throws TransformException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {

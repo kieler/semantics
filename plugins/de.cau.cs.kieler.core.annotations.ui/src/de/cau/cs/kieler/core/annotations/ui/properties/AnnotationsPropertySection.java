@@ -34,13 +34,13 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
-import de.cau.cs.kieler.core.KielerNotSupportedException;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
 import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 
 /**
  * Property section for annotatable objects.
@@ -209,8 +209,8 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
                     }
                     viewer.setInput(object);
                 }
-            } catch (KielerNotSupportedException e) {
-                /* haf: nothing. Cannot refresh, if there is no diagram available. */
+            } catch (UnsupportedPartException e) {
+                /* haf: nothing. Cannot refresh if there is no diagram available. */
             }
         }
     }

@@ -34,7 +34,6 @@ import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.esterel.cec.CEC;
 
 /**
@@ -92,11 +91,6 @@ public class CGenerator extends AbstractHandler {
                     CEC.run(strlFile, cFile);
                 } catch (IOException e) {
                     Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "IO Error", e);
-                    StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-                    return Status.OK_STATUS;
-                } catch (KielerException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
-                            "Internal Error", e);
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     return Status.OK_STATUS;
                 }

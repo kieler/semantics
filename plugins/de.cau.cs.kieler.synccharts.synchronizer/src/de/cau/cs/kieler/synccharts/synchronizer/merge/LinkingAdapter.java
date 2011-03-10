@@ -20,7 +20,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.ecore.EObject;
 
-import de.cau.cs.kieler.core.KielerRuntimeException;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
@@ -58,7 +57,7 @@ public class LinkingAdapter implements Adapter {
                     o_s = it_s.next();
                     o_c = it_c.next();
                     if (!o_s.getClass().equals(o_c.getClass())) {
-                        throw new KielerRuntimeException("LINKING FEHLER");
+                        throw new IllegalStateException("LINKING ERROR");
                     }
                     internalInstallLinkingAdapter(theSource, theCopy, false);
                 }

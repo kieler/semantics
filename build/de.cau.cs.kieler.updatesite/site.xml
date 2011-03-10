@@ -76,7 +76,7 @@
    <feature url="features/de.cau.cs.kieler.kev.source_0.2.2.qualifier.jar" id="de.cau.cs.kieler.kev.source" version="0.2.2.qualifier">
       <category name="KIELER Sources"/>
    </feature>
-   <feature url="features/net.ogdf.lib_2.1.0.qualifier.jar" id="net.ogdf.lib" version="2.1.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
+   <feature url="features/net.ogdf.bin_1.0.0.qualifier.jar" id="net.ogdf.bin" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.kiml.graphviz_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz" version="0.4.0.qualifier">

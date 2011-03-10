@@ -37,7 +37,7 @@ import org.eclipse.xpand2.output.PostProcessor;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
-import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
@@ -170,7 +170,7 @@ public final class XpandTransformationUtil {
             workflow.invoke(wfx, m2mMonitor, issues);
         } catch (WorkflowInterruptedException we) {
             if (we.getMessage().contains("UnknownHostException")) {
-                e = new KielerException("Failed loading Ptolemy file. "
+                e = new TransformException("Failed loading Ptolemy file. "
                         + "Could not resolve the Ptolemy DTD. Unfortunately the parser"
                         + " currently requires an Internet connection.", we);
             } else {
@@ -209,7 +209,7 @@ public final class XpandTransformationUtil {
      * @param modelPackages
      *            EPackages of the metamodels that need to be known to the transformation
      * 
-     * @throws KielerException
+     * @throws TransformException
      *             if something fails
      * 
      * @return the Status about success and errors and warnings
@@ -217,7 +217,7 @@ public final class XpandTransformationUtil {
      */
     public static XtendStatus model2TextTransform(final String xpandFile,
             final String startFunction, final URI inputModelURI, final String outPath,
-            final EPackage... modelPackages) throws KielerException {
+            final EPackage... modelPackages) throws TransformException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
@@ -245,14 +245,14 @@ public final class XpandTransformationUtil {
      * @param modelPackages
      *            EPackages of the metamodels that need to be known to the transformation
      * @return the Status about success and errors and warnings
-     * @throws KielerException
+     * @throws TransformException
      *             if something fails {@link model2TextTransform} but executes the transformation in
      *             a MonitoredOperation and automatically pops up a progress bar.
      */
     public static XtendStatus model2TextTransform(final String xpandFile,
             final String startFunction, final URI inputModelURI, final String outPath,
             final PostProcessor postProcessor, final EPackage... modelPackages)
-            throws KielerException {
+            throws TransformException {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {

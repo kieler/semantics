@@ -26,7 +26,7 @@ import org.junit.Test;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.KielerException;
+import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.Variable;
@@ -132,7 +132,7 @@ public class ParserSerializerTest {
      *             internal parser error
      */
     @Test
-    public void testParser1() throws KielerException, IOException {
+    public void testParser1() throws KielerModelException, IOException {
         this.parse("A/B");
     }
 
@@ -145,13 +145,13 @@ public class ParserSerializerTest {
      *             internal parser error
      */
     @Test
-    public void testParser2() throws KielerException, IOException {
+    public void testParser2() throws KielerModelException, IOException {
         this.parse("A and B and C or D and not D or (43<?D) or (varA = 103) and "
                 + "not (B and (C or D)) / G, H(23), I, varB:=104");
     }
 
     @Test
-    public void testParser3() throws KielerException, IOException {
+    public void testParser3() throws KielerModelException, IOException {
         this.parse("A and B and C or D and not D or  " + "not (B and (C or D))");
     }
 
@@ -163,8 +163,7 @@ public class ParserSerializerTest {
      * @throws IOException
      *             internal parser error
      */
-    @Test(expected = KielerException.class)
-    public void testParserInvalid() throws KielerException, IOException {
+    public void testParserInvalid() throws KielerModelException, IOException {
         this.parse("A and B and InvalidSignal or D");
     }
 
@@ -678,13 +677,11 @@ public class ParserSerializerTest {
      * 
      * @param textToParse
      *            String to be parsed
-     * @throws KielerException
-     *             the main exception if something failed
      * @throws IOException
      *             unlikely to be thrown, only if there are internal errors regarding the resource
      *             factories.
      */
-    private void parse(final String textToParse) throws KielerException, IOException {
+    private void parse(final String textToParse) throws KielerModelException, IOException {
         ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
                 parser, injector);
         parseCommand.parse();
@@ -704,7 +701,7 @@ public class ParserSerializerTest {
         return outputStream.toString();
     }
 
-    private void parseAndSerialize(final String inputString) throws KielerException, IOException {
+    private void parseAndSerialize(final String inputString) throws KielerModelException, IOException {
         parse(inputString);
         // Our Inofficial simple custom Serializer
         // String serializedString = ActionLabelSerializer.toString(transition);
@@ -713,7 +710,7 @@ public class ParserSerializerTest {
         if (inputString.equals(serializedString)) {
             return;
         } else {
-            throw new KielerException("Serialization failed. Input and output"
+            throw new IllegalStateException("Serialization failed. Input and output"
                     + "are not the same: Input: " + inputString + " Output: " + serializedString);
         }
     }

@@ -19,6 +19,8 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 
+import de.cau.cs.kieler.core.model.m2m.TransformException;
+
 /**
  * Interface for creating a bridge between a transformation framework and KIELER.
  * 
@@ -44,10 +46,10 @@ public interface ITransformationFramework {
      * Executes a transformation with the parameters set with the initalizeTransformation method.
      * 
      * @return A return value from the transformation. May be null
-     * @throws TransformationException
+     * @throws TransformException
      *             if executing the transformation failed
      */
-    Object executeTransformation() throws TransformationException;
+    Object executeTransformation() throws TransformException;
 
     /**
      * Sets the transformation parameters by matching the current selection with the given list of
