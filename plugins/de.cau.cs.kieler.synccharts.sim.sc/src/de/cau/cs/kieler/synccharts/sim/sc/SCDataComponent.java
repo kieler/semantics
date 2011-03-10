@@ -58,6 +58,10 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
  */
 public class SCDataComponent extends AbstractAutomatedProducer {
 
+    private static final int PROP_COMPILER = 1;
+    private static final int PROP_PATH = 2;
+    private static final int NUM_PROPERTIES = 3;
+    
     private WorkflowGenerator wf = null;
     private Process process = null;
     private PrintWriter toSC;
@@ -108,7 +112,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
             if (!validation || (validation && newValidation)) {
                 // compile
-                String compiler = (getProperties()[1]).getValue();
+                String compiler = (getProperties()[PROP_COMPILER]).getValue();
                 String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
                         + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
                         + bundleLocation + " " + "-o " + outPath
@@ -222,8 +226,6 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             process.destroy();
         }
 
-        // System.out.println("incoming " + out.toString());
-        // System.out.println("outgoing " + jSONObject.toString());
         return out;
     }
 
@@ -242,11 +244,11 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     }
 
     public KiemProperty[] doProvideProperties() {
-        final int numberOfProperties = 3;
-        KiemProperty[] properties = new KiemProperty[numberOfProperties];
+
+        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
-        properties[0] = new KiemProperty("Compiler", compilerFile, "gcc");
-        properties[1] = new KiemProperty("File Location", "");
+        properties[PROP_COMPILER - 1] = new KiemProperty("Compiler", compilerFile, "gcc");
+        properties[PROP_PATH - 1] = new KiemProperty("File Location", "");
         // String[] items = { "complete hierarchie", "shortest hierarchie",
         // "unique incremental name" };
         // TODO: only complete hierarchie is supported yet
@@ -280,53 +282,6 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         }
     }
 
-    // -------------------------------------------------------------------------
-
-//    private DiagramEditor diagramEditor = null;
-//    private boolean diagramEditorFlag = false;
-//
-//    DiagramEditor getInputEditor() {
-//        String kiemEditorProperty = this.getProperties()[0].getValue();
-//        diagramEditorFlag = false;
-//
-//        Display.getDefault().syncExec(new Runnable() {
-//            public void run() {
-//                // get the active editor as a default case (if property is empty)
-//                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-//                IWorkbenchPage activePage = window.getActivePage();
-//                IEditorPart editor = activePage.getActiveEditor();
-//                if (editor instanceof DiagramEditor) {
-//                    diagramEditor = (DiagramEditor) editor;
-//                }
-//                diagramEditorFlag = true;
-//            }
-//        });
-//
-//        while (!diagramEditorFlag) {
-//            try {
-//                Thread.sleep(100);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        return diagramEditor;
-//    }
-
-    // -------------------------------------------------------------------------
-
-//    public String getInputModel() {
-//        DiagramEditor inputEditor = this.getInputEditor();
-//        // now extract the file
-//        View notationElement = ((View) inputEditor.getDiagramEditPart().getModel());
-//        EObject myModel = (EObject) notationElement.getElement();
-//        URI uri = myModel.eResource().getURI();
-//
-//        return uri.toPlatformString(false);
-//    } 
-    
-    // -------------------------------------------------------------------------
-
     /**
      * @return {@link JSONObject} the initial JSON object before the simulation could be started.
      * 
@@ -339,7 +294,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
         JSONObject returnObj = new JSONObject();
 
-        if ((getProperties()[2]).getValue().equals("")) {
+        if ((getProperties()[PROP_PATH]).getValue().equals("")) {
             String tempDir = System.getProperty("java.io.tmpdir");
             // for Windows (tmpdir ends with backslash)
             if (tempDir.endsWith("\\")) {
@@ -347,7 +302,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             }
             outPath = tempDir + File.separator + randomString() + File.separator;
         } else {
-            outPath = (getProperties()[3]).getValue();
+            outPath = (getProperties()[PROP_PATH]).getValue();
             if (!outPath.endsWith(File.separator)) {
                 outPath += File.separator;
             }
