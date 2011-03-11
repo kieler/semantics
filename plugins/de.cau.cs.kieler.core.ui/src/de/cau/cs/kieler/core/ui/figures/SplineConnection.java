@@ -24,7 +24,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
-import org.eclipse.gmf.runtime.draw2d.ui.internal.routers.OrthogonalRouter;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -162,8 +161,10 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * true if edge corners should be rounded. Same as super method except it doesn't check 
+     * Checks if edge corners should be rounded. Same as super method, except it doesn't check 
      * if edge routing is orthogonal.
+     * 
+     * @return {@code true} if edge corners should be rounded.
      */
     @Override
     public boolean isRoundingBendpoints() {
