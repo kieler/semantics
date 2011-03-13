@@ -128,13 +128,19 @@ fmod eclipseInterface is
 
   «FOREACH this.getTransitions().select(e|e.isBasicTrans()) AS transition SEPARATOR '\n'-»«transition.genMaude2()-»«ENDFOREACH-»
 
-  «REM» We now work thru the Fork and Join nodes. For all CCs ending with non Fork/Join nodes, we just construct ONE combined transition. «ENDREM»
+  «REM» We now work thru the Fork and Join and Choice nodes. «ENDREM»
   «resetPseudostates()-»
   «REM»Clear marked vertices«ENDREM»
   «clearDoneVertices()-»
   «FOREACH this.getForkJoinChoice() AS pseudostate SEPARATOR '\n'-»
    «IF !pseudostate.isDone("OUTGOING")-»
-   eq ctr«pseudostate.getId()-» = «pseudostate.getClassIdentifier()-» "ctr«pseudostate.getId()-»" «getComplexTransitionInformation("TRIGGER").get(0)» («FOREACH pseudostate.getPseudoSourceTransitions() AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   «REM» Protocol: getPseudoTargetTransitions has to be called BEFORE getComplexTransitionInformation can be called.
+   Therefore the PsuedoSourceTransitions list is memorized as a temporary variable as it is used later than the
+   getComplexTransitionInformation. 
+   «ENDREM»
+   «LET pseudostate.getPseudoSourceTransitions() AS PseudoSourceTransitions -»
+   	eq ctr«pseudostate.getId()-» = «pseudostate.getClassIdentifier()-» "ctr«pseudostate.getId()-»" «getComplexTransitionInformation("TRIGGER").get(0)» («FOREACH PseudoSourceTransitions AS source SEPARATOR ','-»tr«source.getId()-»«ENDFOREACH-») («FOREACH pseudostate.getPseudoTargetTransitions() AS target SEPARATOR ','-»tr«target.getId()-»«ENDFOREACH-») «getLastRootRegion().getId()-» . «resetLastRootRegion()-»
+   «ENDLET»
    «addPseudostate(pseudostate)-»
    «ENDIF-»
   «ENDFOREACH-»
