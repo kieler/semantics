@@ -73,35 +73,56 @@ import de.cau.cs.kieler.core.ui.Messages;
  * that return a content provider, label provider, comparator and filters. To
  * set the input that should be fed into the tree's content provider, call
  * {@link #setResourceTreeInput(Object)}. The list's content provider's input
- * is automatically set to the element currently selected in the tree.
+ * is automatically set to the element currently selected in the tree.</p>
  * 
  * <p>The source group, if present, usually provides a way to select some kind of
  * source directory, often also providing a history of previously entered values.
  * You can use {@link #createDefaultSourceGroup(Composite, String, String)} to
- * have a default source group with a combo box and a browse button created.
+ * have a default source group with a combo box and a browse button created.</p>
  * 
  * <p>The target group, if present, usually provides a way to select some kind of
  * target container or directory, often also providing a history of previously
  * selected values. As with the source group, you can use
  * {@link #createDefaultTargetGroup(Composite, String, String)} to have a default
- * target group with a combo box and a browse button created.
+ * target group with a combo box and a browse button created.</p>
  * 
  * <p>The button bar, if present, usually provides a way to select and deselect all
  * list items. By default, such a group is created. Subclasses can change this
- * by overriding {@link #createButtonBar(Composite)}.
+ * by overriding {@link #createButtonBar(Composite)}.</p>
  * 
  * <p>Finally, the options group, if present, usually allows the user to influence
  * some parameters of the actions to be performed. There is no way to have a
  * default options group created, since there is no way to know which options
- * might be needed.
+ * might be needed.</p>
  * 
  * <p>There are currently two specializations of this class. {@link FileSystemResourcesPage}
  * specializes in file system imports while {@link WorkspaceResourcesPage}
- * specializes in workspace imports.
+ * specializes in workspace imports.</p>
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by haf, msp, pkl
  */
 public abstract class ResourceTreeAndListPage extends WizardPage {
+    
+    // CONSTANTS
+    
+    /**
+     * Width hint for the resource tree and list.
+     */
+    private static final int SIZE_HINT_WIDTH = 200;
+    
+    /**
+     * Height hint for the resource tree and list.
+     */
+    private static final int SIZE_HINT_HEIGHT = 250;
+    
+    /**
+     * The number of columns used to lay out the default source and target groups.
+     */
+    private static final int DEFAULT_SOURCE_TARGET_GROUP_COLUMNS = 3;
+    
+    // VARIABLES
     
     /**
      * Remembers all the checked list items for a given tree viewer item. This map
@@ -213,7 +234,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * grayed are recursively visited.
      * 
      * <p>All elements added to the list are required to pass the installed filters
-     * first.
+     * first.</p>
      * 
      * @param monitor progress monitor.
      * @param element the element to visit.
@@ -305,9 +326,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * Creates the tree and list and registers the necessary listeners.
      */
     private void createResourceGroup() {
-        // UI code is allowed to use magic numbers.
-        // CHECKSTYLEOFF MagicNumber
-        
         GridData gd;
         
         // Resource Tree
@@ -315,8 +333,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 SWT.SINGLE | SWT.CHECK | SWT.FULL_SELECTION | SWT.BORDER);
         
         gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd.heightHint = 250;
-        gd.widthHint = 200;
+        gd.heightHint = SIZE_HINT_HEIGHT;
+        gd.widthHint = SIZE_HINT_WIDTH;
         resourceTree.setLayoutData(gd);
         
         resourceTreeContentProvider = getResourceTreeContentProvider();
@@ -334,8 +352,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 SWT.SINGLE | SWT.CHECK | SWT.FULL_SELECTION | SWT.BORDER);
         
         gd = new GridData(SWT.FILL, SWT.FILL, true, true);
-        gd.heightHint = 250;
-        gd.widthHint = 200;
+        gd.heightHint = SIZE_HINT_HEIGHT;
+        gd.widthHint = SIZE_HINT_WIDTH;
         resourceList.setLayoutData(gd);
         
         resourceListContentProvider = getResourceListContentProvider();
@@ -403,8 +421,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 });
             }
         });
-        
-        // CHECKSTYLEON MagicNumber
     }
     
     /**
@@ -464,7 +480,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * may override. The default implementation returns an empty array.
      * 
      * <p><em>Note:</em> This could be made more flexible to allow changeing
-     * the list of active filters after creation.
+     * the list of active filters after creation.</p>
      * 
      * @return array of filters.
      */
@@ -514,7 +530,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * may override. The default implementation returns an empty array.
      * 
      * <p><em>Note:</em> This could be made more flexible to allow changeing
-     * the list of active filters after creation.
+     * the list of active filters after creation.</p>
      * 
      * @return array of filters.
      */
@@ -596,7 +612,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * button created. In this case, it should also implement {@link #applyNewSource(String)}
      * and {@link #doBrowseSource()}. While access to the combo box and the browse
      * button shouldn't normally be necessary, they can be retrieved using
-     * {@link #getSourceGroupCombo()} and {@link #getSourceGroupBrowseButton()}.
+     * {@link #getSourceGroupCombo()} and {@link #getSourceGroupBrowseButton()}.</p>
      * 
      * @param parent the new source group's parent.
      * @return the new source group, or {@code null} if none should be shown.
@@ -616,13 +632,9 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     protected final Composite createDefaultSourceGroup(final Composite parent,
             final String labelText, final String browseButtonText) {
 
-        // This method uses magic numbers for layout purposes, so keep Checkstyle from
-        // checking for those
-        // CHECKSTYLEOFF MagicNumber
-        
         // Composite
         Composite sourceGroup = new Composite(parent, SWT.NULL);
-        sourceGroup.setLayout(new GridLayout(3, false));
+        sourceGroup.setLayout(new GridLayout(DEFAULT_SOURCE_TARGET_GROUP_COLUMNS, false));
         
         // Label
         Label label = new Label(sourceGroup, SWT.NULL);
@@ -676,8 +688,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         });
         
         return sourceGroup;
-        
-        // CHECKSTYLEON MagicNumber
     }
     
     /**
@@ -685,7 +695,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * default source group, it should implement this method to react to the user
      * entering a new source. The default implementation does nothing.
      * 
-     * <p>After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.</p>
      * 
      * @param text the combo's current text.
      */
@@ -698,7 +708,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * the default source group, it should implement this method to pop up some
      * kind of browse dialog. The default implementation does nothing.
      * 
-     * <p>After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.</p>
      */
     protected void doBrowseSource() {
         // Do nothing
@@ -739,10 +749,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     protected Composite createButtonBar(final Composite parent) {
         GridLayout gl;
 
-        // This method uses magic numbers for layout purposes, so keep Checkstyle from
-        // checking for those
-        // CHECKSTYLEOFF MagicNumber
-        
         // Composite
         Composite buttonBar = new Composite(parent, SWT.NULL);
         gl = new GridLayout(1, false);
@@ -791,8 +797,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         });
         
         return buttonBar;
-        
-        // CHECKSTYLEON MagicNumber
     }
     
     
@@ -808,7 +812,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * button created. In this case, it should also implement {@link #applyNewTarget(String)}
      * and {@link #doBrowseTarget()}. While access to the combo box and the browse
      * button shouldn't normally be necessary, they can be retrieved using
-     * {@link #getTargetGroupCombo()} and {@link #getTargetGroupBrowseButton()}.
+     * {@link #getTargetGroupCombo()} and {@link #getTargetGroupBrowseButton()}.</p>
      * 
      * @param parent the new target group's parent.
      * @return the new target group, or {@code null} if none should be shown.
@@ -828,13 +832,9 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     protected final Composite createDefaultTargetGroup(final Composite parent,
             final String labelText, final String browseButtonText) {
 
-        // This method uses magic numbers for layout purposes, so keep Checkstyle from
-        // checking for those
-        // CHECKSTYLEOFF MagicNumber
-        
         // Composite
         Composite targetGroup = new Composite(parent, SWT.NULL);
-        targetGroup.setLayout(new GridLayout(3, false));
+        targetGroup.setLayout(new GridLayout(DEFAULT_SOURCE_TARGET_GROUP_COLUMNS, false));
         
         // Label
         Label label = new Label(targetGroup, SWT.NULL);
@@ -888,8 +888,6 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
         });
         
         return targetGroup;
-        
-        // CHECKSTYLEON MagicNumber
     }
     
     /**
@@ -897,7 +895,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * default target group, it should implement this method to react to the user
      * entering a new target. The default implementation does nothing.
      * 
-     * <p>After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.</p>
      * 
      * @param text the combo's current text.
      */
@@ -910,7 +908,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * the default target group, it should implement this method to pop up some
      * kind of browse dialog. The default implementation does nothing.
      * 
-     * <p>After this method was called, {@link validate()} is called automatically.
+     * <p>After this method was called, {@link validate()} is called automatically.</p>
      */
     protected void doBrowseTarget() {
         // Do nothing
@@ -1022,7 +1020,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * <p>There is one condition that must be met for this to work: The tree
      * content provider must be able to return the element's ancestors
      * without them having been visited before. This especially means that
-     * the tree content provider must know what to do with the element.
+     * the tree content provider must know what to do with the element.</p>
      * 
      * @param element the element to select and reveal.
      * @param listElement {@code true} if this is an element in the resource
@@ -1160,7 +1158,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * as the list's new input, if any. The list viewer's check state is then
      * restored.
      * 
-     * <p>Does not validate the page.
+     * <p>Does not validate the page.</p>
      * 
      * @param element the element to be visited.
      * @param updateList {@code true} if the list's input should be set to the
@@ -1199,7 +1197,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      * problem, however, since the check state applied to the element in this method
      * is no different from the check state communicated in the event. Furthermore,
      * no check state change events are generated in response to non-user-initiated
-     * check states.
+     * check states.</p>
      * 
      * @param element the element whose check state has changed.
      * @param checked whether the element is now checked.

@@ -33,7 +33,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  * the methods of this class to be able to update the ancestor and child
  * elements. Since programmatically triggered changes on the check state of
  * an element do not trigger events, the check state manager cannot cope with
- * this on its own.
+ * this on its own.</p>
  * 
  * @author cds
  * @kieler.rating yellow 2010-03-14

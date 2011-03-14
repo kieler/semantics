@@ -28,11 +28,10 @@ import org.eclipse.swt.widgets.Scrollable;
  * anywhere in the control and drag the mouse to scroll. The control's cursor
  * is optionally set to the hand cursor.
  * 
- * <p>
- * This class assumes that dragging the mouse by 1 pixel would result in
+ * <p>This class assumes that dragging the mouse by 1 pixel would result in
  * changeing the scroll bar value by 1. When dragging occurs, the values of
  * the scroll bar(s) is/are modified and a custom Selection event sent to their
- * selection listeners.
+ * selection listeners.</p>
  * 
  * @author cds
  * @kieler.rating yellow 2010-03-14

@@ -44,12 +44,20 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
  * workspace to import to.
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by haf, msp, pkl
  */
 public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
     
     // CONSTANTS
+    /**
+     * Key for the target directory history setting.
+     */
     private static final String SETT_TARGET_DIR_HISTORY = ".targetDir.history"; //$NON-NLS-1$
     
+    /**
+     * Size of the history of combo boxes.
+     */
     private static final int HISTORY_SIZE = 15;
     
     // VARIABLES

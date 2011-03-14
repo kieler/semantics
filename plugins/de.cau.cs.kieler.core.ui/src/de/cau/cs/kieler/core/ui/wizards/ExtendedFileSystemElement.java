@@ -26,6 +26,8 @@ import org.eclipse.ui.dialogs.FileSystemElement;
  * and subfolders to it. This class is used by {@link FileSystemResourcesPage}.
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by haf, msp, pkl
  */
 public class ExtendedFileSystemElement extends FileSystemElement {
     /**
