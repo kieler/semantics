@@ -39,7 +39,7 @@ fmod COMPOUNDTRANSITIONS is
   ceq $chooseChoice empty C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
   ceq $chooseChoice empty C (st2, sT) = st2 if (evalGuard (guard st2) C) .
   eq $chooseChoice empty C st2 = st2 .
-  eq $chooseChoice st C st2 = st2 if (evalGuard (guard st2) C) .
+  ceq $chooseChoice st C st2 = st2 if (evalGuard (guard st2) C) .
   eq $chooseChoice st C st2 = st [owise] .
 
   
