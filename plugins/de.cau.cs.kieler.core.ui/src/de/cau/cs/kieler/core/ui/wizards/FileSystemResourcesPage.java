@@ -18,6 +18,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IResource;
@@ -42,7 +44,7 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
 /**
  * A wizard page that allows the user to choose files to import from the file system.
  * Optionally, a target group may allow the user to choose a target folder in the
- * workspace to import to.
+ * workspace to import to. Files can be filtered using regular expressions.
  * 
  * @author cds
  * @kieler.rating yellow 2010-03-14
@@ -237,9 +239,9 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     private boolean showTargetGroup = false;
     
     /**
-     * Array of allowed file name extensions. Lower case with preceding dot.
+     * Allowed file name pattern.
      */
-    private String[] extensions = null;
+    private Pattern filterPattern = null;
     
     // UI WIDGETS
     private ComboHistoryHandler sourceComboHistoryManager;
@@ -248,19 +250,16 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     
     
     /**
-     * Constructs a new instance with the given name.
+     * Constructs a new instance with the given name that doesn't filter out any
+     * files.
      * 
      * @param pageName name of the page. Used as part of the IDs the dialog
      *                 settings are saved as.
      * @param showTargetGroup if {@code true}, a target group is created
      *                        where the user can select a folder in the
      *                        workspace to import to.
-     * @param fileExtensions array of allowed file name extensions without
-     *                       preceding dot. May be {@code null}.
      */
-    public FileSystemResourcesPage(final String pageName, final boolean showTargetGroup,
-            final String[] fileExtensions) {
-        
+    public FileSystemResourcesPage(final String pageName, final boolean showTargetGroup) {
         super(pageName);
         
         setTitle(Messages.FileSystemResourcesPage_title);
@@ -268,17 +267,72 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         this.showTargetGroup = showTargetGroup;
         
-        // Save extensions
-        if (fileExtensions != null) {
-            extensions = new String[fileExtensions.length];
-            
-            for (int i = 0; i < fileExtensions.length; i++) {
-                extensions[i] = "." + fileExtensions[i].toLowerCase(); //$NON-NLS-1$
-            }
-        }
-        
         // Initially, this page is incomplete
         setPageComplete(false);
+    }
+    
+    /**
+     * Constructs a new instance with the given name, using a regular expression as
+     * its file name filter.
+     * 
+     * @param pageName name of the page. Used as part of the IDs the dialog
+     *                 settings are saved as.
+     * @param showTargetGroup if {@code true}, a target group is created
+     *                        where the user can select a folder in the
+     *                        workspace to import to.
+     * @param fileNamePattern file name pattern, specified as a regular
+     *                        expression.
+     */
+    public FileSystemResourcesPage(final String pageName, final boolean showTargetGroup,
+            final String fileNamePattern) {
+        
+        this(pageName, showTargetGroup);
+        
+        // Save file name pattern, if any
+        filterPattern = Pattern.compile(fileNamePattern);
+    }
+
+    
+    /**
+     * Constructs a new instance with the given name, using a regular expression as
+     * its file name filter.
+     * 
+     * @param pageName name of the page. Used as part of the IDs the dialog
+     *                 settings are saved as.
+     * @param showTargetGroup if {@code true}, a target group is created
+     *                        where the user can select a folder in the
+     *                        workspace to import to.
+     * @param fileExtensions a list of file extensions, either with or without preceding
+     *                       dot, that determines the files that will be shown to the
+     *                       user.
+     */
+    public FileSystemResourcesPage(final String pageName, final boolean showTargetGroup,
+            final String[] fileExtensions) {
+
+        this(pageName, showTargetGroup);
+        
+        if (fileExtensions.length > 0) {
+            StringBuffer buffer = new StringBuffer(".*\\.(?:");
+            
+            // Add all file extensions to the pattern
+            for (String extension : fileExtensions) {
+                if (extension.startsWith(".")) {
+                    buffer.append("(?:");
+                    buffer.append(extension.substring(1));
+                    buffer.append(")|");
+                } else {
+                    buffer.append("(?:");
+                    buffer.append(extension);
+                    buffer.append(")|");
+                }
+            }
+            
+            // Remove the last | character and close the expression
+            buffer.deleteCharAt(buffer.length() - 1);
+            buffer.append(")");
+            
+            filterPattern = Pattern.compile(buffer.toString());
+        }
     }
     
     
@@ -338,23 +392,15 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      */
     @Override
     protected ViewerFilter[] getResourceListFilters() {
-        if (extensions != null) {
+        if (filterPattern != null) {
             return new ViewerFilter[] {new ViewerFilter() {
                 @Override
                 public boolean select(final Viewer viewer, final Object parentElement,
                         final Object element) {
                     
-                    String name =
-                        ((ExtendedFileSystemElement) element).getFile().getName().toLowerCase();
-                    
-                    // Iterate through the list of allowed file filters
-                    for (String extension : extensions) {
-                        if (name.endsWith(extension)) {
-                            return true;
-                        }
-                    }
-                    
-                    return false;
+                    Matcher matcher = filterPattern.matcher(
+                            ((ExtendedFileSystemElement) element).getFile().getName());
+                    return matcher.matches();
                 }
             } };
         } else {
