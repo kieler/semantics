@@ -6,8 +6,8 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-
 import java.util.Set;
+
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -59,7 +59,7 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateInterface_7054SemanticChildren(viewObject);
+                .getStateInterface_7067SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -90,7 +90,7 @@ public class StateSignalCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateInterface_7054SemanticChildren((View) getHost().getModel());
+                .getStateInterface_7067SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();

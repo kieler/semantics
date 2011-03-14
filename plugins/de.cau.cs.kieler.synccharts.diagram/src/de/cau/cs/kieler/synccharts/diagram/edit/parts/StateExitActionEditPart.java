@@ -32,7 +32,7 @@ public class StateExitActionEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3044;
+    public static final int VISUAL_ID = 3051;
 
     /**
      * @generated

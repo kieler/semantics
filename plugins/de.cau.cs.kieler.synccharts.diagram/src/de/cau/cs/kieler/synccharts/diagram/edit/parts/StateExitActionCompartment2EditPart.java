@@ -27,7 +27,7 @@ public class StateExitActionCompartment2EditPart extends ShapeCompartmentEditPar
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7064;
+    public static final int VISUAL_ID = 7077;
 
     /**
      * @generated

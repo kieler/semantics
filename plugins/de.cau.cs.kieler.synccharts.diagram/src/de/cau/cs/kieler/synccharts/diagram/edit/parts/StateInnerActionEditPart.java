@@ -32,7 +32,7 @@ public class StateInnerActionEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3043;
+    public static final int VISUAL_ID = 3050;
 
     /**
      * @generated

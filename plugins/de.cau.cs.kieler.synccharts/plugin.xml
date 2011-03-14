@@ -14,7 +14,7 @@
 
    <extension point="org.eclipse.emf.ecore.generated_package">
       <package
-            uri="http://kieler.cs.cau.de/synccharts/0.2.3"
+            uri="http://kieler.cs.cau.de/synccharts/0.2.4"
             class="de.cau.cs.kieler.synccharts.SyncchartsPackage"
             genModel="model/synccharts.genmodel"/>
    </extension>

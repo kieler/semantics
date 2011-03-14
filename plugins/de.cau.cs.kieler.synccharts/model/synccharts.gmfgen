@@ -28,10 +28,9 @@
     <domainDiagramElement
         href="synccharts.genmodel#//synccharts/Region"/>
     <childNodes
-        visualID="3041"
+        visualID="3048"
         editPartClassName="SignalEditPart"
         itemSemanticEditPolicyClassName="SignalItemSemanticEditPolicy"
-        notationViewFactoryClassName="SignalViewFactory"
         canonicalEditPolicyClassName="SignalCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="SignalGraphicalNodeEditPolicy"
         createCommandClassName="SignalCreateCommand"
@@ -54,10 +53,9 @@
             href="synccharts.genmodel#//synccharts/Scope/signals"/>
       </modelFacet>
       <labels
-          visualID="5051"
+          visualID="5063"
           editPartClassName="SignalNameEditPart"
-          itemSemanticEditPolicyClassName="SignalNameItemSemanticEditPolicy"
-          notationViewFactoryClassName="SignalNameViewFactory">
+          itemSemanticEditPolicyClassName="SignalNameItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -76,10 +74,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3042"
+        visualID="3049"
         editPartClassName="StateEntryActionEditPart"
         itemSemanticEditPolicyClassName="StateEntryActionItemSemanticEditPolicy"
-        notationViewFactoryClassName="ActionViewFactory"
         canonicalEditPolicyClassName="StateEntryActionCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="StateEntryActionGraphicalNodeEditPolicy"
         createCommandClassName="StateEntryActionCreateCommand"
@@ -102,10 +99,9 @@
             href="synccharts.genmodel#//synccharts/Scope/entryActions"/>
       </modelFacet>
       <labels
-          visualID="5052"
+          visualID="5064"
           editPartClassName="StateEntryActionLabelEditPart"
-          itemSemanticEditPolicyClassName="StateEntryActionLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="ActionLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateEntryActionLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -123,10 +119,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3043"
+        visualID="3050"
         editPartClassName="StateInnerActionEditPart"
         itemSemanticEditPolicyClassName="StateInnerActionItemSemanticEditPolicy"
-        notationViewFactoryClassName="ActionViewFactory"
         canonicalEditPolicyClassName="StateInnerActionCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="StateInnerActionGraphicalNodeEditPolicy"
         createCommandClassName="StateInnerActionCreateCommand"
@@ -149,10 +144,9 @@
             href="synccharts.genmodel#//synccharts/Scope/innerActions"/>
       </modelFacet>
       <labels
-          visualID="5053"
+          visualID="5065"
           editPartClassName="StateInnerActionLabelEditPart"
-          itemSemanticEditPolicyClassName="StateInnerActionLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="ActionLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateInnerActionLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -170,10 +164,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3044"
+        visualID="3051"
         editPartClassName="StateExitActionEditPart"
         itemSemanticEditPolicyClassName="StateExitActionItemSemanticEditPolicy"
-        notationViewFactoryClassName="ActionViewFactory"
         canonicalEditPolicyClassName="StateExitActionCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="StateExitActionGraphicalNodeEditPolicy"
         createCommandClassName="StateExitActionCreateCommand"
@@ -196,10 +189,9 @@
             href="synccharts.genmodel#//synccharts/Scope/exitActions"/>
       </modelFacet>
       <labels
-          visualID="5054"
+          visualID="5066"
           editPartClassName="StateExitActionLabelEditPart"
-          itemSemanticEditPolicyClassName="StateExitActionLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="ActionLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateExitActionLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -217,10 +209,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3045"
+        visualID="3052"
         editPartClassName="StateSuspensionTriggerEditPart"
         itemSemanticEditPolicyClassName="StateSuspensionTriggerItemSemanticEditPolicy"
-        notationViewFactoryClassName="ActionViewFactory"
         canonicalEditPolicyClassName="StateSuspensionTriggerCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="StateSuspensionTriggerGraphicalNodeEditPolicy"
         createCommandClassName="StateSuspensionTriggerCreateCommand"
@@ -243,10 +234,9 @@
             href="synccharts.genmodel#//synccharts/Scope/suspensionTrigger"/>
       </modelFacet>
       <labels
-          visualID="5055"
+          visualID="5067"
           editPartClassName="StateSuspensionTriggerLabelEditPart"
-          itemSemanticEditPolicyClassName="StateSuspensionTriggerLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="ActionLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateSuspensionTriggerLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -264,10 +254,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3046"
+        visualID="3053"
         editPartClassName="TextualCodeEditPart"
         itemSemanticEditPolicyClassName="TextualCodeItemSemanticEditPolicy"
-        notationViewFactoryClassName="TextualCodeViewFactory"
         canonicalEditPolicyClassName="TextualCodeCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="TextualCodeGraphicalNodeEditPolicy"
         createCommandClassName="TextualCodeCreateCommand"
@@ -290,21 +279,15 @@
             href="synccharts.genmodel#//synccharts/Scope/bodyText"/>
       </modelFacet>
       <labels
-          visualID="5061"
-          editPartClassName="TextualCodeLabelEditPart"
-          itemSemanticEditPolicyClassName="TextualCodeLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="TextualCodeTypeViewFactory">
+          visualID="5068"
+          editPartClassName="TextualCodeCodeEditPart"
+          itemSemanticEditPolicyClassName="TextualCodeCodeItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
             xsi:type="gmfgen:ParentAssignedViewmap"
             getterName="getFigureCodeLabelFigure"
-            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel">
-          <attributes
-              xsi:type="gmfgen:StyleAttributes"
-              fixedFont="true"
-              fixedForeground="true"/>
-        </viewmap>
+            figureQualifiedClassName="org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel"/>
         <modelFacet
             xsi:type="gmfgen:FeatureLabelModelFacet"
             parser="//@labelParsers/@implementations.0">
@@ -316,10 +299,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3039"
+        visualID="3054"
         editPartClassName="StateRegionEditPart"
         itemSemanticEditPolicyClassName="StateRegionItemSemanticEditPolicy"
-        notationViewFactoryClassName="RegionViewFactory"
         canonicalEditPolicyClassName="StateRegionCanonicalEditPolicy"
         compartments="//@diagram/@compartments.6"
         graphicalNodeEditPolicyClassName="StateRegionGraphicalNodeEditPolicy"
@@ -343,10 +325,9 @@
             href="synccharts.genmodel#//synccharts/State/regions"/>
       </modelFacet>
       <labels
-          visualID="5058"
+          visualID="5072"
           editPartClassName="StateRegionLabelEditPart"
-          itemSemanticEditPolicyClassName="StateRegionLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="RegionLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateRegionLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -370,10 +351,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3040"
+        visualID="3055"
         editPartClassName="RegionStateEditPart"
         itemSemanticEditPolicyClassName="RegionStateItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateViewFactory"
         canonicalEditPolicyClassName="RegionStateCanonicalEditPolicy"
         compartments="//@diagram/@compartments.7 //@diagram/@compartments.8 //@diagram/@compartments.9 //@diagram/@compartments.10 //@diagram/@compartments.11 //@diagram/@compartments.12"
         graphicalNodeEditPolicyClassName="RegionStateGraphicalNodeEditPolicy"
@@ -397,10 +377,9 @@
             href="synccharts.genmodel#//synccharts/Region/states"/>
       </modelFacet>
       <labels
-          visualID="5056"
+          visualID="5070"
           editPartClassName="RegionStateLabelEditPart"
-          itemSemanticEditPolicyClassName="RegionStateLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="StateLabelViewFactory">
+          itemSemanticEditPolicyClassName="RegionStateLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -416,10 +395,9 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5057"
+          visualID="5071"
           editPartClassName="RegionState2LabelEditPart"
-          itemSemanticEditPolicyClassName="RegionStateLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="StateInterfaceDeclarationViewFactory">
+          itemSemanticEditPolicyClassName="RegionStateLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -437,10 +415,9 @@
       </labels>
     </childNodes>
     <childNodes
-        visualID="3047"
+        visualID="3056"
         editPartClassName="VariableEditPart"
         itemSemanticEditPolicyClassName="VariableItemSemanticEditPolicy"
-        notationViewFactoryClassName="VariableViewFactory"
         canonicalEditPolicyClassName="VariableCanonicalEditPolicy"
         graphicalNodeEditPolicyClassName="VariableGraphicalNodeEditPolicy"
         createCommandClassName="VariableCreateCommand"
@@ -463,10 +440,9 @@
             href="synccharts.genmodel#//synccharts/Scope/variables"/>
       </modelFacet>
       <labels
-          visualID="5062"
+          visualID="5069"
           editPartClassName="VariableNameEditPart"
-          itemSemanticEditPolicyClassName="VariableNameItemSemanticEditPolicy"
-          notationViewFactoryClassName="VariableNameViewFactory">
+          itemSemanticEditPolicyClassName="VariableNameItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -482,10 +458,9 @@
       </labels>
     </childNodes>
     <topLevelNodes
-        visualID="2005"
+        visualID="2006"
         editPartClassName="StateEditPart"
         itemSemanticEditPolicyClassName="StateItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateViewFactory"
         canonicalEditPolicyClassName="StateCanonicalEditPolicy"
         compartments="//@diagram/@compartments.0 //@diagram/@compartments.1 //@diagram/@compartments.2 //@diagram/@compartments.3 //@diagram/@compartments.4 //@diagram/@compartments.5"
         graphicalNodeEditPolicyClassName="StateGraphicalNodeEditPolicy"
@@ -508,10 +483,9 @@
             href="synccharts.genmodel#//synccharts/Region/states"/>
       </modelFacet>
       <labels
-          visualID="5059"
+          visualID="5073"
           editPartClassName="StateLabelEditPart"
-          itemSemanticEditPolicyClassName="StateLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="StateLabelViewFactory">
+          itemSemanticEditPolicyClassName="StateLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -527,10 +501,9 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="5060"
+          visualID="5074"
           editPartClassName="StateInterfaceDeclarationEditPart"
-          itemSemanticEditPolicyClassName="StateInterfaceDeclarationItemSemanticEditPolicy"
-          notationViewFactoryClassName="StateInterfaceDeclarationViewFactory">
+          itemSemanticEditPolicyClassName="StateInterfaceDeclarationItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -548,10 +521,9 @@
       </labels>
     </topLevelNodes>
     <links
-        visualID="4005"
+        visualID="4006"
         editPartClassName="TransitionEditPart"
         itemSemanticEditPolicyClassName="TransitionItemSemanticEditPolicy"
-        notationViewFactoryClassName="TransitionViewFactory"
         createCommandClassName="TransitionCreateCommand"
         reorientCommandClassName="TransitionReorientCommand">
       <diagramRunTimeClass
@@ -592,10 +564,9 @@
             href="synccharts.genmodel#//synccharts/Transition/targetState"/>
       </modelFacet>
       <labels
-          visualID="6009"
+          visualID="6011"
           editPartClassName="TransitionLabelEditPart"
-          itemSemanticEditPolicyClassName="TransitionLabelItemSemanticEditPolicy"
-          notationViewFactoryClassName="TransitionLabelViewFactory">
+          itemSemanticEditPolicyClassName="TransitionLabelItemSemanticEditPolicy">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
         <viewmap
@@ -616,10 +587,9 @@
         </modelFacet>
       </labels>
       <labels
-          visualID="6010"
+          visualID="6012"
           editPartClassName="TransitionPriorityEditPart"
           itemSemanticEditPolicyClassName="TransitionPriorityItemSemanticEditPolicy"
-          notationViewFactoryClassName="TransitionPriorityViewFactory"
           alignment="TARGET">
         <diagramRunTimeClass
             href="../../../plugin/org.eclipse.gmf.runtime.notation/model/notation.genmodel#//notation/Node"/>
@@ -647,10 +617,9 @@
       </labels>
     </links>
     <compartments
-        visualID="7054"
+        visualID="7067"
         editPartClassName="StateSignalCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateSignalCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateSignalViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.8"
         title="Interface:"
@@ -665,10 +634,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7055"
+        visualID="7068"
         editPartClassName="StateEntryActionCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateEntryActionCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnEntryActionViewFactory"
         canonicalEditPolicyClassName="StateEntryActionCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.1"
         title="OnEntryAction:"
@@ -683,10 +651,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7056"
+        visualID="7069"
         editPartClassName="StateInnerActionCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateInnerActionCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnInsideActionViewFactory"
         canonicalEditPolicyClassName="StateInnerActionCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.2"
         title="OnInsideAction:"
@@ -701,10 +668,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7057"
+        visualID="7070"
         editPartClassName="StateExitActionCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateExitActionCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnExitActionViewFactory"
         canonicalEditPolicyClassName="StateExitActionCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.3"
         title="OnExitAction:"
@@ -719,10 +685,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7058"
+        visualID="7071"
         editPartClassName="StateSuspensionTriggerCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateSuspensionTriggerCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateSuspendViewFactory"
         canonicalEditPolicyClassName="StateSuspensionTriggerCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.4"
         title="Suspend:"
@@ -737,10 +702,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7059"
+        visualID="7072"
         editPartClassName="StateRegionCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateRegionCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateRegionCompartmentViewFactory"
         canonicalEditPolicyClassName="StateRegionCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.5 //@diagram/@childNodes.6"
         title="RegionCompartment"
@@ -755,10 +719,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7060"
+        visualID="7073"
         editPartClassName="RegionStateCompartmentEditPart"
         itemSemanticEditPolicyClassName="RegionStateCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="RegionStateCompartmentViewFactory"
         canonicalEditPolicyClassName="RegionStateCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.7 //@diagram/@childNodes.5"
         title="StateCompartment"
@@ -773,10 +736,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class RegionFigure extends de.cau.cs.kieler.synccharts.custom.CustomRegionFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureRegionIdFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public RegionFigure() {&#xA;&#x9;&#x9;this.setLayoutManager(new org.eclipse.draw2d.StackLayout());&#xA;&#x9;&#x9;&#xA;&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureRegionIdFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureRegionIdFigure.setText(&quot;&quot;);&#xA;&#x9;fFigureRegionIdFigure.setForegroundColor(org.eclipse.draw2d.ColorConstants.gray);&#xA;&#xA;fFigureRegionIdFigure.setFont(FFIGUREREGIONIDFIGURE_FONT);&#xA;&#xA;&#xA;&#xA;fFigureRegionIdFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(2)&#xA;, getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(2)&#xA;));&#xA;&#xA;this.add(fFigureRegionIdFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureRegionIdFigure() {&#xA;&#x9;&#x9;return fFigureRegionIdFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;/**&#xA; * @generated&#xA; */&#xA;static final org.eclipse.swt.graphics.Font FFIGUREREGIONIDFIGURE_FONT = new org.eclipse.swt.graphics.Font(org.eclipse.swt.widgets.Display.getCurrent(), &quot;Sans&quot;, 7, org.eclipse.swt.SWT.NORMAL);&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7061"
+        visualID="7074"
         editPartClassName="StateSignalCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateSignalCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateSignalViewFactory"
         canonicalEditPolicyClassName="StateSignalCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.0 //@diagram/@childNodes.8"
         title="Interface:"
@@ -791,10 +753,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7062"
+        visualID="7075"
         editPartClassName="StateEntryActionCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateEntryActionCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnEntryActionViewFactory"
         canonicalEditPolicyClassName="StateEntryActionCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.1"
         title="OnEntryAction:"
@@ -809,10 +770,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7063"
+        visualID="7076"
         editPartClassName="StateInnerActionCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateInnerActionCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnInsideActionViewFactory"
         canonicalEditPolicyClassName="StateInnerActionCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.2"
         title="OnInsideAction:"
@@ -827,10 +787,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7064"
+        visualID="7077"
         editPartClassName="StateExitActionCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateExitActionCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateOnExitActionViewFactory"
         canonicalEditPolicyClassName="StateExitActionCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.3"
         title="OnExitAction:"
@@ -845,10 +804,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7065"
+        visualID="7078"
         editPartClassName="StateSuspensionTriggerCompartment2EditPart"
         itemSemanticEditPolicyClassName="StateSuspensionTriggerCompartment2ItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateSuspendViewFactory"
         canonicalEditPolicyClassName="StateSuspensionTriggerCompartment2CanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.4"
         title="Suspend:"
@@ -863,10 +821,9 @@
           classBody="&#xA;/**&#xA; * @generated&#xA; */&#xA;public class StateFigure extends de.cau.cs.kieler.karma.SwitchableFigure {&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureStateNameFigure; &#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel fFigureInterfaceDeclFigure; &#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public StateFigure() {&#xA;&#x9;&#x9;&#xA;&#x9;de.cau.cs.kieler.synccharts.custom.StateLayout layoutThis = new de.cau.cs.kieler.synccharts.custom.StateLayout();&#xA;&#xA;&#xA;&#x9;this.setLayoutManager(layoutThis);&#xA;&#xA;&#x9;&#x9;&#xA;&#xA;this.setSize(getMapMode().DPtoLP(20)&#xA;, getMapMode().DPtoLP(20)&#xA;);&#xA;&#x9;&#x9;createContents();&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;private void createContents(){&#xA;&#xA;&#xA;fFigureStateNameFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureStateNameFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureStateNameFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureStateNameFigure);&#xA;&#xA;&#xA;&#xA;de.cau.cs.kieler.core.ui.figures.TranslatablePolyline polyline0 = new de.cau.cs.kieler.core.ui.figures.TranslatablePolyline();&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(0)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;polyline0.addPoint(new org.eclipse.draw2d.geometry.Point(getMapMode().DPtoLP(50)&#xA;, getMapMode().DPtoLP(20)&#xA;));&#xA;&#xA;this.add(polyline0);&#xA;&#xA;&#xA;&#xA;fFigureInterfaceDeclFigure = new org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel();&#xA;fFigureInterfaceDeclFigure.setText(&quot;&quot;);&#xA;&#xA;fFigureInterfaceDeclFigure.setBorder(new org.eclipse.draw2d.MarginBorder(getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;, getMapMode().DPtoLP(5)&#xA;, getMapMode().DPtoLP(10)&#xA;));&#xA;&#xA;this.add(fFigureInterfaceDeclFigure);&#xA;&#xA;&#xA;&#x9;}&#xA;&#xA;&#xA;&#xA;&#xA;&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureStateNameFigure() {&#xA;&#x9;&#x9;return fFigureStateNameFigure;&#xA;&#x9;}&#xA;&#x9;/**&#xA;&#x9; * @generated&#xA;&#x9; */&#xA;&#x9;public org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel getFigureInterfaceDeclFigure() {&#xA;&#x9;&#x9;return fFigureInterfaceDeclFigure;&#xA;&#x9;}&#xA;&#xA;&#xA;}&#xA;&#xA;"/>
     </compartments>
     <compartments
-        visualID="7066"
+        visualID="7079"
         editPartClassName="StateRegionCompartmentEditPart"
         itemSemanticEditPolicyClassName="StateRegionCompartmentItemSemanticEditPolicy"
-        notationViewFactoryClassName="StateRegionCompartmentViewFactory"
         canonicalEditPolicyClassName="StateRegionCompartmentCanonicalEditPolicy"
         childNodes="//@diagram/@childNodes.5 //@diagram/@childNodes.6"
         title="RegionCompartment"
@@ -949,7 +906,7 @@
   </diagram>
   <plugin
       name="SyncCharts Diagram Editor"
-      provider="Christian-Albrechts-Universit√§t zu Kiel"
+      provider="Christian-Albrechts-Universität zu Kiel"
       version="0.4.0.qualifier"
       printingEnabled="true">
     <requiredPlugins>org.eclipse.draw2d</requiredPlugins>

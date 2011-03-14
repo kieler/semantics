@@ -12,7 +12,7 @@ public class SyncchartsNavigatorSorter extends ViewerSorter {
     /**
      * @generated
      */
-    private static final int GROUP_CATEGORY = 7068;
+    private static final int GROUP_CATEGORY = 7081;
 
     /**
      * @generated

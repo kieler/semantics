@@ -7,7 +7,7 @@ Bundle-ClassPath: .
 Bundle-Activator: de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Export-Package: de.cau.cs.kieler.synccharts.diagram.edit.parts,
+Export-Package: de.cau.cs.kieler.synccharts.diagram.edit.parts, 
  de.cau.cs.kieler.synccharts.diagram.part,
  de.cau.cs.kieler.synccharts.diagram.providers
 Require-Bundle: org.eclipse.core.runtime,

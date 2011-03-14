@@ -19,7 +19,7 @@ public class SignalItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEdit
      * @generated
      */
     public SignalItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Signal_3041);
+        super(SyncchartsElementTypes.Signal_3048);
     }
 
     /**

@@ -59,7 +59,7 @@ public class StateRegionCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateRegionCompartment_7066SemanticChildren(viewObject);
+                .getStateRegionCompartment_7079SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -91,7 +91,7 @@ public class StateRegionCompartmentCanonicalEditPolicy extends CanonicalEditPoli
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateRegionCompartment_7066SemanticChildren((View) getHost().getModel());
+                .getStateRegionCompartment_7079SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();

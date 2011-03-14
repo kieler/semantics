@@ -48,12 +48,12 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsParserProvider;
 /**
  * @generated
  */
-public class TextualCodeLabelEditPart extends CompartmentEditPart implements ITextAwareEditPart {
+public class TextualCodeCodeEditPart extends CompartmentEditPart implements ITextAwareEditPart {
 
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5061;
+    public static final int VISUAL_ID = 5068;
 
     /**
      * @generated
@@ -78,7 +78,7 @@ public class TextualCodeLabelEditPart extends CompartmentEditPart implements ITe
     /**
      * @generated
      */
-    public TextualCodeLabelEditPart(View view) {
+    public TextualCodeCodeEditPart(View view) {
         super(view);
     }
 
@@ -282,10 +282,10 @@ public class TextualCodeLabelEditPart extends CompartmentEditPart implements ITe
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.TextualCode_3046,
+                            SyncchartsElementTypes.TextualCode_3053,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
-                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart.VISUAL_ID));
+                                    .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeCodeEditPart.VISUAL_ID));
         }
         return parser;
     }
@@ -485,7 +485,7 @@ public class TextualCodeLabelEditPart extends CompartmentEditPart implements ITe
      * @generated
      */
     private View getFontStyleOwnerView() {
-        return (View) getModel();
+        return getPrimaryView();
     }
 
     /**

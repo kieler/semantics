@@ -46,7 +46,7 @@ public class StateExitActionCompartment2CanonicalEditPolicy extends CanonicalEdi
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateOnExitAction_7064SemanticChildren(viewObject);
+                .getStateOnExitAction_7077SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -76,7 +76,7 @@ public class StateExitActionCompartment2CanonicalEditPolicy extends CanonicalEdi
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateOnExitAction_7064SemanticChildren((View) getHost().getModel());
+                .getStateOnExitAction_7077SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();

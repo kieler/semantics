@@ -32,7 +32,7 @@ public class StateSuspensionTriggerEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3045;
+    public static final int VISUAL_ID = 3052;
 
     /**
      * @generated

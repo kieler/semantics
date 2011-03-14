@@ -27,7 +27,7 @@ public class StateSignalCompartmentEditPart extends ShapeCompartmentEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7054;
+    public static final int VISUAL_ID = 7067;
 
     /**
      * @generated

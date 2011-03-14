@@ -116,8 +116,8 @@ public class AddStateHandler extends AbstractHandler implements IHandler {
     private void addState(final GraphicalEditPart regionEditPart) {
         // FIXME: try to use something else instead of the State_... IDs, they
         // change very often
-        IElementType elementType = regionEditPart instanceof RegionEditPart ? SyncchartsElementTypes.State_2005
-                : SyncchartsElementTypes.State_3040;
+        IElementType elementType = regionEditPart instanceof RegionEditPart ? SyncchartsElementTypes.State_2006
+                : SyncchartsElementTypes.State_3055;
 
         // find the region compartment
         GraphicalEditPart compartment = null;

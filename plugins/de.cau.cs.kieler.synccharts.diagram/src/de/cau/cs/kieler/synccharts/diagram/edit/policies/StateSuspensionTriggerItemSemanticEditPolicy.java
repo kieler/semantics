@@ -20,7 +20,7 @@ public class StateSuspensionTriggerItemSemanticEditPolicy extends
      * @generated
      */
     public StateSuspensionTriggerItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Action_3045);
+        super(SyncchartsElementTypes.Action_3052);
     }
 
     /**

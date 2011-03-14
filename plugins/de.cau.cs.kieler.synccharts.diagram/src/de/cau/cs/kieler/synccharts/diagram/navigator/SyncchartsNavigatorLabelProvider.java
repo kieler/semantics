@@ -34,8 +34,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableEditPart;
@@ -99,42 +99,42 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      */
     public Image getImage(View view) {
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
-        case StateEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?TopLevelNode?http://kieler.cs.cau.de/synccharts/0.2.3?State", SyncchartsElementTypes.State_2005); //$NON-NLS-1$
-        case StateEntryActionEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?Action", SyncchartsElementTypes.Action_3042); //$NON-NLS-1$
-        case SignalEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Signal", SyncchartsElementTypes.Signal_3041); //$NON-NLS-1$
         case TransitionEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Link?http://kieler.cs.cau.de/synccharts/0.2.3?Transition", SyncchartsElementTypes.Transition_4005); //$NON-NLS-1$
-        case VariableEditPart.VISUAL_ID:
+                    "Navigator?Link?http://kieler.cs.cau.de/synccharts/0.2.4?Transition", SyncchartsElementTypes.Transition_4006); //$NON-NLS-1$
+        case StateEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Variable", SyncchartsElementTypes.Variable_3047); //$NON-NLS-1$
-        case StateSuspensionTriggerEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?Action", SyncchartsElementTypes.Action_3045); //$NON-NLS-1$
-        case RegionEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Diagram?http://kieler.cs.cau.de/synccharts/0.2.3?Region", SyncchartsElementTypes.Region_1000); //$NON-NLS-1$
+                    "Navigator?TopLevelNode?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_2006); //$NON-NLS-1$
         case StateRegionEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?Region", SyncchartsElementTypes.Region_3039); //$NON-NLS-1$
-        case StateExitActionEditPart.VISUAL_ID:
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_3054); //$NON-NLS-1$
+        case StateEntryActionEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?Action", SyncchartsElementTypes.Action_3044); //$NON-NLS-1$
-        case StateInnerActionEditPart.VISUAL_ID:
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3049); //$NON-NLS-1$
+        case SignalEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?Action", SyncchartsElementTypes.Action_3043); //$NON-NLS-1$
+                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Signal", SyncchartsElementTypes.Signal_3048); //$NON-NLS-1$
         case TextualCodeEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?TextualCode", SyncchartsElementTypes.TextualCode_3046); //$NON-NLS-1$
+                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?TextualCode", SyncchartsElementTypes.TextualCode_3053); //$NON-NLS-1$
         case RegionStateEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.3?State", SyncchartsElementTypes.State_3040); //$NON-NLS-1$
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_3055); //$NON-NLS-1$
+        case VariableEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Variable", SyncchartsElementTypes.Variable_3056); //$NON-NLS-1$
+        case RegionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Diagram?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_1000); //$NON-NLS-1$
+        case StateExitActionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3051); //$NON-NLS-1$
+        case StateInnerActionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3050); //$NON-NLS-1$
+        case StateSuspensionTriggerEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3052); //$NON-NLS-1$
         }
         return getImage("Navigator?UnknownElement", null); //$NON-NLS-1$
     }
@@ -187,30 +187,30 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
             return getUnresolvedDomainElementProxyText(view);
         }
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
-        case StateEditPart.VISUAL_ID:
-            return getState_2005Text(view);
-        case StateEntryActionEditPart.VISUAL_ID:
-            return getAction_3042Text(view);
-        case SignalEditPart.VISUAL_ID:
-            return getSignal_3041Text(view);
         case TransitionEditPart.VISUAL_ID:
-            return getTransition_4005Text(view);
+            return getTransition_4006Text(view);
+        case StateEditPart.VISUAL_ID:
+            return getState_2006Text(view);
+        case StateRegionEditPart.VISUAL_ID:
+            return getRegion_3054Text(view);
+        case StateEntryActionEditPart.VISUAL_ID:
+            return getAction_3049Text(view);
+        case SignalEditPart.VISUAL_ID:
+            return getSignal_3048Text(view);
+        case TextualCodeEditPart.VISUAL_ID:
+            return getTextualCode_3053Text(view);
+        case RegionStateEditPart.VISUAL_ID:
+            return getState_3055Text(view);
         case VariableEditPart.VISUAL_ID:
-            return getVariable_3047Text(view);
-        case StateSuspensionTriggerEditPart.VISUAL_ID:
-            return getAction_3045Text(view);
+            return getVariable_3056Text(view);
         case RegionEditPart.VISUAL_ID:
             return getRegion_1000Text(view);
-        case StateRegionEditPart.VISUAL_ID:
-            return getRegion_3039Text(view);
         case StateExitActionEditPart.VISUAL_ID:
-            return getAction_3044Text(view);
+            return getAction_3051Text(view);
         case StateInnerActionEditPart.VISUAL_ID:
-            return getAction_3043Text(view);
-        case TextualCodeEditPart.VISUAL_ID:
-            return getTextualCode_3046Text(view);
-        case RegionStateEditPart.VISUAL_ID:
-            return getState_3040Text(view);
+            return getAction_3050Text(view);
+        case StateSuspensionTriggerEditPart.VISUAL_ID:
+            return getAction_3052Text(view);
         }
         return getUnknownElementText(view);
     }
@@ -218,8 +218,62 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getAction_3042Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3042,
+    private String getTransition_4006Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Transition_4006,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(TransitionLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 6011); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getState_2006Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_2006,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(StateLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5073); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getRegion_3054Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Region_3054,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(StateRegionLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5072); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getAction_3049Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3049,
                 view.getElement() != null ? view.getElement() : view,
                 SyncchartsVisualIDRegistry.getType(StateEntryActionLabelEditPart.VISUAL_ID));
         if (parser != null) {
@@ -228,7 +282,7 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
                     ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5052); //$NON-NLS-1$
+                    "Parser was not found for label " + 5064); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
     }
@@ -236,44 +290,8 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getVariable_3047Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Variable_3047,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(VariableNameEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5062); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getState_3040Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_3040,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(RegionStateLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5056); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getSignal_3041Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Signal_3041,
+    private String getSignal_3048Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Signal_3048,
                 view.getElement() != null ? view.getElement() : view,
                 SyncchartsVisualIDRegistry.getType(SignalNameEditPart.VISUAL_ID));
         if (parser != null) {
@@ -282,7 +300,62 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
                     ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5051); //$NON-NLS-1$
+                    "Parser was not found for label " + 5063); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getTextualCode_3053Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(
+                SyncchartsElementTypes.TextualCode_3053,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(TextualCodeCodeEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5068); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getState_3055Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_3055,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(RegionStateLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5070); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getVariable_3056Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Variable_3056,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(VariableNameEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5069); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
     }
@@ -304,117 +377,8 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
     /**
      * @generated
      */
-    private String getAction_3045Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3045,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5055); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getTransition_4005Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Transition_4005,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(TransitionLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 6009); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getRegion_3039Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Region_3039,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(StateRegionLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5058); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getTextualCode_3046Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(
-                SyncchartsElementTypes.TextualCode_3046,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(TextualCodeLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5061); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getAction_3043Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3043,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(StateInnerActionLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5053); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getState_2005Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.State_2005,
-                view.getElement() != null ? view.getElement() : view,
-                SyncchartsVisualIDRegistry.getType(StateLabelEditPart.VISUAL_ID));
-        if (parser != null) {
-            return parser.getPrintString(
-                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
-                    ParserOptions.NONE.intValue());
-        } else {
-            SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5059); //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-    }
-
-    /**
-     * @generated
-     */
-    private String getAction_3044Text(View view) {
-        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3044,
+    private String getAction_3051Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3051,
                 view.getElement() != null ? view.getElement() : view,
                 SyncchartsVisualIDRegistry.getType(StateExitActionLabelEditPart.VISUAL_ID));
         if (parser != null) {
@@ -423,7 +387,43 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
                     ParserOptions.NONE.intValue());
         } else {
             SyncchartsDiagramEditorPlugin.getInstance().logError(
-                    "Parser was not found for label " + 5054); //$NON-NLS-1$
+                    "Parser was not found for label " + 5066); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getAction_3050Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3050,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(StateInnerActionLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5065); //$NON-NLS-1$
+            return ""; //$NON-NLS-1$
+        }
+    }
+
+    /**
+     * @generated
+     */
+    private String getAction_3052Text(View view) {
+        IParser parser = SyncchartsParserProvider.getParser(SyncchartsElementTypes.Action_3052,
+                view.getElement() != null ? view.getElement() : view,
+                SyncchartsVisualIDRegistry.getType(StateSuspensionTriggerLabelEditPart.VISUAL_ID));
+        if (parser != null) {
+            return parser.getPrintString(
+                    new EObjectAdapter(view.getElement() != null ? view.getElement() : view),
+                    ParserOptions.NONE.intValue());
+        } else {
+            SyncchartsDiagramEditorPlugin.getInstance().logError(
+                    "Parser was not found for label " + 5067); //$NON-NLS-1$
             return ""; //$NON-NLS-1$
         }
     }

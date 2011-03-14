@@ -53,7 +53,7 @@ public class VariableNameEditPart extends CompartmentEditPart implements ITextAw
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5062;
+    public static final int VISUAL_ID = 5069;
 
     /**
      * @generated
@@ -282,7 +282,7 @@ public class VariableNameEditPart extends CompartmentEditPart implements ITextAw
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Variable_3047,
+                            SyncchartsElementTypes.Variable_3056,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.VariableNameEditPart.VISUAL_ID));

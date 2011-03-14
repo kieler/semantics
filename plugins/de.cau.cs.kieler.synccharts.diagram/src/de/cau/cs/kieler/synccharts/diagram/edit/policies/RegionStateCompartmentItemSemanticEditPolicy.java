@@ -17,17 +17,17 @@ public class RegionStateCompartmentItemSemanticEditPolicy extends
      * @generated
      */
     public RegionStateCompartmentItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Region_3039);
+        super(SyncchartsElementTypes.Region_3054);
     }
 
     /**
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.State_3040 == req.getElementType()) {
+        if (SyncchartsElementTypes.State_3055 == req.getElementType()) {
             return getGEFWrapper(new RegionStateCreateCommand(req));
         }
-        if (SyncchartsElementTypes.TextualCode_3046 == req.getElementType()) {
+        if (SyncchartsElementTypes.TextualCode_3053 == req.getElementType()) {
             return getGEFWrapper(new TextualCodeCreateCommand(req));
         }
         return super.getCreateCommand(req);

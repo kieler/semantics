@@ -1,13 +1,9 @@
 package de.cau.cs.kieler.synccharts.diagram.edit.parts;
 
-import org.eclipse.draw2d.FlowLayout;
-import org.eclipse.draw2d.GridLayout;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RectangleFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.StackLayout;
-import org.eclipse.draw2d.XYLayout;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.EditPolicy;
 import org.eclipse.gef.Request;
@@ -25,7 +21,6 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.synccharts.custom.ListCompartmentLayout;
 import de.cau.cs.kieler.synccharts.custom.ListLayout;
 import de.cau.cs.kieler.synccharts.diagram.edit.policies.TextualCodeItemSemanticEditPolicy;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
@@ -38,7 +33,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3046;
+    public static final int VISUAL_ID = 3053;
 
     /**
      * @generated
@@ -113,8 +108,8 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean addFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TextualCodeLabelEditPart) {
-            ((TextualCodeLabelEditPart) childEditPart).setLabel(getPrimaryShape()
+        if (childEditPart instanceof TextualCodeCodeEditPart) {
+            ((TextualCodeCodeEditPart) childEditPart).setLabel(getPrimaryShape()
                     .getFigureCodeLabelFigure());
             return true;
         }
@@ -125,7 +120,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      * @generated
      */
     protected boolean removeFixedChild(EditPart childEditPart) {
-        if (childEditPart instanceof TextualCodeLabelEditPart) {
+        if (childEditPart instanceof TextualCodeCodeEditPart) {
             return true;
         }
         return false;
@@ -249,7 +244,7 @@ public class TextualCodeEditPart extends ShapeNodeEditPart {
      */
     public EditPart getPrimaryChildEditPart() {
         return getChildBySemanticHint(SyncchartsVisualIDRegistry
-                .getType(TextualCodeLabelEditPart.VISUAL_ID));
+                .getType(TextualCodeCodeEditPart.VISUAL_ID));
     }
 
     /**

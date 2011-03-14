@@ -27,7 +27,7 @@ public class StateInnerActionCompartmentEditPart extends ShapeCompartmentEditPar
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7056;
+    public static final int VISUAL_ID = 7069;
 
     /**
      * @generated

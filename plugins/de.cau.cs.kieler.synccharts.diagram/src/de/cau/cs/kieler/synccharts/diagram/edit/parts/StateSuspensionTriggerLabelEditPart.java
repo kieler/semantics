@@ -54,7 +54,7 @@ public class StateSuspensionTriggerLabelEditPart extends CompartmentEditPart imp
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5055;
+    public static final int VISUAL_ID = 5067;
 
     /**
      * @generated
@@ -283,7 +283,7 @@ public class StateSuspensionTriggerLabelEditPart extends CompartmentEditPart imp
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Action_3045,
+                            SyncchartsElementTypes.Action_3052,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerLabelEditPart.VISUAL_ID));

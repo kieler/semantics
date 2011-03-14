@@ -53,77 +53,77 @@ public class SyncchartsModelingAssistantProvider extends ModelingAssistantProvid
                 .getAdapter(IGraphicalEditPart.class);
         if (editPart instanceof RegionEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.State_2005);
+            types.add(SyncchartsElementTypes.State_2006);
             return types;
         }
         if (editPart instanceof StateSignalCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-            types.add(SyncchartsElementTypes.Signal_3041);
-            types.add(SyncchartsElementTypes.Variable_3047);
+            types.add(SyncchartsElementTypes.Signal_3048);
+            types.add(SyncchartsElementTypes.Variable_3056);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3042);
+            types.add(SyncchartsElementTypes.Action_3049);
             return types;
         }
         if (editPart instanceof StateInnerActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3043);
+            types.add(SyncchartsElementTypes.Action_3050);
             return types;
         }
         if (editPart instanceof StateExitActionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3044);
+            types.add(SyncchartsElementTypes.Action_3051);
             return types;
         }
         if (editPart instanceof StateSuspensionTriggerCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3045);
+            types.add(SyncchartsElementTypes.Action_3052);
             return types;
         }
         if (editPart instanceof StateRegionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-            types.add(SyncchartsElementTypes.TextualCode_3046);
-            types.add(SyncchartsElementTypes.Region_3039);
+            types.add(SyncchartsElementTypes.TextualCode_3053);
+            types.add(SyncchartsElementTypes.Region_3054);
             return types;
         }
         if (editPart instanceof RegionStateCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-            types.add(SyncchartsElementTypes.State_3040);
-            types.add(SyncchartsElementTypes.TextualCode_3046);
+            types.add(SyncchartsElementTypes.State_3055);
+            types.add(SyncchartsElementTypes.TextualCode_3053);
             return types;
         }
         if (editPart instanceof StateSignalCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-            types.add(SyncchartsElementTypes.Signal_3041);
-            types.add(SyncchartsElementTypes.Variable_3047);
+            types.add(SyncchartsElementTypes.Signal_3048);
+            types.add(SyncchartsElementTypes.Variable_3056);
             return types;
         }
         if (editPart instanceof StateEntryActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3042);
+            types.add(SyncchartsElementTypes.Action_3049);
             return types;
         }
         if (editPart instanceof StateInnerActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3043);
+            types.add(SyncchartsElementTypes.Action_3050);
             return types;
         }
         if (editPart instanceof StateExitActionCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3044);
+            types.add(SyncchartsElementTypes.Action_3051);
             return types;
         }
         if (editPart instanceof StateSuspensionTriggerCompartment2EditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-            types.add(SyncchartsElementTypes.Action_3045);
+            types.add(SyncchartsElementTypes.Action_3052);
             return types;
         }
         if (editPart instanceof StateRegionCompartmentEditPart) {
             ArrayList<IElementType> types = new ArrayList<IElementType>(2);
-            types.add(SyncchartsElementTypes.TextualCode_3046);
-            types.add(SyncchartsElementTypes.Region_3039);
+            types.add(SyncchartsElementTypes.TextualCode_3053);
+            types.add(SyncchartsElementTypes.Region_3054);
             return types;
         }
         return Collections.EMPTY_LIST;

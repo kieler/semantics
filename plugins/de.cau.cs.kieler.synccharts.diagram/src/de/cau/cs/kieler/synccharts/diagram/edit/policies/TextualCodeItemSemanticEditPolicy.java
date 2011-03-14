@@ -19,7 +19,7 @@ public class TextualCodeItemSemanticEditPolicy extends SyncchartsBaseItemSemanti
      * @generated
      */
     public TextualCodeItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.TextualCode_3046);
+        super(SyncchartsElementTypes.TextualCode_3053);
     }
 
     /**

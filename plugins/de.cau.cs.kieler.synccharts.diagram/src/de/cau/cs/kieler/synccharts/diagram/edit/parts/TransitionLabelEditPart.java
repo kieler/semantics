@@ -54,7 +54,7 @@ public class TransitionLabelEditPart extends LabelEditPart implements ITextAware
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 6009;
+    public static final int VISUAL_ID = 6011;
 
     /**
      * @generated
@@ -300,7 +300,7 @@ public class TransitionLabelEditPart extends LabelEditPart implements ITextAware
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Transition_4005,
+                            SyncchartsElementTypes.Transition_4006,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart.VISUAL_ID));

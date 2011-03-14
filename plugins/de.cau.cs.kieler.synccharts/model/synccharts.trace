@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <trace:TraceModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:trace="http://www.eclipse.org/gmf/2006/Trace">
-  <nodeTraces visualID="2005" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'State') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Region') and _containmentMF_.name = 'states')">
-    <nodeLabelTraces visualID="5059" queryText="true"/>
-    <nodeLabelTraces visualID="5060" queryText="true"/>
-    <compartmentTraces visualID="7054" queryText="true"/>
-    <compartmentTraces visualID="7055" queryText="true"/>
-    <compartmentTraces visualID="7056" queryText="true"/>
-    <compartmentTraces visualID="7057" queryText="true"/>
-    <compartmentTraces visualID="7058" queryText="true"/>
-    <compartmentTraces visualID="7059" queryText="true"/>
+  <nodeTraces visualID="2006" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'State') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Region') and _containmentMF_.name = 'states')">
+    <nodeLabelTraces visualID="5073" queryText="true"/>
+    <nodeLabelTraces visualID="5074" queryText="true"/>
+    <compartmentTraces visualID="7067" queryText="true"/>
+    <compartmentTraces visualID="7068" queryText="true"/>
+    <compartmentTraces visualID="7069" queryText="true"/>
+    <compartmentTraces visualID="7070" queryText="true"/>
+    <compartmentTraces visualID="7071" queryText="true"/>
+    <compartmentTraces visualID="7072" queryText="true"/>
   </nodeTraces>
-  <childNodeTraces visualID="3039" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Region') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'State') and _containmentMF_.name = 'regions')">
-    <nodeLabelTraces visualID="5058" queryText="true"/>
-    <compartmentTraces visualID="7060" queryText="true"/>
+  <childNodeTraces visualID="3048" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/kexpressions/0.1.2' and _eClass_.name = 'Signal') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'signals')">
+    <nodeLabelTraces visualID="5063" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3040" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'State') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Region') and _containmentMF_.name = 'states')">
-    <nodeLabelTraces visualID="5056" queryText="true"/>
-    <nodeLabelTraces visualID="5057" queryText="true"/>
-    <compartmentTraces visualID="7061" queryText="true"/>
-    <compartmentTraces visualID="7062" queryText="true"/>
-    <compartmentTraces visualID="7063" queryText="true"/>
-    <compartmentTraces visualID="7064" queryText="true"/>
-    <compartmentTraces visualID="7065" queryText="true"/>
-    <compartmentTraces visualID="7066" queryText="true"/>
+  <childNodeTraces visualID="3049" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'entryActions')">
+    <nodeLabelTraces visualID="5064" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3041" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/expressions/0.1.2' and _eClass_.name = 'Signal') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'signals')">
-    <nodeLabelTraces visualID="5051" queryText="true"/>
+  <childNodeTraces visualID="3050" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'innerActions')">
+    <nodeLabelTraces visualID="5065" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3042" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'entryActions')">
-    <nodeLabelTraces visualID="5052" queryText="true"/>
+  <childNodeTraces visualID="3051" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'exitActions')">
+    <nodeLabelTraces visualID="5066" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3043" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'innerActions')">
-    <nodeLabelTraces visualID="5053" queryText="true"/>
+  <childNodeTraces visualID="3052" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'suspensionTrigger')">
+    <nodeLabelTraces visualID="5067" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3044" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'exitActions')">
-    <nodeLabelTraces visualID="5054" queryText="true"/>
+  <childNodeTraces visualID="3053" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/kexpressions/0.1.2' and _eClass_.name = 'TextualCode') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'bodyText')">
+    <nodeLabelTraces visualID="5068" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3045" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Action') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'suspensionTrigger')">
-    <nodeLabelTraces visualID="5055" queryText="true"/>
+  <childNodeTraces visualID="3054" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Region') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'State') and _containmentMF_.name = 'regions')">
+    <nodeLabelTraces visualID="5072" queryText="true"/>
+    <compartmentTraces visualID="7073" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3046" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/expressions/0.1.2' and _eClass_.name = 'TextualCode') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'bodyText')">
-    <nodeLabelTraces visualID="5061" queryText="true"/>
+  <childNodeTraces visualID="3055" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'State') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Region') and _containmentMF_.name = 'states')">
+    <nodeLabelTraces visualID="5070" queryText="true"/>
+    <nodeLabelTraces visualID="5071" queryText="true"/>
+    <compartmentTraces visualID="7074" queryText="true"/>
+    <compartmentTraces visualID="7075" queryText="true"/>
+    <compartmentTraces visualID="7076" queryText="true"/>
+    <compartmentTraces visualID="7077" queryText="true"/>
+    <compartmentTraces visualID="7078" queryText="true"/>
+    <compartmentTraces visualID="7079" queryText="true"/>
   </childNodeTraces>
-  <childNodeTraces visualID="3047" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/expressions/0.1.2' and _eClass_.name = 'Variable') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Scope') and _containmentMF_.name = 'variables')">
-    <nodeLabelTraces visualID="5062" queryText="true"/>
+  <childNodeTraces visualID="3056" queryText="(let _eClass_:ecore::EClass = modelFacet.metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/kexpressions/0.1.2' and _eClass_.name = 'Variable') and (let _containmentMF_:ecore::EStructuralFeature = modelFacet.containmentMetaFeature.ecoreFeature in (let _eClass_:ecore::EClass = _containmentMF_.eContainingClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Scope') and _containmentMF_.name = 'variables')">
+    <nodeLabelTraces visualID="5069" queryText="true"/>
   </childNodeTraces>
-  <linkTraces visualID="4005" queryText="modelFacet.oclIsKindOf(gmfgen::TypeLinkModelFacet) and (let _eClass_:ecore::EClass = modelFacet.oclAsType(gmfgen::TypeLinkModelFacet).metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.3' and _eClass_.name = 'Transition')">
-    <linkLabelTraces visualID="6009" queryText="true"/>
-    <linkLabelTraces visualID="6010" queryText="true"/>
+  <linkTraces visualID="4006" queryText="modelFacet.oclIsKindOf(gmfgen::TypeLinkModelFacet) and (let _eClass_:ecore::EClass = modelFacet.oclAsType(gmfgen::TypeLinkModelFacet).metaClass.ecoreClass in _eClass_.ePackage.nsURI = 'http://kieler.cs.cau.de/synccharts/0.2.4' and _eClass_.name = 'Transition')">
+    <linkLabelTraces visualID="6011" queryText="true"/>
+    <linkLabelTraces visualID="6012" queryText="true"/>
   </linkTraces>
 </trace:TraceModel>

@@ -53,7 +53,7 @@ public class SignalNameEditPart extends CompartmentEditPart implements ITextAwar
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5051;
+    public static final int VISUAL_ID = 5063;
 
     /**
      * @generated
@@ -282,7 +282,7 @@ public class SignalNameEditPart extends CompartmentEditPart implements ITextAwar
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Signal_3041,
+                            SyncchartsElementTypes.Signal_3048,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.SignalNameEditPart.VISUAL_ID));

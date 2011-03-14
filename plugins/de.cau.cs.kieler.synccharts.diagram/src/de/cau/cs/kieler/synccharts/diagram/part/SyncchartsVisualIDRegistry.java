@@ -41,8 +41,8 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerComp
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerCompartmentEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateSuspensionTriggerLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeCodeEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeEditPart;
-import de.cau.cs.kieler.synccharts.diagram.edit.parts.TextualCodeLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart;
@@ -323,7 +323,7 @@ public class SyncchartsVisualIDRegistry {
             }
             break;
         case TextualCodeEditPart.VISUAL_ID:
-            if (TextualCodeLabelEditPart.VISUAL_ID == nodeVisualID) {
+            if (TextualCodeCodeEditPart.VISUAL_ID == nodeVisualID) {
                 return true;
             }
             break;

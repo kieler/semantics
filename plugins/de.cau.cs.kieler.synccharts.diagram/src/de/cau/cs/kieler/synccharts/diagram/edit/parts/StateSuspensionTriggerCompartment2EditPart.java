@@ -27,7 +27,7 @@ public class StateSuspensionTriggerCompartment2EditPart extends ShapeCompartment
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 7065;
+    public static final int VISUAL_ID = 7078;
 
     /**
      * @generated

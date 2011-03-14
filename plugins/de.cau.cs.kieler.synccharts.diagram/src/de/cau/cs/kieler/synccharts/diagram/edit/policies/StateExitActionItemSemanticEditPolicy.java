@@ -19,7 +19,7 @@ public class StateExitActionItemSemanticEditPolicy extends SyncchartsBaseItemSem
      * @generated
      */
     public StateExitActionItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Action_3044);
+        super(SyncchartsElementTypes.Action_3051);
     }
 
     /**

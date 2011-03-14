@@ -17,17 +17,17 @@ public class StateSignalCompartmentItemSemanticEditPolicy extends
      * @generated
      */
     public StateSignalCompartmentItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_2005);
+        super(SyncchartsElementTypes.State_2006);
     }
 
     /**
      * @generated
      */
     protected Command getCreateCommand(CreateElementRequest req) {
-        if (SyncchartsElementTypes.Signal_3041 == req.getElementType()) {
+        if (SyncchartsElementTypes.Signal_3048 == req.getElementType()) {
             return getGEFWrapper(new SignalCreateCommand(req));
         }
-        if (SyncchartsElementTypes.Variable_3047 == req.getElementType()) {
+        if (SyncchartsElementTypes.Variable_3056 == req.getElementType()) {
             return getGEFWrapper(new VariableCreateCommand(req));
         }
         return super.getCreateCommand(req);

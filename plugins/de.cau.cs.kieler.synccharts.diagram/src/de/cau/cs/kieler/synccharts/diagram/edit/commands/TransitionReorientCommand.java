@@ -70,7 +70,7 @@ public class TransitionReorientCommand extends EditElementCommand {
             return false;
         }
         State container = (State) getLink().eContainer();
-        return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4005(
+        return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4006(
                 container, getLink(), getNewSource(), target);
     }
 
@@ -86,7 +86,7 @@ public class TransitionReorientCommand extends EditElementCommand {
             return false;
         }
         State container = (State) getLink().eContainer();
-        return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4005(
+        return SyncchartsBaseItemSemanticEditPolicy.getLinkConstraints().canExistTransition_4006(
                 container, getLink(), source, getNewTarget());
     }
 

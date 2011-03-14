@@ -19,7 +19,7 @@ public class VariableItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEd
      * @generated
      */
     public VariableItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.Variable_3047);
+        super(SyncchartsElementTypes.Variable_3056);
     }
 
     /**

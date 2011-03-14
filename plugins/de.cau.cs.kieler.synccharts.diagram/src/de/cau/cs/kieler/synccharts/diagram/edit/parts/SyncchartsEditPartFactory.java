@@ -74,8 +74,8 @@ public class SyncchartsEditPartFactory implements EditPartFactory {
             case TextualCodeEditPart.VISUAL_ID:
                 return new TextualCodeEditPart(view);
 
-            case TextualCodeLabelEditPart.VISUAL_ID:
-                return new TextualCodeLabelEditPart(view);
+            case TextualCodeCodeEditPart.VISUAL_ID:
+                return new TextualCodeCodeEditPart(view);
 
             case StateRegionEditPart.VISUAL_ID:
                 return new StateRegionEditPart(view);

@@ -239,7 +239,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getState_2005ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getState_2006ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -249,7 +249,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case SignalEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getSignal_3041ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getSignal_3048ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -259,7 +259,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateEntryActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3042ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3049ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -269,7 +269,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateInnerActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3043ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3050ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -279,7 +279,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateExitActionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3044ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3051ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -289,7 +289,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateSuspensionTriggerEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getAction_3045ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getAction_3052ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -299,7 +299,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case TextualCodeEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getTextualCode_3046ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getTextualCode_3053ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -309,7 +309,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case StateRegionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getRegion_3039ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getRegion_3054ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -319,7 +319,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case RegionStateEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getState_3040ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getState_3055ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -329,7 +329,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case VariableEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getVariable_3047ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getVariable_3056ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$
@@ -339,7 +339,7 @@ public class RegionCanonicalEditPolicy extends CanonicalEditPolicy {
         }
         case TransitionEditPart.VISUAL_ID: {
             if (!domain2NotationMap.containsKey(view.getElement())) {
-                result.addAll(SyncchartsDiagramUpdater.getTransition_4005ContainedLinks(view));
+                result.addAll(SyncchartsDiagramUpdater.getTransition_4006ContainedLinks(view));
             }
             if (!domain2NotationMap.containsKey(view.getElement())
                     || view.getEAnnotation("Shortcut") == null) { //$NON-NLS-1$

@@ -44,7 +44,7 @@ public class StateItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditP
      * @generated
      */
     public StateItemSemanticEditPolicy() {
-        super(SyncchartsElementTypes.State_2005);
+        super(SyncchartsElementTypes.State_2006);
     }
 
     /**
@@ -203,7 +203,7 @@ public class StateItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditP
      * @generated
      */
     protected Command getStartCreateRelationshipCommand(CreateRelationshipRequest req) {
-        if (SyncchartsElementTypes.Transition_4005 == req.getElementType()) {
+        if (SyncchartsElementTypes.Transition_4006 == req.getElementType()) {
             return getGEFWrapper(new TransitionCreateCommand(req, req.getSource(), req.getTarget()));
         }
         return null;
@@ -213,7 +213,7 @@ public class StateItemSemanticEditPolicy extends SyncchartsBaseItemSemanticEditP
      * @generated
      */
     protected Command getCompleteCreateRelationshipCommand(CreateRelationshipRequest req) {
-        if (SyncchartsElementTypes.Transition_4005 == req.getElementType()) {
+        if (SyncchartsElementTypes.Transition_4006 == req.getElementType()) {
             return getGEFWrapper(new TransitionCreateCommand(req, req.getSource(), req.getTarget()));
         }
         return null;

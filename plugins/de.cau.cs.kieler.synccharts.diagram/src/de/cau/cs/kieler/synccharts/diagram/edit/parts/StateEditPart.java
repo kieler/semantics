@@ -43,7 +43,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 2005;
+    public static final int VISUAL_ID = 2006;
 
     /**
      * @generated
@@ -268,7 +268,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public List<IElementType> getMARelTypesOnSource() {
         ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-        types.add(SyncchartsElementTypes.Transition_4005);
+        types.add(SyncchartsElementTypes.Transition_4006);
         return types;
     }
 
@@ -278,10 +278,10 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
     public List<IElementType> getMARelTypesOnSourceAndTarget(IGraphicalEditPart targetEditPart) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
         if (targetEditPart instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart) {
-            types.add(SyncchartsElementTypes.Transition_4005);
+            types.add(SyncchartsElementTypes.Transition_4006);
         }
         if (targetEditPart instanceof RegionStateEditPart) {
-            types.add(SyncchartsElementTypes.Transition_4005);
+            types.add(SyncchartsElementTypes.Transition_4006);
         }
         return types;
     }
@@ -291,9 +291,9 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public List<IElementType> getMATypesForTarget(IElementType relationshipType) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
-        if (relationshipType == SyncchartsElementTypes.Transition_4005) {
-            types.add(SyncchartsElementTypes.State_2005);
-            types.add(SyncchartsElementTypes.State_3040);
+        if (relationshipType == SyncchartsElementTypes.Transition_4006) {
+            types.add(SyncchartsElementTypes.State_2006);
+            types.add(SyncchartsElementTypes.State_3055);
         }
         return types;
     }
@@ -303,7 +303,7 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public List<IElementType> getMARelTypesOnTarget() {
         ArrayList<IElementType> types = new ArrayList<IElementType>(1);
-        types.add(SyncchartsElementTypes.Transition_4005);
+        types.add(SyncchartsElementTypes.Transition_4006);
         return types;
     }
 
@@ -312,9 +312,9 @@ public class StateEditPart extends AdvancedRenderingShapeNodeEditPart {
      */
     public List<IElementType> getMATypesForSource(IElementType relationshipType) {
         LinkedList<IElementType> types = new LinkedList<IElementType>();
-        if (relationshipType == SyncchartsElementTypes.Transition_4005) {
-            types.add(SyncchartsElementTypes.State_2005);
-            types.add(SyncchartsElementTypes.State_3040);
+        if (relationshipType == SyncchartsElementTypes.Transition_4006) {
+            types.add(SyncchartsElementTypes.State_2006);
+            types.add(SyncchartsElementTypes.State_3055);
         }
         return types;
     }

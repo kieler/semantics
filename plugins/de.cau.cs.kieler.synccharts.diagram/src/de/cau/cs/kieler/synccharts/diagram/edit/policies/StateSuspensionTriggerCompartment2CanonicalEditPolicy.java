@@ -46,7 +46,7 @@ public class StateSuspensionTriggerCompartment2CanonicalEditPolicy extends Canon
         View viewObject = (View) getHost().getModel();
         LinkedList<EObject> result = new LinkedList<EObject>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateSuspend_7065SemanticChildren(viewObject);
+                .getStateSuspend_7078SemanticChildren(viewObject);
         for (SyncchartsNodeDescriptor d : childDescriptors) {
             result.add(d.getModelElement());
         }
@@ -77,7 +77,7 @@ public class StateSuspensionTriggerCompartment2CanonicalEditPolicy extends Canon
         }
         LinkedList<IAdaptable> createdViews = new LinkedList<IAdaptable>();
         List<SyncchartsNodeDescriptor> childDescriptors = SyncchartsDiagramUpdater
-                .getStateSuspend_7065SemanticChildren((View) getHost().getModel());
+                .getStateSuspend_7078SemanticChildren((View) getHost().getModel());
         LinkedList<View> orphaned = new LinkedList<View>();
         // we care to check only views we recognize as ours
         LinkedList<View> knownViewChildren = new LinkedList<View>();

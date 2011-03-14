@@ -53,7 +53,7 @@ public class RegionState2LabelEditPart extends CompartmentEditPart implements IT
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5057;
+    public static final int VISUAL_ID = 5071;
 
     /**
      * @generated
@@ -282,7 +282,7 @@ public class RegionState2LabelEditPart extends CompartmentEditPart implements IT
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.State_3040,
+                            SyncchartsElementTypes.State_3055,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.RegionState2LabelEditPart.VISUAL_ID));

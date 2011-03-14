@@ -54,7 +54,7 @@ public class StateEntryActionLabelEditPart extends CompartmentEditPart implement
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 5052;
+    public static final int VISUAL_ID = 5064;
 
     /**
      * @generated
@@ -283,7 +283,7 @@ public class StateEntryActionLabelEditPart extends CompartmentEditPart implement
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Action_3042,
+                            SyncchartsElementTypes.Action_3049,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEntryActionLabelEditPart.VISUAL_ID));

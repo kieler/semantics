@@ -32,7 +32,7 @@ public class SignalEditPart extends ShapeNodeEditPart {
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 3041;
+    public static final int VISUAL_ID = 3048;
 
     /**
      * @generated

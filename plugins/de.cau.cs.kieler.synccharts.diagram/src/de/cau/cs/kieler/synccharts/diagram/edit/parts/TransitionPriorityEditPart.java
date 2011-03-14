@@ -54,7 +54,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
     /**
      * @generated
      */
-    public static final int VISUAL_ID = 6010;
+    public static final int VISUAL_ID = 6012;
 
     /**
      * @generated
@@ -300,7 +300,7 @@ public class TransitionPriorityEditPart extends LabelEditPart implements ITextAw
         if (parser == null) {
             parser = SyncchartsParserProvider
                     .getParser(
-                            SyncchartsElementTypes.Transition_4005,
+                            SyncchartsElementTypes.Transition_4006,
                             getParserElement(),
                             SyncchartsVisualIDRegistry
                                     .getType(de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionPriorityEditPart.VISUAL_ID));

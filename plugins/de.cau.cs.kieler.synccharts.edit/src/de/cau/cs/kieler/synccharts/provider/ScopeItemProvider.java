@@ -423,6 +423,11 @@ public class ScopeItemProvider
         newChildDescriptors.add
             (createChildParameter
                 (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
+                 AnnotationsFactory.eINSTANCE.createTypedStringAnnotation()));
+
+        newChildDescriptors.add
+            (createChildParameter
+                (SyncchartsPackage.Literals.SCOPE__BODY_CONTENTS,
                  EcoreFactory.eINSTANCE.createEAttribute()));
 
         newChildDescriptors.add
