@@ -191,7 +191,7 @@ mod INIT is
 
 	vars msst mastate : MState .
 	vars V V2 : Verts .
-	var E : EventSS .
+	var E : Events .
 	vars HC : HistoryConfs .
 	
 	subsort MState < State .
