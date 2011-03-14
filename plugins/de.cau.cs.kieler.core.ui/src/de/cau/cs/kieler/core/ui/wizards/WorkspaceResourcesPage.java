@@ -35,7 +35,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
 import de.cau.cs.kieler.core.ui.Messages;
-import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
+import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
 
 
 /**
@@ -69,7 +69,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
     private IStructuredSelection selection = null;
     
     // UI WIDGETS
-    private ComboHistoryManager targetComboHistoryManager;
+    private ComboHistoryHandler targetComboHistoryManager;
     
     
     /**
@@ -275,7 +275,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                 Messages.WorkspaceResourcesPage_targetGroup_text,
                 Messages.WorkspaceResourcesPage_targetGroup_browse);
         
-        targetComboHistoryManager = new ComboHistoryManager(getTargetGroupCombo(), HISTORY_SIZE);
+        targetComboHistoryManager = new ComboHistoryHandler(getTargetGroupCombo(), HISTORY_SIZE);
         
         return targetGroup;
     }

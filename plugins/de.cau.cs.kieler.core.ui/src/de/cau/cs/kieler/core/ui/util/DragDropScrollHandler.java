@@ -35,6 +35,8 @@ import org.eclipse.swt.widgets.Scrollable;
  * selection listeners.
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by haf, msp, pkl
  */
 public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
     /**
@@ -69,7 +71,7 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
     
     
     /**
-     * Constructs a new instance manageing the given control and sets the
+     * Constructs a new instance managing the given control and sets the
      * control's cursor to the hand cursor.
      * 
      * @param control the control to manage. Must have at least one of the two

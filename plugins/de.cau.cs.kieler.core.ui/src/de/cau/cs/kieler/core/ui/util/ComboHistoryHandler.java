@@ -30,8 +30,10 @@ import org.eclipse.swt.widgets.Combo;
  * settings using a {@code DialogSettings} instance.
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by msp, pkl
  */
-public class ComboHistoryManager {
+public class ComboHistoryHandler {
     /**
      * History size.
      */
@@ -50,7 +52,7 @@ public class ComboHistoryManager {
      * @param combo the combo box whose history to manage.
      * @param historySize size of the history.
      */
-    public ComboHistoryManager(final Combo combo, final int historySize) {
+    public ComboHistoryHandler(final Combo combo, final int historySize) {
         if (combo == null) {
             throw new NullPointerException("combo cannot be null.");
         }

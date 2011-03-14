@@ -36,7 +36,7 @@ import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
 import de.cau.cs.kieler.core.ui.Messages;
-import de.cau.cs.kieler.core.ui.util.ComboHistoryManager;
+import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
 
 
 /**
@@ -230,8 +230,8 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
     private String[] extensions = null;
     
     // UI WIDGETS
-    private ComboHistoryManager sourceComboHistoryManager;
-    private ComboHistoryManager targetComboHistoryManager;
+    private ComboHistoryHandler sourceComboHistoryManager;
+    private ComboHistoryHandler targetComboHistoryManager;
     private DirectoryDialog directoryDialog;
     
     
@@ -372,7 +372,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
                 Messages.FileSystemResourcesPage_sourceGroup_text,
                 Messages.FileSystemResourcesPage_sourceGroup_browse);
         
-        sourceComboHistoryManager = new ComboHistoryManager(getSourceGroupCombo(), HISTORY_SIZE);
+        sourceComboHistoryManager = new ComboHistoryHandler(getSourceGroupCombo(), HISTORY_SIZE);
         
         // Prepare the directory dialog used by the browse button
         directoryDialog = new DirectoryDialog(parent.getShell(), SWT.SAVE | SWT.SHEET);
@@ -442,7 +442,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
                 Messages.FileSystemResourcesPage_targetGroup_text,
                 Messages.FileSystemResourcesPage_targetGroup_browse);
         
-        targetComboHistoryManager = new ComboHistoryManager(getTargetGroupCombo(), HISTORY_SIZE);
+        targetComboHistoryManager = new ComboHistoryHandler(getTargetGroupCombo(), HISTORY_SIZE);
         
         return targetGroup;
     }

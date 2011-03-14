@@ -36,8 +36,10 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
  * this on its own.
  * 
  * @author cds
+ * @kieler.rating yellow 2010-03-14
+ *      reviewed by haf, msp, pkl
  */
-public class TreeViewerCheckStateManager {
+public class TreeViewerCheckStateHandler {
     /**
      * The tree viewer to be managed.
      */
@@ -49,7 +51,7 @@ public class TreeViewerCheckStateManager {
      * 
      * @param treeViewer the tree viewer to be managed.
      */
-    public TreeViewerCheckStateManager(final CheckboxTreeViewer treeViewer) {
+    public TreeViewerCheckStateHandler(final CheckboxTreeViewer treeViewer) {
         if (treeViewer == null) {
             throw new IllegalArgumentException("viewer may not be null.");
         }
