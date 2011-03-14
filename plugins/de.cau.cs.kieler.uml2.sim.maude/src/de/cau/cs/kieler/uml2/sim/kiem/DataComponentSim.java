@@ -1,5 +1,6 @@
 package de.cau.cs.kieler.uml2.sim.kiem;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,14 +32,16 @@ public class DataComponentSim extends DataComponent implements
 	 * for.
 	 */
 	// FIXME: the has to be adapted to the new syntax -> check
-	//
 	private static final String MAUDEPARSESTATESTARTER = "--> maState doneC ("; // FALSCH! "--> maState  doneC (r";
 
 	/** The constant MAUDEERROR indicates the error token to search for. */
 	private static final String MAUDEERROR = "*HERE*";
 
 	/** The currently active states. */
-	String[] currentStates;
+	List<String> currentStates = new LinkedList<String>();
+
+	/** The currently active regions. */
+	List<String> currentRegions = new LinkedList<String>();
 
 	// -------------------------------------------------------------------------
 
@@ -60,10 +63,11 @@ public class DataComponentSim extends DataComponent implements
 	 */
 	@Override
 	public KiemProperty[] doProvideProperties() {
-		KiemProperty[] properties = new KiemProperty[2];
+		KiemProperty[] properties = new KiemProperty[3];
 		KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
 		properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
 		properties[1] = new KiemProperty("State Variable", "state");
+		properties[2] = new KiemProperty("Region Variable", "region");
 		return properties;
 	}
 
@@ -124,19 +128,25 @@ public class DataComponentSim extends DataComponent implements
 		}
 
 		// second build the current states
-		String currentStatesQuery = "";
+		String currentStatesRegionsQuery = "";
 		for (String currentState : currentStates) {
-			if (!currentStatesQuery.isEmpty()) {
-				currentStatesQuery += ",";
+			if (!currentStatesRegionsQuery.isEmpty()) {
+				currentStatesRegionsQuery += ",";
 			}
-			currentStatesQuery += currentState;
+			currentStatesRegionsQuery += currentState;
+		}
+		for (String currentRegion : currentRegions) {
+			if (!currentStatesRegionsQuery.isEmpty()) {
+				currentStatesRegionsQuery += ",";
+			}
+			currentStatesRegionsQuery += currentRegion;
 		}
 
 		// FIXME: this has to be adapted to the new synatx
 		// search (maState (stableC (prettyVerts (R-990928836 ,
 		// susp441237549)) empty) (res,
 		// ee1)) =>* mastate such that isDone mastate .
-		String queryRequest = "search (maState (stableC (" + currentStatesQuery
+		String queryRequest = "search (maState (stableC (" + currentStatesRegionsQuery
 				+ ") empty) (" + triggerEventsQuery
 				+ ")) =>* mastate such that isDone mastate . \n";
 
@@ -156,25 +166,76 @@ public class DataComponentSim extends DataComponent implements
 		printConsole(result);
 
 		// interpret resulting states
-		List<String[]> currentStatesChoices = extractActiveStates(result);
+		List<String[]> currentStatesRegionsChoices = extractActiveStates(result);
+		List<String> currentStatesRegions = new LinkedList<String>();
 
-		if (currentStatesChoices.size() == 1) {
-			currentStates = currentStatesChoices.get(0);
+		if (currentStatesRegionsChoices.size() == 1) {
+			currentStatesRegions = Arrays.asList(currentStatesRegionsChoices.get(0));
 		}
-		if (currentStatesChoices.size() > 1) {
-			currentStates = selectCurrentState(currentStatesChoices);
+		if (currentStatesRegionsChoices.size() > 1) {
+			currentStatesRegions = Arrays.asList(selectCurrentState(currentStatesRegionsChoices));
 		}
+
+		// if anything changed, extract regions from state list
+		if (currentStatesRegionsChoices.size() > 0) {
+			currentStates = new LinkedList<String>();
+			currentRegions = new LinkedList<String>();
+			
+			for (String currentStateRegion : currentStatesRegions) {
+				if (currentStateRegion.startsWith("R-")) {
+					// possibly add to region list
+					boolean found = false;
+					for (String currentRegion: currentRegions) {
+						if (currentRegion.equals(currentStateRegion)) {
+							found = true;
+							break;
+						}
+					}
+					if (! found) {
+						// add to regions list because it is not yet in this list
+						currentRegions.add(currentStateRegion);
+					}
+				}
+				else {
+					// possibly add to state list
+					boolean found = false;
+					for (String currentState: currentStates) {
+						if (currentState.equals(currentStateRegion)) {
+							found = true;
+							break;
+						}
+					}
+					if (! found) {
+						// add to regions list because it is not yet in this list
+						currentStates.add(currentStateRegion);
+					}
+				}
+			}
+		}
+		
 		// else
-		// currentStates don't change
+		// currentStates and currentRegions don't change
 
+		
 		// the stateName is the second KIEM property
 		String stateName = this.getProperties()[2].getValue();
 		try {
-			returnObj.accumulate(stateName, getCurrentStateIds(currentStates));
+			returnObj.accumulate(stateName, getCurrentStateIds(currentStates.toArray(new String[0])));
 		} catch (Exception e) {
 			// ignore any errors
 			e.printStackTrace();
 		}
+
+
+		// the regionName is the third KIEM property
+		String regionName = this.getProperties()[3].getValue();
+		try {
+			returnObj.accumulate(regionName, getCurrentStateIds(currentRegions.toArray (new String [0])));
+		} catch (Exception e) {
+			// ignore any errors
+			e.printStackTrace();
+		}
+
 		
 		// no actions can be extracted so far
 		return returnObj;
@@ -272,7 +333,8 @@ public class DataComponentSim extends DataComponent implements
 		clearConsole();
 
 		// initialize with initial states (and regions)
-		currentStates = getInitialStates();
+		currentStates = Arrays.asList(getInitialStates());
+		//TODO: Initial Regions?
 
 		maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(
 				pathToMaude, pathToMaudeCode);

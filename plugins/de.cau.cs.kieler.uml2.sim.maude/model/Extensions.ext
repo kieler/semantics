@@ -87,14 +87,14 @@ Set[String] getActions(StateMachine sm):
 // Ideally this should return just one vertex, but cause must be paied because
 // the maude ide is constructed using just the hash value. In theory this may
 // lead to duplicate maude state ids.
-Set[String] getEmfId(Package package, String maudeStateId) :
- let vertexList = (Set[Vertex])package.getStates():
- let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateId.toString())):
+Set[String] getEmfId(Package package, String maudeStateRegionId) :
+ let vertexList = (Set[Vertex])package.getStatesRegions():
+ let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateRegionId.toString())):
  vertexSelectedList.getEMFId()
 ;
-Set[String] getEmfId(StateMachine sm, String maudeStateId) :
- let vertexList = (Set[Vertex])sm.getStates():
- let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateId.toString())):
+Set[String] getEmfId(StateMachine sm, String maudeStateRegionId) :
+ let vertexList = (Set[Vertex])sm.getStatesRegions():
+ let vertexSelectedList = vertexList.select(e|e.getId().toString().matches(maudeStateRegionId.toString())):
  vertexSelectedList.getEMFId()
 ;
 
@@ -164,10 +164,23 @@ Set[Pseudostate] getForkJoinChoice(StateMachine sm):
  ((Set[Transition])sm.eAllContents.select(e|e.metaType == Pseudostate && ( ((Vertex)e).isJoin() || ((Vertex)e).isFork() || ((Vertex)e).isChoice() ) ))
 ;
 
+
+// Get all States and Regions of the state machine
+Set[Vertex] getStatesRegions(Package package):
+ //ToDo: FinalState is State ?!?
+ ((Set[Vertex])package.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState || e.metaType == Region))
+;
+
 // Get all States of the state machine
 Set[Vertex] getStates(Package package):
  //ToDo: FinalState is State ?!?
  ((Set[Vertex])package.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState))
+;
+
+// Get all States and Regions of the state machine
+Set[Vertex] getStatesRegions(StateMachine sm):
+ //ToDo: FinalState is State ?!?
+ ((Set[Vertex])sm.eRootContainer.eAllContents.select(e|e.metaType == State || e.metaType == FinalState || e.metaType == Region))
 ;
 
 // Get all States of the state machine
@@ -712,6 +725,11 @@ String getId(Vertex vertex):
 // Get the EMF ID of a vertex
 String getEMFId(Vertex vertex):
   JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEMFId(org.eclipse.uml2.uml.Vertex)
+;
+
+// Get the EMF ID of a region
+String getEMFId(Region region):
+  JAVA de.cau.cs.kieler.uml2.sim.JavaEscape.getEMFId(org.eclipse.uml2.uml.Region)
 ;
 
 // Get the ID of a transition

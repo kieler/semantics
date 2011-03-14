@@ -235,6 +235,13 @@ public class JavaEscape {
 
     // ------------------------------------------------------------------------
 
+    // Get the EMF Fragment URI ID of a Region
+    public static String getEMFId(Region region) {
+        return region.eResource().getURIFragment(region).toString();
+    }
+
+    // ------------------------------------------------------------------------
+
     // Get the ID of a Region
     public static String getId(Region region) {
         return "R" + hash(region.eResource().getURIFragment(region).toString());
