@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.model.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.core.model.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -184,6 +185,8 @@ public class SyncChartsCombination extends AbstractCombination {
             FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
             focusEffect.addFocus(activeStates.getHistoryStates(), 0);
             this.schedule(focusEffect);
+            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, true, false,
+                    true, true));
         }
     }
 
