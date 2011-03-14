@@ -97,7 +97,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
-    protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C";
+//    protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C"; (OLD SYNTAX)
+    protected static final String MAUDEPARSESTATESTARTER = "--> maState doneC (";
 
     /** The Constant MAUDENOEVENT no event (will not be displayed). */
     protected static final String MAUDENOEVENT = "(ev: \"noevent\")";
@@ -528,7 +529,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     public String[] selectCurrentState(List<String[]> currentStatesChoicesParam) {
         flagDialogDone = false;
         currentStatesChoices = currentStatesChoicesParam;
-        // this is also the default case if nothing is selected of canceled
+        // this is also the default case if nothing is selected or canceled
         currentStatesSelected = currentStatesChoices.get(0);
 
         Display.getDefault().asyncExec(new Runnable() {
