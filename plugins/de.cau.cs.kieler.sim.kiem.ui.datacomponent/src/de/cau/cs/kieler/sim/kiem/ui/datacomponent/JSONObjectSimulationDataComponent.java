@@ -388,8 +388,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         Diagnostician diagnostician = Diagnostician.INSTANCE;
         EObject rootEObject = getModelRootElement();
         
-        // FIXME: validation currently always fails
-        boolean ok = true; //checkModelValidation(rootEObject);
+        boolean ok = checkModelValidation(rootEObject);
 
         if (!ok) {
             // bring Problems View to the front otherwise
