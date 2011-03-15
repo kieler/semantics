@@ -39,7 +39,6 @@ import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
-import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
@@ -264,7 +263,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             parentPosition.x = (int) parentLayout.getXpos();
             parentPosition.y = (int) parentLayout.getYpos();
         }
-        KInsets insets = parentLayout.getProperty(LayoutOptions.INSETS);
+        KInsets insets = parentLayout.getInsets();
         parentPosition.x += insets.getLeft();
         parentPosition.y += insets.getTop();
         
