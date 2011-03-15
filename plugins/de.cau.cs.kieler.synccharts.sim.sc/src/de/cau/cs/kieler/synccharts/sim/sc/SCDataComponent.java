@@ -112,11 +112,12 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
             if (!validation || (validation && newValidation)) {
                 // compile
+                // -m32 = 32 bit compatibility mode. Otherwise compiler errors in 64bit archs
                 String compiler = (getProperties()[PROP_COMPILER]).getValue();
                 String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
                         + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
                         + bundleLocation + " " + "-o " + outPath
-                        + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
+                        + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -m32";
                 process = Runtime.getRuntime().exec(compile);
                 System.out.println(compile);
 
