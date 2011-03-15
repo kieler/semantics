@@ -76,7 +76,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      * The Constant AIMED_STEP_DURATION_DEFAULT. Default value of the
      * AimedStepDuration text field in ms.
      */
-    public static final int AIMED_STEP_DURATION_DEFAULT = 500;
+    public static final int AIMED_STEP_DURATION_DEFAULT = 2000;
 
     /**
      * The Constant AIMED_STEP_DURATION_MIN. Minimum value of the
