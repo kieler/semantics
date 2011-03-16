@@ -414,26 +414,6 @@ public class SyncchartsSimDataComponent extends
     }
 
     // -------------------------------------------------------------------------
-    @Override
-    public void bringProblemsViewToFront() {
-        try {
-            IWorkbenchWindow window = PlatformUI.getWorkbench()
-                    .getActiveWorkbenchWindow();
-            if (window != null) {
-                IWorkbenchPage page = window.getActivePage();
-                if (page != null) {
-                    IViewPart vP = page
-                            .showView(org.eclipse.ui.IPageLayout.ID_PROBLEM_VIEW);
-                    vP.setFocus();
-                }
-            }
-        } catch (Exception e) {
-            // FIXME: Evil catch block, fix this :P
-            e.printStackTrace();
-        }
-    }
-
-    // -------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
