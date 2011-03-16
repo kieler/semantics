@@ -30,18 +30,17 @@ import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
  * @author soh
  * @kieler.rating 2010-06-15 yellow msp, cmot
  */
-public class SyncchartsCutCopyPasteCommandFactory extends
-        AbstractCutCopyPasteCommandFactory {
+public class SyncchartsCutCopyPasteCommandFactory extends AbstractCutCopyPasteCommandFactory {
 
     /** The transformation file. */
     private static final String FILE = "/transformations/copyPaste.ext";
 
     /** The base packages of the underlying meta model. */
-    private static final String[] MODEL = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
+    private static final String[] MODEL = { "de.cau.cs.kieler.synccharts.SyncchartsPackage",
+            "org.eclipse.emf.ecore.EcorePackage" };
 
     /** All types that are supported by copy and paste and have to be mapped. */
-    private static final Class<?>[] TYPES = { State.class, Region.class,
-            Transition.class };
+    private static final Class<?>[] TYPES = { State.class, Region.class, Transition.class };
 
     /**
      * {@inheritDoc}

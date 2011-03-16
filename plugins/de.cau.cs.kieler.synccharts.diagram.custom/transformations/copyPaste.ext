@@ -1,5 +1,6 @@
 import synccharts;
 import utilities;
+import ecore;
 
 //Sets the object that should be selected after the transformation is executed
 Void setSelection(Object object):
