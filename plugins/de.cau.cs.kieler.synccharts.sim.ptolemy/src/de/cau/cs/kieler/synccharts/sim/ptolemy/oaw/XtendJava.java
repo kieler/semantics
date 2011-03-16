@@ -206,7 +206,7 @@ public class XtendJava {
         } else {
             returnId =  (removeBlancs(myState.getId()) + "_" + hash(getURIFragment(myState)));
         }
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + returnId);
+//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + returnId);
         return returnId;
         
         // return hash(getURIFragment(myState));

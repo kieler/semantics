@@ -144,7 +144,7 @@ public class ExecutePtolemyModel {
             String signalName = kielerIOList.get(c).getSignalName();
             // remove quotation marks
             signalName = signalName.replaceAll("'", "");
-                System.out.print(">>>" + signalName);
+//                System.out.print(">>>" + signalName);
             keyArray[c] = signalName;
         }
 
@@ -356,7 +356,7 @@ public class ExecutePtolemyModel {
                 fillKielerIOList(kielerIOList, compositeActor.entityList());
             }
 
-            System.out.println(child.getClass().getName());
+//            System.out.println(child.getClass().getName());
             
             if (child.getClass().getName().equals("ptolemy.actor.kiel.KielerIO")) {
                 kielerIOList.add((KielerIO) child);
