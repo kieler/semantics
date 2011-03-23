@@ -23,18 +23,18 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin;
-import de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils;
+import de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils;
 
 /**
  * @author soh
  */
-public class OptimizationPreferencePage extends FieldEditorPreferencePage
+public class FixSyncChartPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {
 
     /**
      * Creates a KIELER preference page.
      */
-    public OptimizationPreferencePage() {
+    public FixSyncChartPreferencePage() {
         super(GRID);
         setDescription("Preference page for the Optimizations");
     }
@@ -45,22 +45,22 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
     @Override
     protected void createFieldEditors() {
         try {
-            List<String> keys = OptimizeUtils.getKeys();
+            List<String> keys = FixSyncChartUtils.getKeys();
 
             for (String key : keys) {
                 Composite parent = getFieldEditorParent();
                 BooleanFieldEditor enablementFE = new BooleanFieldEditor(key,
-                        OptimizeUtils.getDisplay(key), parent);
+                        FixSyncChartUtils.getDisplay(key), parent);
                 enablementFE.getDescriptionControl(parent).setToolTipText(
-                        OptimizeUtils.getTooltip(key));
+                        FixSyncChartUtils.getTooltip(key));
                 super.addField(enablementFE);
             }
 
-            List<String> choiceKeys = OptimizeUtils.getChoiceKeys();
+            List<String> choiceKeys = FixSyncChartUtils.getChoiceKeys();
 
             for (String key : choiceKeys) {
                 Composite parent2 = getFieldEditorParent();
-                String label = OptimizeUtils.getDisplay(key);
+                String label = FixSyncChartUtils.getDisplay(key);
                 int cols = 1;
                 String[][] input = getInput(key);
                 RadioGroupFieldEditor choiceFE = new RadioGroupFieldEditor(key,
@@ -76,12 +76,12 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
     }
 
     private String[][] getInput(final String key) {
-        List<String> options = OptimizeUtils.getChoices(key);
+        List<String> options = FixSyncChartUtils.getChoices(key);
         String choice = getPreferenceStore().getString(key);
 
         String[][] input = new String[options.size()][2];
         for (int i = 0; i < options.size(); i++) {
-            input[i][0] = OptimizeUtils.getDisplay(options.get(i));
+            input[i][0] = FixSyncChartUtils.getDisplay(options.get(i));
             input[i][1] = options.get(i);
         }
         return input;
@@ -96,7 +96,7 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
         if (!super.performOk()) {
             return false;
         }
-        OptimizeUtils.saveConfiguration();
+        FixSyncChartUtils.saveConfiguration();
         return true;
     }
 
@@ -105,7 +105,7 @@ public class OptimizationPreferencePage extends FieldEditorPreferencePage
      */
     public void init(final IWorkbench workbench) {
         try {
-            OptimizeUtils.loadConfiguration();
+            FixSyncChartUtils.loadConfiguration();
             setPreferenceStore(SyncchartsKsbasePlugin.getDefault()
                     .getPreferenceStore());
         } catch (RuntimeException e0) {

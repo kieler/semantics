@@ -39,7 +39,7 @@ import de.cau.cs.kieler.synccharts.listener.UniqueStringCache;
  * 
  * @author soh
  */
-public final class OptimizeUtils {
+public final class FixSyncChartUtils {
 
     /** Preference Prefix. */
     public static final String PREFIX = "_OPTIMIZE_";
@@ -124,7 +124,7 @@ public final class OptimizeUtils {
      * Dummy.
      * 
      */
-    private OptimizeUtils() {
+    private FixSyncChartUtils() {
 
     }
 

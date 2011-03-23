@@ -6,13 +6,13 @@ extension repair;
 extension dialogs;
 
 // start from selected state
-Void optimizeSelected(State state):
- optimize(state)
+Void fixSelected(State state):
+ fix(state)
 ;
 
 // start from selected region (root region is usually best)
-Void optimizeSelected(Region rootRegion):
- optimize(rootRegion)
+Void fixSelected(Region rootRegion):
+ fix(rootRegion)
 ;
 
 //Adds a successor to the given state 
@@ -281,11 +281,11 @@ if (stateSize <= 1) then parentState.regions.remove(parentRegion)
 ;
 
 List[State] getStateList():
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStateList()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.getStateList()
 ;
 
 Void myDebug(Object object):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.debug(java.lang.Object)
 ;
 
 // put the selected region into a new state and add
@@ -490,7 +490,7 @@ Boolean hasSignalsVariables(State state):
 
 // get an empty string list from java for creating a list for user selection
 List[String] getStringList():
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStringList()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.getStringList()
 ;
 
 // create a list for user selection with all signal and variable names

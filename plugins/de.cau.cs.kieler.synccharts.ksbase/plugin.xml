@@ -184,10 +184,10 @@
               </transformation>
               <transformation
                     icon="icons/quickfix_obj.gif"
-                    name="Optimize"
-                    tooltip="Optimize the current Synccharts. This can be configured through the preference page."
-                    transformation="optimizeSelected"
-                    transformationId="de.cau.cs.kieler.ksbase.optimize">
+                    name="Fix SyncChart"
+                    tooltip="Fix the current SyncChart. This can be configured through the preference page."
+                    transformation="fixSelected"
+                    transformationId="de.cau.cs.kieler.ksbase.fixsyncchart">
               </transformation>
               <transformation
                     icon="icons/strongAbort.gif"
@@ -312,7 +312,7 @@
            id="de.cau.cs.kieler.synccharts.ksbase.separator5">
      </separator>
 				     <transformationCommand
-           transformationId="de.cau.cs.kieler.ksbase.optimize">
+           transformationId="de.cau.cs.kieler.ksbase.fixsyncchart">
      </transformationCommand>
 				</menuContribution>
     <menuContribution
@@ -471,9 +471,9 @@
        point="org.eclipse.ui.preferencePages">
     <page
           category="de.cau.cs.kieler.synccharts.diagram.general"
-          class="de.cau.cs.kieler.synccharts.ksbase.preferences.OptimizationPreferencePage"
-          id="de.cau.cs.kieler.synccharts.ksbase.optimizePage"
-          name="Optimization">
+          class="de.cau.cs.kieler.synccharts.ksbase.preferences.FixSyncChartPreferencePage"
+          id="de.cau.cs.kieler.synccharts.ksbase.fixSyncChartPage"
+          name="Fix SyncChart">
     </page>
  </extension>
   <extension

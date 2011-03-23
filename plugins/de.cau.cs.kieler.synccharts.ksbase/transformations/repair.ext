@@ -14,38 +14,38 @@ Void setLabel(Action action, Object label):
 
 // generate IDs
 Void generateStateId(State state):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.generateStateId(de.cau.cs.kieler.synccharts.State)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.generateStateId(de.cau.cs.kieler.synccharts.State)
 ;
 Void generateRegionId(Region region):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.generateRegionId(de.cau.cs.kieler.synccharts.Region)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.generateRegionId(de.cau.cs.kieler.synccharts.Region)
 ;
 
 // clear the cache for region and state ids
 Void clearIDCache():
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.clearCache()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.clearCache()
 ;
 
 // get empty lists
 List[State] getStateList():
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getStateList()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.getStateList()
 ;
 List[Region] getRegionList():
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getRegionList()
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.getRegionList()
 ;
  
 // used for debug output
 // FIXME: haf: a function "debug" is already defined by the io stdlib
 Void myDebug(Object object):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.debug(java.lang.Object)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.debug(java.lang.Object)
 ;
 
 // determine whether or not an optimization is enabled
 Boolean isEnabled(String key):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.isEnabled(java.lang.String)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.isEnabled(java.lang.String)
 ;
 
 String getChoice(String key):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.getChoice(java.lang.String)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.getChoice(java.lang.String)
 ;
 
 // check for simple state
@@ -58,18 +58,55 @@ Boolean isSimpleState(State state):
 ;
 
 // start from selected state
-Void optimize(State state):
- optimize(state.parentRegion)
+Void fix(State state):
+ fix(state.parentRegion)
+;
+
+// Encapsulate more than one top level state into a new state (with a new region)
+Void fixMoreThanOneToplevelState(Region rootRegion):
+ 	// only apply fix if top level region AND region contains more than one state
+    if ((rootRegion.eContainer == null) && (rootRegion.states.size > 1)) then
+      		fixMoreThanOneToplevelStateHelper(rootRegion)
+;
+// create a new region and a new state
+// copy properties from rootRegion to the new region 
+// (now new region contains all items contained in the root region previously)
+// add the new region to the new state
+// add the new state to the original rootRegion
+Void fixMoreThanOneToplevelStateHelper(Region rootRegion):
+	let newRegion = new Region:
+	let newState = new State:
+	// copy properties from rootRegion to new region
+	newRegion.setStates(rootRegion.states) ->
+	newRegion.setAnnotations(rootRegion.annotations) ->
+	newRegion.setBodyContents(rootRegion.bodyContents) ->
+	newRegion.setBodyReference(rootRegion.bodyReference) ->
+	newRegion.setBodyText(rootRegion.bodyText) ->
+	newRegion.setEntryActions(rootRegion.entryActions) ->
+	newRegion.setExitActions(rootRegion.exitActions) ->
+	newRegion.setId(rootRegion.id) ->
+	newRegion.setInnerActions(rootRegion.innerActions) ->
+	newRegion.setInterfaceDeclaration(rootRegion.interfaceDeclaration) ->
+	newRegion.setLabel(rootRegion.label) ->
+	newRegion.setSignals(rootRegion.signals) ->
+	newRegion.setRenamings(rootRegion.renamings) ->
+	newRegion.setSuspensionTrigger(rootRegion.suspensionTrigger) ->
+	newRegion.setVariables(rootRegion.variables) ->
+	// set root region to contain just one state
+	newState.regions.add(newRegion) ->
+    rootRegion.states.add(newState) ->
+	null
 ;
 
 // start from selected region (root region is usually best)
-Void optimize(Region rootRegion):
+Void fix(Region rootRegion):
  let statesToRemove = getStateList():
  let regionsToRemove = getRegionList():
+ fixMoreThanOneToplevelState(rootRegion) ->
  clearIDCache() ->
  statesToRemove.removeAll(statesToRemove) ->
  regionsToRemove.removeAll(regionsToRemove) ->
- optimizeRec(rootRegion,
+ fixRec(rootRegion,
              statesToRemove,
              regionsToRemove) ->
  // remove redundant regions and states after optimization to avoid
@@ -93,11 +130,11 @@ Void removeRegionFromState(Region region):
    region.parentState.regions.remove(region)
 ;
 
-// optimize recursively
-Void optimizeRec(Region region,
+// fix recursively
+Void fixRec(Region region,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
- optimizeScope(region) ->
+ fixScope(region) ->
  (if isEnabled("fixIDs") then
     generateRegionId(region)) ->
  (if region.states.isEmpty 
@@ -108,7 +145,7 @@ Void optimizeRec(Region region,
        regionsToRemove.add(region))
    else
    // region not empty, go through states recursively
-    region.states.optimizeRec(statesToRemove,
+    region.states.fixRec(statesToRemove,
                                    regionsToRemove)
  )
 ;
@@ -126,11 +163,11 @@ Boolean isRemoveStatesEnabled():
  (isEnabled("removeDummyStates") || isEnabled("removeDeadEndConditionals"))
 ;
 
-// optimize state recursively
-Void optimizeRec(State state,
+// fix state recursively
+Void fixRec(State state,
                  List[State] statesToRemove,
                  List[Region] regionsToRemove):
- optimizeScope(state) ->
+ fixScope(state) ->
  (if isFixTransitionsEnabled() then 
    // fix transitions sorted by priority
    state.outgoingTransitions.sortBy(e|e.priority).fixTransitions()) ->
@@ -152,7 +189,7 @@ Void optimizeRec(State state,
  (if isRemoveStatesEnabled() then
    state.fixDummyState(statesToRemove)) ->
  // recursion
- state.regions.optimizeRec(statesToRemove,
+ state.regions.fixRec(statesToRemove,
                            regionsToRemove)
 ;
 
@@ -180,7 +217,7 @@ List[Variable] getUnusedVariables(Scope scope):
  scope.variables.select(e|variableNotRead(e, scope) && (e.const || variableNotWritten(e, scope)))
 ;
 
-Void optimizeScope(Scope scope):
+Void fixScope(Scope scope):
  (if (isEnabled("removeUnusedSignalsAndVariables")) then 
    (
     scope.removeSignalsFromScope(scope.getUnReferencedSignals()) ->
@@ -243,7 +280,7 @@ Void fixTransitionPriorityBasedOnType(List[Transition] list):
 
 // order the priorities by type, keeps order within the types as list was sorted earlier
 Void fixTransList(Object obj):
- JAVA de.cau.cs.kieler.synccharts.ksbase.util.OptimizeUtils.fixTransList(java.lang.Object)
+ JAVA de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils.fixTransList(java.lang.Object)
 ;
  
 // increment all priorities if one has priority zero
