@@ -268,6 +268,7 @@ public class HighlightEffect extends AbstractEffect {
                     rect.setForegroundColor(ColorConstants.red);
                     rect.setOpaque(false);
                     rect.setAlpha(100);
+                    rect.setLineWidth(4);
                     bnf.getBorderItemContainer().add(rect);
 
                     if (changeWidth && originalWidth == -1) {
