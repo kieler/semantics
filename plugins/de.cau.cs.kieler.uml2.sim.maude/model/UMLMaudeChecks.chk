@@ -99,11 +99,6 @@ ERROR "Join or fork node '"+this.name+"' must have outgoing and incoming transit
 // ------------------------------------------------------------------------------------------------
 // Features not supported by Maude Simulation
 
-context Pseudostate if (this.kind.toString().matches("choice"))
-WARNING "MAUDE: Choice nodes like node '"+this.name+"' are currently not supprted by Maude simulation." :
-  false
-;
-
 context Pseudostate if (this.kind.toString().matches("entryPoint"))
 WARNING "MAUDE: EntryPoints nodes like node '"+this.name+"' are currently not supprted by Maude simulation." :
   false
