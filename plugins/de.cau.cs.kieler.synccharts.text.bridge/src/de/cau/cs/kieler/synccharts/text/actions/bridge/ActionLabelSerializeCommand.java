@@ -34,8 +34,8 @@ public class ActionLabelSerializeCommand extends AbstractCommand {
 
     public void execute() {
         String newLabel = null;
-        if (action.getTrigger() != null || !action.getEffects().isEmpty()
-                || action.isIsImmediate()) {
+        if (action.getTrigger() != null || !action.getEffects().isEmpty() || action.isIsImmediate()
+                || action.getDelay() > 1) {
             newLabel = ActionLabelSerializer.toString(action);
         }
         if (newLabel == null) {
