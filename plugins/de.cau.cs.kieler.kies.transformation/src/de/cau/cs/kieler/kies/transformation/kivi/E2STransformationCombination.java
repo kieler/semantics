@@ -185,9 +185,10 @@ public class E2STransformationCombination extends AbstractCombination {
             // (checking for xtext editor is sufficient as the buttons are only displayed for the
             // esterel editor.)
             if (currentlyActiveEditor instanceof XtextEditor) {
-                initializeTransformation();
-                if (buttonState.getButtonId() == BUTTON_EXPAND
-                        || buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE) {
+                boolean created = initializeTransformation();
+                if (created
+                        && (buttonState.getButtonId() == BUTTON_EXPAND 
+                                || buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE)) {
                     // FIXME the editor was changed by the initializeTransformation method, but the
                     // editorState wasn't processed yet. Therefore, it is necessary to fetch the new
                     // editor.

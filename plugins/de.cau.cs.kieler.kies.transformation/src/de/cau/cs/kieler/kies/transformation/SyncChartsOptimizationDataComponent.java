@@ -246,6 +246,9 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
      */
     @Override
     public JSONObject step(final JSONObject arg0) throws KiemExecutionException {
+        if (rootRegion == null) {
+            return null;
+        }
         // check if model was transformed completely
         TreeIterator<EObject> it = rootRegion.eAllContents();
         while (it.hasNext()) {
@@ -313,4 +316,3 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     }
 
 }
-
