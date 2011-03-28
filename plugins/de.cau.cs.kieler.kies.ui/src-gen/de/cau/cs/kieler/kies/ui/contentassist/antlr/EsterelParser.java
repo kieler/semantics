@@ -385,7 +385,6 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getStatementAccess().getListAssignment_1_2(), "rule__Statement__ListAssignment_1_2");
 					put(grammarAccess.getSequenceAccess().getListAssignment_1_2(), "rule__Sequence__ListAssignment_1_2");
 					put(grammarAccess.getBlockAccess().getStatementAssignment_1(), "rule__Block__StatementAssignment_1");
-					put(grammarAccess.getVarStatementAccess().getVardeclAssignment(), "rule__VarStatement__VardeclAssignment");
 					put(grammarAccess.getAssignmentAccess().getVarAssignment_0(), "rule__Assignment__VarAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExprAssignment_2(), "rule__Assignment__ExprAssignment_2");
 					put(grammarAccess.getAbortAccess().getStatementAssignment_1(), "rule__Abort__StatementAssignment_1");

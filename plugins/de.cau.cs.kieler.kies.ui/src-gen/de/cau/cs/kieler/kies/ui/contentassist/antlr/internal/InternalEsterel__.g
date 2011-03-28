@@ -102,43 +102,43 @@ T108 : '=>' ;
 T109 : 'positive' ;
 T110 : 'immediate' ;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31008
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30959
 RULE_ESTEREL_SL_COMMENT : '%' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31010
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30961
 RULE_ESTEREL_ML_COMMENT : '%' '{' ( options {greedy=false;} : . )*'}' '%';
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31012
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30963
 RULE_STRING : '"' (~('"')|'"' '"')* '"';
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31014
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30965
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31016
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30967
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31018
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30969
 RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31020
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30971
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31022
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30973
 RULE_FLOAT : ('-'? ('0'..'9')+ '.' ('0'..'9')* (('e'|'E') ('+'|'-')? ('0'..'9')+)? 'f'?|'-'? ('0'..'9')+ 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31024
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30975
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31026
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30977
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31028
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30979
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31030
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30981
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 31032
+// $ANTLR src "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g" 30983
 RULE_ANY_OTHER : .;
 
 

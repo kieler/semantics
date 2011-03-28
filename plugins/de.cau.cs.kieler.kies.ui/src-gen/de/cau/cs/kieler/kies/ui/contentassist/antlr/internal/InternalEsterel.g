@@ -1053,34 +1053,6 @@ finally {
 
 
 
-// Entry rule entryRuleVarStatement
-entryRuleVarStatement 
-:
-{ before(grammarAccess.getVarStatementRule()); }
-	 ruleVarStatement
-{ after(grammarAccess.getVarStatementRule()); } 
-	 EOF 
-;
-
-// Rule VarStatement
-ruleVarStatement
-    @init {
-		int stackSize = keepStackSize();
-    }
-	:
-(
-{ before(grammarAccess.getVarStatementAccess().getVardeclAssignment()); }
-(rule__VarStatement__VardeclAssignment)
-{ after(grammarAccess.getVarStatementAccess().getVardeclAssignment()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-
-
 // Entry rule entryRuleAssignment
 entryRuleAssignment 
 :
@@ -5023,15 +4995,9 @@ rule__AtomicStatement__Alternatives
 )
 
     |(
-{ before(grammarAccess.getAtomicStatementAccess().getVarStatementParserRuleCall_23()); }
-	ruleVarStatement
-{ after(grammarAccess.getAtomicStatementAccess().getVarStatementParserRuleCall_23()); }
-)
-
-    |(
-{ before(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_24()); }
+{ before(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_23()); }
 	ruleWeakAbort
-{ after(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_24()); }
+{ after(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_23()); }
 )
 
 ;
@@ -27157,21 +27123,6 @@ rule__Block__StatementAssignment_1
 (
 { before(grammarAccess.getBlockAccess().getStatementStatementParserRuleCall_1_0()); }
 	ruleStatement{ after(grammarAccess.getBlockAccess().getStatementStatementParserRuleCall_1_0()); }
-)
-
-;
-finally {
-	restoreStackSize(stackSize);
-}
-
-rule__VarStatement__VardeclAssignment
-    @init {
-		int stackSize = keepStackSize();
-    }
-:
-(
-{ before(grammarAccess.getVarStatementAccess().getVardeclIVariableParserRuleCall_0()); }
-	ruleIVariable{ after(grammarAccess.getVarStatementAccess().getVardeclIVariableParserRuleCall_0()); }
 )
 
 ;

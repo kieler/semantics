@@ -12,4 +12,8 @@ public class EsterelUiModule extends de.cau.cs.kieler.kies.ui.AbstractEsterelUiM
 	public EsterelUiModule(AbstractUIPlugin plugin) {
 		super(plugin);
 	}
+
+    public Class<? extends org.eclipse.xtext.ui.editor.IXtextEditorCallback> bindIXtextEditorCallback() {
+        return org.eclipse.xtext.ui.editor.IXtextEditorCallback.NullImpl.class;
+    }
 }
