@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
@@ -1603,16 +1604,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EClass getStatement()
   {
     return statementEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getStatement_Vardecl()
-  {
-    return (EReference)statementEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3879,7 +3870,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(taskEClass, TASK__ID_LIST2);
 
     statementEClass = createEClass(STATEMENT);
-    createEReference(statementEClass, STATEMENT__VARDECL);
 
     blockEClass = createEClass(BLOCK);
     createEReference(blockEClass, BLOCK__STATEMENT);
@@ -4352,7 +4342,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getTask_IdList2(), this.getTypeIdentifier(), null, "idList2", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getStatement_Vardecl(), theKExpressionsPackage.getIVariable(), null, "vardecl", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getBlock_Statement(), this.getStatement(), null, "statement", null, 0, 1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

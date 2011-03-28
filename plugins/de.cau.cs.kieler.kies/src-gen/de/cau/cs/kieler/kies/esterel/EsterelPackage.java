@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
@@ -357,22 +358,13 @@ public interface EsterelPackage extends EPackage
   int STATEMENT = 25;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STATEMENT__VARDECL = 0;
-
-  /**
    * The number of structural features of the '<em>Statement</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STATEMENT_FEATURE_COUNT = 1;
+  int STATEMENT_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.LocalSignalDeclImpl <em>Local Signal Decl</em>}' class.
@@ -383,15 +375,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int LOCAL_SIGNAL_DECL = 6;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_SIGNAL_DECL__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Signal List</b></em>' containment reference.
@@ -1034,15 +1017,6 @@ public interface EsterelPackage extends EPackage
   int BLOCK = 26;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BLOCK__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1069,15 +1043,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int ASSIGNMENT = 27;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ASSIGNMENT__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Var</b></em>' reference.
@@ -1115,15 +1080,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int ABORT = 28;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ABORT__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1386,15 +1342,6 @@ public interface EsterelPackage extends EPackage
   int AWAIT = 36;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AWAIT__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1534,15 +1481,6 @@ public interface EsterelPackage extends EPackage
   int PROC_CALL = 40;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROC_CALL__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Proc</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1587,15 +1525,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int DO = 41;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DO__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1737,15 +1666,6 @@ public interface EsterelPackage extends EPackage
   int EMIT = 45;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EMIT__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1790,15 +1710,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int EVERY_DO = 46;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVERY_DO__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1847,15 +1758,6 @@ public interface EsterelPackage extends EPackage
   int EXIT = 47;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXIT__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1893,15 +1795,6 @@ public interface EsterelPackage extends EPackage
   int HALT = 48;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HALT__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The number of structural features of the '<em>Halt</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1919,15 +1812,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int IF_TEST = 49;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF_TEST__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -2087,15 +1971,6 @@ public interface EsterelPackage extends EPackage
   int LOOP = 53;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOOP__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2245,15 +2120,6 @@ public interface EsterelPackage extends EPackage
   int NOTHING = 58;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int NOTHING__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The number of structural features of the '<em>Nothing</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2273,15 +2139,6 @@ public interface EsterelPackage extends EPackage
   int PAUSE = 59;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PAUSE__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The number of structural features of the '<em>Pause</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2299,15 +2156,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int PRESENT = 60;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRESENT__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -2532,15 +2380,6 @@ public interface EsterelPackage extends EPackage
   int REPEAT = 66;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int REPEAT__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Positive</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2594,15 +2433,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int RUN = 67;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int RUN__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Module</b></em>' containment reference.
@@ -2984,15 +2814,6 @@ public interface EsterelPackage extends EPackage
   int SUSPEND = 77;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSPEND__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3028,15 +2849,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int SUSTAIN = 78;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SUSTAIN__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -3083,15 +2895,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int TRAP = 79;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TRAP__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Trap Decl List</b></em>' containment reference.
@@ -3212,15 +3015,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int LOCAL_VARIABLE = 82;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LOCAL_VARIABLE__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Var</b></em>' containment reference.
@@ -3368,15 +3162,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int EXEC = 85;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXEC__VARDECL = STATEMENT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' reference.
@@ -3774,15 +3559,6 @@ public interface EsterelPackage extends EPackage
   int PARALLEL = 93;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARALLEL__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3811,15 +3587,6 @@ public interface EsterelPackage extends EPackage
   int SEQUENCE = 94;
 
   /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SEQUENCE__VARDECL = STATEMENT__VARDECL;
-
-  /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3846,15 +3613,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   int WEAK_ABORT = 95;
-
-  /**
-   * The feature id for the '<em><b>Vardecl</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int WEAK_ABORT__VARDECL = ABORT__VARDECL;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -4965,17 +4723,6 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EClass getStatement();
-
-  /**
-   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.kies.esterel.Statement#getVardecl <em>Vardecl</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Vardecl</em>'.
-   * @see de.cau.cs.kieler.kies.esterel.Statement#getVardecl()
-   * @see #getStatement()
-   * @generated
-   */
-  EReference getStatement_Vardecl();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kies.esterel.Block <em>Block</em>}'.
@@ -7880,14 +7627,6 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EClass STATEMENT = eINSTANCE.getStatement();
-
-    /**
-     * The meta object literal for the '<em><b>Vardecl</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATEMENT__VARDECL = eINSTANCE.getStatement_Vardecl();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kies.esterel.impl.BlockImpl <em>Block</em>}' class.

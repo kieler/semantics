@@ -3533,24 +3533,11 @@ ruleAtomicStatement returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        currentNode=createCompositeNode(grammarAccess.getAtomicStatementAccess().getVarStatementParserRuleCall_23(), currentNode); 
+        currentNode=createCompositeNode(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_23(), currentNode); 
     }
-    this_VarStatement_23=ruleVarStatement
+    this_WeakAbort_23=ruleWeakAbort
     { 
-        $current = $this_VarStatement_23.current; 
-        currentNode = currentNode.getParent();
-    }
-
-    |
-	{ 
-	  /* */ 
-	}
-    { 
-        currentNode=createCompositeNode(grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_24(), currentNode); 
-    }
-    this_WeakAbort_24=ruleWeakAbort
-    { 
-        $current = $this_WeakAbort_24.current; 
+        $current = $this_WeakAbort_23.current; 
         currentNode = currentNode.getParent();
     }
 )
@@ -3694,53 +3681,6 @@ ruleBlock returns [EObject current=null]
     {
         createLeafNode(grammarAccess.getBlockAccess().getRightSquareBracketKeyword_2(), null); 
     }
-)
-;
-
-
-
-
-
-// Entry rule entryRuleVarStatement
-entryRuleVarStatement returns [EObject current=null] 
-	:
-	{ currentNode = createCompositeNode(grammarAccess.getVarStatementRule(), currentNode); }
-	 iv_ruleVarStatement=ruleVarStatement 
-	 { $current=$iv_ruleVarStatement.current; } 
-	 EOF 
-;
-
-// Rule VarStatement
-ruleVarStatement returns [EObject current=null] 
-    @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
-    }
-    @after { resetLookahead(); 
-    	lastConsumedNode = currentNode;
-    }:
-(
-(
-		{ 
-	        currentNode=createCompositeNode(grammarAccess.getVarStatementAccess().getVardeclIVariableParserRuleCall_0(), currentNode); 
-	    }
-		lv_vardecl_0_0=ruleIVariable		{
-	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getVarStatementRule().getType().getClassifier());
-	            associateNodeWithAstElement(currentNode.getParent(), $current);
-	        }
-	        try {
-	       		set(
-	       			$current, 
-	       			"vardecl",
-	        		lv_vardecl_0_0, 
-	        		"IVariable", 
-	        		currentNode);
-	        } catch (ValueConverterException vce) {
-				handleValueConverterException(vce);
-	        }
-	        currentNode = currentNode.getParent();
-	    }
-
-)
 )
 ;
 

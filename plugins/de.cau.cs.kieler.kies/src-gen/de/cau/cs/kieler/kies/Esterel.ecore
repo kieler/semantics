@@ -125,10 +125,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="idList2" upperBound="-1"
         eType="#//TypeIdentifier" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Statement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="vardecl" eType="ecore:EClass ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore#//IVariable"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Statement"/>
   <eClassifiers xsi:type="ecore:EClass" name="Block" eSuperTypes="#//Statement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="statement" eType="#//Statement"
         containment="true"/>

@@ -63,120 +63,119 @@ protected class ThisRootNode extends RootToken {
 			case 29: return new AtomicStatement_Alternatives(this, this, 29, inst);
 			case 30: return new Sequence_Group(this, this, 30, inst);
 			case 31: return new Block_Group(this, this, 31, inst);
-			case 32: return new VarStatement_VardeclAssignment(this, this, 32, inst);
-			case 33: return new Assignment_Group(this, this, 33, inst);
-			case 34: return new Abort_Group(this, this, 34, inst);
-			case 35: return new AbortBody_Alternatives(this, this, 35, inst);
-			case 36: return new AbortInstance_Group(this, this, 36, inst);
-			case 37: return new AbortCase_Group(this, this, 37, inst);
-			case 38: return new AbortCaseSingle_Group(this, this, 38, inst);
-			case 39: return new WeakAbort_Group(this, this, 39, inst);
-			case 40: return new WeakAbortBody_Alternatives(this, this, 40, inst);
-			case 41: return new WeakAbortEnd_Group(this, this, 41, inst);
-			case 42: return new WeakAbortEndAlt_Group(this, this, 42, inst);
-			case 43: return new WeakAbortInstance_Group(this, this, 43, inst);
-			case 44: return new WeakAbortCase_Group(this, this, 44, inst);
-			case 45: return new Await_Group(this, this, 45, inst);
-			case 46: return new AwaitBody_Alternatives(this, this, 46, inst);
-			case 47: return new AwaitInstance_Group(this, this, 47, inst);
-			case 48: return new AwaitCase_Group(this, this, 48, inst);
-			case 49: return new ProcCall_Group(this, this, 49, inst);
-			case 50: return new Do_Group(this, this, 50, inst);
-			case 51: return new DoUpto_Group(this, this, 51, inst);
-			case 52: return new DoWatching_Group(this, this, 52, inst);
-			case 53: return new DoWatchingEnd_Group(this, this, 53, inst);
-			case 54: return new Emit_Group(this, this, 54, inst);
-			case 55: return new EveryDo_Group(this, this, 55, inst);
-			case 56: return new Exit_Group(this, this, 56, inst);
-			case 57: return new Halt_Group(this, this, 57, inst);
-			case 58: return new IfTest_Group(this, this, 58, inst);
-			case 59: return new ElsIf_Group(this, this, 59, inst);
-			case 60: return new ThenPart_Group(this, this, 60, inst);
-			case 61: return new ElsePart_Group(this, this, 61, inst);
-			case 62: return new Loop_Group(this, this, 62, inst);
-			case 63: return new EndLoop_Group(this, this, 63, inst);
-			case 64: return new LoopEach_Group(this, this, 64, inst);
-			case 65: return new LoopDelay_DelayAssignment(this, this, 65, inst);
-			case 66: return new LoopBody_StatementAssignment(this, this, 66, inst);
-			case 67: return new Nothing_Group(this, this, 67, inst);
-			case 68: return new Pause_Group(this, this, 68, inst);
-			case 69: return new Present_Group(this, this, 69, inst);
-			case 70: return new PresentBody_Alternatives(this, this, 70, inst);
-			case 71: return new PresentEventBody_Group(this, this, 71, inst);
-			case 72: return new PresentCaseList_Group(this, this, 72, inst);
-			case 73: return new PresentCase_Group(this, this, 73, inst);
-			case 74: return new PresentEvent_Alternatives(this, this, 74, inst);
-			case 75: return new Repeat_Group(this, this, 75, inst);
-			case 76: return new Run_Alternatives(this, this, 76, inst);
-			case 77: return new ModuleRenaming_Alternatives(this, this, 77, inst);
-			case 78: return new RenamingList_Group(this, this, 78, inst);
-			case 79: return new Renaming_Alternatives(this, this, 79, inst);
-			case 80: return new TypeRenaming_Group(this, this, 80, inst);
-			case 81: return new ConstantRenaming_Group(this, this, 81, inst);
-			case 82: return new FunctionRenaming_Group(this, this, 82, inst);
-			case 83: return new ProcedureRenaming_Group(this, this, 83, inst);
-			case 84: return new TaskRenaming_Group(this, this, 84, inst);
-			case 85: return new SignalRenaming_Group(this, this, 85, inst);
-			case 86: return new Suspend_Group(this, this, 86, inst);
-			case 87: return new Sustain_Group(this, this, 87, inst);
-			case 88: return new Trap_Group(this, this, 88, inst);
-			case 89: return new TrapDeclList_Group(this, this, 89, inst);
-			case 90: return new TrapDecl_Group(this, this, 90, inst);
-			case 91: return new TrapHandler_Group(this, this, 91, inst);
-			case 92: return new LocalVariable_Group(this, this, 92, inst);
-			case 93: return new AtomicExpression_Alternatives(this, this, 93, inst);
-			case 94: return new TrapExpression_Group(this, this, 94, inst);
-			case 95: return new FunctionExpression_Group(this, this, 95, inst);
-			case 96: return new ConstantExpression_Group(this, this, 96, inst);
-			case 97: return new TrapExpr_SignalExpressionParserRuleCall(this, this, 97, inst);
-			case 98: return new SignalExpression_Group(this, this, 98, inst);
-			case 99: return new SignalAndExpression_Group(this, this, 99, inst);
-			case 100: return new SignalNotExpression_Alternatives(this, this, 100, inst);
-			case 101: return new SignalAtomicExpression_Alternatives(this, this, 101, inst);
-			case 102: return new SignalReferenceExpr_ValuedObjectAssignment(this, this, 102, inst);
-			case 103: return new SignalPreExpr_Group(this, this, 103, inst);
-			case 104: return new TrapReferenceExpr_Group(this, this, 104, inst);
-			case 105: return new DelayExpr_Alternatives(this, this, 105, inst);
-			case 106: return new DelayEvent_Alternatives(this, this, 106, inst);
-			case 107: return new Exec_Group(this, this, 107, inst);
-			case 108: return new ExecBody_Group(this, this, 108, inst);
-			case 109: return new ExecCase_Group(this, this, 109, inst);
-			case 110: return new Root_Alternatives(this, this, 110, inst);
-			case 111: return new Expression_Alternatives(this, this, 111, inst);
-			case 112: return new BooleanExpression_OrExpressionParserRuleCall(this, this, 112, inst);
-			case 113: return new OrExpression_Group(this, this, 113, inst);
-			case 114: return new AndExpression_Group(this, this, 114, inst);
-			case 115: return new CompareOperation_Alternatives(this, this, 115, inst);
-			case 116: return new NotOrValuedExpression_Alternatives(this, this, 116, inst);
-			case 117: return new NotExpression_Alternatives(this, this, 117, inst);
-			case 118: return new ValuedExpression_AddExpressionParserRuleCall(this, this, 118, inst);
-			case 119: return new AddExpression_Group(this, this, 119, inst);
-			case 120: return new SubExpression_Group(this, this, 120, inst);
-			case 121: return new MultExpression_Group(this, this, 121, inst);
-			case 122: return new DivExpression_Group(this, this, 122, inst);
-			case 123: return new ModExpression_Group(this, this, 123, inst);
-			case 124: return new NegExpression_Alternatives(this, this, 124, inst);
-			case 125: return new AtomicValuedExpression_Alternatives(this, this, 125, inst);
-			case 126: return new ValuedObjectTestExpression_Alternatives(this, this, 126, inst);
-			case 127: return new ValuedObjectReference_ValuedObjectAssignment(this, this, 127, inst);
-			case 128: return new TextExpression_Group(this, this, 128, inst);
-			case 129: return new IntValue_ValueAssignment(this, this, 129, inst);
-			case 130: return new FloatValue_ValueAssignment(this, this, 130, inst);
-			case 131: return new BooleanValue_ValueAssignment(this, this, 131, inst);
-			case 132: return new InterfaceDeclaration_Alternatives(this, this, 132, inst);
-			case 133: return new ISignal_Group(this, this, 133, inst);
-			case 134: return new InterfaceSignalDecl_Alternatives(this, this, 134, inst);
-			case 135: return new InterfaceVariableDecl_Group(this, this, 135, inst);
-			case 136: return new VariableDecl_Group(this, this, 136, inst);
-			case 137: return new IVariable_Group(this, this, 137, inst);
-			case 138: return new Annotation_Alternatives(this, this, 138, inst);
-			case 139: return new CommentAnnotation_ValueAssignment(this, this, 139, inst);
-			case 140: return new TagAnnotation_Group(this, this, 140, inst);
-			case 141: return new KeyStringValueAnnotation_Group(this, this, 141, inst);
-			case 142: return new KeyBooleanValueAnnotation_Group(this, this, 142, inst);
-			case 143: return new KeyIntValueAnnotation_Group(this, this, 143, inst);
-			case 144: return new KeyFloatValueAnnotation_Group(this, this, 144, inst);
-			case 145: return new ImportAnnotation_Group(this, this, 145, inst);
+			case 32: return new Assignment_Group(this, this, 32, inst);
+			case 33: return new Abort_Group(this, this, 33, inst);
+			case 34: return new AbortBody_Alternatives(this, this, 34, inst);
+			case 35: return new AbortInstance_Group(this, this, 35, inst);
+			case 36: return new AbortCase_Group(this, this, 36, inst);
+			case 37: return new AbortCaseSingle_Group(this, this, 37, inst);
+			case 38: return new WeakAbort_Group(this, this, 38, inst);
+			case 39: return new WeakAbortBody_Alternatives(this, this, 39, inst);
+			case 40: return new WeakAbortEnd_Group(this, this, 40, inst);
+			case 41: return new WeakAbortEndAlt_Group(this, this, 41, inst);
+			case 42: return new WeakAbortInstance_Group(this, this, 42, inst);
+			case 43: return new WeakAbortCase_Group(this, this, 43, inst);
+			case 44: return new Await_Group(this, this, 44, inst);
+			case 45: return new AwaitBody_Alternatives(this, this, 45, inst);
+			case 46: return new AwaitInstance_Group(this, this, 46, inst);
+			case 47: return new AwaitCase_Group(this, this, 47, inst);
+			case 48: return new ProcCall_Group(this, this, 48, inst);
+			case 49: return new Do_Group(this, this, 49, inst);
+			case 50: return new DoUpto_Group(this, this, 50, inst);
+			case 51: return new DoWatching_Group(this, this, 51, inst);
+			case 52: return new DoWatchingEnd_Group(this, this, 52, inst);
+			case 53: return new Emit_Group(this, this, 53, inst);
+			case 54: return new EveryDo_Group(this, this, 54, inst);
+			case 55: return new Exit_Group(this, this, 55, inst);
+			case 56: return new Halt_Group(this, this, 56, inst);
+			case 57: return new IfTest_Group(this, this, 57, inst);
+			case 58: return new ElsIf_Group(this, this, 58, inst);
+			case 59: return new ThenPart_Group(this, this, 59, inst);
+			case 60: return new ElsePart_Group(this, this, 60, inst);
+			case 61: return new Loop_Group(this, this, 61, inst);
+			case 62: return new EndLoop_Group(this, this, 62, inst);
+			case 63: return new LoopEach_Group(this, this, 63, inst);
+			case 64: return new LoopDelay_DelayAssignment(this, this, 64, inst);
+			case 65: return new LoopBody_StatementAssignment(this, this, 65, inst);
+			case 66: return new Nothing_Group(this, this, 66, inst);
+			case 67: return new Pause_Group(this, this, 67, inst);
+			case 68: return new Present_Group(this, this, 68, inst);
+			case 69: return new PresentBody_Alternatives(this, this, 69, inst);
+			case 70: return new PresentEventBody_Group(this, this, 70, inst);
+			case 71: return new PresentCaseList_Group(this, this, 71, inst);
+			case 72: return new PresentCase_Group(this, this, 72, inst);
+			case 73: return new PresentEvent_Alternatives(this, this, 73, inst);
+			case 74: return new Repeat_Group(this, this, 74, inst);
+			case 75: return new Run_Alternatives(this, this, 75, inst);
+			case 76: return new ModuleRenaming_Alternatives(this, this, 76, inst);
+			case 77: return new RenamingList_Group(this, this, 77, inst);
+			case 78: return new Renaming_Alternatives(this, this, 78, inst);
+			case 79: return new TypeRenaming_Group(this, this, 79, inst);
+			case 80: return new ConstantRenaming_Group(this, this, 80, inst);
+			case 81: return new FunctionRenaming_Group(this, this, 81, inst);
+			case 82: return new ProcedureRenaming_Group(this, this, 82, inst);
+			case 83: return new TaskRenaming_Group(this, this, 83, inst);
+			case 84: return new SignalRenaming_Group(this, this, 84, inst);
+			case 85: return new Suspend_Group(this, this, 85, inst);
+			case 86: return new Sustain_Group(this, this, 86, inst);
+			case 87: return new Trap_Group(this, this, 87, inst);
+			case 88: return new TrapDeclList_Group(this, this, 88, inst);
+			case 89: return new TrapDecl_Group(this, this, 89, inst);
+			case 90: return new TrapHandler_Group(this, this, 90, inst);
+			case 91: return new LocalVariable_Group(this, this, 91, inst);
+			case 92: return new AtomicExpression_Alternatives(this, this, 92, inst);
+			case 93: return new TrapExpression_Group(this, this, 93, inst);
+			case 94: return new FunctionExpression_Group(this, this, 94, inst);
+			case 95: return new ConstantExpression_Group(this, this, 95, inst);
+			case 96: return new TrapExpr_SignalExpressionParserRuleCall(this, this, 96, inst);
+			case 97: return new SignalExpression_Group(this, this, 97, inst);
+			case 98: return new SignalAndExpression_Group(this, this, 98, inst);
+			case 99: return new SignalNotExpression_Alternatives(this, this, 99, inst);
+			case 100: return new SignalAtomicExpression_Alternatives(this, this, 100, inst);
+			case 101: return new SignalReferenceExpr_ValuedObjectAssignment(this, this, 101, inst);
+			case 102: return new SignalPreExpr_Group(this, this, 102, inst);
+			case 103: return new TrapReferenceExpr_Group(this, this, 103, inst);
+			case 104: return new DelayExpr_Alternatives(this, this, 104, inst);
+			case 105: return new DelayEvent_Alternatives(this, this, 105, inst);
+			case 106: return new Exec_Group(this, this, 106, inst);
+			case 107: return new ExecBody_Group(this, this, 107, inst);
+			case 108: return new ExecCase_Group(this, this, 108, inst);
+			case 109: return new Root_Alternatives(this, this, 109, inst);
+			case 110: return new Expression_Alternatives(this, this, 110, inst);
+			case 111: return new BooleanExpression_OrExpressionParserRuleCall(this, this, 111, inst);
+			case 112: return new OrExpression_Group(this, this, 112, inst);
+			case 113: return new AndExpression_Group(this, this, 113, inst);
+			case 114: return new CompareOperation_Alternatives(this, this, 114, inst);
+			case 115: return new NotOrValuedExpression_Alternatives(this, this, 115, inst);
+			case 116: return new NotExpression_Alternatives(this, this, 116, inst);
+			case 117: return new ValuedExpression_AddExpressionParserRuleCall(this, this, 117, inst);
+			case 118: return new AddExpression_Group(this, this, 118, inst);
+			case 119: return new SubExpression_Group(this, this, 119, inst);
+			case 120: return new MultExpression_Group(this, this, 120, inst);
+			case 121: return new DivExpression_Group(this, this, 121, inst);
+			case 122: return new ModExpression_Group(this, this, 122, inst);
+			case 123: return new NegExpression_Alternatives(this, this, 123, inst);
+			case 124: return new AtomicValuedExpression_Alternatives(this, this, 124, inst);
+			case 125: return new ValuedObjectTestExpression_Alternatives(this, this, 125, inst);
+			case 126: return new ValuedObjectReference_ValuedObjectAssignment(this, this, 126, inst);
+			case 127: return new TextExpression_Group(this, this, 127, inst);
+			case 128: return new IntValue_ValueAssignment(this, this, 128, inst);
+			case 129: return new FloatValue_ValueAssignment(this, this, 129, inst);
+			case 130: return new BooleanValue_ValueAssignment(this, this, 130, inst);
+			case 131: return new InterfaceDeclaration_Alternatives(this, this, 131, inst);
+			case 132: return new ISignal_Group(this, this, 132, inst);
+			case 133: return new InterfaceSignalDecl_Alternatives(this, this, 133, inst);
+			case 134: return new InterfaceVariableDecl_Group(this, this, 134, inst);
+			case 135: return new VariableDecl_Group(this, this, 135, inst);
+			case 136: return new IVariable_Group(this, this, 136, inst);
+			case 137: return new Annotation_Alternatives(this, this, 137, inst);
+			case 138: return new CommentAnnotation_ValueAssignment(this, this, 138, inst);
+			case 139: return new TagAnnotation_Group(this, this, 139, inst);
+			case 140: return new KeyStringValueAnnotation_Group(this, this, 140, inst);
+			case 141: return new KeyBooleanValueAnnotation_Group(this, this, 141, inst);
+			case 142: return new KeyIntValueAnnotation_Group(this, this, 142, inst);
+			case 143: return new KeyFloatValueAnnotation_Group(this, this, 143, inst);
+			case 144: return new ImportAnnotation_Group(this, this, 144, inst);
 			default: return null;
 		}	
 	}	
@@ -186,6 +185,7 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Program ****************
  *
  * //	root rule. an esterel file can contain multiple modules
+ * 
  * Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
  * 	modules+=Module*;
  *
@@ -243,7 +243,9 @@ protected class Program_ModulesAssignment extends AssignmentToken  {
 /************ begin Rule Module ****************
  *
  * // a module consists of an interface and a body
+ * 
  * // !-(module)
+ * 
  * Module:
  * 	"module" name=ID ":" interface=ModuleInterface? body=ModuleBody end=EndModule;
  *
@@ -547,8 +549,11 @@ protected class ModuleBody_StatementsAssignment extends AssignmentToken  {
 /************ begin Rule ModuleInterface ****************
  *
  * // -!
+ * 
  * //            Interface Declarations
+ * 
  * // ----------------------------------------------
+ * 
  * ModuleInterface:
  * 	(intSignalDecls+=InterfaceSignalDecl | intTypeDecls+=TypeDecl | intSensorDecls+=SensorDecl |
  * 	intConstantDecls+=ConstantDecls | intRelationDecls+=RelationDecl | intTaskDecls+=TaskDecl |
@@ -962,6 +967,7 @@ protected class ModuleInterface_IntProcedureDeclsAssignment_7 extends Assignment
 /************ begin Rule ChannelDescription ****************
  *
  * // overwrite to add the EsterelTypeIdentifier
+ * 
  * ChannelDescription:
  * 	":" type=EsterelTypeIdentifier | "(" type=EsterelTypeIdentifier ")" | ":=" expression=Expression ":"
  * 	type=EsterelTypeIdentifier;
@@ -1367,6 +1373,7 @@ protected class ChannelDescription_TypeAssignment_2_3 extends AssignmentToken  {
 /************ begin Rule EsterelTypeIdentifier ****************
  *
  * // overwrite to allow function references for signal declarations
+ * 
  * EsterelTypeIdentifier returns kexpressions::TypeIdentifier:
  * 	type=ValueType | typeID=ID | {EsterelTypeIdentifier} ("combine" (type=ValueType | typeID=ID) "with" (func=[Function] |
  * 	operator=CombineOperator));
@@ -1793,6 +1800,7 @@ protected class EsterelTypeIdentifier_OperatorAssignment_2_1_3_1 extends Assignm
 /************ begin Rule TypeIdentifier ****************
  *
  * // overwrite to allow type definitions in a specific module
+ * 
  * TypeIdentifier:
  * 	type=ValueType | typeID=ID | "combine" (type=ValueType | typeID=ID) "with" operator=CombineOperator | {EsterelType}
  * 	estType=[Type];
@@ -2202,7 +2210,9 @@ protected class TypeIdentifier_EstTypeAssignment_3_1 extends AssignmentToken  {
 /************ begin Rule LocalSignalDecl ****************
  *
  * // ==> Local Signal Declaration
+ * 
  * // !-(localsignal) -------------------------------------
+ * 
  * LocalSignalDecl:
  * 	"signal" signalList=LocalSignalList "in" statement=Statement "end" optEnd="signal"?;
  *
@@ -2641,8 +2651,11 @@ protected class LocalSignalList_SignalAssignment_2_1 extends AssignmentToken  {
 /************ begin Rule SensorDecl ****************
  *
  * // -!
+ * 
  * // ==> Sensor
+ * 
  * // -------------------------------------
+ * 
  * SensorDecl:
  * 	"sensor" sensors+=SensorWithType ("," sensors+=SensorWithType)* ";";
  *
@@ -3269,7 +3282,9 @@ protected class Sensor_NameAssignment extends AssignmentToken  {
 /************ begin Rule RelationDecl ****************
  *
  * // ==> Relations
+ * 
  * // -------------------------------------
+ * 
  * RelationDecl:
  * 	{Relation} "relation" relations+=RelationType ("," relations+=RelationType)* ";";
  *
@@ -4012,7 +4027,9 @@ protected class RelationIncompatibility_IncompAssignment_3_1 extends AssignmentT
 /************ begin Rule TypeDecl ****************
  *
  * // ==> Types
+ * 
  * // -------------------------------------
+ * 
  * TypeDecl:
  * 	"type" types+=Type ("," types+=Type)* ";";
  *
@@ -4281,7 +4298,9 @@ protected class Type_NameAssignment extends AssignmentToken  {
 /************ begin Rule ConstantDecls ****************
  *
  * // ==> Constants
+ * 
  * // -------------------------------------
+ * 
  * ConstantDecls:
  * 	"constant" constants+=OneTypeConstantDecls ("," constants+=OneTypeConstantDecls)* ";";
  *
@@ -5018,7 +5037,9 @@ protected class Constant_NameAssignment_1 extends AssignmentToken  {
 /************ begin Rule FunctionDecl ****************
  *
  * // ==> Functions
+ * 
  * // -------------------------------------
+ * 
  * FunctionDecl:
  * 	"function" functions+=Function ("," functions+=Function)* ";";
  *
@@ -5590,6 +5611,7 @@ protected class Function_TypeAssignment_5 extends AssignmentToken  {
 /************ begin Rule ProcedureDecl ****************
  *
  * // ==> Procedures
+ * 
  * ProcedureDecl:
  * 	"procedure" procedures+=Procedure ("," procedures+=Procedure)* ";";
  *
@@ -6302,6 +6324,7 @@ protected class Procedure_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule TaskDecl ****************
  *
  * // ==> Tasks
+ * 
  * TaskDecl:
  * 	"task" tasks+=Task ("," tasks+=Task)* ";";
  *
@@ -7014,9 +7037,13 @@ protected class Task_RightParenthesisKeyword_6 extends KeywordToken  {
 /************ begin Rule Statement ****************
  *
  * // ==============================================
+ * 
  * // ===            B.4 Statements              ===
+ * 
  * // ==============================================
+ * 
  * // !-(parallel)
+ * 
  * Statement:
  * 	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
  *
@@ -7067,7 +7094,6 @@ protected class Statement_Group extends GroupToken {
 		   getEObject().eClass() != grammarAccess.getRepeatRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRunRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSequenceAccess().getSequenceListAction_1_0().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSuspendRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSustainRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTrapRule().getType().getClassifier() && 
@@ -7121,7 +7147,6 @@ protected class Statement_SequenceParserRuleCall_0 extends RuleCallToken {
 		   getEObject().eClass() != grammarAccess.getRepeatRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRunRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSequenceAccess().getSequenceListAction_1_0().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSuspendRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSustainRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTrapRule().getType().getClassifier() && 
@@ -7274,14 +7299,15 @@ protected class Statement_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule AtomicStatement ****************
  *
  * // -!
+ * 
  * AtomicStatement returns Statement:
  * 	Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
- * 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort;
+ * 	Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | WeakAbort;
  *
  **/
 
 // Abort | Assignment | Await | Block | ProcCall | Do | Emit | EveryDo | Exit | Exec | Halt | IfTest | LocalSignalDecl |
-// Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | VarStatement | WeakAbort
+// Loop | Nothing | Pause | Present | Repeat | Run | Suspend | Sustain | Trap | LocalVariable | WeakAbort
 protected class AtomicStatement_Alternatives extends AlternativesToken {
 
 	public AtomicStatement_Alternatives(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -7319,8 +7345,7 @@ protected class AtomicStatement_Alternatives extends AlternativesToken {
 			case 20: return new AtomicStatement_SustainParserRuleCall_20(lastRuleCallOrigin, this, 20, inst);
 			case 21: return new AtomicStatement_TrapParserRuleCall_21(lastRuleCallOrigin, this, 21, inst);
 			case 22: return new AtomicStatement_LocalVariableParserRuleCall_22(lastRuleCallOrigin, this, 22, inst);
-			case 23: return new AtomicStatement_VarStatementParserRuleCall_23(lastRuleCallOrigin, this, 23, inst);
-			case 24: return new AtomicStatement_WeakAbortParserRuleCall_24(lastRuleCallOrigin, this, 24, inst);
+			case 23: return new AtomicStatement_WeakAbortParserRuleCall_23(lastRuleCallOrigin, this, 23, inst);
 			default: return null;
 		}	
 	}
@@ -7347,7 +7372,6 @@ protected class AtomicStatement_Alternatives extends AlternativesToken {
 		   getEObject().eClass() != grammarAccess.getProcCallRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRepeatRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRunRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSuspendRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSustainRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTrapRule().getType().getClassifier() && 
@@ -8186,52 +8210,16 @@ protected class AtomicStatement_LocalVariableParserRuleCall_22 extends RuleCallT
 	}	
 }
 
-// VarStatement
-protected class AtomicStatement_VarStatementParserRuleCall_23 extends RuleCallToken {
-	
-	public AtomicStatement_VarStatementParserRuleCall_23(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public RuleCall getGrammarElement() {
-		return grammarAccess.getAtomicStatementAccess().getVarStatementParserRuleCall_23();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new VarStatement_VardeclAssignment(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier())
-			return null;
-		if(checkForRecursion(VarStatement_VardeclAssignment.class, eObjectConsumer)) return null;
-		return eObjectConsumer;
-	}
-	
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, inst);
-		}	
-	}	
-}
-
 // WeakAbort
-protected class AtomicStatement_WeakAbortParserRuleCall_24 extends RuleCallToken {
+protected class AtomicStatement_WeakAbortParserRuleCall_23 extends RuleCallToken {
 	
-	public AtomicStatement_WeakAbortParserRuleCall_24(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public AtomicStatement_WeakAbortParserRuleCall_23(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_24();
+		return grammarAccess.getAtomicStatementAccess().getWeakAbortParserRuleCall_23();
 	}
 
     @Override
@@ -8265,7 +8253,9 @@ protected class AtomicStatement_WeakAbortParserRuleCall_24 extends RuleCallToken
 /************ begin Rule Sequence ****************
  *
  * // --> B.4.1 Control Flow Operators <--	
+ * 
  * // !-(sequence)
+ * 
  * Sequence returns Statement:
  * 	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
  *
@@ -8315,7 +8305,6 @@ protected class Sequence_Group extends GroupToken {
 		   getEObject().eClass() != grammarAccess.getRepeatRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRunRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSequenceAccess().getSequenceListAction_1_0().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSuspendRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSustainRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTrapRule().getType().getClassifier() && 
@@ -8368,7 +8357,6 @@ protected class Sequence_AtomicStatementParserRuleCall_0 extends RuleCallToken {
 		   getEObject().eClass() != grammarAccess.getProcCallRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRepeatRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getRunRule().getType().getClassifier() && 
-		   getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSuspendRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getSustainRule().getType().getClassifier() && 
 		   getEObject().eClass() != grammarAccess.getTrapRule().getType().getClassifier() && 
@@ -8521,6 +8509,7 @@ protected class Sequence_ListAssignment_1_2 extends AssignmentToken  {
 /************ begin Rule Block ****************
  *
  * // -!
+ * 
  * Block:
  * 	"[" statement=Statement "]";
  *
@@ -8648,67 +8637,12 @@ protected class Block_RightSquareBracketKeyword_2 extends KeywordToken  {
 /************ end Rule Block ****************/
 
 
-/************ begin Rule VarStatement ****************
- *
- * VarStatement returns Statement:
- * 	vardecl=IVariable;
- *
- **/
-
-// vardecl=IVariable
-protected class VarStatement_VardeclAssignment extends AssignmentToken  {
-	
-	public VarStatement_VardeclAssignment(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
-		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
-	}
-	
-	@Override
-	public Assignment getGrammarElement() {
-		return grammarAccess.getVarStatementAccess().getVardeclAssignment();
-	}
-
-    @Override
-	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
-		switch(index) {
-			case 0: return new IVariable_Group(this, this, 0, inst);
-			default: return null;
-		}	
-	}
-
-    @Override	
-	public IEObjectConsumer tryConsume() {
-		if(getEObject().eClass() != grammarAccess.getVarStatementRule().getType().getClassifier())
-			return null;
-		if((value = eObjectConsumer.getConsumable("vardecl",true)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("vardecl");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
-			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getIVariableRule().getType().getClassifier())) {
-				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getVarStatementAccess().getVardeclIVariableParserRuleCall_0(); 
-				consumed = obj;
-				return param;
-			}
-		}
-		return null;
-	}
-
-    @Override
-	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
-		if(value == inst.getEObject() && !inst.isConsumed()) return null;
-		switch(index) {
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index, consumed);
-		}	
-	}	
-}
-
-/************ end Rule VarStatement ****************/
-
-
 /************ begin Rule Assignment ****************
  *
  * // Assignment
+ * 
  * // !-(assign) -------------------------------------
+ * 
  * Assignment:
  * 	var=[kexpressions::IVariable] ":=" expr=Expression;
  *
@@ -8854,8 +8788,11 @@ protected class Assignment_ExprAssignment_2 extends AssignmentToken  {
 /************ begin Rule Abort ****************
  *
  * // -!
+ * 
  * // !-(abort) --> B.4.2 abort: Strong Preemption
+ * 
  * // -------------------------------------
+ * 
  * Abort:
  * 	"abort" statement=Statement "when" body=AbortBody;
  *
@@ -9769,8 +9706,11 @@ protected class AbortCaseSingle_StatementAssignment_2_1 extends AssignmentToken 
 /************ begin Rule WeakAbort ****************
  *
  * // -!
+ * 
  * // --> B.4.25 weak abort: Weak Preemption
+ * 
  * // -------------------------------------
+ * 
  * WeakAbort returns Abort:
  * 	{WeakAbort} "weak" "abort" statement=Statement "when" body=WeakAbortBody;
  *
@@ -10808,7 +10748,9 @@ protected class WeakAbortCase_EndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Await ****************
  *
  * // --> B.4.3 await: Strong Preemption
+ * 
  * // !-(await) -------------------------------------
+ * 
  * Await:
  * 	"await" body=AwaitBody;
  *
@@ -11410,8 +11352,11 @@ protected class AwaitCase_EndAssignment_2 extends AssignmentToken  {
 /************ begin Rule ProcCall ****************
  *
  * // -!
+ * 
  * // --> B.4.4 call: Procedure Call
+ * 
  * // -------------------------------------
+ * 
  * ProcCall:
  * 	"call" proc=[Procedure] "(" (varList+=[kexpressions::IVariable] ("," varList+=[kexpressions::IVariable])*)? ")" "("
  * 	(kexpressions+=Expression ("," kexpressions+=Expression)*)? ")";
@@ -11909,8 +11854,11 @@ protected class ProcCall_RightParenthesisKeyword_7 extends KeywordToken  {
 /************ begin Rule Do ****************
  *
  * // --> B.4.5 do-upto: Conditional Iteration (deprecated)
+ * 
  * // --> B.4.6 do-watching: Strong Preemption (deprecated)
+ * 
  * // !-(doupto) -------------------------------------
+ * 
  * Do:
  * 	"do" statement=Statement (end=DoUpto | end=DoWatching);
  *
@@ -12560,8 +12508,11 @@ protected class DoWatchingEnd_OptEndAssignment_3 extends AssignmentToken  {
 /************ begin Rule Emit ****************
  *
  * // -!
+ * 
  * // --> B.4.7 emit: Signal Emission <--
+ * 
  * // !-(emit)2 -------------------------------------
+ * 
  * Emit:
  * 	"emit" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expr=Expression ")")?;
  *
@@ -12833,8 +12784,11 @@ protected class Emit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule EveryDo ****************
  *
  * // -!
+ * 
  * // --> B.4.8 every-do: Conditional Iteration
+ * 
  * // !-(every)-------------------------------------
+ * 
  * EveryDo:
  * 	"every" delay=DelayExpr "do" statement=Statement "end" optEnd="every"?;
  *
@@ -13068,8 +13022,11 @@ protected class EveryDo_OptEndAssignment_5 extends AssignmentToken  {
 /************ begin Rule Exit ****************
  *
  * // -!
+ * 
  * // --> B.4.10 exit: Trap Exit
+ * 
  * // !-(exit) -------------------------------------
+ * 
  * Exit:
  * 	"exit" trap=[TrapDecl] ("(" expression=Expression ")")?;
  *
@@ -13283,8 +13240,11 @@ protected class Exit_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Halt ****************
  *
  * // -!
+ * 
  * // --> B.4.11 halt: Wait Forever
+ * 
  * // !-(halt) -------------------------------------
+ * 
  * Halt:
  * 	{Halt} "halt";
  *
@@ -13374,8 +13334,11 @@ protected class Halt_HaltKeyword_1 extends KeywordToken  {
 /************ begin Rule IfTest ****************
  *
  * // -!
+ * 
  * // --> B.4.12: if: Conditional for Data
+ * 
  * // !-(if)-------------------------------------
+ * 
  * IfTest:
  * 	"if" expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? "end" optEnd="if"?;
  *
@@ -14054,9 +14017,13 @@ protected class ElsePart_StatementAssignment_1 extends AssignmentToken  {
 /************ begin Rule Loop ****************
  *
  * // -!
+ * 
  * // --> B.4.13 loop: Infinite Loop
+ * 
  * // --> B.4.14 loop-each: Condition Iteration
+ * 
  * // !-(loop)-------------------------------------
+ * 
  * Loop:
  * 	"loop" body=LoopBody (end1=EndLoop | end=LoopEach);
  *
@@ -14614,8 +14581,11 @@ protected class LoopBody_StatementAssignment extends AssignmentToken  {
 /************ begin Rule Nothing ****************
  *
  * // -!
+ * 
  * // --> B.4.15 nothing: No Operation
+ * 
  * // !-(nothing) -------------------------------------
+ * 
  * Nothing:
  * 	"nothing" {Nothing};
  *
@@ -14705,8 +14675,11 @@ protected class Nothing_NothingAction_1 extends ActionToken  {
 /************ begin Rule Pause ****************
  *
  * // -!
+ * 
  * // --> B.4.16 pause: Unit Delay
+ * 
  * // !-(pause) -------------------------------------
+ * 
  * Pause:
  * 	"pause" {Pause};
  *
@@ -14796,8 +14769,11 @@ protected class Pause_PauseAction_1 extends ActionToken  {
 /************ begin Rule Present ****************
  *
  * // -!
+ * 
  * // --> B.4.17 present: Conditional for Signals
+ * 
  * // !-(present) -------------------------------------
+ * 
  * Present:
  * 	"present" body=PresentBody elsePart=ElsePart? "end" optEnd="present"?;
  *
@@ -15844,8 +15820,11 @@ protected class PresentEvent_TickAssignment_2 extends AssignmentToken  {
 /************ begin Rule Repeat ****************
  *
  * // -!
+ * 
  * // --> B.4.18 repeat: Iterate a Fixed Number of Times
+ * 
  * // -------------------------------------
+ * 
  * Repeat:
  * 	positive?="positive"? "repeat" expression=Expression "times" statement=Statement "end" optEnd="repeat"?;
  *
@@ -16113,8 +16092,11 @@ protected class Repeat_OptEndAssignment_6 extends AssignmentToken  {
 /************ begin Rule Run ****************
  *
  * // --> B.4.19 run: Module Instantiation
+ * 
  * // -------------------------------------
+ * 
  * //deprecated
+ * 
  * Run:
  * 	"run" module=ModuleRenaming ("[" list=RenamingList "]")? | "copymodule" module=ModuleRenaming ("[" list=RenamingList
  * 	"]")?;
@@ -16567,7 +16549,9 @@ protected class Run_RightSquareBracketKeyword_1_2_2 extends KeywordToken  {
 /************ begin Rule ModuleRenaming ****************
  *
  * // Renamings
+ * 
  * // -------------------------------------
+ * 
  * ModuleRenaming:
  * 	module=[Module] | newName=ID "/" module=[Module];
  *
@@ -19115,7 +19099,9 @@ protected class SignalRenaming_OldNameAssignment_2 extends AssignmentToken  {
 /************ begin Rule Suspend ****************
  *
  * // --> B.4.21 suspend: Preemption with State Freeze
+ * 
  * // !-(suspend)-------------------------------------
+ * 
  * Suspend:
  * 	"suspend" statement=Statement "when" delay=DelayExpr;
  *
@@ -19292,8 +19278,11 @@ protected class Suspend_DelayAssignment_3 extends AssignmentToken  {
 /************ begin Rule Sustain ****************
  *
  * // -!
+ * 
  * // --> B.4.22 sustain: Emit a Signal Indefinitely
+ * 
  * // !-(sustain) -------------------------------------
+ * 
  * Sustain:
  * 	"sustain" (signal=[kexpressions::ISignal] | tick=Tick) ("(" expression=Expression ")")?;
  *
@@ -19565,8 +19554,11 @@ protected class Sustain_RightParenthesisKeyword_2_2 extends KeywordToken  {
 /************ begin Rule Trap ****************
  *
  * // -!
+ * 
  * // --> B.4.23 trap: TrapDeclaration and Handling
+ * 
  * // !-(trap)-------------------------------------
+ * 
  * Trap:
  * 	"trap" trapDeclList=TrapDeclList "in" statement=Statement trapHandler+=TrapHandler* "end" optEnd="trap"?;
  *
@@ -20348,8 +20340,11 @@ protected class TrapHandler_StatementAssignment_3 extends AssignmentToken  {
 /************ begin Rule LocalVariable ****************
  *
  * // -!
+ * 
  * // --> B.4.24 var: Local Variable Declaration
+ * 
  * // !-(localvariable) -------------------------------------
+ * 
  * LocalVariable:
  * 	var=InterfaceVariableDecl "in" statement=Statement "end" optEnd="var"?;
  *
@@ -20561,11 +20556,17 @@ protected class LocalVariable_OptEndAssignment_4 extends AssignmentToken  {
 /************ begin Rule AtomicExpression ****************
  *
  * // -!
+ * 
  * // ==============================================
+ * 
  * // ===            B.3 Expressions             ===
+ * 
  * // ==============================================
+ * 
  * // esterel is a bit richer than what is provided by kexpressions. These rules are introduced here
+ * 
  * // care about order of the rules! 
+ * 
  * AtomicExpression returns kexpressions::Expression:
  * 	FunctionExpression | TrapExpression | BooleanValue | ValuedObjectTestExpression | TextExpression | "("
  * 	BooleanExpression ")" | ConstantExpression;
@@ -21535,7 +21536,9 @@ protected class ConstantExpression_ValueAssignment_1_1 extends AssignmentToken  
 /************ begin Rule TrapExpr ****************
  *
  * // --> B.3.5 Trap Expressions <--
+ * 
  * // -------------------------------------
+ * 
  * TrapExpr returns kexpressions::Expression:
  * 	SignalExpression;
  *
@@ -21585,7 +21588,9 @@ protected class TrapExpr_SignalExpressionParserRuleCall extends RuleCallToken {
 /************ begin Rule SignalExpression ****************
  *
  * // --> B.3.3 Signal Expressions <--
+ * 
  * // -------------------------------------
+ * 
  * SignalExpression returns kexpressions::Expression:
  * 	SignalAndExpression ({kexpressions::OperatorExpression.subExpressions+=current} operator=OrOperator
  * 	subExpressions+=SignalAndExpression)*;
@@ -22239,11 +22244,13 @@ protected class SignalNotExpression_SignalAtomicExpressionParserRuleCall_1 exten
  *
  * SignalAtomicExpression returns kexpressions::Expression:
  * 	SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // maybe place this somewhere else 
+ * 
  * 	TrapReferenceExpr;
  *
  **/
 
 // SignalReferenceExpr | "(" SignalExpression ")" | SignalPreExpr | // maybe place this somewhere else 
+// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_Alternatives extends AlternativesToken {
 
@@ -22452,6 +22459,7 @@ protected class SignalAtomicExpression_SignalPreExprParserRuleCall_2 extends Rul
 }
 
 // // maybe place this somewhere else 
+// 
 // TrapReferenceExpr
 protected class SignalAtomicExpression_TrapReferenceExprParserRuleCall_3 extends RuleCallToken {
 	
@@ -22836,7 +22844,9 @@ protected class TrapReferenceExpr_ValuedObjectAssignment_1 extends AssignmentTok
 /************ begin Rule DelayExpr ****************
  *
  * // --> B.3.4 Delay Expressions <--
+ * 
  * // -------------------------------------
+ * 
  * DelayExpr:
  * 	expr=Expression event=DelayEvent | event=DelayEvent | isImmediate?="immediate" event=DelayEvent;
  *
@@ -23397,7 +23407,9 @@ protected class DelayEvent_EBAssignment_2_2 extends AssignmentToken  {
 /************ begin Rule Exec ****************
  *
  * // --> Exec
+ * 
  * // -------------------------------------
+ * 
  * Exec:
  * 	("exec" task=[Task] body=ExecBody "return" retSignal=[kexpressions::ISignal] ("do" statement=Statement)? | "exec"
  * 	execCaseList+=ExecCase execCaseList+=ExecCase*) "end" optEnd="exec"?;

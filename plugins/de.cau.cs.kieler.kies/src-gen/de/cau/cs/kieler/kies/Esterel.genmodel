@@ -98,9 +98,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/idList1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/idList2"/>
     </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Statement">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Statement/vardecl"/>
-    </genClasses>
+    <genClasses ecoreClass="Esterel.ecore#//Statement"/>
     <genClasses ecoreClass="Esterel.ecore#//Block">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Block/statement"/>
     </genClasses>
