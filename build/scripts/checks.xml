@@ -210,7 +210,7 @@
 		<!-- See http://checkstyle.sf.net/config_blocks.html -->
 		<module name="AvoidNestedBlocks">
 			<!-- cds: allow nested blocks in switch statements. -->
-			<property allowInSwitchCase="true" />
+			<property name="allowInSwitchCase" value="true" />
 		</module>
 		<module name="LeftCurly" />
 		<module name="NeedBraces" />
