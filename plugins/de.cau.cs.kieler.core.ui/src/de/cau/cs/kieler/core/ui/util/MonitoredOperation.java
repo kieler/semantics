@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.core.ui.util;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -295,15 +294,19 @@ public abstract class MonitoredOperation {
                 }
             }
             postUIexec(status.get());
-        } catch (InvocationTargetException exception) {
-            if (monitor.get() == null) {
-                synchronized (monitor) {
+        } catch (Throwable throwable) {
+            synchronized (monitor) {
+                if (monitor.get() == null) {
                     monitor.set(new NullProgressMonitor());
                     monitor.notify();
                 }
             }
-        } catch (InterruptedException exception) {
-            return;
+            synchronized (status) {
+                if (status.get() == null) {
+                    status.set(new Status(IStatus.ERROR, null,
+                            "Error in monitored operation", throwable));
+                }
+            }
         }
     }
     
