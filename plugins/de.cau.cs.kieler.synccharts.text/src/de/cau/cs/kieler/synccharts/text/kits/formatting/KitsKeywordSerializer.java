@@ -35,7 +35,7 @@ import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
  * overriding the
  * {@link KeywordSerializer#isValid(EObject, Keyword,
  * Object, org.eclipse.xtext.parsetree.reconstr.ITokenSerializer.IErrorAcceptor)}
- * does not lead to the inteded behavior.
+ * does not lead to the intended behavior.
  * 
  * @author chsch
  */
