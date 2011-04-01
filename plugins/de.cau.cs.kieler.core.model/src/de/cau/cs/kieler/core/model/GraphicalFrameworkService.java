@@ -40,7 +40,7 @@ public final class GraphicalFrameworkService {
     public static final String FW_GRAPHITI = "graphiti";
     
     /** the extension point identifier. */
-    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.core.ui.graphicalFrameworkBridges";
+    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.core.model.graphicalFrameworkBridges";
 
     /** the singleton instance. **/
     private static GraphicalFrameworkService instance;

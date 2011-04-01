@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension-point id="de.cau.cs.kieler.core.model.Validation" name="Validation" schema="schema/de.cau.cs.kieler.core.model.Validation.exsd"/>
+   <extension-point id="Validation" name="Validation" schema="schema/Validation.exsd"/>
    <extension-point id="graphicalFrameworkBridges" name="Graphical Framework Bridges" schema="schema/graphicalFrameworkBridges.exsd"/>
       <extension
          point="org.eclipse.ui.commands">
@@ -54,15 +54,6 @@
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.core.model.combinations.ShowHierarchyCombination"
-            description="Show the hierarchy levels of a diagram by painting each level in a different color."
-            name="Show Hierarchy Levels">
-      </combination>
    </extension>
 
 </plugin>
