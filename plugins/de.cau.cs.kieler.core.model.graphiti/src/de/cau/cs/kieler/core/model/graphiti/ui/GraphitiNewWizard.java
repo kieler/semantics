@@ -53,7 +53,7 @@ import org.eclipse.ui.actions.WorkspaceModifyOperation;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.model.graphiti.KielerGraphitiPlugin;
+import de.cau.cs.kieler.core.model.graphiti.ModelGraphitiPlugin;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -222,7 +222,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
                                 .getTargetException()).getStatus());
             } else {
                 IStatus status = new Status(IStatus.ERROR,
-                        KielerGraphitiPlugin.PLUGIN_ID,
+                        ModelGraphitiPlugin.PLUGIN_ID,
                         "Error creating diagram",
                         exception.getTargetException());
                 StatusManager.getManager().handle(status, StatusManager.LOG);
@@ -269,7 +269,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
                 diagramResource.save(createSaveOptions());
             } catch (IOException exception) {
                 IStatus status = new Status(IStatus.ERROR,
-                        KielerGraphitiPlugin.PLUGIN_ID,
+                        ModelGraphitiPlugin.PLUGIN_ID,
                         "Unable to store model and diagram resources",
                         exception);
                 StatusManager.getManager().handle(status);
@@ -307,7 +307,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
             }
         } catch (CoreException e) {
             StatusManager.getManager()
-                    .handle(e, KielerGraphitiPlugin.PLUGIN_ID);
+                    .handle(e, ModelGraphitiPlugin.PLUGIN_ID);
         }
     }
 

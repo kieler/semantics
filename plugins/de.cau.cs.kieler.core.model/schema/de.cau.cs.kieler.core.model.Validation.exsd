@@ -19,12 +19,9 @@
       <complexType>
          <sequence minOccurs="0" maxOccurs="unbounded">
             <element ref="ePackageDefinition"/>
-            <sequence minOccurs="0" maxOccurs="unbounded">
-               <element ref="Validation"/>
-            </sequence>
-            <sequence minOccurs="0" maxOccurs="unbounded">
-               <element ref="ValidateAction"/>
-            </sequence>
+            <element ref="validationRegistry"/>
+            <element ref="Validation"/>
+            <element ref="ValidateAction"/>
          </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
@@ -196,6 +193,26 @@ The Validation has to have either a checkfilePath or a validator.
                </documentation>
                <appinfo>
                   <meta.attribute kind="identifier" basedOn="org.eclipse.emf.ecore.generated_package/package/@uri"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="validationRegistry">
+      <annotation>
+         <documentation>
+            Register validation registry classes.
+         </documentation>
+      </annotation>
+      <complexType>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  A validation registry implementation
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java" basedOn=":de.cau.cs.kieler.core.model.validation.IValidationRegistry"/>
                </appinfo>
             </annotation>
          </attribute>

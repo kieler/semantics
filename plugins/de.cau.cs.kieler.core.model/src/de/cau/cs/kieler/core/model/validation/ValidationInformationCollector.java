@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.model.validation;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -28,7 +29,9 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
@@ -42,6 +45,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
 
     /** The map for mapping ePackage IDs to ePackage nsURIs. */
     private static Map<String, String> ePackages = new HashMap<String, String>();
+    /** The list of validation registries. */
+    private static List<IValidationRegistry> registries = new LinkedList<IValidationRegistry>();
 
     /**
      * The map for mapping ePackage IDs to the elements containing the validate
@@ -75,6 +80,8 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                     addValidation(element);
                 } else if (elemName.equals("ValidateAction")) {
                     addValidateAction(element);
+                } else if (elemName.equals("validationRegistry")) {
+                    addValidationRegistry(element);
                 }
             }
         }
@@ -84,7 +91,9 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     }
 
     /**
-     * @param element
+     * Add a validate action.
+     * 
+     * @param element an extension element
      */
     private void addValidateAction(final IConfigurationElement element) {
         String ePackageId = element.getAttribute("ePackageId");
@@ -102,7 +111,9 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     }
 
     /**
-     * @param element
+     * Add a validation.
+     * 
+     * @param element an extension element
      */
     private void addValidation(final IConfigurationElement element) {
         String ePackageId = element.getAttribute("ePackageId");
@@ -145,12 +156,30 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
     }
 
     /**
-     * @param element
+     * Add an EPackage definition.
+     * 
+     * @param element an extension element
      */
     private void addEPackageDefinition(final IConfigurationElement element) {
         String ePackageId = element.getAttribute("ePackageId");
         String ePackageNsURI = element.getAttribute("ePackageNsURI");
         ePackages.put(ePackageId, ePackageNsURI);
+    }
+    
+    /**
+     * Add a validation registry.
+     * 
+     * @param element an extension element
+     */
+    private void addValidationRegistry(final IConfigurationElement element) {
+        try {
+            Object obj = element.createExecutableExtension("class");
+            if (obj instanceof IValidationRegistry) {
+                registries.add((IValidationRegistry) obj);
+            }
+        } catch (CoreException exception) {
+            StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
+        }
     }
 
     /**
@@ -180,11 +209,21 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         private boolean isEnabledByDefault;
 
         private List<String> referencedURIs;
-
+    }
+    
+    /**
+     * Return the validation registries that are added by extension point.
+     * 
+     * @return the validation registries
+     */
+    public static List<IValidationRegistry> getRegistries() {
+        return Collections.unmodifiableList(registries);
     }
 
     /**
-     * @param check
+     * Register a check file.
+     * 
+     * @param check a check file definition
      */
     private void registerCheckfile(final CheckfileDefinition check) {
         String nsURI = ePackages.get(check.ePackageId);

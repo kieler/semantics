@@ -21,18 +21,18 @@ import org.osgi.framework.BundleContext;
  * 
  * @author msp
  */
-public class KielerGraphitiPlugin extends AbstractUIPlugin {
+public class ModelGraphitiPlugin extends AbstractUIPlugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.core.model.graphiti";
 
     /** The shared instance. */
-    private static KielerGraphitiPlugin plugin;
+    private static ModelGraphitiPlugin plugin;
 
     /**
      * The constructor.
      */
-    public KielerGraphitiPlugin() {
+    public ModelGraphitiPlugin() {
     }
 
     /**
@@ -58,7 +58,7 @@ public class KielerGraphitiPlugin extends AbstractUIPlugin {
      * 
      * @return the shared instance
      */
-    public static KielerGraphitiPlugin getDefault() {
+    public static ModelGraphitiPlugin getDefault() {
         return plugin;
     }
 

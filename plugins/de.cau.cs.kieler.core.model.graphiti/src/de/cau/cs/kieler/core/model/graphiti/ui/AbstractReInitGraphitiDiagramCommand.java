@@ -76,7 +76,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.model.graphiti.KielerGraphitiPlugin;
+import de.cau.cs.kieler.core.model.graphiti.ModelGraphitiPlugin;
 import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
 import de.cau.cs.kieler.core.util.Maybe;
 
@@ -308,7 +308,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             } catch (IOException exception) {
                 IStatus status =
                         new Status(IStatus.ERROR,
-                                KielerGraphitiPlugin.PLUGIN_ID,
+                                ModelGraphitiPlugin.PLUGIN_ID,
                                 "Unable to store model and diagram resources",
                                 exception);
                 StatusManager.getManager().handle(status);

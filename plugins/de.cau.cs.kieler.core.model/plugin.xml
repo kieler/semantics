@@ -55,12 +55,6 @@
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
    </extension>
    <extension
-         point="de.cau.cs.kieler.core.ui.graphicalFrameworkBridges">
-      <bridge
-            class="de.cau.cs.kieler.core.model.GmfFrameworkBridge">
-      </bridge>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"

@@ -28,7 +28,6 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.xtend.typesystem.emf.check.CheckRegistry;
 import org.eclipse.xtext.validation.CompositeEValidator;
 import org.eclipse.xtext.validation.CompositeEValidator.EValidatorEqualitySupport;
 
@@ -305,9 +304,11 @@ public final class ValidationManager {
      */
     private static void register(final CheckFile checkFile) {
         if (checkFile.isEnabled()) {
-            CheckRegistry.getInstance().registerCheckFile(checkFile.ePackage,
-                    checkFile.file, checkFile.isWrapExistingValidator,
-                    checkFile.referencedEPackageNsURIs);
+            for (IValidationRegistry registry : ValidationInformationCollector.getRegistries()) {
+                registry.register(checkFile.ePackage, checkFile.file,
+                        checkFile.isWrapExistingValidator,
+                        checkFile.referencedEPackageNsURIs);                
+            }
         }
     }
 
