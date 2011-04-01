@@ -61,9 +61,9 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         super.start(context);
         plugin = this;
         logger = getLog();
+        GraphicalFrameworkService.start();
         errorHandler = new ModelErrorHandler();
         addErrorListener(errorHandler);
-
     }
 
     /**

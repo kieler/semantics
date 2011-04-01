@@ -26,9 +26,9 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 
-import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
-import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
-import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;
+import de.cau.cs.kieler.core.model.figures.DoubleRoundedRectangle;
+import de.cau.cs.kieler.core.model.figures.layout.container.Cell;
+import de.cau.cs.kieler.core.model.figures.layout.container.ExtendedTable;
 import de.cau.cs.kieler.karma.IRenderingProvider;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;

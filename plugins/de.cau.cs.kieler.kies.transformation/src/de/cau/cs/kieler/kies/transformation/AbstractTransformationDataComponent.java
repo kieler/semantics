@@ -35,8 +35,8 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Maps;
 
-import de.cau.cs.kieler.core.model.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.effects.TransformationEffect;
+import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;

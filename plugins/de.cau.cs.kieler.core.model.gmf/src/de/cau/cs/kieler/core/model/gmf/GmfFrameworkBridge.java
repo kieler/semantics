@@ -37,7 +37,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 
@@ -52,9 +52,15 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
      * {@inheritDoc}
      */
     public boolean supports(final Object object) {
-        return object instanceof IGraphicalEditPart
+        if (object instanceof IGraphicalEditPart
                 || object instanceof DiagramEditor
-                || object instanceof View;
+                || object instanceof View) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return getEditPart(object) != null;
+        }
+        return false;
     }
 
     /**
@@ -134,6 +140,21 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
                 return view.getElement();
             }
             return (EObject) adaptable.getAdapter(EObject.class);
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public EObject getNotationElement(final Object object) {
+        if (object instanceof IGraphicalEditPart) {
+            return ((IGraphicalEditPart) object).getNotationView();
+        } else if (object instanceof View) {
+            return (View) object;
+        } else if (object instanceof IAdaptable) {
+            IAdaptable adaptable = (IAdaptable) object;
+            return (View) adaptable.getAdapter(View.class);
         }
         return null;
     }

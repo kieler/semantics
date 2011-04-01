@@ -2,9 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.core.ui.graphicalFrameworkBridges">
+         point="de.cau.cs.kieler.core.model.graphicalFrameworkBridges">
       <bridge
-            class="de.cau.cs.kieler.core.model.graphiti.GraphitiFrameworkBridge">
+            class="de.cau.cs.kieler.core.model.graphiti.GraphitiFrameworkBridge"
+            id="graphiti">
       </bridge>
    </extension>
    <extension

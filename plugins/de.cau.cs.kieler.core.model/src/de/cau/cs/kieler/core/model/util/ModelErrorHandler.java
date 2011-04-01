@@ -25,16 +25,17 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
+import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.ui.Messages;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
@@ -194,14 +195,20 @@ public class ModelErrorHandler implements StatusListener {
 
                 public void run() {
                     try {
-                        String elementID = ""; //$NON-NLS-1$
-                        EditPart editPart = ModelingUtil.getEditPart(target);
+                        IGraphicalFrameworkBridge bridge = GraphicalFrameworkService
+                                .getInstance().getBridge(GraphicalFrameworkService.FW_GMF);
+                        EditPart editPart = bridge.getEditPart(target);
 
                         if (editPart != null) {
-                            View view = (View) editPart.getModel();
-                            elementID = ViewUtil.getIdStr(view);
-                            IResource resource = WorkspaceSynchronizer
-                                    .getFile(view.eResource());
+                            EObject view = bridge.getNotationElement(editPart);
+                            String elementID = "";
+                            if (view.eResource() instanceof XMLResource ) {
+                                    String id = ((XMLResource) view.eResource()).getID(view);
+                                    if (id != null) {
+                                        elementID = id;
+                                    }
+                            }
+                            IResource resource = WorkspaceSynchronizer.getFile(view.eResource());
                             IMarker marker = resource
                                     .createMarker("de.cau.cs.kieler.synccharts.diagram.diagnostic");
                             marker.setAttribute(IMarker.MESSAGE, msg);
@@ -209,9 +216,7 @@ public class ModelErrorHandler implements StatusListener {
                                     IMarker.PRIORITY_HIGH);
                             marker.setAttribute(IMarker.SEVERITY,
                                     IMarker.SEVERITY_ERROR);
-                            marker.setAttribute(
-                                    org.eclipse.gmf.runtime.common.ui.resources.IMarker.ELEMENT_ID,
-                                    elementID);
+                            marker.setAttribute("elementId", elementID);
                             List<IMarker> myMarkers = markers.get(target);
                             if (myMarkers == null) {
                                 myMarkers = new ArrayList<IMarker>();

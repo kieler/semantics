@@ -13,20 +13,43 @@
  */
 package de.cau.cs.kieler.synccharts.diagram.custom;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.action.Action;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 
-import de.cau.cs.kieler.core.model.validation.AbstractDiagramEditorValidationActionFactory;
+import de.cau.cs.kieler.core.model.validation.AbstractValidationActionFactory;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
 
 /**
  * @author soh
  */
-public class SyncchartsValidationActionFactory extends
-        AbstractDiagramEditorValidationActionFactory {
+public class SyncchartsValidationActionFactory extends AbstractValidationActionFactory {
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean supportsEditor(final IEditorPart editor) {
+        if (editor != null && editor instanceof DiagramEditor) {
+            Object obj = ((DiagramEditor) editor).getDiagramEditPart()
+                    .getModel();
+            if (obj != null && obj instanceof View) {
+                EObject eObj = ((View) obj).getElement();
+                EPackage ePackage1 = eObj.eClass().getEPackage();
+                EPackage ePackage2 = SyncchartsPackage.eINSTANCE;
+                if (ePackage1 != null && ePackage2 != null) {
+                    return ePackage1.equals(ePackage2);
+                }
+            }
+        }
+        return false;
+    }
+    
     /**
      * {@inheritDoc}
      */
@@ -34,9 +57,5 @@ public class SyncchartsValidationActionFactory extends
     public Action getValidationAction(final IWorkbenchPage page) {
         return new ValidateAction(page);
     }
-
-    @Override
-    public EPackage getEPackage() {
-        return SyncchartsPackage.eINSTANCE;
-    }
+    
 }

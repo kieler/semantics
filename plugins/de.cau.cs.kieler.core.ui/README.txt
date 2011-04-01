@@ -7,9 +7,11 @@ UI elements that can be reused throughout KIELER. This includes categories
 for the most important UI contributions, e.g. commands or views.
 
 Other plug-ins should import this only if they contain UI code and are not
-meant to be exported for a stand-alone application or library.
+meant to be exported for a stand-alone application or library. This plug-in
+should be kept free from any extended Eclipse features, such as GEF, GMF,
+Xtext, or other modeling frameworks.
 
-Files:
+Special files:
 
 help/
   contents for eclipse internal help and the welcome page

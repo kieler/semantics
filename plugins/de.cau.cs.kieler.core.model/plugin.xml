@@ -2,7 +2,8 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="de.cau.cs.kieler.core.model.Validation" name="Validation" schema="schema/de.cau.cs.kieler.core.model.Validation.exsd"/>
-   <extension
+   <extension-point id="graphicalFrameworkBridges" name="Graphical Framework Bridges" schema="schema/graphicalFrameworkBridges.exsd"/>
+      <extension
          point="org.eclipse.ui.commands">
       <command
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ValidateActionHandler"

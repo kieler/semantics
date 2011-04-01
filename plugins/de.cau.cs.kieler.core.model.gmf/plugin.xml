@@ -2,9 +2,10 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension
-         point="de.cau.cs.kieler.core.ui.graphicalFrameworkBridges">
+         point="de.cau.cs.kieler.core.model.graphicalFrameworkBridges">
       <bridge
-            class="de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge">
+            class="de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge"
+            id="gmf">
       </bridge>
    </extension>
 

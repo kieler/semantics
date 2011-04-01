@@ -30,8 +30,8 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.LineAttributes;
 
-import de.cau.cs.kieler.core.ui.figures.CircleDecoration;
-import de.cau.cs.kieler.core.ui.figures.SplineConnection;
+import de.cau.cs.kieler.core.model.figures.CircleDecoration;
+import de.cau.cs.kieler.core.model.gmf.figures.SplineConnection;
 import de.cau.cs.kieler.karma.IRenderingProvider;
 
 /**

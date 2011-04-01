@@ -38,8 +38,8 @@ import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
-import de.cau.cs.kieler.core.ui.GraphicalFrameworkService;
-import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 
 /**

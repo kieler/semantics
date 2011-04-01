@@ -17,10 +17,10 @@ package de.cau.cs.kieler.synccharts.custom;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.common.notify.Notifier;
 
-import de.cau.cs.kieler.core.ui.figures.DoubleRoundedRectangle;
-import de.cau.cs.kieler.core.ui.figures.layout.AbstractTableLayout;
-import de.cau.cs.kieler.core.ui.figures.layout.container.Cell;
-import de.cau.cs.kieler.core.ui.figures.layout.container.ExtendedTable;
+import de.cau.cs.kieler.core.model.figures.DoubleRoundedRectangle;
+import de.cau.cs.kieler.core.model.figures.layout.AbstractTableLayout;
+import de.cau.cs.kieler.core.model.figures.layout.container.Cell;
+import de.cau.cs.kieler.core.model.figures.layout.container.ExtendedTable;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;

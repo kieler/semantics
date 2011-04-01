@@ -35,19 +35,19 @@ import org.eclipse.xtend.typesystem.emf.EcoreUtil2;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.model.m2m.TransformException;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
 import de.cau.cs.kieler.core.model.xtend.transformation.AbstractTransformation;
 import de.cau.cs.kieler.core.model.xtend.transformation.ITransformationFramework;
 
 /**
  * An implementation of the ITransformationFramework interface for the use with the Xtend framework.
  * 
+ * FIXME this class depends on a GMF utility class; after it has been removed, the dependency to core.model.gmf should be deleted
  * 
  * @author mim
  * @deprecated This class is used by KSBasE. For new implementations extend the
  *             {@link XtendTransformationContext} instead.
- * @kieler.rating 2010-01-08 proposed yellow
  */
 
 public class XtendTransformationFramework implements ITransformationFramework {
@@ -98,7 +98,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
             final String... parameter) {
         List<EObject> slist = null;
         if (parametersToMap == null) {
-            slist = ModelingUtil.getModelElementsFromSelection();
+            slist = GmfModelingUtil.getModelElementsFromSelection();
         } else {
             slist = new LinkedList<EObject>();
             slist.addAll(parametersToMap);

@@ -35,7 +35,7 @@ import org.eclipse.graphiti.ui.internal.util.gef.ScalableRootEditPartAnimated;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.cau.cs.kieler.core.ui.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 
 /**
  * Editing provider for Graphiti.
@@ -50,9 +50,15 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      * {@inheritDoc}
      */
     public boolean supports(final Object object) {
-        return object instanceof IPictogramElementEditPart
+        if (object instanceof IPictogramElementEditPart
                 || object instanceof DiagramEditor
-                || object instanceof PictogramElement;
+                || object instanceof PictogramElement) {
+            return true;
+        }
+        if (object instanceof EObject) {
+            return getEditPart(object) != null;
+        }
+        return false;
     }
 
     /**
@@ -91,6 +97,21 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
                 }
             }
             return (EObject) adaptable.getAdapter(EObject.class);
+        }
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public EObject getNotationElement(final Object object) {
+        if (object instanceof IPictogramElementEditPart) {
+            return ((IPictogramElementEditPart) object).getPictogramElement();
+        } else if (object instanceof PictogramElement) {
+            return (PictogramElement) object;
+        } else if (object instanceof IAdaptable) {
+            IAdaptable adaptable = (IAdaptable) object;
+            return (PictogramElement) adaptable.getAdapter(PictogramElement.class);
         }
         return null;
     }

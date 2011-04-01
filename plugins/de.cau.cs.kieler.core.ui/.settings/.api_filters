@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="de.cau.cs.kieler.core.ui" version="2">
+    <resource path="src/de/cau/cs/kieler/core/ui/splashHandlers/CustomExtensibleSplashHandler.java" type="de.cau.cs.kieler.core.ui.splashHandlers.CustomExtensibleSplashHandler">
+        <filter id="571519004">
+            <message_arguments>
+                <message_argument value="de.cau.cs.kieler.core.ui.splashHandlers.CustomExtensibleSplashHandler.createTextLabel(String)"/>
+                <message_argument value="Label"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

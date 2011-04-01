@@ -52,7 +52,6 @@ public class CoreUIPlugin extends AbstractUIPlugin {
         CombinedWorkbenchListener.getInstance().earlyStartup();
         RefactoringCore.getHistoryService().addHistoryListener(
                 new RefactoringListener());
-        GraphicalFrameworkService.start();
     }
 
     /**

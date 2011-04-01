@@ -45,8 +45,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.emf.core.GMFEditingDomainFactory;
-import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -58,7 +56,8 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.model.trigger.ReInitDiagramDoneTrigger;
+import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.model.triggers.ReInitDiagramDoneTrigger;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.ui.commands.AffectedFileSelectionDialog;
 
@@ -113,7 +112,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                                         .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
-                        EObject eObj = getEObjectFromEditPart(editPart);
+                        EObject eObj = GraphicalFrameworkService.getInstance()
+                                .getBridge(editPart).getElement(editPart);
                         // no model element found for the edit part
                         if (eObj == null) {
                             super.setBaseEnabled(false);
@@ -144,22 +144,6 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * GMF method for getting model element from EditPart. Subclasses should
-     * override.
-     * 
-     * @param editPart
-     *            the editpart
-     * @return the domain model element
-     */
-    public EObject getEObjectFromEditPart(final EditPart editPart) {
-        Object model = editPart.getModel();
-        if (model instanceof View) {
-            return ((View) model).getElement();
-        }
-        return null;
-    }
-
-    /**
      * {@inheritDoc}
      */
     @SuppressWarnings("restriction")
@@ -183,7 +167,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                                         .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
-                        EObject eObj = getEObjectFromEditPart(editPart);
+                        EObject eObj = GraphicalFrameworkService.getInstance()
+                                .getBridge(editPart).getElement(editPart);
                         if (eObj != null) {
                             URI uri = eObj.eResource().getURI();
                             path =
@@ -355,7 +340,6 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      * @param newEditor
      *            the newly opened editor
      */
-    @SuppressWarnings("unused")
     protected void performPostOperationAction(final IFile path,
             final List<IFile> partners, final IProgressMonitor monitor,
             final IEditorPart newEditor) {
@@ -372,7 +356,6 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      * @param monitor
      *            the progress monitor
      */
-    @SuppressWarnings("unused")
     protected void performPreOperationActions(final IFile path,
             final List<IFile> partners, final IProgressMonitor monitor) {
     }
@@ -510,14 +493,14 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * GMF method for creating a new transactional editing domain. Subclasses
-     * should override.
+     * Create a new transactional editing domain. For GMF this is done using
+     * <pre>
+     *   GMFEditingDomainFactory.INSTANCE.createEditingDomain()
+     * <pre>
      * 
      * @return a new transactional editing domain
      */
-    protected TransactionalEditingDomain createEditingDomain() {
-        return GMFEditingDomainFactory.INSTANCE.createEditingDomain();
-    }
+    protected abstract TransactionalEditingDomain createEditingDomain();
 
     /**
      * Create a new diagram file from the given semantics model. Subclasses must

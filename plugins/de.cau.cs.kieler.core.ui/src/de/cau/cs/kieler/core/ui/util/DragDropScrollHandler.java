@@ -13,11 +13,11 @@
  */
 package de.cau.cs.kieler.core.ui.util;
 
-import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseMoveListener;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Scrollable;
@@ -61,12 +61,12 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
     /**
      * Point where the user started pressing down the left mouse button.
      */
-    private Point origin = new Point();
+    private Point origin = new Point(0, 0);
     
     /**
      * The original scroll bar values when the dragging began.
      */
-    private Point barValues = new Point();
+    private Point barValues = new Point(0, 0);
     
     
     /**

@@ -9,15 +9,16 @@ import org.eclipse.core.runtime.IExtension;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
@@ -142,13 +143,23 @@ public class CustomExtensibleSplashHandler extends BasicSplashHandler {
         }
     }
 
+    /** the grey value for label color. */
+    private static final int SHADING = 200;
+    
     /**
      * @param text
      */
     private void createTextLabel(final String text) {
-        Label label = new Label(fTextPanel, SWT.NONE);
+        final Color color = new Color(Display.getDefault(), SHADING, SHADING, SHADING);
+        Label label = new Label(fTextPanel, SWT.NONE) {
+            @Override
+            public void dispose() {
+                super.dispose();
+                color.dispose();
+            }
+        };
         label.setText(text);
-        label.setForeground(ColorConstants.lightGray);
+        label.setForeground(color);
         Font f = label.getFont();
         if (f.getFontData() != null) {
             FontData fd = f.getFontData()[0];

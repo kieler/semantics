@@ -218,16 +218,6 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         return DiagramEditorFactory.createResourceSetAndEditingDomain();
     }
 
-    @Override
-    public EObject getEObjectFromEditPart(final EditPart editPart) {
-        if (editPart instanceof IPictogramElementEditPart) {
-            IPictogramElementEditPart part =
-                    (IPictogramElementEditPart) editPart;
-            return part.getPictogramElement();
-        }
-        return null;
-    }
-
     /**
      * {@inheritDoc}
      */
