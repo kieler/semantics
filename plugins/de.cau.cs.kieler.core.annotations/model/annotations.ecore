@@ -14,16 +14,16 @@
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Search an annotation with the given name.&#xA;&#xA;@param name the name of the annotation, does not need to be unique&#xA;@returns the first annotation that matches the name"/>
       </eAnnotations>
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="getAllAnnotations" lowerBound="1">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
         <details key="documentation" value="Search all annotations with the given name.&#xA;&#xA;@param name the name of the annotations, does not need to be unique&#xA;@returns a list of all annotations that match the name"/>
       </eAnnotations>
-      <eGenericType eClassifier="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EEList">
+      <eGenericType eClassifier="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EEList">
         <eTypeArguments eClassifier="#//Annotation"/>
       </eGenericType>
-      <eParameters name="name" eType="ecore:EDataType platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EString"/>
+      <eParameters name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </eOperations>
     <eOperations name="removeAllAnnotations">
       <eAnnotations source="http://www.eclipse.org/emf/2002/GenModel">
