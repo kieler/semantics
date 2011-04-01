@@ -38,7 +38,7 @@ import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 
 /**
  * Draws a transient arrow from source to target edit part.
@@ -100,7 +100,7 @@ public class ArrowEffect extends AbstractEffect {
         }, true);
         if (maybe.get() instanceof DiagramEditor) {
             DiagramEditPart diagram = ((DiagramEditor) maybe.get()).getDiagramEditPart();
-            source = (GraphicalEditPart) ModelingUtil.getEditPart(diagram, s);
+            source = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, s);
             if (source instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;
@@ -115,7 +115,7 @@ public class ArrowEffect extends AbstractEffect {
                 }
                 source = potential;
             }
-            target = (GraphicalEditPart) ModelingUtil.getEditPart(diagram, t);
+            target = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, t);
             if (target instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;

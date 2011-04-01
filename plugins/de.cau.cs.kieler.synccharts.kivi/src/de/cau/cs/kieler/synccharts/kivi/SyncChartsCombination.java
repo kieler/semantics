@@ -32,7 +32,7 @@ import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
@@ -196,7 +196,7 @@ public class SyncChartsCombination extends AbstractCombination {
      * @throws KielerModelException
      */
     private void collapseAll(final DiagramEditor editor) {
-        Collection<EObject> states = ModelingUtil.getAllByType(
+        Collection<EObject> states = GmfModelingUtil.getAllByType(
                 SyncchartsPackage.eINSTANCE.getState(), editor.getDiagramEditPart());
         for (EObject state : states) {
             // remove the root State because it represents the whole SM and will not be active

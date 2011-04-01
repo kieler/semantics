@@ -19,6 +19,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.ImageDescriptor;
@@ -33,7 +34,7 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
-import de.cau.cs.kieler.core.model.gmf.triggers.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
@@ -91,7 +92,8 @@ public class SignalFlowCombination extends AbstractCombination {
             effects = new ArrayList<Pair<Signal, Transition>>();
 
             // traverse over all EObjects
-            EObject diagramElement = selection.getDiagramEditor().getDiagram().getElement();
+            EObject diagramElement = ((DiagramEditor) selection.getDiagramEditor())
+                    .getDiagram().getElement();
             for (Iterator<EObject> iterator = diagramElement.eAllContents(); iterator.hasNext();) {
                 EObject current = iterator.next();
 

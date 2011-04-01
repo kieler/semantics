@@ -14,7 +14,7 @@ import static de.cau.cs.kieler.synccharts.custom.StateLayout.REGION;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.SIGNALS;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.STATELABEL;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.SUSPENDTRIGGER;
-import de.cau.cs.kieler.core.model.figures.layout.container.ExtendedTable;
+import de.cau.cs.kieler.core.model.gmf.figures.layout.container.ExtendedTable;
 import de.cau.cs.kieler.synccharts.custom.StateLayout.AbstractSyncChartsConfiguration;
 
 public class SSM03Configuration extends AbstractSyncChartsConfiguration{

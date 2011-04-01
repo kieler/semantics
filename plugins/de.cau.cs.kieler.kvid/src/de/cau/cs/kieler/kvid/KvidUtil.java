@@ -34,7 +34,7 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
 import de.cau.cs.kieler.core.kgraph.KEdge;
 import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
@@ -271,7 +271,7 @@ public final class KvidUtil {
             //Element couldn't be resolved, can't decide on paths then
             return null;
         }
-        List<EditPart> parts = ModelingUtil.getEditParts(
+        List<EditPart> parts = GmfModelingUtil.getEditParts(
                 currentEditor.getDiagramEditPart(), modelElement);
         KNode currentNode = null;
         for (EditPart part : parts) {

@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts.diagram.custom.handlers;
 
 import org.eclipse.emf.ecore.EPackage;
 
-import de.cau.cs.kieler.core.ui.policies.AbstractDeletionPolicyProvider;
+import de.cau.cs.kieler.core.model.gmf.policies.AbstractDeletionPolicyProvider;
 import de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl;
 
 /**

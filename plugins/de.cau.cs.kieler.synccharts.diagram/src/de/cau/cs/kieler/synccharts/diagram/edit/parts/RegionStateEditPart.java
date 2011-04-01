@@ -26,8 +26,8 @@ import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 
-import de.cau.cs.kieler.core.ui.figures.RoundedRectangleFigure;
-import de.cau.cs.kieler.core.ui.figures.TranslatablePolyline;
+import de.cau.cs.kieler.core.model.figures.TranslatablePolyline;
+import de.cau.cs.kieler.core.model.gmf.figures.RoundedRectangleFigure;
 import de.cau.cs.kieler.karma.AdvancedRenderingShapeNodeEditPart;
 import de.cau.cs.kieler.karma.SwitchableFigure;
 import de.cau.cs.kieler.synccharts.custom.StateLayout;

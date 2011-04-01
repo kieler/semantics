@@ -1,8 +1,8 @@
 package de.cau.cs.kieler.synccharts.custom.layout;
 
-import de.cau.cs.kieler.core.model.figures.layout.container.ExtendedTable;
 import static de.cau.cs.kieler.synccharts.custom.StateLayout.*;
-import static de.cau.cs.kieler.core.model.figures.layout.container.ExtendedTable.*;
+import static de.cau.cs.kieler.core.model.gmf.figures.layout.container.ExtendedTable.*;
+import de.cau.cs.kieler.core.model.gmf.figures.layout.container.ExtendedTable;
 
 public class SyncChartsConfiguration extends AbstractSyncChartsConfiguration {
 

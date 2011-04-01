@@ -33,7 +33,7 @@ import org.eclipse.ui.IEditorPart;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
-import de.cau.cs.kieler.core.model.util.ModelingUtil;
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
@@ -124,7 +124,7 @@ public class PointerEffect extends AbstractEffect {
         }, true);
         if (maybe.get() instanceof DiagramEditor) {
             DiagramEditPart diagram = ((DiagramEditor) maybe.get()).getDiagramEditPart();
-            target = (GraphicalEditPart) ModelingUtil.getEditPart(diagram, theTarget);
+            target = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, theTarget);
             if (target instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;
