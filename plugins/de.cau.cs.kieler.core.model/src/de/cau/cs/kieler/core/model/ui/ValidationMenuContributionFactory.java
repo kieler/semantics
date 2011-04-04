@@ -30,9 +30,9 @@ import org.eclipse.ui.menus.ExtensionContributionFactory;
 import org.eclipse.ui.menus.IContributionRoot;
 import org.eclipse.ui.services.IServiceLocator;
 
+import de.cau.cs.kieler.core.model.handlers.RemoveMarkerHandler;
 import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.handler.RemoveMarkerHandler;
 
 /**
  * This factory is responsible for creating the menu entries for the menu of the

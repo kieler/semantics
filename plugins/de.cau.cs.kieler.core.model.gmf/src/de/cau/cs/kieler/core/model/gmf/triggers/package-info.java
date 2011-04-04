@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2011 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,7 +13,7 @@
  */
 
 /**
- * Policies to be used in GMF editors.
+ * GMF-specific view management triggers.
  */
-package de.cau.cs.kieler.core.model.gmf.policies;
+package de.cau.cs.kieler.core.model.gmf.triggers;
 

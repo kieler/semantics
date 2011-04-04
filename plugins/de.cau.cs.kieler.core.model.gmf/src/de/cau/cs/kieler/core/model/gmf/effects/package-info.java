@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2011 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,6 +13,7 @@
  */
 
 /**
- * General handlers for the KIELER user interface.
+ * GMF-specific view management effects.
  */
-package de.cau.cs.kieler.core.ui.handler;
+package de.cau.cs.kieler.core.model.gmf.effects;
+

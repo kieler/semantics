@@ -17,5 +17,69 @@
             name="Show Hierarchy Levels">
       </combination>
    </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.model.gmf.handlers.ZoomToFitHandler"
+            description="Zoom so that the content fits the whole canvas"
+            id="de.cau.cs.kieler.core.model.command.zoom"
+            name="Zoom to fit">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.definitions">
+      <definition
+            id="de.cau.cs.kieler.expression.gmfDiagram">
+         <with
+               variable="activeEditor">
+            <instanceof
+                  value="org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor">
+            </instanceof>
+         </with>
+      </definition>
+      <definition
+            id="de.cau.cs.kieler.expression.onlyConnectionsSelected">
+         <iterate
+               ifEmpty="false"
+               operator="and">
+            <instanceof
+                  value="org.eclipse.gmf.runtime.diagram.ui.editparts.ConnectionEditPart">
+            </instanceof>
+         </iterate>
+      </definition>
+      <definition
+            id="de.cau.cs.kieler.expression.diagramSelected">
+         <and>
+            <count
+                  value="1">
+            </count>
+            <iterate>
+               <instanceof
+                     value="org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart">
+               </instanceof>
+            </iterate>
+         </and>
+      </definition>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+         <command
+               commandId="de.cau.cs.kieler.core.model.command.zoom"
+               label="Zoom to Fit"
+               mnemonic="z"
+               style="push"
+               tooltip="Zoom the current diagram such that all contents fit into the current view.">
+            <visibleWhen
+                  checkEnabled="false">
+               <reference
+                     definitionId="de.cau.cs.kieler.expression.gmfDiagram">
+               </reference>
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
 
 </plugin>

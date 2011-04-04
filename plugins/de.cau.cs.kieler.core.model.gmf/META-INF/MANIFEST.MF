@@ -21,7 +21,7 @@ Export-Package: de.cau.cs.kieler.core.model.gmf,
  de.cau.cs.kieler.core.model.gmf.figures,
  de.cau.cs.kieler.core.model.gmf.figures.layout,
  de.cau.cs.kieler.core.model.gmf.figures.layout.container,
- de.cau.cs.kieler.core.model.gmf.handler,
+ de.cau.cs.kieler.core.model.gmf.handlers,
  de.cau.cs.kieler.core.model.gmf.policies,
  de.cau.cs.kieler.core.model.gmf.triggers,
  de.cau.cs.kieler.core.model.gmf.util

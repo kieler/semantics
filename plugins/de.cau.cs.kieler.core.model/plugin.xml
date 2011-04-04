@@ -6,9 +6,17 @@
       <extension
          point="org.eclipse.ui.commands">
       <command
+            categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.ValidateActionHandler"
             id="de.cau.cs.kieler.core.model.validate"
-            name="validate">
+            name="Validate">
+      </command>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.model.handlers.RemoveMarkerHandler"
+            description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
+            id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+            name="Remove Problem Markers">
       </command>
    </extension>
    <extension
@@ -24,17 +32,37 @@
          <command
                commandId="de.cau.cs.kieler.core.model.validate"
                icon="icons/validate.gif"
+               label="Validate"
                style="pulldown">
             <visibleWhen
                   checkEnabled="false">
                <with
                      variable="activeEditor">
-                  <instanceof
-                        value="org.eclipse.ui.part.EditorPart">
-                  </instanceof>
+                  <test
+                        property="de.cau.cs.kieler.core.model.editorTester">
+                  </test>
                </with>
             </visibleWhen>
          </command>
+      </menuContribution>
+      <menuContribution
+            locationURI="popup:de.cau.cs.kieler">
+        <command
+              commandId="de.cau.cs.kieler.core.ui.command.removeMarkers"
+              id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+              label="Remove Problem Markers"
+              mnemonic="r"
+              style="push">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <test
+                        property="de.cau.cs.kieler.core.model.editorTester">
+                  </test>
+               </with>
+            </visibleWhen>
+        </command>
       </menuContribution>
       <menuContribution
             class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"
@@ -54,6 +82,16 @@
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
+   </extension>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.core.model.GraphicalFrameworkService.SupportedTester"
+            id="de.cau.cs.kieler.core.model.editorTester"
+            namespace="de.cau.cs.kieler.core.model"
+            properties="editorSupported"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
    </extension>
 
 </plugin>
