@@ -52,15 +52,9 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
      * {@inheritDoc}
      */
     public boolean supports(final Object object) {
-        if (object instanceof IGraphicalEditPart
+        return object instanceof IGraphicalEditPart
                 || object instanceof DiagramEditor
-                || object instanceof View) {
-            return true;
-        }
-        if (object instanceof EObject) {
-            return getEditPart(object) != null;
-        }
-        return false;
+                || object instanceof View;
     }
 
     /**

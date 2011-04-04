@@ -50,15 +50,9 @@ public class GraphitiFrameworkBridge implements IGraphicalFrameworkBridge {
      * {@inheritDoc}
      */
     public boolean supports(final Object object) {
-        if (object instanceof IPictogramElementEditPart
+        return object instanceof IPictogramElementEditPart
                 || object instanceof DiagramEditor
-                || object instanceof PictogramElement) {
-            return true;
-        }
-        if (object instanceof EObject) {
-            return getEditPart(object) != null;
-        }
-        return false;
+                || object instanceof PictogramElement;
     }
 
     /**
