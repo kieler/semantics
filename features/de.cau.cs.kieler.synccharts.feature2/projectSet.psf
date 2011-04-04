@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<psf version="2.0">
+<provider id="org.eclipse.team.svn.core.svnnature">
+<project reference="1.0.1,http://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.kivi,de.cau.cs.kieler.synccharts.kivi,a0a47d54a3f0001f1e08a6bcea8bff31;http://rtsys.informatik.uni-kiel.de/svn/kieler;http://rtsys.informatik.uni-kiel.de/svn/kieler;branches;tags;trunk;true;6debc4e9-3993-48f0-b640-80cb21cd30b6;http://rtsys.informatik.uni-kiel.de/svn/kieler;;false;;;0"/>
+<project reference="1.0.1,http://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.ksbase,de.cau.cs.kieler.synccharts.ksbase,a0a47d54a3f0001f1e08a6bcea8bff31;http://rtsys.informatik.uni-kiel.de/svn/kieler;http://rtsys.informatik.uni-kiel.de/svn/kieler;branches;tags;trunk;true;6debc4e9-3993-48f0-b640-80cb21cd30b6;http://rtsys.informatik.uni-kiel.de/svn/kieler;;false;;;0"/>
+<project reference="1.0.1,http://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.s,de.cau.cs.kieler.synccharts.s,a0a47d54a3f0001f1e08a6bcea8bff31;http://rtsys.informatik.uni-kiel.de/svn/kieler;http://rtsys.informatik.uni-kiel.de/svn/kieler;branches;tags;trunk;true;6debc4e9-3993-48f0-b640-80cb21cd30b6;http://rtsys.informatik.uni-kiel.de/svn/kieler;;false;;;0"/>
+<project reference="1.0.1,http://rtsys.informatik.uni-kiel.de/svn/kieler/trunk/plugins/de.cau.cs.kieler.synccharts.samples,de.cau.cs.kieler.synccharts.samples,a0a47d54a3f0001f1e08a6bcea8bff31;http://rtsys.informatik.uni-kiel.de/svn/kieler;http://rtsys.informatik.uni-kiel.de/svn/kieler;branches;tags;trunk;true;6debc4e9-3993-48f0-b640-80cb21cd30b6;http://rtsys.informatik.uni-kiel.de/svn/kieler;;false;;;0"/>
+</provider>
+</psf>
