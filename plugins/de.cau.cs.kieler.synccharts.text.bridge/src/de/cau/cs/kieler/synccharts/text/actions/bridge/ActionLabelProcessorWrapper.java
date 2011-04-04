@@ -51,18 +51,13 @@ public class ActionLabelProcessorWrapper {
     public static final boolean SERIALIZE = false;
 
     private Injector injector;
-    // SerializerUtil serializerUtil;
-    private IAntlrParser parser;
 
     /**
      * Default Constructor initializes parsers and serializers.
      */
     public ActionLabelProcessorWrapper() {
-        // injector = new TransitionLabelStandaloneSetup()
         injector = new ActionsStandaloneSetup()
                 .createInjectorAndDoEMFRegistration();
-        // serializerUtil = injector.getInstance(SerializerUtil.class);
-        parser = injector.getInstance(IAntlrParser.class);
     }
 
     /**
@@ -222,7 +217,7 @@ public class ActionLabelProcessorWrapper {
             throws KielerModelException, IOException {
         if (parse == PARSE) {
             ActionLabelParseCommand cmd = new ActionLabelParseCommand(action,
-                    action.getLabel(), parser, injector);
+                    action.getLabel(), injector);
             cmd.parse();
         } else {
 
@@ -239,7 +234,7 @@ public class ActionLabelProcessorWrapper {
     public Command getProcessActionCommand(final Action action, final boolean parse) {
         if (parse == PARSE) {
             return new ActionLabelParseCommand(action, action
-                    .getLabel(), parser, injector);
+                    .getLabel(), injector);
         } else {
             return new ActionLabelSerializeCommand(action);
         }

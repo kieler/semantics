@@ -30,9 +30,6 @@
             class="de.cau.cs.kieler.synccharts.listener.TriggerListenerChoice">
       </triggerListener>
       <triggerListener
-            class="de.cau.cs.kieler.synccharts.listener.TriggerListenerDebug">
-      </triggerListener>
-      <triggerListener
             class="de.cau.cs.kieler.synccharts.listener.TriggerListenerRecursiveAdd">
       </triggerListener>
    </extension>

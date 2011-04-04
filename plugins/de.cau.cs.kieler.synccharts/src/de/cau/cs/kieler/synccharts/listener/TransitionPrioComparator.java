@@ -32,13 +32,7 @@ public class TransitionPrioComparator implements Comparator<Transition> {
 
     /** {@inheritDoc} **/
     public int compare(final Transition t1, final Transition t2) {
-        if (t1.getPriority() < t2.getPriority()) {
-            return -1;
-        } else if (t1.getPriority() == t2.getPriority()) {
-            return 0;
-        } else {
-            return 1;
-        }
+        return t1.getPriority() - t2.getPriority();
     }
 
 }

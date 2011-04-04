@@ -102,13 +102,11 @@ public class ActionLabelParseCommand extends AbstractCommand {
      *            the target element
      * @param theNewString
      *            the String to be parsed
-     * @param parser
-     *            the internal Xtext parser
      * @param theInjector
      *            the Xtext Guice Injector
      */
     public ActionLabelParseCommand(final EObject theElement,
-            final String theNewString, final IAntlrParser parser,
+            final String theNewString,
             final Injector theInjector) {
         super();
         this.newString = theNewString;

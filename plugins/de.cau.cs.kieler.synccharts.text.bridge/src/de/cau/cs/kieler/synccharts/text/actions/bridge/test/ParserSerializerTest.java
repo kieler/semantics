@@ -683,7 +683,7 @@ public class ParserSerializerTest {
      */
     private void parse(final String textToParse) throws KielerModelException, IOException {
         ActionLabelParseCommand parseCommand = new ActionLabelParseCommand(transition, textToParse,
-                parser, injector);
+                injector);
         parseCommand.parse();
     }
 
