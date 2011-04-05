@@ -19,7 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xpand;bundle-version="1.0.1",
  de.cau.cs.kieler.core.model.gmf;bundle-version="0.1.0"
 Bundle-ActivationPolicy: lazy
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Export-Package: de.cau.cs.kieler.core.model.xtend,
  de.cau.cs.kieler.core.model.xtend.m2m,

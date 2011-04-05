@@ -30,7 +30,6 @@ public class CheckValidationRegistry implements IValidationRegistry {
     /**
      * {@inheritDoc}
      */
-    @Override
     public void register(final EPackage epackage, final String file,
             final boolean isWrapExistingValidator,
             final List<String> referencedEPackageNsURIs) {
