@@ -13477,7 +13477,7 @@ protected class Annotation_KeyBooleanValueAnnotationParserRuleCall_3 extends Rul
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_3();
+		return grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4();
 	}
 
     @Override
@@ -13513,7 +13513,7 @@ protected class Annotation_KeyIntValueAnnotationParserRuleCall_4 extends RuleCal
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_4();
+		return grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5();
 	}
 
     @Override
@@ -13549,7 +13549,7 @@ protected class Annotation_KeyFloatValueAnnotationParserRuleCall_5 extends RuleC
 	
 	@Override
 	public RuleCall getGrammarElement() {
-		return grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_5();
+		return grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6();
 	}
 
     @Override
