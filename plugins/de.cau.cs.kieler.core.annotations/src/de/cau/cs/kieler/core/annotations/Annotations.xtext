@@ -15,18 +15,11 @@ Annotation returns Annotation:
 	CommentAnnotation
 	| TagAnnotation
 	| KeyStringValueAnnotation
+	| TypedStringAnnotation
 	| KeyBooleanValueAnnotation
 	| KeyIntValueAnnotation
 	| KeyFloatValueAnnotation
 	;
-
-
-
-// introduction of parsing rules for annotations
-//StringAnnotation returns Annotation:
-//	CommentAnnotation
-//	| KeyStringValueAnnotation
-//	;
 
 
 // e.g.: /** semantic comment */
@@ -35,28 +28,51 @@ CommentAnnotation returns StringAnnotation:
 
 
 // e.g.: @HVlayout
-TagAnnotation returns StringAnnotation:
-    '@' name=ID;
+TagAnnotation returns Annotation:
+    '@' name=ID
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
 
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-	'@' name=ID value=EString;
+	'@' name=ID value=EString
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
+
+
+// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+TypedStringAnnotation returns TypedStringAnnotation:
+    '@' name=ID type=TypeId? value=EString
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
 
 
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-	'@' name=ID value=Boolean;
+	'@' name=ID value=Boolean
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
 
 
 // e.g.: @minSpace 10;    
 KeyIntValueAnnotation returns IntAnnotation:
-	'@' name=ID value=INT;
+	'@' name=ID value=INT
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
 
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-	'@' name=ID value=Float;
+	'@' name=ID value=Float
+    ('('
+        (annotations+=Annotation)*
+    ')')?;
 
 
 // needed for importing other resources
@@ -96,11 +112,6 @@ terminal INT returns ecore::EInt:
     '-'?('0'..'9')+;
 
 
-//// redefine INT terminal to allow negative numbers
-//terminal NINT returns ecore::EInt:
-//    '-'?('0'..'9')+;
-
-
 // make sure the Float rule does not shadow the INT rule
 terminal Float returns ecore::EFloatObject :
  '-'?('0'..'9')+ ("."('0'..'9')*) (("e"|"E")("+"|"-")?('0'..'9')+)? "f"? |
@@ -112,3 +123,11 @@ terminal Boolean returns ecore::EBooleanObject :
     "true" | "false";
 
 
+// custom terminal rule for strings
+terminal STRING returns ecore::EString:
+    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
+
+
+// type identifiers can reference Java classes
+terminal TypeId returns ecore::EString:
+    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';

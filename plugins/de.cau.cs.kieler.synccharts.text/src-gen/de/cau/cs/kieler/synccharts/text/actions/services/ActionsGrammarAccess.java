@@ -935,13 +935,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// custom terminal rule allowing to save transition label string as they are
-	//terminal STRING:
-	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
-	public TerminalRule getSTRINGRule() {
-		return gaKExpressions.getSTRINGRule();
-	} 
-
-	//// custom terminal rule allowing to save transition label string as they are
 	//terminal HOSTCODE:
 	//	"\'" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\'"))* "\'";
 	public TerminalRule getHOSTCODERule() {
@@ -954,8 +947,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | KeyBooleanValueAnnotation | KeyIntValueAnnotation |
-	//	KeyFloatValueAnnotation;
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedStringAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
 	}
@@ -964,11 +957,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
-	//// introduction of parsing rules for annotations
-	////StringAnnotation returns Annotation:
-	////	CommentAnnotation
-	////	| KeyStringValueAnnotation
-	////	;
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
@@ -981,8 +969,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @HVlayout
-	//TagAnnotation returns StringAnnotation:
-	//	"@" name=ID;
+	//TagAnnotation returns Annotation:
+	//	"@" name=ID ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaKExpressions.getTagAnnotationAccess();
 	}
@@ -993,7 +981,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	//KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString;
+	//	"@" name=ID value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getKeyStringValueAnnotationAccess();
 	}
@@ -1002,9 +990,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getKeyStringValueAnnotationAccess().getRule();
 	}
 
+	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
+	//TypedStringAnnotation:
+	//	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
+	public AnnotationsGrammarAccess.TypedStringAnnotationElements getTypedStringAnnotationAccess() {
+		return gaKExpressions.getTypedStringAnnotationAccess();
+	}
+	
+	public ParserRule getTypedStringAnnotationRule() {
+		return getTypedStringAnnotationAccess().getRule();
+	}
+
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ID value=Boolean;
+	//	"@" name=ID value=Boolean ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKExpressions.getKeyBooleanValueAnnotationAccess();
 	}
@@ -1015,7 +1014,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	//KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ID value=INT;
+	//	"@" name=ID value=INT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaKExpressions.getKeyIntValueAnnotationAccess();
 	}
@@ -1026,7 +1025,7 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ID value=Float;
+	//	"@" name=ID value=Float ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKExpressions.getKeyFloatValueAnnotationAccess();
 	}
@@ -1086,9 +1085,6 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		return gaKExpressions.getINTRule();
 	} 
 
-	////// redefine INT terminal to allow negative numbers
-	////terminal NINT returns ecore::EInt:
-	////    '-'?('0'..'9')+;
 	//// make sure the Float rule does not shadow the INT rule
 	//terminal Float returns ecore::EFloatObject:
 	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
@@ -1101,6 +1097,20 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//	"true" | "false";
 	public TerminalRule getBooleanRule() {
 		return gaKExpressions.getBooleanRule();
+	} 
+
+	//// custom terminal rule for strings
+	//terminal STRING:
+	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
+	public TerminalRule getSTRINGRule() {
+		return gaKExpressions.getSTRINGRule();
+	} 
+
+	//// type identifiers can reference Java classes
+	//terminal TypeId:
+	//	"[" ("a".."z" | "A".."Z" | "_" | ".") ("a".."z" | "A".."Z" | "_" | "." | "0".."9")* "]";
+	public TerminalRule getTypeIdRule() {
+		return gaKExpressions.getTypeIdRule();
 	} 
 
 	//terminal ID:

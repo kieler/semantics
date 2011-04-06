@@ -47,6 +47,28 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                         }
                 };
     }
+    
+    /**
+     * Provides comment annotation converter dropping/attaching the leading/trailing characters.
+     * @return dedicated value converter
+     */
+    @ValueConverter(rule = "TypeId")
+        public IValueConverter<String> TypeId() {
+                return new IValueConverter<String>() {
+
+                        public String toValue(String string, AbstractNode node) {
+                                return string.replace("[","").replace("]", "").trim();
+                        }
+
+                        public String toString(String value) {
+                                if (Strings.isEmpty(value)) {
+                                        return null;
+                                } else {
+                                        return "[" + value + "]";
+                                }
+                        }
+                };
+    }
 
     
     /**

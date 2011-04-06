@@ -259,10 +259,5 @@ enum CombineOperator returns CombineOperator:
 
 
 // custom terminal rule allowing to save transition label string as they are
-terminal STRING returns ecore::EString: 
-    '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
-
-
-// custom terminal rule allowing to save transition label string as they are
 terminal HOSTCODE returns ecore::EString: 
 	"'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|"'") )* "'";
