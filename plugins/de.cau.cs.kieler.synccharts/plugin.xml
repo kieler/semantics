@@ -34,15 +34,6 @@
       </triggerListener>
    </extension>
       <extension
-         point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
-      <editpolicyProvider
-            class="de.cau.cs.kieler.core.model.gmf.policies.BalloonPopupEditPolicyProvider">
-         <Priority
-               name="Lowest">
-         </Priority>
-      </editpolicyProvider>
-   </extension>
-      <extension
             point="de.cau.cs.kieler.core.model.Validation">
          <ePackageDefinition
                ePackageClass="de.cau.cs.kieler.synccharts.SyncchartsPackage"
