@@ -56,6 +56,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.triggers.ReInitDiagramDoneTrigger;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
@@ -107,8 +108,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     IPath path = null;
                     if (o instanceof org.eclipse.core.internal.resources.File) {
                         // selection is an a file
-                        path =
-                                ((org.eclipse.core.internal.resources.File) o)
+                        path = ((org.eclipse.core.internal.resources.File) o)
                                         .getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
@@ -131,9 +131,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
 
                     }
                     // check if file has the model extension
-                    if (path != null
-                            && path.getFileExtension().equals(
-                                    getModelExtension())) {
+                    if (path != null && path.getFileExtension().equals(getModelExtension())) {
                         super.setBaseEnabled(true);
                         return;
                     }
@@ -162,31 +160,20 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     IPath path = null;
                     // perform same checks as in set enabled
                     if (o instanceof org.eclipse.core.internal.resources.File) {
-                        path =
-                                ((org.eclipse.core.internal.resources.File) o)
-                                        .getFullPath();
+                        path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
                     } else if (o instanceof EditPart) {
                         EditPart editPart = (EditPart) o;
                         EObject eObj = GraphicalFrameworkService.getInstance()
                                 .getBridge(editPart).getElement(editPart);
                         if (eObj != null) {
                             URI uri = eObj.eResource().getURI();
-                            path =
-                                    Path.fromOSString(uri
-                                            .toPlatformString(true));
+                            path = Path.fromOSString(uri.toPlatformString(true));
                         }
                     }
                     if (path != null) {
-                        IFile file =
-                                ResourcesPlugin.getWorkspace().getRoot()
-                                        .getFile(path);
-                        try {
-                            // execute transformation
-                            reinitialize(file);
-                        } catch (RuntimeException e0) {
-                            e0.printStackTrace();
-                            throw e0;
-                        }
+                        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
+                        // execute transformation
+                        reinitialize(file);
                     }
                 }
                 // refresh workspace when done to show changes
@@ -208,8 +195,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             ResourcesPlugin.getWorkspace().getRoot()
                     .refreshLocal(IResource.DEPTH_INFINITE, monitor);
             monitor.waitUntilDone();
-        } catch (CoreException e0) {
-            e0.printStackTrace();
+        } catch (CoreException exception) {
+            StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
         }
     }
 
@@ -223,11 +210,8 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     private List<IFile> getUserSelection(final List<IFile> affectedFiles) {
         final List<IFile> result = new LinkedList<IFile>();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
-
             public void run() {
-                Shell shell =
-                        PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                                .getShell();
+                Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
                 AffectedFileSelectionDialog dialog =
                         new AffectedFileSelectionDialog(shell, affectedFiles);
@@ -268,7 +252,6 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         }
 
         reinitializeSelectedFiles(path, partners, selection);
-
     }
 
     /**
@@ -317,12 +300,12 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     }
                 }
             });
-        } catch (InvocationTargetException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+        } catch (InvocationTargetException exception) {
+            IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                    "Error during initialization.", exception.getCause());
+            StatusManager.getManager().handle(status);
+        } catch (InterruptedException exception) {
+            // ignore exception
         }
 
     }
@@ -375,8 +358,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
         }
         List<IFile> result = new LinkedList<IFile>();
         for (IFile file : files) {
-            if (file != null
-                    && (!file.exists() || path.getFileExtension().equals(
+            if (file != null && (!file.exists() || path.getFileExtension().equals(
                             getModelExtension()))) {
                 result.add(file);
             }
@@ -396,7 +378,6 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      */
     private void find(final List<IFile> result, final IContainer root,
             final IFile model) {
-
         try {
             IResource[] members = root.members();
 
@@ -433,17 +414,21 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                             br.close();
                             isr.close();
                             is.close();
-                        } catch (FileNotFoundException e0) {
-                            e0.printStackTrace();
-                        } catch (IOException e0) {
-                            e0.printStackTrace();
+                        } catch (FileNotFoundException exception) {
+                            IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                                    "Error while searching for partner files.", exception);
+                            StatusManager.getManager().handle(status);
+                        } catch (IOException exception) {
+                            IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                                    "Error while searching for partner files.", exception);
+                            StatusManager.getManager().handle(status);
                         }
                     }
                 }
             }
 
-        } catch (CoreException e01) {
-            e01.printStackTrace();
+        } catch (CoreException exception) {
+            StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
         }
     }
 
@@ -573,7 +558,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             try {
                 sem.acquire();
             } catch (InterruptedException e0) {
-                e0.printStackTrace();
+                // ignore exception
             }
         }
 
