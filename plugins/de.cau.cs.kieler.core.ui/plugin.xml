@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="balloonPopupBarContribution" name="Balloon Popup Bar Contribution" schema="schema/balloonPopupBarContribution.exsd"/>
    <extension-point id="customSplashExtension" name="Splash Extensions" schema="schema/customSplashExtension.exsd"/>
    <extension
          point="org.eclipse.ui.views">
@@ -147,14 +146,6 @@
             configId="org.eclipse.ui.intro.universalConfig"
             content="intro/introContent.xml">
       </configExtension>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="de.cau.cs.kieler.core.ui.command.zoom"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
-            sequence="M1+R Z">
-      </key>
    </extension>
    <extension
          point="org.eclipse.ui.perspectives">

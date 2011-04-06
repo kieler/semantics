@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
+    <extension-point id="balloonPopupBarContribution" name="Balloon Popup Bar Contribution" schema="schema/balloonPopupBarContribution.exsd"/>
+      <extension
          point="de.cau.cs.kieler.core.model.graphicalFrameworkBridges">
       <bridge
             class="de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge"
@@ -26,6 +27,14 @@
             id="de.cau.cs.kieler.core.model.command.zoom"
             name="Zoom to fit">
       </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.core.model.command.zoom"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+R Z">
+      </key>
    </extension>
    <extension
          point="org.eclipse.core.expressions.definitions">

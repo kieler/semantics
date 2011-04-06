@@ -30,6 +30,9 @@ import org.eclipse.gmf.runtime.diagram.ui.editparts.NoteEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.EditPolicyRoles;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editparts.NoteAttachmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.services.editpolicy.IEditPolicyProvider;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.core.model.gmf.ModelGmfPlugin;
 
 /**
  * Provides an edit policy to create popup balloons.
@@ -52,19 +55,15 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
      */
     public void createEditPolicies(final EditPart editPart) {
         if (!isNote(editPart)) {
-            try {
-                List<IBalloonContribution> contrib = getContributions();
-                if (contrib != null) {
-                    editPart.removeEditPolicy(EditPolicyRoles.POPUPBAR_ROLE);
-                    BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
-                            contrib, editPart);
-                    policy.setHost(editPart);
-                    editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
-                            policy);
-                    policy.activate();
-                }
-            } catch (RuntimeException e0) {
-                e0.printStackTrace();
+            List<IBalloonContribution> contrib = getContributions();
+            if (contrib != null) {
+                editPart.removeEditPolicy(EditPolicyRoles.POPUPBAR_ROLE);
+                BalloonPopupBarEditPolicy policy = new BalloonPopupBarEditPolicy(
+                        contrib, editPart);
+                policy.setHost(editPart);
+                editPart.installEditPolicy(EditPolicyRoles.POPUPBAR_ROLE,
+                        policy);
+                policy.activate();
             }
         }
     }
@@ -90,7 +89,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
     }
 
     /**
-     * Get the contributions from the extending plugins. *
+     * Get the contributions from the extending plugins.
      * 
      * @return the list of contributions
      */
@@ -99,7 +98,7 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
             IConfigurationElement[] contributors = Platform
                     .getExtensionRegistry()
                     .getConfigurationElementsFor(
-                            "de.cau.cs.kieler.core.ui.balloonPopupBarContribution");
+                            "de.cau.cs.kieler.core.model.gmf.balloonPopupBarContribution");
 
             if (contributors != null && contributors.length > 0) {
                 contributions = new LinkedList<IBalloonContribution>();
@@ -130,8 +129,8 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
                                 }
                                 contributions.add(con);
                             }
-                        } catch (CoreException e0) {
-                            e0.printStackTrace();
+                        } catch (CoreException exception) {
+                            StatusManager.getManager().handle(exception, ModelGmfPlugin.PLUGIN_ID);
                         }
                     }
                 }
@@ -151,4 +150,5 @@ public class BalloonPopupEditPolicyProvider extends AbstractProvider implements
         return true;
         // return operation instanceof CreateEditPoliciesOperation;
     }
+    
 }
