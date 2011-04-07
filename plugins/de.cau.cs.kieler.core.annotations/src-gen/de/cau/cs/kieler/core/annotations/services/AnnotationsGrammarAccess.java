@@ -23,7 +23,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cTagAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cTypedStringAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cTypedKeyStringValueAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cKeyBooleanValueAnnotationParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		private final RuleCall cKeyIntValueAnnotationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
 		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_6 = (RuleCall)cAlternatives.eContents().get(6);
@@ -34,12 +34,12 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		////
 		//// --------------------------
 		//Annotation:
-		//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedStringAnnotation | KeyBooleanValueAnnotation |
-		//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+		//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+		//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 		public ParserRule getRule() { return rule; }
 
-		//CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedStringAnnotation | KeyBooleanValueAnnotation |
-		//KeyIntValueAnnotation | KeyFloatValueAnnotation
+		//CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation
+		//| KeyIntValueAnnotation | KeyFloatValueAnnotation
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//CommentAnnotation
@@ -51,8 +51,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//KeyStringValueAnnotation
 		public RuleCall getKeyStringValueAnnotationParserRuleCall_2() { return cKeyStringValueAnnotationParserRuleCall_2; }
 
-		//TypedStringAnnotation
-		public RuleCall getTypedStringAnnotationParserRuleCall_3() { return cTypedStringAnnotationParserRuleCall_3; }
+		//TypedKeyStringValueAnnotation
+		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_3() { return cTypedKeyStringValueAnnotationParserRuleCall_3; }
 
 		//KeyBooleanValueAnnotation
 		public RuleCall getKeyBooleanValueAnnotationParserRuleCall_4() { return cKeyBooleanValueAnnotationParserRuleCall_4; }
@@ -179,8 +179,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_3_2() { return cRightParenthesisKeyword_3_2; }
 	}
 
-	public class TypedStringAnnotationElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypedStringAnnotation");
+	public class TypedKeyStringValueAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypedKeyStringValueAnnotation");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
@@ -196,7 +196,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-		//TypedStringAnnotation:
+		//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 		//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -450,7 +450,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private CommentAnnotationElements pCommentAnnotation;
 	private TagAnnotationElements pTagAnnotation;
 	private KeyStringValueAnnotationElements pKeyStringValueAnnotation;
-	private TypedStringAnnotationElements pTypedStringAnnotation;
+	private TypedKeyStringValueAnnotationElements pTypedKeyStringValueAnnotation;
 	private KeyBooleanValueAnnotationElements pKeyBooleanValueAnnotation;
 	private KeyIntValueAnnotationElements pKeyIntValueAnnotation;
 	private KeyFloatValueAnnotationElements pKeyFloatValueAnnotation;
@@ -491,8 +491,8 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedStringAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationElements getAnnotationAccess() {
 		return (pAnnotation != null) ? pAnnotation : (pAnnotation = new AnnotationElements());
 	}
@@ -535,14 +535,14 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//TypedStringAnnotation:
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
-	public TypedStringAnnotationElements getTypedStringAnnotationAccess() {
-		return (pTypedStringAnnotation != null) ? pTypedStringAnnotation : (pTypedStringAnnotation = new TypedStringAnnotationElements());
+	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
+		return (pTypedKeyStringValueAnnotation != null) ? pTypedKeyStringValueAnnotation : (pTypedKeyStringValueAnnotation = new TypedKeyStringValueAnnotationElements());
 	}
 	
-	public ParserRule getTypedStringAnnotationRule() {
-		return getTypedStringAnnotationAccess().getRule();
+	public ParserRule getTypedKeyStringValueAnnotationRule() {
+		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// e.g.: @visible true;

@@ -41,20 +41,19 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
 	 * @param f GrammarAccess provided by caller
 	 */
 	protected void customConfigureFormatting(FormattingConfig c, AnnotationsGrammarAccess f) {
-            c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
-            c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
-            c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
+//            c.setLinewrap(0, 1, 2).before(f.getSL_COMMENTRule());
+//            c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
+//            c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
             
             c.setLinewrap().after(f.getImportAnnotationRule());
-            c.setLinewrap(2).before(f.getCOMMENT_ANNOTATIONRule());
-            
-            c.setLinewrap(2).before(f.getAnnotationRule());
+
             c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
             c.setLinewrap().after(f.getTagAnnotationRule());
             c.setLinewrap().after(f.getKeyStringValueAnnotationRule());
             c.setLinewrap().after(f.getKeyBooleanValueAnnotationRule());
             c.setLinewrap().after(f.getKeyIntValueAnnotationRule());
             c.setLinewrap().after(f.getKeyFloatValueAnnotationRule());
+            c.setLinewrap().after(f.getTypedKeyStringValueAnnotationRule());
             
             c.setLinewrap().after(f.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0());
             c.setLinewrap().after(f.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0());

@@ -15,7 +15,7 @@ Annotation returns Annotation:
 	CommentAnnotation
 	| TagAnnotation
 	| KeyStringValueAnnotation
-	| TypedStringAnnotation
+	| TypedKeyStringValueAnnotation
 	| KeyBooleanValueAnnotation
 	| KeyIntValueAnnotation
 	| KeyFloatValueAnnotation
@@ -44,7 +44,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-TypedStringAnnotation returns TypedStringAnnotation:
+TypedKeyStringValueAnnotation returns TypedStringAnnotation:
     '@' name=ID type=TypeId value=EString
     ('('
         (annotations+=Annotation)*
