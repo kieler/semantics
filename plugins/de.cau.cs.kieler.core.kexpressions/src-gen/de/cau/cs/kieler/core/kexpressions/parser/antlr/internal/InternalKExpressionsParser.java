@@ -44,7 +44,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
         public InternalKExpressionsParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[171+1];
+            ruleMemo = new HashMap[170+1];
          }
         
 
@@ -1027,11 +1027,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 {
                 int LA5_3 = input.LA(2);
 
-                if ( ((LA5_3>=30 && LA5_3<=35)||(LA5_3>=40 && LA5_3<=44)) ) {
-                    alt5=1;
-                }
-                else if ( (LA5_3==EOF||LA5_3==17||LA5_3==19||LA5_3==24||(LA5_3>=37 && LA5_3<=38)) ) {
+                if ( (LA5_3==EOF||LA5_3==17||LA5_3==19||LA5_3==24||(LA5_3>=37 && LA5_3<=38)) ) {
                     alt5=2;
+                }
+                else if ( ((LA5_3>=30 && LA5_3<=35)||(LA5_3>=40 && LA5_3<=44)) ) {
+                    alt5=1;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
@@ -1088,11 +1088,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                             if ( (LA5_29==17) ) {
                                 int LA5_30 = input.LA(6);
 
-                                if ( (LA5_30==EOF||LA5_30==17||LA5_30==19||LA5_30==24||(LA5_30>=37 && LA5_30<=38)) ) {
-                                    alt5=2;
-                                }
-                                else if ( ((LA5_30>=30 && LA5_30<=35)||(LA5_30>=40 && LA5_30<=44)) ) {
+                                if ( ((LA5_30>=30 && LA5_30<=35)||(LA5_30>=40 && LA5_30<=44)) ) {
                                     alt5=1;
+                                }
+                                else if ( (LA5_30==EOF||LA5_30==17||LA5_30==19||LA5_30==24||(LA5_30>=37 && LA5_30<=38)) ) {
+                                    alt5=2;
                                 }
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
@@ -1126,11 +1126,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         if ( (LA5_23==17) ) {
                             int LA5_30 = input.LA(5);
 
-                            if ( (LA5_30==EOF||LA5_30==17||LA5_30==19||LA5_30==24||(LA5_30>=37 && LA5_30<=38)) ) {
-                                alt5=2;
-                            }
-                            else if ( ((LA5_30>=30 && LA5_30<=35)||(LA5_30>=40 && LA5_30<=44)) ) {
+                            if ( ((LA5_30>=30 && LA5_30<=35)||(LA5_30>=40 && LA5_30<=44)) ) {
                                 alt5=1;
+                            }
+                            else if ( (LA5_30==EOF||LA5_30==17||LA5_30==19||LA5_30==24||(LA5_30>=37 && LA5_30<=38)) ) {
+                                alt5=2;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -1174,11 +1174,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 if ( (LA5_5==RULE_ID) ) {
                     int LA5_12 = input.LA(3);
 
-                    if ( ((LA5_12>=30 && LA5_12<=35)||(LA5_12>=40 && LA5_12<=44)) ) {
-                        alt5=1;
-                    }
-                    else if ( (LA5_12==EOF||LA5_12==17||LA5_12==19||LA5_12==24||(LA5_12>=37 && LA5_12<=38)) ) {
+                    if ( (LA5_12==EOF||LA5_12==17||LA5_12==19||LA5_12==24||(LA5_12>=37 && LA5_12<=38)) ) {
                         alt5=2;
+                    }
+                    else if ( ((LA5_12>=30 && LA5_12<=35)||(LA5_12>=40 && LA5_12<=44)) ) {
+                        alt5=1;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -1201,11 +1201,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 {
                 int LA5_6 = input.LA(2);
 
-                if ( (LA5_6==EOF||LA5_6==17||LA5_6==19||LA5_6==24||(LA5_6>=37 && LA5_6<=38)) ) {
-                    alt5=2;
-                }
-                else if ( ((LA5_6>=30 && LA5_6<=35)||(LA5_6>=40 && LA5_6<=44)) ) {
+                if ( ((LA5_6>=30 && LA5_6<=35)||(LA5_6>=40 && LA5_6<=44)) ) {
                     alt5=1;
+                }
+                else if ( (LA5_6==EOF||LA5_6==17||LA5_6==19||LA5_6==24||(LA5_6>=37 && LA5_6<=38)) ) {
+                    alt5=2;
                 }
                 else {
                     if (backtracking>0) {failed=true; return current;}
@@ -1229,11 +1229,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         if ( (LA5_24==17) ) {
                             int LA5_31 = input.LA(5);
 
-                            if ( ((LA5_31>=30 && LA5_31<=35)||(LA5_31>=40 && LA5_31<=44)) ) {
-                                alt5=1;
-                            }
-                            else if ( (LA5_31==EOF||LA5_31==17||LA5_31==19||LA5_31==24||(LA5_31>=37 && LA5_31<=38)) ) {
+                            if ( (LA5_31==EOF||LA5_31==17||LA5_31==19||LA5_31==24||(LA5_31>=37 && LA5_31<=38)) ) {
                                 alt5=2;
+                            }
+                            else if ( ((LA5_31>=30 && LA5_31<=35)||(LA5_31>=40 && LA5_31<=44)) ) {
+                                alt5=1;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -1260,6 +1260,16 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     }
                     }
                     break;
+                case EOF:
+                case 17:
+                case 19:
+                case 24:
+                case 37:
+                case 38:
+                    {
+                    alt5=2;
+                    }
+                    break;
                 case 30:
                 case 31:
                 case 32:
@@ -1273,16 +1283,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                 case 44:
                     {
                     alt5=1;
-                    }
-                    break;
-                case EOF:
-                case 17:
-                case 19:
-                case 24:
-                case 37:
-                case 38:
-                    {
-                    alt5=2;
                     }
                     break;
                 default:
@@ -1321,11 +1321,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     {
                     int LA5_15 = input.LA(3);
 
-                    if ( ((LA5_15>=30 && LA5_15<=35)) ) {
-                        alt5=1;
-                    }
-                    else if ( (LA5_15==EOF||LA5_15==17||LA5_15==19||LA5_15==24||(LA5_15>=37 && LA5_15<=38)) ) {
+                    if ( (LA5_15==EOF||LA5_15==17||LA5_15==19||LA5_15==24||(LA5_15>=37 && LA5_15<=38)) ) {
                         alt5=2;
+                    }
+                    else if ( ((LA5_15>=30 && LA5_15<=35)) ) {
+                        alt5=1;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -1382,11 +1382,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                                 if ( (LA5_37==17) ) {
                                     int LA5_38 = input.LA(7);
 
-                                    if ( ((LA5_38>=30 && LA5_38<=35)) ) {
-                                        alt5=1;
-                                    }
-                                    else if ( (LA5_38==EOF||LA5_38==17||LA5_38==19||LA5_38==24||(LA5_38>=37 && LA5_38<=38)) ) {
+                                    if ( (LA5_38==EOF||LA5_38==17||LA5_38==19||LA5_38==24||(LA5_38>=37 && LA5_38<=38)) ) {
                                         alt5=2;
+                                    }
+                                    else if ( ((LA5_38>=30 && LA5_38<=35)) ) {
+                                        alt5=1;
                                     }
                                     else {
                                         if (backtracking>0) {failed=true; return current;}
@@ -1420,11 +1420,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                             if ( (LA5_34==17) ) {
                                 int LA5_38 = input.LA(6);
 
-                                if ( ((LA5_38>=30 && LA5_38<=35)) ) {
-                                    alt5=1;
-                                }
-                                else if ( (LA5_38==EOF||LA5_38==17||LA5_38==19||LA5_38==24||(LA5_38>=37 && LA5_38<=38)) ) {
+                                if ( (LA5_38==EOF||LA5_38==17||LA5_38==19||LA5_38==24||(LA5_38>=37 && LA5_38<=38)) ) {
                                     alt5=2;
+                                }
+                                else if ( ((LA5_38>=30 && LA5_38<=35)) ) {
+                                    alt5=1;
                                 }
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
@@ -1495,11 +1495,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     {
                     int LA5_18 = input.LA(3);
 
-                    if ( (LA5_18==EOF||LA5_18==17||LA5_18==19||LA5_18==24||(LA5_18>=37 && LA5_18<=38)) ) {
-                        alt5=2;
-                    }
-                    else if ( ((LA5_18>=30 && LA5_18<=35)) ) {
+                    if ( ((LA5_18>=30 && LA5_18<=35)) ) {
                         alt5=1;
+                    }
+                    else if ( (LA5_18==EOF||LA5_18==17||LA5_18==19||LA5_18==24||(LA5_18>=37 && LA5_18<=38)) ) {
+                        alt5=2;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -1542,11 +1542,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                             if ( (LA5_35==17) ) {
                                 int LA5_39 = input.LA(6);
 
-                                if ( ((LA5_39>=30 && LA5_39<=35)) ) {
-                                    alt5=1;
-                                }
-                                else if ( (LA5_39==EOF||LA5_39==17||LA5_39==19||LA5_39==24||(LA5_39>=37 && LA5_39<=38)) ) {
+                                if ( (LA5_39==EOF||LA5_39==17||LA5_39==19||LA5_39==24||(LA5_39>=37 && LA5_39<=38)) ) {
                                     alt5=2;
+                                }
+                                else if ( ((LA5_39>=30 && LA5_39<=35)) ) {
+                                    alt5=1;
                                 }
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
@@ -1573,16 +1573,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         }
                         }
                         break;
-                    case 30:
-                    case 31:
-                    case 32:
-                    case 33:
-                    case 34:
-                    case 35:
-                        {
-                        alt5=1;
-                        }
-                        break;
                     case EOF:
                     case 17:
                     case 19:
@@ -1591,6 +1581,16 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     case 38:
                         {
                         alt5=2;
+                        }
+                        break;
+                    case 30:
+                    case 31:
+                    case 32:
+                    case 33:
+                    case 34:
+                    case 35:
+                        {
+                        alt5=1;
                         }
                         break;
                     default:
@@ -7914,19 +7914,9 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
                 if ( (LA31_2==RULE_ID) ) {
                     switch ( input.LA(3) ) {
-                    case RULE_INT:
-                        {
-                        alt31=6;
-                        }
-                        break;
                     case RULE_BOOLEAN:
                         {
                         alt31=5;
-                        }
-                        break;
-                    case RULE_FLOAT:
-                        {
-                        alt31=7;
                         }
                         break;
                     case RULE_TYPEID:
@@ -7934,42 +7924,20 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         alt31=4;
                         }
                         break;
-                    case RULE_STRING:
+                    case RULE_FLOAT:
                         {
-                        int LA31_8 = input.LA(4);
-
-                        if ( (synpred42()) ) {
-                            alt31=3;
+                        alt31=7;
                         }
-                        else if ( (synpred43()) ) {
-                            alt31=4;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("2926:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_TagAnnotation_1= ruleTagAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedStringAnnotation_3= ruleTypedStringAnnotation | this_KeyBooleanValueAnnotation_4= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_5= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_6= ruleKeyFloatValueAnnotation )", 31, 8, input);
-
-                            throw nvae;
-                        }
+                        break;
+                    case RULE_INT:
+                        {
+                        alt31=6;
                         }
                         break;
                     case RULE_ID:
+                    case RULE_STRING:
                         {
-                        int LA31_9 = input.LA(4);
-
-                        if ( (synpred42()) ) {
-                            alt31=3;
-                        }
-                        else if ( (synpred43()) ) {
-                            alt31=4;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("2926:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_TagAnnotation_1= ruleTagAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedStringAnnotation_3= ruleTypedStringAnnotation | this_KeyBooleanValueAnnotation_4= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_5= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_6= ruleKeyFloatValueAnnotation )", 31, 9, input);
-
-                            throw nvae;
-                        }
+                        alt31=3;
                         }
                         break;
                     case EOF:
@@ -8826,7 +8794,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTypedStringAnnotation
-    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3270:1: ruleTypedStringAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) ;
+    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3270:1: ruleTypedStringAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) ;
     public final EObject ruleTypedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -8840,11 +8808,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3275:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3275:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
             {
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3276:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
             {
             match(input,29,FollowSets000.FOLLOW_29_in_ruleTypedStringAnnotation5636); if (failed) return current;
             if ( backtracking==0 ) {
@@ -8889,55 +8857,44 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3304:2: ( (lv_type_2_0= RULE_TYPEID ) )?
-            int alt36=2;
-            int LA36_0 = input.LA(1);
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3304:2: ( (lv_type_2_0= RULE_TYPEID ) )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3305:1: (lv_type_2_0= RULE_TYPEID )
+            {
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3305:1: (lv_type_2_0= RULE_TYPEID )
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3306:3: lv_type_2_0= RULE_TYPEID
+            {
+            lv_type_2_0=(Token)input.LT(1);
+            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation5675); if (failed) return current;
+            if ( backtracking==0 ) {
 
-            if ( (LA36_0==RULE_TYPEID) ) {
-                alt36=1;
+              			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
+              		
             }
-            switch (alt36) {
-                case 1 :
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3305:1: (lv_type_2_0= RULE_TYPEID )
-                    {
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3305:1: (lv_type_2_0= RULE_TYPEID )
-                    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3306:3: lv_type_2_0= RULE_TYPEID
-                    {
-                    lv_type_2_0=(Token)input.LT(1);
-                    match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation5675); if (failed) return current;
-                    if ( backtracking==0 ) {
+            if ( backtracking==0 ) {
 
-                      			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
-                      		
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        try {
-                      	       		set(
-                      	       			current, 
-                      	       			"type",
-                      	        		lv_type_2_0, 
-                      	        		"TypeId", 
-                      	        		lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-
-                    }
-                    break;
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"type",
+              	        		lv_type_2_0, 
+              	        		"TypeId", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
 
             }
 
-            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3328:3: ( (lv_value_3_0= ruleEString ) )
+
+            }
+
+            // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3328:2: ( (lv_value_3_0= ruleEString ) )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3329:1: (lv_value_3_0= ruleEString )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3329:1: (lv_value_3_0= ruleEString )
@@ -8948,7 +8905,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
               	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0(), currentNode); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_ruleTypedStringAnnotation5702);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_ruleTypedStringAnnotation5701);
             lv_value_3_0=ruleEString();
             _fsp--;
             if (failed) return current;
@@ -8978,34 +8935,34 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3352:2: ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
-            int alt38=2;
-            int LA38_0 = input.LA(1);
+            int alt37=2;
+            int LA37_0 = input.LA(1);
 
-            if ( (LA38_0==16) ) {
-                alt38=1;
+            if ( (LA37_0==16) ) {
+                alt37=1;
             }
-            switch (alt38) {
+            switch (alt37) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3352:4: '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,16,FollowSets000.FOLLOW_16_in_ruleTypedStringAnnotation5713); if (failed) return current;
+                    match(input,16,FollowSets000.FOLLOW_16_in_ruleTypedStringAnnotation5712); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3356:1: ( (lv_annotations_5_0= ruleAnnotation ) )*
-                    loop37:
+                    loop36:
                     do {
-                        int alt37=2;
-                        int LA37_0 = input.LA(1);
+                        int alt36=2;
+                        int LA36_0 = input.LA(1);
 
-                        if ( (LA37_0==RULE_COMMENT_ANNOTATION||LA37_0==29) ) {
-                            alt37=1;
+                        if ( (LA36_0==RULE_COMMENT_ANNOTATION||LA36_0==29) ) {
+                            alt36=1;
                         }
 
 
-                        switch (alt37) {
+                        switch (alt36) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3357:1: (lv_annotations_5_0= ruleAnnotation )
                     	    {
@@ -9017,7 +8974,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation5734);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation5733);
                     	    lv_annotations_5_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -9048,11 +9005,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop37;
+                    	    break loop36;
                         }
                     } while (true);
 
-                    match(input,17,FollowSets000.FOLLOW_17_in_ruleTypedStringAnnotation5745); if (failed) return current;
+                    match(input,17,FollowSets000.FOLLOW_17_in_ruleTypedStringAnnotation5744); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2(), null); 
@@ -9103,14 +9060,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyBooleanValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation5783);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation5782);
             iv_ruleKeyBooleanValueAnnotation=ruleKeyBooleanValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyBooleanValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation5793); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation5792); if (failed) return current;
 
             }
 
@@ -9146,7 +9103,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3407:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3407:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyBooleanValueAnnotation5828); if (failed) return current;
+            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyBooleanValueAnnotation5827); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -9159,7 +9116,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3413:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation5845); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation5844); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -9196,7 +9153,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3437:3: lv_value_2_0= RULE_BOOLEAN
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation5867); if (failed) return current;
+            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation5866); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0(), "value"); 
@@ -9227,34 +9184,34 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3459:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt40=2;
-            int LA40_0 = input.LA(1);
+            int alt39=2;
+            int LA39_0 = input.LA(1);
 
-            if ( (LA40_0==16) ) {
-                alt40=1;
+            if ( (LA39_0==16) ) {
+                alt39=1;
             }
-            switch (alt40) {
+            switch (alt39) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3459:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyBooleanValueAnnotation5883); if (failed) return current;
+                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyBooleanValueAnnotation5882); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3463:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop39:
+                    loop38:
                     do {
-                        int alt39=2;
-                        int LA39_0 = input.LA(1);
+                        int alt38=2;
+                        int LA38_0 = input.LA(1);
 
-                        if ( (LA39_0==RULE_COMMENT_ANNOTATION||LA39_0==29) ) {
-                            alt39=1;
+                        if ( (LA38_0==RULE_COMMENT_ANNOTATION||LA38_0==29) ) {
+                            alt38=1;
                         }
 
 
-                        switch (alt39) {
+                        switch (alt38) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3464:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -9266,7 +9223,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation5904);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation5903);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -9297,11 +9254,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop39;
+                    	    break loop38;
                         }
                     } while (true);
 
-                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyBooleanValueAnnotation5915); if (failed) return current;
+                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyBooleanValueAnnotation5914); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -9352,14 +9309,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyIntValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation5953);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation5952);
             iv_ruleKeyIntValueAnnotation=ruleKeyIntValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyIntValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation5963); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation5962); if (failed) return current;
 
             }
 
@@ -9395,7 +9352,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3514:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3514:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyIntValueAnnotation5998); if (failed) return current;
+            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyIntValueAnnotation5997); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -9408,7 +9365,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3520:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation6015); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation6014); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -9445,7 +9402,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3544:3: lv_value_2_0= RULE_INT
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation6037); if (failed) return current;
+            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation6036); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0(), "value"); 
@@ -9476,34 +9433,34 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3566:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt42=2;
-            int LA42_0 = input.LA(1);
+            int alt41=2;
+            int LA41_0 = input.LA(1);
 
-            if ( (LA42_0==16) ) {
-                alt42=1;
+            if ( (LA41_0==16) ) {
+                alt41=1;
             }
-            switch (alt42) {
+            switch (alt41) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3566:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyIntValueAnnotation6053); if (failed) return current;
+                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyIntValueAnnotation6052); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3570:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop41:
+                    loop40:
                     do {
-                        int alt41=2;
-                        int LA41_0 = input.LA(1);
+                        int alt40=2;
+                        int LA40_0 = input.LA(1);
 
-                        if ( (LA41_0==RULE_COMMENT_ANNOTATION||LA41_0==29) ) {
-                            alt41=1;
+                        if ( (LA40_0==RULE_COMMENT_ANNOTATION||LA40_0==29) ) {
+                            alt40=1;
                         }
 
 
-                        switch (alt41) {
+                        switch (alt40) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3571:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -9515,7 +9472,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyIntValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation6074);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation6073);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -9546,11 +9503,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop41;
+                    	    break loop40;
                         }
                     } while (true);
 
-                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyIntValueAnnotation6085); if (failed) return current;
+                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyIntValueAnnotation6084); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -9601,14 +9558,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyFloatValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation6123);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation6122);
             iv_ruleKeyFloatValueAnnotation=ruleKeyFloatValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyFloatValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation6133); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation6132); if (failed) return current;
 
             }
 
@@ -9644,7 +9601,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3621:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3621:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyFloatValueAnnotation6168); if (failed) return current;
+            match(input,29,FollowSets000.FOLLOW_29_in_ruleKeyFloatValueAnnotation6167); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -9657,7 +9614,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3627:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation6185); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation6184); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -9694,7 +9651,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3651:3: lv_value_2_0= RULE_FLOAT
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation6207); if (failed) return current;
+            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation6206); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0(), "value"); 
@@ -9725,34 +9682,34 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3673:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt44=2;
-            int LA44_0 = input.LA(1);
+            int alt43=2;
+            int LA43_0 = input.LA(1);
 
-            if ( (LA44_0==16) ) {
-                alt44=1;
+            if ( (LA43_0==16) ) {
+                alt43=1;
             }
-            switch (alt44) {
+            switch (alt43) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3673:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyFloatValueAnnotation6223); if (failed) return current;
+                    match(input,16,FollowSets000.FOLLOW_16_in_ruleKeyFloatValueAnnotation6222); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3677:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop43:
+                    loop42:
                     do {
-                        int alt43=2;
-                        int LA43_0 = input.LA(1);
+                        int alt42=2;
+                        int LA42_0 = input.LA(1);
 
-                        if ( (LA43_0==RULE_COMMENT_ANNOTATION||LA43_0==29) ) {
-                            alt43=1;
+                        if ( (LA42_0==RULE_COMMENT_ANNOTATION||LA42_0==29) ) {
+                            alt42=1;
                         }
 
 
-                        switch (alt43) {
+                        switch (alt42) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3678:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -9764,7 +9721,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyFloatValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation6244);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation6243);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -9795,11 +9752,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop43;
+                    	    break loop42;
                         }
                     } while (true);
 
-                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyFloatValueAnnotation6255); if (failed) return current;
+                    match(input,17,FollowSets000.FOLLOW_17_in_ruleKeyFloatValueAnnotation6254); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -9850,14 +9807,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getEStringRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_entryRuleEString6296);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_entryRuleEString6295);
             iv_ruleEString=ruleEString();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleEString.getText(); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEString6307); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEString6306); if (failed) return current;
 
             }
 
@@ -9889,28 +9846,28 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3730:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3730:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
-            int alt45=2;
-            int LA45_0 = input.LA(1);
+            int alt44=2;
+            int LA44_0 = input.LA(1);
 
-            if ( (LA45_0==RULE_STRING) ) {
-                alt45=1;
+            if ( (LA44_0==RULE_STRING) ) {
+                alt44=1;
             }
-            else if ( (LA45_0==RULE_ID) ) {
-                alt45=2;
+            else if ( (LA44_0==RULE_ID) ) {
+                alt44=2;
             }
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3730:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 45, 0, input);
+                    new NoViableAltException("3730:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 44, 0, input);
 
                 throw nvae;
             }
-            switch (alt45) {
+            switch (alt44) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3730:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)input.LT(1);
-                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEString6347); if (failed) return current;
+                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEString6346); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_STRING_0);
@@ -9928,7 +9885,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3738:10: this_ID_1= RULE_ID
                     {
                     this_ID_1=(Token)input.LT(1);
-                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEString6373); if (failed) return current;
+                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEString6372); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_ID_1);
@@ -9977,54 +9934,54 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3758:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3758:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
-            int alt46=6;
+            int alt45=6;
             switch ( input.LA(1) ) {
             case 30:
                 {
-                alt46=1;
+                alt45=1;
                 }
                 break;
             case 31:
                 {
-                alt46=2;
+                alt45=2;
                 }
                 break;
             case 32:
                 {
-                alt46=3;
+                alt45=3;
                 }
                 break;
             case 33:
                 {
-                alt46=4;
+                alt45=4;
                 }
                 break;
             case 34:
                 {
-                alt46=5;
+                alt45=5;
                 }
                 break;
             case 35:
                 {
-                alt46=6;
+                alt45=6;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3758:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 46, 0, input);
+                    new NoViableAltException("3758:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 45, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt46) {
+            switch (alt45) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3758:2: ( '=' )
                     {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3758:2: ( '=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3758:4: '='
                     {
-                    match(input,30,FollowSets000.FOLLOW_30_in_ruleCompareOperator6430); if (failed) return current;
+                    match(input,30,FollowSets000.FOLLOW_30_in_ruleCompareOperator6429); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -10043,7 +10000,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3764:6: ( '<' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3764:8: '<'
                     {
-                    match(input,31,FollowSets000.FOLLOW_31_in_ruleCompareOperator6445); if (failed) return current;
+                    match(input,31,FollowSets000.FOLLOW_31_in_ruleCompareOperator6444); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -10062,7 +10019,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3770:6: ( '<=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3770:8: '<='
                     {
-                    match(input,32,FollowSets000.FOLLOW_32_in_ruleCompareOperator6460); if (failed) return current;
+                    match(input,32,FollowSets000.FOLLOW_32_in_ruleCompareOperator6459); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -10081,7 +10038,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3776:6: ( '>' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3776:8: '>'
                     {
-                    match(input,33,FollowSets000.FOLLOW_33_in_ruleCompareOperator6475); if (failed) return current;
+                    match(input,33,FollowSets000.FOLLOW_33_in_ruleCompareOperator6474); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -10100,7 +10057,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3782:6: ( '>=' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3782:8: '>='
                     {
-                    match(input,34,FollowSets000.FOLLOW_34_in_ruleCompareOperator6490); if (failed) return current;
+                    match(input,34,FollowSets000.FOLLOW_34_in_ruleCompareOperator6489); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -10119,7 +10076,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3788:6: ( '<>' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3788:8: '<>'
                     {
-                    match(input,35,FollowSets000.FOLLOW_35_in_ruleCompareOperator6505); if (failed) return current;
+                    match(input,35,FollowSets000.FOLLOW_35_in_ruleCompareOperator6504); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -10169,7 +10126,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3803:1: ( 'pre' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3803:3: 'pre'
             {
-            match(input,36,FollowSets000.FOLLOW_36_in_rulePreOperator6547); if (failed) return current;
+            match(input,36,FollowSets000.FOLLOW_36_in_rulePreOperator6546); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10213,7 +10170,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3818:1: ( 'or' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3818:3: 'or'
             {
-            match(input,37,FollowSets000.FOLLOW_37_in_ruleOrOperator6588); if (failed) return current;
+            match(input,37,FollowSets000.FOLLOW_37_in_ruleOrOperator6587); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10257,7 +10214,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3833:1: ( 'and' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3833:3: 'and'
             {
-            match(input,38,FollowSets000.FOLLOW_38_in_ruleAndOperator6629); if (failed) return current;
+            match(input,38,FollowSets000.FOLLOW_38_in_ruleAndOperator6628); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10301,7 +10258,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3848:1: ( 'not' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3848:3: 'not'
             {
-            match(input,39,FollowSets000.FOLLOW_39_in_ruleNotOperator6670); if (failed) return current;
+            match(input,39,FollowSets000.FOLLOW_39_in_ruleNotOperator6669); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10345,7 +10302,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3863:1: ( '+' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3863:3: '+'
             {
-            match(input,40,FollowSets000.FOLLOW_40_in_ruleAddOperator6711); if (failed) return current;
+            match(input,40,FollowSets000.FOLLOW_40_in_ruleAddOperator6710); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAddOperatorAccess().getADDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10389,7 +10346,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3878:1: ( '-' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3878:3: '-'
             {
-            match(input,41,FollowSets000.FOLLOW_41_in_ruleSubOperator6752); if (failed) return current;
+            match(input,41,FollowSets000.FOLLOW_41_in_ruleSubOperator6751); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getSubOperatorAccess().getSUBEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10433,7 +10390,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3893:1: ( '*' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3893:3: '*'
             {
-            match(input,42,FollowSets000.FOLLOW_42_in_ruleMultOperator6793); if (failed) return current;
+            match(input,42,FollowSets000.FOLLOW_42_in_ruleMultOperator6792); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10477,7 +10434,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3908:1: ( 'mod' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3908:3: 'mod'
             {
-            match(input,43,FollowSets000.FOLLOW_43_in_ruleModOperator6834); if (failed) return current;
+            match(input,43,FollowSets000.FOLLOW_43_in_ruleModOperator6833); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10521,7 +10478,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3923:1: ( '/' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3923:3: '/'
             {
-            match(input,44,FollowSets000.FOLLOW_44_in_ruleDivOperator6875); if (failed) return current;
+            match(input,44,FollowSets000.FOLLOW_44_in_ruleDivOperator6874); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10565,7 +10522,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3938:1: ( '?' )
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3938:3: '?'
             {
-            match(input,45,FollowSets000.FOLLOW_45_in_ruleValueTestOperator6916); if (failed) return current;
+            match(input,45,FollowSets000.FOLLOW_45_in_ruleValueTestOperator6915); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getValueTestOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -10607,64 +10564,64 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3953:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3953:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
-            int alt47=8;
+            int alt46=8;
             switch ( input.LA(1) ) {
             case 46:
                 {
-                alt47=1;
+                alt46=1;
                 }
                 break;
             case 47:
                 {
-                alt47=2;
+                alt46=2;
                 }
                 break;
             case 48:
                 {
-                alt47=3;
+                alt46=3;
                 }
                 break;
             case 49:
                 {
-                alt47=4;
+                alt46=4;
                 }
                 break;
             case 50:
                 {
-                alt47=5;
+                alt46=5;
                 }
                 break;
             case 51:
                 {
-                alt47=6;
+                alt46=6;
                 }
                 break;
             case 52:
                 {
-                alt47=7;
+                alt46=7;
                 }
                 break;
             case 53:
                 {
-                alt47=8;
+                alt46=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("3953:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 47, 0, input);
+                    new NoViableAltException("3953:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 46, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt47) {
+            switch (alt46) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3953:2: ( 'pure' )
                     {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3953:2: ( 'pure' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3953:4: 'pure'
                     {
-                    match(input,46,FollowSets000.FOLLOW_46_in_ruleValueType6958); if (failed) return current;
+                    match(input,46,FollowSets000.FOLLOW_46_in_ruleValueType6957); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -10683,7 +10640,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3959:6: ( 'boolean' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3959:8: 'boolean'
                     {
-                    match(input,47,FollowSets000.FOLLOW_47_in_ruleValueType6973); if (failed) return current;
+                    match(input,47,FollowSets000.FOLLOW_47_in_ruleValueType6972); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -10702,7 +10659,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3965:6: ( 'unsigned' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3965:8: 'unsigned'
                     {
-                    match(input,48,FollowSets000.FOLLOW_48_in_ruleValueType6988); if (failed) return current;
+                    match(input,48,FollowSets000.FOLLOW_48_in_ruleValueType6987); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -10721,7 +10678,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3971:6: ( 'integer' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3971:8: 'integer'
                     {
-                    match(input,49,FollowSets000.FOLLOW_49_in_ruleValueType7003); if (failed) return current;
+                    match(input,49,FollowSets000.FOLLOW_49_in_ruleValueType7002); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -10740,7 +10697,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3977:6: ( 'float' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3977:8: 'float'
                     {
-                    match(input,50,FollowSets000.FOLLOW_50_in_ruleValueType7018); if (failed) return current;
+                    match(input,50,FollowSets000.FOLLOW_50_in_ruleValueType7017); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -10759,7 +10716,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3983:6: ( 'double' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3983:8: 'double'
                     {
-                    match(input,51,FollowSets000.FOLLOW_51_in_ruleValueType7033); if (failed) return current;
+                    match(input,51,FollowSets000.FOLLOW_51_in_ruleValueType7032); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getDOUBLEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -10778,7 +10735,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3989:6: ( 'string' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3989:8: 'string'
                     {
-                    match(input,52,FollowSets000.FOLLOW_52_in_ruleValueType7048); if (failed) return current;
+                    match(input,52,FollowSets000.FOLLOW_52_in_ruleValueType7047); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -10797,7 +10754,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3995:6: ( 'host' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:3995:8: 'host'
                     {
-                    match(input,53,FollowSets000.FOLLOW_53_in_ruleValueType7063); if (failed) return current;
+                    match(input,53,FollowSets000.FOLLOW_53_in_ruleValueType7062); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -10845,64 +10802,64 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4010:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
             {
             // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4010:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
-            int alt48=8;
+            int alt47=8;
             switch ( input.LA(1) ) {
             case 54:
                 {
-                alt48=1;
+                alt47=1;
                 }
                 break;
             case 40:
                 {
-                alt48=2;
+                alt47=2;
                 }
                 break;
             case 42:
                 {
-                alt48=3;
+                alt47=3;
                 }
                 break;
             case 55:
                 {
-                alt48=4;
+                alt47=4;
                 }
                 break;
             case 56:
                 {
-                alt48=5;
+                alt47=5;
                 }
                 break;
             case 37:
                 {
-                alt48=6;
+                alt47=6;
                 }
                 break;
             case 38:
                 {
-                alt48=7;
+                alt47=7;
                 }
                 break;
             case 53:
                 {
-                alt48=8;
+                alt47=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("4010:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 48, 0, input);
+                    new NoViableAltException("4010:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 47, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt48) {
+            switch (alt47) {
                 case 1 :
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4010:2: ( 'none' )
                     {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4010:2: ( 'none' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4010:4: 'none'
                     {
-                    match(input,54,FollowSets000.FOLLOW_54_in_ruleCombineOperator7106); if (failed) return current;
+                    match(input,54,FollowSets000.FOLLOW_54_in_ruleCombineOperator7105); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -10921,7 +10878,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4016:6: ( '+' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4016:8: '+'
                     {
-                    match(input,40,FollowSets000.FOLLOW_40_in_ruleCombineOperator7121); if (failed) return current;
+                    match(input,40,FollowSets000.FOLLOW_40_in_ruleCombineOperator7120); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -10940,7 +10897,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4022:6: ( '*' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4022:8: '*'
                     {
-                    match(input,42,FollowSets000.FOLLOW_42_in_ruleCombineOperator7136); if (failed) return current;
+                    match(input,42,FollowSets000.FOLLOW_42_in_ruleCombineOperator7135); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -10959,7 +10916,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4028:6: ( 'max' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4028:8: 'max'
                     {
-                    match(input,55,FollowSets000.FOLLOW_55_in_ruleCombineOperator7151); if (failed) return current;
+                    match(input,55,FollowSets000.FOLLOW_55_in_ruleCombineOperator7150); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -10978,7 +10935,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4034:6: ( 'min' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4034:8: 'min'
                     {
-                    match(input,56,FollowSets000.FOLLOW_56_in_ruleCombineOperator7166); if (failed) return current;
+                    match(input,56,FollowSets000.FOLLOW_56_in_ruleCombineOperator7165); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -10997,7 +10954,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4040:6: ( 'or' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4040:8: 'or'
                     {
-                    match(input,37,FollowSets000.FOLLOW_37_in_ruleCombineOperator7181); if (failed) return current;
+                    match(input,37,FollowSets000.FOLLOW_37_in_ruleCombineOperator7180); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -11016,7 +10973,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4046:6: ( 'and' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4046:8: 'and'
                     {
-                    match(input,38,FollowSets000.FOLLOW_38_in_ruleCombineOperator7196); if (failed) return current;
+                    match(input,38,FollowSets000.FOLLOW_38_in_ruleCombineOperator7195); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -11035,7 +10992,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4052:6: ( 'host' )
                     // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:4052:8: 'host'
                     {
-                    match(input,53,FollowSets000.FOLLOW_53_in_ruleCombineOperator7211); if (failed) return current;
+                    match(input,53,FollowSets000.FOLLOW_53_in_ruleCombineOperator7210); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -11215,58 +11172,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred19
 
-    // $ANTLR start synpred42
-    public final void synpred42_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2953:2: ( ruleKeyStringValueAnnotation )
-        // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2953:2: ruleKeyStringValueAnnotation
-        {
-        if ( backtracking==0 ) {
-           
-          	  /* */ 
-          	
-        }
-        pushFollow(FollowSets000.FOLLOW_ruleKeyStringValueAnnotation_in_synpred425028);
-        ruleKeyStringValueAnnotation();
-        _fsp--;
-        if (failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred42
-
-    // $ANTLR start synpred43
-    public final void synpred43_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2966:2: ( ruleTypedStringAnnotation )
-        // ../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g:2966:2: ruleTypedStringAnnotation
-        {
-        if ( backtracking==0 ) {
-           
-          	  /* */ 
-          	
-        }
-        pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_synpred435058);
-        ruleTypedStringAnnotation();
-        _fsp--;
-        if (failed) return ;
-
-        }
-    }
-    // $ANTLR end synpred43
-
-    public final boolean synpred43() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred43_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
     public final boolean synpred19() {
         backtracking++;
         int start = input.mark();
@@ -11314,20 +11219,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         int start = input.mark();
         try {
             synpred2_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred42() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred42_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -11509,31 +11400,31 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
     static final String DFA2_acceptS =
         "\12\uffff\1\1\16\uffff\1\2\u03b5\uffff";
     static final String DFA2_specialS =
-        "\4\uffff\1\0\1\2\2\uffff\1\1\1\112\1\uffff\1\150\2\uffff\1\120\14"+
-        "\uffff\1\24\5\uffff\1\16\10\uffff\1\121\10\uffff\1\117\10\uffff"+
-        "\1\116\10\uffff\1\115\17\uffff\1\161\2\uffff\1\134\11\uffff\1\162"+
-        "\2\uffff\1\107\12\uffff\1\163\2\uffff\1\110\13\uffff\1\164\2\uffff"+
-        "\1\111\14\uffff\1\25\1\uffff\1\26\1\60\14\uffff\1\135\16\uffff\1"+
-        "\136\10\uffff\1\17\16\uffff\1\133\10\uffff\1\15\10\uffff\1\14\16"+
-        "\uffff\1\132\10\uffff\1\13\10\uffff\1\12\10\uffff\1\11\11\uffff"+
-        "\1\57\12\uffff\1\56\12\uffff\1\160\2\uffff\1\10\11\uffff\1\55\12"+
-        "\uffff\1\157\2\uffff\1\7\11\uffff\1\147\2\uffff\1\6\12\uffff\1\54"+
-        "\12\uffff\1\156\2\uffff\1\5\11\uffff\1\146\2\uffff\1\4\12\uffff"+
-        "\1\145\2\uffff\1\3\13\uffff\1\61\3\uffff\1\62\7\uffff\1\63\14\uffff"+
-        "\1\122\11\uffff\1\64\14\uffff\1\123\16\uffff\1\124\10\uffff\1\20"+
-        "\11\uffff\1\65\14\uffff\1\125\16\uffff\1\126\10\uffff\1\21\16\uffff"+
-        "\1\127\10\uffff\1\22\10\uffff\1\23\11\uffff\1\66\3\uffff\1\67\12"+
-        "\uffff\1\70\3\uffff\1\71\12\uffff\1\72\12\uffff\1\151\2\uffff\1"+
-        "\137\11\uffff\1\73\3\uffff\1\74\12\uffff\1\75\12\uffff\1\152\2\uffff"+
-        "\1\140\11\uffff\1\76\12\uffff\1\153\2\uffff\1\141\11\uffff\1\154"+
-        "\2\uffff\1\142\12\uffff\1\77\3\uffff\1\100\7\uffff\1\101\7\uffff"+
-        "\1\102\14\uffff\1\143\11\uffff\1\103\7\uffff\1\104\14\uffff\1\144"+
-        "\11\uffff\1\105\14\uffff\1\131\16\uffff\1\130\10\uffff\1\114\11"+
-        "\uffff\1\53\3\uffff\1\52\3\uffff\1\51\12\uffff\1\50\3\uffff\1\47"+
-        "\3\uffff\1\46\12\uffff\1\45\3\uffff\1\44\12\uffff\1\43\12\uffff"+
-        "\1\155\2\uffff\1\106\11\uffff\1\42\3\uffff\1\41\7\uffff\1\40\7\uffff"+
-        "\1\37\7\uffff\1\36\14\uffff\1\113\11\uffff\1\35\3\uffff\1\34\3\uffff"+
-        "\1\33\3\uffff\1\32\12\uffff\1\31\3\uffff\1\30\7\uffff\1\27\3\uffff}>";
+        "\4\uffff\1\0\1\33\2\uffff\1\2\1\3\1\uffff\1\133\2\uffff\1\146\14"+
+        "\uffff\1\1\5\uffff\1\14\10\uffff\1\161\10\uffff\1\13\10\uffff\1"+
+        "\12\10\uffff\1\11\17\uffff\1\140\2\uffff\1\10\11\uffff\1\141\2\uffff"+
+        "\1\15\12\uffff\1\142\2\uffff\1\16\13\uffff\1\143\2\uffff\1\17\14"+
+        "\uffff\1\34\1\uffff\1\4\1\66\14\uffff\1\162\16\uffff\1\163\10\uffff"+
+        "\1\124\16\uffff\1\160\10\uffff\1\123\10\uffff\1\122\16\uffff\1\157"+
+        "\10\uffff\1\121\10\uffff\1\120\10\uffff\1\117\11\uffff\1\65\12\uffff"+
+        "\1\64\12\uffff\1\132\2\uffff\1\156\11\uffff\1\63\12\uffff\1\131"+
+        "\2\uffff\1\155\11\uffff\1\130\2\uffff\1\116\12\uffff\1\62\12\uffff"+
+        "\1\127\2\uffff\1\154\11\uffff\1\126\2\uffff\1\115\12\uffff\1\125"+
+        "\2\uffff\1\114\13\uffff\1\67\3\uffff\1\70\7\uffff\1\71\14\uffff"+
+        "\1\20\11\uffff\1\72\14\uffff\1\21\16\uffff\1\22\10\uffff\1\23\11"+
+        "\uffff\1\73\14\uffff\1\24\16\uffff\1\25\10\uffff\1\26\16\uffff\1"+
+        "\27\10\uffff\1\30\10\uffff\1\164\11\uffff\1\74\3\uffff\1\75\12\uffff"+
+        "\1\76\3\uffff\1\77\12\uffff\1\100\12\uffff\1\134\2\uffff\1\147\11"+
+        "\uffff\1\101\3\uffff\1\102\12\uffff\1\103\12\uffff\1\135\2\uffff"+
+        "\1\150\11\uffff\1\104\12\uffff\1\136\2\uffff\1\151\11\uffff\1\144"+
+        "\2\uffff\1\152\12\uffff\1\105\3\uffff\1\106\7\uffff\1\107\7\uffff"+
+        "\1\110\14\uffff\1\31\11\uffff\1\111\7\uffff\1\112\14\uffff\1\32"+
+        "\11\uffff\1\113\14\uffff\1\7\16\uffff\1\6\10\uffff\1\153\11\uffff"+
+        "\1\61\3\uffff\1\60\3\uffff\1\57\12\uffff\1\56\3\uffff\1\55\3\uffff"+
+        "\1\54\12\uffff\1\53\3\uffff\1\52\12\uffff\1\51\12\uffff\1\137\2"+
+        "\uffff\1\5\11\uffff\1\50\3\uffff\1\47\7\uffff\1\46\7\uffff\1\45"+
+        "\7\uffff\1\44\14\uffff\1\145\11\uffff\1\43\3\uffff\1\42\3\uffff"+
+        "\1\41\3\uffff\1\40\12\uffff\1\37\3\uffff\1\36\7\uffff\1\35\3\uffff}>";
     static final String[] DFA2_transitionS = {
             "\1\10\1\11\1\2\1\3\1\5\7\uffff\1\4\23\uffff\1\6\2\uffff\1\12"+
             "\1\uffff\1\1\3\uffff\1\7",
@@ -12877,291 +12768,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         if ( s>=0 ) return s;
                         break;
                     case 1 : 
-                        int LA2_8 = input.LA(1);
-
-                         
-                        int index2_8 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_8);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
-                        int LA2_5 = input.LA(1);
-
-                         
-                        int index2_5 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_5);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 3 : 
-                        int LA2_382 = input.LA(1);
-
-                         
-                        int index2_382 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_382);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 4 : 
-                        int LA2_368 = input.LA(1);
-
-                         
-                        int index2_368 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_368);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 5 : 
-                        int LA2_355 = input.LA(1);
-
-                         
-                        int index2_355 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_355);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 6 : 
-                        int LA2_330 = input.LA(1);
-
-                         
-                        int index2_330 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_330);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 7 : 
-                        int LA2_317 = input.LA(1);
-
-                         
-                        int index2_317 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_317);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 8 : 
-                        int LA2_293 = input.LA(1);
-
-                         
-                        int index2_293 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_293);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 9 : 
-                        int LA2_258 = input.LA(1);
-
-                         
-                        int index2_258 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_258);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 10 : 
-                        int LA2_249 = input.LA(1);
-
-                         
-                        int index2_249 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_249);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 11 : 
-                        int LA2_240 = input.LA(1);
-
-                         
-                        int index2_240 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_240);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 12 : 
-                        int LA2_216 = input.LA(1);
-
-                         
-                        int index2_216 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_216);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 13 : 
-                        int LA2_207 = input.LA(1);
-
-                         
-                        int index2_207 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_207);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 14 : 
-                        int LA2_33 = input.LA(1);
-
-                         
-                        int index2_33 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_33);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 15 : 
-                        int LA2_183 = input.LA(1);
-
-                         
-                        int index2_183 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_183);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 16 : 
-                        int LA2_466 = input.LA(1);
-
-                         
-                        int index2_466 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_466);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 17 : 
-                        int LA2_513 = input.LA(1);
-
-                         
-                        int index2_513 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_513);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 18 : 
-                        int LA2_537 = input.LA(1);
-
-                         
-                        int index2_537 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_537);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 19 : 
-                        int LA2_546 = input.LA(1);
-
-                         
-                        int index2_546 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_546);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 20 : 
                         int LA2_27 = input.LA(1);
 
                          
@@ -13176,11 +12782,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_27);
                         if ( s>=0 ) return s;
                         break;
-                    case 21 : 
-                        int LA2_143 = input.LA(1);
+                    case 2 : 
+                        int LA2_8 = input.LA(1);
 
                          
-                        int index2_143 = input.index();
+                        int index2_8 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -13188,790 +12794,10 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_143);
+                        input.seek(index2_8);
                         if ( s>=0 ) return s;
                         break;
-                    case 22 : 
-                        int LA2_145 = input.LA(1);
-
-                         
-                        int index2_145 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_145);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 23 : 
-                        int LA2_971 = input.LA(1);
-
-                         
-                        int index2_971 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_971);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 24 : 
-                        int LA2_963 = input.LA(1);
-
-                         
-                        int index2_963 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_963);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 25 : 
-                        int LA2_959 = input.LA(1);
-
-                         
-                        int index2_959 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_959);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 26 : 
-                        int LA2_948 = input.LA(1);
-
-                         
-                        int index2_948 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_948);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 27 : 
-                        int LA2_944 = input.LA(1);
-
-                         
-                        int index2_944 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_944);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 28 : 
-                        int LA2_940 = input.LA(1);
-
-                         
-                        int index2_940 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_940);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 29 : 
-                        int LA2_936 = input.LA(1);
-
-                         
-                        int index2_936 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_936);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 30 : 
-                        int LA2_913 = input.LA(1);
-
-                         
-                        int index2_913 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_913);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 31 : 
-                        int LA2_905 = input.LA(1);
-
-                         
-                        int index2_905 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_905);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 32 : 
-                        int LA2_897 = input.LA(1);
-
-                         
-                        int index2_897 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_897);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 33 : 
-                        int LA2_889 = input.LA(1);
-
-                         
-                        int index2_889 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_889);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 34 : 
-                        int LA2_885 = input.LA(1);
-
-                         
-                        int index2_885 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_885);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 35 : 
-                        int LA2_861 = input.LA(1);
-
-                         
-                        int index2_861 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_861);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 36 : 
-                        int LA2_850 = input.LA(1);
-
-                         
-                        int index2_850 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_850);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 37 : 
-                        int LA2_846 = input.LA(1);
-
-                         
-                        int index2_846 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_846);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 38 : 
-                        int LA2_835 = input.LA(1);
-
-                         
-                        int index2_835 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_835);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 39 : 
-                        int LA2_831 = input.LA(1);
-
-                         
-                        int index2_831 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_831);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 40 : 
-                        int LA2_827 = input.LA(1);
-
-                         
-                        int index2_827 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_827);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 41 : 
-                        int LA2_816 = input.LA(1);
-
-                         
-                        int index2_816 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_816);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 42 : 
-                        int LA2_812 = input.LA(1);
-
-                         
-                        int index2_812 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_812);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 43 : 
-                        int LA2_808 = input.LA(1);
-
-                         
-                        int index2_808 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_808);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 44 : 
-                        int LA2_341 = input.LA(1);
-
-                         
-                        int index2_341 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_341);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 45 : 
-                        int LA2_303 = input.LA(1);
-
-                         
-                        int index2_303 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_303);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 46 : 
-                        int LA2_279 = input.LA(1);
-
-                         
-                        int index2_279 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_279);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 47 : 
-                        int LA2_268 = input.LA(1);
-
-                         
-                        int index2_268 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_268);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 48 : 
-                        int LA2_146 = input.LA(1);
-
-                         
-                        int index2_146 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_146);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 49 : 
-                        int LA2_394 = input.LA(1);
-
-                         
-                        int index2_394 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_394);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 50 : 
-                        int LA2_398 = input.LA(1);
-
-                         
-                        int index2_398 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_398);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 51 : 
-                        int LA2_406 = input.LA(1);
-
-                         
-                        int index2_406 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_406);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 52 : 
-                        int LA2_429 = input.LA(1);
-
-                         
-                        int index2_429 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_429);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 53 : 
-                        int LA2_476 = input.LA(1);
-
-                         
-                        int index2_476 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_476);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 54 : 
-                        int LA2_556 = input.LA(1);
-
-                         
-                        int index2_556 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_556);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 55 : 
-                        int LA2_560 = input.LA(1);
-
-                         
-                        int index2_560 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_560);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 56 : 
-                        int LA2_571 = input.LA(1);
-
-                         
-                        int index2_571 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_571);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 57 : 
-                        int LA2_575 = input.LA(1);
-
-                         
-                        int index2_575 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_575);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 58 : 
-                        int LA2_586 = input.LA(1);
-
-                         
-                        int index2_586 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_586);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 59 : 
-                        int LA2_610 = input.LA(1);
-
-                         
-                        int index2_610 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_610);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 60 : 
-                        int LA2_614 = input.LA(1);
-
-                         
-                        int index2_614 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_614);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 61 : 
-                        int LA2_625 = input.LA(1);
-
-                         
-                        int index2_625 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_625);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 62 : 
-                        int LA2_649 = input.LA(1);
-
-                         
-                        int index2_649 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_649);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 63 : 
-                        int LA2_687 = input.LA(1);
-
-                         
-                        int index2_687 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_687);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 64 : 
-                        int LA2_691 = input.LA(1);
-
-                         
-                        int index2_691 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_691);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 65 : 
-                        int LA2_699 = input.LA(1);
-
-                         
-                        int index2_699 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_699);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 66 : 
-                        int LA2_707 = input.LA(1);
-
-                         
-                        int index2_707 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_707);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 67 : 
-                        int LA2_730 = input.LA(1);
-
-                         
-                        int index2_730 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_730);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 68 : 
-                        int LA2_738 = input.LA(1);
-
-                         
-                        int index2_738 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_738);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 69 : 
-                        int LA2_761 = input.LA(1);
-
-                         
-                        int index2_761 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_761);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 70 : 
-                        int LA2_875 = input.LA(1);
-
-                         
-                        int index2_875 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_875);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 71 : 
-                        int LA2_101 = input.LA(1);
-
-                         
-                        int index2_101 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_101);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 72 : 
-                        int LA2_115 = input.LA(1);
-
-                         
-                        int index2_115 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_115);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 73 : 
-                        int LA2_130 = input.LA(1);
-
-                         
-                        int index2_130 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_130);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 74 : 
+                    case 3 : 
                         int LA2_9 = input.LA(1);
 
                          
@@ -13986,11 +12812,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_9);
                         if ( s>=0 ) return s;
                         break;
-                    case 75 : 
-                        int LA2_926 = input.LA(1);
+                    case 4 : 
+                        int LA2_145 = input.LA(1);
 
                          
-                        int index2_926 = input.index();
+                        int index2_145 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -13998,14 +12824,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_926);
+                        input.seek(index2_145);
                         if ( s>=0 ) return s;
                         break;
-                    case 76 : 
-                        int LA2_798 = input.LA(1);
+                    case 5 : 
+                        int LA2_875 = input.LA(1);
 
                          
-                        int index2_798 = input.index();
+                        int index2_875 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14013,175 +12839,10 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_798);
+                        input.seek(index2_875);
                         if ( s>=0 ) return s;
                         break;
-                    case 77 : 
-                        int LA2_69 = input.LA(1);
-
-                         
-                        int index2_69 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_69);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 78 : 
-                        int LA2_60 = input.LA(1);
-
-                         
-                        int index2_60 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_60);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 79 : 
-                        int LA2_51 = input.LA(1);
-
-                         
-                        int index2_51 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_51);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 80 : 
-                        int LA2_14 = input.LA(1);
-
-                         
-                        int index2_14 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_14);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 81 : 
-                        int LA2_42 = input.LA(1);
-
-                         
-                        int index2_42 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_42);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 82 : 
-                        int LA2_419 = input.LA(1);
-
-                         
-                        int index2_419 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_419);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 83 : 
-                        int LA2_442 = input.LA(1);
-
-                         
-                        int index2_442 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_442);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 84 : 
-                        int LA2_457 = input.LA(1);
-
-                         
-                        int index2_457 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_457);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 85 : 
-                        int LA2_489 = input.LA(1);
-
-                         
-                        int index2_489 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_489);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 86 : 
-                        int LA2_504 = input.LA(1);
-
-                         
-                        int index2_504 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_504);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 87 : 
-                        int LA2_528 = input.LA(1);
-
-                         
-                        int index2_528 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_528);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 88 : 
+                    case 6 : 
                         int LA2_789 = input.LA(1);
 
                          
@@ -14196,7 +12857,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_789);
                         if ( s>=0 ) return s;
                         break;
-                    case 89 : 
+                    case 7 : 
                         int LA2_774 = input.LA(1);
 
                          
@@ -14211,37 +12872,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_774);
                         if ( s>=0 ) return s;
                         break;
-                    case 90 : 
-                        int LA2_231 = input.LA(1);
-
-                         
-                        int index2_231 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_231);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 91 : 
-                        int LA2_198 = input.LA(1);
-
-                         
-                        int index2_198 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_198);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 92 : 
+                    case 8 : 
                         int LA2_88 = input.LA(1);
 
                          
@@ -14256,11 +12887,11 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_88);
                         if ( s>=0 ) return s;
                         break;
-                    case 93 : 
-                        int LA2_159 = input.LA(1);
+                    case 9 : 
+                        int LA2_69 = input.LA(1);
 
                          
-                        int index2_159 = input.index();
+                        int index2_69 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14268,14 +12899,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_159);
+                        input.seek(index2_69);
                         if ( s>=0 ) return s;
                         break;
-                    case 94 : 
-                        int LA2_174 = input.LA(1);
+                    case 10 : 
+                        int LA2_60 = input.LA(1);
 
                          
-                        int index2_174 = input.index();
+                        int index2_60 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14283,14 +12914,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_174);
+                        input.seek(index2_60);
                         if ( s>=0 ) return s;
                         break;
-                    case 95 : 
-                        int LA2_600 = input.LA(1);
+                    case 11 : 
+                        int LA2_51 = input.LA(1);
 
                          
-                        int index2_600 = input.index();
+                        int index2_51 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14298,14 +12929,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_600);
+                        input.seek(index2_51);
                         if ( s>=0 ) return s;
                         break;
-                    case 96 : 
-                        int LA2_639 = input.LA(1);
+                    case 12 : 
+                        int LA2_33 = input.LA(1);
 
                          
-                        int index2_639 = input.index();
+                        int index2_33 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14313,14 +12944,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_639);
+                        input.seek(index2_33);
                         if ( s>=0 ) return s;
                         break;
-                    case 97 : 
-                        int LA2_663 = input.LA(1);
+                    case 13 : 
+                        int LA2_101 = input.LA(1);
 
                          
-                        int index2_663 = input.index();
+                        int index2_101 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14328,14 +12959,14 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_663);
+                        input.seek(index2_101);
                         if ( s>=0 ) return s;
                         break;
-                    case 98 : 
-                        int LA2_676 = input.LA(1);
+                    case 14 : 
+                        int LA2_115 = input.LA(1);
 
                          
-                        int index2_676 = input.index();
+                        int index2_115 = input.index();
                         input.rewind();
                         s = -1;
                         if ( (synpred2()) ) {s = 10;}
@@ -14343,10 +12974,160 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         else if ( (true) ) {s = 25;}
 
                          
-                        input.seek(index2_676);
+                        input.seek(index2_115);
                         if ( s>=0 ) return s;
                         break;
-                    case 99 : 
+                    case 15 : 
+                        int LA2_130 = input.LA(1);
+
+                         
+                        int index2_130 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_130);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 16 : 
+                        int LA2_419 = input.LA(1);
+
+                         
+                        int index2_419 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_419);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 17 : 
+                        int LA2_442 = input.LA(1);
+
+                         
+                        int index2_442 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_442);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 18 : 
+                        int LA2_457 = input.LA(1);
+
+                         
+                        int index2_457 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_457);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 19 : 
+                        int LA2_466 = input.LA(1);
+
+                         
+                        int index2_466 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_466);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 20 : 
+                        int LA2_489 = input.LA(1);
+
+                         
+                        int index2_489 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_489);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 21 : 
+                        int LA2_504 = input.LA(1);
+
+                         
+                        int index2_504 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_504);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 22 : 
+                        int LA2_513 = input.LA(1);
+
+                         
+                        int index2_513 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_513);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 23 : 
+                        int LA2_528 = input.LA(1);
+
+                         
+                        int index2_528 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_528);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 24 : 
+                        int LA2_537 = input.LA(1);
+
+                         
+                        int index2_537 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_537);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 25 : 
                         int LA2_720 = input.LA(1);
 
                          
@@ -14361,7 +13142,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_720);
                         if ( s>=0 ) return s;
                         break;
-                    case 100 : 
+                    case 26 : 
                         int LA2_751 = input.LA(1);
 
                          
@@ -14376,7 +13157,877 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_751);
                         if ( s>=0 ) return s;
                         break;
-                    case 101 : 
+                    case 27 : 
+                        int LA2_5 = input.LA(1);
+
+                         
+                        int index2_5 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_5);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 28 : 
+                        int LA2_143 = input.LA(1);
+
+                         
+                        int index2_143 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_143);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 29 : 
+                        int LA2_971 = input.LA(1);
+
+                         
+                        int index2_971 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_971);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 30 : 
+                        int LA2_963 = input.LA(1);
+
+                         
+                        int index2_963 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_963);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 31 : 
+                        int LA2_959 = input.LA(1);
+
+                         
+                        int index2_959 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_959);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 32 : 
+                        int LA2_948 = input.LA(1);
+
+                         
+                        int index2_948 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_948);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 33 : 
+                        int LA2_944 = input.LA(1);
+
+                         
+                        int index2_944 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_944);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 34 : 
+                        int LA2_940 = input.LA(1);
+
+                         
+                        int index2_940 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_940);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 35 : 
+                        int LA2_936 = input.LA(1);
+
+                         
+                        int index2_936 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_936);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 36 : 
+                        int LA2_913 = input.LA(1);
+
+                         
+                        int index2_913 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_913);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 37 : 
+                        int LA2_905 = input.LA(1);
+
+                         
+                        int index2_905 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_905);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 38 : 
+                        int LA2_897 = input.LA(1);
+
+                         
+                        int index2_897 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_897);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 39 : 
+                        int LA2_889 = input.LA(1);
+
+                         
+                        int index2_889 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_889);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 40 : 
+                        int LA2_885 = input.LA(1);
+
+                         
+                        int index2_885 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_885);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 41 : 
+                        int LA2_861 = input.LA(1);
+
+                         
+                        int index2_861 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_861);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 42 : 
+                        int LA2_850 = input.LA(1);
+
+                         
+                        int index2_850 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_850);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 43 : 
+                        int LA2_846 = input.LA(1);
+
+                         
+                        int index2_846 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_846);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 44 : 
+                        int LA2_835 = input.LA(1);
+
+                         
+                        int index2_835 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_835);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 45 : 
+                        int LA2_831 = input.LA(1);
+
+                         
+                        int index2_831 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_831);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 46 : 
+                        int LA2_827 = input.LA(1);
+
+                         
+                        int index2_827 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_827);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 47 : 
+                        int LA2_816 = input.LA(1);
+
+                         
+                        int index2_816 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_816);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 48 : 
+                        int LA2_812 = input.LA(1);
+
+                         
+                        int index2_812 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_812);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 49 : 
+                        int LA2_808 = input.LA(1);
+
+                         
+                        int index2_808 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_808);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 50 : 
+                        int LA2_341 = input.LA(1);
+
+                         
+                        int index2_341 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_341);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 51 : 
+                        int LA2_303 = input.LA(1);
+
+                         
+                        int index2_303 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_303);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 52 : 
+                        int LA2_279 = input.LA(1);
+
+                         
+                        int index2_279 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_279);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 53 : 
+                        int LA2_268 = input.LA(1);
+
+                         
+                        int index2_268 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_268);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 54 : 
+                        int LA2_146 = input.LA(1);
+
+                         
+                        int index2_146 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_146);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 55 : 
+                        int LA2_394 = input.LA(1);
+
+                         
+                        int index2_394 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_394);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 56 : 
+                        int LA2_398 = input.LA(1);
+
+                         
+                        int index2_398 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_398);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 57 : 
+                        int LA2_406 = input.LA(1);
+
+                         
+                        int index2_406 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_406);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 58 : 
+                        int LA2_429 = input.LA(1);
+
+                         
+                        int index2_429 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_429);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 59 : 
+                        int LA2_476 = input.LA(1);
+
+                         
+                        int index2_476 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_476);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 60 : 
+                        int LA2_556 = input.LA(1);
+
+                         
+                        int index2_556 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_556);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 61 : 
+                        int LA2_560 = input.LA(1);
+
+                         
+                        int index2_560 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_560);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 62 : 
+                        int LA2_571 = input.LA(1);
+
+                         
+                        int index2_571 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_571);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 63 : 
+                        int LA2_575 = input.LA(1);
+
+                         
+                        int index2_575 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_575);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 64 : 
+                        int LA2_586 = input.LA(1);
+
+                         
+                        int index2_586 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_586);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 65 : 
+                        int LA2_610 = input.LA(1);
+
+                         
+                        int index2_610 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_610);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 66 : 
+                        int LA2_614 = input.LA(1);
+
+                         
+                        int index2_614 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_614);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 67 : 
+                        int LA2_625 = input.LA(1);
+
+                         
+                        int index2_625 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_625);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 68 : 
+                        int LA2_649 = input.LA(1);
+
+                         
+                        int index2_649 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_649);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 69 : 
+                        int LA2_687 = input.LA(1);
+
+                         
+                        int index2_687 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_687);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 70 : 
+                        int LA2_691 = input.LA(1);
+
+                         
+                        int index2_691 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_691);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 71 : 
+                        int LA2_699 = input.LA(1);
+
+                         
+                        int index2_699 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_699);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 72 : 
+                        int LA2_707 = input.LA(1);
+
+                         
+                        int index2_707 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_707);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 73 : 
+                        int LA2_730 = input.LA(1);
+
+                         
+                        int index2_730 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_730);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 74 : 
+                        int LA2_738 = input.LA(1);
+
+                         
+                        int index2_738 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_738);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 75 : 
+                        int LA2_761 = input.LA(1);
+
+                         
+                        int index2_761 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_761);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 76 : 
+                        int LA2_382 = input.LA(1);
+
+                         
+                        int index2_382 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_382);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 77 : 
+                        int LA2_368 = input.LA(1);
+
+                         
+                        int index2_368 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_368);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 78 : 
+                        int LA2_330 = input.LA(1);
+
+                         
+                        int index2_330 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_330);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 79 : 
+                        int LA2_258 = input.LA(1);
+
+                         
+                        int index2_258 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_258);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 80 : 
+                        int LA2_249 = input.LA(1);
+
+                         
+                        int index2_249 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_249);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 81 : 
+                        int LA2_240 = input.LA(1);
+
+                         
+                        int index2_240 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_240);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 82 : 
+                        int LA2_216 = input.LA(1);
+
+                         
+                        int index2_216 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_216);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 83 : 
+                        int LA2_207 = input.LA(1);
+
+                         
+                        int index2_207 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_207);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 84 : 
+                        int LA2_183 = input.LA(1);
+
+                         
+                        int index2_183 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_183);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 85 : 
                         int LA2_379 = input.LA(1);
 
                          
@@ -14391,7 +14042,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_379);
                         if ( s>=0 ) return s;
                         break;
-                    case 102 : 
+                    case 86 : 
                         int LA2_365 = input.LA(1);
 
                          
@@ -14406,112 +14057,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_365);
                         if ( s>=0 ) return s;
                         break;
-                    case 103 : 
-                        int LA2_327 = input.LA(1);
-
-                         
-                        int index2_327 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_327);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 104 : 
-                        int LA2_11 = input.LA(1);
-
-                         
-                        int index2_11 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_11);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 105 : 
-                        int LA2_597 = input.LA(1);
-
-                         
-                        int index2_597 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_597);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 106 : 
-                        int LA2_636 = input.LA(1);
-
-                         
-                        int index2_636 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_636);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 107 : 
-                        int LA2_660 = input.LA(1);
-
-                         
-                        int index2_660 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_660);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 108 : 
-                        int LA2_673 = input.LA(1);
-
-                         
-                        int index2_673 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_673);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 109 : 
-                        int LA2_872 = input.LA(1);
-
-                         
-                        int index2_872 = input.index();
-                        input.rewind();
-                        s = -1;
-                        if ( (synpred2()) ) {s = 10;}
-
-                        else if ( (true) ) {s = 25;}
-
-                         
-                        input.seek(index2_872);
-                        if ( s>=0 ) return s;
-                        break;
-                    case 110 : 
+                    case 87 : 
                         int LA2_352 = input.LA(1);
 
                          
@@ -14526,7 +14072,22 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_352);
                         if ( s>=0 ) return s;
                         break;
-                    case 111 : 
+                    case 88 : 
+                        int LA2_327 = input.LA(1);
+
+                         
+                        int index2_327 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_327);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 89 : 
                         int LA2_314 = input.LA(1);
 
                          
@@ -14541,7 +14102,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_314);
                         if ( s>=0 ) return s;
                         break;
-                    case 112 : 
+                    case 90 : 
                         int LA2_290 = input.LA(1);
 
                          
@@ -14556,7 +14117,82 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_290);
                         if ( s>=0 ) return s;
                         break;
-                    case 113 : 
+                    case 91 : 
+                        int LA2_11 = input.LA(1);
+
+                         
+                        int index2_11 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_11);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 92 : 
+                        int LA2_597 = input.LA(1);
+
+                         
+                        int index2_597 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_597);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 93 : 
+                        int LA2_636 = input.LA(1);
+
+                         
+                        int index2_636 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_636);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 94 : 
+                        int LA2_660 = input.LA(1);
+
+                         
+                        int index2_660 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_660);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 95 : 
+                        int LA2_872 = input.LA(1);
+
+                         
+                        int index2_872 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_872);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 96 : 
                         int LA2_85 = input.LA(1);
 
                          
@@ -14571,7 +14207,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_85);
                         if ( s>=0 ) return s;
                         break;
-                    case 114 : 
+                    case 97 : 
                         int LA2_98 = input.LA(1);
 
                          
@@ -14586,7 +14222,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_98);
                         if ( s>=0 ) return s;
                         break;
-                    case 115 : 
+                    case 98 : 
                         int LA2_112 = input.LA(1);
 
                          
@@ -14601,7 +14237,7 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
                         input.seek(index2_112);
                         if ( s>=0 ) return s;
                         break;
-                    case 116 : 
+                    case 99 : 
                         int LA2_127 = input.LA(1);
 
                          
@@ -14614,6 +14250,261 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
 
                          
                         input.seek(index2_127);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 100 : 
+                        int LA2_673 = input.LA(1);
+
+                         
+                        int index2_673 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_673);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 101 : 
+                        int LA2_926 = input.LA(1);
+
+                         
+                        int index2_926 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_926);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 102 : 
+                        int LA2_14 = input.LA(1);
+
+                         
+                        int index2_14 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_14);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 103 : 
+                        int LA2_600 = input.LA(1);
+
+                         
+                        int index2_600 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_600);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 104 : 
+                        int LA2_639 = input.LA(1);
+
+                         
+                        int index2_639 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_639);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 105 : 
+                        int LA2_663 = input.LA(1);
+
+                         
+                        int index2_663 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_663);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 106 : 
+                        int LA2_676 = input.LA(1);
+
+                         
+                        int index2_676 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_676);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 107 : 
+                        int LA2_798 = input.LA(1);
+
+                         
+                        int index2_798 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_798);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 108 : 
+                        int LA2_355 = input.LA(1);
+
+                         
+                        int index2_355 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_355);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 109 : 
+                        int LA2_317 = input.LA(1);
+
+                         
+                        int index2_317 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_317);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 110 : 
+                        int LA2_293 = input.LA(1);
+
+                         
+                        int index2_293 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_293);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 111 : 
+                        int LA2_231 = input.LA(1);
+
+                         
+                        int index2_231 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_231);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 112 : 
+                        int LA2_198 = input.LA(1);
+
+                         
+                        int index2_198 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_198);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 113 : 
+                        int LA2_42 = input.LA(1);
+
+                         
+                        int index2_42 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_42);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 114 : 
+                        int LA2_159 = input.LA(1);
+
+                         
+                        int index2_159 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_159);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 115 : 
+                        int LA2_174 = input.LA(1);
+
+                         
+                        int index2_174 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_174);
+                        if ( s>=0 ) return s;
+                        break;
+                    case 116 : 
+                        int LA2_546 = input.LA(1);
+
+                         
+                        int index2_546 = input.index();
+                        input.rewind();
+                        s = -1;
+                        if ( (synpred2()) ) {s = 10;}
+
+                        else if ( (true) ) {s = 25;}
+
+                         
+                        input.seek(index2_546);
                         if ( s>=0 ) return s;
                         break;
             }
@@ -14838,72 +14729,72 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation5591 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTypedStringAnnotation5601 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_29_in_ruleTypedStringAnnotation5636 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleTypedStringAnnotation5653 = new BitSet(new long[]{0x0000000000000C10L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleTypedStringAnnotation5653 = new BitSet(new long[]{0x0000000000000400L});
         public static final BitSet FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation5675 = new BitSet(new long[]{0x0000000000000810L});
-        public static final BitSet FOLLOW_ruleEString_in_ruleTypedStringAnnotation5702 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_16_in_ruleTypedStringAnnotation5713 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation5734 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_17_in_ruleTypedStringAnnotation5745 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation5783 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation5793 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleKeyBooleanValueAnnotation5828 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation5845 = new BitSet(new long[]{0x0000000000000100L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation5867 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_16_in_ruleKeyBooleanValueAnnotation5883 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation5904 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_17_in_ruleKeyBooleanValueAnnotation5915 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation5953 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation5963 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleKeyIntValueAnnotation5998 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation6015 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation6037 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_16_in_ruleKeyIntValueAnnotation6053 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation6074 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_17_in_ruleKeyIntValueAnnotation6085 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation6123 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation6133 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_29_in_ruleKeyFloatValueAnnotation6168 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation6185 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation6207 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_16_in_ruleKeyFloatValueAnnotation6223 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation6244 = new BitSet(new long[]{0x0000000020020200L});
-        public static final BitSet FOLLOW_17_in_ruleKeyFloatValueAnnotation6255 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_entryRuleEString6296 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleEString6307 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleEString6347 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleEString6373 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_30_in_ruleCompareOperator6430 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_31_in_ruleCompareOperator6445 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_32_in_ruleCompareOperator6460 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_33_in_ruleCompareOperator6475 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_34_in_ruleCompareOperator6490 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_35_in_ruleCompareOperator6505 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_36_in_rulePreOperator6547 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_ruleOrOperator6588 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_38_in_ruleAndOperator6629 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_39_in_ruleNotOperator6670 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_ruleAddOperator6711 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_41_in_ruleSubOperator6752 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_ruleMultOperator6793 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_43_in_ruleModOperator6834 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_44_in_ruleDivOperator6875 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_45_in_ruleValueTestOperator6916 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_46_in_ruleValueType6958 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_47_in_ruleValueType6973 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_ruleValueType6988 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_ruleValueType7003 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_50_in_ruleValueType7018 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_51_in_ruleValueType7033 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_ruleValueType7048 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_ruleValueType7063 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_54_in_ruleCombineOperator7106 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_40_in_ruleCombineOperator7121 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_42_in_ruleCombineOperator7136 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_ruleCombineOperator7151 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_ruleCombineOperator7166 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_37_in_ruleCombineOperator7181 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_38_in_ruleCombineOperator7196 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_ruleCombineOperator7211 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_ruleTypedStringAnnotation5701 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleTypedStringAnnotation5712 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation5733 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_17_in_ruleTypedStringAnnotation5744 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation5782 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation5792 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleKeyBooleanValueAnnotation5827 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation5844 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation5866 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyBooleanValueAnnotation5882 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation5903 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_17_in_ruleKeyBooleanValueAnnotation5914 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation5952 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation5962 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleKeyIntValueAnnotation5997 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation6014 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation6036 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyIntValueAnnotation6052 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation6073 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_17_in_ruleKeyIntValueAnnotation6084 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation6122 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation6132 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_29_in_ruleKeyFloatValueAnnotation6167 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation6184 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation6206 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_16_in_ruleKeyFloatValueAnnotation6222 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation6243 = new BitSet(new long[]{0x0000000020020200L});
+        public static final BitSet FOLLOW_17_in_ruleKeyFloatValueAnnotation6254 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_entryRuleEString6295 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleEString6306 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleEString6346 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleEString6372 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_30_in_ruleCompareOperator6429 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_31_in_ruleCompareOperator6444 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_32_in_ruleCompareOperator6459 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_33_in_ruleCompareOperator6474 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_34_in_ruleCompareOperator6489 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_35_in_ruleCompareOperator6504 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_36_in_rulePreOperator6546 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_ruleOrOperator6587 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_ruleAndOperator6628 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_39_in_ruleNotOperator6669 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_40_in_ruleAddOperator6710 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_41_in_ruleSubOperator6751 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_ruleMultOperator6792 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_43_in_ruleModOperator6833 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_44_in_ruleDivOperator6874 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_45_in_ruleValueTestOperator6915 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_46_in_ruleValueType6957 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_47_in_ruleValueType6972 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_ruleValueType6987 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_ruleValueType7002 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_50_in_ruleValueType7017 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_51_in_ruleValueType7032 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_ruleValueType7047 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_ruleValueType7062 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_54_in_ruleCombineOperator7105 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_40_in_ruleCombineOperator7120 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_42_in_ruleCombineOperator7135 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_ruleCombineOperator7150 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_ruleCombineOperator7165 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_37_in_ruleCombineOperator7180 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_38_in_ruleCombineOperator7195 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_ruleCombineOperator7210 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleBooleanExpression_in_synpred2266 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleNotOrValuedExpression_in_synpred5789 = new BitSet(new long[]{0x0000000FC0000000L});
         public static final BitSet FOLLOW_ruleCompareOperator_in_synpred5822 = new BitSet(new long[]{0x00002290000101F0L});
@@ -14912,8 +14803,6 @@ public class InternalKExpressionsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_16_in_synpred192516 = new BitSet(new long[]{0x00002210000101F0L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred192541 = new BitSet(new long[]{0x0000000000020000L});
         public static final BitSet FOLLOW_17_in_synpred192550 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_synpred425028 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_synpred435058 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

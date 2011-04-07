@@ -44,7 +44,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
         public InternalKitsParser(TokenStream input) {
             super(input);
-            ruleMemo = new HashMap[300+1];
+            ruleMemo = new HashMap[299+1];
          }
         
 
@@ -9651,11 +9651,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                             if ( (LA82_29==21) ) {
                                 int LA82_30 = input.LA(6);
 
-                                if ( (LA82_30==EOF||LA82_30==RULE_COMMENT_ANNOTATION||LA82_30==16||LA82_30==18||(LA82_30>=21 && LA82_30<=25)||LA82_30==27||(LA82_30>=30 && LA82_30<=34)||(LA82_30>=37 && LA82_30<=41)||LA82_30==44||(LA82_30>=49 && LA82_30<=54)||(LA82_30>=62 && LA82_30<=63)) ) {
-                                    alt82=2;
-                                }
-                                else if ( (LA82_30==17||(LA82_30>=55 && LA82_30<=60)||(LA82_30>=65 && LA82_30<=68)) ) {
+                                if ( (LA82_30==17||(LA82_30>=55 && LA82_30<=60)||(LA82_30>=65 && LA82_30<=68)) ) {
                                     alt82=1;
+                                }
+                                else if ( (LA82_30==EOF||LA82_30==RULE_COMMENT_ANNOTATION||LA82_30==16||LA82_30==18||(LA82_30>=21 && LA82_30<=25)||LA82_30==27||(LA82_30>=30 && LA82_30<=34)||(LA82_30>=37 && LA82_30<=41)||LA82_30==44||(LA82_30>=49 && LA82_30<=54)||(LA82_30>=62 && LA82_30<=63)) ) {
+                                    alt82=2;
                                 }
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
@@ -9689,11 +9689,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                         if ( (LA82_23==21) ) {
                             int LA82_30 = input.LA(5);
 
-                            if ( (LA82_30==EOF||LA82_30==RULE_COMMENT_ANNOTATION||LA82_30==16||LA82_30==18||(LA82_30>=21 && LA82_30<=25)||LA82_30==27||(LA82_30>=30 && LA82_30<=34)||(LA82_30>=37 && LA82_30<=41)||LA82_30==44||(LA82_30>=49 && LA82_30<=54)||(LA82_30>=62 && LA82_30<=63)) ) {
-                                alt82=2;
-                            }
-                            else if ( (LA82_30==17||(LA82_30>=55 && LA82_30<=60)||(LA82_30>=65 && LA82_30<=68)) ) {
+                            if ( (LA82_30==17||(LA82_30>=55 && LA82_30<=60)||(LA82_30>=65 && LA82_30<=68)) ) {
                                 alt82=1;
+                            }
+                            else if ( (LA82_30==EOF||LA82_30==RULE_COMMENT_ANNOTATION||LA82_30==16||LA82_30==18||(LA82_30>=21 && LA82_30<=25)||LA82_30==27||(LA82_30>=30 && LA82_30<=34)||(LA82_30>=37 && LA82_30<=41)||LA82_30==44||(LA82_30>=49 && LA82_30<=54)||(LA82_30>=62 && LA82_30<=63)) ) {
+                                alt82=2;
                             }
                             else {
                                 if (backtracking>0) {failed=true; return current;}
@@ -9823,21 +9823,6 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     }
                     }
                     break;
-                case 17:
-                case 55:
-                case 56:
-                case 57:
-                case 58:
-                case 59:
-                case 60:
-                case 65:
-                case 66:
-                case 67:
-                case 68:
-                    {
-                    alt82=1;
-                    }
-                    break;
                 case EOF:
                 case RULE_COMMENT_ANNOTATION:
                 case 16:
@@ -9869,6 +9854,21 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 case 63:
                     {
                     alt82=2;
+                    }
+                    break;
+                case 17:
+                case 55:
+                case 56:
+                case 57:
+                case 58:
+                case 59:
+                case 60:
+                case 65:
+                case 66:
+                case 67:
+                case 68:
+                    {
+                    alt82=1;
                     }
                     break;
                 default:
@@ -9968,11 +9968,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                                 if ( (LA82_37==21) ) {
                                     int LA82_38 = input.LA(7);
 
-                                    if ( (LA82_38==EOF||LA82_38==RULE_COMMENT_ANNOTATION||LA82_38==16||LA82_38==18||(LA82_38>=21 && LA82_38<=25)||LA82_38==27||(LA82_38>=30 && LA82_38<=34)||(LA82_38>=37 && LA82_38<=41)||LA82_38==44||(LA82_38>=49 && LA82_38<=54)||(LA82_38>=62 && LA82_38<=63)) ) {
-                                        alt82=2;
-                                    }
-                                    else if ( ((LA82_38>=55 && LA82_38<=60)) ) {
+                                    if ( ((LA82_38>=55 && LA82_38<=60)) ) {
                                         alt82=1;
+                                    }
+                                    else if ( (LA82_38==EOF||LA82_38==RULE_COMMENT_ANNOTATION||LA82_38==16||LA82_38==18||(LA82_38>=21 && LA82_38<=25)||LA82_38==27||(LA82_38>=30 && LA82_38<=34)||(LA82_38>=37 && LA82_38<=41)||LA82_38==44||(LA82_38>=49 && LA82_38<=54)||(LA82_38>=62 && LA82_38<=63)) ) {
+                                        alt82=2;
                                     }
                                     else {
                                         if (backtracking>0) {failed=true; return current;}
@@ -10006,11 +10006,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                             if ( (LA82_34==21) ) {
                                 int LA82_38 = input.LA(6);
 
-                                if ( (LA82_38==EOF||LA82_38==RULE_COMMENT_ANNOTATION||LA82_38==16||LA82_38==18||(LA82_38>=21 && LA82_38<=25)||LA82_38==27||(LA82_38>=30 && LA82_38<=34)||(LA82_38>=37 && LA82_38<=41)||LA82_38==44||(LA82_38>=49 && LA82_38<=54)||(LA82_38>=62 && LA82_38<=63)) ) {
-                                    alt82=2;
-                                }
-                                else if ( ((LA82_38>=55 && LA82_38<=60)) ) {
+                                if ( ((LA82_38>=55 && LA82_38<=60)) ) {
                                     alt82=1;
+                                }
+                                else if ( (LA82_38==EOF||LA82_38==RULE_COMMENT_ANNOTATION||LA82_38==16||LA82_38==18||(LA82_38>=21 && LA82_38<=25)||LA82_38==27||(LA82_38>=30 && LA82_38<=34)||(LA82_38>=37 && LA82_38<=41)||LA82_38==44||(LA82_38>=49 && LA82_38<=54)||(LA82_38>=62 && LA82_38<=63)) ) {
+                                    alt82=2;
                                 }
                                 else {
                                     if (backtracking>0) {failed=true; return current;}
@@ -10081,11 +10081,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     {
                     int LA82_18 = input.LA(3);
 
-                    if ( ((LA82_18>=55 && LA82_18<=60)) ) {
-                        alt82=1;
-                    }
-                    else if ( (LA82_18==EOF||LA82_18==RULE_COMMENT_ANNOTATION||LA82_18==16||LA82_18==18||(LA82_18>=21 && LA82_18<=25)||LA82_18==27||(LA82_18>=30 && LA82_18<=34)||(LA82_18>=37 && LA82_18<=41)||LA82_18==44||(LA82_18>=49 && LA82_18<=54)||(LA82_18>=62 && LA82_18<=63)) ) {
+                    if ( (LA82_18==EOF||LA82_18==RULE_COMMENT_ANNOTATION||LA82_18==16||LA82_18==18||(LA82_18>=21 && LA82_18<=25)||LA82_18==27||(LA82_18>=30 && LA82_18<=34)||(LA82_18>=37 && LA82_18<=41)||LA82_18==44||(LA82_18>=49 && LA82_18<=54)||(LA82_18>=62 && LA82_18<=63)) ) {
                         alt82=2;
+                    }
+                    else if ( ((LA82_18>=55 && LA82_18<=60)) ) {
+                        alt82=1;
                     }
                     else {
                         if (backtracking>0) {failed=true; return current;}
@@ -10159,6 +10159,16 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                         }
                         }
                         break;
+                    case 55:
+                    case 56:
+                    case 57:
+                    case 58:
+                    case 59:
+                    case 60:
+                        {
+                        alt82=1;
+                        }
+                        break;
                     case EOF:
                     case RULE_COMMENT_ANNOTATION:
                     case 16:
@@ -10190,16 +10200,6 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     case 63:
                         {
                         alt82=2;
-                        }
-                        break;
-                    case 55:
-                    case 56:
-                    case 57:
-                    case 58:
-                    case 59:
-                    case 60:
-                        {
-                        alt82=1;
                         }
                         break;
                     default:
@@ -16044,6 +16044,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
                 if ( (LA106_2==RULE_ID) ) {
                     switch ( input.LA(3) ) {
+                    case RULE_FLOAT:
+                        {
+                        alt106=7;
+                        }
+                        break;
                     case RULE_INT:
                         {
                         alt106=6;
@@ -16054,9 +16059,15 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                         alt106=5;
                         }
                         break;
-                    case RULE_FLOAT:
+                    case RULE_TYPEID:
                         {
-                        alt106=7;
+                        alt106=4;
+                        }
+                        break;
+                    case RULE_ID:
+                    case RULE_STRING:
+                        {
+                        alt106=3;
                         }
                         break;
                     case EOF:
@@ -16081,49 +16092,6 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     case 54:
                         {
                         alt106=2;
-                        }
-                        break;
-                    case RULE_TYPEID:
-                        {
-                        alt106=4;
-                        }
-                        break;
-                    case RULE_STRING:
-                        {
-                        int LA106_9 = input.LA(4);
-
-                        if ( (synpred132()) ) {
-                            alt106=3;
-                        }
-                        else if ( (synpred133()) ) {
-                            alt106=4;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("5759:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_TagAnnotation_1= ruleTagAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedStringAnnotation_3= ruleTypedStringAnnotation | this_KeyBooleanValueAnnotation_4= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_5= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_6= ruleKeyFloatValueAnnotation )", 106, 9, input);
-
-                            throw nvae;
-                        }
-                        }
-                        break;
-                    case RULE_ID:
-                        {
-                        int LA106_10 = input.LA(4);
-
-                        if ( (synpred132()) ) {
-                            alt106=3;
-                        }
-                        else if ( (synpred133()) ) {
-                            alt106=4;
-                        }
-                        else {
-                            if (backtracking>0) {failed=true; return current;}
-                            NoViableAltException nvae =
-                                new NoViableAltException("5759:1: (this_CommentAnnotation_0= ruleCommentAnnotation | this_TagAnnotation_1= ruleTagAnnotation | this_KeyStringValueAnnotation_2= ruleKeyStringValueAnnotation | this_TypedStringAnnotation_3= ruleTypedStringAnnotation | this_KeyBooleanValueAnnotation_4= ruleKeyBooleanValueAnnotation | this_KeyIntValueAnnotation_5= ruleKeyIntValueAnnotation | this_KeyFloatValueAnnotation_6= ruleKeyFloatValueAnnotation )", 106, 10, input);
-
-                            throw nvae;
-                        }
                         }
                         break;
                     default:
@@ -16971,7 +16939,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start ruleTypedStringAnnotation
-    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6103:1: ruleTypedStringAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) ;
+    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6103:1: ruleTypedStringAnnotation returns [EObject current=null] : ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) ;
     public final EObject ruleTypedStringAnnotation() throws RecognitionException {
         EObject current = null;
 
@@ -16985,11 +16953,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
          EObject temp=null; setCurrentLookahead(); resetLookahead(); 
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6108:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6108:6: ( ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) )? ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )? )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6109:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_type_2_0= RULE_TYPEID ) ) ( (lv_value_3_0= ruleEString ) ) ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
             {
             match(input,25,FollowSets000.FOLLOW_25_in_ruleTypedStringAnnotation9794); if (failed) return current;
             if ( backtracking==0 ) {
@@ -17034,55 +17002,44 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6137:2: ( (lv_type_2_0= RULE_TYPEID ) )?
-            int alt111=2;
-            int LA111_0 = input.LA(1);
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6137:2: ( (lv_type_2_0= RULE_TYPEID ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6138:1: (lv_type_2_0= RULE_TYPEID )
+            {
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6138:1: (lv_type_2_0= RULE_TYPEID )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6139:3: lv_type_2_0= RULE_TYPEID
+            {
+            lv_type_2_0=(Token)input.LT(1);
+            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation9833); if (failed) return current;
+            if ( backtracking==0 ) {
 
-            if ( (LA111_0==RULE_TYPEID) ) {
-                alt111=1;
+              			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
+              		
             }
-            switch (alt111) {
-                case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6138:1: (lv_type_2_0= RULE_TYPEID )
-                    {
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6138:1: (lv_type_2_0= RULE_TYPEID )
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6139:3: lv_type_2_0= RULE_TYPEID
-                    {
-                    lv_type_2_0=(Token)input.LT(1);
-                    match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation9833); if (failed) return current;
-                    if ( backtracking==0 ) {
+            if ( backtracking==0 ) {
 
-                      			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
-                      		
-                    }
-                    if ( backtracking==0 ) {
-
-                      	        if (current==null) {
-                      	            current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
-                      	            associateNodeWithAstElement(currentNode, current);
-                      	        }
-                      	        try {
-                      	       		set(
-                      	       			current, 
-                      	       			"type",
-                      	        		lv_type_2_0, 
-                      	        		"TypeId", 
-                      	        		lastConsumedNode);
-                      	        } catch (ValueConverterException vce) {
-                      				handleValueConverterException(vce);
-                      	        }
-                      	    
-                    }
-
-                    }
-
-
-                    }
-                    break;
+              	        if (current==null) {
+              	            current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+              	            associateNodeWithAstElement(currentNode, current);
+              	        }
+              	        try {
+              	       		set(
+              	       			current, 
+              	       			"type",
+              	        		lv_type_2_0, 
+              	        		"TypeId", 
+              	        		lastConsumedNode);
+              	        } catch (ValueConverterException vce) {
+              				handleValueConverterException(vce);
+              	        }
+              	    
+            }
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6161:3: ( (lv_value_3_0= ruleEString ) )
+
+            }
+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6161:2: ( (lv_value_3_0= ruleEString ) )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6162:1: (lv_value_3_0= ruleEString )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6162:1: (lv_value_3_0= ruleEString )
@@ -17093,7 +17050,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
               	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0(), currentNode); 
               	    
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_ruleTypedStringAnnotation9860);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_ruleTypedStringAnnotation9859);
             lv_value_3_0=ruleEString();
             _fsp--;
             if (failed) return current;
@@ -17123,34 +17080,34 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6185:2: ( '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')' )?
-            int alt113=2;
-            int LA113_0 = input.LA(1);
+            int alt112=2;
+            int LA112_0 = input.LA(1);
 
-            if ( (LA113_0==20) ) {
-                alt113=1;
+            if ( (LA112_0==20) ) {
+                alt112=1;
             }
-            switch (alt113) {
+            switch (alt112) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6185:4: '(' ( (lv_annotations_5_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,20,FollowSets000.FOLLOW_20_in_ruleTypedStringAnnotation9871); if (failed) return current;
+                    match(input,20,FollowSets000.FOLLOW_20_in_ruleTypedStringAnnotation9870); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6189:1: ( (lv_annotations_5_0= ruleAnnotation ) )*
-                    loop112:
+                    loop111:
                     do {
-                        int alt112=2;
-                        int LA112_0 = input.LA(1);
+                        int alt111=2;
+                        int LA111_0 = input.LA(1);
 
-                        if ( (LA112_0==RULE_COMMENT_ANNOTATION||LA112_0==25) ) {
-                            alt112=1;
+                        if ( (LA111_0==RULE_COMMENT_ANNOTATION||LA111_0==25) ) {
+                            alt111=1;
                         }
 
 
-                        switch (alt112) {
+                        switch (alt111) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6190:1: (lv_annotations_5_0= ruleAnnotation )
                     	    {
@@ -17162,7 +17119,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation9892);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation9891);
                     	    lv_annotations_5_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -17193,11 +17150,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop112;
+                    	    break loop111;
                         }
                     } while (true);
 
-                    match(input,21,FollowSets000.FOLLOW_21_in_ruleTypedStringAnnotation9903); if (failed) return current;
+                    match(input,21,FollowSets000.FOLLOW_21_in_ruleTypedStringAnnotation9902); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2(), null); 
@@ -17248,14 +17205,14 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyBooleanValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation9941);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation9940);
             iv_ruleKeyBooleanValueAnnotation=ruleKeyBooleanValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyBooleanValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation9951); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation9950); if (failed) return current;
 
             }
 
@@ -17291,7 +17248,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6240:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6240:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_BOOLEAN ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyBooleanValueAnnotation9986); if (failed) return current;
+            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyBooleanValueAnnotation9985); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -17304,7 +17261,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6246:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation10003); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation10002); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -17341,7 +17298,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6270:3: lv_value_2_0= RULE_BOOLEAN
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation10025); if (failed) return current;
+            match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation10024); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0(), "value"); 
@@ -17372,34 +17329,34 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6292:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt115=2;
-            int LA115_0 = input.LA(1);
+            int alt114=2;
+            int LA114_0 = input.LA(1);
 
-            if ( (LA115_0==20) ) {
-                alt115=1;
+            if ( (LA114_0==20) ) {
+                alt114=1;
             }
-            switch (alt115) {
+            switch (alt114) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6292:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyBooleanValueAnnotation10041); if (failed) return current;
+                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyBooleanValueAnnotation10040); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6296:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop114:
+                    loop113:
                     do {
-                        int alt114=2;
-                        int LA114_0 = input.LA(1);
+                        int alt113=2;
+                        int LA113_0 = input.LA(1);
 
-                        if ( (LA114_0==RULE_COMMENT_ANNOTATION||LA114_0==25) ) {
-                            alt114=1;
+                        if ( (LA113_0==RULE_COMMENT_ANNOTATION||LA113_0==25) ) {
+                            alt113=1;
                         }
 
 
-                        switch (alt114) {
+                        switch (alt113) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6297:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -17411,7 +17368,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation10062);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation10061);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -17442,11 +17399,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop114;
+                    	    break loop113;
                         }
                     } while (true);
 
-                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyBooleanValueAnnotation10073); if (failed) return current;
+                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyBooleanValueAnnotation10072); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyBooleanValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -17497,14 +17454,14 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyIntValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation10111);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation10110);
             iv_ruleKeyIntValueAnnotation=ruleKeyIntValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyIntValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation10121); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation10120); if (failed) return current;
 
             }
 
@@ -17540,7 +17497,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6347:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6347:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_INT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyIntValueAnnotation10156); if (failed) return current;
+            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyIntValueAnnotation10155); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -17553,7 +17510,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6353:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation10173); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation10172); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -17590,7 +17547,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6377:3: lv_value_2_0= RULE_INT
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation10195); if (failed) return current;
+            match(input,RULE_INT,FollowSets000.FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation10194); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0(), "value"); 
@@ -17621,34 +17578,34 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6399:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt117=2;
-            int LA117_0 = input.LA(1);
+            int alt116=2;
+            int LA116_0 = input.LA(1);
 
-            if ( (LA117_0==20) ) {
-                alt117=1;
+            if ( (LA116_0==20) ) {
+                alt116=1;
             }
-            switch (alt117) {
+            switch (alt116) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6399:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyIntValueAnnotation10211); if (failed) return current;
+                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyIntValueAnnotation10210); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6403:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop116:
+                    loop115:
                     do {
-                        int alt116=2;
-                        int LA116_0 = input.LA(1);
+                        int alt115=2;
+                        int LA115_0 = input.LA(1);
 
-                        if ( (LA116_0==RULE_COMMENT_ANNOTATION||LA116_0==25) ) {
-                            alt116=1;
+                        if ( (LA115_0==RULE_COMMENT_ANNOTATION||LA115_0==25) ) {
+                            alt115=1;
                         }
 
 
-                        switch (alt116) {
+                        switch (alt115) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6404:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -17660,7 +17617,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyIntValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation10232);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation10231);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -17691,11 +17648,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop116;
+                    	    break loop115;
                         }
                     } while (true);
 
-                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyIntValueAnnotation10243); if (failed) return current;
+                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyIntValueAnnotation10242); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyIntValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -17746,14 +17703,14 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getKeyFloatValueAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation10281);
+            pushFollow(FollowSets000.FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation10280);
             iv_ruleKeyFloatValueAnnotation=ruleKeyFloatValueAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleKeyFloatValueAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation10291); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation10290); if (failed) return current;
 
             }
 
@@ -17789,7 +17746,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6454:1: ( '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )? )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6454:3: '@' ( (lv_name_1_0= RULE_ID ) ) ( (lv_value_2_0= RULE_FLOAT ) ) ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
             {
-            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyFloatValueAnnotation10326); if (failed) return current;
+            match(input,25,FollowSets000.FOLLOW_25_in_ruleKeyFloatValueAnnotation10325); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
@@ -17802,7 +17759,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6460:3: lv_name_1_0= RULE_ID
             {
             lv_name_1_0=(Token)input.LT(1);
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation10343); if (failed) return current;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation10342); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
@@ -17839,7 +17796,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6484:3: lv_value_2_0= RULE_FLOAT
             {
             lv_value_2_0=(Token)input.LT(1);
-            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation10365); if (failed) return current;
+            match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation10364); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0(), "value"); 
@@ -17870,34 +17827,34 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             }
 
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6506:2: ( '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')' )?
-            int alt119=2;
-            int LA119_0 = input.LA(1);
+            int alt118=2;
+            int LA118_0 = input.LA(1);
 
-            if ( (LA119_0==20) ) {
-                alt119=1;
+            if ( (LA118_0==20) ) {
+                alt118=1;
             }
-            switch (alt119) {
+            switch (alt118) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6506:4: '(' ( (lv_annotations_4_0= ruleAnnotation ) )* ')'
                     {
-                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyFloatValueAnnotation10381); if (failed) return current;
+                    match(input,20,FollowSets000.FOLLOW_20_in_ruleKeyFloatValueAnnotation10380); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getLeftParenthesisKeyword_3_0(), null); 
                           
                     }
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6510:1: ( (lv_annotations_4_0= ruleAnnotation ) )*
-                    loop118:
+                    loop117:
                     do {
-                        int alt118=2;
-                        int LA118_0 = input.LA(1);
+                        int alt117=2;
+                        int LA117_0 = input.LA(1);
 
-                        if ( (LA118_0==RULE_COMMENT_ANNOTATION||LA118_0==25) ) {
-                            alt118=1;
+                        if ( (LA117_0==RULE_COMMENT_ANNOTATION||LA117_0==25) ) {
+                            alt117=1;
                         }
 
 
-                        switch (alt118) {
+                        switch (alt117) {
                     	case 1 :
                     	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6511:1: (lv_annotations_4_0= ruleAnnotation )
                     	    {
@@ -17909,7 +17866,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	      	        currentNode=createCompositeNode(grammarAccess.getKeyFloatValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_3_1_0(), currentNode); 
                     	      	    
                     	    }
-                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation10402);
+                    	    pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation10401);
                     	    lv_annotations_4_0=ruleAnnotation();
                     	    _fsp--;
                     	    if (failed) return current;
@@ -17940,11 +17897,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     	    break;
 
                     	default :
-                    	    break loop118;
+                    	    break loop117;
                         }
                     } while (true);
 
-                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyFloatValueAnnotation10413); if (failed) return current;
+                    match(input,21,FollowSets000.FOLLOW_21_in_ruleKeyFloatValueAnnotation10412); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               createLeafNode(grammarAccess.getKeyFloatValueAnnotationAccess().getRightParenthesisKeyword_3_2(), null); 
@@ -17995,14 +17952,14 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getImportAnnotationRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleImportAnnotation_in_entryRuleImportAnnotation10451);
+            pushFollow(FollowSets000.FOLLOW_ruleImportAnnotation_in_entryRuleImportAnnotation10450);
             iv_ruleImportAnnotation=ruleImportAnnotation();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleImportAnnotation; 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleImportAnnotation10461); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleImportAnnotation10460); if (failed) return current;
 
             }
 
@@ -18035,7 +17992,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6561:1: ( 'import' ( (lv_importURI_1_0= RULE_STRING ) ) )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6561:3: 'import' ( (lv_importURI_1_0= RULE_STRING ) )
             {
-            match(input,48,FollowSets000.FOLLOW_48_in_ruleImportAnnotation10496); if (failed) return current;
+            match(input,48,FollowSets000.FOLLOW_48_in_ruleImportAnnotation10495); if (failed) return current;
             if ( backtracking==0 ) {
 
                       createLeafNode(grammarAccess.getImportAnnotationAccess().getImportKeyword_0(), null); 
@@ -18048,7 +18005,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6567:3: lv_importURI_1_0= RULE_STRING
             {
             lv_importURI_1_0=(Token)input.LT(1);
-            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleImportAnnotation10513); if (failed) return current;
+            match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleImportAnnotation10512); if (failed) return current;
             if ( backtracking==0 ) {
 
               			createLeafNode(grammarAccess.getImportAnnotationAccess().getImportURISTRINGTerminalRuleCall_1_0(), "importURI"); 
@@ -18117,14 +18074,14 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             if ( backtracking==0 ) {
                currentNode = createCompositeNode(grammarAccess.getEStringRule(), currentNode); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_entryRuleEString10555);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_entryRuleEString10554);
             iv_ruleEString=ruleEString();
             _fsp--;
             if (failed) return current;
             if ( backtracking==0 ) {
                current =iv_ruleEString.getText(); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEString10566); if (failed) return current;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleEString10565); if (failed) return current;
 
             }
 
@@ -18156,28 +18113,28 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6612:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6612:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )
-            int alt120=2;
-            int LA120_0 = input.LA(1);
+            int alt119=2;
+            int LA119_0 = input.LA(1);
 
-            if ( (LA120_0==RULE_STRING) ) {
-                alt120=1;
+            if ( (LA119_0==RULE_STRING) ) {
+                alt119=1;
             }
-            else if ( (LA120_0==RULE_ID) ) {
-                alt120=2;
+            else if ( (LA119_0==RULE_ID) ) {
+                alt119=2;
             }
             else {
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6612:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 120, 0, input);
+                    new NoViableAltException("6612:1: (this_STRING_0= RULE_STRING | this_ID_1= RULE_ID )", 119, 0, input);
 
                 throw nvae;
             }
-            switch (alt120) {
+            switch (alt119) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6612:6: this_STRING_0= RULE_STRING
                     {
                     this_STRING_0=(Token)input.LT(1);
-                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEString10606); if (failed) return current;
+                    match(input,RULE_STRING,FollowSets000.FOLLOW_RULE_STRING_in_ruleEString10605); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_STRING_0);
@@ -18195,7 +18152,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6620:10: this_ID_1= RULE_ID
                     {
                     this_ID_1=(Token)input.LT(1);
-                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEString10632); if (failed) return current;
+                    match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_ruleEString10631); if (failed) return current;
                     if ( backtracking==0 ) {
 
                       		current.merge(this_ID_1);
@@ -18244,44 +18201,44 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6640:1: ( ( 'normal' ) | ( 'conditional' ) | ( 'reference' ) | ( 'textual' ) )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6640:1: ( ( 'normal' ) | ( 'conditional' ) | ( 'reference' ) | ( 'textual' ) )
-            int alt121=4;
+            int alt120=4;
             switch ( input.LA(1) ) {
             case 49:
                 {
-                alt121=1;
+                alt120=1;
                 }
                 break;
             case 50:
                 {
-                alt121=2;
+                alt120=2;
                 }
                 break;
             case 51:
                 {
-                alt121=3;
+                alt120=3;
                 }
                 break;
             case 18:
                 {
-                alt121=4;
+                alt120=4;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6640:1: ( ( 'normal' ) | ( 'conditional' ) | ( 'reference' ) | ( 'textual' ) )", 121, 0, input);
+                    new NoViableAltException("6640:1: ( ( 'normal' ) | ( 'conditional' ) | ( 'reference' ) | ( 'textual' ) )", 120, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt121) {
+            switch (alt120) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6640:2: ( 'normal' )
                     {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6640:2: ( 'normal' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6640:4: 'normal'
                     {
-                    match(input,49,FollowSets000.FOLLOW_49_in_ruleStateType10689); if (failed) return current;
+                    match(input,49,FollowSets000.FOLLOW_49_in_ruleStateType10688); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getNORMALEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -18300,7 +18257,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6646:6: ( 'conditional' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6646:8: 'conditional'
                     {
-                    match(input,50,FollowSets000.FOLLOW_50_in_ruleStateType10704); if (failed) return current;
+                    match(input,50,FollowSets000.FOLLOW_50_in_ruleStateType10703); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getCONDITIONALEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -18319,7 +18276,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6652:6: ( 'reference' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6652:8: 'reference'
                     {
-                    match(input,51,FollowSets000.FOLLOW_51_in_ruleStateType10719); if (failed) return current;
+                    match(input,51,FollowSets000.FOLLOW_51_in_ruleStateType10718); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getREFERENCEEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -18338,7 +18295,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6658:6: ( 'textual' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6658:8: 'textual'
                     {
-                    match(input,18,FollowSets000.FOLLOW_18_in_ruleStateType10734); if (failed) return current;
+                    match(input,18,FollowSets000.FOLLOW_18_in_ruleStateType10733); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getStateTypeAccess().getTEXTUALEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -18386,39 +18343,39 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6673:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6673:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )
-            int alt122=3;
+            int alt121=3;
             switch ( input.LA(1) ) {
             case 52:
                 {
-                alt122=1;
+                alt121=1;
                 }
                 break;
             case 53:
                 {
-                alt122=2;
+                alt121=2;
                 }
                 break;
             case 54:
                 {
-                alt122=3;
+                alt121=3;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6673:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 122, 0, input);
+                    new NoViableAltException("6673:1: ( ( '-->' ) | ( 'o->' ) | ( '>->' ) )", 121, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt122) {
+            switch (alt121) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6673:2: ( '-->' )
                     {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6673:2: ( '-->' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6673:4: '-->'
                     {
-                    match(input,52,FollowSets000.FOLLOW_52_in_ruleTransitionType10777); if (failed) return current;
+                    match(input,52,FollowSets000.FOLLOW_52_in_ruleTransitionType10776); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getWEAKABORTEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -18437,7 +18394,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6679:6: ( 'o->' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6679:8: 'o->'
                     {
-                    match(input,53,FollowSets000.FOLLOW_53_in_ruleTransitionType10792); if (failed) return current;
+                    match(input,53,FollowSets000.FOLLOW_53_in_ruleTransitionType10791); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getSTRONGABORTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -18456,7 +18413,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6685:6: ( '>->' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6685:8: '>->'
                     {
-                    match(input,54,FollowSets000.FOLLOW_54_in_ruleTransitionType10807); if (failed) return current;
+                    match(input,54,FollowSets000.FOLLOW_54_in_ruleTransitionType10806); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getTransitionTypeAccess().getNORMALTERMINATIONEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -18506,7 +18463,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6700:1: ( ':' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6700:3: ':'
             {
-            match(input,17,FollowSets000.FOLLOW_17_in_ruleDivOperator10849); if (failed) return current;
+            match(input,17,FollowSets000.FOLLOW_17_in_ruleDivOperator10848); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getDivOperatorAccess().getDIVEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18548,54 +18505,54 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6715:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6715:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )
-            int alt123=6;
+            int alt122=6;
             switch ( input.LA(1) ) {
             case 55:
                 {
-                alt123=1;
+                alt122=1;
                 }
                 break;
             case 56:
                 {
-                alt123=2;
+                alt122=2;
                 }
                 break;
             case 57:
                 {
-                alt123=3;
+                alt122=3;
                 }
                 break;
             case 58:
                 {
-                alt123=4;
+                alt122=4;
                 }
                 break;
             case 59:
                 {
-                alt123=5;
+                alt122=5;
                 }
                 break;
             case 60:
                 {
-                alt123=6;
+                alt122=6;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6715:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 123, 0, input);
+                    new NoViableAltException("6715:1: ( ( '=' ) | ( '<' ) | ( '<=' ) | ( '>' ) | ( '>=' ) | ( '<>' ) )", 122, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt123) {
+            switch (alt122) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6715:2: ( '=' )
                     {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6715:2: ( '=' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6715:4: '='
                     {
-                    match(input,55,FollowSets000.FOLLOW_55_in_ruleCompareOperator10891); if (failed) return current;
+                    match(input,55,FollowSets000.FOLLOW_55_in_ruleCompareOperator10890); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getEQEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -18614,7 +18571,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6721:6: ( '<' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6721:8: '<'
                     {
-                    match(input,56,FollowSets000.FOLLOW_56_in_ruleCompareOperator10906); if (failed) return current;
+                    match(input,56,FollowSets000.FOLLOW_56_in_ruleCompareOperator10905); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLTEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -18633,7 +18590,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6727:6: ( '<=' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6727:8: '<='
                     {
-                    match(input,57,FollowSets000.FOLLOW_57_in_ruleCompareOperator10921); if (failed) return current;
+                    match(input,57,FollowSets000.FOLLOW_57_in_ruleCompareOperator10920); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getLEQEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -18652,7 +18609,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6733:6: ( '>' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6733:8: '>'
                     {
-                    match(input,58,FollowSets000.FOLLOW_58_in_ruleCompareOperator10936); if (failed) return current;
+                    match(input,58,FollowSets000.FOLLOW_58_in_ruleCompareOperator10935); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -18671,7 +18628,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6739:6: ( '>=' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6739:8: '>='
                     {
-                    match(input,59,FollowSets000.FOLLOW_59_in_ruleCompareOperator10951); if (failed) return current;
+                    match(input,59,FollowSets000.FOLLOW_59_in_ruleCompareOperator10950); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getGEQEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -18690,7 +18647,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6745:6: ( '<>' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6745:8: '<>'
                     {
-                    match(input,60,FollowSets000.FOLLOW_60_in_ruleCompareOperator10966); if (failed) return current;
+                    match(input,60,FollowSets000.FOLLOW_60_in_ruleCompareOperator10965); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCompareOperatorAccess().getNEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -18740,7 +18697,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6760:1: ( 'pre' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6760:3: 'pre'
             {
-            match(input,61,FollowSets000.FOLLOW_61_in_rulePreOperator11008); if (failed) return current;
+            match(input,61,FollowSets000.FOLLOW_61_in_rulePreOperator11007); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getPreOperatorAccess().getPREEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18784,7 +18741,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6775:1: ( 'or' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6775:3: 'or'
             {
-            match(input,62,FollowSets000.FOLLOW_62_in_ruleOrOperator11049); if (failed) return current;
+            match(input,62,FollowSets000.FOLLOW_62_in_ruleOrOperator11048); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getOrOperatorAccess().getOREnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18828,7 +18785,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6790:1: ( 'and' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6790:3: 'and'
             {
-            match(input,63,FollowSets000.FOLLOW_63_in_ruleAndOperator11090); if (failed) return current;
+            match(input,63,FollowSets000.FOLLOW_63_in_ruleAndOperator11089); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAndOperatorAccess().getANDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18872,7 +18829,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6805:1: ( 'not' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6805:3: 'not'
             {
-            match(input,64,FollowSets000.FOLLOW_64_in_ruleNotOperator11131); if (failed) return current;
+            match(input,64,FollowSets000.FOLLOW_64_in_ruleNotOperator11130); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getNotOperatorAccess().getNOTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18916,7 +18873,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6820:1: ( '+' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6820:3: '+'
             {
-            match(input,65,FollowSets000.FOLLOW_65_in_ruleAddOperator11172); if (failed) return current;
+            match(input,65,FollowSets000.FOLLOW_65_in_ruleAddOperator11171); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getAddOperatorAccess().getADDEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -18960,7 +18917,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6835:1: ( '-' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6835:3: '-'
             {
-            match(input,66,FollowSets000.FOLLOW_66_in_ruleSubOperator11213); if (failed) return current;
+            match(input,66,FollowSets000.FOLLOW_66_in_ruleSubOperator11212); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getSubOperatorAccess().getSUBEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -19004,7 +18961,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6850:1: ( '*' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6850:3: '*'
             {
-            match(input,67,FollowSets000.FOLLOW_67_in_ruleMultOperator11254); if (failed) return current;
+            match(input,67,FollowSets000.FOLLOW_67_in_ruleMultOperator11253); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getMultOperatorAccess().getMULTEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -19048,7 +19005,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6865:1: ( 'mod' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6865:3: 'mod'
             {
-            match(input,68,FollowSets000.FOLLOW_68_in_ruleModOperator11295); if (failed) return current;
+            match(input,68,FollowSets000.FOLLOW_68_in_ruleModOperator11294); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getModOperatorAccess().getMODEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -19092,7 +19049,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6880:1: ( '?' )
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6880:3: '?'
             {
-            match(input,69,FollowSets000.FOLLOW_69_in_ruleValueTestOperator11336); if (failed) return current;
+            match(input,69,FollowSets000.FOLLOW_69_in_ruleValueTestOperator11335); if (failed) return current;
             if ( backtracking==0 ) {
 
                       current = grammarAccess.getValueTestOperatorAccess().getVALEnumLiteralDeclaration().getEnumLiteral().getInstance();
@@ -19134,64 +19091,64 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6895:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6895:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )
-            int alt124=8;
+            int alt123=8;
             switch ( input.LA(1) ) {
             case 70:
                 {
-                alt124=1;
+                alt123=1;
                 }
                 break;
             case 71:
                 {
-                alt124=2;
+                alt123=2;
                 }
                 break;
             case 72:
                 {
-                alt124=3;
+                alt123=3;
                 }
                 break;
             case 73:
                 {
-                alt124=4;
+                alt123=4;
                 }
                 break;
             case 74:
                 {
-                alt124=5;
+                alt123=5;
                 }
                 break;
             case 75:
                 {
-                alt124=6;
+                alt123=6;
                 }
                 break;
             case 76:
                 {
-                alt124=7;
+                alt123=7;
                 }
                 break;
             case 77:
                 {
-                alt124=8;
+                alt123=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6895:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 124, 0, input);
+                    new NoViableAltException("6895:1: ( ( 'pure' ) | ( 'boolean' ) | ( 'unsigned' ) | ( 'integer' ) | ( 'float' ) | ( 'double' ) | ( 'string' ) | ( 'host' ) )", 123, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt124) {
+            switch (alt123) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6895:2: ( 'pure' )
                     {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6895:2: ( 'pure' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6895:4: 'pure'
                     {
-                    match(input,70,FollowSets000.FOLLOW_70_in_ruleValueType11378); if (failed) return current;
+                    match(input,70,FollowSets000.FOLLOW_70_in_ruleValueType11377); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getPUREEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -19210,7 +19167,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6901:6: ( 'boolean' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6901:8: 'boolean'
                     {
-                    match(input,71,FollowSets000.FOLLOW_71_in_ruleValueType11393); if (failed) return current;
+                    match(input,71,FollowSets000.FOLLOW_71_in_ruleValueType11392); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getBOOLEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -19229,7 +19186,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6907:6: ( 'unsigned' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6907:8: 'unsigned'
                     {
-                    match(input,72,FollowSets000.FOLLOW_72_in_ruleValueType11408); if (failed) return current;
+                    match(input,72,FollowSets000.FOLLOW_72_in_ruleValueType11407); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getUNSIGNEDEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -19248,7 +19205,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6913:6: ( 'integer' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6913:8: 'integer'
                     {
-                    match(input,73,FollowSets000.FOLLOW_73_in_ruleValueType11423); if (failed) return current;
+                    match(input,73,FollowSets000.FOLLOW_73_in_ruleValueType11422); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getINTEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -19267,7 +19224,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6919:6: ( 'float' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6919:8: 'float'
                     {
-                    match(input,74,FollowSets000.FOLLOW_74_in_ruleValueType11438); if (failed) return current;
+                    match(input,74,FollowSets000.FOLLOW_74_in_ruleValueType11437); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getFLOATEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -19286,7 +19243,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6925:6: ( 'double' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6925:8: 'double'
                     {
-                    match(input,75,FollowSets000.FOLLOW_75_in_ruleValueType11453); if (failed) return current;
+                    match(input,75,FollowSets000.FOLLOW_75_in_ruleValueType11452); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getDOUBLEEnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -19305,7 +19262,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6931:6: ( 'string' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6931:8: 'string'
                     {
-                    match(input,76,FollowSets000.FOLLOW_76_in_ruleValueType11468); if (failed) return current;
+                    match(input,76,FollowSets000.FOLLOW_76_in_ruleValueType11467); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getSTRINGEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -19324,7 +19281,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6937:6: ( 'host' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6937:8: 'host'
                     {
-                    match(input,77,FollowSets000.FOLLOW_77_in_ruleValueType11483); if (failed) return current;
+                    match(input,77,FollowSets000.FOLLOW_77_in_ruleValueType11482); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getValueTypeAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -19372,64 +19329,64 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6952:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
             {
             // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6952:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )
-            int alt125=8;
+            int alt124=8;
             switch ( input.LA(1) ) {
             case 78:
                 {
-                alt125=1;
+                alt124=1;
                 }
                 break;
             case 65:
                 {
-                alt125=2;
+                alt124=2;
                 }
                 break;
             case 67:
                 {
-                alt125=3;
+                alt124=3;
                 }
                 break;
             case 79:
                 {
-                alt125=4;
+                alt124=4;
                 }
                 break;
             case 80:
                 {
-                alt125=5;
+                alt124=5;
                 }
                 break;
             case 62:
                 {
-                alt125=6;
+                alt124=6;
                 }
                 break;
             case 63:
                 {
-                alt125=7;
+                alt124=7;
                 }
                 break;
             case 77:
                 {
-                alt125=8;
+                alt124=8;
                 }
                 break;
             default:
                 if (backtracking>0) {failed=true; return current;}
                 NoViableAltException nvae =
-                    new NoViableAltException("6952:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 125, 0, input);
+                    new NoViableAltException("6952:1: ( ( 'none' ) | ( '+' ) | ( '*' ) | ( 'max' ) | ( 'min' ) | ( 'or' ) | ( 'and' ) | ( 'host' ) )", 124, 0, input);
 
                 throw nvae;
             }
 
-            switch (alt125) {
+            switch (alt124) {
                 case 1 :
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6952:2: ( 'none' )
                     {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6952:2: ( 'none' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6952:4: 'none'
                     {
-                    match(input,78,FollowSets000.FOLLOW_78_in_ruleCombineOperator11526); if (failed) return current;
+                    match(input,78,FollowSets000.FOLLOW_78_in_ruleCombineOperator11525); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getNONEEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
@@ -19448,7 +19405,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6958:6: ( '+' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6958:8: '+'
                     {
-                    match(input,65,FollowSets000.FOLLOW_65_in_ruleCombineOperator11541); if (failed) return current;
+                    match(input,65,FollowSets000.FOLLOW_65_in_ruleCombineOperator11540); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getADDEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
@@ -19467,7 +19424,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6964:6: ( '*' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6964:8: '*'
                     {
-                    match(input,67,FollowSets000.FOLLOW_67_in_ruleCombineOperator11556); if (failed) return current;
+                    match(input,67,FollowSets000.FOLLOW_67_in_ruleCombineOperator11555); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMULTEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
@@ -19486,7 +19443,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6970:6: ( 'max' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6970:8: 'max'
                     {
-                    match(input,79,FollowSets000.FOLLOW_79_in_ruleCombineOperator11571); if (failed) return current;
+                    match(input,79,FollowSets000.FOLLOW_79_in_ruleCombineOperator11570); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMAXEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
@@ -19505,7 +19462,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6976:6: ( 'min' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6976:8: 'min'
                     {
-                    match(input,80,FollowSets000.FOLLOW_80_in_ruleCombineOperator11586); if (failed) return current;
+                    match(input,80,FollowSets000.FOLLOW_80_in_ruleCombineOperator11585); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getMINEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
@@ -19524,7 +19481,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6982:6: ( 'or' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6982:8: 'or'
                     {
-                    match(input,62,FollowSets000.FOLLOW_62_in_ruleCombineOperator11601); if (failed) return current;
+                    match(input,62,FollowSets000.FOLLOW_62_in_ruleCombineOperator11600); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getOREnumLiteralDeclaration_5().getEnumLiteral().getInstance();
@@ -19543,7 +19500,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6988:6: ( 'and' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6988:8: 'and'
                     {
-                    match(input,63,FollowSets000.FOLLOW_63_in_ruleCombineOperator11616); if (failed) return current;
+                    match(input,63,FollowSets000.FOLLOW_63_in_ruleCombineOperator11615); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getANDEnumLiteralDeclaration_6().getEnumLiteral().getInstance();
@@ -19562,7 +19519,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6994:6: ( 'host' )
                     // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:6994:8: 'host'
                     {
-                    match(input,77,FollowSets000.FOLLOW_77_in_ruleCombineOperator11631); if (failed) return current;
+                    match(input,77,FollowSets000.FOLLOW_77_in_ruleCombineOperator11630); if (failed) return current;
                     if ( backtracking==0 ) {
 
                               current = grammarAccess.getCombineOperatorAccess().getHOSTEnumLiteralDeclaration_7().getEnumLiteral().getInstance();
@@ -19666,17 +19623,17 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:123:4: ( ( ruleAnnotation ) )* 'region' ( ( RULE_ID ) )? ( ( RULE_STRING ) )? ':' ( ( ( ruleVariable ) ) | ( ( ruleSignal ) ) )* ( ( ruleTextualCode ) )*
         {
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:123:4: ( ( ruleAnnotation ) )*
-        loop126:
+        loop125:
         do {
-            int alt126=2;
-            int LA126_0 = input.LA(1);
+            int alt125=2;
+            int LA125_0 = input.LA(1);
 
-            if ( (LA126_0==RULE_COMMENT_ANNOTATION||LA126_0==25) ) {
-                alt126=1;
+            if ( (LA125_0==RULE_COMMENT_ANNOTATION||LA125_0==25) ) {
+                alt125=1;
             }
 
 
-            switch (alt126) {
+            switch (alt125) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:124:1: ( ruleAnnotation )
         	    {
@@ -19700,19 +19657,19 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop126;
+        	    break loop125;
             }
         } while (true);
 
         match(input,16,FollowSets000.FOLLOW_16_in_synpred8171); if (failed) return ;
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:151:1: ( ( RULE_ID ) )?
-        int alt127=2;
-        int LA127_0 = input.LA(1);
+        int alt126=2;
+        int LA126_0 = input.LA(1);
 
-        if ( (LA127_0==RULE_ID) ) {
-            alt127=1;
+        if ( (LA126_0==RULE_ID) ) {
+            alt126=1;
         }
-        switch (alt127) {
+        switch (alt126) {
             case 1 :
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:152:1: ( RULE_ID )
                 {
@@ -19730,13 +19687,13 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         }
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:175:3: ( ( RULE_STRING ) )?
-        int alt128=2;
-        int LA128_0 = input.LA(1);
+        int alt127=2;
+        int LA127_0 = input.LA(1);
 
-        if ( (LA128_0==RULE_STRING) ) {
-            alt128=1;
+        if ( (LA127_0==RULE_STRING) ) {
+            alt127=1;
         }
-        switch (alt128) {
+        switch (alt127) {
             case 1 :
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:176:1: ( RULE_STRING )
                 {
@@ -19755,19 +19712,19 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
         match(input,17,FollowSets000.FOLLOW_17_in_synpred8227); if (failed) return ;
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:203:1: ( ( ( ruleVariable ) ) | ( ( ruleSignal ) ) )*
-        loop129:
+        loop128:
         do {
-            int alt129=3;
+            int alt128=3;
             switch ( input.LA(1) ) {
             case RULE_COMMENT_ANNOTATION:
                 {
-                int LA129_3 = input.LA(2);
+                int LA128_3 = input.LA(2);
 
                 if ( (synpred5()) ) {
-                    alt129=1;
+                    alt128=1;
                 }
                 else if ( (synpred6()) ) {
-                    alt129=2;
+                    alt128=2;
                 }
 
 
@@ -19775,13 +19732,13 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 break;
             case 25:
                 {
-                int LA129_4 = input.LA(2);
+                int LA128_4 = input.LA(2);
 
                 if ( (synpred5()) ) {
-                    alt129=1;
+                    alt128=1;
                 }
                 else if ( (synpred6()) ) {
-                    alt129=2;
+                    alt128=2;
                 }
 
 
@@ -19789,20 +19746,20 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 break;
             case 44:
                 {
-                alt129=1;
+                alt128=1;
                 }
                 break;
             case 39:
             case 40:
             case 41:
                 {
-                alt129=2;
+                alt128=2;
                 }
                 break;
 
             }
 
-            switch (alt129) {
+            switch (alt128) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:203:2: ( ( ruleVariable ) )
         	    {
@@ -19859,22 +19816,22 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop129;
+        	    break loop128;
             }
         } while (true);
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:252:4: ( ( ruleTextualCode ) )*
-        loop130:
+        loop129:
         do {
-            int alt130=2;
-            int LA130_0 = input.LA(1);
+            int alt129=2;
+            int LA129_0 = input.LA(1);
 
-            if ( (LA130_0==18) ) {
-                alt130=1;
+            if ( (LA129_0==18) ) {
+                alt129=1;
             }
 
 
-            switch (alt130) {
+            switch (alt129) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:253:1: ( ruleTextualCode )
         	    {
@@ -19898,7 +19855,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop130;
+        	    break loop129;
             }
         } while (true);
 
@@ -19975,17 +19932,17 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:323:3: ( ( ruleAnnotation ) )* 'region' ( ( RULE_ID ) )? ( ( RULE_STRING ) )? ':' ( ( ( ruleVariable ) ) | ( ( ruleSignal ) ) )* ( ( ruleTextualCode ) )*
         {
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:323:3: ( ( ruleAnnotation ) )*
-        loop131:
+        loop130:
         do {
-            int alt131=2;
-            int LA131_0 = input.LA(1);
+            int alt130=2;
+            int LA130_0 = input.LA(1);
 
-            if ( (LA131_0==RULE_COMMENT_ANNOTATION||LA131_0==25) ) {
-                alt131=1;
+            if ( (LA130_0==RULE_COMMENT_ANNOTATION||LA130_0==25) ) {
+                alt130=1;
             }
 
 
-            switch (alt131) {
+            switch (alt130) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:324:1: ( ruleAnnotation )
         	    {
@@ -20009,19 +19966,19 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop131;
+        	    break loop130;
             }
         } while (true);
 
         match(input,16,FollowSets000.FOLLOW_16_in_synpred16428); if (failed) return ;
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:351:1: ( ( RULE_ID ) )?
-        int alt132=2;
-        int LA132_0 = input.LA(1);
+        int alt131=2;
+        int LA131_0 = input.LA(1);
 
-        if ( (LA132_0==RULE_ID) ) {
-            alt132=1;
+        if ( (LA131_0==RULE_ID) ) {
+            alt131=1;
         }
-        switch (alt132) {
+        switch (alt131) {
             case 1 :
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:352:1: ( RULE_ID )
                 {
@@ -20039,13 +19996,13 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         }
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:375:3: ( ( RULE_STRING ) )?
-        int alt133=2;
-        int LA133_0 = input.LA(1);
+        int alt132=2;
+        int LA132_0 = input.LA(1);
 
-        if ( (LA133_0==RULE_STRING) ) {
-            alt133=1;
+        if ( (LA132_0==RULE_STRING) ) {
+            alt132=1;
         }
-        switch (alt133) {
+        switch (alt132) {
             case 1 :
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:376:1: ( RULE_STRING )
                 {
@@ -20064,19 +20021,19 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
 
         match(input,17,FollowSets000.FOLLOW_17_in_synpred16484); if (failed) return ;
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:403:1: ( ( ( ruleVariable ) ) | ( ( ruleSignal ) ) )*
-        loop134:
+        loop133:
         do {
-            int alt134=3;
+            int alt133=3;
             switch ( input.LA(1) ) {
             case RULE_COMMENT_ANNOTATION:
                 {
-                int LA134_3 = input.LA(2);
+                int LA133_3 = input.LA(2);
 
                 if ( (synpred13()) ) {
-                    alt134=1;
+                    alt133=1;
                 }
                 else if ( (synpred14()) ) {
-                    alt134=2;
+                    alt133=2;
                 }
 
 
@@ -20084,13 +20041,13 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 break;
             case 25:
                 {
-                int LA134_4 = input.LA(2);
+                int LA133_4 = input.LA(2);
 
                 if ( (synpred13()) ) {
-                    alt134=1;
+                    alt133=1;
                 }
                 else if ( (synpred14()) ) {
-                    alt134=2;
+                    alt133=2;
                 }
 
 
@@ -20098,20 +20055,20 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 break;
             case 44:
                 {
-                alt134=1;
+                alt133=1;
                 }
                 break;
             case 39:
             case 40:
             case 41:
                 {
-                alt134=2;
+                alt133=2;
                 }
                 break;
 
             }
 
-            switch (alt134) {
+            switch (alt133) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:403:2: ( ( ruleVariable ) )
         	    {
@@ -20168,22 +20125,22 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop134;
+        	    break loop133;
             }
         } while (true);
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:452:4: ( ( ruleTextualCode ) )*
-        loop135:
+        loop134:
         do {
-            int alt135=2;
-            int LA135_0 = input.LA(1);
+            int alt134=2;
+            int LA134_0 = input.LA(1);
 
-            if ( (LA135_0==18) ) {
-                alt135=1;
+            if ( (LA134_0==18) ) {
+                alt134=1;
             }
 
 
-            switch (alt135) {
+            switch (alt134) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:453:1: ( ruleTextualCode )
         	    {
@@ -20207,7 +20164,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop135;
+        	    break loop134;
             }
         } while (true);
 
@@ -20356,13 +20313,13 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         }
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1020:2: ( '[' ( ( ruleSubstitution ) ) ( ',' ( ( ruleSubstitution ) ) )* ']' )?
-        int alt140=2;
-        int LA140_0 = input.LA(1);
+        int alt139=2;
+        int LA139_0 = input.LA(1);
 
-        if ( (LA140_0==26) ) {
-            alt140=1;
+        if ( (LA139_0==26) ) {
+            alt139=1;
         }
-        switch (alt140) {
+        switch (alt139) {
             case 1 :
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1020:4: '[' ( ( ruleSubstitution ) ) ( ',' ( ( ruleSubstitution ) ) )* ']'
                 {
@@ -20389,17 +20346,17 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 }
 
                 // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1048:2: ( ',' ( ( ruleSubstitution ) ) )*
-                loop139:
+                loop138:
                 do {
-                    int alt139=2;
-                    int LA139_0 = input.LA(1);
+                    int alt138=2;
+                    int LA138_0 = input.LA(1);
 
-                    if ( (LA139_0==27) ) {
-                        alt139=1;
+                    if ( (LA138_0==27) ) {
+                        alt138=1;
                     }
 
 
-                    switch (alt139) {
+                    switch (alt138) {
                 	case 1 :
                 	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1048:4: ',' ( ( ruleSubstitution ) )
                 	    {
@@ -20430,7 +20387,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
                 	    break;
 
                 	default :
-                	    break loop139;
+                	    break loop138;
                     }
                 } while (true);
 
@@ -20538,17 +20495,17 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         }
 
         // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1298:2: ( ( ruleRegion ) )*
-        loop141:
+        loop140:
         do {
-            int alt141=2;
-            int LA141_0 = input.LA(1);
+            int alt140=2;
+            int LA140_0 = input.LA(1);
 
-            if ( (LA141_0==RULE_COMMENT_ANNOTATION||LA141_0==16||LA141_0==25) ) {
-                alt141=1;
+            if ( (LA140_0==RULE_COMMENT_ANNOTATION||LA140_0==16||LA140_0==25) ) {
+                alt140=1;
             }
 
 
-            switch (alt141) {
+            switch (alt140) {
         	case 1 :
         	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:1299:1: ( ruleRegion )
         	    {
@@ -20572,7 +20529,7 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         	    break;
 
         	default :
-        	    break loop141;
+        	    break loop140;
             }
         } while (true);
 
@@ -20822,44 +20779,34 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end synpred109
 
-    // $ANTLR start synpred132
-    public final void synpred132_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:2: ( ruleKeyStringValueAnnotation )
-        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:2: ruleKeyStringValueAnnotation
-        {
-        if ( backtracking==0 ) {
-           
-          	  /* */ 
-          	
+    public final boolean synpred96() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred96_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
         }
-        pushFollow(FollowSets000.FOLLOW_ruleKeyStringValueAnnotation_in_synpred1329186);
-        ruleKeyStringValueAnnotation();
-        _fsp--;
-        if (failed) return ;
-
-        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
     }
-    // $ANTLR end synpred132
-
-    // $ANTLR start synpred133
-    public final void synpred133_fragment() throws RecognitionException {   
-        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5799:2: ( ruleTypedStringAnnotation )
-        // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5799:2: ruleTypedStringAnnotation
-        {
-        if ( backtracking==0 ) {
-           
-          	  /* */ 
-          	
+    public final boolean synpred35() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred35_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
         }
-        pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_synpred1339216);
-        ruleTypedStringAnnotation();
-        _fsp--;
-        if (failed) return ;
-
-        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
     }
-    // $ANTLR end synpred133
-
     public final boolean synpred44() {
         backtracking++;
         int start = input.mark();
@@ -20888,123 +20835,25 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred84() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred84_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred109() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred109_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred25() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred25_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred23() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred23_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred22() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred22_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred35() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred35_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred96() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred96_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
-    public final boolean synpred133() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred133_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
     public final boolean synpred95() {
         backtracking++;
         int start = input.mark();
         try {
             synpred95_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred92() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred92_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -21028,11 +20877,11 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred92() {
+    public final boolean synpred84() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred92_fragment(); // can never throw exception
+            synpred84_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -21112,20 +20961,6 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred8() {
-        backtracking++;
-        int start = input.mark();
-        try {
-            synpred8_fragment(); // can never throw exception
-        } catch (RecognitionException re) {
-            System.err.println("impossible: "+re);
-        }
-        boolean success = !failed;
-        input.rewind(start);
-        backtracking--;
-        failed=false;
-        return success;
-    }
     public final boolean synpred50() {
         backtracking++;
         int start = input.mark();
@@ -21140,11 +20975,25 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
-    public final boolean synpred132() {
+    public final boolean synpred8() {
         backtracking++;
         int start = input.mark();
         try {
-            synpred132_fragment(); // can never throw exception
+            synpred8_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred109() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred109_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -21182,6 +21031,20 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
+    public final boolean synpred25() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred25_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred17() {
         backtracking++;
         int start = input.mark();
@@ -21196,11 +21059,39 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         failed=false;
         return success;
     }
+    public final boolean synpred23() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred23_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
     public final boolean synpred13() {
         backtracking++;
         int start = input.mark();
         try {
             synpred13_fragment(); // can never throw exception
+        } catch (RecognitionException re) {
+            System.err.println("impossible: "+re);
+        }
+        boolean success = !failed;
+        input.rewind(start);
+        backtracking--;
+        failed=false;
+        return success;
+    }
+    public final boolean synpred22() {
+        backtracking++;
+        int start = input.mark();
+        try {
+            synpred22_fragment(); // can never throw exception
         } catch (RecognitionException re) {
             System.err.println("impossible: "+re);
         }
@@ -21604,83 +21495,83 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation9749 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleTypedStringAnnotation9759 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_25_in_ruleTypedStringAnnotation9794 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleTypedStringAnnotation9811 = new BitSet(new long[]{0x0000000000000830L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleTypedStringAnnotation9811 = new BitSet(new long[]{0x0000000000000800L});
         public static final BitSet FOLLOW_RULE_TYPEID_in_ruleTypedStringAnnotation9833 = new BitSet(new long[]{0x0000000000000030L});
-        public static final BitSet FOLLOW_ruleEString_in_ruleTypedStringAnnotation9860 = new BitSet(new long[]{0x0000000000100002L});
-        public static final BitSet FOLLOW_20_in_ruleTypedStringAnnotation9871 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation9892 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_21_in_ruleTypedStringAnnotation9903 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation9941 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation9951 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyBooleanValueAnnotation9986 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation10003 = new BitSet(new long[]{0x0000000000000200L});
-        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation10025 = new BitSet(new long[]{0x0000000000100002L});
-        public static final BitSet FOLLOW_20_in_ruleKeyBooleanValueAnnotation10041 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation10062 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_21_in_ruleKeyBooleanValueAnnotation10073 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation10111 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation10121 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyIntValueAnnotation10156 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation10173 = new BitSet(new long[]{0x0000000000000040L});
-        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation10195 = new BitSet(new long[]{0x0000000000100002L});
-        public static final BitSet FOLLOW_20_in_ruleKeyIntValueAnnotation10211 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation10232 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_21_in_ruleKeyIntValueAnnotation10243 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation10281 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation10291 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_25_in_ruleKeyFloatValueAnnotation10326 = new BitSet(new long[]{0x0000000000000010L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation10343 = new BitSet(new long[]{0x0000000000000100L});
-        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation10365 = new BitSet(new long[]{0x0000000000100002L});
-        public static final BitSet FOLLOW_20_in_ruleKeyFloatValueAnnotation10381 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation10402 = new BitSet(new long[]{0x0000000002200400L});
-        public static final BitSet FOLLOW_21_in_ruleKeyFloatValueAnnotation10413 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleImportAnnotation_in_entryRuleImportAnnotation10451 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleImportAnnotation10461 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_48_in_ruleImportAnnotation10496 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleImportAnnotation10513 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_entryRuleEString10555 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleEString10566 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_STRING_in_ruleEString10606 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_ruleEString10632 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_49_in_ruleStateType10689 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_50_in_ruleStateType10704 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_51_in_ruleStateType10719 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_18_in_ruleStateType10734 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_ruleTransitionType10777 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_ruleTransitionType10792 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_54_in_ruleTransitionType10807 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_17_in_ruleDivOperator10849 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_ruleCompareOperator10891 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_56_in_ruleCompareOperator10906 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_57_in_ruleCompareOperator10921 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_58_in_ruleCompareOperator10936 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_59_in_ruleCompareOperator10951 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_60_in_ruleCompareOperator10966 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_61_in_rulePreOperator11008 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_ruleOrOperator11049 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_63_in_ruleAndOperator11090 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_64_in_ruleNotOperator11131 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_65_in_ruleAddOperator11172 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_66_in_ruleSubOperator11213 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_67_in_ruleMultOperator11254 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_68_in_ruleModOperator11295 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_69_in_ruleValueTestOperator11336 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_70_in_ruleValueType11378 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_71_in_ruleValueType11393 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_72_in_ruleValueType11408 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_73_in_ruleValueType11423 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_74_in_ruleValueType11438 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_75_in_ruleValueType11453 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_76_in_ruleValueType11468 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_77_in_ruleValueType11483 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_78_in_ruleCombineOperator11526 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_65_in_ruleCombineOperator11541 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_67_in_ruleCombineOperator11556 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_79_in_ruleCombineOperator11571 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_80_in_ruleCombineOperator11586 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_62_in_ruleCombineOperator11601 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_63_in_ruleCombineOperator11616 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_77_in_ruleCombineOperator11631 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_ruleTypedStringAnnotation9859 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleTypedStringAnnotation9870 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleTypedStringAnnotation9891 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_21_in_ruleTypedStringAnnotation9902 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation9940 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation9950 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_25_in_ruleKeyBooleanValueAnnotation9985 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyBooleanValueAnnotation10002 = new BitSet(new long[]{0x0000000000000200L});
+        public static final BitSet FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation10024 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleKeyBooleanValueAnnotation10040 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyBooleanValueAnnotation10061 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_21_in_ruleKeyBooleanValueAnnotation10072 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_entryRuleKeyIntValueAnnotation10110 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyIntValueAnnotation10120 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_25_in_ruleKeyIntValueAnnotation10155 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyIntValueAnnotation10172 = new BitSet(new long[]{0x0000000000000040L});
+        public static final BitSet FOLLOW_RULE_INT_in_ruleKeyIntValueAnnotation10194 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleKeyIntValueAnnotation10210 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyIntValueAnnotation10231 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_21_in_ruleKeyIntValueAnnotation10242 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_entryRuleKeyFloatValueAnnotation10280 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleKeyFloatValueAnnotation10290 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_25_in_ruleKeyFloatValueAnnotation10325 = new BitSet(new long[]{0x0000000000000010L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleKeyFloatValueAnnotation10342 = new BitSet(new long[]{0x0000000000000100L});
+        public static final BitSet FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation10364 = new BitSet(new long[]{0x0000000000100002L});
+        public static final BitSet FOLLOW_20_in_ruleKeyFloatValueAnnotation10380 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_ruleKeyFloatValueAnnotation10401 = new BitSet(new long[]{0x0000000002200400L});
+        public static final BitSet FOLLOW_21_in_ruleKeyFloatValueAnnotation10412 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleImportAnnotation_in_entryRuleImportAnnotation10450 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleImportAnnotation10460 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_48_in_ruleImportAnnotation10495 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleImportAnnotation10512 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_entryRuleEString10554 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleEString10565 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_STRING_in_ruleEString10605 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_ruleEString10631 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_49_in_ruleStateType10688 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_50_in_ruleStateType10703 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_51_in_ruleStateType10718 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_18_in_ruleStateType10733 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_ruleTransitionType10776 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_ruleTransitionType10791 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_54_in_ruleTransitionType10806 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_ruleDivOperator10848 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_ruleCompareOperator10890 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_56_in_ruleCompareOperator10905 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_57_in_ruleCompareOperator10920 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_58_in_ruleCompareOperator10935 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_59_in_ruleCompareOperator10950 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_60_in_ruleCompareOperator10965 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_61_in_rulePreOperator11007 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_ruleOrOperator11048 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_63_in_ruleAndOperator11089 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_64_in_ruleNotOperator11130 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_65_in_ruleAddOperator11171 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_66_in_ruleSubOperator11212 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_67_in_ruleMultOperator11253 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_68_in_ruleModOperator11294 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_69_in_ruleValueTestOperator11335 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_70_in_ruleValueType11377 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_71_in_ruleValueType11392 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_72_in_ruleValueType11407 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_73_in_ruleValueType11422 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_74_in_ruleValueType11437 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_75_in_ruleValueType11452 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_76_in_ruleValueType11467 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_77_in_ruleValueType11482 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_78_in_ruleCombineOperator11525 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_65_in_ruleCombineOperator11540 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_67_in_ruleCombineOperator11555 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_79_in_ruleCombineOperator11570 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_80_in_ruleCombineOperator11585 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_62_in_ruleCombineOperator11600 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_63_in_ruleCombineOperator11615 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_77_in_ruleCombineOperator11630 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleVariable_in_synpred5249 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleSignal_in_synpred6276 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_synpred8160 = new BitSet(new long[]{0x0000000002010400L});
@@ -21729,8 +21620,6 @@ public class InternalKitsParser extends AbstractInternalAntlrParser {
         public static final BitSet FOLLOW_20_in_synpred1096938 = new BitSet(new long[]{0x20000000001003D0L,0x0000000000000024L});
         public static final BitSet FOLLOW_ruleValuedExpression_in_synpred1096963 = new BitSet(new long[]{0x0000000000200000L});
         public static final BitSet FOLLOW_21_in_synpred1096972 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_synpred1329186 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_synpred1339216 = new BitSet(new long[]{0x0000000000000002L});
     }
 
 

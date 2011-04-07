@@ -11756,7 +11756,7 @@ rule__TypedStringAnnotation__Group__2__Impl
 :
 (
 { before(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); }
-(rule__TypedStringAnnotation__TypeAssignment_2)?
+(rule__TypedStringAnnotation__TypeAssignment_2)
 { after(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); }
 )
 

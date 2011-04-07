@@ -5971,7 +5971,7 @@ ruleTypedStringAnnotation returns [EObject current=null]
 	    }
 
 )
-)?(
+)(
 (
 		{ 
 	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0(), currentNode); 

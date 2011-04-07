@@ -28,71 +28,49 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
     /**
      * Provides comment annotation converter dropping/attaching the leading/trailing characters.
+     * 
      * @return dedicated value converter
      */
     @ValueConverter(rule = "COMMENT_ANNOTATION")
-        public IValueConverter<String> CommentAnnotation() {
-                return new IValueConverter<String>() {
+    public IValueConverter<String> CommentAnnotation() {
+        return new IValueConverter<String>() {
 
-                        public String toValue(String string, AbstractNode node) {
-                                return string.replace("/**","").replace("*/", "").trim();
-                        }
+            public String toValue(String string, AbstractNode node) {
+                return string.replace("/**", "").replace("*/", "").trim();
+            }
 
-                        public String toString(String value) {
-                                if (Strings.isEmpty(value)) {
-                                        return null;
-                                } else {
-                                        return "/** " + value + " */";
-                                }
-                        }
-                };
+            public String toString(String value) {
+                if (Strings.isEmpty(value)) {
+                    return null;
+                } else {
+                    return "/** " + value + " */";
+                }
+            }
+        };
     }
-    
+
     /**
      * Provides comment annotation converter dropping/attaching the leading/trailing characters.
+     * 
      * @return dedicated value converter
      */
     @ValueConverter(rule = "TypeId")
-        public IValueConverter<String> TypeId() {
-                return new IValueConverter<String>() {
+    public IValueConverter<String> TypeId() {
+        return new IValueConverter<String>() {
 
-                        public String toValue(String string, AbstractNode node) {
-                                return string.replace("[","").replace("]", "").trim();
-                        }
+            public String toValue(String string, AbstractNode node) {
+                return string.substring(0, string.length() - 1).trim();
+            }
 
-                        public String toString(String value) {
-                                if (Strings.isEmpty(value)) {
-                                        return null;
-                                } else {
-                                        return "[" + value + "]";
-                                }
-                        }
-                };
+            public String toString(String value) {
+                if (Strings.isEmpty(value)) {
+                    return "[]";
+                } else {
+                    return "[" + value + "]";
+                }
+            }
+        };
     }
-
-    
-    /**
-     * Provides annotation key converter dropping/attaching the leading '@'.
-     * @return dedicated value converter
-     */
-    @ValueConverter(rule = "ANNOTATION_KEY")
-        public IValueConverter<String> AnnotationKey() {
-                return new IValueConverter<String>() {
-
-                        public String toValue(String string, AbstractNode node) {
-                                return string.replace("@","");
-                        }
-
-                        public String toString(String value) {
-                                if (Strings.isEmpty(value)) {
-                                        return null;
-                                } else {
-                                        return "\"" + "@" + value + "\""; 
-                                }
-                        }
-                };
-    }
-    
 
     /**
      * Provides EString converter dropping/attaching the leading/trailing character.

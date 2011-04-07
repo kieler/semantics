@@ -197,10 +197,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 		//TypedStringAnnotation:
-		//	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?
+		//"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -212,7 +212,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
-		//type=TypeId?
+		//type=TypeId
 		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
 
 		//TypeId
@@ -536,7 +536,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedStringAnnotation:
-	//	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
 	public TypedStringAnnotationElements getTypedStringAnnotationAccess() {
 		return (pTypedStringAnnotation != null) ? pTypedStringAnnotation : (pTypedStringAnnotation = new TypedStringAnnotationElements());
 	}

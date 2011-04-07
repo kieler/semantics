@@ -8902,11 +8902,11 @@ protected class KeyStringValueAnnotation_RightParenthesisKeyword_3_2 extends Key
  *
  * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
  * TypedStringAnnotation:
- * 	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?
+// "@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?
 protected class TypedStringAnnotation_Group extends GroupToken {
 	
 	public TypedStringAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8991,7 +8991,7 @@ protected class TypedStringAnnotation_NameAssignment_1 extends AssignmentToken  
 
 }
 
-// type=TypeId?
+// type=TypeId
 protected class TypedStringAnnotation_TypeAssignment_2 extends AssignmentToken  {
 	
 	public TypedStringAnnotation_TypeAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9013,7 +9013,7 @@ protected class TypedStringAnnotation_TypeAssignment_2 extends AssignmentToken  
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("type",false)) == null) return null;
+		if((value = eObjectConsumer.getConsumable("type",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("type");
 		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
@@ -9041,7 +9041,6 @@ protected class TypedStringAnnotation_ValueAssignment_3 extends AssignmentToken 
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
 			case 0: return new TypedStringAnnotation_TypeAssignment_2(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new TypedStringAnnotation_NameAssignment_1(lastRuleCallOrigin, this, 1, inst);
 			default: return null;
 		}	
 	}

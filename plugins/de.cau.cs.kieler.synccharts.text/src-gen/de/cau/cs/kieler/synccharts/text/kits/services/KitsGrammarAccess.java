@@ -2203,7 +2203,7 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedStringAnnotation:
-	//	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedStringAnnotationElements getTypedStringAnnotationAccess() {
 		return gaActions.getTypedStringAnnotationAccess();
 	}
