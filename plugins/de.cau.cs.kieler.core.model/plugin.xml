@@ -18,6 +18,17 @@
             id="de.cau.cs.kieler.core.ui.command.removeMarkers"
             name="Remove Problem Markers">
       </command>
+      <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.model.handlers.ConvertModelHandler"
+            id="de.cau.cs.kieler.core.model.convert"
+            name="Convert to Textual">
+         <commandParameter
+               id="de.cau.cs.kieler.convert.targetExtension"
+               name="Target Extension"
+               optional="false">
+         </commandParameter>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

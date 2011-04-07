@@ -168,6 +168,32 @@
             	</visibleWhen>
 			</command>
 		</menuContribution>
+         <menuContribution
+            locationURI="popup:org.eclipse.ui.popup.any?after=additions">
+         <command
+               commandId="de.cau.cs.kieler.core.model.convert"
+               label="Convert to Textual"
+               style="push"
+               tooltip="Convert the model to textual SyncCharts format">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate>
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           forcePluginActivation="false"
+                           property="org.eclipse.core.resources.extension"
+                           value="kixs">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.convert.targetExtension"
+                  value="kits">
+            </parameter>
+         </command>
+     </menuContribution>
 	</extension>
 
 
