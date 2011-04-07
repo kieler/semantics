@@ -20,7 +20,7 @@ import java.util.List;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.expressions.EvaluationContext;
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.mwe.core.WorkflowContext;
@@ -31,6 +31,9 @@ import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.emf.mwe.utils.Writer;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 
@@ -47,59 +50,17 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     private static final List<String> MODEL_EXTENSIONS = Arrays.asList(new String[]{ "kixs","kits" });
 
     /**
-     * 
      * {@inheritDoc}
      */
-    @Override
-    @SuppressWarnings("restriction")
-    public void setEnabled(Object evaluationContext) {
-        if (evaluationContext instanceof EvaluationContext) {
-            EvaluationContext evalContext = (EvaluationContext) evaluationContext;
-            // get list of selected files
-            Object defVar = evalContext.getDefaultVariable();
-            if (defVar instanceof Iterable<?>) {
-                Iterable<?> iterable = (Iterable<?>) defVar;
-                Iterator<?> iter = iterable.iterator();
-                while (iter.hasNext()) {
-                    Object o = iter.next();
-                    if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
-                        if (MODEL_EXTENSIONS.contains(path.getFileExtension())) {
-                            super.setBaseEnabled(true);
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        super.setBaseEnabled(false);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @SuppressWarnings("restriction")
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-        // get the selection
-        Object object = event.getApplicationContext();
-        if (object instanceof EvaluationContext) {
-            EvaluationContext evalContext = (EvaluationContext) object;
-            // get list of selected files
-            Object defVar = evalContext.getDefaultVariable();
-            if (defVar instanceof Iterable<?>) {
-                Iterable<?> iterable = (Iterable<?>) defVar;
-                Iterator<?> iter = iterable.iterator();
-                while (iter.hasNext()) {
-                    Object o = iter.next();
-                    if (o instanceof org.eclipse.core.internal.resources.File) {
-                        IPath path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
-                        try {
-                            expandMacroStates(path);
-                        } catch (RuntimeException e0) {
-                            e0.printStackTrace();
-                            return null;
-                        }
-                    }
+        ISelection selection = HandlerUtil.getCurrentSelection(event);
+        if (selection instanceof IStructuredSelection) {
+            Iterator<?> iter = ((IStructuredSelection) selection).iterator();
+            while (iter.hasNext()) {
+                Object o = iter.next();
+                if (o instanceof IFile) {
+                    IPath path = ((IFile) o).getFullPath();
+                    expandMacroStates(path);
                 }
             }
         }
@@ -107,7 +68,6 @@ public class ExpandMacroStatesCommand extends AbstractHandler {
     }
 
     private void expandMacroStates(final IPath path) {
- 
    	IPath target;
         Workflow workflow;
         WorkflowContext wfx;

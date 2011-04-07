@@ -24,6 +24,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -303,7 +304,7 @@ public abstract class MonitoredOperation {
             }
             synchronized (status) {
                 if (status.get() == null) {
-                    status.set(new Status(IStatus.ERROR, null,
+                    status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
                             "Error in monitored operation", throwable));
                 }
             }

@@ -53,7 +53,7 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.Variable;
-import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
+import de.cau.cs.kieler.core.model.handlers.AbstractInitDiagramHandler;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
@@ -76,7 +76,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
     /**
      * The command for reinitializing the diagram.
      */
-    private static AbstractReInitDiagramCommand cmd;
+    private static AbstractInitDiagramHandler cmd;
 
     /**
      * Set the reinitialize command for automatic migration. FIXME: currently
@@ -86,7 +86,7 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
      *            the param
      */
     public static void setReInitDiagramCommand(
-            final AbstractReInitDiagramCommand cmdParam) {
+            final AbstractInitDiagramHandler cmdParam) {
         cmd = cmdParam;
     }
 
@@ -773,10 +773,10 @@ public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
          */
         private boolean handleUnknownFeature(final EObject owner,
                 final EStructuralFeature f, final Object value) {
-            System.out.println(owner);
-            System.out.println(f);
-            System.out.println(value);
-            System.out.println();
+//            System.out.println(owner);
+//            System.out.println(f);
+//            System.out.println(value);
+//            System.out.println();
             if (f.getName().equals("DUMMY_signal")) {
                 Emission em = (Emission) owner;
                 EObject container = em.eContainer();

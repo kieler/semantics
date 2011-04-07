@@ -110,7 +110,7 @@
    </command>
          <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand"
+            defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler"
             description="Reinitialize the diagram for the selected kixs file overwriting the olds kids file."
             id="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
             name="Reinitialize and save synccharts diagram">
@@ -314,28 +314,37 @@
       </menuContribution>
             <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <menu
-               id="de.cau.cs.kieler"
-               label="KIELER"
-               mnemonic="K">
-            <command
-                  commandId="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
-                  label="Reinitialize and save synccharts diagram"
-                  style="push"
-                  tooltip="Reinitialize the diagram for the selected kixs file overwriting the olds kids file.">
-            </command>
-            <command
-                  commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
-                  label="Expand reference-macrostates"
-                  style="push"
-                  tooltip="Expand reference-macrostates">
-            </command>
-         </menu>
+         <command
+               commandId="de.cau.cs.kieler.synccharts.ui.reinitDiagram"
+               label="Initialize GMF Diagram File (kids)"
+               style="push"
+               tooltip="Reinitialize the diagram for the selected SyncCharts model, overwriting any olds &apos;kids&apos; file.">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate>
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <or>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.core.resources.extension"
+                              value="kixs">
+                        </test>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.core.resources.extension"
+                              value="kits">
+                        </test></or>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
       </menuContribution>
             <menuContribution
                   locationURI="menu:de.cau.cs.kieler">
                <command
                      commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
+                     label="Hide Transition Priority Labels"
                      style="toggle">
                   <visibleWhen
                         checkEnabled="false">
@@ -347,6 +356,34 @@
                         </test>
                      </with>
                   </visibleWhen>
+               </command>
+            </menuContribution>
+            <menuContribution
+                  locationURI="popup:de.cau.cs.kieler">
+               <command
+                     commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
+                     label="Expand reference-macrostates"
+                     style="push"
+                     tooltip="Expand reference-macrostates">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate>
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <or>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.core.resources.extension"
+                              value="kixs">
+                        </test>
+                        <test
+                              forcePluginActivation="false"
+                              property="org.eclipse.core.resources.extension"
+                              value="kits">
+                        </test></or>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
                </command>
             </menuContribution>
    </extension>

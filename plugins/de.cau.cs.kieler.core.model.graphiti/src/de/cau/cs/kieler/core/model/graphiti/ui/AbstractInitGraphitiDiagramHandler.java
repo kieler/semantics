@@ -66,18 +66,15 @@ import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
-import org.eclipse.graphiti.ui.internal.parts.IPictogramElementEditPart;
-import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.model.graphiti.ModelGraphitiPlugin;
-import de.cau.cs.kieler.core.model.ui.AbstractReInitDiagramCommand;
+import de.cau.cs.kieler.core.model.handlers.AbstractInitDiagramHandler;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -85,9 +82,8 @@ import de.cau.cs.kieler.core.util.Maybe;
  * 
  * @author soh
  */
-@SuppressWarnings("restriction")
-public abstract class AbstractReInitGraphitiDiagramCommand extends
-        AbstractReInitDiagramCommand {
+public abstract class AbstractInitGraphitiDiagramHandler extends
+        AbstractInitDiagramHandler {
 
     /**
      * Command for performing the reinitialization process.
@@ -127,19 +123,18 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             editor = editorParam;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean canExecute() {
             return true;
         }
 
-        public void execute() {
-            doExecute();
-        }
-
         /**
-         * 
+         * {@inheritDoc}
          */
-        protected void doExecute() {
+        public void execute() {
             // process children of the root element
             for (EObject eObj : modelRoot.eContents()) {
                 ContainerShape contShape = (ContainerShape) elem;
@@ -152,11 +147,17 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             alignBoxRelativeAnchors();
         }
 
+        /**
+         * {@inheritDoc}
+         */
         @Override
         public boolean canUndo() {
             return false;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         public void redo() {
             execute();
         }
@@ -182,7 +183,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * @param snapToGridParam
      *            true if it should snap to grid
      */
-    public AbstractReInitGraphitiDiagramCommand(
+    public AbstractInitGraphitiDiagramHandler(
             final String diagramTypeNameParam, final int gridSizeParam,
             final boolean snapToGridParam) {
         super();
@@ -205,14 +206,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     protected abstract String getEditorId();
 
     /**
-     * Getter for the container.
-     * 
-     * @return the container
+     * {@inheritDoc}
      */
-    private IWorkbenchWindow getContainer() {
-        return PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-    }
-
     @Override
     protected TransactionalEditingDomain createEditingDomain() {
         return DiagramEditorFactory.createResourceSetAndEditingDomain();
@@ -224,22 +219,18 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
     @Override
     public IEditorPart createNewDiagram(final EObject modelRootParam,
             final TransactionalEditingDomain editingDomain,
-            final IFile diagramPath, final IProgressMonitor monitor) {
+            final IFile diagramFile, final IProgressMonitor monitor) {
         // taken from the new wizard and adapted
-        Resource diagramResource =
-                createDiagram(diagramPath, modelRootParam, editingDomain,
-                        monitor);
+        Resource diagramResource = createDiagram(diagramFile, modelRootParam, editingDomain, monitor);
         if (diagramResource != null && getEditorId() != null) {
             try {
                 return openDiagram(diagramResource);
-            } catch (PartInitException e) {
-                ErrorDialog.openError(getContainer().getShell(),
-                        "Error opening diagram editor", null, e.getStatus());
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (RollbackException e) {
-                ErrorDialog.openError(getContainer().getShell(),
-                        "Error: Transaction rolled back", null, e.getStatus());
+            } catch (PartInitException exception) {
+                StatusManager.getManager().handle(exception.getStatus(), StatusManager.SHOW);
+            } catch (InterruptedException exception) {
+                // ignore exception
+            } catch (RollbackException exception) {
+                StatusManager.getManager().handle(exception.getStatus(), StatusManager.SHOW);
             }
         }
 
@@ -356,18 +347,16 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
      * 
      * @author soh
      */
-    public static enum LayoutDirection {
+    private static enum LayoutDirection {
         LEFT, RIGHT, DOWN, UP;
 
         /**
-         * Gives the opposite direction of the given direction.
+         * Gives the opposite direction.
          * 
-         * @param dir
-         *            the direction
          * @return the opposite direction
          */
-        public static LayoutDirection opposite(final LayoutDirection dir) {
-            switch (dir) {
+        public LayoutDirection opposite() {
+            switch (this) {
             case DOWN:
                 return UP;
             case LEFT:
@@ -409,7 +398,7 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
         List<BoxRelativeAnchor> in = new LinkedList<BoxRelativeAnchor>();
         List<BoxRelativeAnchor> out = new LinkedList<BoxRelativeAnchor>();
         determineSideForAnchors(anchors, in, out);
-        alignPortsOnSide(in, LayoutDirection.opposite(dir));
+        alignPortsOnSide(in, dir.opposite());
         alignPortsOnSide(out, dir);
     }
 
@@ -856,7 +845,8 @@ public abstract class AbstractReInitGraphitiDiagramCommand extends
             PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
                 public void run() {
-                    IWorkbenchPage page = getContainer().getActivePage();
+                    IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                            .getActivePage();
                     try {
                         editor.set(page.openEditor(new FileEditorInput(
                                 (IFile) workspaceResource), getEditorId()));

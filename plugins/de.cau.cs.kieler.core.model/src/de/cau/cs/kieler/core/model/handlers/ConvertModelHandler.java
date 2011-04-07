@@ -17,7 +17,6 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.core.commands.AbstractHandler;
@@ -28,6 +27,7 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -73,17 +73,20 @@ public class ConvertModelHandler extends AbstractHandler {
         targetExtension = event.getParameter(PARAM_TARGET_EXT);
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         if (selection instanceof IStructuredSelection && targetExtension != null) {
-            final Iterator<?> iterator = ((IStructuredSelection) selection).iterator();
+            final Object[] elements = ((IStructuredSelection) selection).toArray();
             try {
                 PlatformUI.getWorkbench().getProgressService().run(
                         false, true, new IRunnableWithProgress() {
                     public void run(final IProgressMonitor monitor) {
-                        monitor.beginTask("Convert model", 1);
-                        while (iterator.hasNext() && !monitor.isCanceled()) {
-                            Object object = iterator.next();
+                        monitor.beginTask("Convert model", elements.length);
+                        for (Object object : elements) {
+                            if (monitor.isCanceled()) {
+                                break;
+                            }
                             if (object instanceof IFile) {
                                 convert((IFile) object);
                             }
+                            monitor.worked(1);
                         }
                         monitor.done();
                     }
@@ -139,19 +142,15 @@ public class ConvertModelHandler extends AbstractHandler {
      */
     private URI createTarget(final IFile file) {
         IPath basePath = file.getFullPath();
-        basePath = basePath.removeFirstSegments(basePath.segmentCount() - 1).removeFileExtension();
-        IPath target;
+        String name = basePath.removeFileExtension().lastSegment();
+        IPath targetPath = new Path(name + "." + targetExtension);
         int i = 0;
         IContainer parent = file.getParent();
-        do {
-            if (i <= 0) {
-                target = basePath.addFileExtension(targetExtension);
-            } else {
-                target = basePath.append(Integer.toString(i)).addFileExtension(targetExtension);
-            }
-        } while (parent.exists(target));
-        target = parent.getFullPath().append(target);
-        return URI.createPlatformResourceURI(target.toString(), false);
+        while (parent.exists(targetPath)) {
+            targetPath = new Path(name + (++i) + "." + targetExtension);
+        }
+        targetPath = parent.getFullPath().append(targetPath);
+        return URI.createPlatformResourceURI(targetPath.toString(), false);
     }
 
     /**

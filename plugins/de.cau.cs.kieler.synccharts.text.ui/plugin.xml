@@ -172,7 +172,7 @@
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <command
                commandId="de.cau.cs.kieler.core.model.convert"
-               label="Convert to Textual"
+               label="Convert to Textual Model (kits)"
                style="push"
                tooltip="Convert the model to textual SyncCharts format">
             <visibleWhen
@@ -191,6 +191,29 @@
             <parameter
                   name="de.cau.cs.kieler.convert.targetExtension"
                   value="kits">
+            </parameter>
+         </command>
+                  <command
+               commandId="de.cau.cs.kieler.core.model.convert"
+               label="Convert to XMI Model (kixs)"
+               style="push"
+               tooltip="Convert the model to XMI-based SyncCharts format">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate>
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                     <test
+                           forcePluginActivation="false"
+                           property="org.eclipse.core.resources.extension"
+                           value="kits">
+                     </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+            <parameter
+                  name="de.cau.cs.kieler.convert.targetExtension"
+                  value="kixs">
             </parameter>
          </command>
      </menuContribution>

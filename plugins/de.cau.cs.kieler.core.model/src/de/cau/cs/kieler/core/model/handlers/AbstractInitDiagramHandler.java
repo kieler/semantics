@@ -11,23 +11,23 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.model.ui;
+package de.cau.cs.kieler.core.model.handlers;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.Semaphore;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.expressions.EvaluationContext;
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -46,14 +46,15 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.jface.operation.IRunnableWithProgress;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.handlers.HandlerUtil;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.progress.IProgressService;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
@@ -61,14 +62,16 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.triggers.ReInitDiagramDoneTrigger;
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.ui.commands.AffectedFileSelectionDialog;
+import de.cau.cs.kieler.core.util.Maybe;
 
 /**
- * A command that reinitializes a diagram file from a given model file.
+ * A command handler that reinitializes a diagram file from a given model file.
  * 
  * @author soh
+ * @author msp
  * @kieler.rating 2010-06-14 proposed yellow soh
  */
-public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
+public abstract class AbstractInitDiagramHandler extends AbstractHandler {
 
     /**
      * Provides the file extension for the diagram file.
@@ -78,107 +81,40 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     protected abstract String getDiagramExtension();
 
     /**
-     * Provides the file extension for the model file.
-     * 
-     * @return the file extension
-     */
-    protected abstract String getModelExtension();
-
-    /**
-     * Checks whether the selection consists of edit parts in files with the
-     * model extension or files with the model extension.
-     * 
-     * @param evaluationContext
-     *            the evaluation context
-     */
-    @Override
-    @SuppressWarnings("restriction")
-    public void setEnabled(final Object evaluationContext) {
-        if (evaluationContext instanceof EvaluationContext) {
-            EvaluationContext evalContext =
-                    (EvaluationContext) evaluationContext;
-
-            // get list of selected files
-            Object defVar = evalContext.getDefaultVariable();
-            if (defVar instanceof Iterable<?>) {
-                Iterable<?> iterable = (Iterable<?>) defVar;
-                Iterator<?> iter = iterable.iterator();
-                while (iter.hasNext()) {
-                    Object o = iter.next();
-                    IPath path = null;
-                    if (o instanceof org.eclipse.core.internal.resources.File) {
-                        // selection is an a file
-                        path = ((org.eclipse.core.internal.resources.File) o)
-                                        .getFullPath();
-                    } else if (o instanceof EditPart) {
-                        EditPart editPart = (EditPart) o;
-                        EObject eObj = GraphicalFrameworkService.getInstance()
-                                .getBridge(editPart).getElement(editPart);
-                        // no model element found for the edit part
-                        if (eObj == null) {
-                            super.setBaseEnabled(false);
-                            return;
-                        }
-                        Resource res = eObj.eResource();
-                        // edit part doesn't belong to a resource
-                        if (res == null) {
-                            super.setBaseEnabled(false);
-                            return;
-                        }
-                        URI uri = res.getURI();
-                        // set the path to the path of the file
-                        path = Path.fromOSString(uri.toPlatformString(true));
-
-                    }
-                    // check if file has the model extension
-                    if (path != null && path.getFileExtension().equals(getModelExtension())) {
-                        super.setBaseEnabled(true);
-                        return;
-                    }
-                }
-            }
-        }
-        super.setBaseEnabled(false);
-    }
-
-    /**
      * {@inheritDoc}
      */
-    @SuppressWarnings("restriction")
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         // get the selection
-        Object object = event.getApplicationContext();
-        if (object instanceof EvaluationContext) {
-            EvaluationContext evalContext = (EvaluationContext) object;
-            // get list of selected files
-            Object defVar = evalContext.getDefaultVariable();
-            if (defVar instanceof Iterable<?>) {
-                Iterable<?> iterable = (Iterable<?>) defVar;
-                Iterator<?> iter = iterable.iterator();
-                while (iter.hasNext()) {
-                    Object o = iter.next();
-                    IPath path = null;
-                    // perform same checks as in set enabled
-                    if (o instanceof org.eclipse.core.internal.resources.File) {
-                        path = ((org.eclipse.core.internal.resources.File) o).getFullPath();
-                    } else if (o instanceof EditPart) {
-                        EditPart editPart = (EditPart) o;
-                        EObject eObj = GraphicalFrameworkService.getInstance()
-                                .getBridge(editPart).getElement(editPart);
-                        if (eObj != null) {
-                            URI uri = eObj.eResource().getURI();
-                            path = Path.fromOSString(uri.toPlatformString(true));
+        ISelection selection = HandlerUtil.getCurrentSelection(event);
+        if (selection instanceof IStructuredSelection) {
+            Iterator<?> iter = ((IStructuredSelection) selection).iterator();
+            Set<Resource> processedResources = new HashSet<Resource>();
+            while (iter.hasNext()) {
+                Object o = iter.next();
+                IFile file = null;
+                if (o instanceof IFile) {
+                    file = (IFile) o;
+                } else if (o instanceof EditPart) {
+                    EditPart editPart = (EditPart) o;
+                    EObject eObj = GraphicalFrameworkService.getInstance()
+                            .getBridge(editPart).getElement(editPart);
+                    if (eObj != null) {
+                        Resource resource = eObj.eResource();
+                        if (!processedResources.contains(resource)) {
+                            processedResources.add(resource);
+                            URI uri = resource.getURI();
+                            IPath path = Path.fromOSString(uri.toPlatformString(true));
+                            file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
                         }
                     }
-                    if (path != null) {
-                        IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
-                        // execute transformation
-                        reinitialize(file);
-                    }
                 }
-                // refresh workspace when done to show changes
-                refreshWorkspace();
+                if (file != null) {
+                    // execute transformation
+                    reinitialize(file);
+                }
             }
+            // refresh workspace when done to show changes
+            refreshWorkspace();
         }
         return null;
     }
@@ -208,93 +144,75 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      * @return the selected files
      */
     private List<IFile> getUserSelection(final List<IFile> affectedFiles) {
-        final List<IFile> result = new LinkedList<IFile>();
+        final Maybe<List<IFile>> result = Maybe.create();
         PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 Shell shell = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell();
 
                 AffectedFileSelectionDialog dialog =
                         new AffectedFileSelectionDialog(shell, affectedFiles);
-                List<IFile> results = dialog.openDialog();
-                if (results != null) {
-                    result.addAll(results);
-                }
+                result.set(dialog.openDialog());
             }
         });
-        return result;
+        return result.get();
     }
 
     /**
-     * Reinitialize the diagram file.
+     * Reinitialize the diagram file. The current diagram file is removed, if present, and replaced
+     * by a new diagram file which is initialized from the model.
      * 
-     * @param path
-     *            the path of the model file
+     * @param file the model file
      */
-    public void reinitialize(final IFile path) {
-        List<IFile> partners = getPartners(path);
+    public void reinitialize(final IFile file) {
+        IContainer container = file.getParent();
+        List<IFile> partners = findPartners(file, container);
 
         List<IFile> selection = new LinkedList<IFile>();
         if (partners.isEmpty()) {
-            IPath plain = path.getFullPath().removeFileExtension();
-            IPath newPath = plain.addFileExtension(getDiagramExtension());
-            IFile file =
-                    ResourcesPlugin.getWorkspace().getRoot().getFile(newPath);
+            IPath fullPath = file.getFullPath();
+            String name = fullPath.removeFileExtension().lastSegment();
+            IPath targetPath = new Path(name + "." + getDiagramExtension());
             int i = 0;
-            while (file.exists()) {
-                newPath = plain.append(i++ + "");
-                file =
-                        ResourcesPlugin.getWorkspace().getRoot()
-                                .getFile(newPath);
+            while (container.exists(targetPath)) {
+                targetPath = new Path(name + (++i) + "." + getDiagramExtension());
             }
-            selection.add(file);
+            selection.add(ResourcesPlugin.getWorkspace().getRoot().getFile(
+                    container.getFullPath().append(targetPath)));
         } else {
             selection = getUserSelection(partners);
         }
 
-        reinitializeSelectedFiles(path, partners, selection);
+        reinitializeSelectedFiles(file, partners, selection);
     }
 
     /**
+     * Reinitialize the selected diagram files.
      * 
-     * @param path
-     * @param partners
-     * @param selection
+     * @param modelFile the model file
+     * @param partners list of partner diagram files
+     * @param selection the user's selection of diagram files
      */
-    private void reinitializeSelectedFiles(final IFile path,
+    private void reinitializeSelectedFiles(final IFile modelFile,
             final List<IFile> partners, final List<IFile> selection) {
-        IWorkbench wb = PlatformUI.getWorkbench();
-        IProgressService ps = wb.getProgressService();
         try {
-            ps.busyCursorWhile(new IRunnableWithProgress() {
-
+            PlatformUI.getWorkbench().getProgressService()
+                    .busyCursorWhile(new IRunnableWithProgress() {
                 public void run(final IProgressMonitor monitor)
                         throws InvocationTargetException, InterruptedException {
                     for (IFile partner : selection) {
-                        performPreOperationActions(path, partners, monitor);
-
-                        IFile kixsPath =
-                                path.getFileExtension().equals(
-                                        getModelExtension()) ? path : partner;
-                        IFile kidsPath =
-                                path.getFileExtension().equals(
-                                        getDiagramExtension()) ? path : partner;
+                        performPreOperationActions(modelFile, partners, monitor);
 
                         // delete old diagram file
-                        if (kidsPath != null) {
-                            IResource[] resources = new IResource[1];
-                            resources[0] = kidsPath;
-                            try {
-                                ResourcesPlugin.getWorkspace().delete(
-                                        resources, true, null);
-                            } catch (CoreException e0) {
-                                e0.printStackTrace();
-                            }
+                        IResource[] resources = new IResource[1];
+                        resources[0] = partner;
+                        try {
+                            ResourcesPlugin.getWorkspace().delete(resources, true, null);
+                        } catch (CoreException exception) {
+                            StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
                         }
-                        IEditorPart newEditor =
-                                reinitializeDiagram(kixsPath, kidsPath, monitor);
+                        IEditorPart newEditor = initializeDiagram(modelFile, partner, monitor);
 
-                        performPostOperationAction(path, partners, monitor,
-                                newEditor);
+                        performPostOperationAction(modelFile, partners, monitor, newEditor);
 
                         ReInitDiagramDoneTrigger.triggerAll(newEditor);
                     }
@@ -311,7 +229,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Perform actions after the reinit. Default implemenations does nothing.
+     * Perform actions after the reinitialization. Default implementation does nothing.
      * Subclasses may override.
      * 
      * @param path
@@ -329,13 +247,13 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Perform actions prior to the reinit. Default implemenations does nothing.
+     * Perform actions prior to the reinitialization. Default implementation does nothing.
      * Subclasses may override.
      * 
      * @param path
      *            the file
      * @param partners
-     *            the partner files
+     *            the affected partner files
      * @param monitor
      *            the progress monitor
      */
@@ -344,76 +262,42 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     }
 
     /**
-     * Get the partner files for a specific file.
+     * Search the given container for files that reference the given model.
      * 
-     * @param path
-     *            the file
-     * @return the list of partners
-     */
-    private List<IFile> getPartners(final IFile path) {
-        List<IFile> files = new LinkedList<IFile>();
-        // recursively search the workspace
-        if (path.getFileExtension().equals(getModelExtension())) {
-            find(files, path.getParent(), path);
-        }
-        List<IFile> result = new LinkedList<IFile>();
-        for (IFile file : files) {
-            if (file != null && (!file.exists() || path.getFileExtension().equals(
-                            getModelExtension()))) {
-                result.add(file);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Internal method to recursively search the whole workspace.
-     * 
-     * @param result
-     *            the list of affected files.
      * @param root
-     *            the root file
-     * @param model
+     *            the root container
+     * @param modelFile
      *            the model file
+     * @return a list of files that reference the model
      */
-    private void find(final List<IFile> result, final IContainer root,
-            final IFile model) {
+    private List<IFile> findPartners(final IFile modelFile, final IContainer root) {
+        List<IFile> result = new LinkedList<IFile>();
         try {
-            IResource[] members = root.members();
-
-            for (IResource res : members) {
-
+            String name = modelFile.getName();
+            for (IResource res : root.members()) {
                 if (res instanceof IFile) {
                     IFile file = (IFile) res;
-                    if (file.getFileExtension().equals(getDiagramExtension())) {
+                    if (getDiagramExtension().equals(file.getFileExtension())) {
 
                         // found relevant file
                         try {
-                            InputStream is = file.getContents();
-                            InputStreamReader isr = new InputStreamReader(is);
-                            BufferedReader br = new BufferedReader(isr);
+                            BufferedReader br = new BufferedReader(new InputStreamReader(
+                                    file.getContents()));
 
                             // line that is read at the moment
                             String s = br.readLine();
-                            boolean found = false;
 
                             // search the file for references to the model file
-                            while (s != null && !found) {
-                                if (s.contains(model.getName())) {
-                                    if (!found) {
-                                        found = true;
-                                        result.add(file);
-                                    }
+                            while (s != null) {
+                                if (s.contains(name)) {
+                                    result.add(file);
+                                    break;
                                 }
-                                if (!found) {
-                                    s = br.readLine();
-                                }
+                                s = br.readLine();
                             }
 
                             // close streams
                             br.close();
-                            isr.close();
-                            is.close();
                         } catch (FileNotFoundException exception) {
                             IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
                                     "Error while searching for partner files.", exception);
@@ -426,35 +310,26 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
                     }
                 }
             }
-
         } catch (CoreException exception) {
             StatusManager.getManager().handle(exception, CoreModelPlugin.PLUGIN_ID);
         }
+        return result;
     }
 
     /**
-     * Reinitialize the diagram from a given model file.
+     * Initialize a diagram file from a given model file.
      * 
-     * @param modelPath
+     * @param modelFile
      *            the source file.
-     * @param diagramPath
+     * @param diagramFile
      *            the destination file.
      * @param monitor
      *            the progress monitor
      * @return the diagram editor that was opened, may be null
      */
-    public IEditorPart reinitializeDiagram(final IFile modelPath,
-            final IFile diagramPath, final IProgressMonitor monitor) {
-        String[] array = modelPath.toString().split("/");
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < array.length - 1; i++) {
-            if (!array[i].equals("L")) {
-                builder.append(array[i] + "/");
-            }
-        }
-        builder.append(array[array.length - 1]);
-        URI domainModelURI =
-                URI.createPlatformResourceURI(builder.toString(), true);
+    public IEditorPart initializeDiagram(final IFile modelFile,
+            final IFile diagramFile, final IProgressMonitor monitor) {
+        URI domainModelURI = URI.createPlatformResourceURI(modelFile.getFullPath().toString(), true);
 
         TransactionalEditingDomain editingDomain = createEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
@@ -464,17 +339,18 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
             Resource resource = resourceSet.getResource(domainModelURI, true);
             modelRoot = resource.getContents().get(0);
         } catch (WrappedException ex) {
-            ex.printStackTrace();
+            IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                    "Error while reading the model file.", ex.exception());
+            StatusManager.getManager().handle(status, StatusManager.SHOW);
             return null;
         }
         if (modelRoot == null) {
-            IStatus status =
-                    new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
-                            "DiagramRoot is null.");
+            IStatus status = new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                            "Unable to read the domain model from the given file.");
             StatusManager.getManager().handle(status, StatusManager.LOG);
             return null;
         }
-        return createNewDiagram(modelRoot, editingDomain, diagramPath, monitor);
+        return createNewDiagram(modelRoot, editingDomain, diagramFile, monitor);
     }
 
     /**
@@ -508,7 +384,7 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
     /**
      * Utility method for opening an editor on the resource.
      * 
-     * @param diagram
+     * @param diagramResource
      *            the resource
      * @param editorId
      *            the editor id
@@ -516,18 +392,15 @@ public abstract class AbstractReInitDiagramCommand extends AbstractHandler {
      * @throws PartInitException
      *             if the editor was not opened
      */
-    protected IEditorPart openDiagram(final Resource diagram,
+    protected IEditorPart openDiagram(final Resource diagramResource,
             final String editorId) throws PartInitException {
-        String path = diagram.getURI().toPlatformString(true);
-        IResource workspaceResource =
-                ResourcesPlugin.getWorkspace().getRoot()
+        String path = diagramResource.getURI().toPlatformString(true);
+        IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot()
                         .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
-            IWorkbenchPage page =
-                    PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+            IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                             .getActivePage();
-            return page.openEditor(new FileEditorInput(
-                    (IFile) workspaceResource), editorId);
+            return page.openEditor(new FileEditorInput((IFile) workspaceResource), editorId);
         }
         return null;
     }

@@ -31,7 +31,7 @@ import org.osgi.framework.BundleContext;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.custom.update.UpdateResourceFactoryImpl;
-import de.cau.cs.kieler.synccharts.diagram.custom.commands.ReInitSyncchartsDiagramCommand;
+import de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.RedundantLabelTriggerListener;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -65,7 +65,7 @@ public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         CombinedWorkbenchListener.receiveAlreadyOpenedPages(this);
         CombinedWorkbenchListener.receiveAlreadyOpenedParts(this);
         UpdateResourceFactoryImpl
-                .setReInitDiagramCommand(new ReInitSyncchartsDiagramCommand());
+                .setReInitDiagramCommand(new InitSyncchartsDiagramHandler());
     }
 
     /**
