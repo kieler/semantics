@@ -59,7 +59,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
         return new IValueConverter<String>() {
 
             public String toValue(String string, AbstractNode node) {
-                return string.substring(0, string.length() - 1).trim();
+                return string.substring(1, string.length() - 1).trim();
             }
 
             public String toString(String value) {
