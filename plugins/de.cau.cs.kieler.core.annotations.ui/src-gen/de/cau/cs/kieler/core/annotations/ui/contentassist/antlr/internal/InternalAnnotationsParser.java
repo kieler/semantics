@@ -401,24 +401,24 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end ruleKeyStringValueAnnotation
 
 
-    // $ANTLR start entryRuleTypedStringAnnotation
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:174:1: entryRuleTypedStringAnnotation : ruleTypedStringAnnotation EOF ;
-    public final void entryRuleTypedStringAnnotation() throws RecognitionException {
+    // $ANTLR start entryRuleTypedKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:174:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
+    public final void entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:175:1: ( ruleTypedStringAnnotation EOF )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:176:1: ruleTypedStringAnnotation EOF
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:175:1: ( ruleTypedKeyStringValueAnnotation EOF )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:176:1: ruleTypedKeyStringValueAnnotation EOF
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationRule()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation307);
-            ruleTypedStringAnnotation();
+            pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation307);
+            ruleTypedKeyStringValueAnnotation();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationRule()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleTypedStringAnnotation314); if (failed) return ;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation314); if (failed) return ;
 
             }
 
@@ -431,37 +431,37 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end entryRuleTypedStringAnnotation
+    // $ANTLR end entryRuleTypedKeyStringValueAnnotation
 
 
-    // $ANTLR start ruleTypedStringAnnotation
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:183:1: ruleTypedStringAnnotation : ( ( rule__TypedStringAnnotation__Group__0 ) ) ;
-    public final void ruleTypedStringAnnotation() throws RecognitionException {
+    // $ANTLR start ruleTypedKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:183:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
+    public final void ruleTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:187:2: ( ( ( rule__TypedStringAnnotation__Group__0 ) ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:188:1: ( ( rule__TypedStringAnnotation__Group__0 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:187:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:188:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:188:1: ( ( rule__TypedStringAnnotation__Group__0 ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:189:1: ( rule__TypedStringAnnotation__Group__0 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:188:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:189:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getGroup()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:190:1: ( rule__TypedStringAnnotation__Group__0 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:190:2: rule__TypedStringAnnotation__Group__0
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:190:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:190:2: rule__TypedKeyStringValueAnnotation__Group__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__0_in_ruleTypedStringAnnotation340);
-            rule__TypedStringAnnotation__Group__0();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0_in_ruleTypedKeyStringValueAnnotation340);
+            rule__TypedKeyStringValueAnnotation__Group__0();
             _fsp--;
             if (failed) return ;
 
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getGroup()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
 
             }
@@ -481,7 +481,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end ruleTypedStringAnnotation
+    // $ANTLR end ruleTypedKeyStringValueAnnotation
 
 
     // $ANTLR start entryRuleKeyBooleanValueAnnotation
@@ -817,13 +817,13 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
 
     // $ANTLR start rule__Annotation__Alternatives
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );
     public final void rule__Annotation__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:320:1: ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:320:1: ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) )
             int alt1=7;
             int LA1_0 = input.LA(1);
 
@@ -873,7 +873,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 3, input);
+                            new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 3, input);
 
                         throw nvae;
                     }
@@ -882,7 +882,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 2, input);
+                        new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 2, input);
 
                     throw nvae;
                 }
@@ -890,7 +890,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 0, input);
+                    new NoViableAltException("316:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 1, 0, input);
 
                 throw nvae;
             }
@@ -962,20 +962,20 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:339:6: ( ruleTypedStringAnnotation )
+                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:339:6: ( ruleTypedKeyStringValueAnnotation )
                     {
-                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:339:6: ( ruleTypedStringAnnotation )
-                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:340:1: ruleTypedStringAnnotation
+                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:339:6: ( ruleTypedKeyStringValueAnnotation )
+                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:340:1: ruleTypedKeyStringValueAnnotation
                     {
                     if ( backtracking==0 ) {
-                       before(grammarAccess.getAnnotationAccess().getTypedStringAnnotationParserRuleCall_3()); 
+                       before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_rule__Annotation__Alternatives669);
-                    ruleTypedStringAnnotation();
+                    pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives669);
+                    ruleTypedKeyStringValueAnnotation();
                     _fsp--;
                     if (failed) return ;
                     if ( backtracking==0 ) {
-                       after(grammarAccess.getAnnotationAccess().getTypedStringAnnotationParserRuleCall_3()); 
+                       after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
                     }
 
                     }
@@ -2252,22 +2252,22 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end rule__KeyStringValueAnnotation__Group_3__2__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__0
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:803:1: rule__TypedStringAnnotation__Group__0 : rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1 ;
-    public final void rule__TypedStringAnnotation__Group__0() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__0
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:803:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:807:1: ( rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:808:2: rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:807:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:808:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__0__Impl_in_rule__TypedStringAnnotation__Group__01609);
-            rule__TypedStringAnnotation__Group__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__01609);
+            rule__TypedKeyStringValueAnnotation__Group__0__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__1_in_rule__TypedStringAnnotation__Group__01612);
-            rule__TypedStringAnnotation__Group__1();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__01612);
+            rule__TypedKeyStringValueAnnotation__Group__1();
             _fsp--;
             if (failed) return ;
 
@@ -2285,12 +2285,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__0
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__0
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__0__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:815:1: rule__TypedStringAnnotation__Group__0__Impl : ( '@' ) ;
-    public final void rule__TypedStringAnnotation__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__0__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:815:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -2302,11 +2302,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:821:1: '@'
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getCommercialAtKeyword_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,15,FollowSets000.FOLLOW_15_in_rule__TypedStringAnnotation__Group__0__Impl1640); if (failed) return ;
+            match(input,15,FollowSets000.FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1640); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getCommercialAtKeyword_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
 
             }
@@ -2326,25 +2326,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__0__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__0__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__1
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:834:1: rule__TypedStringAnnotation__Group__1 : rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2 ;
-    public final void rule__TypedStringAnnotation__Group__1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__1
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:834:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:838:1: ( rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:839:2: rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:838:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:839:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__1__Impl_in_rule__TypedStringAnnotation__Group__11671);
-            rule__TypedStringAnnotation__Group__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__11671);
+            rule__TypedKeyStringValueAnnotation__Group__1__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__2_in_rule__TypedStringAnnotation__Group__11674);
-            rule__TypedStringAnnotation__Group__2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__11674);
+            rule__TypedKeyStringValueAnnotation__Group__2();
             _fsp--;
             if (failed) return ;
 
@@ -2362,123 +2362,37 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__1__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:846:1: rule__TypedStringAnnotation__Group__1__Impl : ( ( rule__TypedStringAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:850:1: ( ( ( rule__TypedStringAnnotation__NameAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:851:1: ( ( rule__TypedStringAnnotation__NameAssignment_1 ) )
-            {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:851:1: ( ( rule__TypedStringAnnotation__NameAssignment_1 ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:852:1: ( rule__TypedStringAnnotation__NameAssignment_1 )
-            {
-            if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getNameAssignment_1()); 
-            }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:853:1: ( rule__TypedStringAnnotation__NameAssignment_1 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:853:2: rule__TypedStringAnnotation__NameAssignment_1
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__NameAssignment_1_in_rule__TypedStringAnnotation__Group__1__Impl1701);
-            rule__TypedStringAnnotation__NameAssignment_1();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-            if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getNameAssignment_1()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__1__Impl
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__2
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:863:1: rule__TypedStringAnnotation__Group__2 : rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3 ;
-    public final void rule__TypedStringAnnotation__Group__2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__1__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:846:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:867:1: ( rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:868:2: rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:850:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:851:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__2__Impl_in_rule__TypedStringAnnotation__Group__21731);
-            rule__TypedStringAnnotation__Group__2__Impl();
-            _fsp--;
-            if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__3_in_rule__TypedStringAnnotation__Group__21734);
-            rule__TypedStringAnnotation__Group__3();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__2
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__2__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:875:1: rule__TypedStringAnnotation__Group__2__Impl : ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:879:1: ( ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:880:1: ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) )
-            {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:880:1: ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:881:1: ( rule__TypedStringAnnotation__TypeAssignment_2 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:851:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:852:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:882:1: ( rule__TypedStringAnnotation__TypeAssignment_2 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:882:2: rule__TypedStringAnnotation__TypeAssignment_2
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:853:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:853:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__TypeAssignment_2_in_rule__TypedStringAnnotation__Group__2__Impl1761);
-            rule__TypedStringAnnotation__TypeAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl1701);
+            rule__TypedKeyStringValueAnnotation__NameAssignment_1();
             _fsp--;
             if (failed) return ;
 
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
 
             }
@@ -2498,107 +2412,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__2__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__1__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__3
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:892:1: rule__TypedStringAnnotation__Group__3 : rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4 ;
-    public final void rule__TypedStringAnnotation__Group__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:896:1: ( rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:897:2: rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__3__Impl_in_rule__TypedStringAnnotation__Group__31791);
-            rule__TypedStringAnnotation__Group__3__Impl();
-            _fsp--;
-            if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__4_in_rule__TypedStringAnnotation__Group__31794);
-            rule__TypedStringAnnotation__Group__4();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__3
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__3__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:904:1: rule__TypedStringAnnotation__Group__3__Impl : ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__2
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:863:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:908:1: ( ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:909:1: ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:867:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:868:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:909:1: ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:910:1: ( rule__TypedStringAnnotation__ValueAssignment_3 )
-            {
-            if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getValueAssignment_3()); 
-            }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:911:1: ( rule__TypedStringAnnotation__ValueAssignment_3 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:911:2: rule__TypedStringAnnotation__ValueAssignment_3
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__ValueAssignment_3_in_rule__TypedStringAnnotation__Group__3__Impl1821);
-            rule__TypedStringAnnotation__ValueAssignment_3();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__21731);
+            rule__TypedKeyStringValueAnnotation__Group__2__Impl();
             _fsp--;
             if (failed) return ;
-
-            }
-
-            if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getValueAssignment_3()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__3__Impl
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__4
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:921:1: rule__TypedStringAnnotation__Group__4 : rule__TypedStringAnnotation__Group__4__Impl ;
-    public final void rule__TypedStringAnnotation__Group__4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:925:1: ( rule__TypedStringAnnotation__Group__4__Impl )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:926:2: rule__TypedStringAnnotation__Group__4__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__4__Impl_in_rule__TypedStringAnnotation__Group__41851);
-            rule__TypedStringAnnotation__Group__4__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__21734);
+            rule__TypedKeyStringValueAnnotation__Group__3();
             _fsp--;
             if (failed) return ;
 
@@ -2616,26 +2448,194 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__4
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__4__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:932:1: rule__TypedStringAnnotation__Group__4__Impl : ( ( rule__TypedStringAnnotation__Group_4__0 )? ) ;
-    public final void rule__TypedStringAnnotation__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__2__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:875:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:936:1: ( ( ( rule__TypedStringAnnotation__Group_4__0 )? ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:937:1: ( ( rule__TypedStringAnnotation__Group_4__0 )? )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:879:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:880:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) )
             {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:937:1: ( ( rule__TypedStringAnnotation__Group_4__0 )? )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:938:1: ( rule__TypedStringAnnotation__Group_4__0 )?
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:880:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:881:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getGroup_4()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:939:1: ( rule__TypedStringAnnotation__Group_4__0 )?
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:882:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:882:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_2
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_2_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1761);
+            rule__TypedKeyStringValueAnnotation__TypeAssignment_2();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+            if ( backtracking==0 ) {
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__2__Impl
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__3
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:892:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:896:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:897:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__31791);
+            rule__TypedKeyStringValueAnnotation__Group__3__Impl();
+            _fsp--;
+            if (failed) return ;
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__31794);
+            rule__TypedKeyStringValueAnnotation__Group__4();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__3
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__3__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:904:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:908:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:909:1: ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) )
+            {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:909:1: ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:910:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 )
+            {
+            if ( backtracking==0 ) {
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_3()); 
+            }
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:911:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:911:2: rule__TypedKeyStringValueAnnotation__ValueAssignment_3
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl1821);
+            rule__TypedKeyStringValueAnnotation__ValueAssignment_3();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+            if ( backtracking==0 ) {
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_3()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__3__Impl
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__4
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:921:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:925:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:926:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__41851);
+            rule__TypedKeyStringValueAnnotation__Group__4__Impl();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__4
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__4__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:932:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:936:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:937:1: ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? )
+            {
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:937:1: ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:938:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0 )?
+            {
+            if ( backtracking==0 ) {
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_4()); 
+            }
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:939:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0 )?
             int alt7=2;
             int LA7_0 = input.LA(1);
 
@@ -2644,10 +2644,10 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:939:2: rule__TypedStringAnnotation__Group_4__0
+                    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:939:2: rule__TypedKeyStringValueAnnotation__Group_4__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__0_in_rule__TypedStringAnnotation__Group__4__Impl1878);
-                    rule__TypedStringAnnotation__Group_4__0();
+                    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1878);
+                    rule__TypedKeyStringValueAnnotation__Group_4__0();
                     _fsp--;
                     if (failed) return ;
 
@@ -2657,7 +2657,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getGroup_4()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_4()); 
             }
 
             }
@@ -2677,25 +2677,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__4__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__4__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__0
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:959:1: rule__TypedStringAnnotation__Group_4__0 : rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1 ;
-    public final void rule__TypedStringAnnotation__Group_4__0() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__0
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:959:1: rule__TypedKeyStringValueAnnotation__Group_4__0 : rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:963:1: ( rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:964:2: rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:963:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:964:2: rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__0__Impl_in_rule__TypedStringAnnotation__Group_4__01919);
-            rule__TypedStringAnnotation__Group_4__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__01919);
+            rule__TypedKeyStringValueAnnotation__Group_4__0__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__1_in_rule__TypedStringAnnotation__Group_4__01922);
-            rule__TypedStringAnnotation__Group_4__1();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1_in_rule__TypedKeyStringValueAnnotation__Group_4__01922);
+            rule__TypedKeyStringValueAnnotation__Group_4__1();
             _fsp--;
             if (failed) return ;
 
@@ -2713,12 +2713,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__0
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__0
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__0__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:971:1: rule__TypedStringAnnotation__Group_4__0__Impl : ( '(' ) ;
-    public final void rule__TypedStringAnnotation__Group_4__0__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__0__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:971:1: rule__TypedKeyStringValueAnnotation__Group_4__0__Impl : ( '(' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -2730,11 +2730,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:977:1: '('
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
             }
-            match(input,16,FollowSets000.FOLLOW_16_in_rule__TypedStringAnnotation__Group_4__0__Impl1950); if (failed) return ;
+            match(input,16,FollowSets000.FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl1950); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
             }
 
             }
@@ -2754,25 +2754,25 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__0__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__0__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__1
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:990:1: rule__TypedStringAnnotation__Group_4__1 : rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2 ;
-    public final void rule__TypedStringAnnotation__Group_4__1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__1
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:990:1: rule__TypedKeyStringValueAnnotation__Group_4__1 : rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:994:1: ( rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2 )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:995:2: rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:994:1: ( rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2 )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:995:2: rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__1__Impl_in_rule__TypedStringAnnotation__Group_4__11981);
-            rule__TypedStringAnnotation__Group_4__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__11981);
+            rule__TypedKeyStringValueAnnotation__Group_4__1__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__2_in_rule__TypedStringAnnotation__Group_4__11984);
-            rule__TypedStringAnnotation__Group_4__2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2_in_rule__TypedKeyStringValueAnnotation__Group_4__11984);
+            rule__TypedKeyStringValueAnnotation__Group_4__2();
             _fsp--;
             if (failed) return ;
 
@@ -2790,26 +2790,26 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__1__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1002:1: rule__TypedStringAnnotation__Group_4__1__Impl : ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* ) ;
-    public final void rule__TypedStringAnnotation__Group_4__1__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__1__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1002:1: rule__TypedKeyStringValueAnnotation__Group_4__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1006:1: ( ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* ) )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1007:1: ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1006:1: ( ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* ) )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1007:1: ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* )
             {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1007:1: ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1008:1: ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )*
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1007:1: ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1008:1: ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )*
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAssignment_4_1()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_4_1()); 
             }
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1009:1: ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )*
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1009:1: ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )*
             loop8:
             do {
                 int alt8=2;
@@ -2822,10 +2822,10 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
 
                 switch (alt8) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1009:2: rule__TypedStringAnnotation__AnnotationsAssignment_4_1
+            	    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1009:2: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__AnnotationsAssignment_4_1_in_rule__TypedStringAnnotation__Group_4__1__Impl2011);
-            	    rule__TypedStringAnnotation__AnnotationsAssignment_4_1();
+            	    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1_in_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl2011);
+            	    rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1();
             	    _fsp--;
             	    if (failed) return ;
 
@@ -2838,7 +2838,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             } while (true);
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAssignment_4_1()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_4_1()); 
             }
 
             }
@@ -2858,21 +2858,21 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__1__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__1__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__2
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1019:1: rule__TypedStringAnnotation__Group_4__2 : rule__TypedStringAnnotation__Group_4__2__Impl ;
-    public final void rule__TypedStringAnnotation__Group_4__2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__2
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1019:1: rule__TypedKeyStringValueAnnotation__Group_4__2 : rule__TypedKeyStringValueAnnotation__Group_4__2__Impl ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1023:1: ( rule__TypedStringAnnotation__Group_4__2__Impl )
-            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1024:2: rule__TypedStringAnnotation__Group_4__2__Impl
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1023:1: ( rule__TypedKeyStringValueAnnotation__Group_4__2__Impl )
+            // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1024:2: rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__2__Impl_in_rule__TypedStringAnnotation__Group_4__22042);
-            rule__TypedStringAnnotation__Group_4__2__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__22042);
+            rule__TypedKeyStringValueAnnotation__Group_4__2__Impl();
             _fsp--;
             if (failed) return ;
 
@@ -2890,12 +2890,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__2
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__2__Impl
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1030:1: rule__TypedStringAnnotation__Group_4__2__Impl : ( ')' ) ;
-    public final void rule__TypedStringAnnotation__Group_4__2__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1030:1: rule__TypedKeyStringValueAnnotation__Group_4__2__Impl : ( ')' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -2907,11 +2907,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1036:1: ')'
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4_2()); 
             }
-            match(input,17,FollowSets000.FOLLOW_17_in_rule__TypedStringAnnotation__Group_4__2__Impl2070); if (failed) return ;
+            match(input,17,FollowSets000.FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl2070); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4_2()); 
             }
 
             }
@@ -2931,7 +2931,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__2__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
 
 
     // $ANTLR start rule__KeyBooleanValueAnnotation__Group__0
@@ -4977,9 +4977,9 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
     // $ANTLR end rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__NameAssignment_1
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1810:1: rule__TypedStringAnnotation__NameAssignment_1 : ( RULE_ID ) ;
-    public final void rule__TypedStringAnnotation__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__NameAssignment_1
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1810:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( RULE_ID ) ;
+    public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -4991,11 +4991,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1816:1: RULE_ID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypedStringAnnotation__NameAssignment_13607); if (failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_13607); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
             }
 
             }
@@ -5015,12 +5015,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__NameAssignment_1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__NameAssignment_1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__TypeAssignment_2
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1825:1: rule__TypedStringAnnotation__TypeAssignment_2 : ( RULE_TYPEID ) ;
-    public final void rule__TypedStringAnnotation__TypeAssignment_2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__TypeAssignment_2
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1825:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_2 : ( RULE_TYPEID ) ;
+    public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -5032,11 +5032,11 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1831:1: RULE_TYPEID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_rule__TypedStringAnnotation__TypeAssignment_23638); if (failed) return ;
+            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_23638); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
             }
 
             }
@@ -5056,12 +5056,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__TypeAssignment_2
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__TypeAssignment_2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__ValueAssignment_3
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1840:1: rule__TypedStringAnnotation__ValueAssignment_3 : ( ruleEString ) ;
-    public final void rule__TypedStringAnnotation__ValueAssignment_3() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__ValueAssignment_3
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1840:1: rule__TypedKeyStringValueAnnotation__ValueAssignment_3 : ( ruleEString ) ;
+    public final void rule__TypedKeyStringValueAnnotation__ValueAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -5073,14 +5073,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1846:1: ruleEString
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedStringAnnotation__ValueAssignment_33669);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_33669);
             ruleEString();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
             }
 
             }
@@ -5100,12 +5100,12 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__ValueAssignment_3
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__ValueAssignment_3
 
 
-    // $ANTLR start rule__TypedStringAnnotation__AnnotationsAssignment_4_1
-    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1855:1: rule__TypedStringAnnotation__AnnotationsAssignment_4_1 : ( ruleAnnotation ) ;
-    public final void rule__TypedStringAnnotation__AnnotationsAssignment_4_1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
+    // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1855:1: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 : ( ruleAnnotation ) ;
+    public final void rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -5117,14 +5117,14 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
             // ../de.cau.cs.kieler.core.annotations.ui/src-gen/de/cau/cs/kieler/core/annotations/ui/contentassist/antlr/internal/InternalAnnotations.g:1861:1: ruleAnnotation
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__TypedStringAnnotation__AnnotationsAssignment_4_13700);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_13700);
             ruleAnnotation();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
             }
 
             }
@@ -5144,7 +5144,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__AnnotationsAssignment_4_1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
 
 
     // $ANTLR start rule__KeyBooleanValueAnnotation__NameAssignment_1
@@ -5541,9 +5541,9 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation247 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation254 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0_in_ruleKeyStringValueAnnotation280 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation307 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleTypedStringAnnotation314 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__0_in_ruleTypedStringAnnotation340 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation307 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation314 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0_in_ruleTypedKeyStringValueAnnotation340 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation367 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation374 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0_in_ruleKeyBooleanValueAnnotation400 = new BitSet(new long[]{0x0000000000000002L});
@@ -5559,7 +5559,7 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives618 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives635 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives652 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_rule__Annotation__Alternatives669 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives669 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives686 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives703 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives720 = new BitSet(new long[]{0x0000000000000002L});
@@ -5600,28 +5600,28 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl1513 = new BitSet(new long[]{0x0000000000008042L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__21544 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_17_in_rule__KeyStringValueAnnotation__Group_3__2__Impl1572 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__0__Impl_in_rule__TypedStringAnnotation__Group__01609 = new BitSet(new long[]{0x0000000000000020L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__1_in_rule__TypedStringAnnotation__Group__01612 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_15_in_rule__TypedStringAnnotation__Group__0__Impl1640 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__1__Impl_in_rule__TypedStringAnnotation__Group__11671 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__2_in_rule__TypedStringAnnotation__Group__11674 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__NameAssignment_1_in_rule__TypedStringAnnotation__Group__1__Impl1701 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__2__Impl_in_rule__TypedStringAnnotation__Group__21731 = new BitSet(new long[]{0x0000000000000030L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__3_in_rule__TypedStringAnnotation__Group__21734 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__TypeAssignment_2_in_rule__TypedStringAnnotation__Group__2__Impl1761 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__3__Impl_in_rule__TypedStringAnnotation__Group__31791 = new BitSet(new long[]{0x0000000000010002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__4_in_rule__TypedStringAnnotation__Group__31794 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__ValueAssignment_3_in_rule__TypedStringAnnotation__Group__3__Impl1821 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__4__Impl_in_rule__TypedStringAnnotation__Group__41851 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__0_in_rule__TypedStringAnnotation__Group__4__Impl1878 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__0__Impl_in_rule__TypedStringAnnotation__Group_4__01919 = new BitSet(new long[]{0x0000000000028040L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__1_in_rule__TypedStringAnnotation__Group_4__01922 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_16_in_rule__TypedStringAnnotation__Group_4__0__Impl1950 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__1__Impl_in_rule__TypedStringAnnotation__Group_4__11981 = new BitSet(new long[]{0x0000000000020000L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__2_in_rule__TypedStringAnnotation__Group_4__11984 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__AnnotationsAssignment_4_1_in_rule__TypedStringAnnotation__Group_4__1__Impl2011 = new BitSet(new long[]{0x0000000000008042L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__2__Impl_in_rule__TypedStringAnnotation__Group_4__22042 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_17_in_rule__TypedStringAnnotation__Group_4__2__Impl2070 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__01609 = new BitSet(new long[]{0x0000000000000020L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__01612 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_15_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl1640 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__11671 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__11674 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl1701 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__21731 = new BitSet(new long[]{0x0000000000000030L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__21734 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_2_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl1761 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__31791 = new BitSet(new long[]{0x0000000000010002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__31794 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl1821 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__41851 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl1878 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__01919 = new BitSet(new long[]{0x0000000000028040L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1_in_rule__TypedKeyStringValueAnnotation__Group_4__01922 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_16_in_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl1950 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__11981 = new BitSet(new long[]{0x0000000000020000L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2_in_rule__TypedKeyStringValueAnnotation__Group_4__11984 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1_in_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl2011 = new BitSet(new long[]{0x0000000000008042L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__22042 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_17_in_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl2070 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__02107 = new BitSet(new long[]{0x0000000000000020L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__02110 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_15_in_rule__KeyBooleanValueAnnotation__Group__0__Impl2138 = new BitSet(new long[]{0x0000000000000002L});
@@ -5685,10 +5685,10 @@ public class InternalAnnotationsParser extends AbstractInternalContentAssistPars
         public static final BitSet FOLLOW_RULE_ID_in_rule__KeyStringValueAnnotation__NameAssignment_13514 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_23545 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_13576 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__TypedStringAnnotation__NameAssignment_13607 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_TYPEID_in_rule__TypedStringAnnotation__TypeAssignment_23638 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__TypedStringAnnotation__ValueAssignment_33669 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedStringAnnotation__AnnotationsAssignment_4_13700 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_13607 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_TYPEID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_23638 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_33669 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_13700 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__KeyBooleanValueAnnotation__NameAssignment_13731 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_23762 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_13793 = new BitSet(new long[]{0x0000000000000002L});

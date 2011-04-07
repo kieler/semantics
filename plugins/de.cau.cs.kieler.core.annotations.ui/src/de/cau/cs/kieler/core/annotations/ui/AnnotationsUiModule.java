@@ -8,8 +8,21 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class AnnotationsUiModule extends de.cau.cs.kieler.core.annotations.ui.AbstractAnnotationsUiModule {
-	public AnnotationsUiModule(AbstractUIPlugin plugin) {
-		super(plugin);
-	}
+public class AnnotationsUiModule extends
+        de.cau.cs.kieler.core.annotations.ui.AbstractAnnotationsUiModule {
+
+    public AnnotationsUiModule(AbstractUIPlugin plugin) {
+        super(plugin);
+    }
+
+    /* introduces new highlighting profiles (e.g. annotationKey) */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration> bindIHighlightingConfiguration() {
+        return AnnotationsHighlightingConfiguration.class;
+    }
+
+    /* provides a few additional highlighting rules */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
+        return AnnotationsSemanticHighlightingCalculator.class;
+    }
+
 }
