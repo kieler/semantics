@@ -4208,24 +4208,24 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end ruleKeyStringValueAnnotation
 
 
-    // $ANTLR start entryRuleTypedStringAnnotation
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1466:1: entryRuleTypedStringAnnotation : ruleTypedStringAnnotation EOF ;
-    public final void entryRuleTypedStringAnnotation() throws RecognitionException {
+    // $ANTLR start entryRuleTypedKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1466:1: entryRuleTypedKeyStringValueAnnotation : ruleTypedKeyStringValueAnnotation EOF ;
+    public final void entryRuleTypedKeyStringValueAnnotation() throws RecognitionException {
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1467:1: ( ruleTypedStringAnnotation EOF )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1468:1: ruleTypedStringAnnotation EOF
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1467:1: ( ruleTypedKeyStringValueAnnotation EOF )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1468:1: ruleTypedKeyStringValueAnnotation EOF
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationRule()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation3069);
-            ruleTypedStringAnnotation();
+            pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation3069);
+            ruleTypedKeyStringValueAnnotation();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationRule()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationRule()); 
             }
-            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleTypedStringAnnotation3076); if (failed) return ;
+            match(input,EOF,FollowSets000.FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation3076); if (failed) return ;
 
             }
 
@@ -4238,37 +4238,37 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end entryRuleTypedStringAnnotation
+    // $ANTLR end entryRuleTypedKeyStringValueAnnotation
 
 
-    // $ANTLR start ruleTypedStringAnnotation
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1475:1: ruleTypedStringAnnotation : ( ( rule__TypedStringAnnotation__Group__0 ) ) ;
-    public final void ruleTypedStringAnnotation() throws RecognitionException {
+    // $ANTLR start ruleTypedKeyStringValueAnnotation
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1475:1: ruleTypedKeyStringValueAnnotation : ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) ;
+    public final void ruleTypedKeyStringValueAnnotation() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1479:2: ( ( ( rule__TypedStringAnnotation__Group__0 ) ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1480:1: ( ( rule__TypedStringAnnotation__Group__0 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1479:2: ( ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1480:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1480:1: ( ( rule__TypedStringAnnotation__Group__0 ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1481:1: ( rule__TypedStringAnnotation__Group__0 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1480:1: ( ( rule__TypedKeyStringValueAnnotation__Group__0 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1481:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getGroup()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1482:1: ( rule__TypedStringAnnotation__Group__0 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1482:2: rule__TypedStringAnnotation__Group__0
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1482:1: ( rule__TypedKeyStringValueAnnotation__Group__0 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:1482:2: rule__TypedKeyStringValueAnnotation__Group__0
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__0_in_ruleTypedStringAnnotation3102);
-            rule__TypedStringAnnotation__Group__0();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0_in_ruleTypedKeyStringValueAnnotation3102);
+            rule__TypedKeyStringValueAnnotation__Group__0();
             _fsp--;
             if (failed) return ;
 
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getGroup()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup()); 
             }
 
             }
@@ -4288,7 +4288,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end ruleTypedStringAnnotation
+    // $ANTLR end ruleTypedKeyStringValueAnnotation
 
 
     // $ANTLR start entryRuleKeyBooleanValueAnnotation
@@ -9955,13 +9955,13 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start rule__Annotation__Alternatives
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );
     public final void rule__Annotation__Alternatives() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2757:1: ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2757:1: ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) )
             int alt34=7;
             int LA34_0 = input.LA(1);
 
@@ -10026,7 +10026,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     default:
                         if (backtracking>0) {failed=true; return ;}
                         NoViableAltException nvae =
-                            new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 3, input);
+                            new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 3, input);
 
                         throw nvae;
                     }
@@ -10035,7 +10035,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                 else {
                     if (backtracking>0) {failed=true; return ;}
                     NoViableAltException nvae =
-                        new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 2, input);
+                        new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 2, input);
 
                     throw nvae;
                 }
@@ -10043,7 +10043,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             else {
                 if (backtracking>0) {failed=true; return ;}
                 NoViableAltException nvae =
-                    new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedStringAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 0, input);
+                    new NoViableAltException("2753:1: rule__Annotation__Alternatives : ( ( ruleCommentAnnotation ) | ( ruleTagAnnotation ) | ( ruleKeyStringValueAnnotation ) | ( ruleTypedKeyStringValueAnnotation ) | ( ruleKeyBooleanValueAnnotation ) | ( ruleKeyIntValueAnnotation ) | ( ruleKeyFloatValueAnnotation ) );", 34, 0, input);
 
                 throw nvae;
             }
@@ -10115,20 +10115,20 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
                     }
                     break;
                 case 4 :
-                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2776:6: ( ruleTypedStringAnnotation )
+                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2776:6: ( ruleTypedKeyStringValueAnnotation )
                     {
-                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2776:6: ( ruleTypedStringAnnotation )
-                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2777:1: ruleTypedStringAnnotation
+                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2776:6: ( ruleTypedKeyStringValueAnnotation )
+                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:2777:1: ruleTypedKeyStringValueAnnotation
                     {
                     if ( backtracking==0 ) {
-                       before(grammarAccess.getAnnotationAccess().getTypedStringAnnotationParserRuleCall_3()); 
+                       before(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
                     }
-                    pushFollow(FollowSets000.FOLLOW_ruleTypedStringAnnotation_in_rule__Annotation__Alternatives6004);
-                    ruleTypedStringAnnotation();
+                    pushFollow(FollowSets000.FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives6004);
+                    ruleTypedKeyStringValueAnnotation();
                     _fsp--;
                     if (failed) return ;
                     if ( backtracking==0 ) {
-                       after(grammarAccess.getAnnotationAccess().getTypedStringAnnotationParserRuleCall_3()); 
+                       after(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
                     }
 
                     }
@@ -36172,22 +36172,22 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__KeyStringValueAnnotation__Group_3__2__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__0
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12009:1: rule__TypedStringAnnotation__Group__0 : rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1 ;
-    public final void rule__TypedStringAnnotation__Group__0() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__0
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12009:1: rule__TypedKeyStringValueAnnotation__Group__0 : rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12013:1: ( rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12014:2: rule__TypedStringAnnotation__Group__0__Impl rule__TypedStringAnnotation__Group__1
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12013:1: ( rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12014:2: rule__TypedKeyStringValueAnnotation__Group__0__Impl rule__TypedKeyStringValueAnnotation__Group__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__0__Impl_in_rule__TypedStringAnnotation__Group__024441);
-            rule__TypedStringAnnotation__Group__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__024441);
+            rule__TypedKeyStringValueAnnotation__Group__0__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__1_in_rule__TypedStringAnnotation__Group__024444);
-            rule__TypedStringAnnotation__Group__1();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__024444);
+            rule__TypedKeyStringValueAnnotation__Group__1();
             _fsp--;
             if (failed) return ;
 
@@ -36205,12 +36205,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__0
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__0
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__0__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12021:1: rule__TypedStringAnnotation__Group__0__Impl : ( '@' ) ;
-    public final void rule__TypedStringAnnotation__Group__0__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__0__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12021:1: rule__TypedKeyStringValueAnnotation__Group__0__Impl : ( '@' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -36222,11 +36222,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12027:1: '@'
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getCommercialAtKeyword_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
-            match(input,55,FollowSets000.FOLLOW_55_in_rule__TypedStringAnnotation__Group__0__Impl24472); if (failed) return ;
+            match(input,55,FollowSets000.FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl24472); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getCommercialAtKeyword_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()); 
             }
 
             }
@@ -36246,25 +36246,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__0__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__0__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__1
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12040:1: rule__TypedStringAnnotation__Group__1 : rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2 ;
-    public final void rule__TypedStringAnnotation__Group__1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__1
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12040:1: rule__TypedKeyStringValueAnnotation__Group__1 : rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12044:1: ( rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12045:2: rule__TypedStringAnnotation__Group__1__Impl rule__TypedStringAnnotation__Group__2
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12044:1: ( rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12045:2: rule__TypedKeyStringValueAnnotation__Group__1__Impl rule__TypedKeyStringValueAnnotation__Group__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__1__Impl_in_rule__TypedStringAnnotation__Group__124503);
-            rule__TypedStringAnnotation__Group__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__124503);
+            rule__TypedKeyStringValueAnnotation__Group__1__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__2_in_rule__TypedStringAnnotation__Group__124506);
-            rule__TypedStringAnnotation__Group__2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__124506);
+            rule__TypedKeyStringValueAnnotation__Group__2();
             _fsp--;
             if (failed) return ;
 
@@ -36282,123 +36282,37 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__1__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12052:1: rule__TypedStringAnnotation__Group__1__Impl : ( ( rule__TypedStringAnnotation__NameAssignment_1 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__1__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12056:1: ( ( ( rule__TypedStringAnnotation__NameAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12057:1: ( ( rule__TypedStringAnnotation__NameAssignment_1 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12057:1: ( ( rule__TypedStringAnnotation__NameAssignment_1 ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12058:1: ( rule__TypedStringAnnotation__NameAssignment_1 )
-            {
-            if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getNameAssignment_1()); 
-            }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12059:1: ( rule__TypedStringAnnotation__NameAssignment_1 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12059:2: rule__TypedStringAnnotation__NameAssignment_1
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__NameAssignment_1_in_rule__TypedStringAnnotation__Group__1__Impl24533);
-            rule__TypedStringAnnotation__NameAssignment_1();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-            if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getNameAssignment_1()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__1__Impl
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__2
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12069:1: rule__TypedStringAnnotation__Group__2 : rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3 ;
-    public final void rule__TypedStringAnnotation__Group__2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__1__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12052:1: rule__TypedKeyStringValueAnnotation__Group__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12073:1: ( rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12074:2: rule__TypedStringAnnotation__Group__2__Impl rule__TypedStringAnnotation__Group__3
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12056:1: ( ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12057:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__2__Impl_in_rule__TypedStringAnnotation__Group__224563);
-            rule__TypedStringAnnotation__Group__2__Impl();
-            _fsp--;
-            if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__3_in_rule__TypedStringAnnotation__Group__224566);
-            rule__TypedStringAnnotation__Group__3();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__2
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__2__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12081:1: rule__TypedStringAnnotation__Group__2__Impl : ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__2__Impl() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12085:1: ( ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12086:1: ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) )
-            {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12086:1: ( ( rule__TypedStringAnnotation__TypeAssignment_2 ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12087:1: ( rule__TypedStringAnnotation__TypeAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12057:1: ( ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12058:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12088:1: ( rule__TypedStringAnnotation__TypeAssignment_2 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12088:2: rule__TypedStringAnnotation__TypeAssignment_2
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12059:1: ( rule__TypedKeyStringValueAnnotation__NameAssignment_1 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12059:2: rule__TypedKeyStringValueAnnotation__NameAssignment_1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__TypeAssignment_2_in_rule__TypedStringAnnotation__Group__2__Impl24593);
-            rule__TypedStringAnnotation__TypeAssignment_2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl24533);
+            rule__TypedKeyStringValueAnnotation__NameAssignment_1();
             _fsp--;
             if (failed) return ;
 
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getTypeAssignment_2()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1()); 
             }
 
             }
@@ -36418,107 +36332,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__2__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__1__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__3
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12098:1: rule__TypedStringAnnotation__Group__3 : rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4 ;
-    public final void rule__TypedStringAnnotation__Group__3() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12102:1: ( rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12103:2: rule__TypedStringAnnotation__Group__3__Impl rule__TypedStringAnnotation__Group__4
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__3__Impl_in_rule__TypedStringAnnotation__Group__324623);
-            rule__TypedStringAnnotation__Group__3__Impl();
-            _fsp--;
-            if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__4_in_rule__TypedStringAnnotation__Group__324626);
-            rule__TypedStringAnnotation__Group__4();
-            _fsp--;
-            if (failed) return ;
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__3
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__3__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12110:1: rule__TypedStringAnnotation__Group__3__Impl : ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) ) ;
-    public final void rule__TypedStringAnnotation__Group__3__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__2
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12069:1: rule__TypedKeyStringValueAnnotation__Group__2 : rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12114:1: ( ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12115:1: ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12073:1: ( rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12074:2: rule__TypedKeyStringValueAnnotation__Group__2__Impl rule__TypedKeyStringValueAnnotation__Group__3
             {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12115:1: ( ( rule__TypedStringAnnotation__ValueAssignment_3 ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12116:1: ( rule__TypedStringAnnotation__ValueAssignment_3 )
-            {
-            if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getValueAssignment_3()); 
-            }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12117:1: ( rule__TypedStringAnnotation__ValueAssignment_3 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12117:2: rule__TypedStringAnnotation__ValueAssignment_3
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__ValueAssignment_3_in_rule__TypedStringAnnotation__Group__3__Impl24653);
-            rule__TypedStringAnnotation__ValueAssignment_3();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__224563);
+            rule__TypedKeyStringValueAnnotation__Group__2__Impl();
             _fsp--;
             if (failed) return ;
-
-            }
-
-            if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getValueAssignment_3()); 
-            }
-
-            }
-
-
-            }
-
-        }
-        catch (RecognitionException re) {
-            reportError(re);
-            recover(input,re);
-        }
-        finally {
-
-            	restoreStackSize(stackSize);
-
-        }
-        return ;
-    }
-    // $ANTLR end rule__TypedStringAnnotation__Group__3__Impl
-
-
-    // $ANTLR start rule__TypedStringAnnotation__Group__4
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12127:1: rule__TypedStringAnnotation__Group__4 : rule__TypedStringAnnotation__Group__4__Impl ;
-    public final void rule__TypedStringAnnotation__Group__4() throws RecognitionException {
-
-        		int stackSize = keepStackSize();
-            
-        try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12131:1: ( rule__TypedStringAnnotation__Group__4__Impl )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12132:2: rule__TypedStringAnnotation__Group__4__Impl
-            {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group__4__Impl_in_rule__TypedStringAnnotation__Group__424683);
-            rule__TypedStringAnnotation__Group__4__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__224566);
+            rule__TypedKeyStringValueAnnotation__Group__3();
             _fsp--;
             if (failed) return ;
 
@@ -36536,26 +36368,194 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__4
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group__4__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12138:1: rule__TypedStringAnnotation__Group__4__Impl : ( ( rule__TypedStringAnnotation__Group_4__0 )? ) ;
-    public final void rule__TypedStringAnnotation__Group__4__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__2__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12081:1: rule__TypedKeyStringValueAnnotation__Group__2__Impl : ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12142:1: ( ( ( rule__TypedStringAnnotation__Group_4__0 )? ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12143:1: ( ( rule__TypedStringAnnotation__Group_4__0 )? )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12085:1: ( ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12086:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) )
             {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12143:1: ( ( rule__TypedStringAnnotation__Group_4__0 )? )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12144:1: ( rule__TypedStringAnnotation__Group_4__0 )?
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12086:1: ( ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12087:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 )
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getGroup_4()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_2()); 
             }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12145:1: ( rule__TypedStringAnnotation__Group_4__0 )?
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12088:1: ( rule__TypedKeyStringValueAnnotation__TypeAssignment_2 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12088:2: rule__TypedKeyStringValueAnnotation__TypeAssignment_2
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_2_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl24593);
+            rule__TypedKeyStringValueAnnotation__TypeAssignment_2();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+            if ( backtracking==0 ) {
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_2()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__2__Impl
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__3
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12098:1: rule__TypedKeyStringValueAnnotation__Group__3 : rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__3() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12102:1: ( rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12103:2: rule__TypedKeyStringValueAnnotation__Group__3__Impl rule__TypedKeyStringValueAnnotation__Group__4
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__324623);
+            rule__TypedKeyStringValueAnnotation__Group__3__Impl();
+            _fsp--;
+            if (failed) return ;
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__324626);
+            rule__TypedKeyStringValueAnnotation__Group__4();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__3
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__3__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12110:1: rule__TypedKeyStringValueAnnotation__Group__3__Impl : ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__3__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12114:1: ( ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12115:1: ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) )
+            {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12115:1: ( ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12116:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 )
+            {
+            if ( backtracking==0 ) {
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_3()); 
+            }
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12117:1: ( rule__TypedKeyStringValueAnnotation__ValueAssignment_3 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12117:2: rule__TypedKeyStringValueAnnotation__ValueAssignment_3
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl24653);
+            rule__TypedKeyStringValueAnnotation__ValueAssignment_3();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+            if ( backtracking==0 ) {
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_3()); 
+            }
+
+            }
+
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__3__Impl
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__4
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12127:1: rule__TypedKeyStringValueAnnotation__Group__4 : rule__TypedKeyStringValueAnnotation__Group__4__Impl ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__4() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12131:1: ( rule__TypedKeyStringValueAnnotation__Group__4__Impl )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12132:2: rule__TypedKeyStringValueAnnotation__Group__4__Impl
+            {
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__424683);
+            rule__TypedKeyStringValueAnnotation__Group__4__Impl();
+            _fsp--;
+            if (failed) return ;
+
+            }
+
+        }
+        catch (RecognitionException re) {
+            reportError(re);
+            recover(input,re);
+        }
+        finally {
+
+            	restoreStackSize(stackSize);
+
+        }
+        return ;
+    }
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__4
+
+
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group__4__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12138:1: rule__TypedKeyStringValueAnnotation__Group__4__Impl : ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group__4__Impl() throws RecognitionException {
+
+        		int stackSize = keepStackSize();
+            
+        try {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12142:1: ( ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12143:1: ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? )
+            {
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12143:1: ( ( rule__TypedKeyStringValueAnnotation__Group_4__0 )? )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12144:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0 )?
+            {
+            if ( backtracking==0 ) {
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_4()); 
+            }
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12145:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0 )?
             int alt125=2;
             int LA125_0 = input.LA(1);
 
@@ -36564,10 +36564,10 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             }
             switch (alt125) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12145:2: rule__TypedStringAnnotation__Group_4__0
+                    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12145:2: rule__TypedKeyStringValueAnnotation__Group_4__0
                     {
-                    pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__0_in_rule__TypedStringAnnotation__Group__4__Impl24710);
-                    rule__TypedStringAnnotation__Group_4__0();
+                    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl24710);
+                    rule__TypedKeyStringValueAnnotation__Group_4__0();
                     _fsp--;
                     if (failed) return ;
 
@@ -36577,7 +36577,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             }
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getGroup_4()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_4()); 
             }
 
             }
@@ -36597,25 +36597,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group__4__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group__4__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__0
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12165:1: rule__TypedStringAnnotation__Group_4__0 : rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1 ;
-    public final void rule__TypedStringAnnotation__Group_4__0() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__0
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12165:1: rule__TypedKeyStringValueAnnotation__Group_4__0 : rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12169:1: ( rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12170:2: rule__TypedStringAnnotation__Group_4__0__Impl rule__TypedStringAnnotation__Group_4__1
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12169:1: ( rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12170:2: rule__TypedKeyStringValueAnnotation__Group_4__0__Impl rule__TypedKeyStringValueAnnotation__Group_4__1
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__0__Impl_in_rule__TypedStringAnnotation__Group_4__024751);
-            rule__TypedStringAnnotation__Group_4__0__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__024751);
+            rule__TypedKeyStringValueAnnotation__Group_4__0__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__1_in_rule__TypedStringAnnotation__Group_4__024754);
-            rule__TypedStringAnnotation__Group_4__1();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1_in_rule__TypedKeyStringValueAnnotation__Group_4__024754);
+            rule__TypedKeyStringValueAnnotation__Group_4__1();
             _fsp--;
             if (failed) return ;
 
@@ -36633,12 +36633,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__0
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__0
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__0__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12177:1: rule__TypedStringAnnotation__Group_4__0__Impl : ( '(' ) ;
-    public final void rule__TypedStringAnnotation__Group_4__0__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__0__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12177:1: rule__TypedKeyStringValueAnnotation__Group_4__0__Impl : ( '(' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__0__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -36650,11 +36650,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12183:1: '('
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
             }
-            match(input,52,FollowSets000.FOLLOW_52_in_rule__TypedStringAnnotation__Group_4__0__Impl24782); if (failed) return ;
+            match(input,52,FollowSets000.FOLLOW_52_in_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl24782); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_4_0()); 
             }
 
             }
@@ -36674,25 +36674,25 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__0__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__0__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__1
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12196:1: rule__TypedStringAnnotation__Group_4__1 : rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2 ;
-    public final void rule__TypedStringAnnotation__Group_4__1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__1
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12196:1: rule__TypedKeyStringValueAnnotation__Group_4__1 : rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2 ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12200:1: ( rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2 )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12201:2: rule__TypedStringAnnotation__Group_4__1__Impl rule__TypedStringAnnotation__Group_4__2
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12200:1: ( rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2 )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12201:2: rule__TypedKeyStringValueAnnotation__Group_4__1__Impl rule__TypedKeyStringValueAnnotation__Group_4__2
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__1__Impl_in_rule__TypedStringAnnotation__Group_4__124813);
-            rule__TypedStringAnnotation__Group_4__1__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__124813);
+            rule__TypedKeyStringValueAnnotation__Group_4__1__Impl();
             _fsp--;
             if (failed) return ;
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__2_in_rule__TypedStringAnnotation__Group_4__124816);
-            rule__TypedStringAnnotation__Group_4__2();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2_in_rule__TypedKeyStringValueAnnotation__Group_4__124816);
+            rule__TypedKeyStringValueAnnotation__Group_4__2();
             _fsp--;
             if (failed) return ;
 
@@ -36710,26 +36710,26 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__1__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12208:1: rule__TypedStringAnnotation__Group_4__1__Impl : ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* ) ;
-    public final void rule__TypedStringAnnotation__Group_4__1__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__1__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12208:1: rule__TypedKeyStringValueAnnotation__Group_4__1__Impl : ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12212:1: ( ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* ) )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12213:1: ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12212:1: ( ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* ) )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12213:1: ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* )
             {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12213:1: ( ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )* )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12214:1: ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )*
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12213:1: ( ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )* )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12214:1: ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )*
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAssignment_4_1()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_4_1()); 
             }
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12215:1: ( rule__TypedStringAnnotation__AnnotationsAssignment_4_1 )*
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12215:1: ( rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 )*
             loop126:
             do {
                 int alt126=2;
@@ -36742,10 +36742,10 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
 
                 switch (alt126) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12215:2: rule__TypedStringAnnotation__AnnotationsAssignment_4_1
+            	    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12215:2: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
             	    {
-            	    pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__AnnotationsAssignment_4_1_in_rule__TypedStringAnnotation__Group_4__1__Impl24843);
-            	    rule__TypedStringAnnotation__AnnotationsAssignment_4_1();
+            	    pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1_in_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl24843);
+            	    rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1();
             	    _fsp--;
             	    if (failed) return ;
 
@@ -36758,7 +36758,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             } while (true);
 
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAssignment_4_1()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_4_1()); 
             }
 
             }
@@ -36778,21 +36778,21 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__1__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__1__Impl
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__2
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12225:1: rule__TypedStringAnnotation__Group_4__2 : rule__TypedStringAnnotation__Group_4__2__Impl ;
-    public final void rule__TypedStringAnnotation__Group_4__2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__2
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12225:1: rule__TypedKeyStringValueAnnotation__Group_4__2 : rule__TypedKeyStringValueAnnotation__Group_4__2__Impl ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12229:1: ( rule__TypedStringAnnotation__Group_4__2__Impl )
-            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12230:2: rule__TypedStringAnnotation__Group_4__2__Impl
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12229:1: ( rule__TypedKeyStringValueAnnotation__Group_4__2__Impl )
+            // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12230:2: rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
             {
-            pushFollow(FollowSets000.FOLLOW_rule__TypedStringAnnotation__Group_4__2__Impl_in_rule__TypedStringAnnotation__Group_4__224874);
-            rule__TypedStringAnnotation__Group_4__2__Impl();
+            pushFollow(FollowSets000.FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__224874);
+            rule__TypedKeyStringValueAnnotation__Group_4__2__Impl();
             _fsp--;
             if (failed) return ;
 
@@ -36810,12 +36810,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__2
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__Group_4__2__Impl
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12236:1: rule__TypedStringAnnotation__Group_4__2__Impl : ( ')' ) ;
-    public final void rule__TypedStringAnnotation__Group_4__2__Impl() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12236:1: rule__TypedKeyStringValueAnnotation__Group_4__2__Impl : ( ')' ) ;
+    public final void rule__TypedKeyStringValueAnnotation__Group_4__2__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -36827,11 +36827,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:12242:1: ')'
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4_2()); 
             }
-            match(input,53,FollowSets000.FOLLOW_53_in_rule__TypedStringAnnotation__Group_4__2__Impl24902); if (failed) return ;
+            match(input,53,FollowSets000.FOLLOW_53_in_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl24902); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4_2()); 
             }
 
             }
@@ -36851,7 +36851,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__Group_4__2__Impl
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__Group_4__2__Impl
 
 
     // $ANTLR start rule__KeyBooleanValueAnnotation__Group__0
@@ -45645,9 +45645,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
     // $ANTLR end rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__NameAssignment_1
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15425:1: rule__TypedStringAnnotation__NameAssignment_1 : ( RULE_ID ) ;
-    public final void rule__TypedStringAnnotation__NameAssignment_1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__NameAssignment_1
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15425:1: rule__TypedKeyStringValueAnnotation__NameAssignment_1 : ( RULE_ID ) ;
+    public final void rule__TypedKeyStringValueAnnotation__NameAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -45659,11 +45659,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15431:1: RULE_ID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
             }
-            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypedStringAnnotation__NameAssignment_131367); if (failed) return ;
+            match(input,RULE_ID,FollowSets000.FOLLOW_RULE_ID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_131367); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()); 
             }
 
             }
@@ -45683,12 +45683,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__NameAssignment_1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__NameAssignment_1
 
 
-    // $ANTLR start rule__TypedStringAnnotation__TypeAssignment_2
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15440:1: rule__TypedStringAnnotation__TypeAssignment_2 : ( RULE_TYPEID ) ;
-    public final void rule__TypedStringAnnotation__TypeAssignment_2() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__TypeAssignment_2
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15440:1: rule__TypedKeyStringValueAnnotation__TypeAssignment_2 : ( RULE_TYPEID ) ;
+    public final void rule__TypedKeyStringValueAnnotation__TypeAssignment_2() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -45700,11 +45700,11 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15446:1: RULE_TYPEID
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
             }
-            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_rule__TypedStringAnnotation__TypeAssignment_231398); if (failed) return ;
+            match(input,RULE_TYPEID,FollowSets000.FOLLOW_RULE_TYPEID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_231398); if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0()); 
             }
 
             }
@@ -45724,12 +45724,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__TypeAssignment_2
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__TypeAssignment_2
 
 
-    // $ANTLR start rule__TypedStringAnnotation__ValueAssignment_3
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15455:1: rule__TypedStringAnnotation__ValueAssignment_3 : ( ruleEString ) ;
-    public final void rule__TypedStringAnnotation__ValueAssignment_3() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__ValueAssignment_3
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15455:1: rule__TypedKeyStringValueAnnotation__ValueAssignment_3 : ( ruleEString ) ;
+    public final void rule__TypedKeyStringValueAnnotation__ValueAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -45741,14 +45741,14 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15461:1: ruleEString
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedStringAnnotation__ValueAssignment_331429);
+            pushFollow(FollowSets000.FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_331429);
             ruleEString();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_3_0()); 
             }
 
             }
@@ -45768,12 +45768,12 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__ValueAssignment_3
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__ValueAssignment_3
 
 
-    // $ANTLR start rule__TypedStringAnnotation__AnnotationsAssignment_4_1
-    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15470:1: rule__TypedStringAnnotation__AnnotationsAssignment_4_1 : ( ruleAnnotation ) ;
-    public final void rule__TypedStringAnnotation__AnnotationsAssignment_4_1() throws RecognitionException {
+    // $ANTLR start rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
+    // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15470:1: rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1 : ( ruleAnnotation ) ;
+    public final void rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -45785,14 +45785,14 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.synccharts.text.ui/src-gen/de/cau/cs/kieler/synccharts/text/kits/ui/contentassist/antlr/internal/InternalKits.g:15476:1: ruleAnnotation
             {
             if ( backtracking==0 ) {
-               before(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
+               before(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
             }
-            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__TypedStringAnnotation__AnnotationsAssignment_4_131460);
+            pushFollow(FollowSets000.FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_131460);
             ruleAnnotation();
             _fsp--;
             if (failed) return ;
             if ( backtracking==0 ) {
-               after(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
+               after(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0()); 
             }
 
             }
@@ -45812,7 +45812,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__TypedStringAnnotation__AnnotationsAssignment_4_1
+    // $ANTLR end rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1
 
 
     // $ANTLR start rule__KeyBooleanValueAnnotation__NameAssignment_1
@@ -47202,9 +47202,9 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_entryRuleKeyStringValueAnnotation3009 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyStringValueAnnotation3016 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group__0_in_ruleKeyStringValueAnnotation3042 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_entryRuleTypedStringAnnotation3069 = new BitSet(new long[]{0x0000000000000000L});
-        public static final BitSet FOLLOW_EOF_in_entryRuleTypedStringAnnotation3076 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__0_in_ruleTypedStringAnnotation3102 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_entryRuleTypedKeyStringValueAnnotation3069 = new BitSet(new long[]{0x0000000000000000L});
+        public static final BitSet FOLLOW_EOF_in_entryRuleTypedKeyStringValueAnnotation3076 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0_in_ruleTypedKeyStringValueAnnotation3102 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_entryRuleKeyBooleanValueAnnotation3129 = new BitSet(new long[]{0x0000000000000000L});
         public static final BitSet FOLLOW_EOF_in_entryRuleKeyBooleanValueAnnotation3136 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0_in_ruleKeyBooleanValueAnnotation3162 = new BitSet(new long[]{0x0000000000000002L});
@@ -47320,7 +47320,7 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_ruleCommentAnnotation_in_rule__Annotation__Alternatives5953 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleTagAnnotation_in_rule__Annotation__Alternatives5970 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyStringValueAnnotation_in_rule__Annotation__Alternatives5987 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleTypedStringAnnotation_in_rule__Annotation__Alternatives6004 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleTypedKeyStringValueAnnotation_in_rule__Annotation__Alternatives6004 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyBooleanValueAnnotation_in_rule__Annotation__Alternatives6021 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyIntValueAnnotation_in_rule__Annotation__Alternatives6038 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleKeyFloatValueAnnotation_in_rule__Annotation__Alternatives6055 = new BitSet(new long[]{0x0000000000000002L});
@@ -48104,28 +48104,28 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1_in_rule__KeyStringValueAnnotation__Group_3__1__Impl24345 = new BitSet(new long[]{0x0080000000000402L});
         public static final BitSet FOLLOW_rule__KeyStringValueAnnotation__Group_3__2__Impl_in_rule__KeyStringValueAnnotation__Group_3__224376 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_53_in_rule__KeyStringValueAnnotation__Group_3__2__Impl24404 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__0__Impl_in_rule__TypedStringAnnotation__Group__024441 = new BitSet(new long[]{0x0000000000000080L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__1_in_rule__TypedStringAnnotation__Group__024444 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_55_in_rule__TypedStringAnnotation__Group__0__Impl24472 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__1__Impl_in_rule__TypedStringAnnotation__Group__124503 = new BitSet(new long[]{0x0000000000000800L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__2_in_rule__TypedStringAnnotation__Group__124506 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__NameAssignment_1_in_rule__TypedStringAnnotation__Group__1__Impl24533 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__2__Impl_in_rule__TypedStringAnnotation__Group__224563 = new BitSet(new long[]{0x0000000000000180L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__3_in_rule__TypedStringAnnotation__Group__224566 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__TypeAssignment_2_in_rule__TypedStringAnnotation__Group__2__Impl24593 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__3__Impl_in_rule__TypedStringAnnotation__Group__324623 = new BitSet(new long[]{0x0010000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__4_in_rule__TypedStringAnnotation__Group__324626 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__ValueAssignment_3_in_rule__TypedStringAnnotation__Group__3__Impl24653 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group__4__Impl_in_rule__TypedStringAnnotation__Group__424683 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__0_in_rule__TypedStringAnnotation__Group__4__Impl24710 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__0__Impl_in_rule__TypedStringAnnotation__Group_4__024751 = new BitSet(new long[]{0x00A0000000000400L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__1_in_rule__TypedStringAnnotation__Group_4__024754 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_52_in_rule__TypedStringAnnotation__Group_4__0__Impl24782 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__1__Impl_in_rule__TypedStringAnnotation__Group_4__124813 = new BitSet(new long[]{0x0020000000000000L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__2_in_rule__TypedStringAnnotation__Group_4__124816 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__AnnotationsAssignment_4_1_in_rule__TypedStringAnnotation__Group_4__1__Impl24843 = new BitSet(new long[]{0x0080000000000402L});
-        public static final BitSet FOLLOW_rule__TypedStringAnnotation__Group_4__2__Impl_in_rule__TypedStringAnnotation__Group_4__224874 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_53_in_rule__TypedStringAnnotation__Group_4__2__Impl24902 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group__024441 = new BitSet(new long[]{0x0000000000000080L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1_in_rule__TypedKeyStringValueAnnotation__Group__024444 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_55_in_rule__TypedKeyStringValueAnnotation__Group__0__Impl24472 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group__124503 = new BitSet(new long[]{0x0000000000000800L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2_in_rule__TypedKeyStringValueAnnotation__Group__124506 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__NameAssignment_1_in_rule__TypedKeyStringValueAnnotation__Group__1__Impl24533 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group__224563 = new BitSet(new long[]{0x0000000000000180L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3_in_rule__TypedKeyStringValueAnnotation__Group__224566 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__TypeAssignment_2_in_rule__TypedKeyStringValueAnnotation__Group__2__Impl24593 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__3__Impl_in_rule__TypedKeyStringValueAnnotation__Group__324623 = new BitSet(new long[]{0x0010000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4_in_rule__TypedKeyStringValueAnnotation__Group__324626 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__ValueAssignment_3_in_rule__TypedKeyStringValueAnnotation__Group__3__Impl24653 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group__4__Impl_in_rule__TypedKeyStringValueAnnotation__Group__424683 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0_in_rule__TypedKeyStringValueAnnotation__Group__4__Impl24710 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__024751 = new BitSet(new long[]{0x00A0000000000400L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1_in_rule__TypedKeyStringValueAnnotation__Group_4__024754 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_52_in_rule__TypedKeyStringValueAnnotation__Group_4__0__Impl24782 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__124813 = new BitSet(new long[]{0x0020000000000000L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2_in_rule__TypedKeyStringValueAnnotation__Group_4__124816 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1_in_rule__TypedKeyStringValueAnnotation__Group_4__1__Impl24843 = new BitSet(new long[]{0x0080000000000402L});
+        public static final BitSet FOLLOW_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl_in_rule__TypedKeyStringValueAnnotation__Group_4__224874 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_53_in_rule__TypedKeyStringValueAnnotation__Group_4__2__Impl24902 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__0__Impl_in_rule__KeyBooleanValueAnnotation__Group__024939 = new BitSet(new long[]{0x0000000000000080L});
         public static final BitSet FOLLOW_rule__KeyBooleanValueAnnotation__Group__1_in_rule__KeyBooleanValueAnnotation__Group__024942 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_55_in_rule__KeyBooleanValueAnnotation__Group__0__Impl24970 = new BitSet(new long[]{0x0000000000000002L});
@@ -48343,10 +48343,10 @@ public class InternalKitsParser extends AbstractInternalContentAssistParser {
         public static final BitSet FOLLOW_RULE_ID_in_rule__KeyStringValueAnnotation__NameAssignment_131274 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleEString_in_rule__KeyStringValueAnnotation__ValueAssignment_231305 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyStringValueAnnotation__AnnotationsAssignment_3_131336 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_ID_in_rule__TypedStringAnnotation__NameAssignment_131367 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_RULE_TYPEID_in_rule__TypedStringAnnotation__TypeAssignment_231398 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleEString_in_rule__TypedStringAnnotation__ValueAssignment_331429 = new BitSet(new long[]{0x0000000000000002L});
-        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedStringAnnotation__AnnotationsAssignment_4_131460 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_ID_in_rule__TypedKeyStringValueAnnotation__NameAssignment_131367 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_RULE_TYPEID_in_rule__TypedKeyStringValueAnnotation__TypeAssignment_231398 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleEString_in_rule__TypedKeyStringValueAnnotation__ValueAssignment_331429 = new BitSet(new long[]{0x0000000000000002L});
+        public static final BitSet FOLLOW_ruleAnnotation_in_rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_131460 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_ID_in_rule__KeyBooleanValueAnnotation__NameAssignment_131491 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_231522 = new BitSet(new long[]{0x0000000000000002L});
         public static final BitSet FOLLOW_ruleAnnotation_in_rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_131553 = new BitSet(new long[]{0x0000000000000002L});

@@ -13,43 +13,22 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.RGB;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor;
-import org.eclipse.xtext.ui.editor.utils.TextStyle;
+
+import de.cau.cs.kieler.core.annotations.ui.AnnotationsHighlightingConfiguration;
 
 /**
- * Custom {@link IHighlightingConfiguration} contributing to the Kits editor.
- * Provides profile for key value annotations' keys highlighting.
+ * Custom {@link IHighlightingConfiguration} contributing to the Kits editor. The required method
+ * {@link IHighlightingConfiguration#configure(org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfigurationAcceptor)}
+ * will be provided by the {@link AnnotationsHighlightingConfiguration} and can be specialized in
+ * order to add KITS specific highlighting profiles.
  * 
  * @author chsch
  */
 public class KitsHighlightingConfiguration extends
-		DefaultHighlightingConfiguration {
+		AnnotationsHighlightingConfiguration {
 
-    public static final String ANNOTATION_KEY = "annotationKey";
-    public static final String COMMENT_ANNOTATION = "commentAnnotation";
-
-	public void configure(IHighlightingConfigurationAcceptor acceptor) {
-		super.configure(acceptor);
-		acceptor.acceptDefaultHighlighting(ANNOTATION_KEY, "AnnotationKey", annotationKeyTextStyle());
-		acceptor.acceptDefaultHighlighting(COMMENT_ANNOTATION, "CommentAnnotation", commentAnnotationTextStyle());
-	}
-		
-	public TextStyle annotationKeyTextStyle() {
-		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0x86, 0x9D, 0xB9));
-		textStyle.setStyle(SWT.BOLD);
-		return textStyle;
-	}
-
-	public TextStyle commentAnnotationTextStyle() {
-		TextStyle textStyle = defaultTextStyle().copy();
-		textStyle.setColor(new RGB(0x42, 0x60, 0xB8));
-		return textStyle;
-	}
-
-
+//	public void configure(IHighlightingConfigurationAcceptor acceptor) {
+//		super.configure(acceptor);
+//	}		
 }

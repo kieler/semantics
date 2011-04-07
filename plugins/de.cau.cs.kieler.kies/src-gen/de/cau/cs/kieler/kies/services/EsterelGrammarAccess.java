@@ -7243,8 +7243,8 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	////
 	//// --------------------------
 	//Annotation:
-	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedStringAnnotation | KeyBooleanValueAnnotation |
-	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	//	CommentAnnotation | TagAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation |
+	//	KeyBooleanValueAnnotation | KeyIntValueAnnotation | KeyFloatValueAnnotation;
 	public AnnotationsGrammarAccess.AnnotationElements getAnnotationAccess() {
 		return gaKExpressions.getAnnotationAccess();
 	}
@@ -7287,14 +7287,14 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
-	//TypedStringAnnotation:
-	//	"@" name=ID type=TypeId? value=EString ("(" annotations+=Annotation* ")")?;
-	public AnnotationsGrammarAccess.TypedStringAnnotationElements getTypedStringAnnotationAccess() {
-		return gaKExpressions.getTypedStringAnnotationAccess();
+	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
+	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
+	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
+		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
 	}
 	
-	public ParserRule getTypedStringAnnotationRule() {
-		return getTypedStringAnnotationAccess().getRule();
+	public ParserRule getTypedKeyStringValueAnnotationRule() {
+		return getTypedKeyStringValueAnnotationAccess().getRule();
 	}
 
 	//// e.g.: @visible true;

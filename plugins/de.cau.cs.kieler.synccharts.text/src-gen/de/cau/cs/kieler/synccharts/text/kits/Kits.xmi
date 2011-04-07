@@ -1621,7 +1621,7 @@
         </elements>
       </alternatives>
     </rules>
-    <rules xsi:type="xtext:ParserRule" name="TypedStringAnnotation">
+    <rules xsi:type="xtext:ParserRule" name="TypedKeyStringValueAnnotation">
       <type metamodel="/3/@metamodelDeclarations.0">
         <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/annotations#//TypedStringAnnotation"/>
       </type>

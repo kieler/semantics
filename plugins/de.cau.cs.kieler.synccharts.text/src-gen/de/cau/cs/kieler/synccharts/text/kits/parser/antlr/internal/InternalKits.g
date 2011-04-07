@@ -5800,11 +5800,11 @@ ruleAnnotation returns [EObject current=null]
 	  /* */ 
 	}
     { 
-        currentNode=createCompositeNode(grammarAccess.getAnnotationAccess().getTypedStringAnnotationParserRuleCall_3(), currentNode); 
+        currentNode=createCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3(), currentNode); 
     }
-    this_TypedStringAnnotation_3=ruleTypedStringAnnotation
+    this_TypedKeyStringValueAnnotation_3=ruleTypedKeyStringValueAnnotation
     { 
-        $current = $this_TypedStringAnnotation_3.current; 
+        $current = $this_TypedKeyStringValueAnnotation_3.current; 
         currentNode = currentNode.getParent();
     }
 
@@ -6090,17 +6090,17 @@ ruleKeyStringValueAnnotation returns [EObject current=null]
 
 
 
-// Entry rule entryRuleTypedStringAnnotation
-entryRuleTypedStringAnnotation returns [EObject current=null] 
+// Entry rule entryRuleTypedKeyStringValueAnnotation
+entryRuleTypedKeyStringValueAnnotation returns [EObject current=null] 
 	:
-	{ currentNode = createCompositeNode(grammarAccess.getTypedStringAnnotationRule(), currentNode); }
-	 iv_ruleTypedStringAnnotation=ruleTypedStringAnnotation 
-	 { $current=$iv_ruleTypedStringAnnotation.current; } 
+	{ currentNode = createCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationRule(), currentNode); }
+	 iv_ruleTypedKeyStringValueAnnotation=ruleTypedKeyStringValueAnnotation 
+	 { $current=$iv_ruleTypedKeyStringValueAnnotation.current; } 
 	 EOF 
 ;
 
-// Rule TypedStringAnnotation
-ruleTypedStringAnnotation returns [EObject current=null] 
+// Rule TypedKeyStringValueAnnotation
+ruleTypedKeyStringValueAnnotation returns [EObject current=null] 
     @init { EObject temp=null; setCurrentLookahead(); resetLookahead(); 
     }
     @after { resetLookahead(); 
@@ -6108,17 +6108,17 @@ ruleTypedStringAnnotation returns [EObject current=null]
     }:
 (	'@' 
     {
-        createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getCommercialAtKeyword_0(), null); 
+        createLeafNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0(), null); 
     }
 (
 (
 		lv_name_1_0=RULE_ID
 		{
-			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
+			createLeafNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), "name"); 
 		}
 		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTypedKeyStringValueAnnotationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
@@ -6138,11 +6138,11 @@ ruleTypedStringAnnotation returns [EObject current=null]
 (
 		lv_type_2_0=RULE_TYPEID
 		{
-			createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
+			createLeafNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdTerminalRuleCall_2_0(), "type"); 
 		}
 		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTypedKeyStringValueAnnotationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode, $current);
 	        }
 	        try {
@@ -6161,11 +6161,11 @@ ruleTypedStringAnnotation returns [EObject current=null]
 )(
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getValueEStringParserRuleCall_3_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_3_0(), currentNode); 
 	    }
 		lv_value_3_0=ruleEString		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTypedKeyStringValueAnnotationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
@@ -6184,16 +6184,16 @@ ruleTypedStringAnnotation returns [EObject current=null]
 )
 )(	'(' 
     {
-        createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getLeftParenthesisKeyword_4_0(), null); 
+        createLeafNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getLeftParenthesisKeyword_4_0(), null); 
     }
 (
 (
 		{ 
-	        currentNode=createCompositeNode(grammarAccess.getTypedStringAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0(), currentNode); 
+	        currentNode=createCompositeNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAnnotationParserRuleCall_4_1_0(), currentNode); 
 	    }
 		lv_annotations_5_0=ruleAnnotation		{
 	        if ($current==null) {
-	            $current = factory.create(grammarAccess.getTypedStringAnnotationRule().getType().getClassifier());
+	            $current = factory.create(grammarAccess.getTypedKeyStringValueAnnotationRule().getType().getClassifier());
 	            associateNodeWithAstElement(currentNode.getParent(), $current);
 	        }
 	        try {
@@ -6212,7 +6212,7 @@ ruleTypedStringAnnotation returns [EObject current=null]
 )
 )*	')' 
     {
-        createLeafNode(grammarAccess.getTypedStringAnnotationAccess().getRightParenthesisKeyword_4_2(), null); 
+        createLeafNode(grammarAccess.getTypedKeyStringValueAnnotationAccess().getRightParenthesisKeyword_4_2(), null); 
     }
 )?)
 ;
