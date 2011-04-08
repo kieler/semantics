@@ -19,7 +19,6 @@ import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.RoundedRectangle;
-import org.eclipse.draw2d.Shape;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
@@ -496,9 +495,18 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     }
     
 
+    /**
+     * {@inheritDoc}
+     */
     public BorderItemLocator getBorderItemLocatorByString(final String input, final IFigure parent,
             final Object locator, final EObject object) {
-        // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Dimension getSizeByString(final String input, final EObject object, final EditPart part) {
         return null;
     }
 }

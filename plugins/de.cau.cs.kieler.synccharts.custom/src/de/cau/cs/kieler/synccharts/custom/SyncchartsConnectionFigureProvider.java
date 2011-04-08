@@ -22,6 +22,7 @@ import org.eclipse.draw2d.LayoutManager;
 import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.PolylineConnection;
 import org.eclipse.draw2d.RotatableDecoration;
+import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
@@ -197,6 +198,13 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
 
     public BorderItemLocator getBorderItemLocatorByString(String input,final IFigure parent, final Object locator, final EObject object) {
         // TODO Auto-generated method stub
+        return null;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Dimension getSizeByString(final String input, final EObject object, final EditPart part) {
         return null;
     }
 
