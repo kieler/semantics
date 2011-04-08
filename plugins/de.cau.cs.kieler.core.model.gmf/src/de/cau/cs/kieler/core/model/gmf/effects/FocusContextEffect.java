@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 
-import de.cau.cs.kieler.core.kivi.ICompoundEffect;
+import de.cau.cs.kieler.core.kivi.IEffectCompound;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 
@@ -50,18 +50,18 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
  * whole focus has been set, this transitive focus gets calculated and the context will be set as
  * its complement.
  * <p>
- * This class implements {@link ICompoundEffect} as it is composed out of many 
+ * This class implements {@link IEffectCompound} as it is composed out of many 
  * {@link CompartmentCollapseExpandEffect}s and in future may also contain other effects. While
- * an {@link ICompoundEffect} itself is no {@link IEffect}, it can be asked for a list of
+ * an {@link IEffectCompound} itself is no {@link IEffect}, it can be asked for a list of
  * the primitive effects by {@link #getPrimitiveEffects()}. An {@link AbstractCombination} is able
- * to schedule an {@link ICompoundEffect} just like it can schedule an {@link IEffect}. However, 
+ * to schedule an {@link IEffectCompound} just like it can schedule an {@link IEffect}. However, 
  * this is just some convenience function to schedule all primitive effects successively.
  * 
  * 
  * @author haf
  * 
  */
-public class FocusContextEffect implements ICompoundEffect {
+public class FocusContextEffect implements IEffectCompound {
 
     private Set<EObject> focus;
     private Set<EObject> context;
