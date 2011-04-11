@@ -113,7 +113,7 @@ public class E2STransformationCombination extends AbstractCombination {
         // #### back
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepBackIcon.png");
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "StepBack",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "Step Back",
                 "Step Back", iconStepBack, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### step
@@ -131,9 +131,9 @@ public class E2STransformationCombination extends AbstractCombination {
         // #### expand and optimize
         ImageDescriptor iconExpandAndOptimize = Activator.imageDescriptorFromPlugin(
                 Activator.PLUGIN_ID, "icons/expandAndOptimizeIcon.png");
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE, "EaO",
-                "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH, null, SYNCCHARTS_EDITOR_ID,
-                ESTEREL_EDITOR_ID);
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE,
+                "Expand and Optimize", "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH,
+                null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
