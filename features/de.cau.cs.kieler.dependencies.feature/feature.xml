@@ -230,7 +230,8 @@
 
    <includes
          id="com.google.guava.runtime.feature"
-         version="0.0.0"/>
+         version="0.0.0"
+         search-location="self"/>
 
    <plugin
          id="org.eclipse.jdt.core"

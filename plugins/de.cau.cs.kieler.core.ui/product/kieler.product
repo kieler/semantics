@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.4.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.5.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
       <image path="/de.cau.cs.kieler.core.ui/images/about.png"/>
@@ -155,29 +155,14 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </plugins>
 
    <features>
-      <feature id="de.cau.cs.kieler.core" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.core.model" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kiml.graphviz" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.synccharts" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kies" version="0.1.3.qualifier"/>
-      <feature id="de.cau.cs.kieler.ksbase" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.sim.kiem" version="0.4.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.sim.ptolemy" version="0.2.0.qualifier"/>
       <feature id="de.cau.cs.kieler.dependencies" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kev" version="0.2.2.qualifier"/>
-      <feature id="de.cau.cs.kieler.krep" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.uml2" version="0.3.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.esterel.extended" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.keg" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kaom" version="0.2.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kex" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kaom.ptolemy" version="0.1.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.kvid" version="0.1.0.qualifier"/>
       <feature id="org.ptolemy" version="8.0.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.sj" version="0.1.0.qualifier"/>
-      <feature id="net.sourceforge.lpsolve" version="5.5.2.qualifier"/>
       <feature id="net.ogdf.bin" version="1.0.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kiml.gmf" version="0.5.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.synccharts" version="0.5.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.kaom" version="0.3.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.keg" version="0.3.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.uml2" version="0.3.0.qualifier"/>
    </features>
 
 
