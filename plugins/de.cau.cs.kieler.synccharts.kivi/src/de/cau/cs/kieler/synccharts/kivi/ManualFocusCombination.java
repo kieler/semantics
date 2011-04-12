@@ -75,19 +75,19 @@ public class ManualFocusCombination extends AbstractCombination {
         ImageDescriptor iconMinus = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/focusContextMinus.png");
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, FOCUS_BUTTON_ID, "focusSelect",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, FOCUS_BUTTON_ID, "Manual Focus",
                 "Focus selected model objects and do a semantic zooming.", iconFC, SWT.CHECK, null,
                 EDITOR_IDS.toArray(new String[2]));
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, PLUS_BUTTON_ID, "focusPlus",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, PLUS_BUTTON_ID, "Focus more",
                 "Increase Focus/Context zoom level.", iconPlus, SWT.PUSH, null,
                 EDITOR_IDS.toArray(new String[2]));
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, MINUS_BUTTON_ID, "focusMinus",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, MINUS_BUTTON_ID, "Focus less",
                 "Decrease Focus/Context zoom level.", iconMinus, SWT.PUSH, null,
                 EDITOR_IDS.toArray(new String[2]));
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, ALL_BUTTON_ID, "focusPlusPlus",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, ALL_BUTTON_ID, "Focus all",
                 "Show all hierarchy levels.", iconPlusPlus, SWT.PUSH, null,
                 EDITOR_IDS.toArray(new String[2]));
     }
