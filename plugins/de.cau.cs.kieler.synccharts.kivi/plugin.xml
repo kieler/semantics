@@ -36,5 +36,11 @@
             name="SyncCharts Layout After Model Changed"
             active="false">
       </combination>
+       <combination
+            active="true"
+            class="de.cau.cs.kieler.synccharts.kivi.ManualFocusCombination"
+            description="Focus&amp;Context by manual selection of elements in the focus or hierarchy levels that should be visible."
+            name="Manual Focus (Semantic Zoom)">
+      </combination>
    </extension>
 </plugin>
