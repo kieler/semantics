@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.Dialog;
+import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
@@ -45,6 +46,10 @@ import de.cau.cs.kieler.core.ui.util.ComboHistoryHandler;
  * A wizard page that allows the user to choose files to import from the file system.
  * Optionally, a target group may allow the user to choose a target folder in the
  * workspace to import to. Files can be filtered using regular expressions.
+ * 
+ * <p>The settings made on this page can be saved if the wizard has an instance of
+ * {@code IDialogSettings} set on it. If it has not, settings are neither saved nor
+ * loaded.</p>
  * 
  * @author cds
  * @kieler.rating yellow 2010-03-14
@@ -601,11 +606,17 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      */
     @Override
     public void saveDialogSettings() {
-        sourceComboHistoryManager.saveHistory(getDialogSettings(),
+        IDialogSettings dialogSettings = getDialogSettings();
+        if (dialogSettings == null) {
+            // The dialog settings have not been set on the wizard
+            return;
+        }
+        
+        sourceComboHistoryManager.saveHistory(dialogSettings,
                 getName() + SETT_SOURCE_DIR_HISTORY);
         
         if (showTargetGroup) {
-            targetComboHistoryManager.saveHistory(getDialogSettings(),
+            targetComboHistoryManager.saveHistory(dialogSettings,
                     getName() + SETT_TARGET_DIR_HISTORY);
         }
     }
@@ -615,11 +626,17 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      */
     @Override
     protected void restoreDialogSettings() {
-        sourceComboHistoryManager.restoreHistory(getDialogSettings(),
+        IDialogSettings dialogSettings = getDialogSettings();
+        if (dialogSettings == null) {
+            // The dialog settings have not been set on the wizard
+            return;
+        }
+        
+        sourceComboHistoryManager.restoreHistory(dialogSettings,
                 getName() + SETT_SOURCE_DIR_HISTORY);
         
         if (showTargetGroup) {
-            targetComboHistoryManager.restoreHistory(getDialogSettings(),
+            targetComboHistoryManager.restoreHistory(dialogSettings,
                     getName() + SETT_TARGET_DIR_HISTORY);
         }
     }
