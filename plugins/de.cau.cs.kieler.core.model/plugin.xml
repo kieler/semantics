@@ -15,7 +15,7 @@
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.core.model.handlers.RemoveMarkerHandler"
             description="Remove the visible problem markers in the current diagram, e.g. to make a proper screenshot."
-            id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+            id="de.cau.cs.kieler.core.model.removeMarkers"
             name="Remove Problem Markers">
       </command>
       <command
@@ -29,6 +29,21 @@
                optional="false">
          </commandParameter>
       </command>
+            <command
+            categoryId="de.cau.cs.kieler"
+            defaultHandler="de.cau.cs.kieler.core.model.handlers.ZoomToFitHandler"
+            description="Zoom so that the content fits the whole canvas"
+            id="de.cau.cs.kieler.core.model.zoom"
+            name="Zoom to Fit">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="de.cau.cs.kieler.core.model.zoom"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="M1+R Z">
+      </key>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -59,8 +74,8 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler">
         <command
-              commandId="de.cau.cs.kieler.core.ui.command.removeMarkers"
-              id="de.cau.cs.kieler.core.ui.command.removeMarkers"
+              commandId="de.cau.cs.kieler.core.model.removeMarkers"
+              id="de.cau.cs.kieler.core.model.removeMarkers"
               label="Remove Problem Markers"
               mnemonic="r"
               style="push">
@@ -74,6 +89,22 @@
                </with>
             </visibleWhen>
         </command>
+        <command
+               commandId="de.cau.cs.kieler.core.model.zoom"
+               label="Zoom to Fit"
+               mnemonic="z"
+               style="push"
+               tooltip="Zoom the current diagram such that all contents fit into the current view.">
+            <visibleWhen
+                  checkEnabled="false">
+               <with
+                     variable="activeEditor">
+                  <test
+                        property="de.cau.cs.kieler.core.model.editorTester">
+                  </test>
+               </with>
+            </visibleWhen>
+         </command>
       </menuContribution>
       <menuContribution
             class="de.cau.cs.kieler.core.model.ui.ValidationMenuContributionFactory"

@@ -11,9 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.model.gmf.handlers;
-
-import java.util.List;
+package de.cau.cs.kieler.core.model.handlers;
 
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
@@ -22,13 +20,14 @@ import org.eclipse.draw2d.FreeformFigure;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Viewport;
 import org.eclipse.draw2d.geometry.Dimension;
-import org.eclipse.gef.LayerConstants;
+import org.eclipse.gef.EditPart;
+import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gef.editparts.ZoomManager;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.handlers.HandlerUtil;
+
+import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 
 /**
  * A handler used to zoom the diagram to fit.
@@ -56,28 +55,20 @@ public class ZoomToFitHandler extends AbstractHandler {
      *            the editor to zoom
      */
     public static void zoomToFitAllNodes(final IEditorPart editor) {
-        if (editor instanceof DiagramEditor) {
-            DiagramEditPart diagramEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-            ZoomManager zoomManager = ((RenderedDiagramRootEditPart) diagramEditPart.getRoot())
-                    .getZoomManager();
+        IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(editor);
+        if (bridge != null) {
+            EditPart diagramEditPart = bridge.getEditPart(editor);
+            ZoomManager zoomManager = bridge.getZoomManager(diagramEditPart);
 
-            // the primary layer contains only nodes. In contrast to the
-            // connection layer which is drawn
-            // on top of the primary layer. Hence nodes and edges are really
-            // separated in GEF
-            IFigure primaryLayer = diagramEditPart.getLayer(LayerConstants.PRIMARY_LAYER);
-            List<?> canvasFigures = primaryLayer.getChildren();
-            double zoomFactor = 0;
-            for (Object canvasFigure : canvasFigures) {
-                if (canvasFigure instanceof IFigure) {
-                    zoomFactor = getZoomLevel(zoomManager, (IFigure) canvasFigure);
+            if (diagramEditPart instanceof GraphicalEditPart) {
+                IFigure diagramFigure = ((GraphicalEditPart) diagramEditPart).getFigure();
+                double zoomFactor = getZoomLevel(zoomManager, diagramFigure);
+                if (zoomFactor > 0) {
+                    zoomManager.setZoom(zoomFactor);
+                } else {
+                    // fallback if zoom was not calculated correctly
+                    zoomManager.setZoomAsText(ZoomManager.FIT_ALL);
                 }
-            }
-            if (zoomFactor != 0) {
-                zoomManager.setZoom(zoomFactor);
-            } else {
-                // fallback if zoom was not calculated correctly
-                zoomManager.setZoomAsText(ZoomManager.FIT_ALL);
             }
         }
     }
@@ -88,10 +79,10 @@ public class ZoomToFitHandler extends AbstractHandler {
      * @param editor the current editor
      */
     public static void resetViewLocation(final IEditorPart editor) {
-        if (editor instanceof DiagramEditor) {
-            DiagramEditPart diagramEditPart = ((DiagramEditor) editor).getDiagramEditPart();
-            ZoomManager zoomManager = ((RenderedDiagramRootEditPart) diagramEditPart.getRoot())
-                    .getZoomManager();
+        IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(editor);
+        if (bridge != null) {
+            EditPart diagramEditPart = bridge.getEditPart(editor);
+            ZoomManager zoomManager = bridge.getZoomManager(diagramEditPart);
             Viewport viewport = zoomManager.getViewport();
             //viewport.getUpdateManager().performUpdate();
             viewport.setViewLocation(viewport.getHorizontalRangeModel().getMinimum(), viewport
