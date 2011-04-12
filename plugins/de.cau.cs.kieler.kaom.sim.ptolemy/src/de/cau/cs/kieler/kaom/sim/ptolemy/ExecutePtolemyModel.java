@@ -587,8 +587,10 @@ public class ExecutePtolemyModel {
 
                 // run the model
                 if (manager != null) {
-                    // run forest, run!
+
+                	// run forest, run!
                     manager.initialize();
+                	
                     KaomSimPtolemyPlugin.DEBUG("#11");
 
                 }

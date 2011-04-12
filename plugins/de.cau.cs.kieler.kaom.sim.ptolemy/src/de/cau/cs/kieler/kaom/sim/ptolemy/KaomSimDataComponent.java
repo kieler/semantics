@@ -428,10 +428,15 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
             ptolemyModelFile = modelInput.substring(0, modelInput.lastIndexOf("."));
             ptolemyModelFile += ".moml";
 
-            // test file for actual existence
+            // test file for actual existence, if not try xml, otherwise fail with null
             File f = new File(ptolemyModelFile);
             if (!f.exists()) {
-                ptolemyModelFile = null;
+                ptolemyModelFile = modelInput.substring(0, modelInput.lastIndexOf("."));
+                ptolemyModelFile += ".xml";
+                f = new File(ptolemyModelFile);
+                if (!f.exists()) {
+                    ptolemyModelFile = null;
+                }
             }
             // ptolemyModelFile = ptolemyModelFile.substring(1, ptolemyModelFile.length());
         } catch (Exception e) {
