@@ -76,7 +76,6 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
      *            model changed
      */
     public void execute(final ModelChangeState modelState) {
-        dontUndo();
         for (Notification notification : modelState.getChange().getNotifications()) {
             // call layout for every relevant model change. layout effects will be merged by
             // KiVi to avoid too many effects and to guarantee that the right parent is layouted

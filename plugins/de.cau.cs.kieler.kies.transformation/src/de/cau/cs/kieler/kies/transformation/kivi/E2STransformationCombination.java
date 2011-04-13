@@ -153,7 +153,7 @@ public class E2STransformationCombination extends AbstractCombination {
     public void execute(final ButtonState buttonState, final ActiveEditorState editorState,
             final EffectTriggerState<TransformationEffect> transformationState) {
 
-        dontUndo();
+        //dontUndo();
 
         // editor state, remember the currently active editor
         if (getTriggerState() instanceof ActiveEditorState) {

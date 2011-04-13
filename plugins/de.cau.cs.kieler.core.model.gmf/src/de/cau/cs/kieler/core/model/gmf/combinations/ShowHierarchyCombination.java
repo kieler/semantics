@@ -63,14 +63,13 @@ public class ShowHierarchyCombination extends AbstractCombination {
                                                  * enables editing in color, causes some overhead
                                                  */) {
         if (this.getTriggerState() instanceof ButtonState && ID.equals(button.getButtonId())) {
+            undoRecordedEffects();
             if (button.isPushedIn()) {
                 EObject root = diagram.getSemanticModel();
                 int maxLevel = getDepth(root, 0);
                 paintRecursively(diagram.getDiagramPart(), root, 0, maxLevel);
             }
-        } else {
-            doNothing();
-        }
+        } 
     }
 
     private int getDepth(final EObject element, final int current) {

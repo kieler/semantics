@@ -137,9 +137,7 @@ public class ManualFocusCombination extends AbstractCombination {
             focusEffect.addFocus(focus, level);
             this.schedule(focusEffect);
             this.schedule(new LayoutEffect(diagram.getDiagramPart(), null, true, false, true));
-        } else {
-            doNothing();
-        }
+        } 
     }
 
     /**

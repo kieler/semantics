@@ -132,9 +132,9 @@ public class SyncChartsCombination extends AbstractCombination {
     public void execute(final ActiveStates activeStates) {
         // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
-            doNothing();
             return;
         }
+        undoRecordedEffects(); // reset all formerly painted states
         // if there are no active states, the simulation has finished.
         if (activeStates.getActiveStates().isEmpty()
                 || activeStates.getActiveStates().get(0).isEmpty()) {

@@ -203,6 +203,7 @@
             name="KIELER">
       </category>
    </extension>
+<!--
    <extension
          point="org.eclipse.ui.splashHandlers">
       <splashHandler
@@ -221,6 +222,7 @@
             text="0.4.0">
       </splashExtension>
    </extension>
+   -->
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config

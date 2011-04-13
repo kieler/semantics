@@ -60,16 +60,19 @@ public class SignalFlowCombination extends AbstractCombination {
             CombinationParameter.RGB_TYPE) };
 
     private static final int DEFAULT_LENGTH = 15;
-    
+
     private static final String buttonId = "de.cau.cs.kieler.synccharts.kivi.signalflow";
-    
-    public SignalFlowCombination(){
-        super(); 
-        ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,"icons/signalflow.gif");
+
+    public SignalFlowCombination() {
+        super();
+        ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/signalflow.gif");
         String tooltip = "Show the Dual Model of the current SyncChart. It shows the data communication from effects to triggers.";
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model", tooltip, icon, SWT.CHECK, null, "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model",
+                tooltip, icon, SWT.CHECK, null,
+                "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
     }
-    
+
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
@@ -79,12 +82,18 @@ public class SignalFlowCombination extends AbstractCombination {
      *            the selection state
      */
     public void execute(final ButtonState button, final SelectionState selection) {
-        if(button.getButtonId().equals(buttonId) && button.isPushedIn())
-            {
-            if (!shouldExecute(button, selection)) {
-                doNothing(); // keep arrows as-is, eg for exporting images
+        if (button.getButtonId().equals(buttonId)) {
+
+            if (!button.isPushedIn()) {
+                undoRecordedEffects(); // remove old arrows
                 return;
             }
+
+            if (!shouldExecute(button, selection)) {
+                return;// keep arrows as-is, eg for exporting images
+            }
+
+            undoRecordedEffects(); // remove old arrows
 
             // remember which signals appear in which transition
             List<Pair<Signal, Transition>> triggers, effects;
@@ -92,8 +101,8 @@ public class SignalFlowCombination extends AbstractCombination {
             effects = new ArrayList<Pair<Signal, Transition>>();
 
             // traverse over all EObjects
-            EObject diagramElement = ((DiagramEditor) selection.getDiagramEditor())
-                    .getDiagram().getElement();
+            EObject diagramElement = ((DiagramEditor) selection.getDiagramEditor()).getDiagram()
+                    .getElement();
             for (Iterator<EObject> iterator = diagramElement.eAllContents(); iterator.hasNext();) {
                 EObject current = iterator.next();
 
@@ -136,15 +145,15 @@ public class SignalFlowCombination extends AbstractCombination {
             for (Pair<Signal, Transition> trigger : triggers) {
                 if (trigger.getFirst().isIsInput()
                         && isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
-                    schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH, true,
-                            PointerEffect.Direction.NORTH, false));
+                    schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH,
+                            true, PointerEffect.Direction.NORTH, false));
                 }
             }
             for (Pair<Signal, Transition> effect : effects) {
                 if (effect.getFirst().isIsOutput()
                         && isRelevant(selection.getSelectedEObjects(), effect.getSecond())) {
-                    schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH, false,
-                            PointerEffect.Direction.SOUTH, false));
+                    schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH,
+                            false, PointerEffect.Direction.SOUTH, false));
                 }
             }
         }
