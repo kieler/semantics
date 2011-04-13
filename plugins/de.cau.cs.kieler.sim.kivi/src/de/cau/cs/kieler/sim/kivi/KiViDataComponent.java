@@ -105,7 +105,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public boolean isProducer() {
-        return false;
+        //return false;
+        return true;
     }
 
     /**
@@ -175,7 +176,15 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                      */
                     synchronized (this) {
                         if (!wrapupDone) {
-                            StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                            //StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+                            
+                            /*
+                             * performing a synchronized triggering of the KiVi trigger. This will
+                             * block until all effects have finished executing that are caused
+                             * by this triggering. This way we create back pressure from the effects
+                             * to KIEM. 
+                             */
+                            StateActivityTrigger.getInstance().synchronizedStep(statesByStep, diagramEditor);
                         }
                     }
                 }

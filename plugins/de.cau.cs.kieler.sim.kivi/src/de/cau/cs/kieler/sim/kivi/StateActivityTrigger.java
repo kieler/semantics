@@ -57,6 +57,24 @@ public class StateActivityTrigger extends AbstractTrigger {
         trigger(new ActiveStates(aS, editor));
     }
 
+    /**
+     * Give map of active states to the view management. Same as {@link #step(List, DiagramEditor)},
+     * but the thread will block until all KiVi effects corresponding to this triggering have been
+     * finished executing. So this can be used to create back pressure.
+     * 
+     * @param aS
+     *            map of active states
+     * @param editor
+     *            the diagram editor
+     */
+    public void synchronizedStep(final List<List<EObject>> aS, final DiagramEditor editor) {
+        try {
+            synchronizedTrigger(new ActiveStates(aS, editor));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void register() {
         instance = this;
@@ -99,8 +117,7 @@ public class StateActivityTrigger extends AbstractTrigger {
         }
 
         /**
-         * Get the list of states that were active in a
-         * specific step, i.e. a list of lists. The
+         * Get the list of states that were active in a specific step, i.e. a list of lists. The
          * outer list corresponds to the steps.
          * 
          * @return the list of lists of active states
@@ -112,28 +129,30 @@ public class StateActivityTrigger extends AbstractTrigger {
                 return new ArrayList<List<EObject>>();
             }
         }
-        
+
         /**
          * Get list of currently active states in this step.
+         * 
          * @return list of active states
          */
-        public List<EObject> getCurrentActiveStates(){
+        public List<EObject> getCurrentActiveStates() {
             List<List<EObject>> all = getActiveStates();
-            if(!all.isEmpty()){
+            if (!all.isEmpty()) {
                 return all.get(0);
-            }else{
+            } else {
                 return new ArrayList<EObject>();
             }
         }
-        
+
         /**
          * Get list of all states that are active or that have been active.
+         * 
          * @return list of active and history states
          */
-        public List<EObject> getHistoryStates(){
+        public List<EObject> getHistoryStates() {
             List<List<EObject>> all = getActiveStates();
             List<EObject> history = Lists.newArrayList();
-            for(List<EObject> list : all){
+            for (List<EObject> list : all) {
                 history.addAll(list);
             }
             return history;
