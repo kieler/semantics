@@ -39,15 +39,16 @@
     <property name="doc.excludes"                        value=" "/>
     
 
-    <property name="plugin"              value=" "/>
-    <!-- property name="feature"         value=" "/   # see declaration in call.antRunner -->
-    <property name="customContextQualifier" value=" "/>
-    <property name="product"             value=" "/>
-    <property name="executables"         value=" "/>
-    <property name="checkstyle.excludes" value=" "/>
-    <property name="pmd.excludes"        value=" "/>
-    <property name="build.jars"          value="true"/>
-    <property name="publish.feature"     value="true"/>
+    <property name="plugin"                     value=" "/>
+    <!-- property name="feature"                    value=" "/   # see declaration in call.antRunner -->
+    <property name="customContextQualifier"     value=" "/>
+    <property name="product"                    value=" "/>
+    <property name="executables"                value=" "/>
+    <property name="checkstyle.excludes"        value=" "/>
+    <property name="pmd.excludes"               value=" "/>
+    <property name="build.all.plugins.excludes" value=" "/>
+    <property name="build.jars"                 value="true"/>
+    <property name="publish.feature"            value="true"/>
 
     <taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="${antContrib.home}/lib/ant-contrib.jar" />
     <taskdef name="for" classname="net.sf.antcontrib.logic.For" classpath="${antContrib.home}/lib/ant-contrib.jar" />
@@ -180,6 +181,8 @@
                      each folder should contain the subfolders 'features' and 'plugins'
                      can be relative (to ${basedir})
                      CAUTION: required features must not be JARed, plugins should be JARed (so far I figured out) -->
+            <arg value="-Dbuild.all.plugins.excludes=${build.all.plugins.excludes}" />
+                <!-- comma separated path patterns determining plugin folders to be excluded -->
             <arg value="-Dexecutables=${executables}" />
                 <!-- comma separated path patterns included while adding executable flags -->
             <arg value="-Dupdatesite.autobuild=${updatesite.autobuild}" />
@@ -650,6 +653,14 @@
             </sequential>
         </for>
 
+<!-- p2.mirror>
+  <repository location="file:/myDestination" name="A new repository" />
+  <source>
+    <repository location="${p2.build.repo}" />
+  </source>
+  <iu id="tooling.osgi.bundle.default" version="1.0.0" />
+</p2.mirror -->
+
     </target>
     
     <!-- =========================================================================================== -->
@@ -755,6 +766,47 @@
             <param name="no.clean" value="true" />
             <param name="forceContextQualifier" value="v${forceContextQualifier}" />
         </foreach>
+    </target>
+    
+    <!-- =========================================================================================== -->
+
+    <target name="build.all.plugins" if="eclipse.running" depends="init"
+        description="target for building all plugins in the 'plugins' folder">
+
+        <mkdir dir="${basedir}/features/buildHelper" />
+        <mkdir dir="${basedir}/features/buildHelper/sourceTemplateFeature" />
+        <delete file="${basedir}/features/buildHelper/*" />
+        <delete file="${basedir}/features/buildHelper/sourceTemplateFeature/*" />
+
+        <!-- the following lines compute the pluginPath property automatically;
+             all archived artifacts will be considered except those produced by the current
+             job itself in order to avoid any confusions while generating the build scripts;
+             id and property have disjoint namespaces -->
+        <path id="pluginList">
+            <dirset dir="${basedir}/plugins/" includes="*" excludes="${build.all.plugins.excludes}" />
+        </path>
+        <property name="folderList" value="${toString:pluginList}:" />
+
+        <propertyregex
+             global="true"
+             casesensitive="false"
+             input="${folderList}"
+             property="featureContent"
+             regexp="(/[^/:]+)*/([^/:]*):"
+             replace="   &lt;plugin${line.separator}         id=&quot;\2&quot;${line.separator}         download-size=&quot;0&quot;${line.separator}         install-size=&quot;0&quot;${line.separator}         version=&quot;0.0.0&quot;${line.separator}         unpack=&quot;false&quot; /&gt;${line.separator}${line.separator}" />
+
+
+        <property name="featureContent" value=" " />
+
+        <!-- echo message="${featureContent}" / -->
+
+        <concat destfile="${basedir}/features/buildHelper/feature.xml">&lt;feature id=&quot;buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}${featureContent}  &lt;/feature&gt;</concat>
+        <concat destfile="${basedir}/features/buildHelper/build.properties">bin.includes = feature.xml${line.separator}generate.feature@buildHelper.source = buildHelper</concat>
+
+        <antcall target="build.feature">
+            <param name="feature" value="buildHelper" />
+        </antcall>
+
     </target>
     
     <!-- =========================================================================================== -->
@@ -891,10 +943,10 @@
                     <fileset dir="${basedir}/${buildLabel}/${platform}" />
                 </touch>
             </then>
-            <else>
+            <!-- else>
                 <concat destfile="${basedir}/${buildLabel}/${platform}/${basename}/${basename}.ini"
                         append="true">-XX:MaxPermSize=256m</concat>
-            </else>
+            </else -->
         </if>
 
         <zip destfile="${zipfile}" update="true">
@@ -970,4 +1022,3 @@
     </target>
 
 </project>
-
