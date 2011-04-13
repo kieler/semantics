@@ -219,13 +219,13 @@ litigation.
 
    <requires>
       <import feature="com.google.guava.runtime.feature" version="9.0.0"/>
-      <import feature="org.eclipse.emf" version="2.6.1.v20100914-1218"/>
-      <import feature="org.eclipse.emf.compare" version="1.1.2.v20110202-0936"/>
-      <import feature="org.eclipse.gmf" version="1.4.2.v20110201-1000-7d9A7FFYnmMD7_nYQqNhbc2tsgXc"/>
-      <import feature="org.eclipse.gmf.runtime.notation" version="1.4.1.v20100909-1000-37708s73533F5C1479I"/>
-      <import feature="org.eclipse.xtend" version="1.0.1.v201008251147"/>
-      <import feature="org.eclipse.xtext.runtime" version="1.0.2.v201102150722"/>
-      <import feature="org.eclipse.xtext.ui" version="1.0.2.v201102150722"/>
+      <import feature="org.eclipse.emf" version="2.6.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.compare" version="1.1.2" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf" version="1.4.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf.runtime.notation" version="1.4.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtend" version="1.0.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.runtime" version="1.0.1" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.ui" version="1.0.1" match="greaterOrEqual"/>
    </requires>
 
    <plugin
