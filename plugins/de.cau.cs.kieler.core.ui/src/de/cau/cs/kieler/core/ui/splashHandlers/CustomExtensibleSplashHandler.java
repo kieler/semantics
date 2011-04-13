@@ -57,6 +57,8 @@ public class CustomExtensibleSplashHandler extends BasicSplashHandler {
     private Composite fIconPanel;
 
     private Composite fTextPanel;
+    
+    Color labelColor;
 
     /**
      * 
@@ -122,6 +124,7 @@ public class CustomExtensibleSplashHandler extends BasicSplashHandler {
      * 
      */
     private void createUIImages() {
+        labelColor = new Color(Display.getDefault(), SHADING, SHADING, SHADING);
         Iterator<Image> imageIterator = fImageList.iterator();
         Iterator<String> tooltipIterator = fTooltipList.iterator();
         Iterator<String> textIterator = fTextList.iterator();
@@ -150,16 +153,9 @@ public class CustomExtensibleSplashHandler extends BasicSplashHandler {
      * @param text
      */
     private void createTextLabel(final String text) {
-        final Color color = new Color(Display.getDefault(), SHADING, SHADING, SHADING);
-        Label label = new Label(fTextPanel, SWT.NONE) {
-            @Override
-            public void dispose() {
-                super.dispose();
-                color.dispose();
-            }
-        };
+        Label label = new Label(fTextPanel, SWT.NONE);
         label.setText(text);
-        label.setForeground(color);
+        label.setForeground(labelColor);
         Font f = label.getFont();
         if (f.getFontData() != null) {
             FontData fd = f.getFontData()[0];
@@ -386,5 +382,7 @@ public class CustomExtensibleSplashHandler extends BasicSplashHandler {
             Image image = iterator.next();
             image.dispose();
         }
+        // Dispose of the label color
+        labelColor.dispose();
     }
 }
