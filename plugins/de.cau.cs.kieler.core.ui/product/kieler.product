@@ -162,20 +162,6 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.synccharts" version="0.5.0.qualifier"/>
       <feature id="de.cau.cs.kieler.kaom" version="0.3.0.qualifier"/>
       <feature id="de.cau.cs.kieler.keg" version="0.3.0.qualifier"/>
-      <feature id="de.cau.cs.kieler.uml2" version="0.3.0.qualifier"/>
-      <feature id="org.eclipse.papyrus.backbone" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.uml" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.uml.diagram.pkg" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.activity" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.clazz" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.communication" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.composite" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.menu" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.profile" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.sequence" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.statemachine" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.diagram.usecase" version="0.7.2.v201101191114"/>
-      <feature id="org.eclipse.papyrus.xtext.uml" version="0.7.2.v201101191114"/>
    </features>
 
 
