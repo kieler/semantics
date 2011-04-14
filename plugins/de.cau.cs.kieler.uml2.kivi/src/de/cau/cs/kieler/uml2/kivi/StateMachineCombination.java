@@ -74,9 +74,9 @@ public class StateMachineCombination extends AbstractCombination {
      */
     public void execute(final ActiveStates activeStates) {
         if (!(activeStates.getDiagramEditor() instanceof UmlStateMachineDiagramForMultiEditor)) {
-            doNothing();
             return;
         }
+        undoRecordedEffects();
         // if there are no active states, the simulation has finished.
         if (activeStates.getActiveStates().isEmpty()) {
             return;

@@ -10,7 +10,7 @@ fmod PRIORITY is
   *** what kind of priority is this precisely?
   op noHigherPrio__ : Compoundtransition Compoundtransitions -> Bool .
   ceq noHigherPrio t t2 = true if (orthogonal (region t) (region t2)) .
-  eq noHigherPrio t t2 = $noHigherPrio (downset (source t)) (downset (source t2)) [owise] .
+  ceq noHigherPrio t t2 = $noHigherPrio (downset (source t)) (downset (source t2)) if not (orthogonal (region t) (region t2)) .
   eq noHigherPrio t empty = true .
   eq noHigherPrio t (T ,  t2) = (noHigherPrio t t2) and (noHigherPrio t T) .
 

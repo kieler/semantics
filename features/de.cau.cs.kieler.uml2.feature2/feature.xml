@@ -386,27 +386,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.klodd.hierarchical"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.klodd.orthogonal"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.klodd.ui"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
          id="de.cau.cs.kieler.sim.kivi"
          download-size="0"
          install-size="0"
@@ -415,13 +394,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.sim.table"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="net.sourceforge.lpsolve"
          download-size="0"
          install-size="0"
          version="0.0.0"
@@ -485,6 +457,20 @@ litigation.
 
    <plugin
          id="net.ogdf.ogml"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klay.layered"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.klay.planar"
          download-size="0"
          install-size="0"
          version="0.0.0"

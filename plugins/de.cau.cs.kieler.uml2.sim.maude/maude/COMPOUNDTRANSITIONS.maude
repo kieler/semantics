@@ -57,7 +57,7 @@ fmod COMPOUNDTRANSITIONS is
   op $remLowPrio__ : Compoundtransitions Compoundtransitions -> Compoundtransitions .
   ceq $remLowPrio T (T2, t) = $remLowPrio (T, t) T2 
   	if noHigherPrio t (T, T2) .
-  eq $remLowPrio T (T2, t) = $remLowPrio T T2 [owise] .
+  ceq $remLowPrio T (T2, t) = $remLowPrio T T2 if not (noHigherPrio t (T, T2)) .
   eq $remLowPrio T empty = T .
 
 

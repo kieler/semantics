@@ -98,7 +98,7 @@ mod INIT is
 	vars V V2 : Verts .
 	var ac ac2 : Actions .
 	var T : Transitions .
-	var ES : EventSS .
+	var ES : Events .
 	var mode : String .
 	vars HC : HistoryConfs .
 	

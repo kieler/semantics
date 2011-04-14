@@ -61,15 +61,16 @@ mod SEMANTICS is
     vars MN : Sets .
 
 	 
- 
 			  		
+	rl [noevents] : maState (stableC V HC) (ev: "noevent") => 
+	maState (doneC V HC) empty .
 
     *** ToDo: Currently events are NOT consumed 
 	crl [selectEventFSetESINT] : maState (stableC V HC) (e2, ES) => 
-	maState (eventSelC V HC e2) (ES, e2) if e2 =/= empty [print "selected " e2] .
+	maState (eventSelC V HC e2) (ES, e2) if (e2 =/= empty) and (e2 =/= (ev: "noevent")) [print "selected " e2] .
 	crl [discardFSetESINT] : maState (eventSelC V HC e2) (ES) => 
 		maState (doneC V HC) (ES) if 
-		(enabled V e2) == empty [print "discarded " e2] .
+		(enabled V e2) == empty [print "discarded " e2]  .
 
 	crl [computeFSetESINT] : maState (eventSelC V HC e2) (ES) => 
 		maState (fireC V HC 
