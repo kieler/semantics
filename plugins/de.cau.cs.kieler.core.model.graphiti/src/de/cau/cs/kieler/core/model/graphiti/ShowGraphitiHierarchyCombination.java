@@ -45,6 +45,7 @@ public class ShowGraphitiHierarchyCombination extends AbstractCombination {
                                                  */) {
         if (ID.equals(button.getButtonId())
                 && button.getEditor() instanceof DiagramEditor) {
+            undoRecordedEffects();
             if (button.isPushedIn()) {
                 editor = (DiagramEditor) button.getEditor();
                 EObject root =
@@ -53,8 +54,6 @@ public class ShowGraphitiHierarchyCombination extends AbstractCombination {
                 int maxLevel = getDepth(root, 0);
                 paintRecursively(root, 0, maxLevel);
             }
-        } else {
-            doNothing();
         }
     }
 
@@ -75,10 +74,12 @@ public class ShowGraphitiHierarchyCombination extends AbstractCombination {
             paintRecursively(child, level + 1, maxLevel);
         }
         if (level > 0) {
+            // CHECKSTYLEOFF MagicNumber
             GraphitiHighlightEffect effect =
                     new GraphitiHighlightEffect(element, editor, new Color(
                             null, new RGB(360.0f / (maxLevel + 1) * level,
                                     1.0f, 0.9f)));
+            // CHECKSTYLEON MagicNumber
             effect.setChangeWidth(false);
             schedule(effect);
         }
