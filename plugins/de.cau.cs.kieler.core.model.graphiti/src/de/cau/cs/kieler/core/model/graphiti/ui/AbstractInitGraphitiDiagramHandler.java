@@ -82,6 +82,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * 
  * @author soh
  */
+@SuppressWarnings("restriction")
 public abstract class AbstractInitGraphitiDiagramHandler extends
         AbstractInitDiagramHandler {
 
