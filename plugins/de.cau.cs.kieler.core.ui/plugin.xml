@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
-   <extension-point id="customSplashExtension" name="Splash Extensions" schema="schema/customSplashExtension.exsd"/>
    <extension
          point="org.eclipse.ui.views">
       <category
@@ -207,20 +206,13 @@
    <extension
          point="org.eclipse.ui.splashHandlers">
       <splashHandler
-            class="de.cau.cs.kieler.core.ui.splash.CustomExtensibleSplashHandler"
+            class="de.cau.cs.kieler.core.ui.splash.KielerSplashHandler"
             id="de.cau.cs.kieler.core.ui.splash.extensible">
       </splashHandler>
       <splashHandlerProductBinding
             productId="de.cau.cs.kieler.core.ui.product"
             splashId="de.cau.cs.kieler.core.ui.splash.extensible">
       </splashHandlerProductBinding>
-   </extension>
-   <extension
-         point="de.cau.cs.kieler.core.ui.customSplashExtension">
-      <splashExtension
-            id="version"
-            text="0.4.0">
-      </splashExtension>
    </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
