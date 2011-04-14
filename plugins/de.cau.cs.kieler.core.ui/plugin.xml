@@ -207,12 +207,12 @@
    <extension
          point="org.eclipse.ui.splashHandlers">
       <splashHandler
-            class="de.cau.cs.kieler.core.ui.splashHandlers.CustomExtensibleSplashHandler"
-            id="de.cau.cs.kieler.core.ui.splashHandlers.extensible">
+            class="de.cau.cs.kieler.core.ui.splash.CustomExtensibleSplashHandler"
+            id="de.cau.cs.kieler.core.ui.splash.extensible">
       </splashHandler>
       <splashHandlerProductBinding
             productId="de.cau.cs.kieler.core.ui.product"
-            splashId="de.cau.cs.kieler.core.ui.splashHandlers.extensible">
+            splashId="de.cau.cs.kieler.core.ui.splash.extensible">
       </splashHandlerProductBinding>
    </extension>
    <extension

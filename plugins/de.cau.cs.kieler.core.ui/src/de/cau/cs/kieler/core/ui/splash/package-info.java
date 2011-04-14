@@ -15,4 +15,4 @@
 /**
  * Contains classes for the handling of the splash screen.
  */
-package de.cau.cs.kieler.core.ui.splashHandlers;
+package de.cau.cs.kieler.core.ui.splash;
