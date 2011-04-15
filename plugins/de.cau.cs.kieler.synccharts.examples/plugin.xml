@@ -20,7 +20,7 @@
          description="This is the SyncCharts standard model ABRO."
          generation_date="Fri Jul 07 09:05:16 CEST 2010"
          id="de.cau.cs.kieler.synccharts.abro"
-         overview_pic="examples/abro/abro.png"
+         overview_pic="images/abro.png"
          root_directory="examples/"
          title="ABRO">
       <resource direct_open="false" local_path="examples/abro/" resource_type="folder">
@@ -37,7 +37,7 @@
       description="This example shows the synchronisation of signals A and B."
       generation_date="Tue Nov 02 20:58:16 CET 2010"
       id="de.cau.cs.kieler.synccharts.ab_sync"
-      overview_pic="examples/ab_sync/ABSync.png"
+      overview_pic="images/ABSync.png"
       root_directory="examples"
       title="AB Sync">
 <resource direct_open="false" local_path="examples/ab_sync" resource_type="folder"/>
@@ -51,7 +51,7 @@
       description="Shows the modeling of an dvd-player in SyncCharts."
       generation_date="Tue Nov 02 21:00:27 CET 2010"
       id="de.cau.cs.kieler.synccharts.dvd_player"
-      overview_pic="examples/dvd_player/dvdplayer.png"
+      overview_pic="images/dvdplayer.png"
       root_directory="examples"
       title="DVD Player">
 <resource direct_open="false" local_path="examples/dvd_player" resource_type="folder"/>
@@ -65,7 +65,7 @@
       description="This example contains of an elevator with two floors.&#13;&#10;The interacting of floors and the elevator door shows &#13;&#10;concurrency in synccharts."
       generation_date="Tue Nov 02 21:08:07 CET 2010"
       id="de.cau.cs.kieler.synccharts.elevator"
-      overview_pic="examples/elevator/elevator.png"
+      overview_pic="images/elevator.png"
       root_directory="examples"
       title="Elevator">
 <resource direct_open="false" local_path="examples/elevator" resource_type="folder"/>
@@ -92,7 +92,7 @@
       description="The traffic-light example shows how concurrency works in SyncCharts. "
       generation_date="Tue Nov 02 21:14:24 CET 2010"
       id="de.cau.cs.kieler.synccharts.traffic_light"
-      overview_pic="examples/synccharts_traffic_light/traffic_light.png"
+      overview_pic="images/traffic_light.png"
       root_directory="examples"
       title="Traffic Light">
 <resource direct_open="false" local_path="examples/synccharts_traffic_light" resource_type="folder"/>
@@ -106,7 +106,7 @@
       description="This example shows the token-ring-principle in SyncCharts."
       generation_date="Tue Nov 02 21:17:19 CET 2010"
       id="de.cau.cs.kieler.synccharts.token_ring"
-      overview_pic="examples/token_ring/tokenring.png"
+      overview_pic="images/tokenring.png"
       root_directory="examples"
       title="Token Ring">
 <resource direct_open="false" local_path="examples/token_ring" resource_type="folder"/>
