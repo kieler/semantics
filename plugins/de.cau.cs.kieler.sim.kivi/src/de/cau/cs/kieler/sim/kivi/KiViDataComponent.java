@@ -41,7 +41,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
-    private static final int DEFAULT_STEPS = 3;
+    private static final int DEFAULT_STEPS = 0; // changed by cmot upon rvh's request
 
     private static final String DEFAULT_STATE_KEY = "state";
 
