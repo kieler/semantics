@@ -644,11 +644,11 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//consider output signals that may be used in triggers 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-//    outputSignalTransformation(mainRegion.states.get(0)) ->  	
+    outputSignalTransformation(mainRegion.states.get(0)) ->  	
   	
   	//consider input signals that may be used in outputs 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-//    inputSignalTransformation(mainRegion.states.get(0)) ->
+    inputSignalTransformation(mainRegion.states.get(0)) ->
     //ATTENTION: this method can oly be used iff we remove ANY output port from modal model
     //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
     //This is because such a syncchart would not be constructive. Without this modification the
