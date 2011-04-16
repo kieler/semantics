@@ -638,11 +638,11 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//consider output signals that may be used in triggers 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    outputSignalTransformation(mainRegion.states.get(0)) ->  	
+//    outputSignalTransformation(mainRegion.states.get(0)) ->  	
   	
   	//consider input signals that may be used in outputs 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    inputSignalTransformation(mainRegion.states.get(0)) ->
+//    inputSignalTransformation(mainRegion.states.get(0)) ->
     //ATTENTION: this method can oly be used iff we remove ANY output port from modal model
     //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
     //This is because such a syncchart would not be constructive. Without this modification the
@@ -688,13 +688,104 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 //  				"terminated"+outerStateURIHash) -> 
    				
    //post processing: reconsider priorities
-   ConsiderTransitionPriorities(this.entity) 
+   ConsiderTransitionPriorities(this.entity) ->
+   
+   //post processing: remove unnecessary combine actors
+   RemoveUnnecessaryCombineActors(this.entity) 
    
 ;
 
 
+//-----------------------------------------------------------------------------
+//--   A U T O M A T I C   R E M O V E U N N E C E S S A R Y  C O M B I N E  --
+//-----------------------------------------------------------------------------
+
+Void RemoveUnnecessaryCombineActors(List[EntityType] entityList ):
+	let firstEntity = entityList.first():
+	(firstEntity.class1.matches("ptolemy.domains.sr.lib.Combine")) ?
+		RemoveUnnecessaryCombineActors_SRCombine(firstEntity) : null ->
+	(firstEntity.class1.matches("ptolemy.domains.modal.modal.ModalModel")) ? 
+		RemoveUnnecessaryCombineActors_ModalModel(firstEntity,
+										        firstEntity.entity) : null ->
+	(entityList.size > 1) ?
+		RemoveUnnecessaryCombineActors(entityList.withoutFirst()) : null
+;
+
+Void RemoveUnnecessaryCombineActors_SRCombine(EntityType SRCombine):
+	let inputs = RemoveUnnecessaryCombineActors_Count(((EntityType)SRCombine.eContainer).link, SRCombine):
+	dump("----------->" + inputs) ->
+	// Add Links
+	if (inputs < 2) then
+	 RemoveUnnecessaryCombineActors_AddLink(((EntityType)SRCombine.eContainer).link, SRCombine) ->
+	// Remove Links
+	if (inputs < 2) then
+	  RemoveUnnecessaryCombineActors_RemoveLink(((EntityType)SRCombine.eContainer).link, SRCombine) ->
+    // Remove Combine Actor
+	if (inputs < 2) then
+	  ((EntityType)SRCombine.eContainer).entity.remove(SRCombine)
+;											 
+
+Void RemoveUnnecessaryCombineActors_AddLink(List[LinkType] linkList, EntityType SRCombine) :
+   let src = RemoveUnnecessaryCombineActors_GetLinkSource(((EntityType)SRCombine.eContainer).link, SRCombine) :
+   let dst = RemoveUnnecessaryCombineActors_GetLinkDest(((EntityType)SRCombine.eContainer).link, SRCombine) :
+   let containerEntity = (EntityType)SRCombine.eContainer:
+   let linkEntity = new LinkType:
+   containerEntity.link.add(linkEntity) ->
+   linkEntity.setRelation1(src) ->
+   linkEntity.setRelation2(dst)
+;
+
+Void RemoveUnnecessaryCombineActors_RemoveLink(List[LinkType] linkList, EntityType SRCombine) :
+   let firstLink = linkList.first():
+   let containerEntity = (EntityType)SRCombine.eContainer:
+   
+   if (firstLink.port.startsWith(SRCombine.name)) then
+      containerEntity.link.remove(firstLink) ->
+   
+   (linkList.size > 1) ?
+		RemoveUnnecessaryCombineActors_RemoveLink(linkList.withoutFirst(), SRCombine) 
+		: null
+;
 
 
+// Count SRCombine inputs
+int RemoveUnnecessaryCombineActors_Count(List[LinkType] linkList, EntityType SRCombine) :
+   let partLinkList = linkList.select(e|(e.port.startsWith(SRCombine.name)) && (e.port.endsWith("input"))) :
+   partLinkList.size
+;
+
+// Get the Source relation of the Link to remove
+String RemoveUnnecessaryCombineActors_GetLinkSource(List[LinkType] linkList, EntityType SRCombine) :
+   let firstLink = linkList.first():
+   if ((firstLink.port.startsWith(SRCombine.name)) && (firstLink.port.endsWith("output"))) then
+      firstLink.relation
+   else
+  	  RemoveUnnecessaryCombineActors_GetLinkSource(linkList.withoutFirst(), SRCombine) 
+;
+
+// Get the Destination relation of the Link to remove
+String RemoveUnnecessaryCombineActors_GetLinkDest(List[LinkType] linkList, EntityType SRCombine) :
+   let firstLink = linkList.first():
+   if ((firstLink.port.startsWith(SRCombine.name)) && (firstLink.port.endsWith("input"))) then
+      firstLink.relation
+   else
+   	  RemoveUnnecessaryCombineActors_GetLinkDest(linkList.withoutFirst(), SRCombine) 
+;
+
+//Use ModalModel to go to deeper hierarchies (refinements!)
+Void RemoveUnnecessaryCombineActors_ModalModel(EntityType modalModel,
+											 List[EntityType] entityList):
+   let firstEntity = entityList.first():
+	//if this is a Refinement => Recursively go into it		 
+   (firstEntity.class1.matches("ptolemy.domains.modal.modal.Refinement")) ?
+   			RemoveUnnecessaryCombineActors(firstEntity.entity)
+	: null ->   											
+		 
+   (entityList.size > 1) ?
+		RemoveUnnecessaryCombineActors_ModalModel(modalModel, 
+												entityList.withoutFirst()) 
+		: null
+;
 
 
 //-----------------------------------------------------------------------------
@@ -867,7 +958,6 @@ Void ConsiderTransitionPriorities_Relation(RelationType relation,
      			ConsiderTransitionPriorities_Relation(relation, otherRelations.withoutFirst())
 				: null 								    										   	
 ;										   
-
 
 
 //-----------------------------------------------------------------------------
