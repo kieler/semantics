@@ -81,8 +81,11 @@ Void addVertexRelation(EntityType baseEntity, String name, String property) :
 Void addCombineFunction(EntityType baseEntity, String name) :
    let e = new EntityType:
    let p1 = new PropertyType:
+   let display = new DisplayType:								 	
    e.setName(name) ->
    e.setClass1("ptolemy.domains.sr.lib.Combine") ->
+   display.setName("Combine") ->
+   e.display.add(display) ->
    	p1.setName("combine function") ->
    	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
    	p1.setValue("1") ->
@@ -100,7 +103,10 @@ Void addEnvironmentCombineFunction(EntityType baseEntity,
    let e = new EntityType:
    let p1 = new PropertyType:
    let p2 = new PropertyType:
+   let display = new DisplayType:								 	
    e.setName(name) ->
+   display.setName("Combine") ->
+   e.display.add(display) ->
    e.setClass1("ptolemy.domains.sr.lib.Combine") ->
    	p2.setName("combine function") ->
    	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
@@ -1406,6 +1412,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 create EntityType this createModalModelEntity(synccharts::Region region, 
 											  int number, 
 									 	List[Signal] signalList):
+	let display = new DisplayType:								 	
 	let p0 = new PropertyType:
 	let p1 = new PropertyType:
 		p0.setName("directorClass") ->
@@ -1414,6 +1421,8 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	this.property.add(p1) ->
+	display.setName("Region_" + number) ->
+    this.display.add(display) ->
    	this.setName(getStateId(region.parentState) 
    											 	+ "_region_" + number) ->
   	this.setClass1("ptolemy.domains.modal.modal.ModalModel") ->
@@ -1461,12 +1470,15 @@ create EntityType this createMacroStateEntity(synccharts::State state):
 							 		elementURIFragment):
 	let p1 = new PropertyType:
 	let p2 = new PropertyType:
+	let display = new DisplayType:
 		p1.setName("refinementName") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p1.setValue(getStateId(state)) ->
 		p2.setName("originalName") ->
 		p2.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p2.setValue(state.label+" ("+state.id+")") ->
+		display.setName(state.label) ->
+	this.display.add(display) ->
    	this.setName(getStateId(state)) ->
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(p1) ->
@@ -1510,11 +1522,14 @@ create EntityType this createMacroStateRefinementEntity(
 //Create SimpleState == State-Component.
 create EntityType this createSimpleStateEntity(synccharts::State state):
 	//elementURIFragment is *NOT* real XPATH!
+	let display = new DisplayType:
 	let elementURIFragment = getURIFragment(state):
 	let elementURIFragmentProperty = newPropertyType("elementURIFragment",
 							 		"ptolemy.kernel.util.StringAttribute",
 							 		elementURIFragment):
    	this.setName(getStateId(state)) ->
+		display.setName(state.label) ->
+	this.display.add(display) ->
   	this.setClass1("ptolemy.domains.modal.kernel.State") ->
 	this.property.add(elementURIFragmentProperty) ->
   	SetStateInitialFinalFlag(state, this)
