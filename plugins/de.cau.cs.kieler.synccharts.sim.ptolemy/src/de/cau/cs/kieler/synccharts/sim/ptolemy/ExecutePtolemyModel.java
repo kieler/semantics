@@ -530,6 +530,7 @@ public class ExecutePtolemyModel {
         NamedObj ptolemyModel = null;
         try {
             // parse
+        	parser.resetAll();
             ptolemyModel = parser.parse(null, new URL(momlFile.toString()));
             SyncchartsSimPtolemyPlugin.DEBUG("#5");
 
