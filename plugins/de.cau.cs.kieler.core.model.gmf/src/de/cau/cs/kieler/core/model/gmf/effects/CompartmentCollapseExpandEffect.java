@@ -139,10 +139,10 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 // only do something if necessary
                 if (f.isExpanded() == collapse) {
                     if (collapse) {
-                        // System.out.println("Collapsing " + targetEditPart);
+                        System.out.println("Collapsing " + targetEditPart);
                         f.setCollapsed();
                     } else {
-                        // System.out.println("Expanding " + targetEditPart);
+                        System.out.println("Expanding " + targetEditPart);
                         f.setExpanded();
                     }
                     changed = true;
@@ -179,19 +179,23 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     @Override
     public IEffect merge(final IEffect otherEffect) {
         init();
-        if (otherEffect instanceof CompartmentCollapseExpandEffect) {
-            CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
-            if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
-                originalCollapseState = other.originalCollapseState;
-                return this;
-            }
-        } else if (otherEffect instanceof UndoEffect) {
+// FIXME: this merging does not work. You cannot merge hierarchical expand effects for example
+//        if (otherEffect instanceof CompartmentCollapseExpandEffect) {
+//            CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
+//            if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
+//                originalCollapseState = other.originalCollapseState;
+//                System.out.println("Merging 1 "+this+" >===> "+other);
+//                return this;
+//            }
+//        } else 
+        if (otherEffect instanceof UndoEffect) {
             IEffect undo = ((UndoEffect) otherEffect).getEffect();
             if (undo instanceof CompartmentCollapseExpandEffect) {
                 CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) undo;
                 if (other.targetEditor == targetEditor
                         && other.targetEditParts.equals(targetEditParts)) {
                     originalCollapseState = other.originalCollapseState;
+                    System.out.println("Merging 2 "+this+" >===> "+other);
                     return this;
                 }
             }
@@ -238,7 +242,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         } else {
             b.append("Expand ");
         }
-        //b.append(targetNode);
+        b.append(targetNode);
         return b.toString();
     }
 }
