@@ -139,10 +139,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 // only do something if necessary
                 if (f.isExpanded() == collapse) {
                     if (collapse) {
-                        System.out.println("Collapsing " + targetEditPart);
                         f.setCollapsed();
                     } else {
-                        System.out.println("Expanding " + targetEditPart);
                         f.setExpanded();
                     }
                     changed = true;
@@ -184,7 +182,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 //            CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
 //            if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
 //                originalCollapseState = other.originalCollapseState;
-//                System.out.println("Merging 1 "+this+" >===> "+other);
 //                return this;
 //            }
 //        } else 
@@ -195,7 +192,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 if (other.targetEditor == targetEditor
                         && other.targetEditParts.equals(targetEditParts)) {
                     originalCollapseState = other.originalCollapseState;
-                    System.out.println("Merging 2 "+this+" >===> "+other);
                     return this;
                 }
             }
