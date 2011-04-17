@@ -87,16 +87,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     /**
      * {@inheritDoc}
      * 
-     * Synchronized to avoid wrapup() finishing while step() still is running. This would lead to
-     * bad highlighting order: wrapup() undos all highlights, then step() executes a couple of new
-     * highlights that will remain active until the next simulation starts.
      */
-    public synchronized void wrapup() throws KiemInitializationException {
+    public void wrapup() throws KiemInitializationException {
         if (diagramEditor == null) {
             return;
         }
         if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().step(null, diagramEditor);
+            StateActivityTrigger.getInstance().synchronizedStep(null, diagramEditor);
         }
         wrapupDone = true;
     }
@@ -105,7 +102,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public boolean isProducer() {
-        //return false;
+        // return false;
         return true;
     }
 
@@ -168,24 +165,16 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     currentJSONObject = pool.getData(null, index);
                 }
                 if (StateActivityTrigger.getInstance() != null) {
-                    /*
-                     * Synchronized to avoid wrapup() finishing while step() still is running. This
-                     * would lead to bad highlighting order: wrapup() undos all highlights, then step()
-                     * executes a couple of new highlights that will remain active until the next
-                     * simulation starts.
-                     */
-                    synchronized (this) {
-                        if (!wrapupDone) {
-                            //StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
-                            
-                            /*
-                             * performing a synchronized triggering of the KiVi trigger. This will
-                             * block until all effects have finished executing that are caused
-                             * by this triggering. This way we create back pressure from the effects
-                             * to KIEM. 
-                             */
-                            StateActivityTrigger.getInstance().synchronizedStep(statesByStep, diagramEditor);
-                        }
+                    if (!wrapupDone) {
+                        // StateActivityTrigger.getInstance().step(statesByStep, diagramEditor);
+
+                        /*
+                         * performing a synchronized triggering of the KiVi trigger. This will block
+                         * until all effects have finished executing that are caused by this
+                         * triggering. This way we create back pressure from the effects to KIEM.
+                         */
+                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
+                                diagramEditor);
                     }
                 }
             } catch (JSONException e) {
