@@ -41,6 +41,7 @@
 
     <property name="plugin"                     value=" "/>
     <!-- property name="feature"                    value=" "/   # see declaration in call.antRunner -->
+    <property name="fetchSources"               value="false"/>
     <property name="customContextQualifier"     value=" "/>
     <property name="product"                    value=" "/>
     <property name="executables"                value=" "/>
@@ -96,7 +97,7 @@
                 
         <!-- default definitions: may be overwritten while calling this script if necessary -->
         <!-- this is to give antRunner a reasonable value of ${featureParam}
-             ${feature} must not be set widely in case of invoking the build.multiple.features target -->
+             ${feature} must not be set globally in case of invoking the build.multiple.features target -->
         <property name="feature"                 value=" "/>
         <!-- these are located here as I want to state different default values for overall javadoc generation -->
         <property name="doc.basedir"             value="${build.basedir}" />
@@ -172,6 +173,8 @@
                 <!-- the feature(s) whose plugins should be build;
                      need a different name here as for proper execution of target
                      build.multiple.features ${feature} must be unset -->
+            <arg value="-DfetchSources=${fetchSources}" />
+                <!-- should the build process fetch externally built source bundles/child features?  -->
             <arg value="-Dproduct=${product}" />
                 <!-- the product which should be build -->
             <arg value="-Dbasename=${basename}" />
@@ -307,6 +310,7 @@
             <fileset dir="${basedir}/buildTempFolder/" includes="**/*"/>
             <fileset dir="${basedir}/update-site/features/" includes="**/*"/>
             <fileset dir="${basedir}/update-site/plugins/"  includes="**/*"/>
+            <!-- fileset dir="${basedir}/features/" includes="*/build.xml"/ -->
             <fileset dir="${basedir}/features/" includes="*.source/**/*"/>
             <fileset dir="${basedir}/plugins/" includes="*.source_*/**/*"/>
             <dirset  dir="${basedir}/features/" includes="*.source"/>
@@ -349,9 +353,9 @@
         </loadfile>
 
         <mkdir dir="${basedir}/features/${feature}.buildHelper" />
-        <mkdir dir="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature" />
+        <!-- mkdir dir="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature" / -->
         <delete file="${basedir}/features/${feature}.buildHelper/*" />
-        <delete file="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature/*" />
+        <!-- delete file="${basedir}/features/${feature}.buildHelper/sourceTemplateFeature/*" / -->
 	
         <!-- dump out the artificial super feature depending on the demand of a soure feature
              (generate.sourcefeature is set) -->
@@ -359,17 +363,48 @@
             <isset property="generate.sourcefeature" />
             <then>
                 <concat destfile="${basedir}/features/${feature}.buildHelper/feature.xml">&lt;feature id=&quot;${feature}.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${feature}&quot; /&gt;${line.separator}    &lt;includes id=&quot;${feature}.source&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+                <if>
+                    <istrue value="${fetchSources}" />
+                    <then>
+                        <mkdir dir="${basedir}/features/${feature}.source" />
+                        <copy file="${basedir}/features/${feature}/feature.xml"
+                              tofile="${basedir}/features/${feature}.source/feature.xml" overwrite="true" />
+                        <replaceregexp file="${basedir}/features/${feature}.source/feature.xml"
+                                       match="&lt;requires&gt;.*&lt;/requires&gt;"
+                                       replace=" "
+                                       flags="gis" />
+
+                        <replaceregexp file="${basedir}/features/${feature}.source/feature.xml"
+                                       match="(id=&quot;[^&quot;]*)&quot;"
+                                       replace="\1.source&quot;"
+                                       flags="gis" />
+
+                        <replaceregexp file="${basedir}/features/${feature}.source/feature.xml"
+                                       match="(&lt;feature[^&gt;]*label=&quot;[^&quot;]*)&quot;"
+                                       replace="\1 sources&quot;"
+                                       flags="is" />
+
+                                       <!-- match="&lt;requires&gt;.*&lt;/requires&gt;" -->
+                        <!-- copy file="${basedir}/features/${feature}.source/feature.xml"
+                              tofile="${basedir}/features/${feature}.source/feature2.xml" overwrite="true" / -->
+                        <concat destfile="${basedir}/features/${feature}.source/build.properties">bin.includes = feature.xml</concat>
+                        <concat destfile="${basedir}/features/${feature}.buildHelper/build.properties">bin.includes = feature.xml</concat>
+                    </then>
+                    <else>
+                        <!-- copy the original feature's build.properties to the super feature,
+                             as generate.feature must be declared there!
+                             (will have no effect on ${feature}) -->
+                        <copy file="${basedir}/features/${feature}/build.properties"
+                              tofile="${basedir}/features/${feature}.buildHelper/build.properties" overwrite="true" />
+                    </else>
+                </if>
             </then>
             <else>
                 <concat destfile="${basedir}/features/${feature}.buildHelper/feature.xml">&lt;feature id=&quot;${feature}.buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}    &lt;includes id=&quot;${feature}&quot; /&gt;${line.separator}&lt;/feature&gt;</concat>
+                <touch file="${basedir}/features/${feature}.buildHelper/build.properties" />
             </else>
         </if>
 
-        <!-- copy the original feature's build.properties to the super feature,
-             as generate.feature must be declared there!
-             (will have no effect on ${feature}) -->
-        <copy file="${basedir}/features/${feature}/build.properties"
-              tofile="${basedir}/features/${feature}.buildHelper/build.properties" overwrite="true" />
 
         <tstamp />
         <!-- <tstamp> provides ${DSTAMP} and ${TSTAMP}, they're not declared explicitly -->
@@ -774,16 +809,14 @@
         description="target for building all plugins in the 'plugins' folder">
 
         <mkdir dir="${basedir}/features/buildHelper" />
-        <mkdir dir="${basedir}/features/buildHelper/sourceTemplateFeature" />
         <delete file="${basedir}/features/buildHelper/*" />
-        <delete file="${basedir}/features/buildHelper/sourceTemplateFeature/*" />
 
         <!-- the following lines compute the pluginPath property automatically;
              all archived artifacts will be considered except those produced by the current
              job itself in order to avoid any confusions while generating the build scripts;
              id and property have disjoint namespaces -->
         <path id="pluginList">
-            <dirset dir="${basedir}/plugins/" includes="*" excludes="${build.all.plugins.excludes}" />
+            <dirset dir="${basedir}/plugins/" includes="*" excludes="*.source_,${build.all.plugins.excludes}" />
         </path>
         <property name="folderList" value="${toString:pluginList}:" />
 
