@@ -97,12 +97,19 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
                 
                 // Check if we have already visited this element
                 if (!folderElement.isVisited()) {
-                    File folder = folderElement.getFile();
-                    File[] items = folder.listFiles();
-                    
-                    if (items != null) {
-                        for (File item : items) {
-                            new ExtendedFileSystemElement(item, folderElement);
+                    // Check if the element is an input element
+                    if (folderElement.isInputElement()) {
+                        File folder = folderElement.getFile();
+                        
+                        new ExtendedFileSystemElement(folder, folderElement);
+                    } else {
+                        File folder = folderElement.getFile();
+                        File[] items = folder.listFiles();
+                        
+                        if (items != null) {
+                            for (File item : items) {
+                                new ExtendedFileSystemElement(item, folderElement);
+                            }
                         }
                     }
                     
@@ -476,7 +483,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         File folder = new File(newDir);
         if (folder.exists() && folder.isDirectory()) {
             // Create a new ExtendedFileSystemElement
-            ExtendedFileSystemElement newRoot = new ExtendedFileSystemElement(folder, null);
+            ExtendedFileSystemElement newRoot = new ExtendedFileSystemElement(folder, true);
             
             // Update the combo box history and set its text
             sourceComboHistoryManager.recordAndDisplay(newDir);

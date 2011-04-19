@@ -25,11 +25,18 @@ import org.eclipse.ui.dialogs.FileSystemElement;
  * "Visited" in this context means that someone has already added all subdirectories
  * and subfolders to it. This class is used by {@link FileSystemResourcesPage}.
  * 
+ * TODO Document the input element stuff.
+ * 
  * @author cds
  * @kieler.rating yellow 2010-03-14
  *      reviewed by haf, msp, pkl
  */
 public class ExtendedFileSystemElement extends FileSystemElement {
+    /**
+     * Whether this element is used as the input for a viewer or not.
+     */
+    private boolean isInputElement = false;
+    
     /**
      * Whether this element has already been visited or not.
      */
@@ -37,7 +44,8 @@ public class ExtendedFileSystemElement extends FileSystemElement {
     
     
     /**
-     * Constructs a new instance.
+     * Constructs a new instance. This instance is not flagged as being the input element
+     * for a viewer.
      * 
      * @param file the file represented by this object..
      * @param parent the parent, if any.
@@ -48,6 +56,29 @@ public class ExtendedFileSystemElement extends FileSystemElement {
         setFileSystemObject(file);
     }
     
+    /**
+     * Constructs a new instance.
+     * 
+     * @param file the file represented by this object..
+     * @param inputElement {@code true} if this element is being used as the input element
+     *                     for a viewer.
+     */
+    public ExtendedFileSystemElement(final File file, final boolean inputElement) {
+        this(file, null);
+        
+        isInputElement = inputElement;
+    }
+    
+    
+    /**
+     * Returns whether or not this element was flagged as being used as a viewer's input
+     * element.
+     * 
+     * @return {@code true} if this element is being used as a viewer's input element.
+     */
+    public boolean isInputElement() {
+        return isInputElement;
+    }
     
     /**
      * Checks if the element has already been visited. Visited objects can be trusted to
