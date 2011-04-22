@@ -1,1 +1,0 @@
-Editor for Quartz (www.averest.org) files	

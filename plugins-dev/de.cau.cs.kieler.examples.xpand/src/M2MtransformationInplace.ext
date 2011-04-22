@@ -1,0 +1,8 @@
+import mymodel;
+
+//start model transformation here
+Void transform(mymodel::MyDataModel source):
+    source.setName("NAME CHANGED IN INPLACE TRANSFORMATION")
+;
+
+		

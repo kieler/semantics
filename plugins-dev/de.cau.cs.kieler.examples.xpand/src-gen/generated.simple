@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ASCII"?>
+<simple:SimpleModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:simple="http://simple/1.0" xsi:schemaLocation="http://simple/1.0 file:/X:/dop_eclipse/galileo/de.cau.cs.kieler.example.oaw.gen/../de.cau.cs.kieler.example.oaw/model/simple.ecore">
+  <items key="mymodel::MyConst" value="PI"/>
+  <items key="mymodel::MyList" value="LIST"/>
+  <items key="mymodel::MyString" value="Hello KIELER!"/>
+</simple:SimpleModel>

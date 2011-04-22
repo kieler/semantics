@@ -1,0 +1,20 @@
+«IMPORT mymodel»
+
+«DEFINE main FOR MyDataModel-»
+	«FILE "My.c"-»
+
+/* ==========================================================================
+                         o A W   -   E X A M P L E  
+ ========================================================================== */
+
+#include <stdio.h>							  
+
+«FOREACH items AS n ITERATOR i-»
+   «IF n.metaType.name.matches("mymodel::MyString") -»
+    		String myString«i.counter1-» = "«((MyString)n).text»";
+   			printf("String : %s", myString«i.counter1-»);  
+   «ENDIF-»
+«ENDFOREACH-»
+  
+«ENDFILE-»
+«ENDDEFINE»
