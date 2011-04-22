@@ -1,9 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.krep.compiler.strl2kasm.macosx.x86
-Bundle-SymbolicName: de.cau.cs.kieler.krep.compiler.strl2kasm.macosx.x86
-Bundle-Version: 0.1.0.qualifier
-Fragment-Host: de.cau.cs.kieler.krep.sim;bundle-version="0.0.1.qualifier"
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Eclipse-PlatformFilter: (&(osgi.os=macosx) (osgi.arch=x86))
