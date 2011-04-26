@@ -389,7 +389,7 @@ public class HighlightEffect extends AbstractEffect {
                 originalStyle = -1;
 
             }
-        }, true);
+        }, false);
 
     }
 
