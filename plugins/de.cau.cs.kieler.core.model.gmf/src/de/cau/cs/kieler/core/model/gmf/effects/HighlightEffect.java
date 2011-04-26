@@ -24,6 +24,8 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.BorderedNodeFigure;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
+import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
+import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -257,19 +259,16 @@ public class HighlightEffect extends AbstractEffect {
 
                 // Papyrus
                 if (targetFigure instanceof BorderedNodeFigure) {
-                    // TODO: FIXME bad hack
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
-                    IFigure border = bnf.getBorderItemContainer();
-                    while (border.getChildren().size() > 0) {
-                        border.getChildren().remove(0);
+                    if (bnf.getChildren().size() > 0) {
+                        targetFigure = (IFigure)bnf.getChildren().get(0);
+                        if (targetFigure instanceof DefaultSizeNodeFigure) {
+                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure; 
+                            if (dsnf.getChildren().size() > 0) {
+                                targetFigure = (IFigure)dsnf.getChildren().get(0);
+                            }
+                        }
                     }
-                    RectangleFigure rect = new RectangleFigure();
-                    rect.setBounds(targetFigure.getBounds());
-                    rect.setForegroundColor(ColorConstants.red);
-                    rect.setOpaque(false);
-                    rect.setAlpha(100);
-                    rect.setLineWidth(4);
-                    bnf.getBorderItemContainer().add(rect);
 
                     if (changeWidth && originalWidth == -1) {
                         originalWidth = bnf.getLineWidth();
@@ -337,12 +336,17 @@ public class HighlightEffect extends AbstractEffect {
                 if (targetFigure == null) {
                     return;
                 }
-                // TODO: FIXME bad hack
+                // Papyrus case
                 if (targetFigure instanceof BorderedNodeFigure) {
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
-                    IFigure border = bnf.getBorderItemContainer();
-                    while (border.getChildren().size() > 0) {
-                        border.getChildren().remove(0);
+                    if (bnf.getChildren().size() > 0) {
+                        targetFigure = (IFigure)bnf.getChildren().get(0);
+                        if (targetFigure instanceof DefaultSizeNodeFigure) {
+                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure; 
+                            if (dsnf.getChildren().size() > 0) {
+                                targetFigure = (IFigure)dsnf.getChildren().get(0);
+                            }
+                        }
                     }
                 }
 
