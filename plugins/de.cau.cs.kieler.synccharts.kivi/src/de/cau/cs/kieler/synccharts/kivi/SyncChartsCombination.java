@@ -94,6 +94,9 @@ public class SyncChartsCombination extends AbstractCombination {
      */
     public static final String FC_MODE = SyncChartsCombination.class.getCanonicalName() + ".fcMode";
 
+    
+    private static SyncChartsCombination instance;
+    
     private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB(),
@@ -130,6 +133,8 @@ public class SyncChartsCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
+        instance = this;
+        
         // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
             return;
@@ -288,5 +293,9 @@ public class SyncChartsCombination extends AbstractCombination {
      */
     private boolean isFC() {
         return getPreferenceStore().getBoolean(FC_MODE);
+    }
+
+    public static SyncChartsCombination getInstance() {
+        return instance;
     }
 }
