@@ -93,7 +93,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return;
         }
         if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().synchronizedStep(null, diagramEditor);
+            // @author cmot 
+            // do not call synchronizedStep, otherwise this leads to a deadlock
+            // TODO: investigate why!
+            StateActivityTrigger.getInstance().step(null, diagramEditor);
         }
         wrapupDone = true;
     }
