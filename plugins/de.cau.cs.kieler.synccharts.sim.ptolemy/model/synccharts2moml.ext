@@ -717,17 +717,19 @@ Void RemoveUnnecessaryCombineActors(List[EntityType] entityList ):
 		RemoveUnnecessaryCombineActors(entityList.withoutFirst()) : null
 ;
 
+// Only do this if inputs < 2 and outputs > 0 (so dont optimize REAL output interface combine actors)
 Void RemoveUnnecessaryCombineActors_SRCombine(EntityType SRCombine):
-	let inputs = RemoveUnnecessaryCombineActors_Count(((EntityType)SRCombine.eContainer).link, SRCombine):
+	let inputs = RemoveUnnecessaryCombineActors_CountInputs(((EntityType)SRCombine.eContainer).link, SRCombine):
+	let outputs = RemoveUnnecessaryCombineActors_CountOutputs(((EntityType)SRCombine.eContainer).link, SRCombine):
 	dump("----------->" + inputs) ->
 	// Add Links
-	if (inputs < 2) then
+	if (inputs < 2) && (outputs > 0) then
 	 RemoveUnnecessaryCombineActors_AddLink(((EntityType)SRCombine.eContainer).link, SRCombine) ->
 	// Remove Links
-	if (inputs < 2) then
+	if (inputs < 2) && (outputs > 0) then
 	  RemoveUnnecessaryCombineActors_RemoveLink(((EntityType)SRCombine.eContainer).link, SRCombine) ->
     // Remove Combine Actor
-	if (inputs < 2) then
+	if (inputs < 2) && (outputs > 0) then
 	  ((EntityType)SRCombine.eContainer).entity.remove(SRCombine)
 ;											 
 
@@ -755,8 +757,14 @@ Void RemoveUnnecessaryCombineActors_RemoveLink(List[LinkType] linkList, EntityTy
 
 
 // Count SRCombine inputs
-int RemoveUnnecessaryCombineActors_Count(List[LinkType] linkList, EntityType SRCombine) :
+int RemoveUnnecessaryCombineActors_CountInputs(List[LinkType] linkList, EntityType SRCombine) :
    let partLinkList = linkList.select(e|(e.port.startsWith(SRCombine.name)) && (e.port.endsWith("input"))) :
+   partLinkList.size
+;
+
+// Count SRCombine inputs
+int RemoveUnnecessaryCombineActors_CountOutputs(List[LinkType] linkList, EntityType SRCombine) :
+   let partLinkList = linkList.select(e|(e.port.startsWith(SRCombine.name)) && (e.port.endsWith("output"))) :
    partLinkList.size
 ;
 
