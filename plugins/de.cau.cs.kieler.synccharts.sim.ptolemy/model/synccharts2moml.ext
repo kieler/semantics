@@ -1202,8 +1202,8 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 	//linked with iVertex!!!
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
 		addLink(baseEntity, 
-		        firstPort.name.subString(0,firstPort.name.length-1) 
-		         										+ "o_COMBINE.output",
+		        firstPort.name.subString(0,firstPort.name.length-2) 
+		         										+ "_o_COMBINE.output",
 		        firstPort.name + "_RELATION") : null ->
 	
 	//generate ADD-functions and connect environment outputs to it
@@ -1355,8 +1355,8 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	//with iVertex!!!
 	(firstPort.property.select(e|e.name.matches("local_input")).size > 0) ?
 		addLink(baseEntity, 
-				firstPort.name.subString(0,firstPort.name.length-1) 
-							+ "o_COMBINE.output", 
+				firstPort.name.subString(0,firstPort.name.length-2) 
+							+ "_o_COMBINE.output", 
 				firstPort.name + "_RELATION") : null ->
 	//connect local output vertex with input combine 
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
@@ -2049,9 +2049,9 @@ Void addSignalsToModalModel(EntityType entity,
 	port.setClass("ptolemy.domains.modal.modal.ModalPort") ->
 	port.setName(signal.name) ->
 	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalIn.setName(signal.name+"i") ->
+	portLocalIn.setName(signal.name+"_i") ->
 	portLocalOut.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalOut.setName(signal.name+"o") ->
+	portLocalOut.setName(signal.name+"_o") ->
 	p4a.setName("environment_input") ->
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
@@ -2164,9 +2164,9 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	port.setClass("ptolemy.domains.modal.modal.RefinementPort") ->
 	port.setName(signal.name) ->
 	portLocalIn.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalIn.setName(signal.name+"i") ->
+	portLocalIn.setName(signal.name+"_i") ->
 	portLocalOut.setClass("ptolemy.domains.modal.modal.ModalPort") ->
-	portLocalOut.setName(signal.name+"o") ->
+	portLocalOut.setName(signal.name+"_o") ->
 	p4a.setName("environment_input") ->
 	p4b.setName("environment_output") ->
 	p4c.setName("local_input") ->
@@ -2234,10 +2234,10 @@ Void addSignalsToModalController(EntityType entity, EntityType parent,
 	(signal.isLocal() && !isStateSignal) ?
 			entity.port.add(portLocalOut) : null ->
 	(signal.isLocal() && !isStateSignal) ?
-			linkSignalRelationToState(entity, parent, signal.name+"i") 
+			linkSignalRelationToState(entity, parent, signal.name+"_i") 
 			: null ->
 	(signal.isLocal() && !isStateSignal) ?
-			linkSignalRelationToState(entity, parent, signal.name+"o") 
+			linkSignalRelationToState(entity, parent, signal.name+"_o") 
 			: null ->
 
 	//if still signals remain, continue

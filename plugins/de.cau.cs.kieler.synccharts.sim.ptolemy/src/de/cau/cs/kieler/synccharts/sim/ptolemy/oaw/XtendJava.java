@@ -437,7 +437,7 @@ public class XtendJava {
                 myEmission += emission.getSignal().getName();
                 if (isLocal(emission.getSignal())) {
                     // local signal -> set output signal -> signalo
-                    myEmission += "o";
+                    myEmission += "_o";
                 }
                 if (emission.getNewValue() == null) {
                     myEmission += "=1"; // pure signals
@@ -485,7 +485,7 @@ public class XtendJava {
                 String signalName = signal.getName();
                 if (isLocal(signal)) {
                     // local signal -> set input signal -> signal i
-                    signalName += "i";
+                    signalName += "_i";
                 }
                 expressionString += signalName + "_isPresent";
             }
