@@ -37,6 +37,9 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.xtend.XtendComponent;
+import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent;
+import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
+import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVarDef;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -51,6 +54,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
+import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
@@ -285,6 +289,10 @@ public class SyncchartsSimDataComponent extends
         EmfMetaModel metaModel2 = new EmfMetaModel(
                 org.ptolemy.moml.MomlPackage.eINSTANCE);
 
+        // Global options for model transformation alternatives
+        XtendJava.setRaiseLocalSignals(this.getProperties()[2].getValueAsBoolean());
+        XtendJava.setInputOutputTransformation(this.getProperties()[3].getValueAsBoolean());
+
         // XtendComponent
         XtendComponent xtendComponent = new XtendComponent();
         xtendComponent.addMetaModel(metaModel0);
@@ -293,6 +301,7 @@ public class SyncchartsSimDataComponent extends
         xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");
         xtendComponent.setOutputSlot("momlmodel");
 
+        
         // workflow
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
         Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
@@ -440,8 +449,10 @@ public class SyncchartsSimDataComponent extends
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[1];
+        KiemProperty[] properties = new KiemProperty[3];
         properties[0] = new KiemProperty("State Name", "state");
+        properties[1] = new KiemProperty("Raise local signals", true);
+        properties[2] = new KiemProperty("Allow write inputs, read outputs", true);
         return properties;
     }
 

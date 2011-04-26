@@ -45,6 +45,25 @@ public class XtendJava {
 
     static LinkedList<EntityType> modalModels = null;
     static LinkedList<String> portNames = null;
+    
+    static boolean inputoutputtransformation = true;
+    static boolean raiselocalsignals = true;
+    
+    public static void setInputOutputTransformation(boolean enable) {
+        inputoutputtransformation = enable;
+    }
+
+    public static boolean getInputOutputTransformation() {
+        return inputoutputtransformation;
+    }
+    
+    public static void setRaiseLocalSignals(boolean enable) {
+        raiselocalsignals = enable;
+    }
+    
+    public static boolean getRaiseLocalSignals() {
+        return raiselocalsignals;
+    }
 
     public final static void resetQueue2Delete() {
         modalModels = null;

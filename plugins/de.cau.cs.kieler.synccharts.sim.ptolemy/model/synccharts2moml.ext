@@ -5,6 +5,10 @@ import synccharts;
 
 import moml;
 
+
+extension org::eclipse::xtend::util::stdlib::io;  // usage of info
+extension org::eclipse::xtend::util::stdlib::globalvar; // usage of global variables
+
 //-----------------------------------------------------------------------------
 //--     S Y N C C H A R T S - 2 - P T O     T R A N S F O R M A T I O N     --
 //-----------------------------------------------------------------------------
@@ -644,11 +648,14 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
   	this.setClass1("ptolemy.actor.TypedCompositeActor") ->
   	//consider output signals that may be used in triggers 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    outputSignalTransformation(mainRegion.states.get(0)) ->  	
-  	
+    if (getInputOutputTransformation()) then
+    	outputSignalTransformation(mainRegion.states.get(0)) ->  	
+
   	//consider input signals that may be used in outputs 
   	//REMOVED SINCE ONLY EXPERIMENTAL YET
-    inputSignalTransformation(mainRegion.states.get(0)) ->
+    if (getInputOutputTransformation()) then
+	    inputSignalTransformation(mainRegion.states.get(0)) ->
+	    
     //ATTENTION: this method can oly be used iff we remove ANY output port from modal model
     //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
     //This is because such a syncchart would not be constructive. Without this modification the
@@ -659,10 +666,11 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     n2wRegion(mainRegion.states) ->
 
   	//rename all local signals (in order to shift them later)
-    localSignalRenamingPreprocessingRegion(mainRegion.states) ->
+    if (getRaiseLocalSignals()) then
+	    localSignalRenamingPreprocessingRegion(mainRegion.states) ->
     //shift them to the upper most state!
-    localSignalShiftPreprocessingRegion(mainRegion.states, mainRegion.states.get(0)) ->
-  	
+    //if (getRaiseLocalSignals()) then
+	localSignalShiftPreprocessingRegion(mainRegion.states, mainRegion.states.get(0)) ->
 
     dump("signalList after renaming2: "+mainRegion.states.get(0).signals.flatten().toString()) -> 
     
@@ -1547,6 +1555,16 @@ create EntityType this createSimpleStateEntity(synccharts::State state):
 //-----------------------------------------------------------------------------
 //--            (J A V A)   H E L P E R    F U N C T I O N S                 --
 //-----------------------------------------------------------------------------
+
+boolean getInputOutputTransformation():
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			 getInputOutputTransformation()
+;
+
+boolean getRaiseLocalSignals():
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			 getRaiseLocalSignals()
+;
 
 //Move signalList to the other newList. 
 Void moveToSignalList(List[Signal] newList, 
