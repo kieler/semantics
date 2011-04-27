@@ -97,6 +97,10 @@ public class SyncChartsCombination extends AbstractCombination {
     
     private static SyncChartsCombination instance;
     
+    public SyncChartsCombination() {
+        this.enableEffectRecording();
+    }
+    
     private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB(),
@@ -151,7 +155,7 @@ public class SyncChartsCombination extends AbstractCombination {
         // collapseAll(activeStates.getDiagramEditor());
         // }
 
-        // highlight active states
+        // coloring all states inactive/gray
         EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
         for (Iterator<EObject> i = root.eAllContents(); i.hasNext();) {
             EObject current = i.next();
