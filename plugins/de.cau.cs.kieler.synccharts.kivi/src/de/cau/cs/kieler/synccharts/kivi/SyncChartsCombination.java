@@ -147,7 +147,8 @@ public class SyncChartsCombination extends AbstractCombination {
         // if there are no active states, the simulation has finished.
         if (activeStates.getActiveStates().isEmpty()
                 || activeStates.getActiveStates().get(0).isEmpty()) {
-            // schedule layout effect to ensure that layout is triggered after simulation is completed and all undos are executed
+            // schedule layout effect to ensure that layout is triggered after simulation is
+            //completed and all undos are executed
             this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, true, false,
                     true, true));
             return;
