@@ -695,9 +695,13 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     this.entity.DeleteOutputPorts() ->
     
     //optimization: remove output ports of modal models that do not appear in output actions
-//    this.entity.RemoveUnnecessaryOutputPorts() ->
+    // WARNING: this is not always possible, it may change the schedulig order significantly and 
+    //          corrupt the results
+    if (getOptimizeOutputSignals()) then
+        this.entity.RemoveUnnecessaryOutputPorts() ->
     //optimization: remove input ports of modal models that do not appear in guard expressions
-    this.entity.RemoveUnnecessaryInputPorts() ->
+    if (getOptimizeInputSignals()) then
+        this.entity.RemoveUnnecessaryInputPorts() ->
 
     //connect all inner signals recursively
     this.entity.select(e|e.class1.matches("ptolemy.domains.modal.modal.ModalModel")).AutoConnectSignals() ->
