@@ -292,6 +292,8 @@ public class SyncchartsSimDataComponent extends
         // Global options for model transformation alternatives
         XtendJava.setRaiseLocalSignals(this.getProperties()[2].getValueAsBoolean());
         XtendJava.setInputOutputTransformation(this.getProperties()[3].getValueAsBoolean());
+        XtendJava.setOptimizeInputSignals(this.getProperties()[4].getValueAsBoolean());
+        XtendJava.setOptimizeOutputSignals(this.getProperties()[5].getValueAsBoolean());
 
         // XtendComponent
         XtendComponent xtendComponent = new XtendComponent();
@@ -449,10 +451,12 @@ public class SyncchartsSimDataComponent extends
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[3];
+        KiemProperty[] properties = new KiemProperty[5];
         properties[0] = new KiemProperty("State Name", "state");
         properties[1] = new KiemProperty("Raise local signals", true);
         properties[2] = new KiemProperty("Allow write inputs, read outputs", true);
+        properties[3] = new KiemProperty("Optimize input signal ports", true);
+        properties[4] = new KiemProperty("Optimize output signal ports (not always allowed)", false);
         return properties;
     }
 

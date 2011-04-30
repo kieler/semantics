@@ -691,7 +691,16 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
     //new entities or properties
     
     //finally delete output ports of modalmodels that appear in trigges of preemptive transitions!
+    //(only hold for synccharts transformation!)
     this.entity.DeleteOutputPorts() ->
+    
+    //optimization: remove output ports of modal models that do not appear in output actions
+//    this.entity.RemoveUnnecessaryOutputPorts() ->
+    //optimization: remove input ports of modal models that do not appear in guard expressions
+    this.entity.RemoveUnnecessaryInputPorts() ->
+
+    //connect all inner signals recursively
+    this.entity.select(e|e.class1.matches("ptolemy.domains.modal.modal.ModalModel")).AutoConnectSignals() ->
 
     //connect most top input signals
     ConnectTopmostInputSignals(this, this.entity) ->
@@ -981,12 +990,198 @@ Void ConsiderTransitionPriorities_Relation(RelationType relation,
 				: null 								    										   	
 ;										   
 
+//-----------------------------------------------------------------------------
+//--    R E M O V E    U N N E C E S S A R Y    O U T P U T   P O R T S      --
+//-----------------------------------------------------------------------------
+
+// Optimize a Ptolemy Model and remove output ports (before they are connected)
+// that do not appear in any output actions.
+
+Void RemoveUnnecessaryOutputPorts(EntityType entity) :
+    resetQueue2Delete() ->
+	RemoveUnnecessaryOutputPorts(entity, null) ->
+	dump("getQueueSize2Delete: " + getQueueSize2Delete()) ->
+	if (getQueueSize2Delete() > 0) then 
+		deleteModalModelPort()
+	else
+	  	null
+;
+
+Void RemoveUnnecessaryOutputPorts(EntityType entity, EntityType modalModel) :
+    let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    entity.entity.RemoveUnnecessaryOutputPorts(entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalController") && (modalModel != null)) :
+	  		// delete (output) ports for controller
+			 modalModel.port.select(p|p.name.endsWith("o")).RemoveUnnecessaryOutputPorts2(modalModel)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+	        (
+	         //entity.port.select(p|p.name.endsWith("o")).RemoveUnnecessaryOutputPortsRefinement(entity) ->
+	         entity.entity.RemoveUnnecessaryOutputPorts(null)
+	        )
+	  default :
+	    	null
+	} 
+;
+
+//----
+// Search a bunch of entities (maybe recursively) iff port is mentioned
+boolean IsOutputPortUnnecessary(PortType port, List[EntityType] entityList) :
+	let firstEntity              = entityList.first() :
+	let isUnnecessaryOnThisLevel = IsOutputPortUnnecessary(port, firstEntity, null) :
+	
+	if (entityList.withoutFirst().size > 0) then
+	   isUnnecessaryOnThisLevel && IsOutputPortUnnecessary(port, entityList.withoutFirst())
+	else
+	   isUnnecessaryOnThisLevel
+;
+
+// Case statement and recursive closure for this search
+boolean IsOutputPortUnnecessary(PortType port, EntityType entity, EntityType modalModel) :
+        let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    IsOutputPortUnnecessary(port, entity.entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalController") ): // && (modalModel != null)) :
+	  		// test this (output) port for this controller
+	  		IsOutputPortUnnecessaryController(port, entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+            IsOutputPortUnnecessary(port, entity.entity)
+	  default :
+	    	true
+	} 
+;
+
+// Search in all controller's transitions, iff there exists an ouputAction containing the port
+// return true in this case. Return false iff no such transition can be found
+boolean IsOutputPortUnnecessaryController(PortType port, EntityType controller) :
+	let list = controller.relation.select(p|(p.property.select(pp|pp.name.matches("outputActions") && pp.value.contains(port.name)).size > 0) ):
+//	dump("XXXXXXXXXXXXXXXXX" + port.name + ": "  + list.size) ->
+	list.size == 0 //unnecessary iff port not refered 
+;
+//----
+
+
+cached Void RemoveUnnecessaryOutputPorts2(PortType port, EntityType modalModel) :
+  if (IsOutputPortUnnecessary(port, modalModel.entity)) then
+  	enqueue2Delete(modalModel, port.name)
+;
+
+cached Void RemoveUnnecessaryOutputPortsRefinement(PortType port, EntityType refinement) :
+  let portShouldBeRemoved = IsOutputPortUnnecessary(port, refinement.entity.select(e|e.class1.matches("ptolemy.domains.modal.modal.ModalModel"))) :
+//  if (portShouldBeRemoved) then
+//     refinement.link.remove( refinement.link.select(e|e.port.endsWith(port.name)) ) ->
+//  info("MERKE: " + refinement.link.flatten()) ->     
+  if (portShouldBeRemoved) then
+     refinement.port.remove(port)
+ ;
+
+
+//-----------------------------------------------------------------------------
+//--    R E M O V E    U N N E C E S S A R Y    I N P U T   P O R T S      --
+//-----------------------------------------------------------------------------
+
+// Optimize a Ptolemy Model and remove input ports (before they are connected)
+// that do not appear in any transition trigger.
+
+Void RemoveUnnecessaryInputPorts(EntityType entity) :
+    resetQueue2Delete() ->
+	RemoveUnnecessaryInputPorts(entity, null) ->
+	dump("getQueueSize2Delete: " + getQueueSize2Delete()) ->
+	if (getQueueSize2Delete() > 0) then 
+		deleteModalModelPort()
+	else
+	  	null
+;
+
+Void RemoveUnnecessaryInputPorts(EntityType entity, EntityType modalModel) :
+    let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    entity.entity.RemoveUnnecessaryInputPorts(entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalController") && (modalModel != null)) :
+	  		// delete (input) ports for controller
+			 modalModel.port.select(p|p.name.endsWith("i")).RemoveUnnecessaryInputPorts2(modalModel)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+	        (
+//	          entity.port.select(p|p.name.endsWith("i")).RemoveUnnecessaryInputPortsRefinement(entity) ->
+	          entity.entity.RemoveUnnecessaryInputPorts(null)
+	        )
+	  default :
+	    	null
+	} 
+;
+
+//----
+// Search a bunch of entities (maybe recursively) iff port is mentioned
+boolean IsInputPortUnnecessary(PortType port, List[EntityType] entityList) :
+	let firstEntity              = entityList.first() :
+	let isUnnecessaryOnThisLevel = IsInputPortUnnecessary(port, firstEntity, null) :
+	
+	if (entityList.withoutFirst().size > 0) then
+	   isUnnecessaryOnThisLevel && IsInputPortUnnecessary(port, entityList.withoutFirst())
+	else
+	   isUnnecessaryOnThisLevel
+;
+
+// Case statement and recursive closure for this search
+boolean IsInputPortUnnecessary(PortType port, EntityType entity, EntityType modalModel) :
+        let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    IsInputPortUnnecessary(port, entity.entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalController") ): // && (modalModel != null)) :
+	  		// test this (input) port for this controller
+	  		IsInputPortUnnecessaryController(port, entity)
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+            IsInputPortUnnecessary(port, entity.entity)
+	  default :
+	    	true
+	} 
+;
+
+// Search in all controller's transitions, iff there exists an ouputAction containing the port
+// return true in this case. Return false iff no such transition can be found
+boolean IsInputPortUnnecessaryController(PortType port, EntityType controller) :
+	let list = controller.relation.select(p|(p.property.select(pp|pp.name.matches("guardExpression") && pp.value.contains(port.name+"_isPresent")).size > 0) ):
+	list.size == 0 //unnecessary iff port not refered 
+;
+//----
+
+
+cached Void RemoveUnnecessaryInputPorts2(PortType port, EntityType modalModel) :
+  if (IsInputPortUnnecessary(port, modalModel.entity)) then
+  	enqueue2Delete(modalModel, port.name)
+  
+ ;
+
+cached Void RemoveUnnecessaryInputPortsRefinement(PortType port, EntityType refinement) :
+  if (IsInputPortUnnecessary(port, refinement.entity.select(e|e.class1.matches("ptolemy.domains.modal.modal.ModalModel")))) then
+    refinement.port.remove(port)
+ ;
+
+
+
+
 
 //-----------------------------------------------------------------------------
 //--        A U T O M A T I C - D E L E T E  O U T P U T   P O R T S         --
 //-----------------------------------------------------------------------------
 
-//ATTENTION: this method can oly be used iff we remove ANY output port from modal model
+//ATTENTION: this method can omly be used iff we remove ANY output port from modal model
 //actors whose connected/adjacent input ports appear in triggers of strong abortion transitions
 //This is because such a syncchart would not be constructive. Without this modification the
 //Ptolemy model cannot be simulated, because of in general Ptolemy cannot make any assumptions
@@ -1144,6 +1339,7 @@ int getQueueSize2Delete() :
 //--                 A U T O M A T I C - C O N N E N T I O N                 --
 //-----------------------------------------------------------------------------
 
+
 //Connect top most input signals.
 Void ConnectTopmostInputSignals(EntityType baseEntity, 
 							    List[EntityType] entityList) :
@@ -1155,6 +1351,8 @@ Void ConnectTopmostInputSignals(EntityType baseEntity,
 	(entityList.size > 0) ?
 		ConnectTopmostInputSignals(baseEntity, entityList.withoutFirst()) : null
 ;
+
+
 Void ConnectTopmostInputSignalsHelper(EntityType baseEntity, 
 									  String modalModelName,
 						 			  List[PortType] portList) :
@@ -1239,6 +1437,25 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 ;
 
 
+// Automatic connect nested signals:
+Void AutoConnectSignals(EntityType entity) :
+    let entityClass = entity.class1:
+	switch {
+	  case (entityClass.matches("ptolemy.domains.modal.modal.ModalModel")) :
+			// if this is a region, go on with modal controller (typically there is just one per region)
+			// modalModel.entity.select(e|e.name.matches("_Controller")).first()
+		    entity.entity.AutoConnectSignals()
+	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
+	        // do this recursively in all hierachy levels
+	  		(ConnectNestedInputSignals(entity, entity.entity) ->
+	        entity.entity.AutoConnectSignals())
+	  default :
+	    	null
+	} 
+;
+
+
+
 //Connect nested input signals.
 Void ConnectNestedInputSignals(EntityType baseEntity, 
 							   List[EntityType] entityList) :
@@ -1290,6 +1507,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 									  String modalModelName,
 						 			  List[PortType] portList) :
 	let firstPort = portList.first():
+	let modalModel = baseEntity.entity.select(e|e.name.matches(modalModelName)):
 	//for termination ports
 //	(firstPort.property.select(e|e.name.matches("termination")).size > 0) ?
 //		dump("Connect Termination for Port :"
@@ -1355,7 +1573,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
  ///-----
 	//do this only, iff there are no input/output ports of this local signal,
 	// hence it is defined on this hierarchy layer! (= true local signals),
-	// local signals are treated as environment signals in nested hearchy 
+	// local signals are treated as environment signals in nested hiearchy 
 	//layers!
 	
 	//connect local input vertex with output combine operator
@@ -1366,16 +1584,22 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 				firstPort.name.subString(0,firstPort.name.length-2) 
 							+ "_o_COMBINE.output", 
 				firstPort.name + "_RELATION") : null ->
-	//connect local output vertex with input combine 
-	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+	//connect local output vertex with input combine ONLY if necessary 
+	((firstPort.property.select(e|e.name.matches("local_output")).size > 0)  
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addRelation(baseEntity, 
 					firstPort.name + modalModelName + "_COMBINERELATION",
 					 "local_output") : null ->
-	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+	((firstPort.property.select(e|e.name.matches("local_output")).size > 0) 
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
 				firstPort.name + "_COMBINE.input", 
 				firstPort.name + modalModelName + "_COMBINERELATION" ) : null->
-	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
+				
+    //only add a link from the ModalModel output to the combine relation iff there is 
+    //actually an output port, if not it might me optimized away!				
+	((firstPort.property.select(e|e.name.matches("local_output")).size > 0) 
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
 				modalModelName + "." + firstPort.name, 
 				firstPort.name + modalModelName +"_COMBINERELATION") : null ->
@@ -1386,15 +1610,28 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 		addEnvironmentCombineFunction(baseEntity, 
 									  firstPort.name + "_COMBINE", 
 									  firstPort.name) : null ->
-	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+    //Only if necessary									 
+	((firstPort.property.select(e|e.name.matches("environment_output")).size > 0) 
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addRelation(baseEntity, 
 					firstPort.name + modalModelName + "_COMBINERELATION", 
 					"environment_output") : null ->
-	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+    //Only if necessary									 
+	((firstPort.property.select(e|e.name.matches("environment_output")).size > 0) 
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
 				firstPort.name + "_COMBINE.input", 
 				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
-	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
+	
+	
+//    dump (modalModel.class1) ->
+//	if (firstPort.property.select(e|e.name.matches("environment_output")).size > 0) then
+//		dump("XXXXXXXXXX modal model: "+modalModel.port.name.flatten()+", port "+firstPort.name+","+ modalModel.port.select(e|e.name.matches(firstPort.name)).size) ->
+	
+    //only add a link from the ModalModel output to the combine relation iff there is 
+    //actually an output port, if not it might me optimized away!		
+	((firstPort.property.select(e|e.name.matches("environment_output")).size > 0) 
+	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
 				modalModelName + "." + firstPort.name, 
 				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
@@ -1438,6 +1675,8 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
 	this.property.add(p1) ->
 	display.setName("Region_" + number) ->
+	if (region.id != null && !region.id.matches("")) then
+			display.setName(region.id) ->
     this.display.add(display) ->
    	this.setName(getStateId(region.parentState) 
    											 	+ "_region_" + number) ->
@@ -1531,9 +1770,9 @@ create EntityType this createMacroStateRefinementEntity(
 //   	this.addTerminationSignalToModalController(modalModel, state) ->
 //   	//add KielerNormalTermination
 //   	this.addKielerNormalTermination() ->
-   	IterateRegions(state.regions, this, signalList) ->
-    //connect nested input signals
-    ConnectNestedInputSignals(this, this.entity)
+   	IterateRegions(state.regions, this, signalList)
+   	//XXX//
+    //ConnectNestedInputSignals(this, this.entity)
 ;
 //Create SimpleState == State-Component.
 create EntityType this createSimpleStateEntity(synccharts::State state):
@@ -1564,6 +1803,18 @@ boolean getInputOutputTransformation():
 boolean getRaiseLocalSignals():
 	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
 			 getRaiseLocalSignals()
+;
+
+
+boolean getOptimizeInputSignals():
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			 getOptimizeInputSignals()
+;
+
+
+boolean getOptimizeOutputSignals():
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.
+			 getOptimizeOutputSignals()
 ;
 
 //Move signalList to the other newList. 
@@ -1791,7 +2042,7 @@ Void createSyncChartDirector(EntityType entity,
 	 p1.setName("statesignals") ->
 	 p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 p1.setValue(stateSignalNames.flatten().toString()) ->
-    p0.setName("XXX Kieler SyncChart Director") ->
+    p0.setName("Kieler SyncChart Director") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	entity.property.add(p0) 
@@ -1835,7 +2086,7 @@ Void createMainSyncChartDirector(EntityType entity,
   	 	p5.setName("statesignals") ->
 	 	p5.setClass("ptolemy.kernel.util.StringAttribute") ->
 	 	p5.setValue(stateSignalNames.flatten().toString()) ->
-    p0.setName("XXX Kieler SyncChart Director") ->
+    p0.setName("Kieler SyncChart Director") ->
 	p0.setClass("ptolemy.actor.kiel.SyncChartDirector") ->
 	p0.property.add(p1) ->
 	p0.property.add(p2) ->
@@ -1886,7 +2137,7 @@ Void addPortRelationAndLinks(EntityType entity, String portName):
 	link1.setRelation(portName + "Relation") ->
 	link2.setPort("_Controller." + portName) ->
 	link2.setRelation(portName + "Relation") ->
-	entity.relation.add(relation) ->
+	entity.relation.add(relation) ->  
 	entity.link.add(link1) ->
 	entity.link.add(link2)
 ;
@@ -2271,12 +2522,15 @@ linkSignalRelationToState(EntityType modalController,
 						  EntityType parent, 
 						  String signalName) :
 	let stateName = modalController.name:
+//	let refinement = parent.entity.select(e|e.class.name.matches("ptolemy.domains.modal.modal.Refinement")).select(e|(e.name.matches(stateName))) :
 	let l = new LinkType:
 	l.setPort(stateName + "." + signalName) ->
 	dump(parent.name) ->
 	dump(stateName + "." + signalName) ->
 	l.setRelation(signalName + "Relation") ->
-	parent.link.add(l)
+//	info(refinement) ->
+//	if (refinement.port.select(e|e.name.endsWith(signalName)).size > 0) then
+	   parent.link.add(l)
 ;
 
 

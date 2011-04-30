@@ -48,6 +48,8 @@ public class XtendJava {
     
     static boolean inputoutputtransformation = true;
     static boolean raiselocalsignals = true;
+    static boolean optimizeinputsignals = true;
+    static boolean optimizeoutputsignals = false;
     
     public static void setInputOutputTransformation(boolean enable) {
         inputoutputtransformation = enable;
@@ -65,6 +67,23 @@ public class XtendJava {
         return raiselocalsignals;
     }
 
+    public static void setOptimizeInputSignals(boolean enable) {
+        optimizeinputsignals = enable;
+    }
+    
+    public static boolean getOptimizeInputSignals() {
+        return optimizeinputsignals;
+    }
+
+    public static void setOptimizeOutputSignals(boolean enable) {
+        optimizeoutputsignals = enable;
+    }
+    
+    public static boolean getOptimizeOutputSignals() {
+        return optimizeoutputsignals;
+    }
+    
+    
     public final static void resetQueue2Delete() {
         modalModels = null;
         portNames = null;
@@ -212,7 +231,7 @@ public class XtendJava {
         }
         return inText.replaceAll(" ", "");
     }
-    
+
     // -------------------------------------------------------------------------
 
     public final static String getStateId(final State myState) {
