@@ -1722,7 +1722,7 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p0.setValue("ptolemy.domains.modal.kernel.KielerFSMDirector") ->
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
-//XXX//	this.property.add(p1) ->
+	this.property.add(p1) ->
 	display.setName("Region_" + number) ->
 	if (region.id != null && !region.id.matches("")) then
 			display.setName(region.id) ->
