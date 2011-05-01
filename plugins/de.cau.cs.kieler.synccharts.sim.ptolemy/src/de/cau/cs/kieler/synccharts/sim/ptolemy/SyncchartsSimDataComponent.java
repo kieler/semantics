@@ -456,7 +456,7 @@ public class SyncchartsSimDataComponent extends
         properties[1] = new KiemProperty("Raise local signals", true);
         properties[2] = new KiemProperty("Allow write inputs, read outputs", true);
         properties[3] = new KiemProperty("Optimize signal input ports", true);
-        properties[4] = new KiemProperty("Optimize signal output ports (not always allowed)", false);
+        properties[4] = new KiemProperty("Optimize signal output ports (not always possible)", false);
         return properties;
     }
 

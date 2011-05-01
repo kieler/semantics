@@ -136,6 +136,46 @@ Void addKielerNormalTermination(EntityType baseEntity) :
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
 ;   
+
+
+//Add an ABSENT actor and a relation with a link (within baseEntity).
+//Only iff this actors does not already exist. 
+Void addAbsent(EntityType baseEntity) :
+   let e = new EntityType:
+   let p1 = new PropertyType:
+   let r = new RelationType:
+   let p2 = new PropertyType:
+   let l  = new LinkType:
+   let v = new VertexType:
+   
+   e.setName("Absent") ->
+   e.setClass1("ptolemy.domains.sr.lib.Absent") ->
+     p1.setName("outputType") ->
+     p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+     p1.setValue("int") ->
+   e.property.add(p1) ->
+
+   r.setName("AbsentRelation") ->
+   r.setClass("ptolemy.actor.TypedIORelation") ->
+     p2.setName("width") ->
+     p2.setClass("ptolemy.data.expr.Parameter") ->
+     p2.setValue("-1") ->
+   r.property.add(p2) ->
+  	 v.setName("AbsentVertex") ->
+   	 v.setValue("{0.0, 0.0}") ->
+   r.vertex.add(v) ->
+  
+   l.setPort("Absent.output") ->
+   l.setRelation("AbsentRelation") ->
+  
+   //if not already exists
+   if (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) then
+	  ( 
+	    baseEntity.relation.add(r) ->
+	    baseEntity.entity.add(e) ->
+	  	baseEntity.link.add(l)
+	  )
+;   
   
 
 //Add a KIELER IO actor (within baseEntity).
@@ -1024,7 +1064,6 @@ Void RemoveUnnecessaryOutputPorts(EntityType entity, EntityType modalModel) :
 	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
 	        // do this recursively in all hierachy levels
 	        (
-	         //entity.port.select(p|p.name.endsWith("o")).RemoveUnnecessaryOutputPortsRefinement(entity) ->
 	         entity.entity.RemoveUnnecessaryOutputPorts(null)
 	        )
 	  default :
@@ -1057,7 +1096,10 @@ boolean IsOutputPortUnnecessary(PortType port, EntityType entity, EntityType mod
 	  		IsOutputPortUnnecessaryController(port, entity)
 	  case (entityClass.matches("ptolemy.domains.modal.modal.Refinement")) :
 	        // do this recursively in all hierachy levels
-            IsOutputPortUnnecessary(port, entity.entity)
+            (
+              RemoveUnnecessaryOutputPortsAddAbsent(port, entity) ->
+              IsOutputPortUnnecessary(port, entity.entity)
+            )
 	  default :
 	    	true
 	} 
@@ -1067,8 +1109,7 @@ boolean IsOutputPortUnnecessary(PortType port, EntityType entity, EntityType mod
 // return true in this case. Return false iff no such transition can be found
 boolean IsOutputPortUnnecessaryController(PortType port, EntityType controller) :
 	let list = controller.relation.select(p|(p.property.select(pp|pp.name.matches("outputActions") && pp.value.contains(port.name)).size > 0) ):
-//	dump("XXXXXXXXXXXXXXXXX" + port.name + ": "  + list.size) ->
-	list.size == 0 //unnecessary iff port not refered 
+	(list.size == 0) //unnecessary iff port not refered 
 ;
 //----
 
@@ -1078,13 +1119,17 @@ cached Void RemoveUnnecessaryOutputPorts2(PortType port, EntityType modalModel) 
   	enqueue2Delete(modalModel, port.name)
 ;
 
-cached Void RemoveUnnecessaryOutputPortsRefinement(PortType port, EntityType refinement) :
+cached Void RemoveUnnecessaryOutputPortsAddAbsent(PortType port, EntityType refinement) :
+  let l = new LinkType:
   let portShouldBeRemoved = IsOutputPortUnnecessary(port, refinement.entity.select(e|e.class1.matches("ptolemy.domains.modal.modal.ModalModel"))) :
-//  if (portShouldBeRemoved) then
-//     refinement.link.remove( refinement.link.select(e|e.port.endsWith(port.name)) ) ->
-//  info("MERKE: " + refinement.link.flatten()) ->     
   if (portShouldBeRemoved) then
-     refinement.port.remove(port)
+     ( 
+       addAbsent(refinement) ->
+       l.setRelation("AbsentRelation") ->
+       l.setPort(port.name) ->
+       if (refinement.link.select(e|e.port.matches(port.name) && e.relation.matches("AbsentRelation")).size < 1) then
+       		refinement.link.add(l)
+     )
  ;
 
 
@@ -1677,7 +1722,7 @@ create EntityType this createModalModelEntity(synccharts::Region region,
 		p0.setValue("ptolemy.domains.modal.kernel.KielerFSMDirector") ->
 		p1.setName("_tableauFactory") ->
 		p1.setClass("ptolemy.vergil.modal.modal.ModalTableauFactory") ->
-	this.property.add(p1) ->
+//XXX//	this.property.add(p1) ->
 	display.setName("Region_" + number) ->
 	if (region.id != null && !region.id.matches("")) then
 			display.setName(region.id) ->
@@ -1775,8 +1820,6 @@ create EntityType this createMacroStateRefinementEntity(
 //   	//add KielerNormalTermination
 //   	this.addKielerNormalTermination() ->
    	IterateRegions(state.regions, this, signalList)
-   	//XXX//
-    //ConnectNestedInputSignals(this, this.entity)
 ;
 //Create SimpleState == State-Component.
 create EntityType this createSimpleStateEntity(synccharts::State state):
