@@ -18,6 +18,7 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
+import org.eclipse.emf.validation.internal.modeled.model.validation.Constraint;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 
 /**
@@ -57,8 +58,14 @@ public class LabelLocator extends BorderItemLocator {
      */
     @Override
     public void relocate(final IFigure borderItem) {
-        Rectangle validLocation = getValidLocation(null, borderItem);
-        borderItem.setBounds(validLocation);
+        if (this.getConstraint().x == 0 && this.getConstraint().y == 5){
+            Rectangle validLocation = getValidLocation(null, borderItem);
+            borderItem.setBounds(validLocation);
+        } else {
+            Point p = this.getAbsoluteToBorder(this.getConstraint().getLocation());
+            Rectangle validLocation = getValidLocation(new Rectangle(p, new Dimension(-1,-1)), borderItem);
+            borderItem.setBounds(validLocation);
+        }
     }
 
     /**
@@ -75,7 +82,7 @@ public class LabelLocator extends BorderItemLocator {
             locate(location);
         } else {
             int side = findClosestSideOfParent(proposedLocation, getParentBorder());
-            Point newTopLeft = locateOnBorder(location.getTopLeft(), side, 0, borderItem);
+            Point newTopLeft = locateOnBorder(location.getLocation(), side, 0, borderItem);
             location.setLocation(newTopLeft);
         }
         return location;
