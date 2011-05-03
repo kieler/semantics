@@ -18,12 +18,10 @@ import org.eclipse.draw2d.PositionConstants;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.Rectangle;
-import org.eclipse.emf.validation.internal.modeled.model.validation.Constraint;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
 
 /**
  * A border item locator for entity and port labels.
- * TODO add support for user's position constraints
  * 
  * @author msp
  */
@@ -58,12 +56,14 @@ public class LabelLocator extends BorderItemLocator {
      */
     @Override
     public void relocate(final IFigure borderItem) {
+        //gmf sets the constraint to 0,5 if no user constraint is set. 
         if (this.getConstraint().x == 0 && this.getConstraint().y == 5){
             Rectangle validLocation = getValidLocation(null, borderItem);
             borderItem.setBounds(validLocation);
         } else {
-            Point p = this.getAbsoluteToBorder(this.getConstraint().getLocation());
-            Rectangle validLocation = getValidLocation(new Rectangle(p, new Dimension(-1,-1)), borderItem);
+            Point absoluteLocation = this.getAbsoluteToBorder(this.getConstraint().getLocation());
+            Rectangle validLocation = getValidLocation(
+                    new Rectangle(absoluteLocation, new Dimension(-1, -1)), borderItem);
             borderItem.setBounds(validLocation);
         }
     }
