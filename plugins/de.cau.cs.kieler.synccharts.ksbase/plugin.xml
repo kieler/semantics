@@ -105,7 +105,7 @@
 				</transformation>
     <transformation
           icon="icons/reconnect_target.gif"
-          keyboardShortcut="M1+R T"
+          keyboardShortcut="M1+R N"
           name="Set Transition Target"
           tooltip="Set the transition target to the selected state"
           transformation="rerouteTransitionTarget"
@@ -215,7 +215,7 @@
               </transformation>
               <transformation
                     icon="icons/initialfinal.png"
-                    keyboardShortcut="M1+R I"
+                    keyboardShortcut="M1+R T"
                     name="Toggle Initial/Final"
                     tooltip="Normal -&gt; Final -&gt; Initial -&gt; InitialFinal -&gt; Normal"
                     transformation="toggleStateInitialFinal"
