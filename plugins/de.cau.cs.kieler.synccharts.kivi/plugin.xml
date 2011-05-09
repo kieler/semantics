@@ -34,7 +34,7 @@
             class="de.cau.cs.kieler.synccharts.kivi.LayoutAfterModelChangedCombination"
             description="Performs automatic layout after the model has been changed, e.g. a String label has been changed or a compartment has been collapsed or expanded."
             name="SyncCharts Layout After Model Changed"
-            active="false">
+            active="true">
       </combination>
        <combination
             active="true"
