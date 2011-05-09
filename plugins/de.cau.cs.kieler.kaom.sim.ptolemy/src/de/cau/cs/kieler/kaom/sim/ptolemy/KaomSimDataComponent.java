@@ -369,9 +369,27 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
 
         IPath path = new Path(uri.toPlatformString(false));
         IFile file = myWorkspaceRoot.getFile(path);
-
-        return file.getLocationURI().getRawPath();
-        // return uri.toPlatformString(false);
+        
+        IPath fullPath = file.getLocation();
+        
+        //If we have spaces, try it like this...
+        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource)file;
+            fullPath = resource.getLocalManager().locationFor(resource);
+        }
+        
+        //Ensure it is absolute
+        fullPath.makeAbsolute();
+        
+        java.io.File javaFile = fullPath.toFile();
+        
+        if (javaFile.exists()) {
+            String fileString = javaFile.getAbsolutePath();
+            return fileString;
+        }
+        
+        // Something went wrong, we could not resolve the file location
+        return null;
     }
 
     // -------------------------------------------------------------------------
