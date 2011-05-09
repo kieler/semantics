@@ -1532,6 +1532,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param silent the silent tag indicates that only logging occurs, no
      *            message dialog is displayed
      */
+//    StatusAdapter statusAdapter;
+    
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         try {
@@ -1562,10 +1564,14 @@ public class KiemPlugin extends AbstractUIPlugin {
             // BLOCK = modal window, force the user to act!
             // use status manager (log and (optionally) show)
             if (!silent) {
-                StatusManager.getManager().handle(
-                        statusAdapter,
-                        StatusManager.BLOCK | StatusManager.LOG
-                                | StatusManager.SHOW);
+//                Display.getDefault().asyncExec(new Runnable() {
+//                    public void run() {
+                        StatusManager.getManager().handle(
+                                statusAdapter,
+                                StatusManager.BLOCK | StatusManager.LOG
+                                        | StatusManager.SHOW);
+//                    }
+//                });
             } else {
                 StatusManager.getManager().handle(statusAdapter,
                         StatusManager.LOG);

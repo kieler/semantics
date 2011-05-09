@@ -176,6 +176,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /** True if all actions are (temporary) disabled. */
     private boolean allDisabled;
+    
+    private Composite parent;
 
     // -------------------------------------------------------------------------
 
@@ -264,6 +266,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     @Override
     public void createPartControl(final Composite parent) {
+        this.parent = parent;
+        createPartControl();
+    }
+    
+    public void createPartControl() {
         viewer = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI | SWT.H_SCROLL
                 | SWT.V_SCROLL | SWT.FULL_SELECTION);
         createColumns(viewer);
@@ -914,7 +921,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         updateColumnsCollapsed();
         try {
-            viewer.refresh();
+            viewer.refresh(true);
         } catch (Exception e) {
             // catch any viewer refresh errors here
             e.printStackTrace();
@@ -1746,14 +1753,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
+    // class variables for access from display thread
+    long executionTime = 0;
+    long minStepDuration = 0;
+    long wavStepDuration = 0;
+    long aveStepDuration = 0;
+    long maxStepDuration = 0;
+    long steps = 0;
+    long aimedStepDuration = 0;
+
     private void actionStopExecution() {
-        long executionTime = 0;
-        long minStepDuration = 0;
-        long wavStepDuration = 0;
-        long aveStepDuration = 0;
-        long maxStepDuration = 0;
-        long steps = 0;
-        long aimedStepDuration = 0;
 
         // otherwise default implementation
         if (kIEMInstance.getExecution() != null) {
@@ -1770,16 +1779,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
 
         kIEMInstance.setExecution(null);
-        updateView(true);
+        this.updateViewAsync();
 
-        // show execution results
-        showMessage(Messages.mTimingResultsTitle, Messages.mTimingResultsNumberOfSteps + +steps
-                + "\n" + Messages.mTimingResultsOverallExecutionTime + +executionTime + " ms\n\n"
-                + Messages.mTimingResultsAimedStepDuration + +aimedStepDuration + " ms\n"
-                + Messages.mTimingResultsMinimumStepDuration + +minStepDuration + " ms\n"
-                + Messages.mTimingResultsWheightedAverageStepDuration + +wavStepDuration + " ms\n"
-                + Messages.mTimingResultsAverageStepDuration + +aveStepDuration + " ms\n"
-                + Messages.mTimingResultsMaximumStepDuration + +maxStepDuration + " ms");
+        Display.getDefault().asyncExec(new Runnable() {
+            public void run() {
+                // show execution results
+                showMessage(Messages.mTimingResultsTitle, Messages.mTimingResultsNumberOfSteps + +steps
+                        + "\n" + Messages.mTimingResultsOverallExecutionTime + +executionTime + " ms\n\n"
+                        + Messages.mTimingResultsAimedStepDuration + +aimedStepDuration + " ms\n"
+                        + Messages.mTimingResultsMinimumStepDuration + +minStepDuration + " ms\n"
+                        + Messages.mTimingResultsWheightedAverageStepDuration + +wavStepDuration + " ms\n"
+                        + Messages.mTimingResultsAverageStepDuration + +aveStepDuration + " ms\n"
+                        + Messages.mTimingResultsMaximumStepDuration + +maxStepDuration + " ms");
+            }
+        });
+        
 
     }
 

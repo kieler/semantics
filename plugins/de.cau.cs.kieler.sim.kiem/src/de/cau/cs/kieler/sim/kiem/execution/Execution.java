@@ -717,8 +717,13 @@ public class Execution extends Job {
                 }
             }
         }
-        // wrapup components
-        wrapupComponents(false);
+        
+//        (Job {
+//            public void run() {
+                // wrapup components
+                wrapupComponents(false);
+//            }
+//        };).s
 
         // stop timeout thread
         this.timeout.terminate();

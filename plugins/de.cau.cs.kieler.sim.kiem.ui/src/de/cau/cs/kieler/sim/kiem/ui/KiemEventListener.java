@@ -35,6 +35,8 @@ public class KiemEventListener implements IKiemEventListener {
                     // // rebuild view toolbar buttons
                     // KiemView.getInstance().buildLocalToolBar();
                 } else if (event.isEvent(KiemEvent.LOAD)) {
+                    System.out.println("LOAD EVENT");
+                    //KiemView.getInstance().createPartControl();
                     KiemPlugin.getDefault().setDirty(false);
                     KiemView.getInstance().setDirty(false);
                     KiemView.getInstance().updateViewAsync();
