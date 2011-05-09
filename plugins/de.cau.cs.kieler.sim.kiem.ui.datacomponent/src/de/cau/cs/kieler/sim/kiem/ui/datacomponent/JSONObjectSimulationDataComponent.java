@@ -19,8 +19,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.util.StringTokenizer;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -467,20 +472,62 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     // -------------------------------------------------------------------------
 
+//    protected String getInputModel() {
+//        IEditorPart diagramEditor = this.getInputEditor();
+//        // now extract the file
+//        View notationElement = getNotationElement(diagramEditor);
+//        if (notationElement == null) {
+//            return null;
+//        }
+//        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
+//        // .getModel());
+//        EObject myModel = (EObject) notationElement.getElement();
+//        URI uri = myModel.eResource().getURI();
+//        return uri.toPlatformString(false);
+//    }
+
+    
+    // -------------------------------------------------------------------------
+
     protected String getInputModel() {
         IEditorPart diagramEditor = this.getInputEditor();
-        // now extract the file
-        View notationElement = getNotationElement(diagramEditor);
-        if (notationElement == null) {
-            return null;
-        }
-        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-        // .getModel());
+
+      // now extract the file
+      View notationElement = getNotationElement(diagramEditor);
+      if (notationElement == null) {
+          return null;
+      }
+        
         EObject myModel = (EObject) notationElement.getElement();
         URI uri = myModel.eResource().getURI();
-        return uri.toPlatformString(false);
-    }
 
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+
+        IPath path = new Path(uri.toPlatformString(false));
+        IFile file = myWorkspaceRoot.getFile(path);
+        
+        IPath fullPath = file.getLocation();
+        
+        //If we have spaces, try it like this...
+        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource)file;
+            fullPath = resource.getLocalManager().locationFor(resource);
+        }
+        
+        //Ensure it is absolute
+        fullPath.makeAbsolute();
+        
+        java.io.File javaFile = fullPath.toFile();
+        
+        if (javaFile.exists()) {
+            String fileString = javaFile.getAbsolutePath();
+            return fileString;
+        }
+        
+        // Something went wrong, we could not resolve the file location
+        return null;
+    }
+    
     // -------------------------------------------------------------------------
 
     protected EObject getInputModelEObject(IEditorPart diagramEditor) {
