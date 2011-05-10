@@ -147,7 +147,9 @@ public class ScheduleSelector extends ControlContribution implements
     private void setupCombo(final boolean useShortNames) {
         if (combo != null && !refreshing && !combo.isDisposed()) {
             refreshing = true;
-            combo.setEnabled(false);
+// do not do disabling/enabling because we leave the focus and we want to use this
+// just when getting the focus (@author cmot)
+//            combo.setEnabled(false);
             if (listType == ContributionManager.MATCHING_COMBO
                     && EditorManager.getInstance().getEditors().isEmpty()) {
                 String[] names = { "No editor available" };
@@ -216,7 +218,9 @@ public class ScheduleSelector extends ControlContribution implements
             }
             combo.setItems(names);
             combo.select(0);
-            combo.setEnabled(true);
+// do not do disabling/enabling because we leave the focus and we want to use this
+// just when getting the focus (@author cmot)
+//            combo.setEnabled(true);
 
             refreshing = false;
         }
@@ -326,7 +330,7 @@ public class ScheduleSelector extends ControlContribution implements
      * {@inheritDoc}
      */
     public void focusGained(final FocusEvent e) {
-        // setupCombo(false);
+         setupCombo(false);
     }
 
     /**
