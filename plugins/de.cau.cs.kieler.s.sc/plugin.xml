@@ -19,12 +19,18 @@
                commandId="de.cau.cs.kieler.s.sc.s2sc"
                label="Generate SC-Code (new)"
                style="push">
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.s.codegen.canGenerate">
-               </reference>
-            </visibleWhen>
+			<visibleWhen>
+	         <iterate>
+    	        <adapt
+        	          type="org.eclipse.core.resources.IFile">
+            	   <test
+            	   		 forcePluginActivation="true"
+                	     property="org.eclipse.core.resources.extension"
+                    	 value="s">
+               	   </test>
+            	</adapt>
+         	</iterate>
+          </visibleWhen>
          </command>
       </menuContribution>
             <menuContribution
