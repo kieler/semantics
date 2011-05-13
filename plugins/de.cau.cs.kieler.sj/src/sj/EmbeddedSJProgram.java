@@ -355,9 +355,21 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
 
             String signalString = "\"signals\":[";
             for (Signal s : signals) {
-                signalString += s.toJSONString();
+                
+                // ################################################################################
+                // --------------------------------- changed by ybe -------------------------------
+                //
+                // Entries in JSON-Arrays must be comma separated!
+                //
+                // signalString += s.toJSONString();
+            // }
+            // signalString += "]";
+                // --------------------------------------------------------------------------------
+                signalString += s.toJSONString() + ",";
             }
-            signalString += "]";
+            signalString = signalString.substring(0, signalString.length()-1) + "]";
+            // ####################################################################################
+            
             logger.log(SIGNALS, signalString);
         }
 
@@ -367,9 +379,21 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // the logging stuff
             String signalString = "\"signals\":[";
             for (Signal s : signals) {
-                signalString += s.toJSONString();
+                
+                // ################################################################################
+                // --------------------------------- changed by ybe -------------------------------
+                //
+                // Entries in JSON-Arrays must be comma separated!
+                //
+                // signalString += s.toJSONString();
+            // }
+            // signalString += "]";
+                // --------------------------------------------------------------------------------
+                signalString += s.toJSONString() + ",";
             }
-            signalString += "]";
+            signalString = signalString.substring(0, signalString.length()-1) + "]";
+            // ####################################################################################
+            
             logger.log(SIGNALS, signalString);
 
             // if the string with the labels ends with ',' then ...
@@ -676,19 +700,41 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         if (curThread == null) {
             throw new ThreadException("There is no thread running.");
         } else if (!curThread.getDescendants().isEmpty()) {
+            
+            // ####################################################################################
+            // ----------------------------------- changed by ybe ---------------------------------
+            // 
+            // Save the old label of the current thread. Needed for the logger in order to be able
+            // to log the correct label. Label of the current thread is changed just bellow this
+            // block.
+            String oldLabel = curThread.getLabel().name();
+            // ####################################################################################
 
             // NiceToHave: more Comments here
             curThread.setLabel(label);
 
             threadsCurTick.add(curThread);
 
+            // ####################################################################################
+            // ----------------------------------- changed by ybe ---------------------------------
+            //
+            // if (logger != null) {
+            //     logger.log(
+            //             INSTRUCTION,
+            //             "\"forke\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
+            //                     + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
+            //                     + label.name() + "\"]}");
+            // }
+            // ------------------------------------------------------------------------------------
             if (logger != null) {
                 logger.log(
                         INSTRUCTION,
-                        "\"forke\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
+                        "\"forke\":" + "{\"label\":\"" + oldLabel + "\","
                                 + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
                                 + label.name() + "\"]}");
             }
+            // ####################################################################################
+            
             curThread = null;
         } else {
             throw new ThreadException("You can not use forke without a fork before.");
