@@ -15,7 +15,7 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.s.synccharts2s"
-               label="SyncCharts 2 S transformation"
+               label="Generate S code"
                style="push">
 			<visibleWhen>
 	         <iterate>
