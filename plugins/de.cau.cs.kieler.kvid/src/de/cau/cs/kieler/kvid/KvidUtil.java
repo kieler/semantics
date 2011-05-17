@@ -39,7 +39,7 @@ import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutDataService;
 import de.cau.cs.kieler.kiml.ui.util.KimlUiUtil;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
@@ -229,7 +229,7 @@ public final class KvidUtil {
         List<List<Point>> result = new LinkedList<List<Point>>();
         String elementUriPart = elementUri.getElementUri();
         Resource resource;
-        DiagramLayoutManager manager = EclipseLayoutServices.getInstance()
+        DiagramLayoutManager manager = EclipseLayoutDataService.getInstance()
                                             .getManager(currentEditor, null);
         if (currentEditor.getDiagram() != null && currentEditor.getDiagram().getElement() != null) {
             resource = currentEditor.getDiagram().getElement().eResource();

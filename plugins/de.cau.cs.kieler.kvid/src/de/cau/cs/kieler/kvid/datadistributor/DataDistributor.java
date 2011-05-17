@@ -39,7 +39,7 @@ import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
 import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutDataService;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -107,7 +107,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                 //everything KViD does
                 public void run() {
                     //Receive the current diagram layout for path finding
-                    currentDiagramLayout = EclipseLayoutServices.getInstance()
+                    currentDiagramLayout = EclipseLayoutDataService.getInstance()
                             .getManager(currentEditor, null)
                             .buildLayoutGraph(currentEditor, null, false);
                 }
@@ -128,7 +128,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                 //everything KViD does
                 public void run() {
                     //Receive the current diagram layout for path finding
-                    currentDiagramLayout = EclipseLayoutServices.getInstance()
+                    currentDiagramLayout = EclipseLayoutDataService.getInstance()
                             .getManager(currentEditor, null)
                             .buildLayoutGraph(currentEditor, null, false);
                 }

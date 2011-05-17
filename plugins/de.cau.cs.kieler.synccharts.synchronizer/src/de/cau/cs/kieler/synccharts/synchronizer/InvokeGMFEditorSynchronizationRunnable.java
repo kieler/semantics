@@ -18,7 +18,7 @@ import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutServices;
+import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutDataService;
 
 /**
  * A Runnable encapsulating the activities for synchronizing a graphical view.
@@ -51,6 +51,6 @@ public class InvokeGMFEditorSynchronizationRunnable implements Runnable {
         ((DiagramDocumentEditor) passiveEditor).getDiagramGraphicalViewer().flush();
 
 
-        EclipseLayoutServices.getInstance().layout(passiveEditor, null, true, false);
+        EclipseLayoutDataService.getInstance().layout(passiveEditor, null, true, false);
     }
 }
