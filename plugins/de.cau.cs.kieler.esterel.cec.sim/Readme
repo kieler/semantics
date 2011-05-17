@@ -1,0 +1,4 @@
+author: ctr
+
+Simulation of Esterel files using the CEC. The Esterel file is compiled to C and a data file is generated to handle JSON IO. 
+Both are compiled to an executable which communicates with KIELER via stdio. 
