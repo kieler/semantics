@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.core.model.gmf.figures;
 
+import java.util.Hashtable;
+
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
 import org.eclipse.draw2d.ConnectionLocator;
@@ -24,6 +26,7 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
+import org.eclipse.gmf.runtime.draw2d.ui.geometry.PointListUtilities;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -109,18 +112,18 @@ public class SplineConnection extends PolylineConnectionEx {
                 Rectangle splineBound = new Rectangle(start, end);
                 splineBound = splineBound.getUnion(new Rectangle(c1, c2));
                 splineBound.expand(calculatedTolerance, calculatedTolerance);
-                if (splineBound.contains(x, y) && SplineUtilities.distanceFromSpline(start, c1, c2,
-                        end, new Point(x, y)) < calculatedTolerance) {
+                if (splineBound.contains(x, y)
+                        && SplineUtilities.distanceFromSpline(start, c1, c2, end, new Point(x, y)) < calculatedTolerance) {
                     return true;
                 }
             }
 
             if (i == getPoints().size() - 2) {
                 // quad left
-                if (SplineUtilities.distanceFromSpline(getPoints().getPoint(
-                        getPoints().size() - 3), getPoints().getPoint(
-                        getPoints().size() - 2), getPoints().getPoint(getPoints().size() - 1),
-                        new Point(x, y)) < calculatedTolerance) {
+                if (SplineUtilities.distanceFromSpline(
+                        getPoints().getPoint(getPoints().size() - 3),
+                        getPoints().getPoint(getPoints().size() - 2),
+                        getPoints().getPoint(getPoints().size() - 1), new Point(x, y)) < calculatedTolerance) {
                     return true;
                 }
             } else if (i == getPoints().size() - 1) {
@@ -161,19 +164,19 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Checks if edge corners should be rounded. Same as super method, except it doesn't check 
-     * if edge routing is orthogonal.
+     * Checks if edge corners should be rounded. Same as super method, except it doesn't check if
+     * edge routing is orthogonal.
      * 
      * @return {@code true} if edge corners should be rounded.
      */
     @Override
     public boolean isRoundingBendpoints() {
         if (super.getRoundedBendpointsRadius() > 0 && getSmoothness() == 0) {
-                return true;
+            return true;
         }
         return false;
     }
-    
+
     /**
      * Calculate and store the tolerance value for determining whether the line contains a point or
      * not.
@@ -324,10 +327,154 @@ public class SplineConnection extends PolylineConnectionEx {
             }
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
+        } else if (isRoundingBendpoints()) {
+            ///////////////////////////////////////////////////////
+            /////////////Temporary gmf bugfix//////////////////////
+            //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+            ///////////////////////////////////////////////////////
+
+            PointList displayPoints = getSmoothPoints(false);
+
+            Hashtable<Point, Integer> originalDisplayPoints = null;
+            originalDisplayPoints = new Hashtable<Point, Integer>();
+            for (int i = 0; i < displayPoints.size(); i++) {
+                originalDisplayPoints.put(displayPoints.getPoint(i), new Integer(i));
+            }
+            // In originalDisplayPoints, each bendpoint will be replaced with two points: start and
+            // end point of the arc.
+            // If jump links is on, then displayPoints will also contain points identifying jump
+            // links, if any.
+            int i = 1;
+            int rDefault = getRoundedBendpointsRadius();
+            while (i < displayPoints.size() - 1) {
+                // Consider points at indexes i-1, i, i+1.
+                int x0 = 0, y0 = 0;
+                boolean firstPointAssigned = false;
+                if (i < displayPoints.size() - 1) { // if we still didn't reach the end after
+                                                    // drawing jump link polyline
+                    // Draw a segment starting at index i-1 and ending at index i,
+                    // and arc with starting point at index i and ending point at index i+1.
+                    // But first, find points at i-1, i and i+1.
+                    if (!firstPointAssigned) {
+                        x0 = displayPoints.getPoint(i - 1).x;
+                        y0 = displayPoints.getPoint(i - 1).y;
+                    }
+                    int x1;
+                    
+                    int y1;
+                    // If points at i-1 and i are equal (could happen if jump link algorithm
+                    // inserts a point that already exists), just skip the point i
+                    while (i < displayPoints.size() - 1 && x0 == displayPoints.getPoint(i).x
+                            && y0 == displayPoints.getPoint(i).y) {
+                        i++;
+                    }
+                    if (i < displayPoints.size() - 1) {
+                        x1 = displayPoints.getPoint(i).x;
+                        y1 = displayPoints.getPoint(i).y;
+                    } else {
+                        break;
+                    }
+
+                    // The same goes for point at i and i+1
+                    int x2;
+                    int y2;
+                    while (i + 1 < displayPoints.size() - 1
+                            && x1 == displayPoints.getPoint(i + 1).x
+                            && y1 == displayPoints.getPoint(i + 1).y) {
+                        i++;
+                    }
+                    if (i < displayPoints.size() - 1) {
+                        x2 = displayPoints.getPoint(i + 1).x;
+                        y2 = displayPoints.getPoint(i + 1).y;
+                    } else {
+                        break;
+                    }
+
+                    // Draw the segment
+                    g.drawLine(x0, y0, x1, y1);
+
+                    // Find out if arc size is default, or if it had to be decreased because of lack
+                    // of space
+                    this.getRoundedCornersPoints(false);
+                    int r = rDefault;
+                    Point p = displayPoints.getPoint(i);
+                    int origIndex = ((Integer) originalDisplayPoints.get(p)).intValue();
+                    Object o = rForBendpointArc.get(new Integer((origIndex + 1) / 2));
+                    if (o != null) {
+                        r = ((Integer) o).intValue();
+                    }
+                    // Find out the location of enclosing rectangle (x, y), as well as staring angle
+                    // of the arc.
+                    int x, y;
+                    int startAngle;
+                    if (x0 == x1 && x1 < x2) {
+                        x = x1;
+                        y = y1 - r;
+                        if (y1 > y2) {
+                            startAngle = 90;
+                        } else {
+                            startAngle = 180;
+                        }
+                    } else if (x0 > x1 && x1 > x2) {
+                        x = x2;
+                        y = y2 - r;
+                        if (y1 > y2) {
+                            startAngle = 180;
+                        } else {
+                            startAngle = 90;
+                        }
+                    } else if (x0 == x1 && x1 > x2) {
+                        if (y1 > y2) {
+                            x = x2 - r;
+                            y = y2;
+                            startAngle = 0;
+                        } else {
+                            x = x1 - 2 * r;
+                            y = y1 - r;
+                            startAngle = 270;
+                        }
+                    } else { // x0 < x1 && x1 < x2
+                        if (y1 > y2) {
+                            x = x2 - 2 * r;
+                            y = y2 - r;
+                            startAngle = 270;
+                        } else {
+                            x = x1 - r;
+                            y = y1;
+                            startAngle = 0;
+                        }
+                    }
+                    // Draw the arc.
+                    g.drawArc(x, y, 2 * r, 2 * r, startAngle, 90);
+                    i += 2;
+                }
+            }
+            // Draw the last segment.
+            g.drawLine(displayPoints.getPoint(displayPoints.size() - 2),
+                    displayPoints.getLastPoint());
+            //bugfix end
         } else {
             super.outlineShape(g);
         }
     }
+
+    ///////////////////////////////////////////////////////
+    /////////////Temporary gmf bugfix//////////////////////
+    //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+    ///////////////////////////////////////////////////////
+    private Hashtable<Integer, Integer> rForBendpointArc;
+    @Override
+    public PointList getRoundedCornersPoints(boolean calculateAppoxPoints) {
+        if (rForBendpointArc != null) {
+            rForBendpointArc.clear();
+        } else {
+            rForBendpointArc = new Hashtable<Integer, Integer>();
+        }
+
+        return SplineUtilities.calcRoundedCornersPolyline(getPoints(),
+                getRoundedBendpointsRadius(), rForBendpointArc, calculateAppoxPoints);
+    }
+    //bugfix end
 
     /*
      * (non-Javadoc)

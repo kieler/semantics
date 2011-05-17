@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.gmf.util;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
 import org.eclipse.draw2d.geometry.Point;
@@ -620,4 +621,149 @@ public final class SplineUtilities {
         }
         return p[degree][0];
     }
+    
+    
+    ///////////////////////////////////////////////////////
+    /////////////Temporary gmf bugfix//////////////////////
+    //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+    ///////////////////////////////////////////////////////
+    public final static int DEFAULT_CORNER_APPROXIMATION_PTS = 15;
+    public static PointList calcRoundedCornersPolyline(PointList points, int r, 
+            Hashtable<Integer, Integer> rForBendpoint, boolean calculateAppoxPoints) {
+    PointList newPoints = new PointList();
+    // First, clean up the points list if needed. Each segment is defined by two end points,
+    // so if it happens that the segment has points in between, remove them since there is no
+    // use for them, they can just create problems.
+    int k = 1;
+    while (k < points.size() - 1) {
+            int x0 = points.getPoint(k-1).x;
+            int y0 = points.getPoint(k-1).y;
+            int x1 = points.getPoint(k).x;
+            int y1 = points.getPoint(k).y;
+            int x2 = points.getPoint(k+1).x;
+            int y2 = points.getPoint(k+1).y;
+            if ((x0 == x1 && x1 == x2) || (y0 == y1 && y1 == y2)) {
+                    // (x1, y1) is not needed, remove it
+                    points.removePoint(k);
+            } else {
+                    k++;
+            }
+    }
+    newPoints.addPoint(points.getFirstPoint()); 
+    int rDefault = r;
+    for (int i = 1; i < points.size() - 1; i++) {
+            int x0 = points.getPoint(i-1).x;
+            int y0 = points.getPoint(i-1).y;
+            int x1 = points.getPoint(i).x; // x of bendpoint to be replaced
+            int y1 = points.getPoint(i).y; // y of bendpoint to be replaced
+            int x2 = points.getPoint(i+1).x;
+            int y2 = points.getPoint(i+1).y;
+            // there are 8 possibilities: four types of corners, each can be traversed in two directions
+            int cornerCase;
+            if (x0 == x1 && x2 > x1 && y0 < y1 && y2 == y1) {
+                    cornerCase = 1;
+            } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 < y1) {
+                    cornerCase = 2;                         
+            } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 < y1) {
+                    cornerCase = 3;
+            } else if (x0 == x1 && x2 < x1 && y0 < y1 && y2 == y1) {
+                    cornerCase = 4;                         
+            } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 > y1) {
+                    cornerCase = 5;
+            } else if (x0 == x1 && x2 > x1 && y0 > y1 && y2 == y1) {
+                    cornerCase = 6;
+            } else if (x0 == x1 && x2 < x1 && y0 > y1 && y2 == y1) {
+                    cornerCase = 7;
+            } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 > y1) {
+                    cornerCase = 8;
+            } else {
+                    return null; // not rectilinear routing - shouldn't happen
+            }
+            // It is possible that the distance between (x0, y0) and (x1, y1), or (x1, y1) and (x2, y2) 
+            // is smaller than the desired arc width and heighr r. In that case, we have to shrink the arc
+            // to fit whatever space we have. Add changed r in rForBendpoint so it can be used later.
+            r = rDefault;
+            int distance = Math.min(points.getPoint(i-1).getDistanceOrthogonal(points.getPoint(i)),
+                            points.getPoint(i).getDistanceOrthogonal(points.getPoint(i+1)));
+            if (r >= distance / 2) {
+                    r = distance / 2 - 1;
+                    rForBendpoint.put(new Integer(i), new Integer(r));
+            }
+                    
+            // Find the coordinates of the arc center, as well as the sign (+ or -) for the circle equasion                 
+            int sign = 1;
+            int p, q; // coordinates of the arc center              
+            switch (cornerCase) {
+            case 1:
+            case 2:
+                    p = x1 + r;
+                    q = y1 - r; 
+                    break;
+            case 3:
+            case 4:
+                    p = x1 - r;
+                    q = y1 - r;                     
+                    break;
+            case 5:
+            case 6:
+                    p = x1 + r;
+                    q = y1 + r;  
+                    sign = -1;
+                    break;
+            default: // 7 and 8
+                    p = x1 - r;
+                    q = y1 + r;
+                    sign = -1;
+                    break;
+            }
+            // Find the first and last point of the arc, and add the first point to the result list
+            Point lastPoint = null; // last point in bendpoint approximation                
+            switch (cornerCase) {
+            case 1:
+            case 4:
+            case 6:
+            case 7:
+                    newPoints.addPoint(new Point(x1, q));
+                    lastPoint = new Point(p, y1);
+                    break;
+            default:
+                    newPoints.addPoint(new Point(p, y1));
+                    lastPoint = new Point(x1, q);
+                    break;                          
+            }
+            // Find out if x will be decreasing or increasing while calculating approximation points.
+            int incrementSign = 1;
+            switch (cornerCase) {
+            case 2:
+            case 4:
+            case 5:
+            case 7:
+                    incrementSign = -1;
+                    break;
+            }
+            // If arcs need to be approximated: for given x find y so that (x, y)
+            // is on the arc
+            if (calculateAppoxPoints) {     
+                    int x = newPoints.getLastPoint().x;
+                    int rSq = r*r; 
+                    int increment = incrementSign * r / DEFAULT_CORNER_APPROXIMATION_PTS;
+                    int nrOfIncrement = DEFAULT_CORNER_APPROXIMATION_PTS;
+                    if (increment == 0) {
+                            increment = incrementSign * 1;
+                            nrOfIncrement = r;
+                    }
+                    for (int j = 1; j < nrOfIncrement; j++) {
+                            x += increment;
+                            // calculate y with given x so that (x, y) is on the arc                        
+                            int y = (int) (q + sign*Math.sqrt(rSq - (x - p)*(x - p)));
+                            newPoints.addPoint(new Point(x, y));
+                    }
+            }
+            // Add the last point to the result list
+            newPoints.addPoint(lastPoint);
+    }
+    newPoints.addPoint(points.getLastPoint());
+    return newPoints;
+}
+
 }
