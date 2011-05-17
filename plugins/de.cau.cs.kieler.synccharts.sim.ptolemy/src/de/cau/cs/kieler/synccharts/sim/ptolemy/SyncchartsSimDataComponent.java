@@ -268,7 +268,7 @@ public class SyncchartsSimDataComponent extends
 
         // EMF reader
         Reader emfReader = new Reader();
-        emfReader.setUri(this.getInputModel());
+        emfReader.setUri("file://"+this.getInputModel());
         emfReader.setModelSlot("emfmodel");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
         // OTHERWISE WE MAY CHANGE THE INPUT MODEL!

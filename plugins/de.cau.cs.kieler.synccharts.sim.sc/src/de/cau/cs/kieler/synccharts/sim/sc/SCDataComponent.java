@@ -466,7 +466,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         newValidation = true;
         for (KiemProperty p : properties) {
             if (p.getKey().equals(MODEL_FILE)) {
-                fileLocation = p.getValue();
+                fileLocation = "file://"+p.getValue();
             }
             if (p.getKey().equals(ITERATION)) {
                 if (Integer.parseInt(p.getValue()) > 0) {
