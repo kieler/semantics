@@ -923,8 +923,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         try {
             viewer.refresh(true);
         } catch (Exception e) {
-            // catch any viewer refresh errors here
-            e.printStackTrace();
+            // try to handle any viewer refresh errors here
+            try {
+                // as a recovery action, clear the wrapper list (because of some internal eclipse SWT bug)
+                kIEMInstance.clearDataComponentWrapperList();
+            } catch (Exception e2) {
+                // we cannot do any other recovery action when something should go wrong again...
+                e2.printStackTrace();
+            }
         }
         refreshEnabledDisabledTextColors();
         if (deselect) {
