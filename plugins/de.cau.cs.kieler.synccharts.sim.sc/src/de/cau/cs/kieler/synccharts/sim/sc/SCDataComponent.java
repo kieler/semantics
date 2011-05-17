@@ -320,7 +320,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
             } else {
-                String fileLocation2 = getInputModel();
+                String fileLocation2 = "file://"+getInputModel();
                 wf = new WorkflowGenerator(fileLocation2);
             }
             // generate Code from SyncChart
@@ -466,7 +466,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         newValidation = true;
         for (KiemProperty p : properties) {
             if (p.getKey().equals(MODEL_FILE)) {
-                fileLocation = "file://"+p.getValue();
+                fileLocation = p.getValue();
             }
             if (p.getKey().equals(ITERATION)) {
                 if (Integer.parseInt(p.getValue()) > 0) {
