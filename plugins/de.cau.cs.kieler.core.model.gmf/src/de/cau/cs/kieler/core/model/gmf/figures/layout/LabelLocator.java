@@ -62,9 +62,10 @@ public class LabelLocator extends BorderItemLocator {
             borderItem.setBounds(validLocation);
         } else {
             Point absoluteLocation = this.getAbsoluteToBorder(this.getConstraint().getLocation());
-            Rectangle validLocation = getValidLocation(
-                    new Rectangle(absoluteLocation, new Dimension(-1, -1)), borderItem);
-            borderItem.setBounds(validLocation);
+            //Rectangle validLocation = getValidLocation(
+            //        new Rectangle(absoluteLocation, new Dimension(-1, -1)), borderItem);
+            borderItem.setBounds(new Rectangle(absoluteLocation, borderItem.getPreferredSize()));
+            //borderItem.setBounds(validLocation);
         }
     }
 
@@ -81,6 +82,7 @@ public class LabelLocator extends BorderItemLocator {
         if (location.x == 0 && location.y == 0) {
             locate(location);
         } else {
+            //location.setLocation(proposedLocation.getLocation().getCopy());
             int side = findClosestSideOfParent(proposedLocation, getParentBorder());
             Point newTopLeft = locateOnBorder(location.getLocation(), side, 0, borderItem);
             location.setLocation(newTopLeft);
