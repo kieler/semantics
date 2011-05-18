@@ -55,6 +55,7 @@ openFile</programArgsMac>
       </win>
    </launcher>
 
+
    <vm>
    </vm>
 
@@ -162,6 +163,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.synccharts" version="0.5.0.qualifier"/>
       <feature id="de.cau.cs.kieler.kaom" version="0.3.0.qualifier"/>
       <feature id="de.cau.cs.kieler.keg" version="0.3.0.qualifier"/>
+      <feature id="de.cau.cs.kieler.klots" version="0.5.0.qualifier"/>
    </features>
 
 
