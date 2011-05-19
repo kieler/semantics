@@ -61,7 +61,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     private static final int PROP_COMPILER = 1;
     private static final int PROP_PATH = 2;
     private static final int NUM_PROPERTIES = 3;
-    
+
     private WorkflowGenerator wf = null;
     private Process process = null;
     private PrintWriter toSC;
@@ -114,9 +114,22 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                 // compile
                 // -m32 = 32 bit compatibility mode. Otherwise compiler errors in 64bit archs
                 String compiler = (getProperties()[PROP_COMPILER]).getValue();
-                String compile = compiler + " " + outPath + "sim.c " + outPath + "sim_data.c "
-                        + outPath + "misc.c " + bundleLocation + "cJSON.c " + "-I "
-                        + bundleLocation + " " + "-o " + outPath
+
+                String compile = compiler
+                        + " "
+                        + outPath
+                        + "sim.c "
+                        + outPath
+                        + "sim_data.c "
+                        + outPath
+                        + "misc.c "
+                        + bundleLocation
+                        + "cJSON.c "
+                        + "-I "
+                        + bundleLocation
+                        + " "
+                        + "-o "
+                        + outPath
                         + "simulation -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -m32";
                 process = Runtime.getRuntime().exec(compile);
                 System.out.println(compile);
@@ -158,7 +171,13 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             String compileError = "";
             if (!compiled) {
                 compileError = "No compiler found! Please select one in the "
-                        + "\"SC simulation\" component in the Execution Manager";
+                        + "\"SC simulation\" component in the Execution Manager."
+                        + " \n\nThis simulator is optimized for"
+                        + "the gcc compiler that should be available"
+                        + " in your system (from any directory). "
+                        + "If you have a Microsoft Windows system and"
+                        + " no gcc is installed, you may want"
+                        + "to install MinGW (minimal GNU for Windows).";
                 throw new KiemInitializationException(compileError, true, null);
             } else {
                 throw new KiemInitializationException("could not simulate", true, e);
@@ -320,7 +339,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
             } else {
-                String fileLocation2 = "file://"+getInputModel();
+                String fileLocation2 = "file://" + getInputModel();
                 wf = new WorkflowGenerator(fileLocation2);
             }
             // generate Code from SyncChart
