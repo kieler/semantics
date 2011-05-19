@@ -177,7 +177,9 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                         + " in your system (from any directory). "
                         + "If you have a Microsoft Windows system and"
                         + " no gcc is installed, you may want"
-                        + "to install MinGW (minimal GNU for Windows).";
+                        + "to install MinGW (minimal GNU for Windows)."
+                        + "\n\nYou could also try to use another simulator (if available)."
+                        + " Click matching schedules and select the Ptolemy based simulation.";
                 throw new KiemInitializationException(compileError, true, null);
             } else {
                 throw new KiemInitializationException("could not simulate", true, e);
