@@ -13,7 +13,13 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.esterel;
 
+import org.eclipse.core.internal.resources.File;
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -27,6 +33,8 @@ import org.eclipse.emf.mwe.core.monitor.NullProgressMonitor;
 import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
@@ -53,14 +61,45 @@ public class WorkflowGenerator {
     private IEditorPart editor = null;
     private URI uri = null;
 
-    private String part2Location(final IEditorPart ed) {
-        String out = null;
+    // The following code requests the input model from the
+    // currently opened editor. This is not what we want.
+    //
+    // private String part2Location(final IEditorPart ed) {
+    // String out = null;
+    //
+    // final FileEditorInput uri2 = (FileEditorInput) ed.getEditorInput();
+    // final String outName = uri2.getName();
+    // out = uri2.getURI().getRawPath().replace(outName, "");
+    //
+    // return out;
+    // }
 
-        final FileEditorInput uri2 = (FileEditorInput) ed.getEditorInput();
-        final String outName = uri2.getName();
-        out = uri2.getURI().getRawPath().replace(outName, "");
+    public String getAbsoultePath(final URI uri) {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        return out;
+        IPath path = new Path(uri.toPlatformString(false));
+        IFile file = myWorkspaceRoot.getFile(path);
+
+        IPath fullPath = file.getLocation();
+
+        // If we have spaces, try it like this...
+        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) file;
+            fullPath = resource.getLocalManager().locationFor(resource);
+        }
+
+        // Ensure it is absolute
+        fullPath.makeAbsolute();
+
+        java.io.File javaFile = fullPath.toFile();
+
+        if (javaFile.exists()) {
+            String fileString = javaFile.getAbsolutePath();
+            return fileString;
+        }
+
+        // Something went wrong, we could not resolve the file location
+        return null;
     }
 
     /**
@@ -69,24 +108,47 @@ public class WorkflowGenerator {
     public void invokeWorkflow() {
         final IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
+        URI input = URI.createURI("");
+        URI output = URI.createURI("");
+
+        // get input model from currently selected file in Explorer
+        ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getSelectionService().getSelection();
+        File file = (File) ((TreeSelection) selection).getFirstElement();
+        input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+
+        // EObject myModel = (EObject) notationElement.getElement();
+        // URI uri = myModel.eResource().getURI();
+
+        // get output model from input model
+        output = URI.createURI(input.toString());
+        output = output.trimFragment();
 
         final EPackage p1 = SyncchartsPackage.eINSTANCE;
         final EPackage p2 = KExpressionsPackage.eINSTANCE;
         final EPackage p3 = AnnotationsPackage.eINSTANCE;
-        
+
         editor = activePage.getActiveEditor();
-        outPath = part2Location(editor);
-        uriString = null;
-        if (editor instanceof DiagramEditor) {
-            final DiagramEditor diagramEditor = (DiagramEditor) editor;
-            final View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
-            myModel = (EObject) notationElement.getElement();
-            uri = myModel.eResource().getURI();
-            uriString = uri.toString();
-        }
+
+        uriString = getAbsoultePath(input);
+        
+        int index = uriString.lastIndexOf(System.getProperty("file.separator"));
+        
+        outPath = uriString;
+        if (index != -1) {
+           outPath = uriString.substring(0, index+1); // part2Location(editor);
+        } 
+        // if (editor instanceof DiagramEditor) {
+        // final DiagramEditor diagramEditor = (DiagramEditor) editor;
+        // final View notationElement = ((View) diagramEditor.getDiagramEditPart().getModel());
+        // myModel = (EObject) notationElement.getElement();
+        // uri = myModel.eResource().getURI();
+        // uriString = uri.toString();
+        // }
+
         // EMF reader
         final Reader emfReader = new Reader();
-        emfReader.setUri(uriString);
+        emfReader.setUri("file://"+ uriString);
         emfReader.setModelSlot("model");
 
         // Meta model
@@ -102,7 +164,6 @@ public class WorkflowGenerator {
         outlet.setOverwrite(true);
 
         // Generator
-
         final Generator esterelGenerator = new Generator();
         esterelGenerator.addMetaModel(metaModel1);
         esterelGenerator.addMetaModel(metaModel2);
@@ -110,7 +171,6 @@ public class WorkflowGenerator {
         esterelGenerator.addOutlet(outlet);
 
         esterelGenerator.setExpand("templates::esterel::main FOR model");
-
 
         final WorkflowContext wfx = new WorkflowContextDefaultImpl();
         final Issues issues = new IssuesImpl();
@@ -137,7 +197,8 @@ public class WorkflowGenerator {
         }
 
         StatusManager.getManager().handle(
-                new Status(status, EsterelPlugin.PLUGIN_ID, issue.toString(), null), StatusManager.LOG);
+                new Status(status, EsterelPlugin.PLUGIN_ID, issue.toString(), null),
+                StatusManager.LOG);
 
     }
 }
