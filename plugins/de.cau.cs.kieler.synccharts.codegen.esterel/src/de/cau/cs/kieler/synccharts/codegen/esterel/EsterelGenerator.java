@@ -16,6 +16,9 @@ package de.cau.cs.kieler.synccharts.codegen.esterel;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 
 /**
  * @author ctr
@@ -31,6 +34,15 @@ public class EsterelGenerator extends AbstractHandler {
     public Object execute(final ExecutionEvent event) throws ExecutionException {
         wf.invokeWorkflow();
 
+
+        // Refresh the file explorer
+        try {
+            ResourcesPlugin.getWorkspace().getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e2) {
+            e2.printStackTrace();
+        }
+        
         return null;
     }
 }
