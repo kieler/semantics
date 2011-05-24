@@ -34,18 +34,6 @@ import de.cau.cs.kieler.core.ui.UnsupportedPartException;
  * @author msp
  */
 public final class GraphicalFrameworkService {
-    
-    /** A property tester that checks whether the given element is supported. */
-    public class SupportedTester extends PropertyTester {
-        /**
-         * {@inheritDoc}
-         */
-        public boolean test(final Object receiver, final String property,
-                final Object[] args, final Object expectedValue) {
-            return getInstance().isSupported(receiver);
-        }
-        
-    }
 
     /** framework identifier for GMF. */
     public static final String FW_GMF = "gmf";

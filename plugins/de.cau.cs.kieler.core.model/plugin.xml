@@ -3,6 +3,16 @@
 <plugin>
    <extension-point id="Validation" name="Validation" schema="schema/Validation.exsd"/>
    <extension-point id="graphicalFrameworkBridges" name="Graphical Framework Bridges" schema="schema/graphicalFrameworkBridges.exsd"/>
+   <extension
+         point="org.eclipse.core.expressions.propertyTesters">
+      <propertyTester
+            class="de.cau.cs.kieler.core.model.EditorTester"
+            id="de.cau.cs.kieler.core.model.editorTester"
+            namespace="de.cau.cs.kieler.core.model"
+            properties="activeEditorIsSupported"
+            type="org.eclipse.ui.IEditorPart">
+      </propertyTester>
+   </extension>
       <extension
          point="org.eclipse.ui.commands">
       <command
@@ -65,7 +75,7 @@
                <with
                      variable="activeEditor">
                   <test
-                        property="de.cau.cs.kieler.core.model.editorTester">
+                        property="de.cau.cs.kieler.core.model.activeEditorIsSupported">
                   </test>
                </with>
             </visibleWhen>
@@ -124,16 +134,6 @@
          point="org.eclipse.ui.startup">
       <startup
             class="de.cau.cs.kieler.core.model.validation.ValidationInformationCollector"></startup>
-   </extension>
-   <extension
-         point="org.eclipse.core.expressions.propertyTesters">
-      <propertyTester
-            class="de.cau.cs.kieler.core.model.GraphicalFrameworkService.SupportedTester"
-            id="de.cau.cs.kieler.core.model.editorTester"
-            namespace="de.cau.cs.kieler.core.model"
-            properties="editorSupported"
-            type="org.eclipse.ui.IEditorPart">
-      </propertyTester>
    </extension>
 
 </plugin>
