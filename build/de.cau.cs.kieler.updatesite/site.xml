@@ -4,7 +4,7 @@
    <description name="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/">
       Update site for the KIELER project nightly builds
    </description>
-   <feature url="features/de.cau.cs.kieler.sdk_0.4.0.qualifier.jar" id="de.cau.cs.kieler.sdk" version="0.4.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.sdk_0.5.0.qualifier.jar" id="de.cau.cs.kieler.sdk" version="0.5.0.qualifier">
       <category name="KIELER"/>
    </feature>
    <feature url="features/net.ogdf.bin_1.0.0.qualifier.jar" id="net.ogdf.bin" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
@@ -44,6 +44,12 @@
       <category name="KIELER"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.synccharts.source_0.5.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.source" version="0.5.0.qualifier">
+      <category name="KIELER Sources"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.klots_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
    <category-def name="KIELER" label="KIELER">

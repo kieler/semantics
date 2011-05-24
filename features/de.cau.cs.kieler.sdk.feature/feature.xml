@@ -2,12 +2,11 @@
 <feature
       id="de.cau.cs.kieler.sdk"
       label="KIELER SDK"
-      version="0.4.0.qualifier"
+      version="0.5.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/">
-      KIELER development kit providing all binaries and sources of the KIELER
-features
+      Development kit providing all binaries and sources of the KIELER features.
    </description>
 
    <copyright>
@@ -219,86 +218,6 @@ litigation.
    </url>
 
    <includes
-         id="de.cau.cs.kieler.core"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.core.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kies"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kies.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.esterel.extended"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.esterel.extended.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kev"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kev.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.graphviz"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.graphviz.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.krep"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.krep.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.ksbase"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.ksbase.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.sim.kiem"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.sim.kiem.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.sim.ptolemy"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.sim.ptolemy.source"
-         version="0.0.0"/>
-
-   <includes
          id="de.cau.cs.kieler.synccharts"
          version="0.0.0"/>
 
@@ -315,51 +234,11 @@ litigation.
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.sj"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.sj.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kex"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kex.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.core.model"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.core.model.source"
-         version="0.0.0"/>
-
-   <includes
          id="de.cau.cs.kieler.uml2"
          version="0.0.0"/>
 
    <includes
          id="de.cau.cs.kieler.uml2.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kvid"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kvid.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kaom.ptolemy"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kaom.ptolemy.source"
          version="0.0.0"/>
 
    <includes
@@ -371,11 +250,27 @@ litigation.
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.papyrus"
+         id="de.cau.cs.kieler.kiml.gmf"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.papyrus.source"
+         id="de.cau.cs.kieler.kiml.gmf.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kiml.graphiti"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kiml.graphiti.source"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.klots"
+         version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.klots.source"
          version="0.0.0"/>
 
 </feature>
