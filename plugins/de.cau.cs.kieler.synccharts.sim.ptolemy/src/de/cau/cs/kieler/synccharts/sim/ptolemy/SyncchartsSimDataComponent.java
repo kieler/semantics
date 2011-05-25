@@ -265,7 +265,7 @@ public class SyncchartsSimDataComponent extends
 //        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
 //                + ".moml").getAbsolutePath());
         
-        URI fileUri = URI.createURI("file://"+this.getInputModel());
+        URI fileUri = getInputModelAsURI();
         fileUri = URI.createURI(fileUri.toString().substring(0,fileUri.toString().lastIndexOf(".kixs")) + ".moml");
         
         ptolemyModel = resourceSet.createResource(fileUri);
@@ -277,7 +277,7 @@ public class SyncchartsSimDataComponent extends
 
         // EMF reader
         Reader emfReader = new Reader();
-        emfReader.setUri("file://"+this.getInputModel());
+        emfReader.setUri(this.getInputModelAsURI().toString());
         emfReader.setModelSlot("emfmodel");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
         // OTHERWISE WE MAY CHANGE THE INPUT MODEL!

@@ -341,8 +341,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (validation) {
                 wf = new WorkflowGenerator(fileLocation);
             } else {
-                String fileLocation2 = "file://" + getInputModel();
-                wf = new WorkflowGenerator(fileLocation2);
+                wf = new WorkflowGenerator(getInputModelAsURI());
             }
             // generate Code from SyncChart
             // true sets the flag for simulation

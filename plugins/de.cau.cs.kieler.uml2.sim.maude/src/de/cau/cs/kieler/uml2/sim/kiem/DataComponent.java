@@ -744,7 +744,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // EMF reader
         Reader emfReader = new Reader();
-        String stringUri = this.getInputModel();
+        String stringUri = this.getInputModelAsURI().toString();
         
         //FIXME: Is this correct?! Seems not to work in RCA :(
         //emfReader.setUri("platform:/resource" + stringUri);
@@ -760,8 +760,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // Set model name (gets model.maude)
         GlobalVar modelname = new GlobalVar();
         modelname.setName("modelname");
-        String stringUri2 = stringUri.replace(".uml", "");
-        stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1));
+        // Try to exchange file extension
+        String stringUri2 = stringUri;
+        if (stringUri.lastIndexOf(".uml") > 0) {
+            stringUri2 = stringUri.substring(0, stringUri.lastIndexOf(".uml"));
+        }
+        stringUri2 = stringUri2.substring(stringUri2.lastIndexOf("/")+1);
         modelname.setValue(stringUri2);
         
 //        blaaa = "1";

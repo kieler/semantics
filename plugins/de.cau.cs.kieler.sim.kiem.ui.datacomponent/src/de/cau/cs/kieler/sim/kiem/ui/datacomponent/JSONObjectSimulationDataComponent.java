@@ -489,6 +489,17 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     
     // -------------------------------------------------------------------------
 
+    protected URI getInputModelAsURI() {
+        String file = getInputModel();
+        if (file != null) {
+            URI uri = URI.createURI("file://" + file.replaceAll(" ", "%20").replace("\\", "/"));//.replaceAll(" ", "%20"));
+            return uri;
+        }
+        return null;
+    }
+
+    // -------------------------------------------------------------------------
+
     protected String getInputModel() {
         IEditorPart diagramEditor = this.getInputEditor();
 
@@ -517,7 +528,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         //Ensure it is absolute
         fullPath.makeAbsolute();
         
-        java.io.File javaFile = fullPath.toFile();
+        java.io.File javaFile = new File(fullPath.toString().replaceAll("%20", " "));
         
         if (javaFile.exists()) {
             String fileString = javaFile.getAbsolutePath();

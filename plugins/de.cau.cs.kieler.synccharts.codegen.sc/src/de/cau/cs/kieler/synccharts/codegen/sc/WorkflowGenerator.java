@@ -129,6 +129,24 @@ public class WorkflowGenerator {
         myModel = rootRegion;
     }
 
+
+    /**
+     * The constructor to use a given diagram (as *.kixs file) for generating
+     * code.
+     * 
+     * @param fileLocation
+     *            the location of the given diagram file
+     */
+    public WorkflowGenerator(final URI fileLocation) {
+        uri = fileLocation;
+        uriString = fileLocation.toString();
+        // location for the sc file in the KIELER workspace
+        ResourceSet resourceSet = new ResourceSetImpl();
+        Resource resource = resourceSet.getResource(fileLocation, true);
+        Region rootRegion = (Region) resource.getContents().get(0);
+        myModel = rootRegion;
+    }    
+    
     /**
      * Invocation of the workflow. Prepares the environment for generating code.
      * 
