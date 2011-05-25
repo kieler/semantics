@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER Xtext Modeling Utility
+Bundle-SymbolicName: de.cau.cs.kieler.core.model.xtext
+Bundle-Version: 0.1.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.core.model.xtext.ModelXtextPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.core.model,
+ org.eclipse.xtext;bundle-version="1.0.2",
+ org.eclipse.xtext.ui;bundle-version="1.0.2"
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.core.model.xtext,
+ de.cau.cs.kieler.core.model.xtext.util

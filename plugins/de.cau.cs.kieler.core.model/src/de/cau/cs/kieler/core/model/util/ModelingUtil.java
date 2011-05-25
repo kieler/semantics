@@ -16,7 +16,6 @@ package de.cau.cs.kieler.core.model.util;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EClassifier;
@@ -24,18 +23,6 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorSite;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
-
-import de.cau.cs.kieler.core.annotations.NamedObject;
 
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
@@ -46,55 +33,10 @@ import de.cau.cs.kieler.core.annotations.NamedObject;
  */
 public final class ModelingUtil {
 
-    private ModelingUtil() {
-
-    }
-
-    private static EObject xtextModel = null;
-
     /**
-     * Get the model from a given xtext editor.
-     * 
-     * @param xtextEd
-     *            the editor
-     * @return the model
+     * Private constructor to avoid instantiation.
      */
-    public static EObject getModelFromXtextEditor(final XtextEditor xtextEd) {
-        checkForDirtyEditor(xtextEd);
-        IXtextDocument docu = xtextEd.getDocument();
-
-        if (docu instanceof XtextDocument) {
-            XtextDocument document = (XtextDocument) docu;
-
-            document.readOnly(new Void<XtextResource>() {
-
-                @Override
-                public void process(final XtextResource state) throws Exception {
-                    if (state != null) {
-                        List<EObject> eObj = state.getContents();
-
-                        if (!eObj.isEmpty()) {
-                            xtextModel = eObj.get(0);
-                        }
-                    }
-
-                }
-            });
-        }
-        return xtextModel;
-    }
-
-    private static void checkForDirtyEditor(final XtextEditor diagramEditor) {
-        if (diagramEditor.isDirty()) {
-            final Shell shell = Display.getCurrent().getShells()[0];
-            boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
-                    + diagramEditor.getEditorInput().getName() + "'"
-                    + " has been modified. Save changes before simulating? (recommended)");
-            if (b) {
-                IEditorSite part = diagramEditor.getEditorSite();
-                part.getPage().saveEditor((IEditorPart) part.getPart(), false);
-            }
-        }
+    private ModelingUtil() {
     }
 
     /**
@@ -161,7 +103,7 @@ public final class ModelingUtil {
     }
 
     /**
-     * Method to translate a KIELER URI in an EMF Fragment URI.
+     * Translate a KIELER URI to an EMF Fragment URI.
      * 
      * @param kielerUri
      *            The KIELER URI referring an EObject.
@@ -171,6 +113,23 @@ public final class ModelingUtil {
      *         doesn't exists.
      */
     public static String kielerUriToFragmentUri(final String kielerUri, final Resource resource) {
+        return kielerUriToFragmentUri(kielerUri, resource, "name");
+    }
+    
+    /**
+     * Translate a KIELER URI to an EMF Fragment URI.
+     * 
+     * @param kielerUri
+     *            The KIELER URI referring an EObject.
+     * @param resource
+     *            The Resource holding the EObject.
+     * @param nameProperty
+     *            the name of the structural feature that is used to get a name for elements
+     * @return The Fragment URI for the EObject referred by the given KIELER URI. Null, if EObject
+     *         doesn't exists.
+     */
+    public static String kielerUriToFragmentUri(final String kielerUri, final Resource resource,
+            final String nameProperty) {
         String result = "";
 
         try {
@@ -183,6 +142,10 @@ public final class ModelingUtil {
         }
 
         if (kielerUri.startsWith("//")) {
+            // derive a method name from the name property
+            String nameMethod = "get" + Character.toUpperCase(nameProperty.charAt(0))
+                    + nameProperty.substring(1);
+            
             // only one root node present, no translation necessary
             EObject root = resource.getContents().get(0);
             result = "/";
@@ -206,13 +169,19 @@ public final class ModelingUtil {
                 String currentResult = new String(result);
                 for (EObject eo : root.eContents()) {
                     // iterate through the current level and find the NamedObject with the same name
-                    if (eo instanceof NamedObject) {
-                        if (((NamedObject) eo).getName().equals(currentUri.split("\\.")[1])) {
-                            result += ((InternalEObject) eo.eContainer()).eURIFragmentSegment(
-                                    eo.eContainingFeature(), eo);
-                            root = eo;
-                            break;
+                    try {
+                        Object obj = eo.getClass().getMethod(nameMethod).invoke(eo);
+                        if (obj instanceof String) {
+                            String name = (String) obj;
+                            if (name.equals(currentUri.split("\\.")[1])) {
+                                result += ((InternalEObject) eo.eContainer()).eURIFragmentSegment(
+                                        eo.eContainingFeature(), eo);
+                                root = eo;
+                                break;
+                            }
                         }
+                    } catch (Exception exception) {
+                        // a lot can go wrong with reflection, so ignore it
                     }
                 }
                 if (currentResult.equals(result)) {
@@ -242,23 +211,44 @@ public final class ModelingUtil {
      * @return A KIELER URI corresponding to the Fragment URI.
      */
     public static String fragmentUriToKielerUri(final String fragmentUri, final Resource resource) {
-        String result = "";
+        return fragmentUriToKielerUri(fragmentUri, resource, "name");
+    }
+    
+    /**
+     * Method to get a (more readable) KIELER URI from a EMF Fragment URI and its resource. Will
+     * return the Fragment URI, if EObjects are not NamedObjects.
+     * 
+     * @param fragmentUri
+     *            The Fragment URI from which the KIELER URI is generated (must not be null).
+     * @param resource
+     *            The resource in which the referred EObject is held.
+     * @param nameProperty
+     *            the name of the structural feature that is used to get a name for elements
+     * @return A KIELER URI corresponding to the Fragment URI.
+     */
+    public static String fragmentUriToKielerUri(final String fragmentUri, final Resource resource,
+            final String nameProperty) {
+        // derive a method name from the name property
+        String nameMethod = "get" + Character.toUpperCase(nameProperty.charAt(0))
+                + nameProperty.substring(1);
         InternalEObject ieo = (InternalEObject) resource.getEObject(fragmentUri);
         InternalEObject container = (InternalEObject) ieo.eContainer();
 
         if (container != null) {
-            if (ieo instanceof NamedObject) {
-                result = fragmentUriToKielerUri(getFragmentUri(container), resource) + "/" + "@"
-                        + ieo.eContainingFeature().getName() + "." + ((NamedObject) ieo).getName();
-            } else {
-                result = fragmentUriToKielerUri(getFragmentUri(container), resource) + "/"
-                        + container.eURIFragmentSegment(ieo.eContainingFeature(), ieo);
+            try {
+                Object obj = ieo.getClass().getMethod(nameMethod).invoke(ieo);
+                if (obj instanceof String) {
+                    String name = (String) obj;
+                    return fragmentUriToKielerUri(getFragmentUri(container), resource) + "/" + "@"
+                            + ieo.eContainingFeature().getName() + "." + name;
+                }
+            } catch (Exception exception) {
+                // a lot can go wrong with reflection, so ignore it
             }
-        } else {
-            result = "/";
+            return fragmentUriToKielerUri(getFragmentUri(container), resource) + "/"
+                    + container.eURIFragmentSegment(ieo.eContainingFeature(), ieo);
         }
-
-        return result;
+        return "/";
     }
 
     /**

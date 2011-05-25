@@ -26,7 +26,7 @@ import org.eclipse.xtext.validation.CheckMode;
 
 import com.google.inject.Injector;
 
-import de.cau.cs.kieler.core.model.validation.AbstractXtextEditorValidationActionFactory;
+import de.cau.cs.kieler.core.model.xtext.AbstractXtextEditorValidationActionFactory;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;

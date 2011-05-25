@@ -28,8 +28,6 @@ import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.jface.util.PropertyChangeEvent;
-import org.eclipse.xtext.validation.CompositeEValidator;
-import org.eclipse.xtext.validation.CompositeEValidator.EValidatorEqualitySupport;
 
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 
@@ -155,7 +153,7 @@ public final class ValidationManager {
      */
     private static boolean containsCustomValidator(final EValidator validator) {
         Queue<EValidator> validators = new LinkedList<EValidator>();
-        List<EValidator> seen = new LinkedList<EValidator>();
+        Set<EValidator> seen = new HashSet<EValidator>();
         validators.add(validator);
 
         while (!validators.isEmpty()) {
@@ -165,17 +163,23 @@ public final class ValidationManager {
             if (val instanceof CustomEValidator) {
                 return true;
             }
-            if (val instanceof CompositeEValidator) {
-                CompositeEValidator comp = (CompositeEValidator) val;
-                List<EValidatorEqualitySupport> contents = comp.getContents();
-
-                for (EValidatorEqualitySupport eval : contents) {
-                    EValidator delegate = eval.getDelegate();
-                    if (!seen.contains(delegate)
-                            && !validators.contains(delegate)) {
-                        validators.add(delegate);
+            
+            // use reflection to avoid reference to the Xtext classes
+            try {
+                Object contents = val.getClass().getMethod("getContents").invoke(val);
+                if (contents instanceof List<?>) {
+                    for (Object elem : (List<?>) contents) {
+                        Object delegate = elem.getClass().getMethod("getDelegate").invoke(elem);
+                        if (delegate instanceof EValidator) {
+                            EValidator childVal = (EValidator) delegate;
+                            if (!seen.contains(childVal) && !validators.contains(childVal)) {
+                                validators.add(childVal);
+                            }
+                        }
                     }
                 }
+            } catch (Exception e) {
+                // a lot of things can go wrong with reflection - ignore them
             }
         }
         return false;
