@@ -558,6 +558,8 @@ Void n2wBuildTriggerFinalState(synccharts::State finalState,
   let newTransition = new synccharts::Transition:
    //construct a new self transition 
    newTransition.setTargetState(finalState) ->
+   //
+   newTransition.setPriority(finalState.outgoingTransitions.size+100) ->
    //add self transition
    finalState.outgoingTransitions.add(newTransition) ->
    //add emission for all incoming transitions
