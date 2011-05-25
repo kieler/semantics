@@ -233,6 +233,10 @@
          version="0.0.0"
          search-location="self"/>
 
+   <includes
+         id="org.eclipse.jdt"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.jdt.core"
          download-size="0"
