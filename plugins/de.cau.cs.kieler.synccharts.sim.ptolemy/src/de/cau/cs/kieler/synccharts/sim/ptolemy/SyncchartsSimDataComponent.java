@@ -17,6 +17,9 @@ package de.cau.cs.kieler.synccharts.sim.ptolemy;
 import java.io.File;
 import java.net.URL;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
@@ -259,9 +262,15 @@ public class SyncchartsSimDataComponent extends
         }
 
         ResourceSet resourceSet = new ResourceSetImpl();
-        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
-                + ".moml").getAbsolutePath());
+//        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
+//                + ".moml").getAbsolutePath());
+        
+        URI fileUri = URI.createURI("file://"+this.getInputModel());
+        fileUri = URI.createURI(fileUri.toString().substring(0,fileUri.toString().lastIndexOf(".kixs")) + ".moml");
+        
         ptolemyModel = resourceSet.createResource(fileUri);
+        
+        System.out.println(ptolemyModel);
 
         // Workflow
         Workflow workflow = new Workflow();
@@ -320,7 +329,16 @@ public class SyncchartsSimDataComponent extends
         SyncchartsSimPtolemyPlugin.DEBUG(issues.getIssues().toString());
         SyncchartsSimPtolemyPlugin.DEBUG(issues.getWarnings().toString());
         SyncchartsSimPtolemyPlugin.DEBUG(issues.getErrors().toString());
+
+        // Refresh the file explorer
+        try {
+            ResourcesPlugin.getWorkspace().getRoot()
+                    .refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e2) {
+            e2.printStackTrace();
+        }
     }
+    
 
     // -------------------------------------------------------------------------
 
