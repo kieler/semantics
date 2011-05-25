@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="de.cau.cs.kieler.synccharts"
-      label="SyncCharts Editing/Simulation/Code Gen"
+      label="KIELER SyncCharts Editing/Simulation/Code Gen"
       version="0.5.0.qualifier"
       provider-name="Christian-Albrechts-University of Kiel">
 
