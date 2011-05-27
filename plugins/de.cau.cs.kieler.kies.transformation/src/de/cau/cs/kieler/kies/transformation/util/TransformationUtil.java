@@ -378,6 +378,8 @@ public final class TransformationUtil {
             xtextResource.save(null);
 
         } catch (Exception e) {
+            e.printStackTrace();
+            
             Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                     "Problem parsing the Esterel file.", e);
             StatusManager.getManager().handle(myStatus, StatusManager.SHOW);

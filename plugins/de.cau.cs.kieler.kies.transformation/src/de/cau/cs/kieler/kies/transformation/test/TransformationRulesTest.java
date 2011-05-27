@@ -59,7 +59,7 @@ import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.Transformati
 public class TransformationRulesTest {
 
     // FIXME
-    private String pathToWS = "/../eclipseWS4/";
+    private String pathToWS = "/../HELIOS/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
 
