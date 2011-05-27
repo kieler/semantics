@@ -168,18 +168,24 @@ Void ruleAbort(State s, Abort a):
  	(AbortInstance.isInstance(a.body) ?
  		// INSTANCE
 	 	handleAbortCaseSingle(r, initState, 1, 
-	 		((AbortInstance)a.body).delay,
-	 		((AbortInstance)a.body).statement,
+	 		a.body.toAbortInstance().delay,
+	 		a.body.toAbortInstance().statement,
 	 		WeakAbort.isInstance(a)) 
  	:
  		// CASES
- 		(toFinalTrans.setPriority(((AbortCase)a.body).cases.size + 1) ->
-	 	handleAbortCases(r, initState, 1, ((AbortCase)a.body).cases, WeakAbort.isInstance(a)))
+ 		(toFinalTrans.setPriority(a.body.toAbortCase().cases.size + 1) ->
+	 	handleAbortCases(r, initState, 1, a.body.toAbortCase().cases, WeakAbort.isInstance(a)))
 	) -> 	
 	toFinalTrans.connectTransition(initState, finalState) ->
 	// handle abort's body statement
 	finalizeRule(initState, a.statement)
 ;
+
+// CHSCH: just some helper to get rid of the down false positive markers
+AbortInstance toAbortInstance(EObject o): o;
+AbortCase toAbortCase(EObject o): o;
+
+
 		
 Void handleAbortCases(Region parent, State source, Integer prio, List[AbortCaseSingle] cases, boolean weak):
 	(cases.size > 1) ?
@@ -285,13 +291,19 @@ Void rule(State s, Do d):
  	// ERRORMARKERS are not really errors!
  	// handle end
  	((DoUpto.isInstance(d.end)) ? 
- 		handleDoUpto(s, initState, r, (DoUpto) d.end)
+ 		handleDoUpto(s, initState, r, d.end.toDoUpto())
  		:
- 		handleDoWatching(s, initState, r, (DoWatching) d.end)
+ 		handleDoWatching(s, initState, r, d.end.toDoWatching())
  	) ->
 
 	finalizeRule(initState, d.statement)
 ;
+
+// CHSCH: just some helper to get rid of the down false positive markers
+DoUpto toDoUpto(EObject o): o;
+DoWatching toDoWatching(EObject o): o;
+
+		
 
 /** !-
  * rule 10 (doupto)
