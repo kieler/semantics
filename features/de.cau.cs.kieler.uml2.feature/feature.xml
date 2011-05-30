@@ -454,14 +454,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.klay.planar"
+         id="de.cau.cs.kieler.kiml.service"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.kiml.service"
+         id="de.cau.cs.kieler.klay.layered"
          download-size="0"
          install-size="0"
          version="0.0.0"
