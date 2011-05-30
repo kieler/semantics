@@ -27,7 +27,7 @@
          </state>
       </command>
    </extension>
-   <extension
+   <!-- extension
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="toolbar:de.cau.cs.kieler?after=de.cau.cs.kieler.kiml.ui.command.layout">
@@ -38,7 +38,7 @@
                style="toggle">
          </command>
       </menuContribution>
-   </extension>
+   </extension -->
    <extension
          point="org.eclipse.emf.compare.diff.mergerprovider">
       <mergerprovider
