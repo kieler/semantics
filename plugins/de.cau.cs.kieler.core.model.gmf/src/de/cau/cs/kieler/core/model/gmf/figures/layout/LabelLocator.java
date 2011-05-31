@@ -56,16 +56,14 @@ public class LabelLocator extends BorderItemLocator {
      */
     @Override
     public void relocate(final IFigure borderItem) {
-        //gmf sets the constraint to 0,5 if no user constraint is set. 
-        if (this.getConstraint().x == 0 && this.getConstraint().y == 5){
+        // gmf sets the constraint to 0,5 if no user constraint is set.
+        // SUPPRESS CHECKSTYLE NEXT MagicNumber
+        if (this.getConstraint().x == 0 && this.getConstraint().y == 5) {
             Rectangle validLocation = getValidLocation(null, borderItem);
             borderItem.setBounds(validLocation);
         } else {
             Point absoluteLocation = this.getAbsoluteToBorder(this.getConstraint().getLocation());
-            //Rectangle validLocation = getValidLocation(
-            //        new Rectangle(absoluteLocation, new Dimension(-1, -1)), borderItem);
             borderItem.setBounds(new Rectangle(absoluteLocation, borderItem.getPreferredSize()));
-            //borderItem.setBounds(validLocation);
         }
     }
 

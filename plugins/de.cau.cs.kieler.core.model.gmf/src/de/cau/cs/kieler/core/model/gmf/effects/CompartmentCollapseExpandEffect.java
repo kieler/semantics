@@ -34,7 +34,7 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
  * collapses.
  * 
- * @deprecated in some parts this effect is still specific to GMF only, see FIXMEs
+ * XXX in some parts this effect is still specific to GMF only, see FIXMEs
  * @author haf, mmu
  */
 public class CompartmentCollapseExpandEffect extends AbstractEffect {

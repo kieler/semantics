@@ -27,13 +27,16 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.LabelEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -41,7 +44,7 @@ import de.cau.cs.kieler.core.util.Maybe;
  * 
  * @author haf
  * 
- * @deprecated use {@link de.cau.cs.kieler.core.model.GraphicalFrameworkService} instead
+ * XXX for most functions use {@link de.cau.cs.kieler.core.model.GraphicalFrameworkService} instead
  */
 public final class GmfModelingUtil {
 
@@ -404,6 +407,23 @@ public final class GmfModelingUtil {
         } catch (Exception e) {
             e.printStackTrace();
             /* nothing, we simply return null if it cannot be found */
+        }
+        return null;
+    }
+    
+    /**
+     * Returns the label edit part of the given node.
+     * 
+     * @param editorPart a workbench part
+     * @param node a node object
+     * @return the label edit part, or {@code null} if none is found
+     */
+    public static EditPart getLabel(final IWorkbenchPart editorPart, final EObject node) {
+        EditPart nodeEditPart = new GmfFrameworkBridge().getEditPart(editorPart, node);
+        for (Object child : nodeEditPart.getChildren()) {
+            if (child instanceof LabelEditPart) {
+                return (LabelEditPart) child;
+            }
         }
         return null;
     }
