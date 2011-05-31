@@ -499,7 +499,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      * {@inheritDoc}
      */
     public BorderItemLocator getBorderItemLocatorByString(final String input, final IFigure parent,
-            final Object locator, final EObject object) {
+            final Object locator, final EObject object, CollapseStatus collapseStatus) {
         return null;
     }
 
