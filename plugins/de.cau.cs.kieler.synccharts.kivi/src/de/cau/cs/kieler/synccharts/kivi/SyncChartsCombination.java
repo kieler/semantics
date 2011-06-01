@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.model.gmf.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
+import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
@@ -97,6 +98,14 @@ public class SyncChartsCombination extends AbstractCombination {
     
     private static SyncChartsCombination instance;
     
+    /** parameter id for animation. */
+    private static final String ANIMATE = "de.cau.cs.kieler.kiml.animate";
+    /** parameter id for zoom to fit. */
+    private static final String ZOOM_TO_FIT = "de.cau.cs.kieler.kiml.zoomToFit";
+    /** parameter id for progress bar. */
+    private static final String PROGRESS_BAR = "de.cau.cs.kieler.kiml.progressBar";
+    
+    
     public SyncChartsCombination() {
         this.enableEffectRecording();
     }
@@ -128,6 +137,15 @@ public class SyncChartsCombination extends AbstractCombination {
                     CombinationParameter.BOOLEAN_TYPE),
             new CombinationParameter(FC_MODE, getPreferenceStore(), "Focus && Context",
                     "Collapse inactive states, expand active/history states.", true,
+                    CombinationParameter.BOOLEAN_TYPE),
+            new CombinationParameter(ANIMATE, getKIMLPreferenceStore(), "Animate",
+                    "Animates the automatic layout of a graph.", true,
+                    CombinationParameter.BOOLEAN_TYPE),
+            new CombinationParameter(ZOOM_TO_FIT, getKIMLPreferenceStore(), "Zoom to Fit",
+                    "Perform zoom to fit with automatic layout.", false,
+                    CombinationParameter.BOOLEAN_TYPE),
+            new CombinationParameter(PROGRESS_BAR, getKIMLPreferenceStore(), "Progress Bar",
+                    "Display a progress bar while performing automatic layout.", false,
                     CombinationParameter.BOOLEAN_TYPE) };
 
     /**
@@ -139,6 +157,11 @@ public class SyncChartsCombination extends AbstractCombination {
     public void execute(final ActiveStates activeStates) {
         instance = this;
         
+        IPreferenceStore preferenceStore = getKIMLPreferenceStore();
+        boolean animate = preferenceStore.getBoolean(ANIMATE);
+        boolean zoom = preferenceStore.getBoolean(ZOOM_TO_FIT);
+        boolean progressBar = preferenceStore.getBoolean(PROGRESS_BAR);
+        
         // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
             return;
@@ -149,8 +172,8 @@ public class SyncChartsCombination extends AbstractCombination {
                 || activeStates.getActiveStates().get(0).isEmpty()) {
             // schedule layout effect to ensure that layout is triggered after simulation is
             //completed and all undos are executed
-            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, true, false,
-                    true, true));
+            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
+                    true, animate));
             return;
         }
 
@@ -198,8 +221,8 @@ public class SyncChartsCombination extends AbstractCombination {
             FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
             focusEffect.addFocus(activeStates.getHistoryStates(), 0);
             this.schedule(focusEffect);
-            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, true, false,
-                    true, true));
+            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
+                    true, animate));
         }
     }
 
@@ -306,4 +329,14 @@ public class SyncChartsCombination extends AbstractCombination {
     public static SyncChartsCombination getInstance() {
         return instance;
     }
+    
+    /**
+     * Return the preference store for the KIML UI plugin.
+     * 
+     * @return the preference store
+     */
+    private static IPreferenceStore getKIMLPreferenceStore() {
+        return KimlUiPlugin.getDefault().getPreferenceStore();
+    }
+    
 }
