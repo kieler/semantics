@@ -34,7 +34,7 @@ String getStatePathAsName(synccharts::State state):
 
 // Tests if a transition has signals of which other signals are dependend.
 boolean hasDependentState(Transition transition):
-	JAVA Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
+	JAVA de.cau.cs.kieler.synccharts.s.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Returns a String for a region if a state has more than one inner regions

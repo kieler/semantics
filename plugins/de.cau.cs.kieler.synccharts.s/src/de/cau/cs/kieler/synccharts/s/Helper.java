@@ -1,3 +1,4 @@
+package de.cau.cs.kieler.synccharts.s;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -18,11 +19,6 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.StateType;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.TransitionType;
-import de.cau.cs.kieler.synccharts.s.CompareTransitions;
-import de.cau.cs.kieler.synccharts.s.Dependency;
-import de.cau.cs.kieler.synccharts.s.Graph;
-import de.cau.cs.kieler.synccharts.s.StateAndSignals;
-import de.cau.cs.kieler.synccharts.s.StatePlusTransition;
 
 /**
  * The Helper class provides some helping functions for the generation of code.

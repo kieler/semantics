@@ -79,18 +79,18 @@ List[Instruction] getReducedPrio(synccharts::Transition transition):
 
 // Returns the smallest thread priority of a state.
 int getSmallestThreadPriority(State state):
-	JAVA Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.s.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of a state. The state is not represented as weak
 // or strong but by the real nature of the given state.
 int getRealThreadPriority(synccharts::State state):
-	JAVA Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.s.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of a state represented as a weak state.
 int getWeakThreadPriority(synccharts::State state):
-	JAVA Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.s.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of the main thread.

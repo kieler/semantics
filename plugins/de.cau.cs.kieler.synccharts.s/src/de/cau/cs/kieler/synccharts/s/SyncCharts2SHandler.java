@@ -1,3 +1,4 @@
+package de.cau.cs.kieler.synccharts.s;
 import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
@@ -18,7 +19,6 @@ import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.s.Activator;
 
 public class SyncCharts2SHandler extends AbstractHandler implements IHandler {
 

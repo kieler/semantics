@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="SyncCharts2SHandler"
+            defaultHandler="de.cau.cs.kieler.synccharts.s.SyncCharts2SHandler"
             id="de.cau.cs.kieler.synccharts.s.synccharts2s"
             name="SyncCharts 2 S transformation">
       </command>

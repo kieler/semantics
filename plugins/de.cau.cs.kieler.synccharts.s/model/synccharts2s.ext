@@ -83,7 +83,7 @@ Void addAllStatesToMappingList(synccharts::State state):
 
 // Computation of the priority list like is was done in codegen.sc.
 cached List computeThreadPriorities(synccharts::State rootState):
-	JAVA Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.s.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
 
 
