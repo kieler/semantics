@@ -22,7 +22,7 @@ import java.util.List;
  * @author mim
  * 
  * @deprecated This class is used by KSBasE. For new implementations use the
- *             {@link TransformationDescriptor} instead.
+ *             {@link de.cau.cs.kieler.core.model.m2m.TransformationDescriptor} instead.
  */
 public abstract class AbstractTransformation {
     /**

@@ -31,7 +31,7 @@ import de.cau.cs.kieler.core.model.m2m.TransformException;
  * @author mim
  * 
  * @deprecated This class is used by KSBasE. For new implementations use the
- *             {@link ITransformationContext} instead.
+ *             {@link de.cau.cs.kieler.core.model.m2m.ITransformationContext} instead.
  */
 public interface ITransformationFramework {
 
