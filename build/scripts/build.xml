@@ -33,7 +33,8 @@
     <property name="doc.libExcludes"                     value="${system.doc.libExcludes}" />
     <property name="doc.destination"                     value="doc" />
     <property name="standard.doc.destination"            value="${doc.destination}" />
-    <property name="custom.doc.destination"              value="${doc.destination}" />
+    <property name="rating.doc.destination"              value="${doc.destination}" />
+    <property name="uml.doc.destination"                 value="${doc.destination}/classes.uml" />
     <property name="doc.doclets"                         value="com.sun.tools.doclets.standard.Standard" />
     <property name="doc.docletPath"                      value="." />
     <property name="doc.excludes"                        value=" "/>

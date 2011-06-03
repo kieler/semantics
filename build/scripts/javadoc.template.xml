@@ -17,6 +17,17 @@ ${feature.classpath}
 		</path>
 		<property name="eclipse.help" value="http://help.eclipse.org/helios" />
 
+        <!-- choose either rating doclet or UML doclet destination -->
+        <if>
+        <equals arg1="${doc.doclet}" arg2="de.cau.cs.kieler.doclets.UmlDoclet" />
+        <then>
+            <property name="destination" value="${basedir}/${uml.doc.destination}" />
+        </then>
+        <else>
+            <property name="destination" value="${basedir}/${rating.doc.destination}" />
+        </else>
+        </if>
+
         <if>
         <equals arg1="${doc.doclet}" arg2="com.sun.tools.doclets.standard.Standard" />
         <!-- argument set for the standard doclet -->
@@ -61,7 +72,7 @@ ${feature.classpath}
 	    <!-- argument set for other doclets -->
 	    <else>
 	        <javadoc access="protected"
-    			 destdir="${basedir}/${custom.doc.destination}"
+    			 destdir="${destination}"
 	    		 docletpathref="doclet.classpath"
 	    		 doclet="${doc.doclet}"
 	    		 packagenames="de.cau.cs.kieler.*"
