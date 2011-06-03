@@ -5,6 +5,15 @@
 ${feature.classpath}
 			<fileset dir="${doc.basedir}" includes="${doc.libIncludes}" excludes="${doc.libExcludes}" />
 		</path>
+		<path id="doclet.classpath">
+		    <pathelement path="${doc.docletPath}"/>
+		    <fileset dir="${baseLocation}/plugins">
+		      <include name="**/org.eclipse.emf.common_*.jar" />
+		      <include name="**/org.eclipse.emf.ecore_*.jar" />
+		      <include name="**/org.eclipse.emf.ecore.xmi_*.jar" />
+		      <include name="**/org.eclipse.uml2.uml_*.jar" />
+		    </fileset>
+		</path>
 		<property name="eclipse.help" value="http://help.eclipse.org/helios" />
 
         <if>
@@ -52,7 +61,7 @@ ${feature.classpath}
 	    <else>
 	        <javadoc access="protected"
     			 destdir="${basedir}/${custom.doc.destination}"
-	    		 docletpath="${doc.docletPath}"
+	    		 docletpathref="doclet.classpath"
 	    		 doclet="${doc.doclet}"
 	    		 packagenames="de.cau.cs.kieler.*"
 	    		 classpathref="doc.classpath"
