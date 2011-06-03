@@ -106,6 +106,10 @@
 
         <!-- the following conditions will check the presence of certain properties
              and write definite values to new properties in order to pass them to the antRunner -->
+        <condition property="fetchSources" value="true" else="false">
+            <isset property="fetch.sources" />
+        </condition>
+        
         <condition property="suppress.clean" value="true" else="false">
             <isset property="no.clean" />
         </condition>
@@ -805,41 +809,53 @@
     
     <!-- =========================================================================================== -->
 
-    <target name="build.all.plugins" if="eclipse.running" depends="init"
+    <target name="build.all.plugins" if="eclipse.running" depends="init,cleanFolders"
         description="target for building all plugins in the 'plugins' folder">
 
         <mkdir dir="${basedir}/features/buildHelper" />
         <delete file="${basedir}/features/buildHelper/*" />
 
-        <!-- the following lines compute the pluginPath property automatically;
-             all archived artifacts will be considered except those produced by the current
-             job itself in order to avoid any confusions while generating the build scripts;
-             id and property have disjoint namespaces -->
+        <!-- the following lines compute the set of available plugins automatically -->
         <path id="pluginList">
-            <dirset dir="${basedir}/plugins/" includes="*" excludes="*.source_,${build.all.plugins.excludes}" />
+            <dirset dir="${basedir}/plugins/" includes="*" excludes="*.source_*,${build.all.plugins.excludes}">
+                <!-- the following is a weird construction for restricting to folders containing 
+                     plugin content, indicated by the presence of a MANIFEST.MF -->
+                <present targetdir="${basedir}/plugins/">
+                    <mapper type="glob" from="*" to="*/META-INF/MANIFEST.MF"/>
+                </present>
+            </dirset>
         </path>
-        <property name="folderList" value="${toString:pluginList}:" />
+        <property name="pluginList" value="${toString:pluginList}:" />
 
+        <!-- transform the colon separated plugin folder list into a feature.xml-compatible list
+             of plugin declarations, will be dumped into the property ${featureContent} -->
         <propertyregex
              global="true"
              casesensitive="false"
-             input="${folderList}"
+             input="${pluginList}"
              property="featureContent"
              regexp="(/[^/:]+)*/([^/:]*):"
              replace="   &lt;plugin${line.separator}         id=&quot;\2&quot;${line.separator}         download-size=&quot;0&quot;${line.separator}         install-size=&quot;0&quot;${line.separator}         version=&quot;0.0.0&quot;${line.separator}         unpack=&quot;false&quot; /&gt;${line.separator}${line.separator}" />
 
-
+        <!-- default definition if the above list is empty or the above statement fails-->
         <property name="featureContent" value=" " />
 
-        <!-- echo message="${featureContent}" / -->
-
+        <!-- composition of the final feature.xml and build.properties files -->
         <concat destfile="${basedir}/features/buildHelper/feature.xml">&lt;feature id=&quot;buildHelper&quot; version=&quot;1.0.0&quot; &gt;${line.separator}${featureContent}  &lt;/feature&gt;</concat>
         <concat destfile="${basedir}/features/buildHelper/build.properties">bin.includes = feature.xml${line.separator}generate.feature@buildHelper.source = buildHelper</concat>
 
+        <!-- invocation of the build of the above synthesized feature.xml,
+             this way the pde tooling cares about resolving the plugin dependencies and classpaths -->
         <antcall target="build.feature">
             <param name="feature" value="buildHelper" />
         </antcall>
 
+        <!-- delete intermediary build artifacts as svn-deleted plugin folders won't be removed completely
+             during the svn update at the beginning of the build otherwise -->
+        <delete includeemptydirs="true">
+            <dirset dir="${basedir}/plugins/" includes="*/@dot" />
+            <!-- fileset dir="${basedir}/plugins/" includes="*/build.xml" / -->
+        </delete>
     </target>
     
     <!-- =========================================================================================== -->
@@ -890,6 +906,32 @@
 
         <antcall target="postprocess.rca" />
 
+    </target>
+    
+    <!-- =========================================================================================== -->
+
+    <target name="test" description="target platform specific post processings">
+        <!-- path id="ini" -->
+        <property name="buildLabel2" location="N.kielerSlim" />
+            <path id="zip">
+                <first>
+                    <fileset dir="${basedir}/${buildLabel}">
+                        <include name="*.zip" />
+                    </fileset>
+                </first>
+            </path>
+
+        <echo message="${basename}" />
+
+        <copy todir="${basedir}/test" overwrite="true" verbose="true">
+            <!-- zipfileset refid="ini" / -->
+        <zipfileset id="ini" src="${toString:zip}">
+            <patternset includes="${basename}/*.app/Contents/MacOS/*.ini" />
+            <patternset includes="*/*.ini" />
+        </zipfileset>
+        </copy>
+        <echo message="${toString:zip}" />
+        <echo message="${toString:ini}" />
     </target>
     
     <!-- =========================================================================================== -->
@@ -952,7 +994,6 @@
             <patternset includes="${basename}/${basename}.app/Contents/MacOS/${basename}.ini" />
             <patternset includes="${basename}/${basename}.ini" />
             <patternset includes="${basename}/configuration/config.ini" />
-            <patternset includes="${executables}" />
         </unzip>
         
         <!-- copy file="${config.dir}/config.ini" tofile="${basedir}/${buildLabel}/${platform}/${basename}/configuration/config.ini" overwrite="true" / -->
@@ -994,6 +1035,8 @@
         <property name="doc.basedir"             value="${hudson.home}/jobs" />
         <property name="doc.includes"            value="*/workspace/plugins/**/*.java" />
         <property name="doc.includes.buildfiles" value="*/workspace/plugins/*/build.xml" />
+
+        <echo message="${doc.basedir} / ${doc.includes.buildfiles}" />
 
         <!-- first, we need to gather the classpath path entries from plugin's generated build files -->
         <loadfile property="feature.classpath">
@@ -1055,3 +1098,4 @@
     </target>
 
 </project>
+
