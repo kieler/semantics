@@ -1,5 +1,0 @@
-<project name="transform feature to project set" default="f2p" basedir=".">
-	<target name="f2p">
-		<xslt style="feature2projectset.xsl" in="feature.xml" out="projectSet.psf"/>
-	</target>
-</project>

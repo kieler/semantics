@@ -1,0 +1,10 @@
+<project name="Transform feature to project set" default="f2p" basedir=".">
+
+	<property name="transformation.file" value="feature2projectset.xsl" />
+	<property name="feature.file" value="feature.xml" />
+	<property name="projectset.file" value="projectSet.psf" />
+	
+	<target name="f2p">
+		<xslt style="${transformation.file}" in="${feature.file}" out="projectset.file"/>
+	</target>
+</project>
