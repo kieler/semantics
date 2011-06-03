@@ -12,7 +12,7 @@
     <target name="all">
       <foreach param="feature.dir" target="f2p">
         <path>
-          <dirset dir="${build.basedir}" includes="*" />
+          <dirset dir="${build.basedir}" includes="**/features/*" />
         </path>
       </foreach>
     </target>
