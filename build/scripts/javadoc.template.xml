@@ -12,6 +12,7 @@ ${feature.classpath}
 		      <include name="**/org.eclipse.emf.ecore_*.jar" />
 		      <include name="**/org.eclipse.emf.ecore.xmi_*.jar" />
 		      <include name="**/org.eclipse.uml2.uml_*.jar" />
+              <include name="**/org.eclipse.uml2.common_*.jar" />
 		    </fileset>
 		</path>
 		<property name="eclipse.help" value="http://help.eclipse.org/helios" />
