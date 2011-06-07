@@ -44,6 +44,39 @@ context Transition
 context State
  WARNING "SC: On exit actions are not supported!" : 
  exitActions == null || exitActions.isEmpty;
+
+
+context State
+ WARNING "SC: Final states must not have outgoing transitions!" : 
+ outgoingTransitions == null || outgoingTransitions.isEmpty || isFinal == false;
+
+
+context State
+ WARNING "SC: Final states must not have inner actions!" : 
+ innerActions == null || innerActions.isEmpty || isFinal == false;
+
+
+// This rule tries to find for every region a final state if the macro state is a
+// final state (otherwise this final state will never terminate with SC, with
+// Ptolemy this is no problem)
+Boolean containsFinalState(Region region):
+  !(region.states.containsFinalState().select(e|e == true).isEmpty)
+;
+Boolean containsFinalState(State state):
+ (
+   (state.isFinal && state.regions.isEmpty)
+   ||
+   (state.isFinal && (state.regions.containsFinalState().select(e|e == true) 
+                      == 
+                      state.regions.containsFinalState()
+                     )
+   )
+ )
+;
+context State
+ WARNING "SC: Final states that are macro states only terminate if all inner states terminate!\nFor this all final macro states should contain final states!" : 
+ !this.isFinal || this.regions.isEmpty || this.containsFinalState();
+
  
 context State
  WARNING "SC: Suspension is not supported!" :
