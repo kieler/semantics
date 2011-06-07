@@ -71,7 +71,7 @@ ${feature.classpath}
 	    </then>
 	    <!-- argument set for other doclets -->
 	    <else>
-	        <javadoc access="protected"
+	        <javadoc access="private"
     			 destdir="${destination}"
 	    		 docletpathref="doclet.classpath"
 	    		 doclet="${doc.doclet}"
