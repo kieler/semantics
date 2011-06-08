@@ -61,10 +61,11 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * @param maxHierarchyLevels maximal number of reported hierarchy levels
      */
     @Override
-    protected void doBegin(final String name, final int totalWork,
+    protected void doBegin(final String name, final float totalWork,
             final boolean topInstance, final int maxHierarchyLevels) {
         if (topInstance) {
-            progressMonitor.beginTask(name, totalWork <= 0 ? IProgressMonitor.UNKNOWN : totalWork);
+            progressMonitor.beginTask(name, (int) (totalWork <= 0
+                    ? IProgressMonitor.UNKNOWN : totalWork));
         } else if (maxHierarchyLevels != 0) {
             progressMonitor.subTask(name);
         }
@@ -104,7 +105,7 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * @return a new progress monitor instance
      */
     @Override
-    public BasicProgressMonitor doSubTask(final int work, final int maxHierarchyLevels) {
+    public BasicProgressMonitor doSubTask(final float work, final int maxHierarchyLevels) {
         if (maxHierarchyLevels > 0) {
             return new KielerProgressMonitor(progressMonitor, maxHierarchyLevels - 1);
         } else {
