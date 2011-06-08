@@ -632,11 +632,15 @@ _L_DISPATCH: dispatch();
   } while (0)
 
 
+//  disable(_cid);							\
+//  deactivate(_cid);							\
+//  disableSet(_descs[_cid]);						\
+//  deactivateSet(_descs[_cid]); \
+
+
 //! Helper function (if/else-unsafe)
 #ifdef _SC_INLINE_DISPATCH
 #define TERM_								\
-  disable(_cid);							\
-  deactivate(_cid);							\
   trace1t("TERM:", "terminates, enabled = %s\n", _id2str(enabled, _cid)) \
   dispatch_
 #else

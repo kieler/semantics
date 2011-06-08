@@ -17,10 +17,14 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
 import java.io.File;
 import java.io.IOException;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -38,6 +42,8 @@ import org.eclipse.emf.mwe.utils.Reader;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
+import org.eclipse.jface.viewers.ISelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -105,6 +111,35 @@ public class WorkflowGenerator {
 //    }
 
     
+    public static String getAbsoultePath(final URI uri) {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+
+        IPath path = new Path(uri.toPlatformString(false));
+        IFile file = myWorkspaceRoot.getFile(path);
+
+        IPath fullPath = file.getLocation();
+
+        // If we have spaces, try it like this...
+        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) file;
+            fullPath = resource.getLocalManager().locationFor(resource);
+        }
+
+        // Ensure it is absolute
+        fullPath.makeAbsolute();
+
+        java.io.File javaFile = fullPath.toFile();
+
+        if (javaFile.exists()) {
+            String fileString = javaFile.getAbsolutePath();
+            return fileString;
+        }
+
+        // Something went wrong, we could not resolve the file location
+        return null;
+    }
+    
+    
     public String getOutPathFromUI() {
         IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getActivePage();
@@ -122,7 +157,7 @@ public class WorkflowGenerator {
     public WorkflowGenerator(final String fileLocation) {
         // location for the sc file in the KIELER workspace
         uriString = fileLocation;
-        uri = URI.createURI(uriString);
+        uri = URI.createURI("file://"+uriString);
         ResourceSet resourceSet = new ResourceSetImpl();
         Resource resource = resourceSet.getResource(uri, true);
         Region rootRegion = (Region) resource.getContents().get(0);
@@ -157,14 +192,6 @@ public class WorkflowGenerator {
      *            the path where the generated files should be written
      */
     public void invokeWorkflow(final boolean sim, final String path) {
-        // EMF reader
-        Reader emfReader = new Reader();
-        emfReader.setUri(uriString);
-        emfReader.setModelSlot("model");
-
-        // name of the file (from root state)
-        String filename = ((Region) myModel).getStates().get(0).getId();
-
         // Meta model
         EmfMetaModel metaModel1 = new EmfMetaModel(KExpressionsPackage.eINSTANCE);
         EmfMetaModel metaModel2 = new EmfMetaModel(SyncchartsPackage.eINSTANCE);
@@ -174,9 +201,40 @@ public class WorkflowGenerator {
         if (sim) {
             outPath = path;
         } else {
-            outPath = getOutPathFromUI();
+                URI output = URI.createURI("");
+                URI input = URI.createURI("");
+
+                // get input model from currently selected file in Explorer
+                ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                        .getSelectionService().getSelection();
+                org.eclipse.core.internal.resources.File file = (org.eclipse.core.internal.resources.File)
+                                                                ((TreeSelection) selection).getFirstElement();
+                input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+
+                // get output model from input model
+                output = URI.createURI(input.toString());
+                output = output.trimFragment();
+                
+                uriString = getAbsoultePath(input);
+                
+                int index = uriString.lastIndexOf(System.getProperty("file.separator"));
+                
+                outPath = uriString;
+                if (index != -1) {
+                   outPath = uriString.substring(0, index+1); // part2Location(editor);
+                } 
+                
+                uriString = "file://"+uriString;
         }
 
+        // EMF reader
+        Reader emfReader = new Reader();
+        emfReader.setUri(uriString);
+        emfReader.setModelSlot("model");
+
+        // name of the file (from root state)
+        String filename = ((Region) myModel).getStates().get(0).getId();
+        
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
