@@ -253,10 +253,10 @@ public class WorkflowGenerator {
         varSim.setName("sim");
         if (sim) {
             varSim.setValue(true);
-            generator.setExpand("template::SimCodegen::main FOR model");
+            generator.setExpand("templates::SimCodegen::main FOR model");
         } else {
             varSim.setValue(false);
-            generator.setExpand("template::Codegen::main FOR model");
+            generator.setExpand("templates::Codegen::main FOR model");
         }
         generator.addGlobalVar(varSim);
         generator.addGlobalVar(varName);
