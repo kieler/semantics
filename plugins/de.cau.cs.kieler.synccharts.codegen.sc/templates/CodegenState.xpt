@@ -5,7 +5,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION template::Helper»
+«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
  
 «REM»
 	Defines the entry point of a state calls Xpand templated according to their structure. 

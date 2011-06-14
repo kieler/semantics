@@ -1,7 +1,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION templates::helper»
+«EXTENSION de::cau::cs::kieler::synccharts::copdegen::esterel::templates::helper»
 
 «DEFINE main FOR Region-»
 «FILE states.first().label + ".strl"-»

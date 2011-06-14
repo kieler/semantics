@@ -5,7 +5,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION template::Helper»
+«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
 
 «REM»
 	Entry point for triggers. It will be distinguished if

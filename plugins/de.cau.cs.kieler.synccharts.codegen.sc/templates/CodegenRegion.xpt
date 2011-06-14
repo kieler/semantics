@@ -4,7 +4,7 @@
 
 «IMPORT synccharts»
 
-«EXTENSION template::Helper»
+«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
 
 «REM»
 	For a region all inner states will be collected and the state templated will be
