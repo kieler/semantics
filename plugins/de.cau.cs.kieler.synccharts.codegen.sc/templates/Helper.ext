@@ -31,7 +31,7 @@ List sortTransitionPrios(State state):
 
 // Returns a sorted list of states.
 List sortStateControlFlow(State state):
-	JAVA template.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the URI of a state.
@@ -57,7 +57,7 @@ State getInitialState(Region region):
 
 // Returns a list of thread priorities.
 cached List computeThreadPriorities(State rootState):
-	JAVA template.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of the main thread.
@@ -68,32 +68,32 @@ cached int getMainTreadPriority(State rootState):
 // Returns the thread priority of a state. The state is not represented as weak
 // or strong but by the real nature of the given state.
 int getRealThreadPriority(State state):
-	JAVA template.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the optimized thread priority of a state.
 int getRealOptimizedThreadPriority(State state):
-	JAVA template.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of a state represented as a weak state.
 int getWeakThreadPriority(State rootState):
-	JAVA template.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the optimized thread priority of a state represented as a weak state.
 int getOptimizedWeakThreadPriority(State rootState):
-	JAVA template.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the smallest thread priority of a state.
 int getSmallestThreadPriority(State state):
-	JAVA template.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns a list with all signals in the SyncChart.
 cached List allSignals(State state):
-	JAVA template.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
 
@@ -104,7 +104,7 @@ State getInitialState(State state):
 
 // Returns the signal list of a state.
 cached List getStateSignals(State state):
-	JAVA template.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
+	JAVA templates.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the highest priority of the priority list.
@@ -119,25 +119,25 @@ cached int getHighestPriority(State state):
 
 // Tests if a transition has signals of which other signals are dependend.
 boolean hasDependentState(Transition transition):
-	JAVA template.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
+	JAVA templates.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Tests if a transition has signals that are dependend from other transitions.
 boolean isSignalDependent(Transition transition):
-	JAVA template.Helper.isSignalDependent(de.cau.cs.kieler.synccharts.Transition)
+	JAVA templates.Helper.isSignalDependent(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Returns the statename for labels.
 String getStateNameByFlag(State state, int flag):
-	JAVA template.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
+	JAVA templates.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
 ;
 
 Void debug(String s):
-	JAVA template.Helper.debug(java.lang.String)
+	JAVA templates.Helper.debug(java.lang.String)
 ;
 
 Void error(String s):
-	JAVA template.Helper.error(java.lang.String)
+	JAVA templates.Helper.error(java.lang.String)
 ;
 
 // Tests if a state is hierarchical root state without transitions and actions.
