@@ -81,7 +81,7 @@ public final class XtextModelingUtil {
             final Shell shell = Display.getCurrent().getShells()[0];
             boolean b = MessageDialog.openQuestion(shell, "Save Resource", "'"
                     + diagramEditor.getEditorInput().getName() + "'"
-                    + " has been modified. Save changes before simulating? (recommended)");
+                    + " has been modified. Save changes before simulating? (XtextModelingUtil)");
             if (b) {
                 IEditorSite part = diagramEditor.getEditorSite();
                 part.getPage().saveEditor((IEditorPart) part.getPart(), false);
