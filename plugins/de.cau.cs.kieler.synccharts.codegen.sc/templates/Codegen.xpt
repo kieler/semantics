@@ -6,7 +6,7 @@
 «IMPORT kexpressions»
 
 
-«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
+«EXTENSION templates::Helper»
 
 «REM»
 	The main template creates the file and starts the process of generating code.

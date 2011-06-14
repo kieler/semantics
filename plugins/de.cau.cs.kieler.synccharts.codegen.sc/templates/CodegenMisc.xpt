@@ -5,7 +5,7 @@
 «IMPORT kexpressions»
 «IMPORT synccharts»
 
-«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
+«EXTENSION templates::Helper»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
 «REM»

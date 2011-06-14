@@ -5,7 +5,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
+«EXTENSION templates::Helper»
 
 «REM»
 	Entry point for transitions. 

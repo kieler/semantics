@@ -4,7 +4,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION de::cau::cs::kieler::synccharts::codegen::sc::Helper»
+«EXTENSION templates::Helper»
 
 «DEFINE main FOR Region-»
 	«FILE "sim_data.c"-»
