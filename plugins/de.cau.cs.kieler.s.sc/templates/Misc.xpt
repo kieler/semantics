@@ -5,7 +5,10 @@
 «IMPORT s»
 «IMPORT kexpressions»
 
+«REM»
 «EXTENSION Extensions»
+«ENDREM»
+«EXTENSION de::cau::cs::kieler::s::sc::Extensions»
 
 
 «REM»

@@ -1,10 +1,13 @@
 «IMPORT s»
 «IMPORT kexpressions»
 
-«EXTENSION Extensions»
 «REM»
  EXTENSION templates::Extensions
 «ENDREM»
+«REM»
+«EXTENSION Extensions»
+«ENDREM»
+«EXTENSION de::cau::cs::kieler::s::sc::Extensions»
 
 «DEFINE main FOR Program-»
 	«FILE name + ".c"-»
