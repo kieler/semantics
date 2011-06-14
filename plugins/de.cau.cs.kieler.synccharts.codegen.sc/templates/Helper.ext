@@ -31,7 +31,7 @@ List sortTransitionPrios(State state):
 
 // Returns a sorted list of states.
 List sortStateControlFlow(State state):
-	JAVA templates.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.sortStateControlFlow(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the URI of a state.
@@ -57,7 +57,7 @@ State getInitialState(Region region):
 
 // Returns a list of thread priorities.
 cached List computeThreadPriorities(State rootState):
-	JAVA templates.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
+	JAVA de.cau.cs.kieler.synccharts.codegen.sc.Helper.computeThreadPriorities(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of the main thread.
@@ -68,32 +68,32 @@ cached int getMainTreadPriority(State rootState):
 // Returns the thread priority of a state. The state is not represented as weak
 // or strong but by the real nature of the given state.
 int getRealThreadPriority(State state):
-	JAVA templates.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getRealThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the optimized thread priority of a state.
 int getRealOptimizedThreadPriority(State state):
-	JAVA templates.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getRealOptimizedThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the thread priority of a state represented as a weak state.
 int getWeakThreadPriority(State rootState):
-	JAVA templates.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the optimized thread priority of a state represented as a weak state.
 int getOptimizedWeakThreadPriority(State rootState):
-	JAVA templates.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getOptimizedWeakThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the smallest thread priority of a state.
 int getSmallestThreadPriority(State state):
-	JAVA templates.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getSmallestThreadPriority(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns a list with all signals in the SyncChart.
 cached List allSignals(State state):
-	JAVA templates.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.allSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
 
@@ -104,7 +104,7 @@ State getInitialState(State state):
 
 // Returns the signal list of a state.
 cached List getStateSignals(State state):
-	JAVA templates.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getStateSignals(de.cau.cs.kieler.synccharts.State)
 ;
 
 // Returns the highest priority of the priority list.
@@ -119,25 +119,25 @@ cached int getHighestPriority(State state):
 
 // Tests if a transition has signals of which other signals are dependend.
 boolean hasDependentState(Transition transition):
-	JAVA templates.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.hasDependentState(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Tests if a transition has signals that are dependend from other transitions.
 boolean isSignalDependent(Transition transition):
-	JAVA templates.Helper.isSignalDependent(de.cau.cs.kieler.synccharts.Transition)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.isSignalDependent(de.cau.cs.kieler.synccharts.Transition)
 ;
 
 // Returns the statename for labels.
 String getStateNameByFlag(State state, int flag):
-	JAVA templates.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.getStateNameByFlag(de.cau.cs.kieler.synccharts.State, java.lang.Integer)
 ;
 
 Void debug(String s):
-	JAVA templates.Helper.debug(java.lang.String)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.debug(java.lang.String)
 ;
 
 Void error(String s):
-	JAVA templates.Helper.error(java.lang.String)
+	JAVA  de.cau.cs.kieler.synccharts.codegen.sc.Helper.error(java.lang.String)
 ;
 
 // Tests if a state is hierarchical root state without transitions and actions.

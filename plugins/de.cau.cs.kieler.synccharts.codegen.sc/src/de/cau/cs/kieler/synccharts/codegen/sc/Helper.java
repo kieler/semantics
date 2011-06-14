@@ -1,4 +1,4 @@
-package template;
+package de.cau.cs.kieler.synccharts.codegen.sc;
 
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient

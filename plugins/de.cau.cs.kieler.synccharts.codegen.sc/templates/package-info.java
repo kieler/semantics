@@ -17,4 +17,4 @@
  * The template package includes the main files to generate code. The Helper java 
  * class is a utility class to mainly compute the thread priorities for SC.
  */
-package template;
+package templates;
