@@ -7,7 +7,7 @@
 «REM»
 «EXTENSION Extensions»
 «ENDREM»
-«EXTENSION de::cau::cs::kieler::s::sc::Extensions»
+«EXTENSION templates::Extensions»
 
 «DEFINE main FOR Program-»
 	«FILE name + ".c"-»

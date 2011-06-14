@@ -8,7 +8,7 @@
 «REM»
 «EXTENSION Extensions»
 «ENDREM»
-«EXTENSION de::cau::cs::kieler::s::sc::Extensions»
+«EXTENSION templates::Extensions»
 
 
 «REM»
