@@ -37,6 +37,8 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Layout;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+
 /**
  * @author delphino
  * 
@@ -375,7 +377,9 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      */
     protected void focusLost() {
         if (isActivated() && !openingDialog) {
-            System.out.println("fireApplyEditorValue()");
+            if (KiemPlugin.DEBUG) {
+                System.out.println("fireApplyEditorValue()");
+            }
             if (text == null) {
                 fireApplyEditorValue();
                 deactivate();
