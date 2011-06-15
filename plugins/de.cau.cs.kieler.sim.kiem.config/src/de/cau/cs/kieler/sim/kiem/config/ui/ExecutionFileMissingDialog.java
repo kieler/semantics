@@ -27,8 +27,7 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 
 /**
- * The dialog for showing that the execution file is missing and dealing with
- * it.
+ * The dialog for showing that the execution file is missing and dealing with it.
  * 
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
@@ -44,8 +43,7 @@ public class ExecutionFileMissingDialog {
             + " with this schedule can't be found at the saved location."
             + " This can be caused by the file being deleted, moved, renamed or closing"
             + " the project the file is located in."
-            + " Do you want to enter a new location for it or should the schedule be"
-            + " deleted.";
+            + " Do you want to enter a new location for it or should the schedule be" + " deleted.";
 
     /** The text for the delete button. */
     public static final String DELETE = "Delete";
@@ -55,8 +53,7 @@ public class ExecutionFileMissingDialog {
     public static final String NEW_LOCATION = "Enter new location";
 
     /** All labels for the dialog. */
-    private static final String[] BUTTON_LABELS = { DELETE, NEW_LOCATION,
-            CANCEL };
+    private static final String[] BUTTON_LABELS = { DELETE, NEW_LOCATION, CANCEL };
 
     /** The parent shell. */
     private Shell parentShell;
@@ -72,8 +69,7 @@ public class ExecutionFileMissingDialog {
      * @param scheduleParam
      *            the faulty schedule
      */
-    public ExecutionFileMissingDialog(final Shell parentShellParam,
-            final ScheduleData scheduleParam) {
+    public ExecutionFileMissingDialog(final Shell parentShellParam, final ScheduleData scheduleParam) {
         this.parentShell = parentShellParam;
         this.schedule = scheduleParam;
     }
@@ -84,8 +80,8 @@ public class ExecutionFileMissingDialog {
      * @return the choice of the user
      */
     public String open() {
-        MessageDialog dialog = new MessageDialog(parentShell, DIALOG_TITLE,
-                null, DIALOG_MESSAGE, MessageDialog.ERROR, BUTTON_LABELS, 0);
+        MessageDialog dialog = new MessageDialog(parentShell, DIALOG_TITLE, null, DIALOG_MESSAGE,
+                MessageDialog.ERROR, BUTTON_LABELS, 0);
 
         switch (dialog.open()) {
         case 0:
@@ -109,29 +105,34 @@ public class ExecutionFileMissingDialog {
      */
     public String enterNewLocation(final boolean tryToOpen) {
 
-        ElementTreeSelectionDialog dlg = new ElementTreeSelectionDialog(
-                parentShell, new WorkbenchLabelProvider(),
-                new BaseWorkbenchContentProvider());
+        ElementTreeSelectionDialog dlg = new ElementTreeSelectionDialog(parentShell,
+                new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
         dlg.setTitle("Select the execution file.");
         dlg.setMessage("Select the execution file.");
         dlg.setInput(ResourcesPlugin.getWorkspace().getRoot());
         dlg.setAllowMultiple(false);
         int val = dlg.open();
-        if (val == 0) {
-            IPath newPath = ((File) dlg.getFirstResult()).getFullPath();
+        try {
+            if (val == 0) {
+                IPath newPath = ((File) dlg.getFirstResult()).getFullPath();
 
-            schedule.setLocation(newPath);
+                schedule.setLocation(newPath);
 
-            ScheduleManager.getInstance().save();
-            if (tryToOpen) {
-                try {
-                    ScheduleManager.getInstance().openSchedule(schedule);
-                    return NEW_LOCATION;
-                } catch (ScheduleFileMissingException e0) {
-                    return open();
+                ScheduleManager.getInstance().save();
+                if (tryToOpen) {
+                    try {
+                        ScheduleManager.getInstance().openSchedule(schedule);
+                        return NEW_LOCATION;
+                    } catch (ScheduleFileMissingException e0) {
+                        return open();
+                    }
                 }
+                return NEW_LOCATION;
             }
-            return NEW_LOCATION;
+        } catch (Exception e) {
+            // If anything goes wrong, if e.g. a closed folder is selected for the new location
+            // display the message box again.
+            return enterNewLocation(tryToOpen);
         }
         return CANCEL;
     }
