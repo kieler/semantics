@@ -41,5 +41,10 @@ public abstract class AbstractXtextEditorValidationActionFactory extends
         return false;
     }
 
+    /**
+     * Reveals the EPackage the check is registered for.
+     * 
+     * @return the EPackage the check is registered for.
+     */
     public abstract EPackage getEPackage();
 }

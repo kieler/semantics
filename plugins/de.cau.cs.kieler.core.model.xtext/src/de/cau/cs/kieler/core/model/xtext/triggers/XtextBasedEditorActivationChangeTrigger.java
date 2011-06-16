@@ -11,39 +11,38 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.model.xtext;
+package de.cau.cs.kieler.core.model.xtext.triggers;
 
-import java.util.Calendar;
-
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPart;
-import org.eclipse.ui.IWorkbenchPartReference;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
+import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
-import de.cau.cs.kieler.core.model.xtext.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType;
+import de.cau.cs.kieler.core.model.xtext.ModelXtextPlugin;
+import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType; // SUPPRESS CHECKSTYLE LineLength
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 
-
 /**
- * Implementation of {@link ITrigger} dedicated to Xtext-based editors.
- * Reacts on the following events: opening, receiving the focus, modifying of their content, and closing.   
+ * Implementation of {@link ITrigger} dedicated to Xtext-based editors. Reacts on the following
+ * events: opening, receiving the focus, modifying of their content, and closing.
  * 
  * @author chsch
  */
 public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger implements
-        ITrigger, IXtextModelListener, IPartListener, IPartListener2 {
+        ITrigger, IXtextModelListener, IPartListener {
 
     
     /**
@@ -85,14 +84,10 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         editor.getDocument().readOnly(new IUnitOfWork.Void<XtextResource>() {
 
             @Override
-            public void process(XtextResource resource) throws Exception {
-                if (resource.getErrors().isEmpty()) {
+            public void process(final XtextResource resource) throws Exception {
+                if (checkAndIndicateErrors(resource)) {
                     XtextBasedEditorActivationChangeTrigger.this.trigger(new XtextModelChangeState(
                             editor, (opened ? EventType.OPENED : EventType.FOCUSED), resource));
-                } else {
-                    StatusManager.getManager().addLoggedStatus(
-                            new Status(IStatus.INFO, ModelXtextPlugin.PLUGIN_ID, resource.getURI()
-                                    .lastSegment() + ": Model contains critical errors."));
                 }
             }
         });
@@ -106,8 +101,27 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         
     }
     
-    private void xtextEditorClosed(XtextEditor editor) {
+    private void xtextEditorClosed(final XtextEditor editor) {
         this.trigger(new XtextModelChangeState(editor, EventType.CLOSED));
+    }
+    
+    private boolean checkAndIndicateErrors(final XtextResource resource) {
+        final String msg = ": Model contains critical errors, hence no the KIVi is not triggered.";
+        if (resource.getErrors().isEmpty()) {
+            return true;
+        } else {
+            try {
+                IMarker marker;
+                marker = ResourceUtil.getUnderlyingFile(resource).createMarker(IMarker.PROBLEM);
+                marker.setAttribute(IMarker.MESSAGE, "Test");
+                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+            } catch (CoreException e) {
+                StatusManager.getManager().handle(
+                        new Status(IStatus.INFO, ModelXtextPlugin.PLUGIN_ID, resource.getURI()
+                                .lastSegment() + msg));
+            }
+            return true;
+        }
     }
     
     
@@ -118,9 +132,9 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void modelChanged(XtextResource resource) {
-        if (resource.getErrors().isEmpty()) {
-            System.out.println(Calendar.getInstance().get(Calendar.MINUTE) + " TRIGGER");
+    public void modelChanged(final XtextResource resource) {
+        if (checkAndIndicateErrors(resource)) {
+//            System.out.println(Calendar.getInstance().get(Calendar.MINUTE) + " TRIGGER");
             this.trigger(new XtextModelChangeState(this.currentEditor, EventType.MODIFIED, resource));
         }
     }
@@ -133,7 +147,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void partOpened(IWorkbenchPart part) {
+    public void partOpened(final IWorkbenchPart part) {
         if (part instanceof XtextEditor
                 && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
@@ -144,7 +158,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void partBroughtToTop(IWorkbenchPart part) {
+    public void partBroughtToTop(final IWorkbenchPart part) {
         if (part instanceof XtextEditor
                 && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
@@ -155,7 +169,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void partActivated(IWorkbenchPart part) {
+    public void partActivated(final IWorkbenchPart part) {
         if (part instanceof XtextEditor
                 && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
@@ -166,7 +180,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void partDeactivated(IWorkbenchPart part) {
+    public void partDeactivated(final IWorkbenchPart part) {
 //        if (part.equals(this.currentEditor)) {
 //            this.detachFromCurrentXtextEditor();
 //        }
@@ -175,7 +189,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     /**
      * {@inheritDoc}
      */
-    public void partClosed(IWorkbenchPart part) {
+    public void partClosed(final IWorkbenchPart part) {
         if (part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
         }
@@ -196,112 +210,117 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      */    
     public static class XtextModelChangeState extends AbstractTriggerState implements ITriggerState {
         
+        /**
+         * Type of event to be denoted. 
+         */
         public enum EventType { OPENED, FOCUSED, MODIFIED, CLOSED }
-        
-        public static final int NONE = 1; 
-        public static final int MODEL_DISPOSED = 1; 
         
         private XtextEditor editor = null;
         private EventType eventType = EventType.OPENED;
         private XtextResource resource = null;
         
+        /**
+         * Default constructor.
+         */
         public XtextModelChangeState() {            
         }
-        
-        public XtextModelChangeState(XtextEditor theEditor, EventType theEventType) {
+
+        /**
+         * Convenience constructor.
+         * 
+         * @param theEditor
+         *            the editor the event has taken place of.
+         * @param theEventType
+         *            the event type description.
+         */
+        public XtextModelChangeState(final XtextEditor theEditor, final EventType theEventType) {
             this(theEditor, theEventType, null);
         }
 
-        public XtextModelChangeState(XtextEditor theEditor, EventType theEventType, XtextResource theResource) {
+        /**
+         * Complete constructor.
+         * 
+         * @param theEditor
+         *            the editor the event has taken place of.
+         * @param theEventType
+         *            the event type description.
+         * @param theResource
+         *            resource that is maintained by the editor. This parameter can be supplied in
+         *            addition to the editor in order to avoid the costly grabbing via the
+         *            transaction mechanism.
+         */
+        public XtextModelChangeState(final XtextEditor theEditor, final EventType theEventType,
+                final XtextResource theResource) {
             this.editor = theEditor;
             this.eventType = theEventType;
             this.resource = theResource;
         }
 
+        /**
+         * {@inheritDoc}
+         */
         public Class<? extends ITrigger> getTriggerClass() {
             return XtextBasedEditorActivationChangeTrigger.class;
         }
         
+        /**
+         * Getter for the editor field.
+         * 
+         * @return the value of the editor field.
+         */
         public XtextEditor getEditor() {
             return this.editor;
         }
-        
+
+        /**
+         * Getter for the eventType field.
+         * 
+         * @return the value of the eventType field.
+         */
         public EventType getEventType() {
             return this.eventType;
         }
-        
+
+        /**
+         * Getter for the resource field.
+         * 
+         * @return the value of the resource field.
+         */
         public XtextResource getResource() {
             return this.resource;
         }
-        
-        public ITriggerState setEditor(XtextEditor theEditor) {
+
+        /**
+         * Setter for the editor field.
+         * 
+         * @param theEditor the new value for the editor field.
+         * @return the currently manipulated {@link ITriggerState} object.
+         */
+        public ITriggerState setEditor(final XtextEditor theEditor) {
             this.editor = theEditor;
             return this;
         }
-        
-        public ITriggerState setEventType(EventType theEventType) {
+
+        /**
+         * Setter for the eventType field.
+         * 
+         * @param theEventType the new value for the eventType field.
+         * @return the currently manipulated {@link ITriggerState} object.
+         */
+        public ITriggerState setEventType(final EventType theEventType) {
             this.eventType = theEventType;
             return this;
         }
         
-//        /**
-//         * {@inheritDoc}
-//         */
-//        @Override
-//        public void merge(final ITriggerState previous) {
-//            if (previous instanceof XtextModelChangeState
-//                    && this.resource.equals(((XtextModelChangeState) previous).resource)) {
-//            }
-//        }
-        
-    }
-
-
-    public void partOpened(IWorkbenchPartReference partRef) {
-    }
-    
-    
-    public void partActivated(IWorkbenchPartReference partRef) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    public void partVisible(IWorkbenchPartReference partRef) {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    
-    public void partBroughtToTop(IWorkbenchPartReference partRef) {
-        // TODO Auto-generated method stub
-        
-    }
-
-
-    public void partDeactivated(IWorkbenchPartReference partRef) {
-//        if (partRef.equals(currentEditor)) {
-//            this.detachFromXtextEditor(currentEditor);
-//        }
-    }
-
-
-    public void partHidden(IWorkbenchPartReference partRef) {
-        if (partRef.equals(currentEditor)) {
-            this.detachFromCurrentXtextEditor();
+        /**
+         * Setter for the resource field.
+         * 
+         * @param theResource the new value for the resource field.
+         * @return the currently manipulated {@link ITriggerState} object.
+         */
+        public ITriggerState setResource(final XtextResource theResource) {
+            this.resource = theResource;
+            return this;
         }
-    }
-
-
-    public void partClosed(IWorkbenchPartReference partRef) {
-        if (partRef.equals(currentEditor)) {
-            this.detachFromCurrentXtextEditor();
-        }
-    }
-    
-    
-    public void partInputChanged(IWorkbenchPartReference partRef) {
-        // TODO Auto-generated method stub
-        
     }
 }
