@@ -41,7 +41,7 @@ public class PanningEffect extends AbstractEffect {
     private FigureCanvas canvas = null;
     private DiagramDocumentEditor editor = null;
     private boolean animate = false;
-    private double zoomLevel = 100;
+    private double zoomLevel = 1.0;
     private boolean zoom = false;
 
     /**
@@ -59,7 +59,7 @@ public class PanningEffect extends AbstractEffect {
      *            the desired zoom level (i.e. 1.5 = 150%)
      */
     public PanningEffect(final DiagramDocumentEditor editor, final Point coordinates,
-            final boolean animate, boolean zoom, double zoomLevel) {
+            final boolean animate, final boolean zoom, final double zoomLevel) {
         this.coordinates = coordinates;
         this.editor = editor;
         this.animate = animate;
@@ -90,7 +90,7 @@ public class PanningEffect extends AbstractEffect {
      *            the desired zoom level (i.e. 1.5 = 150%)
      */
     public PanningEffect(final DiagramDocumentEditor editor, final EObject target,
-            final boolean animate, boolean zoom, double zoomLevel) {
+            final boolean animate, final boolean zoom, final double zoomLevel) {
         this.target = target;
         this.editor = editor;
         this.animate = animate;
