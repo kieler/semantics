@@ -18,8 +18,10 @@ import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.editparts.ZoomManager;
 import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
@@ -35,14 +37,12 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 public class PanningEffect extends AbstractEffect {
 
     private EObject target = null;
-
     private Point coordinates = null;
-
     private FigureCanvas canvas = null;
-
     private DiagramDocumentEditor editor = null;
-
     private boolean animate = false;
+    private double zoomLevel = 100;
+    private boolean zoom = false;
 
     /**
      * Constructor of the PanningEffect with coordinates as scrolling target.
@@ -53,12 +53,18 @@ public class PanningEffect extends AbstractEffect {
      *            the coordinates to be scrolled to
      * @param animate
      *            true if scrolling should be animated
+     * @param zoom
+     *            true if zooming should be done
+     * @param zoomLevel
+     *            the desired zoom level (i.e. 1.5 = 150%)
      */
     public PanningEffect(final DiagramDocumentEditor editor, final Point coordinates,
-            final boolean animate) {
+            final boolean animate, boolean zoom, double zoomLevel) {
         this.coordinates = coordinates;
         this.editor = editor;
         this.animate = animate;
+        this.zoom = zoom;
+        this.zoomLevel = zoomLevel;
 
         if (editor.getDiagramGraphicalViewer() instanceof ScrollingGraphicalViewer) {
             ScrollingGraphicalViewer scrollViewer = (ScrollingGraphicalViewer) editor
@@ -78,12 +84,18 @@ public class PanningEffect extends AbstractEffect {
      *            the coordinates to be scrolled to
      * @param animate
      *            true if scrolling should be animated
+     * @param zoom
+     *            true if zooming should be done
+     * @param zoomLevel
+     *            the desired zoom level (i.e. 1.5 = 150%)
      */
     public PanningEffect(final DiagramDocumentEditor editor, final EObject target,
-            final boolean animate) {
+            final boolean animate, boolean zoom, double zoomLevel) {
         this.target = target;
         this.editor = editor;
         this.animate = animate;
+        this.zoom = zoom;
+        this.zoomLevel = zoomLevel;
 
         if (editor.getDiagramGraphicalViewer() instanceof ScrollingGraphicalViewer) {
             ScrollingGraphicalViewer scrollViewer = (ScrollingGraphicalViewer) editor
@@ -98,6 +110,8 @@ public class PanningEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
+        final ZoomManager zoomManager = ((RenderedDiagramRootEditPart) editor.getDiagramEditPart()
+                .getRoot()).getZoomManager();
         Point coords = null;
         if (target != null) {
             EditPart part = editor.getDiagramEditPart().findEditPart(editor.getDiagramEditPart(),
@@ -112,21 +126,19 @@ public class PanningEffect extends AbstractEffect {
         }
         final Point finalCoords = coords;
         if (finalCoords != null) {
-            if (animate) {
-                MonitoredOperation.runInUI(new Runnable() {
-                    public void run() {
+            MonitoredOperation.runInUI(new Runnable() {
+                public void run() {
+                    if (animate) {
                         canvas.scrollSmoothTo(finalCoords.x, finalCoords.y);
-                    }
-                }, false);
-            } else {
-                MonitoredOperation.runInUI(new Runnable() {
-                    public void run() {
+                        
+                    } else {
                         canvas.scrollTo(finalCoords.x, finalCoords.y);
                     }
-                }, false);
-
-            }
-
+                    if (zoom) {
+                        zoomManager.setZoom(zoomLevel);                            
+                    }
+                }
+            }, false);
         }
     }
 
