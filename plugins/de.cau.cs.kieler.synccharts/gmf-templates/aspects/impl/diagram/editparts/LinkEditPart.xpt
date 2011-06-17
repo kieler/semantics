@@ -21,8 +21,8 @@
 				«link.editPartClassName».this.updateFigure(figure);
 		«ENDIF-»
 		«REM»temporary spline code«ENDREM»
-		if (figure instanceof de.cau.cs.kieler.core.ui.figures.SplineConnection) {
-			((de.cau.cs.kieler.core.ui.figures.SplineConnection) figure).setSplineMode(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore().getInt(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE));
+		if (figure instanceof de.cau.cs.kieler.core.model.gmf.figures.SplineConnection) {
+			((de.cau.cs.kieler.core.model.gmf.figures.SplineConnection) figure).setSplineMode(de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorPlugin.getInstance().getPreferenceStore().getInt(de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.PREF_SPLINE_MODE));
 		}
 		return figure;
 	}

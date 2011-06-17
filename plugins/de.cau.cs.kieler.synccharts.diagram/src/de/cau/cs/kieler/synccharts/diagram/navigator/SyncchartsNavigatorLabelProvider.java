@@ -99,39 +99,39 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
      */
     public Image getImage(View view) {
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
-        case TransitionEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Link?http://kieler.cs.cau.de/synccharts/0.2.4?Transition", SyncchartsElementTypes.Transition_4006); //$NON-NLS-1$
-        case StateEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?TopLevelNode?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_2006); //$NON-NLS-1$
-        case StateRegionEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_3054); //$NON-NLS-1$
-        case StateEntryActionEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3049); //$NON-NLS-1$
         case SignalEditPart.VISUAL_ID:
             return getImage(
                     "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Signal", SyncchartsElementTypes.Signal_3048); //$NON-NLS-1$
-        case TextualCodeEditPart.VISUAL_ID:
+        case StateEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?TextualCode", SyncchartsElementTypes.TextualCode_3053); //$NON-NLS-1$
-        case RegionStateEditPart.VISUAL_ID:
-            return getImage(
-                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_3055); //$NON-NLS-1$
+                    "Navigator?TopLevelNode?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_2006); //$NON-NLS-1$
         case VariableEditPart.VISUAL_ID:
             return getImage(
                     "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?Variable", SyncchartsElementTypes.Variable_3056); //$NON-NLS-1$
-        case RegionEditPart.VISUAL_ID:
+        case StateRegionEditPart.VISUAL_ID:
             return getImage(
-                    "Navigator?Diagram?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_1000); //$NON-NLS-1$
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_3054); //$NON-NLS-1$
+        case TextualCodeEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/kexpressions/0.1.2?TextualCode", SyncchartsElementTypes.TextualCode_3053); //$NON-NLS-1$
+        case TransitionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Link?http://kieler.cs.cau.de/synccharts/0.2.4?Transition", SyncchartsElementTypes.Transition_4006); //$NON-NLS-1$
         case StateExitActionEditPart.VISUAL_ID:
             return getImage(
                     "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3051); //$NON-NLS-1$
+        case StateEntryActionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3049); //$NON-NLS-1$
         case StateInnerActionEditPart.VISUAL_ID:
             return getImage(
                     "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3050); //$NON-NLS-1$
+        case RegionEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Diagram?http://kieler.cs.cau.de/synccharts/0.2.4?Region", SyncchartsElementTypes.Region_1000); //$NON-NLS-1$
+        case RegionStateEditPart.VISUAL_ID:
+            return getImage(
+                    "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?State", SyncchartsElementTypes.State_3055); //$NON-NLS-1$
         case StateSuspensionTriggerEditPart.VISUAL_ID:
             return getImage(
                     "Navigator?Node?http://kieler.cs.cau.de/synccharts/0.2.4?Action", SyncchartsElementTypes.Action_3052); //$NON-NLS-1$
@@ -187,28 +187,28 @@ public class SyncchartsNavigatorLabelProvider extends LabelProvider implements
             return getUnresolvedDomainElementProxyText(view);
         }
         switch (SyncchartsVisualIDRegistry.getVisualID(view)) {
-        case TransitionEditPart.VISUAL_ID:
-            return getTransition_4006Text(view);
-        case StateEditPart.VISUAL_ID:
-            return getState_2006Text(view);
-        case StateRegionEditPart.VISUAL_ID:
-            return getRegion_3054Text(view);
-        case StateEntryActionEditPart.VISUAL_ID:
-            return getAction_3049Text(view);
         case SignalEditPart.VISUAL_ID:
             return getSignal_3048Text(view);
-        case TextualCodeEditPart.VISUAL_ID:
-            return getTextualCode_3053Text(view);
-        case RegionStateEditPart.VISUAL_ID:
-            return getState_3055Text(view);
+        case StateEditPart.VISUAL_ID:
+            return getState_2006Text(view);
         case VariableEditPart.VISUAL_ID:
             return getVariable_3056Text(view);
-        case RegionEditPart.VISUAL_ID:
-            return getRegion_1000Text(view);
+        case StateRegionEditPart.VISUAL_ID:
+            return getRegion_3054Text(view);
+        case TextualCodeEditPart.VISUAL_ID:
+            return getTextualCode_3053Text(view);
+        case TransitionEditPart.VISUAL_ID:
+            return getTransition_4006Text(view);
         case StateExitActionEditPart.VISUAL_ID:
             return getAction_3051Text(view);
+        case StateEntryActionEditPart.VISUAL_ID:
+            return getAction_3049Text(view);
         case StateInnerActionEditPart.VISUAL_ID:
             return getAction_3050Text(view);
+        case RegionEditPart.VISUAL_ID:
+            return getRegion_1000Text(view);
+        case RegionStateEditPart.VISUAL_ID:
+            return getState_3055Text(view);
         case StateSuspensionTriggerEditPart.VISUAL_ID:
             return getAction_3052Text(view);
         }

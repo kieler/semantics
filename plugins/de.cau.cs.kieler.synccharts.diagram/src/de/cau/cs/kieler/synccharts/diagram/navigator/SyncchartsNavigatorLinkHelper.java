@@ -59,6 +59,9 @@ public class SyncchartsNavigatorLinkHelper implements ILinkHelper {
             return StructuredSelection.EMPTY;
         }
         Diagram diagram = document.getDiagram();
+        if (diagram == null || diagram.eResource() == null) {
+            return StructuredSelection.EMPTY;
+        }
         IFile file = WorkspaceSynchronizer.getFile(diagram.eResource());
         if (file != null) {
             SyncchartsNavigatorItem item = new SyncchartsNavigatorItem(diagram, file, false);

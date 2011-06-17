@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gmf.runtime.diagram.core.util.ViewUtil;
 import org.eclipse.gmf.runtime.diagram.ui.commands.DeferredLayoutCommand;
@@ -30,6 +31,18 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  * @generated
  */
 public class StateSuspensionTriggerCompartmentCanonicalEditPolicy extends CanonicalEditPolicy {
+
+    /**
+     * @generated
+     */
+    protected void refreshOnActivate() {
+        // Need to activate editpart children before invoking the canonical refresh for EditParts to add event listeners
+        List<?> c = getHost().getChildren();
+        for (int i = 0; i < c.size(); i++) {
+            ((EditPart) c.get(i)).activate();
+        }
+        super.refreshOnActivate();
+    }
 
     /**
      * @generated

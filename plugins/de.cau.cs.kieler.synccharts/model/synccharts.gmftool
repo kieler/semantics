@@ -11,15 +11,30 @@
       <tools
           xsi:type="gmftool:CreationTool"
           title="State"
-          description="Create new State"/>
+          description="Create new State">
+        <smallIcon
+            xsi:type="gmftool:DefaultImage"/>
+        <largeIcon
+            xsi:type="gmftool:DefaultImage"/>
+      </tools>
       <tools
           xsi:type="gmftool:CreationTool"
           title="Transition"
-          description="Create new Transition"/>
+          description="Create new Transition">
+        <smallIcon
+            xsi:type="gmftool:DefaultImage"/>
+        <largeIcon
+            xsi:type="gmftool:DefaultImage"/>
+      </tools>
       <tools
           xsi:type="gmftool:CreationTool"
           title="TextualCode"
-          description="Create a new arbitrary text node within a Region or State"/>
+          description="Create a new arbitrary text node within a Region or State">
+        <smallIcon
+            xsi:type="gmftool:DefaultImage"/>
+        <largeIcon
+            xsi:type="gmftool:DefaultImage"/>
+      </tools>
     </tools>
   </palette>
 </gmftool:ToolRegistry>

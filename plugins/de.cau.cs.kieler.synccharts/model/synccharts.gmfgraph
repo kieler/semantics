@@ -57,7 +57,7 @@
       <actualFigure
           xsi:type="gmfgraph:CustomFigure"
           name="TransitionFigure"
-          qualifiedClassName="de.cau.cs.kieler.core.ui.figures.SplineConnection">
+          qualifiedClassName="de.cau.cs.kieler.core.model.gmf.figures.SplineConnection">
         <children
             xsi:type="gmfgraph:Label"
             name="TransitionTriggersAndEffectsFigure"

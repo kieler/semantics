@@ -76,7 +76,7 @@ public class «EXPAND className» extends org.eclipse.core.runtime.preferences.A
 	«storeVar».setDefault(org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants.PREF_PROMPT_ON_DEL_FROM_DIAGRAM, «promptOnDelFromDiagram»);
 	«REM»Manually added (chsch): Set cubic spline mode default«ENDREM»«-»
 	// chsch: added by customized template
-    «storeVar».setDefault(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.ui.figures.SplineConnection.SPLINE_CUBIC);
+    «storeVar».setDefault(de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.SPLINE_CUBIC);
 «ENDDEFINE»
 
 «DEFINE initDefaultColor(storeVar : String, prefName : String) FOR gmfgen::GenColor»

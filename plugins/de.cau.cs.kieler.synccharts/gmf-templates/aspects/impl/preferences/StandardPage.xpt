@@ -83,7 +83,7 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
         super.addFieldEditors(composite);
 
         // spline mode
-        splineModeFieldEditor = new org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE,
+        splineModeFieldEditor = new org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor(de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.PREF_SPLINE_MODE,
                 SPLINE_LABEL, composite, org.eclipse.gmf.runtime.common.ui.preferences.ComboFieldEditor.INT_TYPE, true, 0, 0, true);
         splineModeFieldEditor.autoStorage = true;
         addField(splineModeFieldEditor);
@@ -100,7 +100,7 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
 	«EXPAND xpt::Common::generatedMemberComment»
     public static void initDefaults(org.eclipse.jface.preference.IPreferenceStore preferenceStore) {
         ConnectionsPreferencePage.initDefaults(preferenceStore);
-        preferenceStore.setDefault(de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.ui.figures.SplineConnection.SPLINE_CUBIC);
+        preferenceStore.setDefault(de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.PREF_SPLINE_MODE, de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.SPLINE_CUBIC);
     }
     
 «ENDREM»
@@ -133,9 +133,9 @@ public class «getClassName()»«EXPAND extendsList»«EXPAND implementsList» {
     protected void applySplineMode(org.eclipse.gef.EditPart part) {
         if (part instanceof de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart) {
             org.eclipse.draw2d.Connection c = ((de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart) part).getConnectionFigure();
-            if (c instanceof de.cau.cs.kieler.core.ui.figures.SplineConnection) {
-                ((de.cau.cs.kieler.core.ui.figures.SplineConnection) c).setSplineMode(getPreferenceStore().getInt(
-                        de.cau.cs.kieler.core.ui.figures.SplineConnection.PREF_SPLINE_MODE));
+            if (c instanceof de.cau.cs.kieler.core.model.gmf.figures.SplineConnection) {
+                ((de.cau.cs.kieler.core.model.gmf.figures.SplineConnection) c).setSplineMode(getPreferenceStore().getInt(
+                        de.cau.cs.kieler.core.model.gmf.figures.SplineConnection.PREF_SPLINE_MODE));
             }
         }
         if (part instanceof org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart) {
