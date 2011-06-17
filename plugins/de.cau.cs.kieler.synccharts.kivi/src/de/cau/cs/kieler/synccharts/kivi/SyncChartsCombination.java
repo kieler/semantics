@@ -28,7 +28,6 @@ import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
@@ -45,7 +44,6 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * A combination that visualizes the simulation of a SyncChart.
  * 
  * @author mmu
- * 
  */
 public class SyncChartsCombination extends AbstractCombination {
 
@@ -95,9 +93,6 @@ public class SyncChartsCombination extends AbstractCombination {
      */
     public static final String FC_MODE = SyncChartsCombination.class.getCanonicalName() + ".fcMode";
 
-    
-    private static SyncChartsCombination instance;
-    
     /** parameter id for animation. */
     private static final String ANIMATE = "de.cau.cs.kieler.kiml.animate";
     /** parameter id for zoom to fit. */
@@ -105,7 +100,9 @@ public class SyncChartsCombination extends AbstractCombination {
     /** parameter id for progress bar. */
     private static final String PROGRESS_BAR = "de.cau.cs.kieler.kiml.progressBar";
     
-    
+    /**
+     * Creates a SyncCharts simulation combination.
+     */
     public SyncChartsCombination() {
         this.enableEffectRecording();
     }
@@ -137,15 +134,6 @@ public class SyncChartsCombination extends AbstractCombination {
                     CombinationParameter.BOOLEAN_TYPE),
             new CombinationParameter(FC_MODE, getPreferenceStore(), "Focus && Context",
                     "Collapse inactive states, expand active/history states.", true,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(ANIMATE, getKIMLPreferenceStore(), "Animate",
-                    "Animates the automatic layout of a graph.", true,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(ZOOM_TO_FIT, getKIMLPreferenceStore(), "Zoom to Fit",
-                    "Perform zoom to fit with automatic layout.", false,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(PROGRESS_BAR, getKIMLPreferenceStore(), "Progress Bar",
-                    "Display a progress bar while performing automatic layout.", false,
                     CombinationParameter.BOOLEAN_TYPE) };
 
     /**
@@ -155,12 +143,10 @@ public class SyncChartsCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
-        instance = this;
-        
-        IPreferenceStore preferenceStore = getKIMLPreferenceStore();
-        boolean animate = preferenceStore.getBoolean(ANIMATE);
-        boolean zoom = preferenceStore.getBoolean(ZOOM_TO_FIT);
-        boolean progressBar = preferenceStore.getBoolean(PROGRESS_BAR);
+        IPreferenceStore layoutPrefStore = getKIMLPreferenceStore();
+        boolean animate = layoutPrefStore.getBoolean(ANIMATE);
+        boolean zoom = layoutPrefStore.getBoolean(ZOOM_TO_FIT);
+        boolean progressBar = layoutPrefStore.getBoolean(PROGRESS_BAR);
         
         // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
@@ -324,10 +310,6 @@ public class SyncChartsCombination extends AbstractCombination {
      */
     private boolean isFC() {
         return getPreferenceStore().getBoolean(FC_MODE);
-    }
-
-    public static SyncChartsCombination getInstance() {
-        return instance;
     }
     
     /**

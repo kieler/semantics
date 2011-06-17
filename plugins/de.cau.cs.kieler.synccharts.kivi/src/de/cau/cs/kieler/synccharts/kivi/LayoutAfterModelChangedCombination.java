@@ -20,7 +20,6 @@ import org.eclipse.jface.preference.IPreferenceStore;
 
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.model.gmf.triggers.ModelChangeTrigger.ModelChangeState;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
@@ -74,20 +73,6 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
     private static final String ANIMATE = "de.cau.cs.kieler.kiml.animate";
     /** parameter id for zoom to fit. */
     private static final String ZOOM_TO_FIT = "de.cau.cs.kieler.kiml.zoomToFit";
-    /** parameter id for progress bar. */
-    private static final String PROGRESS_BAR = "de.cau.cs.kieler.kiml.progressBar";
-    
-    /** parameter array for this combination. */
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-            new CombinationParameter(ANIMATE, getPreferenceStore(), "Animate",
-                    "Animates the automatic layout of a graph.", true,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(ZOOM_TO_FIT, getPreferenceStore(), "Zoom to Fit",
-                    "Perform zoom to fit with automatic layout.", false,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(PROGRESS_BAR, getPreferenceStore(), "Progress Bar",
-                    "Display a progress bar while performing automatic layout.", false,
-                    CombinationParameter.BOOLEAN_TYPE) };
 
     /**
      * Apply automatic layout every time the model changed state is updated.
@@ -99,13 +84,12 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
         IPreferenceStore preferenceStore = getPreferenceStore();
         boolean animate = preferenceStore.getBoolean(ANIMATE);
         boolean zoom = preferenceStore.getBoolean(ZOOM_TO_FIT);
-        boolean progressBar = preferenceStore.getBoolean(PROGRESS_BAR);
         for (Notification notification : modelState.getChange().getNotifications()) {
             // call layout for every relevant model change. layout effects will be merged by
             // KiVi to avoid too many effects and to guarantee that the right parent is layouted
             if (modelFilter.matches(notification) && notification.getNotifier() instanceof EObject) {
                 schedule(new LayoutEffect(modelState.getWorkbenchPart(),
-                        (EObject) notification.getNotifier(), zoom, progressBar, true, animate));
+                        (EObject) notification.getNotifier(), zoom, false, true, animate));
             }
         }
     }
