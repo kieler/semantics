@@ -1335,12 +1335,7 @@ Void deleteModalModelPort(EntityType modalModel, String portName) :
 	modalModel.port.remove(modalModel.port.select(e|e.name.matches(portName))
 			  .first()) ->
 
-	modalModel.link.remove(modalModel.link
-			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
-	modalModel.link.remove(modalModel.link
-			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
-	modalModel.link.remove(modalModel.link
-			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+	removeLinkRecursive(modalModel, portName) ->
 
 
 	//debug output
@@ -1349,6 +1344,17 @@ Void deleteModalModelPort(EntityType modalModel, String portName) :
  	//delete port in controller
  	controller.port.remove(controller.port
  			  .select(e|e.name.matches(portName)).first())
+;
+
+// Deletes all links that may exist to this port-Relation
+Void removeLinkRecursive(EntityType modalModel, String portName) :
+	modalModel.link.remove(modalModel.link
+			  .select(e|e.relation.matches(portName+"Relation")).first()) ->
+    if (modalModel.link
+			  .select(e|e.relation.matches(portName+"Relation")).size > 0) then
+	    removeLinkRecursive(modalModel, portName)
+	else 
+		null
 ;
 
 
