@@ -15,7 +15,7 @@ public class SyncchartsSimPtolemyPlugin extends Plugin {
 	private static SyncchartsSimPtolemyPlugin plugin;
 	
 	/** The Constant DEBUG. If true print out debug information. */
-	public static final boolean DEBUG = false;
+	public static final boolean DEBUG = !System.getProperty("java.vm.info", "").contains("sharing");
 
 	
 	/**
