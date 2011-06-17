@@ -14,6 +14,6 @@ present
 	else nothing
 end present
 ||
-present [A and B] end 
+present [ A and B ] end 
 
 end module

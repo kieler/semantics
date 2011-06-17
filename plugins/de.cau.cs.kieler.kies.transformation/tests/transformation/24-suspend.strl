@@ -2,9 +2,9 @@ module suspendModule:
 input A;
 suspend 
 	nothing 
-when [A and pre(A)]
+when [ A and pre(A) ]
 ;
 suspend 
 	nothing 
-when immediate [A]
+when immediate [ A ]
 end module

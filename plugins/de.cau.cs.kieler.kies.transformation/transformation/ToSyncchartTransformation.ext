@@ -183,7 +183,9 @@ Void ruleAbort(State s, Abort a):
 
 // CHSCH: just some helper to get rid of the down false positive markers
 AbortInstance toAbortInstance(EObject o): o;
+AbortInstance toAbortInstance(AbortInstance o): o;
 AbortCase toAbortCase(EObject o): o;
+AbortCase toAbortCase(AbortCase o): o;
 
 
 		
@@ -301,7 +303,9 @@ Void rule(State s, Do d):
 
 // CHSCH: just some helper to get rid of the down false positive markers
 DoUpto toDoUpto(EObject o): o;
+DoUpto toDoUpto(DoUpto o): o;
 DoWatching toDoWatching(EObject o): o;
+DoWatching toDoWatching(DoWatching o): o;
 
 		
 
