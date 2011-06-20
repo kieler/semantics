@@ -31,6 +31,7 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.State;
@@ -197,25 +198,26 @@ public class KitsSynchronizeLinker {
      */
     public void serializeActions(EObject root) {
         EObject eObj = null;
-        Transition transition = null;
-        Transition counterpart = null;
+        Action action = null;
+        Action counterpart = null;
         for (Iterator<EObject> it = root.eAllContents(); it.hasNext();) {
             eObj = it.next();
-            if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(eObj)) {
-                transition = (Transition) eObj;
-                counterpart = getMatched(transition);
+            if (SyncchartsPackage.eINSTANCE.getAction().isInstance(eObj)) {
+                action = (Action) eObj;
+                counterpart = getMatched(action);
                 if (Strings.isEmpty(counterpart.getLabel())
-                        || transition.isIsImmediate()
-                        || transition.isIsHistory()
-                        || transition.getDelay() == 0
-                        || transition.getTrigger() != null
-                        || transition.getEffects() != null
-                        && !transition.getEffects().isEmpty()) {
+                        || action.isIsImmediate()
+                        || (SyncchartsPackage.eINSTANCE.getTransition().isInstance(action)
+                                && ((Transition) action).isIsHistory())
+                        || action.getDelay() == 0
+                        || action.getTrigger() != null
+                        || action.getEffects() != null
+                        && !action.getEffects().isEmpty()) {
                     String newLabel = "";
-                    newLabel = ActionLabelSerializer.toString(transition);
-                    transition.setLabel(newLabel);
+                    newLabel = ActionLabelSerializer.toString(action);
+                    action.setLabel(newLabel);
                 } else {
-                    transition.setLabel(new String(counterpart.getLabel()));
+                    action.setLabel(new String(counterpart.getLabel()));
                 }
             }
         }
