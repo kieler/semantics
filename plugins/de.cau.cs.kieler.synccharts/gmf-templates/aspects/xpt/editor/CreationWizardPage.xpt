@@ -44,6 +44,16 @@ public class «creationWizardPageClassName» extends
 	protected String getExtension() {
 		return fileExtension;
 	}
+	
+    «REM»custom code: This is to allow multiple (valid) file extensions and to extract the first one as the default (cmot,chsch)«ENDREM»
+    /**
+     * Override to create files with this extension.
+     * 
+     * @generated
+     */
+    protected String getDefaultExtension() {
+        return fileExtension.split(",")[0];
+    }	
 
 	«EXPAND xpt::Common::generatedMemberComment»
 	public org.eclipse.emf.common.util.URI getURI() {
@@ -66,7 +76,8 @@ public class «creationWizardPageClassName» extends
 			path = path.append(fileName);
 			«REM»custom code: if file extension is omitted, add it«ENDREM»
 			if (path.getFileExtension() == null) {
-                path = path.addFileExtension(fileExtension);
+                «REM»custom code: fileExtension -> getDefaultExtension() by cmot,chsch«ENDREM»
+                path = path.addFileExtension(getDefaultExtension());
             }
 		}
 		return path;
@@ -76,8 +87,9 @@ public class «creationWizardPageClassName» extends
 	«EXPAND xpt::Common::generatedMemberComment»
 	public void createControl(org.eclipse.swt.widgets.Composite parent) {
 		super.createControl(parent);
+        «REM»custom code: getExtension() -> getDefaultExtension() by cmot,chsch«ENDREM»
 		setFileName(«getDiagramEditorUtilQualifiedClassName()».getUniqueFileName(
-				getContainerFullPath(), getFileName(), getExtension()));
+				getContainerFullPath(), getFileName(), getDefaultExtension()));
 		setPageComplete(validatePage());
 	}
 

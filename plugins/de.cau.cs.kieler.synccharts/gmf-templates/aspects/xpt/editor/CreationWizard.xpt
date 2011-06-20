@@ -83,6 +83,8 @@ public class «creationWizardClassName»
 				"DiagramModelFile", getSelection(), "«editorGen.diagramFileExtension»"); //$NON-NLS-1$ //$NON-NLS-2$
 		diagramModelFilePage.setTitle(«EXPAND xpt::Externalizer::accessorCall(titleKey(i18nKeyForCreationWizardDiagramPage(self))) FOR editorGen»);
 		diagramModelFilePage.setDescription(«EXPAND xpt::Externalizer::accessorCall(descriptionKey(i18nKeyForCreationWizardDiagramPage(self))) FOR editorGen»);
+		«REM»CMOT,CHSCH: allow to overwrite extisting files«ENDREM»
+		diagramModelFilePage.setAllowExistingResources(true);         
 		addPage(diagramModelFilePage);
 	«IF standaloneDomainModel(self)-»
 
@@ -93,12 +95,12 @@ public class «creationWizardClassName»
 
 			public void setVisible(boolean visible) {
 				if (visible) {
-				    «REM»Convert the diagram file name if the extension is missing. «ENDREM»
+				    «REM»SOH: Convert the diagram file name if the extension is missing. «ENDREM»
 					String fileName = diagramModelFilePage.getFileName();
 					if (fileName.endsWith(".«editorGen.diagramFileExtension»")) {
 					   fileName = fileName.substring(0, fileName.length() - ".«editorGen.diagramFileExtension»".length()); //$NON-NLS-1$
 					}
-                    «REM»Custom code end «ENDREM»  
+                    «REM»SOH: Custom code end «ENDREM»  
 					setFileName(«getDiagramEditorUtilQualifiedClassName()».getUniqueFileName(
 							getContainerFullPath(), fileName, "«editorGen.domainFileExtension»")); //$NON-NLS-1$
 				}
@@ -107,6 +109,8 @@ public class «creationWizardClassName»
 		};
 		domainModelFilePage.setTitle(«EXPAND xpt::Externalizer::accessorCall(titleKey(i18nKeyForCreationWizardDomainPage(self))) FOR editorGen»);
 		domainModelFilePage.setDescription(«EXPAND xpt::Externalizer::accessorCall(descriptionKey(i18nKeyForCreationWizardDomainPage(self))) FOR editorGen»);
+		«REM»CMOT,CHSCH: allow to overwrite extisting files«ENDREM»
+		domainModelFilePage.setAllowExistingResources(true);         
 		addPage(domainModelFilePage);
 	«ENDIF-»
 	}
