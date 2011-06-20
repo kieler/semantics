@@ -43,10 +43,10 @@ public class KevView extends ViewPart {
 
     /** The value that identifies the Refresh button. */
     public static final int BUTTON_REFRESH = 2;
-    
+
     /** The value that identifies the both buttons. */
     public static final int BUTTON_BOTH = 3;
-    
+
     private Action openWizardAction = null;
     private Action refreshAction = null;
 
@@ -100,7 +100,7 @@ public class KevView extends ViewPart {
                     } else {
                         MapAnimations.getInstance().initializeMappingFile(defaultFile, false);
                     }
-                    //MapAnimations.getInstance().createHashMap();
+                    // MapAnimations.getInstance().createHashMap();
                 }
             }
         });
@@ -126,12 +126,14 @@ public class KevView extends ViewPart {
     private void makeActions() {
         refreshAction = new Action() {
             public void run() {
-                //svg.paintSVGFile();
+                // svg.paintSVGFile();
                 System.out.println(MapAnimations.getInstance().getMappingFilePath());
                 if (MapAnimations.getInstance().getMappingFilePath().contains(":/")) {
-                    MapAnimations.getInstance().initializeMappingFile(MapAnimations.getInstance().getMappingFilePath(), false);                    
+                    MapAnimations.getInstance().initializeMappingFile(
+                            MapAnimations.getInstance().getMappingFilePath(), false);
                 } else {
-                    MapAnimations.getInstance().initializeMappingFile(MapAnimations.getInstance().getMappingFilePath(), true);
+                    MapAnimations.getInstance().initializeMappingFile(
+                            MapAnimations.getInstance().getMappingFilePath(), true);
                 }
                 MapAnimations.getInstance().createHashMap();
             }
@@ -148,7 +150,7 @@ public class KevView extends ViewPart {
         } else {
             enableButton(BUTTON_BOTH);
         }
-        
+
     }
 
     /**
@@ -204,10 +206,27 @@ public class KevView extends ViewPart {
      * Does some code-wrapup before calling the super method.
      */
     public void dispose() {
-        getViewSite().getPage().removeSelectionListener(svg);
+        try {
+            if (getViewSite() != null) {
+                if (getViewSite().getPage() != null) {
+                    getViewSite().getPage().removeSelectionListener(svg);
+                }
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Set the single KevView instance to null because the view gets closed
         Activator.setKevView(null);
-        svg.dispose();
+        try {
+            if (svg != null) {
+                if (!svg.isDisposed()) {
+                    svg.dispose();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         super.dispose();
     }
 
