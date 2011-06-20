@@ -19,8 +19,15 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.commands.Command;
+import org.eclipse.gef.commands.CompoundCommand;
+import org.eclipse.gmf.runtime.diagram.core.commands.SetPropertyCommand;
+import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IResizableCompartmentEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
+import org.eclipse.gmf.runtime.diagram.ui.internal.properties.Properties;
+import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
+import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -51,6 +58,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     private IWorkbenchPart targetEditor;
     private boolean justExecuted;
     private IGraphicalFrameworkBridge bridge;
+    
+    private boolean persistent = false;
 
     /**
      * The compartment level gives the hierarchy to which to search for compartments to doCollapse.
@@ -78,6 +87,37 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
     }
 
+    
+    /**
+     * The compartment level gives the hierarchy to which to search for compartments to doCollapse.
+     * 
+     * @param editor
+     *            the DiagramEditor containing the EObject
+     * @param node
+     *            the EObject to doCollapse/expand
+     * @param thefeatureToCollapse
+     *            the feature of the EObject to doCollapse/expand
+     * @param theCompartmentLevel
+     *            hierarchy level. 0 means only exactly the given EditPart. Not implemented.
+     * @param collapse
+     *            true if collapsing, false if expanding
+     * @param persistent            
+     *            true if the collapsing should be persistent
+     */
+    public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
+            final EStructuralFeature thefeatureToCollapse, final int theCompartmentLevel,
+            final boolean collapse, final boolean persistent) {
+        this.compartmentLevel = theCompartmentLevel;
+        this.doCollapse = collapse;
+        this.targetEditor = editor;
+        this.targetNode = node;
+        this.targetEditParts = new ArrayList<IResizableCompartmentEditPart>();
+        this.featureToCollapse = thefeatureToCollapse;
+        this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
+        this.persistent = persistent;
+    }
+    
+    
     /**
      * Extracted the initialization into extra method that is NOT called in the constructor, because
      * it accesses the EditParts (bridge.getEditPart), which runs in the UI thread. This could cause
@@ -118,14 +158,26 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        justExecuted = apply(doCollapse);
+        if (!this.persistent) {
+            justExecuted = apply(doCollapse);
+        } else {
+            if (!targetEditParts.isEmpty() && doCollapse != isCollapsed()) {
+                getCollapseCommand(doCollapse).execute();
+            }
+        }
     }
 
     /**
      * Undo the effect, i.e. expand a collapsed compartment.
      */
     public void undo() {
-        justExecuted = apply(originalCollapseState);
+        if (!this.persistent) {
+            justExecuted = apply(originalCollapseState);
+        } else {
+            if (!targetEditParts.isEmpty() && originalCollapseState != isCollapsed()) {
+                getCollapseCommand(originalCollapseState).execute();
+            }
+        }
     }
 
     private boolean apply(final boolean collapse) {
@@ -149,6 +201,20 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         }
         return changed;
     }
+    
+    private Command getCollapseCommand(final boolean collapse) {
+        CompoundCommand command = new CompoundCommand();
+        for (IResizableCompartmentEditPart targetEditPart : this.targetEditParts) {
+            DrawerStyle style = (DrawerStyle) targetEditPart.getModel();
+            SetPropertyCommand spc = new SetPropertyCommand(targetEditPart.getEditingDomain(),
+                    new EObjectAdapter(style), Properties.ID_COLLAPSED,
+                    DiagramUIMessages.PropertyDescriptorFactory_CollapseCompartment, collapse);
+            command.add(new ICommandProxy(spc));
+            //return new ICommandProxy(spc);
+        }
+        return command;
+    }
+    
 
     /**
      * Determines whether the last call to execute() or undo() actually performed any changes.
