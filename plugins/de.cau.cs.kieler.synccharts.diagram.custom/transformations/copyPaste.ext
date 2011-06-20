@@ -208,11 +208,11 @@ Void paste(List[Object] objects):
  (if (!isClipboardEmpty()) then
   switch{
   case isSpecialCase(objects) : applySpecialCase(objects)
- case states.size == 1: paste(states.get(0))
+ case states.size == 1: paste((State) states.get(0))
  case states.size > 1: pasteStateList(states)
- case regions.size == 1: paste(regions.get(0))
+ case regions.size == 1: paste((Region) regions.get(0))
  case regions.size > 1: pasteRegionList(regions)
- case trans.size == 1: paste(trans.get(0))
+ case trans.size == 1: paste((Transition) trans.get(0))
  case trans.size > 1: pasteTransitionList(trans)
  default : states.toString()
  }
@@ -234,7 +234,7 @@ Boolean isSpecialCase(List[Object] objects):
 Void applySpecialCase(List[Object] objects):
  let stateList = objects.select(e|e.metaType == State):
  let transList = objects.select(e|e.metaType == Transition):
- pasteOnStateTransition(stateList.get(0), transList.get(0))
+ pasteOnStateTransition((State) stateList.get(0), (Transition) transList.get(0))
 ;
 
 // dummy matcher
