@@ -105,8 +105,28 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
         diagramModelFilePage.setTitle(Messages.SyncchartsCreationWizard_DiagramModelFilePageTitle);
         diagramModelFilePage
                 .setDescription(Messages.SyncchartsCreationWizard_DiagramModelFilePageDescription);
+        diagramModelFilePage.setAllowExistingResources(true);
+        diagramModelFilePage.setPageComplete(true);
         addPage(diagramModelFilePage);
+        
 
+//        domainModelFilePage = new SyncchartsCreationWizardPage(
+//                "DomainModelFile", getSelection(), "kixs,kits") { //$NON-NLS-1$ //$NON-NLS-2$
+//
+//            public void setVisible(boolean visible) {
+//                if (visible) {
+//
+//                    String fileName = diagramModelFilePage.getFileName();
+//                    if (fileName.endsWith(".kids")) {
+//                        fileName = fileName.substring(0, fileName.length() - ".kids".length()); //$NON-NLS-1$
+//                    }
+//
+//                    setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(
+//                            getContainerFullPath(), fileName, "kixs")); //$NON-NLS-1$
+//                }
+//                super.setVisible(visible);
+//            }
+//        };
         domainModelFilePage = new SyncchartsCreationWizardPage(
                 "DomainModelFile", getSelection(), "kixs,kits") { //$NON-NLS-1$ //$NON-NLS-2$
 
@@ -124,9 +144,12 @@ public class SyncchartsCreationWizard extends Wizard implements INewWizard {
                 super.setVisible(visible);
             }
         };
+
         domainModelFilePage.setTitle(Messages.SyncchartsCreationWizard_DomainModelFilePageTitle);
         domainModelFilePage
                 .setDescription(Messages.SyncchartsCreationWizard_DomainModelFilePageDescription);
+        domainModelFilePage.setAllowExistingResources(true);         
+        domainModelFilePage.setPageComplete(true);
         addPage(domainModelFilePage);
     }
 

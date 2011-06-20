@@ -39,6 +39,16 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
     }
 
     /**
+     * Override to create files with this extension.
+     * 
+     * @generated not
+     */
+    protected String getDefaultExtension() {
+        return fileExtension.split(",")[0];
+    }
+    
+    
+    /**
      * @generated
      */
     public URI getURI() {
@@ -53,12 +63,13 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
         if (path == null) {
             path = new Path(""); //$NON-NLS-1$
         }
+        System.out.println("");
         String fileName = getFileName();
         if (fileName != null) {
             path = path.append(fileName);
 
             if (path.getFileExtension() == null) {
-                path = path.addFileExtension(fileExtension);
+                path = path.addFileExtension(fileExtension.split(",")[0]);
             }
         }
         return path;
@@ -70,10 +81,12 @@ public class SyncchartsCreationWizardPage extends WizardNewFileCreationPage {
     public void createControl(Composite parent) {
         super.createControl(parent);
         setFileName(SyncchartsDiagramEditorUtil.getUniqueFileName(getContainerFullPath(),
-                getFileName(), getExtension()));
+                getFileName(), getDefaultExtension()));
         setPageComplete(validatePage());
     }
 
+ 
+    
     /**
      * @generated
      */
