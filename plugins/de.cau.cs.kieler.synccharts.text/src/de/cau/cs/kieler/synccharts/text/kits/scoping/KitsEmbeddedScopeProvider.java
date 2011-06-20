@@ -23,8 +23,6 @@ import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
-import de.cau.cs.kieler.synccharts.Assignment;
-import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
@@ -44,7 +42,8 @@ public class KitsEmbeddedScopeProvider extends KitsScopeProvider {
         List<IEObjectDescription> l;
         if (trans.eContainer().eContainer() == null) {
             l = new ArrayList<IEObjectDescription>();
-            l.add(new EObjectDescription(((State) trans.eContainer()).getId(), trans.eContainer(), null)); 
+            l.add(new EObjectDescription(((State) trans.eContainer()).getId(), trans.eContainer(),
+                    null));
             if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
                 for (State s : ((Region) logicalContainer).getStates()) {
                     l.add(new EObjectDescription(s.getId(), s, null));
@@ -53,50 +52,48 @@ public class KitsEmbeddedScopeProvider extends KitsScopeProvider {
             return new SimpleScope(l);
         } else {
             return super.scope_Transition_targetState(trans, reference);
-        }        
+        }
     }
-	    
+
     /**
-     * A implementation of scoping for signals and variables.
-     * Won't be called directly but via reflection by the Xtext runtime.
-     * Delegates to {@link KitsScopeProvider#scope_ValuedObject(EObject, EReference, State)}. 
+     * A implementation of scoping for signals and variables. Won't be called directly but via
+     * reflection by the Xtext runtime. Delegates to
+     * {@link KitsScopeProvider#scope_ValuedObject(EObject, EReference, State)}.
      * 
      * @param trans
      * @param reference
      * @return
      */
-	public IScope scope_ValuedObjectReference_valuedObject(final EObject obj,
-			final EReference reference) {
-    	return new SimpleScope(this.scope_ValuedObject(obj, reference, logicalContainer));
+    public IScope scope_ValuedObjectReference_valuedObject(final EObject obj,
+            final EReference reference) {
+        return new SimpleScope(this.scope_ValuedObject(obj, reference, logicalContainer));
     }
-    
-    
+
     /**
-     * A implementation of scoping for signal emissions.
-     * Won't be called directly but via reflection by the Xtext runtime.
-     * Delegates to {@link KitsScopeProvider#scope_Signal(EObject, EReference, State)}.
+     * A implementation of scoping for signal emissions. Won't be called directly but via reflection
+     * by the Xtext runtime. Delegates to
+     * {@link KitsScopeProvider#scope_Signal(EObject, EReference, State)}.
      * 
      * @param obj
      * @param reference
      * @return
      */
-	public IScope scope_Emission_signal(final Emission obj,
-			final EReference reference) {
-		return new SimpleScope(this.scope_Signal(obj, reference, logicalContainer));
-	}
-	
-	
+     public IScope scope_Emission_signal(final EObject obj, final EReference reference) {
+//    public IScope scope_Signal(final EObject obj, final EReference reference) {
+        return new SimpleScope(this.scope_Signal(obj, reference, logicalContainer));
+    }
+
     /**
-     * A implementation of scoping for variable assignments.
-     * Won't be called directly but via reflection by the Xtext runtime.
-     * Delegates to {@link KitsScopeProvider#scope_Variable(EObject, EReference, State)}.
+     * A implementation of scoping for variable assignments. Won't be called directly but via
+     * reflection by the Xtext runtime. Delegates to
+     * {@link KitsScopeProvider#scope_Variable(EObject, EReference, State)}.
      * 
      * @param obj
      * @param reference
      * @return
      */
-	public IScope scope_Assignment_variable(final Assignment obj,
-			final EReference reference) {
-    	return new SimpleScope(this.scope_Variable(obj, reference, logicalContainer));
+     public IScope scope_Assignment_variable(final EObject obj, final EReference reference) {
+//    public IScope scope_Variable(final EObject obj, final EReference reference) {
+        return new SimpleScope(this.scope_Variable(obj, reference, logicalContainer));
     }
 }

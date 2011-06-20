@@ -36,8 +36,6 @@ import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.Variable;
-import de.cau.cs.kieler.synccharts.Assignment;
-import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
@@ -168,7 +166,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
      * @param reference
      * @return
      */
-	public IScope scope_Emission_signal(final Emission obj,
+	public IScope scope_Emission_signal(final EObject obj,
 			final EReference reference) {
 		return new SimpleScope(this.scope_Signal(obj, reference, null));
     }
@@ -221,7 +219,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
      * @param reference
      * @return
      */
-	public IScope scope_Assignment_variable(final Assignment obj,
+	public IScope scope_Assignment_variable(final EObject obj,
 			final EReference reference) {
     	return new SimpleScope(this.scope_Variable(obj, reference, null));
     }
