@@ -119,6 +119,7 @@ public class KitsFormatter extends ActionsFormatter {
         // c.setLinewrap().after(f.getSignalAccess().getSemicolonKeyword_7());
         
         // an alternative formulation of the formatting instructions
+        c.setLinewrap().before(f.getASignalAccess().getAnnotationsAssignment_0().getTerminal());
         c.setLinewrap().before(f.getASignalAccess().getIsInputInputKeyword_1_0());
         c.setLinewrap().before(f.getASignalAccess().getIsOutputOutputKeyword_2_0());
         c.setLinewrap().before(f.getASignalAccess().getSignalKeyword_3());
@@ -129,6 +130,7 @@ public class KitsFormatter extends ActionsFormatter {
         c.setNoLinewrap().between(f.getASignalAccess().getIsOutputOutputKeyword_2_0(),
                 f.getASignalAccess().getSignalKeyword_3());
         
+        c.setLinewrap().before(f.getISignalAccess().getAnnotationsAssignment_0().getTerminal());
         c.setLinewrap().before(f.getISignalAccess().getIsInputInputKeyword_1_0());
         c.setLinewrap().before(f.getISignalAccess().getIsOutputOutputKeyword_2_0());
         c.setLinewrap().before(f.getISignalAccess().getSignalKeyword_3());
@@ -142,7 +144,10 @@ public class KitsFormatter extends ActionsFormatter {
 
         c.setLinewrap().after(f.getVariableRule());
         // c.setLinewrap().after(f.getVariableAccess().getSemicolonKeyword_4());
+
+        c.setLinewrap().before(f.getAVariableAccess().getAnnotationsAssignment_0().getTerminal());
         c.setLinewrap().before(f.getAVariableAccess().getVarKeyword_1());
+        c.setLinewrap().before(f.getIVariableAccess().getAnnotationsAssignment_0().getTerminal());
         c.setLinewrap().before(f.getIVariableAccess().getVarKeyword_1());
 
 
@@ -159,6 +164,7 @@ public class KitsFormatter extends ActionsFormatter {
         // let each transition declaration begin on a new line
         // unfortunately, the first declaration doesn't work as intended
         // c.setLinewrap().before(f.getTransitionRule());
+        c.setLinewrap().before(f.getTransitionAccess().getAnnotationsAssignment_0().getTerminal());
         c.setLinewrap().before(f.getTransitionAccess().getTypeTransitionTypeEnumRuleCall_1_0());
         c.setLinewrap().before(f.getTransitionRule());
     }
