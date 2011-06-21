@@ -1,7 +1,8 @@
 <introContent>
+
     <extensionContent
         id="de.cau.cs.kieler.intro.overview"
-        name="KIELER Overview"
+        name="KIELER Project"
         path="overview/@"
         style="css/intro.css">
         <group
@@ -9,15 +10,39 @@
             id="de.cau.cs.kieler.intro.overview.group"
             style-id="content-group">
             <link 
-                label="KIELER Modeling Tools Overview"
-                url="http://www.informatik.uni-kiel.de/rtsys/kieler"
+                label="KIELER Project"
+                url="http://rtsys.informatik.uni-kiel.de/trac/kieler/"
                 id="kieler-overview-link"
                 style-id="content-link">
                 <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design.</text>
             </link>
         </group>
     </extensionContent>
-    
+   
+    <extensionContent
+        id="de.cau.cs.kieler.intro.samples"
+        name="KIELER Examples"
+        path="samples/@"
+        style="css/intro.css">
+        <group
+            label="KIELER Examples"
+            id="group"
+            style-id="content-group">
+	        <text> The following examples help you to become familiar with in KIELER.</text>
+		 	<anchor id="import-wizard"/>
+ 		    <group
+	            label="Quick Starts"
+	            id="quickstarts"
+	            style-id="content-group">
+			 	<text> Quickstart examples create a project with at least one example.</text>
+			<anchor id="quickstarts.anchor"/>
+	        </group>
+    	 </group>
+    </extensionContent>
+
+
+<!-- the following contents are deactivated due to missing content.
+
     <extensionContent
         id="de.cau.cs.kieler.intro.firststeps"
         name="KIELER First Steps"
@@ -55,27 +80,6 @@
             </link>
         </group>
   	</extensionContent>
-   
-    <extensionContent
-        id="de.cau.cs.kieler.intro.samples"
-        name="KIELER Examples"
-        path="samples/@"
-        style="css/intro.css">
-        <group
-            label="KIELER Examples"
-            id="group"
-            style-id="content-group">
-	        <text> The following examples help you to become familiar with in KIELER.</text>
-		 	<anchor id="import-wizard"/>
- 		    <group
-	            label="Quick Starts"
-	            id="quickstarts"
-	            style-id="content-group">
-			 	<text> Quickstart examples create a project with at least one example.</text>
-			<anchor id="quickstarts.anchor"/>
-	        </group>
-    	 </group>
-    </extensionContent>
    
     <extensionContent
         id="de.cau.cs.kieler.intro.whatsnew"
@@ -117,7 +121,7 @@
    
     <extensionContent
         id="de.cau.cs.kieler.intro.migrate"
-        name="KIELER migrate"
+        name="KIELER Migration"
         path="migrate/@"
         style="css/intro.css">
         <group
@@ -133,5 +137,7 @@
             </link>
         </group>
     </extensionContent>
+
+// end of deactivated content -->
 
 </introContent>
