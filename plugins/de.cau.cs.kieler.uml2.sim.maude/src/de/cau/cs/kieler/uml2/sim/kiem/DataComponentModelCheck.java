@@ -103,7 +103,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     private static final String MAUDE_RULE_COMPUTEES = "'computeFSetESINT";
 
     /** The Constant MAUDEMODELCHECKOK indicates no counter example can be found. */
-    private static final String MAUDEMODELCHECKOK = "result Bool: true";
+    private static final String MAUDEMODELCHECKOK = "result Bool: (true).Bool";
 
     /** The currently active states. */
     String[] currentStates;
