@@ -33,7 +33,6 @@ import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
@@ -92,14 +91,9 @@ public class ArrowEffect extends AbstractEffect {
      */
     public ArrowEffect(final EObject s, final EObject t, final Color c,
             final boolean connectionLayer) {
-        final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
-        MonitoredOperation.runInUI(new Runnable() {
-            public void run() {
-                maybe.set(EditorUtils.getLastActiveEditor());
-            }
-        }, true);
-        if (maybe.get() instanceof DiagramEditor) {
-            DiagramEditPart diagram = ((DiagramEditor) maybe.get()).getDiagramEditPart();
+        IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+        if (editorPart instanceof DiagramEditor) {
+            DiagramEditPart diagram = ((DiagramEditor) editorPart).getDiagramEditPart();
             source = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, s);
             if (source instanceof ConnectionEditPart) {
                 // attempt to find a label

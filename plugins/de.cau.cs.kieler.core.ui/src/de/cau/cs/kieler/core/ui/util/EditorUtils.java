@@ -22,6 +22,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Static utility class for working with editors.
@@ -42,33 +43,28 @@ public final class EditorUtils {
      *
      * @author haf
      *
-     * @return the last open active editor, maybe null if there is no open
-     *         editor or called from non-UI thread
+     * @return the last open active editor, which may be {@code null} if there is no open editor
      */
     public static IEditorPart getLastActiveEditor() {
-        IEditorPart editor = null;
-        try {
-            IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-            if (window == null) {
-                return null;
+        final Maybe<IEditorPart> editor = Maybe.create();
+        MonitoredOperation.runInUI(new Runnable() {
+            public void run() {
+                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                if (window == null) {
+                    return;
+                }
+                IWorkbenchPage page = window.getActivePage();
+                if (page == null) {
+                    return;
+                }
+                editor.set(page.getActiveEditor());
+                if (editor.get() == null) {
+                    IEditorReference[] editors = page.getEditorReferences();
+                    editor.set(editors[0].getEditor(true));
+                }
             }
-            IWorkbenchPage page = window.getActivePage();
-            if (page == null) {
-                return null;
-            }
-            editor = page.getActiveEditor();
-            if (editor == null) {
-                IEditorReference[] editors = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage()
-                        .getEditorReferences();
-                editor = editors[0].getEditor(true);
-            }
-        } catch (NullPointerException e) {
-            /* nothing */
-        } catch (ArrayIndexOutOfBoundsException e1) {
-            /* nothing */
-        }
-        return editor;
+        }, true);
+        return editor.get();
     }
 
 

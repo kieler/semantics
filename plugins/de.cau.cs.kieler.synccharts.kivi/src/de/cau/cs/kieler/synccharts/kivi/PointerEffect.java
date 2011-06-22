@@ -36,7 +36,6 @@ import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
@@ -116,14 +115,9 @@ public class PointerEffect extends AbstractEffect {
      */
     public PointerEffect(final EObject theTarget, final Color theColor, final int theLength,
             final boolean isTowards, final Direction theDirection, final boolean connectionLayer) {
-        final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
-        MonitoredOperation.runInUI(new Runnable() {
-            public void run() {
-                maybe.set(EditorUtils.getLastActiveEditor());
-            }
-        }, true);
-        if (maybe.get() instanceof DiagramEditor) {
-            DiagramEditPart diagram = ((DiagramEditor) maybe.get()).getDiagramEditPart();
+        IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+        if (editorPart instanceof DiagramEditor) {
+            DiagramEditPart diagram = ((DiagramEditor) editorPart).getDiagramEditPart();
             target = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, theTarget);
             if (target instanceof ConnectionEditPart) {
                 // attempt to find a label

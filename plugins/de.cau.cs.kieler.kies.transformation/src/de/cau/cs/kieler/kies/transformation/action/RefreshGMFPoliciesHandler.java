@@ -17,12 +17,10 @@ import org.eclipse.core.commands.AbstractHandler;
 import org.eclipse.core.commands.ExecutionEvent;
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 
 import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * An abstract handler for testing purposes only.
@@ -36,23 +34,13 @@ public class RefreshGMFPoliciesHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
-
-        RefreshGMFEditPoliciesEffect gmf = new RefreshGMFEditPoliciesEffect(getActiveEditor(),
-                false);
-        gmf.execute();
+        IEditorPart editorPart = EditorUtils.getLastActiveEditor();
+        if (editorPart instanceof DiagramEditor) {
+            RefreshGMFEditPoliciesEffect gmf = new RefreshGMFEditPoliciesEffect(
+                    (DiagramEditor) editorPart, false);
+            gmf.execute();
+        }
         return null;
     }
-
-    private DiagramEditor getActiveEditor() {
-        final Maybe<DiagramEditor> maybe = new Maybe<DiagramEditor>();
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                IEditorPart editor = EditorUtils.getLastActiveEditor();
-                if (editor instanceof DiagramEditor) {
-                    maybe.set((DiagramEditor) editor);
-                }
-            }
-        });
-        return maybe.get();
-    }
+    
 }

@@ -32,7 +32,6 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Listens for selection and deselection of graphical elements.
@@ -165,18 +164,10 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * @return the DiagramEditor
          */
         public IEditorPart getDiagramEditor() {
-            // return active editor as default
-            if (editor != null) {
-                return editor;
-            } else {
-                final Maybe<IEditorPart> maybe = new Maybe<IEditorPart>();
-                MonitoredOperation.runInUI(new Runnable() {
-                    public void run() {
-                        maybe.set(EditorUtils.getLastActiveEditor());
-                    }
-                }, true);
-                return maybe.get();
+            if (editor == null) {
+                editor = EditorUtils.getLastActiveEditor();
             }
+            return editor;
         }
     }
 

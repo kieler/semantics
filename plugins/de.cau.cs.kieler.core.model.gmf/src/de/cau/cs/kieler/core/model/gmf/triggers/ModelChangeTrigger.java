@@ -30,7 +30,6 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
@@ -42,7 +41,6 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * A view management Trigger that registered as a ResourceSetChangeListener onto any active Diagram
@@ -73,18 +71,12 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         final ResourceSetListener that = this;
         // register with the active editor
         // else the initially open editor will not send events until the editor changes
-        MonitoredOperation.runInUI(new Runnable() {
-            public void run() {
-                IEditorPart part = EditorUtils.getLastActiveEditor();
-                currentEditor = part;
-                if (isDiagram(part)) {
-                    GraphicalFrameworkService.getInstance().getBridge(currentEditor)
-                            .getEditingDomain(currentEditor);
-                    getEditingDomain(currentEditor).addResourceSetListener(that);
-                }
-                trigger(new ActiveEditorState(part, part, null));
-            }
-        }, false);
+        IEditorPart part = EditorUtils.getLastActiveEditor();
+        currentEditor = part;
+        if (isDiagram(part)) {
+            getEditingDomain(currentEditor).addResourceSetListener(that);
+        }
+        trigger(new ActiveEditorState(part, part, null));
     }
 
     @Override

@@ -15,7 +15,6 @@ package de.cau.cs.kieler.core.model.triggers;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -27,7 +26,6 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * A Trigger for supported diagrams. It will fire a DiagramState to the KIELER View Management if an
@@ -48,14 +46,8 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         CombinedWorkbenchListener.addPartListener(this);
         // test the active editor
         // else the initially open editor will not send events until the editor changes
-        MonitoredOperation.runInUI(new Runnable() {
-            public void run() {
-                IEditorPart part = EditorUtils.getLastActiveEditor();
-                currentEditor = part;
-                tryTrigger(currentEditor);
-
-            }
-        }, false);
+        currentEditor = EditorUtils.getLastActiveEditor();
+        tryTrigger(currentEditor);
     }
 
     /**
