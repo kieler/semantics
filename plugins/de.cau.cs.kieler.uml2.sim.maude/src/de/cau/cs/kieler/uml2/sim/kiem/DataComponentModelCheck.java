@@ -481,7 +481,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             if (modelCheckCounterExample) {
                 MessageText = "Model Checking found at least one counter example for rule:\n\n"
                         + checkingRule
-                        + "\n\nYou may now use the KIEM View to inspect the counter example.";
+                        + "\n\nYou may now use the KIELER Execution Manager View to inspect the counter example.";
             }
 
             Display.getDefault().asyncExec(new Runnable() {
@@ -693,7 +693,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         } catch (Exception e) {
             throw new KiemInitializationException(
                     "Cannot start Maude. Plase make sure that the paths are "
-                            + "set correctly in the KIEM parameters of the simulator"
+                            + "set correctly in the KIELER Execution Manager parameters of the simulator"
                             + " component.", true, e);
         }
 
