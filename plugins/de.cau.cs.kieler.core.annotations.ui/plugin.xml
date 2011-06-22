@@ -46,5 +46,11 @@
          </propertyTab>
       </propertyTabs>
    </extension>
-
+ <extension
+       point="de.cau.cs.kieler.kiml.layoutInfo">
+    <semanticOption
+          class="de.cau.cs.kieler.core.annotations.Annotatable"
+          config="de.cau.cs.kieler.core.annotations.ui.AnnotationsLayoutConfig">
+    </semanticOption>
+ </extension>
 </plugin>
