@@ -119,15 +119,15 @@ mod SEMANTICS is
 
     *** add the effect of the transition to the actions, valuations
     rl [execBTransincomingPstate] : maState (execTransC V HC T t (st, sT) sT1       A) ES => maState (execTransC V  HC T t sT sT1 A) ES .
-    crl [execBTrans2] : maState (execTransC V HC T t empty       sT1 A) ES => maState (execTransC V  HC T t empty empty A) ES if (isChoice t) .
+    crl [execBTrans2] : maState (execTransC V HC T t empty       sT1 A) ES => maState (execChoiceOut V  HC T t empty sT1 A) ES if (isChoice t) .
     crl [execBTrans2] : maState (execTransC V HC T t empty    (st, sT1) A) ES => maState (execTransC V  HC T t empty sT1 A) ES if not(isChoice t) .
    
 
 
-    crl [enterStatesForNonChoiceTrans] : maState (execTransC V HC T t empty empty A) ES => 
-     maState(enterC V HC T t (enterH HC t) A) ES if not(isChoice t) .
-    crl [enterStatesForChoiceTrans] : maState (execTransC V HC T t empty empty A) ES => 
-     maState(enterC V HC T t (enterH HC (chooseChoice t V)) A) ES if (isChoice t) .
+    rl [enterStatesForNonChoiceTrans] : maState (execTransC V HC T t empty empty A) ES => 
+     maState(enterC V HC T t (enterH HC t) A) ES .
+    rl [enterStatesForChoiceTrans] : maState (execChoiceOut V HC T t empty sT1 A) ES => 
+     maState(enterC V HC T t (enterH HC (chooseChoice t V)) A) ES .
 
     crl [enterState] : maState (enterC V HC T t (v, enterStates) A) ES => 
      maState (enterC (V, v) HC T t enterStates A) ES 

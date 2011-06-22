@@ -669,6 +669,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     public void initialize() throws KiemInitializationException {
         String pathToMaude = this.getProperties()[1].getValue();
 
+        System.out.println("");
+        
         String pathToMaudeCode = getMaudeGenCodeLocation();
         if (isWindows()) {
             pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);

@@ -663,7 +663,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     public String getMaudeGenCodeLocation() {
         String outPath = part2Location(this.getInputEditor());
-        String stringUri = this.getInputModel();
+        String stringUri = this.getInputModelAsURI().lastSegment().toString();
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
         return (outPath + stringUri2);
