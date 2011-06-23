@@ -367,7 +367,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             String eMFId = getEMFId(maudeStateId);
             System.out.println("Found " + eMFId);
             if (eMFId != null) {
-                if (!stateIds.isEmpty()) {
+                if (!stateIds.equals("")) {
                     stateIds += ",";
                 }
                 stateIds += eMFId;
@@ -453,7 +453,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 Object object;
                 object = signals.get(signalName);
                 if (JSONSignalValues.isPresent(object)) {
-                    if (!triggerEventsQuery.isEmpty()) {
+                    if (!triggerEventsQuery.equals("")) {
                         triggerEventsQuery += ",";
                     }
                     triggerEventsQuery += signalName;
@@ -470,7 +470,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // second build the current states
         String currentStatesQuery = "";
         for (String currentState : currentStates) {
-            if (!currentStatesQuery.isEmpty()) {
+            if (!currentStatesQuery.equals("")) {
                 currentStatesQuery += ",";
             }
             currentStatesQuery += currentState;

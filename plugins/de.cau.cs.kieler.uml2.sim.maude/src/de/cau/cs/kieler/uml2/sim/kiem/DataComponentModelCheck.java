@@ -410,7 +410,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                     Object object;
                     object = signals.get(signalName);
                     if (JSONSignalValues.isPresent(object)) {
-                        if (!triggerEventsQuery.isEmpty()) {
+                        if (!triggerEventsQuery.equals("")) {
                             triggerEventsQuery += ",";
                         }
                         triggerEventsQuery += signalName;
@@ -427,7 +427,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // second build the current states
             String currentStatesQuery = "";
             for (String currentState : currentStates) {
-                if (!currentStatesQuery.isEmpty()) {
+                if (!currentStatesQuery.equals("")) {
                     currentStatesQuery += ",";
                 }
                 currentStatesQuery += currentState;

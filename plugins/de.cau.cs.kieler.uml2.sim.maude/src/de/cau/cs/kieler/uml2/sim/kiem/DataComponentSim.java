@@ -112,7 +112,7 @@ public class DataComponentSim extends DataComponent implements
 					Object object;
 					object = signals.get(signalName);
 					if (JSONSignalValues.isPresent(object)) {
-						if (!triggerEventsQuery.isEmpty()) {
+						if (!triggerEventsQuery.equals("")) {
 							triggerEventsQuery += ",";
 						}
 						triggerEventsQuery += signalName;
@@ -130,13 +130,13 @@ public class DataComponentSim extends DataComponent implements
 		// second build the current states
 		String currentStatesRegionsQuery = "";
 		for (String currentState : currentStates) {
-			if (!currentStatesRegionsQuery.isEmpty()) {
+			if (!currentStatesRegionsQuery.equals("")) {
 				currentStatesRegionsQuery += ",";
 			}
 			currentStatesRegionsQuery += currentState;
 		}
 		for (String currentRegion : currentRegions) {
-			if (!currentStatesRegionsQuery.isEmpty()) {
+			if (!currentStatesRegionsQuery.equals("")) {
 				currentStatesRegionsQuery += ",";
 			}
 			currentStatesRegionsQuery += currentRegion;
