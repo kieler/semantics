@@ -328,141 +328,203 @@ public class SplineConnection extends PolylineConnectionEx {
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
         } else if (isRoundingBendpoints()) {
-            ///////////////////////////////////////////////////////
-            /////////////Temporary gmf bugfix//////////////////////
-            //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
-            ///////////////////////////////////////////////////////
+            if (!this.isOrthogonal(this.getPoints())) {
+                int origBendpointRadius = this.getRoundedBendpointsRadius();
+                this.setRoundedBendpointsRadius(0);
+                super.outlineShape(g);
+                this.setRoundedBendpointsRadius(origBendpointRadius);
+            } else {
+                // /////////////////////////////////////////////////////
+                // ///////////Temporary gmf bugfix//////////////////////
+                // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+                // /////////////////////////////////////////////////////
 
-            PointList displayPoints = getSmoothPoints(false);
+                PointList displayPoints = getSmoothPoints(false);
 
-            Hashtable<Point, Integer> originalDisplayPoints = null;
-            originalDisplayPoints = new Hashtable<Point, Integer>();
-            for (int i = 0; i < displayPoints.size(); i++) {
-                originalDisplayPoints.put(displayPoints.getPoint(i), new Integer(i));
-            }
-            // In originalDisplayPoints, each bendpoint will be replaced with two points: start and
-            // end point of the arc.
-            // If jump links is on, then displayPoints will also contain points identifying jump
-            // links, if any.
-            int i = 1;
-            int rDefault = getRoundedBendpointsRadius();
-            while (i < displayPoints.size() - 1) {
-                // Consider points at indexes i-1, i, i+1.
-                int x0 = 0, y0 = 0;
-                boolean firstPointAssigned = false;
-                if (i < displayPoints.size() - 1) { // if we still didn't reach the end after
-                                                    // drawing jump link polyline
-                    // Draw a segment starting at index i-1 and ending at index i,
-                    // and arc with starting point at index i and ending point at index i+1.
-                    // But first, find points at i-1, i and i+1.
-                    if (!firstPointAssigned) {
-                        x0 = displayPoints.getPoint(i - 1).x;
-                        y0 = displayPoints.getPoint(i - 1).y;
-                    }
-                    int x1;
-                    
-                    int y1;
-                    // If points at i-1 and i are equal (could happen if jump link algorithm
-                    // inserts a point that already exists), just skip the point i
-                    while (i < displayPoints.size() - 1 && x0 == displayPoints.getPoint(i).x
-                            && y0 == displayPoints.getPoint(i).y) {
-                        i++;
-                    }
-                    if (i < displayPoints.size() - 1) {
-                        x1 = displayPoints.getPoint(i).x;
-                        y1 = displayPoints.getPoint(i).y;
-                    } else {
-                        break;
-                    }
-
-                    // The same goes for point at i and i+1
-                    int x2;
-                    int y2;
-                    while (i + 1 < displayPoints.size() - 1
-                            && x1 == displayPoints.getPoint(i + 1).x
-                            && y1 == displayPoints.getPoint(i + 1).y) {
-                        i++;
-                    }
-                    if (i < displayPoints.size() - 1) {
-                        x2 = displayPoints.getPoint(i + 1).x;
-                        y2 = displayPoints.getPoint(i + 1).y;
-                    } else {
-                        break;
-                    }
-
-                    // Draw the segment
-                    g.drawLine(x0, y0, x1, y1);
-
-                    // Find out if arc size is default, or if it had to be decreased because of lack
-                    // of space
-                    this.getRoundedCornersPoints(false);
-                    int r = rDefault;
-                    Point p = displayPoints.getPoint(i);
-                    int origIndex = ((Integer) originalDisplayPoints.get(p)).intValue();
-                    Object o = rForBendpointArc.get(new Integer((origIndex + 1) / 2));
-                    if (o != null) {
-                        r = ((Integer) o).intValue();
-                    }
-                    // Find out the location of enclosing rectangle (x, y), as well as staring angle
-                    // of the arc.
-                    int x, y;
-                    int startAngle;
-                    if (x0 == x1 && x1 < x2) {
-                        x = x1;
-                        y = y1 - r;
-                        if (y1 > y2) {
-                            startAngle = 90;
-                        } else {
-                            startAngle = 180;
-                        }
-                    } else if (x0 > x1 && x1 > x2) {
-                        x = x2;
-                        y = y2 - r;
-                        if (y1 > y2) {
-                            startAngle = 180;
-                        } else {
-                            startAngle = 90;
-                        }
-                    } else if (x0 == x1 && x1 > x2) {
-                        if (y1 > y2) {
-                            x = x2 - r;
-                            y = y2;
-                            startAngle = 0;
-                        } else {
-                            x = x1 - 2 * r;
-                            y = y1 - r;
-                            startAngle = 270;
-                        }
-                    } else { // x0 < x1 && x1 < x2
-                        if (y1 > y2) {
-                            x = x2 - 2 * r;
-                            y = y2 - r;
-                            startAngle = 270;
-                        } else {
-                            x = x1 - r;
-                            y = y1;
-                            startAngle = 0;
-                        }
-                    }
-                    // Draw the arc.
-                    g.drawArc(x, y, 2 * r, 2 * r, startAngle, 90);
-                    i += 2;
+                Hashtable<Point, Integer> originalDisplayPoints = null;
+                originalDisplayPoints = new Hashtable<Point, Integer>();
+                for (int i = 0; i < displayPoints.size(); i++) {
+                    originalDisplayPoints.put(displayPoints.getPoint(i), new Integer(i));
                 }
+                // In originalDisplayPoints, each bendpoint will be replaced with two points: start
+                // and
+                // end point of the arc.
+                // If jump links is on, then displayPoints will also contain points identifying jump
+                // links, if any.
+                int i = 1;
+                int rDefault = getRoundedBendpointsRadius();
+                while (i < displayPoints.size() - 1) {
+                    // Consider points at indexes i-1, i, i+1.
+                    int x0 = 0, y0 = 0;
+                    boolean firstPointAssigned = false;
+                    if (i < displayPoints.size() - 1) { // if we still didn't reach the end after
+                                                        // drawing jump link polyline
+                        // Draw a segment starting at index i-1 and ending at index i,
+                        // and arc with starting point at index i and ending point at index i+1.
+                        // But first, find points at i-1, i and i+1.
+                        if (!firstPointAssigned) {
+                            x0 = displayPoints.getPoint(i - 1).x;
+                            y0 = displayPoints.getPoint(i - 1).y;
+                        }
+                        int x1;
+
+                        int y1;
+                        // If points at i-1 and i are equal (could happen if jump link algorithm
+                        // inserts a point that already exists), just skip the point i
+                        while (i < displayPoints.size() - 1 && x0 == displayPoints.getPoint(i).x
+                                && y0 == displayPoints.getPoint(i).y) {
+                            i++;
+                        }
+                        if (i < displayPoints.size() - 1) {
+                            x1 = displayPoints.getPoint(i).x;
+                            y1 = displayPoints.getPoint(i).y;
+                        } else {
+                            break;
+                        }
+
+                        // The same goes for point at i and i+1
+                        int x2;
+                        int y2;
+                        while (i + 1 < displayPoints.size() - 1
+                                && x1 == displayPoints.getPoint(i + 1).x
+                                && y1 == displayPoints.getPoint(i + 1).y) {
+                            i++;
+                        }
+                        if (i < displayPoints.size() - 1) {
+                            x2 = displayPoints.getPoint(i + 1).x;
+                            y2 = displayPoints.getPoint(i + 1).y;
+                        } else {
+                            break;
+                        }
+
+                        // Draw the segment
+                        g.drawLine(x0, y0, x1, y1);
+
+                        // Find out if arc size is default, or if it had to be decreased because of
+                        // lack
+                        // of space
+                        this.getRoundedCornersPoints(false);
+                        int r = rDefault;
+                        Point p = displayPoints.getPoint(i);
+                        int origIndex = ((Integer) originalDisplayPoints.get(p)).intValue();
+                        Object o = rForBendpointArc.get(new Integer((origIndex + 1) / 2));
+                        if (o != null) {
+                            r = ((Integer) o).intValue();
+                        }
+                        // Find out the location of enclosing rectangle (x, y), as well as staring
+                        // angle
+                        // of the arc.
+                        int x, y;
+                        int startAngle;
+                        if (x0 == x1 && x1 < x2) {
+                            x = x1;
+                            y = y1 - r;
+                            if (y1 > y2) {
+                                startAngle = 90;
+                            } else {
+                                startAngle = 180;
+                            }
+                        } else if (x0 > x1 && x1 > x2) {
+                            x = x2;
+                            y = y2 - r;
+                            if (y1 > y2) {
+                                startAngle = 180;
+                            } else {
+                                startAngle = 90;
+                            }
+                        } else if (x0 == x1 && x1 > x2) {
+                            if (y1 > y2) {
+                                x = x2 - r;
+                                y = y2;
+                                startAngle = 0;
+                            } else {
+                                x = x1 - 2 * r;
+                                y = y1 - r;
+                                startAngle = 270;
+                            }
+                        } else { // x0 < x1 && x1 < x2
+                            if (y1 > y2) {
+                                x = x2 - 2 * r;
+                                y = y2 - r;
+                                startAngle = 270;
+                            } else {
+                                x = x1 - r;
+                                y = y1;
+                                startAngle = 0;
+                            }
+                        }
+                        // Draw the arc.
+                        g.drawArc(x, y, 2 * r, 2 * r, startAngle, 90);
+                        i += 2;
+                    }
+                }
+                // Draw the last segment.
+                g.drawLine(displayPoints.getPoint(displayPoints.size() - 2),
+                        displayPoints.getLastPoint());
+                // bugfix end
             }
-            // Draw the last segment.
-            g.drawLine(displayPoints.getPoint(displayPoints.size() - 2),
-                    displayPoints.getLastPoint());
-            //bugfix end
         } else {
             super.outlineShape(g);
         }
     }
 
-    ///////////////////////////////////////////////////////
-    /////////////Temporary gmf bugfix//////////////////////
-    //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
-    ///////////////////////////////////////////////////////
+    /**
+     * method to check whether the connection is orthogonal or not.
+     * @param bendpoints the bendpoints of the connection to check
+     * @return true is orthogonal else false
+     */
+    private boolean isOrthogonal(final PointList bendpoints) {
+        boolean isOrthogonal = true;
+        boolean horizontal;
+        Point a = bendpoints.getPoint(0);
+        Point b = bendpoints.getPoint(1);
+        
+        if (a.x == b.x) {
+            horizontal = false;
+        } else if (a.y == b.y) {
+            horizontal = true;
+        } else {
+            return false;
+        }
+            
+        for (int i = 1; i < (bendpoints.size() - 1); i++) {
+            a = bendpoints.getPoint(i);
+            b = bendpoints.getPoint(i + 1);
+            if (horizontal) {
+            if ((i % 2) == 1) {             
+               if (a.x != b.x) {
+                   isOrthogonal = false;
+                   break;
+               }
+            } else {
+                if (a.y != b.y) {
+                    isOrthogonal = false;
+                    break;
+                } 
+            }
+            } else {
+                if ((i % 2) == 1) {             
+                    if (a.y != b.y) {
+                        isOrthogonal = false;
+                        break;
+                    }
+                 } else {
+                     if (a.x != b.x) {
+                         isOrthogonal = false;
+                         break;
+                     } 
+                 }
+            }
+        }
+        return isOrthogonal;
+    }
+
+    // /////////////////////////////////////////////////////
+    // ///////////Temporary gmf bugfix//////////////////////
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+    // /////////////////////////////////////////////////////
     private Hashtable<Integer, Integer> rForBendpointArc;
+
     @Override
     public PointList getRoundedCornersPoints(boolean calculateAppoxPoints) {
         if (rForBendpointArc != null) {
@@ -474,7 +536,8 @@ public class SplineConnection extends PolylineConnectionEx {
         return SplineUtilities.calcRoundedCornersPolyline(getPoints(),
                 getRoundedBendpointsRadius(), rForBendpointArc, calculateAppoxPoints);
     }
-    //bugfix end
+
+    // bugfix end
 
     /*
      * (non-Javadoc)
