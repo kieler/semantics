@@ -532,6 +532,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 try {
                     returnObj.accumulate(stateName,
                             getCurrentStateIds(currentStep.states.toArray(new String[0])));
+                    returnObj.accumulate("DEBUG",
+                            currentStep.states.toArray(new String[0]));
                 } catch (Exception e) {
                     // ignore any errors
                 }

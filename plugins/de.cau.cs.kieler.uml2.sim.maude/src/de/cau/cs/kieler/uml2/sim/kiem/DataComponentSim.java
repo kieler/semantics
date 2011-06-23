@@ -221,6 +221,8 @@ public class DataComponentSim extends DataComponent implements
 		String stateName = this.getProperties()[2].getValue();
 		try {
 			returnObj.accumulate(stateName, getCurrentStateIds(currentStates.toArray(new String[0])));
+			returnObj.accumulate("DEBUG",
+			        currentStates.toArray(new String[0]));
 		} catch (Exception e) {
 			// ignore any errors
 			e.printStackTrace();
