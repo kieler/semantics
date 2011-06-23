@@ -338,6 +338,7 @@ public class HighlightEffect extends AbstractEffect {
                 }
                 // Papyrus case
                 if (targetFigure instanceof BorderedNodeFigure) {
+                    System.out.print("PAPYRUS FIGURE ... ");
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
                     if (bnf.getChildren().size() > 0) {
                         targetFigure = (IFigure)bnf.getChildren().get(0);
@@ -345,6 +346,7 @@ public class HighlightEffect extends AbstractEffect {
                             DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure; 
                             if (dsnf.getChildren().size() > 0) {
                                 targetFigure = (IFigure)dsnf.getChildren().get(0);
+                                System.out.println("FOUND");
                             }
                         }
                     }
