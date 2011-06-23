@@ -102,9 +102,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     /** The Constant MAUDE_RULE_COMPUTEES rule token for a finished event set computation. */
     private static final String MAUDE_RULE_COMPUTEES = "'computeFSetESINT";
 
-    /** The Constant MAUDEMODELCHECKOK indicates no counter example can be found. */
-    private static final String MAUDEMODELCHECKOK = "result Bool: (true).Bool";
+    /** The Constant MAUDEMODELCHECKOK1 (or 2) indicates no counter example can be found. */
+    private static final String MAUDEMODELCHECKOK1 = "result Bool: (true).Bool";
 
+    /** The Constant MAUDEMODELCHECKOK2 (or 1) indicates no counter example can be found. */
+    private static final String MAUDEMODELCHECKOK2 = "result Bool: true";
+    
     /** The currently active states. */
     String[] currentStates;
 
@@ -463,7 +466,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // example
             // or not
             modelCheckCounterExample = true;
-            if (result.contains(MAUDEMODELCHECKOK)) {
+            if (   result.contains(MAUDEMODELCHECKOK1)
+                || result.contains(MAUDEMODELCHECKOK2)) {
                 modelCheckCounterExample = false;
             }
 
