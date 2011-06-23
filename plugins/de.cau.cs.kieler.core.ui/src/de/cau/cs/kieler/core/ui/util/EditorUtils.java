@@ -60,7 +60,9 @@ public final class EditorUtils {
                 editor.set(page.getActiveEditor());
                 if (editor.get() == null) {
                     IEditorReference[] editors = page.getEditorReferences();
-                    editor.set(editors[0].getEditor(true));
+                    if (editors.length > 0) {
+                        editor.set(editors[0].getEditor(true));
+                    }
                 }
             }
         }, true);
