@@ -124,6 +124,11 @@
 		<!-- See http://checkstyle.sf.net/config_javadoc.html -->
 		<module name="JavadocMethod">
 			<property name="scope" value="protected" />
+            
+            <!--
+                cds: removed warning for documented, but undeclared runtime exceptions.
+            -->
+            <property name="allowUndeclaredRTE" value="true" />
 		</module>
 		<module name="JavadocVariable">
 			<property name="scope" value="protected" />
