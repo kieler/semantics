@@ -170,7 +170,7 @@ public class KitsStateParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup(), "rule__KeyStringValueAnnotation__Group__0");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getGroup_3(), "rule__KeyStringValueAnnotation__Group_3__0");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup(), "rule__TypedKeyStringValueAnnotation__Group__0");
-					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_4(), "rule__TypedKeyStringValueAnnotation__Group_4__0");
+					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getGroup_6(), "rule__TypedKeyStringValueAnnotation__Group_6__0");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup(), "rule__KeyBooleanValueAnnotation__Group__0");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getGroup_3(), "rule__KeyBooleanValueAnnotation__Group_3__0");
 					put(grammarAccess.getKeyIntValueAnnotationAccess().getGroup(), "rule__KeyIntValueAnnotation__Group__0");
@@ -178,6 +178,8 @@ public class KitsStateParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup(), "rule__KeyFloatValueAnnotation__Group__0");
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup_3(), "rule__KeyFloatValueAnnotation__Group_3__0");
 					put(grammarAccess.getImportAnnotationAccess().getGroup(), "rule__ImportAnnotation__Group__0");
+					put(grammarAccess.getTypeIdAccess().getGroup(), "rule__TypeId__Group__0");
+					put(grammarAccess.getTypeIdAccess().getGroup_1(), "rule__TypeId__Group_1__0");
 					put(grammarAccess.getRootRegionAccess().getAnnotationsAssignment_0(), "rule__RootRegion__AnnotationsAssignment_0");
 					put(grammarAccess.getRootRegionAccess().getAnnotationsAssignment_1_0(), "rule__RootRegion__AnnotationsAssignment_1_0");
 					put(grammarAccess.getRootRegionAccess().getIdAssignment_1_2(), "rule__RootRegion__IdAssignment_1_2");
@@ -338,9 +340,9 @@ public class KitsStateParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getValueAssignment_2(), "rule__KeyStringValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getKeyStringValueAnnotationAccess().getAnnotationsAssignment_3_1(), "rule__KeyStringValueAnnotation__AnnotationsAssignment_3_1");
 					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameAssignment_1(), "rule__TypedKeyStringValueAnnotation__NameAssignment_1");
-					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_2(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_2");
-					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_3(), "rule__TypedKeyStringValueAnnotation__ValueAssignment_3");
-					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_4_1(), "rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_4_1");
+					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeAssignment_3(), "rule__TypedKeyStringValueAnnotation__TypeAssignment_3");
+					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getValueAssignment_5(), "rule__TypedKeyStringValueAnnotation__ValueAssignment_5");
+					put(grammarAccess.getTypedKeyStringValueAnnotationAccess().getAnnotationsAssignment_6_1(), "rule__TypedKeyStringValueAnnotation__AnnotationsAssignment_6_1");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getNameAssignment_1(), "rule__KeyBooleanValueAnnotation__NameAssignment_1");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueAssignment_2(), "rule__KeyBooleanValueAnnotation__ValueAssignment_2");
 					put(grammarAccess.getKeyBooleanValueAnnotationAccess().getAnnotationsAssignment_3_1(), "rule__KeyBooleanValueAnnotation__AnnotationsAssignment_3_1");

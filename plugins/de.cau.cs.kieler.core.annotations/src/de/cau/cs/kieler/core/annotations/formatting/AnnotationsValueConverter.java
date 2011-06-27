@@ -54,7 +54,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      * 
      * @return dedicated value converter
      */
-    @ValueConverter(rule = "TypeId")
+//    @ValueConverter(rule = "TypeId")
     public IValueConverter<String> TypeId() {
         return new IValueConverter<String>() {
 

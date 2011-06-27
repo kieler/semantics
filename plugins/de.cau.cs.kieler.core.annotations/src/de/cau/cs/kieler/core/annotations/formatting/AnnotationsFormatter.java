@@ -45,6 +45,10 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
 //            c.setLinewrap(0, 1, 2).before(f.getML_COMMENTRule());
 //            c.setLinewrap(0, 1, 1).after(f.getML_COMMENTRule());
             
+            c.setNoSpace().before(f.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+            c.setNoSpace().after(f.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
+	    c.setNoSpace().before(f.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
+	    
             c.setLinewrap().after(f.getImportAnnotationRule());
 
             c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());

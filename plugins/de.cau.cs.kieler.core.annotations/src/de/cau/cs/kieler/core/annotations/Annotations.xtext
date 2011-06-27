@@ -45,7 +45,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ID type=TypeId value=EString
+    '@' name=ID '[' type=TypeId ']' value=EString
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -128,6 +128,9 @@ terminal STRING returns ecore::EString:
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 
 
+TypeId returns ecore::EString:
+  ID("."ID)*;
+
 // type identifiers can reference Java classes
-terminal TypeId returns ecore::EString:
-    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+//terminal TypeId returns ecore::EString:
+//    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';

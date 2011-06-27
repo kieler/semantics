@@ -7,99 +7,99 @@ package de.cau.cs.kieler.s.ui.contentassist.antlr.internal;
 import org.eclipse.xtext.ui.editor.contentassist.antlr.internal.Lexer;
 }
 
-T16 : 'pre' ;
-T17 : 'or' ;
-T18 : 'and' ;
-T19 : 'not' ;
-T20 : '+' ;
-T21 : '-' ;
-T22 : '*' ;
-T23 : 'mod' ;
-T24 : '/' ;
-T25 : '?' ;
-T26 : '=' ;
-T27 : '<' ;
-T28 : '<=' ;
-T29 : '>' ;
-T30 : '>=' ;
-T31 : '<>' ;
-T32 : 'pure' ;
-T33 : 'boolean' ;
-T34 : 'unsigned' ;
-T35 : 'integer' ;
-T36 : 'float' ;
-T37 : 'double' ;
-T38 : 'string' ;
-T39 : 'host' ;
-T40 : 'none' ;
-T41 : 'max' ;
-T42 : 'min' ;
-T43 : 'Synchronous Program' ;
-T44 : '(' ;
-T45 : ')' ;
-T46 : ':' ;
-T47 : 'SIGNALS' ;
-T48 : ';' ;
-T49 : 'signal' ;
-T50 : ':=' ;
-T51 : 'combine' ;
-T52 : 'with' ;
-T53 : 'PAUSE' ;
-T54 : 'TERM' ;
-T55 : 'Halt' ;
-T56 : 'JOIN' ;
-T57 : 'ABORT' ;
-T58 : 'IF' ;
-T59 : '{' ;
-T60 : '}' ;
-T61 : ',' ;
-T62 : 'GOTO' ;
-T63 : 'FORK' ;
-T64 : 'FORKE' ;
-T65 : 'EMIT' ;
-T66 : 'AWAIT' ;
-T67 : 'PRIO' ;
-T68 : 'input' ;
-T69 : 'output' ;
-T70 : 'inputoutput' ;
-T71 : 'return' ;
-T72 : 'var' ;
-T73 : '@' ;
+T15 : 'pre' ;
+T16 : 'or' ;
+T17 : 'and' ;
+T18 : 'not' ;
+T19 : '+' ;
+T20 : '-' ;
+T21 : '*' ;
+T22 : 'mod' ;
+T23 : '/' ;
+T24 : '?' ;
+T25 : '=' ;
+T26 : '<' ;
+T27 : '<=' ;
+T28 : '>' ;
+T29 : '>=' ;
+T30 : '<>' ;
+T31 : 'pure' ;
+T32 : 'boolean' ;
+T33 : 'unsigned' ;
+T34 : 'integer' ;
+T35 : 'float' ;
+T36 : 'double' ;
+T37 : 'string' ;
+T38 : 'host' ;
+T39 : 'none' ;
+T40 : 'max' ;
+T41 : 'min' ;
+T42 : 'Synchronous Program' ;
+T43 : '(' ;
+T44 : ')' ;
+T45 : ':' ;
+T46 : 'SIGNALS' ;
+T47 : ';' ;
+T48 : 'signal' ;
+T49 : ':=' ;
+T50 : 'combine' ;
+T51 : 'with' ;
+T52 : 'PAUSE' ;
+T53 : 'TERM' ;
+T54 : 'Halt' ;
+T55 : 'JOIN' ;
+T56 : 'ABORT' ;
+T57 : 'IF' ;
+T58 : '{' ;
+T59 : '}' ;
+T60 : ',' ;
+T61 : 'GOTO' ;
+T62 : 'FORK' ;
+T63 : 'FORKE' ;
+T64 : 'EMIT' ;
+T65 : 'AWAIT' ;
+T66 : 'PRIO' ;
+T67 : 'input' ;
+T68 : 'output' ;
+T69 : 'inputoutput' ;
+T70 : 'return' ;
+T71 : 'var' ;
+T72 : '@' ;
+T73 : '[' ;
+T74 : ']' ;
+T75 : '.' ;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13156
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13374
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13158
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13376
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13160
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13378
 RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13162
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13380
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13164
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13382
 RULE_FLOAT : ('-'? ('0'..'9')+ '.' ('0'..'9')* (('e'|'E') ('+'|'-')? ('0'..'9')+)? 'f'?|'-'? ('0'..'9')+ 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13166
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13384
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13168
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13386
 RULE_STRING : '"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"';
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13170
-RULE_TYPEID : '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
-
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13172
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13388
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13174
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13390
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13176
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13392
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13178
+// $ANTLR src "../de.cau.cs.kieler.s.ui/src-gen/de/cau/cs/kieler/s/ui/contentassist/antlr/internal/InternalS.g" 13394
 RULE_ANY_OTHER : .;
 
 

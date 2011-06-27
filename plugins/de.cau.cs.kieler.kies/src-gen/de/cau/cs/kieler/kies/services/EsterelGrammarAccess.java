@@ -7288,7 +7288,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKExpressions.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -7396,11 +7396,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// type identifiers can reference Java classes
-	//terminal TypeId:
-	//	"[" ("a".."z" | "A".."Z" | "_" | ".") ("a".."z" | "A".."Z" | "_" | "." | "0".."9")* "]";
-	public TerminalRule getTypeIdRule() {
-		return gaKExpressions.getTypeIdRule();
-	} 
+	////terminal TypeId returns ecore::EString:
+	////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+	//TypeId returns ecore::EString:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.TypeIdElements getTypeIdAccess() {
+		return gaKExpressions.getTypeIdAccess();
+	}
+	
+	public ParserRule getTypeIdRule() {
+		return getTypeIdAccess().getRule();
+	}
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

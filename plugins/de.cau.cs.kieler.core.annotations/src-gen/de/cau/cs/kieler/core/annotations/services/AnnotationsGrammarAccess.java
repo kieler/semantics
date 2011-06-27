@@ -185,22 +185,24 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cCommercialAtKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Assignment cTypeAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cTypeTypeIdTerminalRuleCall_2_0 = (RuleCall)cTypeAssignment_2.eContents().get(0);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cValueEStringParserRuleCall_3_0 = (RuleCall)cValueAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cLeftParenthesisKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cAnnotationsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cAnnotationsAnnotationParserRuleCall_4_1_0 = (RuleCall)cAnnotationsAssignment_4_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTypeAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTypeTypeIdParserRuleCall_3_0 = (RuleCall)cTypeAssignment_3.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cValueAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cValueEStringParserRuleCall_5_0 = (RuleCall)cValueAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cLeftParenthesisKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_6_1_0 = (RuleCall)cAnnotationsAssignment_6_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_6_2 = (Keyword)cGroup_6.eContents().get(2);
 		
 		//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 		//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-		//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?
+		//"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -212,32 +214,38 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 
+		//"["
+		public Keyword getLeftSquareBracketKeyword_2() { return cLeftSquareBracketKeyword_2; }
+
 		//type=TypeId
-		public Assignment getTypeAssignment_2() { return cTypeAssignment_2; }
+		public Assignment getTypeAssignment_3() { return cTypeAssignment_3; }
 
 		//TypeId
-		public RuleCall getTypeTypeIdTerminalRuleCall_2_0() { return cTypeTypeIdTerminalRuleCall_2_0; }
+		public RuleCall getTypeTypeIdParserRuleCall_3_0() { return cTypeTypeIdParserRuleCall_3_0; }
+
+		//"]"
+		public Keyword getRightSquareBracketKeyword_4() { return cRightSquareBracketKeyword_4; }
 
 		//value=EString
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
+		public Assignment getValueAssignment_5() { return cValueAssignment_5; }
 
 		//EString
-		public RuleCall getValueEStringParserRuleCall_3_0() { return cValueEStringParserRuleCall_3_0; }
+		public RuleCall getValueEStringParserRuleCall_5_0() { return cValueEStringParserRuleCall_5_0; }
 
 		//("(" annotations+=Annotation* ")")?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_6() { return cGroup_6; }
 
 		//"("
-		public Keyword getLeftParenthesisKeyword_4_0() { return cLeftParenthesisKeyword_4_0; }
+		public Keyword getLeftParenthesisKeyword_6_0() { return cLeftParenthesisKeyword_6_0; }
 
 		//annotations+=Annotation*
-		public Assignment getAnnotationsAssignment_4_1() { return cAnnotationsAssignment_4_1; }
+		public Assignment getAnnotationsAssignment_6_1() { return cAnnotationsAssignment_6_1; }
 
 		//Annotation
-		public RuleCall getAnnotationsAnnotationParserRuleCall_4_1_0() { return cAnnotationsAnnotationParserRuleCall_4_1_0; }
+		public RuleCall getAnnotationsAnnotationParserRuleCall_6_1_0() { return cAnnotationsAnnotationParserRuleCall_6_1_0; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_4_2() { return cRightParenthesisKeyword_4_2; }
+		public Keyword getRightParenthesisKeyword_6_2() { return cRightParenthesisKeyword_6_2; }
 	}
 
 	public class KeyBooleanValueAnnotationElements extends AbstractParserRuleElementFinder {
@@ -444,6 +452,42 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getIDTerminalRuleCall_1() { return cIDTerminalRuleCall_1; }
 	}
+
+	public class TypeIdElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "TypeId");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final RuleCall cIDTerminalRuleCall_0 = (RuleCall)cGroup.eContents().get(0);
+		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final RuleCall cIDTerminalRuleCall_1_1 = (RuleCall)cGroup_1.eContents().get(1);
+		
+		//// type identifiers can reference Java classes
+		////terminal TypeId returns ecore::EString:
+		////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+		//TypeId returns ecore::EString:
+		//	ID ("." ID)*;
+		public ParserRule getRule() { return rule; }
+
+		//ID ("." ID)* // type identifiers can reference Java classes
+		////terminal TypeId returns ecore::EString:
+		////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+		public Group getGroup() { return cGroup; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_0() { return cIDTerminalRuleCall_0; }
+
+		//("." ID // type identifiers can reference Java classes
+		////terminal TypeId returns ecore::EString:
+		////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+		//)*
+		public Group getGroup_1() { return cGroup_1; }
+
+		//"."
+		public Keyword getFullStopKeyword_1_0() { return cFullStopKeyword_1_0; }
+
+		//ID
+		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
+	}
 	
 	
 	private AnnotationElements pAnnotation;
@@ -462,7 +506,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tFloat;
 	private TerminalRule tBoolean;
 	private TerminalRule tSTRING;
-	private TerminalRule tTypeId;
+	private TypeIdElements pTypeId;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -536,7 +580,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ID type=TypeId value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return (pTypedKeyStringValueAnnotation != null) ? pTypedKeyStringValueAnnotation : (pTypedKeyStringValueAnnotation = new TypedKeyStringValueAnnotationElements());
 	}
@@ -651,11 +695,17 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// type identifiers can reference Java classes
-	//terminal TypeId:
-	//	"[" ("a".."z" | "A".."Z" | "_" | ".") ("a".."z" | "A".."Z" | "_" | "." | "0".."9")* "]";
-	public TerminalRule getTypeIdRule() {
-		return (tTypeId != null) ? tTypeId : (tTypeId = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "TypeId"));
-	} 
+	////terminal TypeId returns ecore::EString:
+	////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
+	//TypeId returns ecore::EString:
+	//	ID ("." ID)*;
+	public TypeIdElements getTypeIdAccess() {
+		return (pTypeId != null) ? pTypeId : (pTypeId = new TypeIdElements());
+	}
+	
+	public ParserRule getTypeIdRule() {
+		return getTypeIdAccess().getRule();
+	}
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

@@ -7,82 +7,82 @@ package de.cau.cs.kieler.core.kexpressions.parser.antlr.internal;
 import org.eclipse.xtext.parser.antlr.Lexer;
 }
 
-T16 : '(' ;
-T17 : ')' ;
-T18 : 'input' ;
-T19 : ',' ;
-T20 : ';' ;
-T21 : 'output' ;
-T22 : 'inputoutput' ;
-T23 : 'return' ;
-T24 : ':' ;
-T25 : ':=' ;
-T26 : 'var' ;
-T27 : 'combine' ;
-T28 : 'with' ;
-T29 : '@' ;
-T30 : '=' ;
-T31 : '<' ;
-T32 : '<=' ;
-T33 : '>' ;
-T34 : '>=' ;
-T35 : '<>' ;
-T36 : 'pre' ;
-T37 : 'or' ;
-T38 : 'and' ;
-T39 : 'not' ;
-T40 : '+' ;
-T41 : '-' ;
-T42 : '*' ;
-T43 : 'mod' ;
-T44 : '/' ;
-T45 : '?' ;
-T46 : 'pure' ;
-T47 : 'boolean' ;
-T48 : 'unsigned' ;
-T49 : 'integer' ;
-T50 : 'float' ;
-T51 : 'double' ;
-T52 : 'string' ;
-T53 : 'host' ;
-T54 : 'none' ;
-T55 : 'max' ;
-T56 : 'min' ;
+T15 : '(' ;
+T16 : ')' ;
+T17 : 'input' ;
+T18 : ',' ;
+T19 : ';' ;
+T20 : 'output' ;
+T21 : 'inputoutput' ;
+T22 : 'return' ;
+T23 : ':' ;
+T24 : ':=' ;
+T25 : 'var' ;
+T26 : 'combine' ;
+T27 : 'with' ;
+T28 : '@' ;
+T29 : '[' ;
+T30 : ']' ;
+T31 : '.' ;
+T32 : '=' ;
+T33 : '<' ;
+T34 : '<=' ;
+T35 : '>' ;
+T36 : '>=' ;
+T37 : '<>' ;
+T38 : 'pre' ;
+T39 : 'or' ;
+T40 : 'and' ;
+T41 : 'not' ;
+T42 : '+' ;
+T43 : '-' ;
+T44 : '*' ;
+T45 : 'mod' ;
+T46 : '/' ;
+T47 : '?' ;
+T48 : 'pure' ;
+T49 : 'boolean' ;
+T50 : 'unsigned' ;
+T51 : 'integer' ;
+T52 : 'float' ;
+T53 : 'double' ;
+T54 : 'string' ;
+T55 : 'host' ;
+T56 : 'none' ;
+T57 : 'max' ;
+T58 : 'min' ;
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4061
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4112
 RULE_HOSTCODE : '\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'';
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4063
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4114
 RULE_COMMENT_ANNOTATION : '/**' ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4065
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4116
 RULE_ML_COMMENT : '/*' ~('*') ( options {greedy=false;} : . )*'*/';
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4067
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4118
 RULE_INT : '-'? ('0'..'9')+;
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4069
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4120
 RULE_FLOAT : ('-'? ('0'..'9')+ '.' ('0'..'9')* (('e'|'E') ('+'|'-')? ('0'..'9')+)? 'f'?|'-'? ('0'..'9')+ 'f');
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4071
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4122
 RULE_BOOLEAN : ('true'|'false');
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4073
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4124
 RULE_STRING : '"' ('\\' ('b'|'t'|'n'|'f'|'r'|'"'|'\''|'\\')|~(('\\'|'"')))* '"';
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4075
-RULE_TYPEID : '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
-
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4077
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4126
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4079
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4128
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')?;
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4081
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4130
 RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
-// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4083
+// $ANTLR src "../de.cau.cs.kieler.core.kexpressions/src-gen/de/cau/cs/kieler/core/kexpressions/parser/antlr/internal/InternalKExpressions.g" 4132
 RULE_ANY_OTHER : .;
 
 
