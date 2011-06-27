@@ -811,7 +811,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @HVlayout
 	//TagAnnotation returns Annotation:
-	//	"@" name=ID ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TagAnnotationElements getTagAnnotationAccess() {
 		return gaKits.getTagAnnotationAccess();
 	}
@@ -822,7 +822,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @layouter dot;   
 	//KeyStringValueAnnotation returns StringAnnotation:
-	//	"@" name=ID value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyStringValueAnnotationElements getKeyStringValueAnnotationAccess() {
 		return gaKits.getKeyStringValueAnnotationAccess();
 	}
@@ -833,7 +833,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 	//TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-	//	"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.TypedKeyStringValueAnnotationElements getTypedKeyStringValueAnnotationAccess() {
 		return gaKits.getTypedKeyStringValueAnnotationAccess();
 	}
@@ -844,7 +844,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ID value=Boolean ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKits.getKeyBooleanValueAnnotationAccess();
 	}
@@ -855,7 +855,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10;    
 	//KeyIntValueAnnotation returns IntAnnotation:
-	//	"@" name=ID value=INT ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyIntValueAnnotationElements getKeyIntValueAnnotationAccess() {
 		return gaKits.getKeyIntValueAnnotationAccess();
 	}
@@ -866,7 +866,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ID value=Float ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKits.getKeyFloatValueAnnotationAccess();
 	}
@@ -895,6 +895,16 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getEStringRule() {
 		return getEStringAccess().getRule();
+	}
+
+	//ExtendedID returns ecore::EString:
+	//	ID ("." ID)*;
+	public AnnotationsGrammarAccess.ExtendedIDElements getExtendedIDAccess() {
+		return gaKits.getExtendedIDAccess();
+	}
+	
+	public ParserRule getExtendedIDRule() {
+		return getExtendedIDAccess().getRule();
 	}
 
 	//// --------------------------
@@ -941,24 +951,14 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// custom terminal rule for strings
+	//// type identifiers can reference Java classes
+	////terminal TypeId returns ecore::EString:
+	////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
 	//terminal STRING:
 	//	"\"" ("\\" ("b" | "t" | "n" | "f" | "r" | "\"" | "\'" | "\\") | !("\\" | "\""))* "\"";
 	public TerminalRule getSTRINGRule() {
 		return gaKits.getSTRINGRule();
 	} 
-
-	//// type identifiers can reference Java classes
-	////terminal TypeId returns ecore::EString:
-	////    '[' ('a'..'z'|'A'..'Z'|'_'|'.') ('a'..'z'|'A'..'Z'|'_'|'.'|'0'..'9')* ']';
-	//TypeId returns ecore::EString:
-	//	ID ("." ID)*;
-	public AnnotationsGrammarAccess.TypeIdElements getTypeIdAccess() {
-		return gaKits.getTypeIdAccess();
-	}
-	
-	public ParserRule getTypeIdRule() {
-		return getTypeIdAccess().getRule();
-	}
 
 	//terminal ID:
 	//	"^"? ("a".."z" | "A".."Z" | "_") ("a".."z" | "A".."Z" | "_" | "0".."9")*;

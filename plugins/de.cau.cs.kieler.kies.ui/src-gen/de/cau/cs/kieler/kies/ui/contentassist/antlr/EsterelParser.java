@@ -307,8 +307,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup(), "rule__KeyFloatValueAnnotation__Group__0");
 					put(grammarAccess.getKeyFloatValueAnnotationAccess().getGroup_3(), "rule__KeyFloatValueAnnotation__Group_3__0");
 					put(grammarAccess.getImportAnnotationAccess().getGroup(), "rule__ImportAnnotation__Group__0");
-					put(grammarAccess.getTypeIdAccess().getGroup(), "rule__TypeId__Group__0");
-					put(grammarAccess.getTypeIdAccess().getGroup_1(), "rule__TypeId__Group_1__0");
+					put(grammarAccess.getExtendedIDAccess().getGroup(), "rule__ExtendedID__Group__0");
+					put(grammarAccess.getExtendedIDAccess().getGroup_1(), "rule__ExtendedID__Group_1__0");
 					put(grammarAccess.getProgramAccess().getModulesAssignment(), "rule__Program__ModulesAssignment");
 					put(grammarAccess.getModuleAccess().getNameAssignment_1(), "rule__Module__NameAssignment_1");
 					put(grammarAccess.getModuleAccess().getInterfaceAssignment_3(), "rule__Module__InterfaceAssignment_3");

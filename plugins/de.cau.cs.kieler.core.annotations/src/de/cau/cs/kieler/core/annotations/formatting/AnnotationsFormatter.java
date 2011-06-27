@@ -60,7 +60,7 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
             c.setLinewrap().after(f.getTypedKeyStringValueAnnotationRule());
             
             c.setLinewrap().after(f.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0());
-            c.setLinewrap().after(f.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0());
+            c.setLinewrap().after(f.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
             c.setLinewrap().after(f.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
             c.setLinewrap().after(f.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0());
             c.setLinewrap().after(f.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0());

@@ -29,7 +29,7 @@ CommentAnnotation returns StringAnnotation:
 
 // e.g.: @HVlayout
 TagAnnotation returns Annotation:
-    '@' name=ID
+    '@' name=ExtendedID
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -37,7 +37,7 @@ TagAnnotation returns Annotation:
 
 // e.g.: @layouter dot;   
 KeyStringValueAnnotation returns StringAnnotation:
-	'@' name=ID value=EString
+	'@' name=ExtendedID value=EString
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -45,7 +45,7 @@ KeyStringValueAnnotation returns StringAnnotation:
 
 // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
 TypedKeyStringValueAnnotation returns TypedStringAnnotation:
-    '@' name=ID '[' type=TypeId ']' value=EString
+    '@' name=ExtendedID '[' type=ExtendedID ']' value=EString
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -53,7 +53,7 @@ TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-	'@' name=ID value=Boolean
+	'@' name=ExtendedID value=Boolean
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -61,7 +61,7 @@ KeyBooleanValueAnnotation returns BooleanAnnotation:
 
 // e.g.: @minSpace 10;    
 KeyIntValueAnnotation returns IntAnnotation:
-	'@' name=ID value=INT
+	'@' name=ExtendedID value=INT
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -69,7 +69,7 @@ KeyIntValueAnnotation returns IntAnnotation:
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-	'@' name=ID value=Float
+	'@' name=ExtendedID value=Float
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -85,6 +85,10 @@ EString returns ecore::EString:
 	STRING | ID;
 
 
+ExtendedID returns ecore::EString:
+  ID("."ID)*;
+  
+  
 // --------------------------
 //
 //  Terminals...
@@ -127,9 +131,6 @@ terminal Boolean returns ecore::EBooleanObject :
 terminal STRING returns ecore::EString:
     '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'"'|"'"|'\\') | !('\\'|'"') )* '"';
 
-
-TypeId returns ecore::EString:
-  ID("."ID)*;
 
 // type identifiers can reference Java classes
 //terminal TypeId returns ecore::EString:

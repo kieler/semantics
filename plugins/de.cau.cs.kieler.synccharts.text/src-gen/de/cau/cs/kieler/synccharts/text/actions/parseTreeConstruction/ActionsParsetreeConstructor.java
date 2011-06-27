@@ -8446,11 +8446,11 @@ protected class CommentAnnotation_ValueAssignment extends AssignmentToken  {
  *
  * // e.g.: @HVlayout
  * TagAnnotation returns Annotation:
- * 	"@" name=ID ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID ("(" annotations+=Annotation* ")")?
 protected class TagAnnotation_Group extends GroupToken {
 	
 	public TagAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8501,7 +8501,7 @@ protected class TagAnnotation_CommercialAtKeyword_0 extends KeywordToken  {
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public TagAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8525,9 +8525,9 @@ protected class TagAnnotation_NameAssignment_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -8657,11 +8657,11 @@ protected class TagAnnotation_RightParenthesisKeyword_2_2 extends KeywordToken  
  *
  * // e.g.: @layouter dot;   
  * KeyStringValueAnnotation returns StringAnnotation:
- * 	"@" name=ID value=EString ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID value=EString ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=EString ("(" annotations+=Annotation* ")")?
 protected class KeyStringValueAnnotation_Group extends GroupToken {
 	
 	public KeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8712,7 +8712,7 @@ protected class KeyStringValueAnnotation_CommercialAtKeyword_0 extends KeywordTo
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class KeyStringValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public KeyStringValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8736,9 +8736,9 @@ protected class KeyStringValueAnnotation_NameAssignment_1 extends AssignmentToke
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -8902,11 +8902,11 @@ protected class KeyStringValueAnnotation_RightParenthesisKeyword_3_2 extends Key
  *
  * // e.g.: @position[de.cau.cs.kieler.core.math.KVector] "(3,2)"
  * TypedKeyStringValueAnnotation returns TypedStringAnnotation:
- * 	"@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID "[" type=TypeId "]" value=EString ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID "[" type=ExtendedID "]" value=EString ("(" annotations+=Annotation* ")")?
 protected class TypedKeyStringValueAnnotation_Group extends GroupToken {
 	
 	public TypedKeyStringValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8957,7 +8957,7 @@ protected class TypedKeyStringValueAnnotation_CommercialAtKeyword_0 extends Keyw
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class TypedKeyStringValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public TypedKeyStringValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8981,9 +8981,9 @@ protected class TypedKeyStringValueAnnotation_NameAssignment_1 extends Assignmen
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -9013,7 +9013,7 @@ protected class TypedKeyStringValueAnnotation_LeftSquareBracketKeyword_2 extends
 
 }
 
-// type=TypeId
+// type=ExtendedID
 protected class TypedKeyStringValueAnnotation_TypeAssignment_3 extends AssignmentToken  {
 	
 	public TypedKeyStringValueAnnotation_TypeAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9037,9 +9037,9 @@ protected class TypedKeyStringValueAnnotation_TypeAssignment_3 extends Assignmen
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("type",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("type");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdParserRuleCall_3_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0(), value, null)) {
 			type = AssignmentType.DATATYPE_RULE_CALL;
-			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeTypeIdParserRuleCall_3_0();
+			element = grammarAccess.getTypedKeyStringValueAnnotationAccess().getTypeExtendedIDParserRuleCall_3_0();
 			return obj;
 		}
 		return null;
@@ -9225,11 +9225,11 @@ protected class TypedKeyStringValueAnnotation_RightParenthesisKeyword_6_2 extend
  *
  * // e.g.: @visible true;
  * KeyBooleanValueAnnotation returns BooleanAnnotation:
- * 	"@" name=ID value=Boolean ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID value=Boolean ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?
 protected class KeyBooleanValueAnnotation_Group extends GroupToken {
 	
 	public KeyBooleanValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9280,7 +9280,7 @@ protected class KeyBooleanValueAnnotation_CommercialAtKeyword_0 extends KeywordT
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class KeyBooleanValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public KeyBooleanValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9304,9 +9304,9 @@ protected class KeyBooleanValueAnnotation_NameAssignment_1 extends AssignmentTok
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -9470,11 +9470,11 @@ protected class KeyBooleanValueAnnotation_RightParenthesisKeyword_3_2 extends Ke
  *
  * // e.g.: @minSpace 10;    
  * KeyIntValueAnnotation returns IntAnnotation:
- * 	"@" name=ID value=INT ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID value=INT ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=INT ("(" annotations+=Annotation* ")")?
 protected class KeyIntValueAnnotation_Group extends GroupToken {
 	
 	public KeyIntValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9525,7 +9525,7 @@ protected class KeyIntValueAnnotation_CommercialAtKeyword_0 extends KeywordToken
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class KeyIntValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public KeyIntValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9549,9 +9549,9 @@ protected class KeyIntValueAnnotation_NameAssignment_1 extends AssignmentToken  
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;
@@ -9715,11 +9715,11 @@ protected class KeyIntValueAnnotation_RightParenthesisKeyword_3_2 extends Keywor
  *
  * // e.g.: @minSpace 10.0;    
  * KeyFloatValueAnnotation returns FloatAnnotation:
- * 	"@" name=ID value=Float ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ID value=Float ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?
 protected class KeyFloatValueAnnotation_Group extends GroupToken {
 	
 	public KeyFloatValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9770,7 +9770,7 @@ protected class KeyFloatValueAnnotation_CommercialAtKeyword_0 extends KeywordTok
 
 }
 
-// name=ID
+// name=ExtendedID
 protected class KeyFloatValueAnnotation_NameAssignment_1 extends AssignmentToken  {
 	
 	public KeyFloatValueAnnotation_NameAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -9794,9 +9794,9 @@ protected class KeyFloatValueAnnotation_NameAssignment_1 extends AssignmentToken
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("name",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("name");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0(), value, null)) {
-			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0();
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0(), value, null)) {
+			type = AssignmentType.DATATYPE_RULE_CALL;
+			element = grammarAccess.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0();
 			return obj;
 		}
 		return null;

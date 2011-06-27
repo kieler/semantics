@@ -64,12 +64,12 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
                 || grammarElement == g.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()
                 || grammarElement == g.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()
                 || grammarElement == g.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getTagAnnotationAccess().getNameIDTerminalRuleCall_1_0()
-                || grammarElement == g.getKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
-                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
-                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
-                || grammarElement == g.getKeyIntValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()
-                || grammarElement == g.getKeyFloatValueAnnotationAccess().getNameIDTerminalRuleCall_1_0()) {
+                || grammarElement == g.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+                || grammarElement == g.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+                || grammarElement == g.getKeyIntValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()) {
             acceptor.addPosition(node.getOffset(), node.getLength(),
                     AnnotationsHighlightingConfiguration.ANNOTATION_KEY);
         }
