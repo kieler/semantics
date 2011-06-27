@@ -120,6 +120,10 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 // Search first occurrence of listType
                 boolean started = false; // did we find the type?
                 for (EObject next : slist) {
+                    // Ensure that next and listType contain valid values (cmot/msp, 27.06.2011)
+                    if ((next != null) || (listType != null)) { 
+                        continue;
+                    }
                     if (next.eClass().getName().equals(listType) || listType.equals("Object")) {
                         listParameterEntries.add(next);
                         started = true;
