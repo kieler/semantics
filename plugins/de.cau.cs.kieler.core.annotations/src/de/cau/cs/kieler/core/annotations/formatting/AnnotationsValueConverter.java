@@ -54,7 +54,8 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      * 
      * @return dedicated value converter
      */
-//    @ValueConverter(rule = "TypeId")
+    // CHSCH: registration disabled since TypeId is now realized by means of a data type rule 
+    //  @ValueConverter(rule = "TypeId")
     public IValueConverter<String> TypeId() {
         return new IValueConverter<String>() {
 

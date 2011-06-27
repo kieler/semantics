@@ -4,9 +4,7 @@
 package de.cau.cs.kieler.kies;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
-import org.eclipse.xtext.formatting.IFormatter;
 
-import de.cau.cs.kieler.kies.formatting.EsterelFormatter;
 import de.cau.cs.kieler.kies.formatting.EsterelValueConverter;
 
 /**
@@ -37,12 +35,12 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.kies.AbstractEsterelR
                 .to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public Class<? extends IFormatter> bindIFormatter() {
-        return EsterelFormatter.class;
-    }
+//    /**
+//     * {@inheritDoc}
+//     */
+//    @Override
+//    public Class<? extends IFormatter> bindIFormatter() {
+//        return EsterelFormatter.class;
+//    }
 
 }
