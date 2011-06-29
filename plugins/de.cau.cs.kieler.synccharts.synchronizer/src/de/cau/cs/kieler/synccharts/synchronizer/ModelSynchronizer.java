@@ -80,8 +80,8 @@ public class ModelSynchronizer implements IStartup {
                 "org.eclipse.ui.commands.toggleState");
         this.active = (Boolean) s.getValue();
         
-        // FIXME this is to definitely disable the model synchronization since it can be active
-        //  if it was activated at the time the button experimental button was available 
+        // FIXME this is to definitely disable the model synchronization since it can be
+        //  active if it was activated at the time the experimental button was available 
         this.active = false;
 
     }
