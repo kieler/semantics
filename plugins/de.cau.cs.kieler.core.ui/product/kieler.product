@@ -44,7 +44,9 @@ openFile</programArgsMac>
 
    <splash
       location="de.cau.cs.kieler.core.ui"
-      handlerType="extensible" />
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
+      startupForegroundColor="000000" />
    <launcher name="kieler">
       <linux icon="/de.cau.cs.kieler.core.ui/icons/kiel_64.xpm"/>
       <macosx icon="/de.cau.cs.kieler.core.ui/icons/kiel.icns"/>
