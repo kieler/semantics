@@ -79,6 +79,10 @@ public class ModelSynchronizer implements IStartup {
         State s = service.getCommand("de.cau.cs.kieler.synccharts.synchronizer.Activate").getState(
                 "org.eclipse.ui.commands.toggleState");
         this.active = (Boolean) s.getValue();
+        
+        // FIXME this is to definitely disable the model synchronization since it can be active
+        //  if it was activated at the time the button experimental button was available 
+        this.active = false;
 
     }
 
