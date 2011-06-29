@@ -53,7 +53,7 @@ public class AnnotationsContentProvider implements ITreeContentProvider {
             Annotatable annotatable = (Annotatable) parentElement;
             return annotatable.getAnnotations().toArray();
         }
-        return null;
+        return new Object[0];
     }
 
     /**
