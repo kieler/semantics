@@ -308,7 +308,9 @@ public class KevComposite extends Composite implements ISelectionListener {
     public void dispose() {
 
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        workspace.removeResourceChangeListener(updater);
+        if (updater != null) {
+            workspace.removeResourceChangeListener(updater);
+        }
         // Don't dispose svgCanvas, could be used later on (simulation can run in background without
         // showing the canvas)
         // svgCanvas.dispose();
