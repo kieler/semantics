@@ -16,6 +16,7 @@ import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -168,10 +169,13 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         }
         if (currentStatesRegionsChoices.size() > 1) {
             currentStatesRegions = Arrays.asList(selectCurrentState(currentStatesRegionsChoices));
-            // Raise a pause exception to pause a possibly running execution
-            throw (new KiemExecutionException(
-                    "A user selection during a running execution will cause the execution to be paused.",
-                    false, true, true, null));
+            if (KiemPlugin.getDefault().getExecution() != null && 
+                      KiemPlugin.getDefault().getExecution().isRunning()) {
+                // Raise a pause exception to pause a possibly running execution
+                throw (new KiemExecutionException(
+                        "A user selection during a running execution will cause the execution to be paused.",
+                        false, true, true, null));
+            }
         }
 
         // if anything changed, extract regions from state list
@@ -331,7 +335,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // TODO: Initial Regions?
 
         maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                pathToMaudeCode);
+                "\"" +pathToMaudeCode +"\"");
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));

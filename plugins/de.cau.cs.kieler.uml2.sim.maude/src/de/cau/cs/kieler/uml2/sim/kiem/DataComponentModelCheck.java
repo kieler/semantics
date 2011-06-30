@@ -700,7 +700,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         currentStates = getInitialStates();
 
         maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                pathToMaudeCode);
+                        "\"" +pathToMaudeCode +"\"");
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));

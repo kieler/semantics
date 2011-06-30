@@ -662,7 +662,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the maude gen code location
      */
     public String getMaudeGenCodeLocation() {
-        String outPath = part2Location(this.getInputEditor());
+        String outPath = part2Location(this.getInputEditor()).replace("%20"," ");
         String stringUri = this.getInputModelAsURI().lastSegment().toString();
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
@@ -755,7 +755,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // emfReader.setResourceSet(this.getInputResourceSet());
         // emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
-        outPath = part2Location(this.getInputEditor());
+        outPath = part2Location(this.getInputEditor()).replace("%20"," ");
 
         // Set model name (gets model.maude)
         GlobalVar modelname = new GlobalVar();
