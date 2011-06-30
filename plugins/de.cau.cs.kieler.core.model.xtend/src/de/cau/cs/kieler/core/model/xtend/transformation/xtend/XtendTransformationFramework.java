@@ -121,19 +121,20 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 boolean started = false; // did we find the type?
                 for (EObject next : slist) {
                     // Ensure that next and listType contain valid values (cmot/msp, 27.06.2011)
-                    if ((next != null) || (listType != null)) { 
-                        continue;
-                    }
-                    if (next.eClass().getName().equals(listType) || listType.equals("Object")) {
-                        listParameterEntries.add(next);
-                        started = true;
-                    } else {
-                        if (started) {
-                            // so we started to add elements and now we found
-                            // some other type, so
-                            // break the loop.
-                            break;
+                    try {
+                        if (next.eClass().getName().equals(listType) || listType.equals("Object")) {
+                            listParameterEntries.add(next);
+                            started = true;
+                        } else {
+                            if (started) {
+                                // so we started to add elements and now we found
+                                // some other type, so
+                                // break the loop.
+                                break;
+                            }
                         }
+                    } catch (Exception e) {
+                        //Fixing: #1697 with try-catch now to ensure valid values
                     }
                 }
                 if (listParameterEntries.size() > 0) {
