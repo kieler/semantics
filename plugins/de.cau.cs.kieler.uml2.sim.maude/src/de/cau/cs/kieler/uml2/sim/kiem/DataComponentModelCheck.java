@@ -495,10 +495,18 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 }
             });
 
-            // Pause the execution
-            throw (new KiemExecutionException(
-                    "Maude Model Checking finished. Counter example found: " + modelCheckCounterExample
-                            + ".", false, true, true, null));
+            if (modelCheckCounterExample) {
+                // Pause the execution
+                throw (new KiemExecutionException(
+                        "Maude Model Checking finished. Counter example found: " + modelCheckCounterExample
+                                + ".", false, true, true, null));
+            }
+            else {
+                // Raise a stop exception to stop the running execution
+                throw (new KiemExecutionException(
+                        "No counter example was found. Execution was stopped.",
+                        true, false, true, null));
+            }
         } else {
             // In this case we may have computed a counter example an can now re-play it
             // We do this only iff we have a valid stepNumber and if there is an example
