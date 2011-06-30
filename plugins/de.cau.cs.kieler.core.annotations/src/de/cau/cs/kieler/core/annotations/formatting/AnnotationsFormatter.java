@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.annotations.formatting;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+import org.eclipse.xtext.util.Pair;
 
 import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
 
@@ -68,6 +69,10 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
             
             for (Keyword at : f.findKeywords("@")) {            	
             	c.setNoSpace().after(at);
-            }            
+            }
+            
+            for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {
+                c.setIndentation(pair.getFirst(), pair.getSecond());
+            }
 	}
 }
