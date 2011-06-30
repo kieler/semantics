@@ -32,6 +32,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -268,7 +269,12 @@ public class KevComposite extends Composite implements ISelectionListener {
                 }
             }
 
-            frame = SWT_AWT.new_Frame(this);
+            frame = null;
+            try {
+                frame = SWT_AWT.new_Frame(this);
+            } catch(InvocationTargetException e) {
+                // Catch 'not implemented' exception
+            }
 
             Panel panel = new Panel(new BorderLayout()) {
                 public void update(java.awt.Graphics g) {
@@ -287,9 +293,12 @@ public class KevComposite extends Composite implements ISelectionListener {
             } else {
                 contentPane.add(BorderLayout.CENTER, svgCanvas);
             }
-            frame.setLayout(new BorderLayout());
-            frame.add(BorderLayout.CENTER, panel);
-            frame.setEnabled(true);
+
+            if (frame != null) {
+                frame.setLayout(new BorderLayout());
+                frame.add(BorderLayout.CENTER, panel);
+                frame.setEnabled(true);
+            }
 
             IWorkspace workspace = ResourcesPlugin.getWorkspace();
             updater = new SVGResourceChangeListener();
