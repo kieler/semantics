@@ -272,7 +272,7 @@ public class KevComposite extends Composite implements ISelectionListener {
             frame = null;
             try {
                 frame = SWT_AWT.new_Frame(this);
-            } catch(InvocationTargetException e) {
+            } catch (Throwable e) {
                 // Catch 'not implemented' exception
             }
 
