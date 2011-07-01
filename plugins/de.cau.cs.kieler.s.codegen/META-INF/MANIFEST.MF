@@ -4,7 +4,7 @@ Bundle-Name: S Codegen
 Bundle-SymbolicName: de.cau.cs.kieler.s.codegen;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.codegen.SCodegenPlugin
-Bundle-Vendor: Christian-Albrechts-Universität, Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model;bundle-version="0.2.0",
