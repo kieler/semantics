@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SyncCharts Diagram Custom Code
+Bundle-Name: KIELER SyncCharts Diagram Editor Customizations
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.diagram.custom;singleton:=true
 Bundle-Version: 0.5.0.qualifier
 Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.1.0",

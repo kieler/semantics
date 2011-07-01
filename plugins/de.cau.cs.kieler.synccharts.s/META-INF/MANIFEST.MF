@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SyncCharts to S transformation
+Bundle-Name: KIELER SyncCharts 2 S Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.s;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.s.Activator
