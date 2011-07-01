@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Expressions for Synchronous Signals Metamodel
+Bundle-Name: KIELER Expressions Infrastructure
 Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-ClassPath: .

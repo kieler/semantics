@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Annotations User Interface
+Bundle-Name: KIELER Model Annotations UI Infrastructure
 Bundle-SymbolicName: de.cau.cs.kieler.core.annotations.ui;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

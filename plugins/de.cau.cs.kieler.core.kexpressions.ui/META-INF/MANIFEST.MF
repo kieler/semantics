@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Expressions User Interface
+Bundle-Name: KIELER Expressions UI Infrastructure
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Version: 0.2.0.qualifier
 Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.ui;singleton:=true
