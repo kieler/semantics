@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.s
-Bundle-Vendor: Christian-Albrechts-Universität, Kiel
+Bundle-Name: KIELER S Language Infrastructure
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-Version: 0.2.0
 Bundle-SymbolicName: de.cau.cs.kieler.s; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -18,7 +18,6 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
  org.antlr.runtime,
- de.cau.cs.kieler.ksbase;bundle-version="0.2.0",
  de.cau.cs.kieler.core.kexpressions;bundle-version="0.1.0",
  de.cau.cs.kieler.core.annotations;bundle-version="0.1.0",
  de.cau.cs.kieler.synccharts.text;bundle-version="0.1.0"
