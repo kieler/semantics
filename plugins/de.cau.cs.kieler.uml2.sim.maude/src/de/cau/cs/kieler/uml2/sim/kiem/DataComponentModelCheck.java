@@ -211,7 +211,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the rule's raw value of numbes's occurrence.
+     * Gets the rule's raw value of numbers's occurrence.
      * 
      * @param input
      *            the input
@@ -291,7 +291,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         // parsing "... seq seq (a1 skip skip) (ee2 ee2)" --> a1 skip skip
         rawValue = rawValue.substring(rawValue.indexOf("("));
         rawValue = rawValue.trim();
-
+        
         boolean inBracket = false;
         boolean skipped = false;
         String extracted = "";
@@ -339,7 +339,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
         String[] resultParts = maudeResult.split(MAUDE_RULE_FINISHEDRTC);
 
-        for (int i = 0; i < resultParts.length - 1; i++) {
+        for (int i = 0; i < resultParts.length; i++) {
             Step currentStep = new Step();
 
             String resultPart = resultParts[i];
@@ -360,10 +360,11 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             // Actions
             String rawValue = getRuleRawValue(resultPart, MAUDE_RULE_FINISHEDRTC, 0);
-            String[] actions = extractEventsAndActions(rawValue);
-            for (String action : actions) {
-                currentStep.actions.add(action);
-            }
+//FIXME: The following does not seem to work any more :/ ... did we recently change the syntax of actions (actually NO actions esp.)?            
+//            String[] actions = extractEventsAndActions(rawValue);
+//            for (String action : actions) {
+//                currentStep.actions.add(action);
+//            }
 
             // States
             String[] states = extractStates(rawValue);
