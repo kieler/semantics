@@ -10,39 +10,6 @@
        genModel = "de/cau/cs/kieler/s/S.genmodel" /> 
 	
   </extension>
-  <extension
-        point="de.cau.cs.kieler.ksbase.configurations">
-     <configuration
-           TransformationFile="transformations/feature.ext"
-           editorId="de.cau.cs.kieler.s.S">
-        <menus>
-           <menuContribution
-                 locationURI="menu:de.cau.cs.kieler">
-              <transformationCommand
-                    transformationId="de.cau.cs.kieler.s.addPrios">
-              </transformationCommand>
-              <transformationCommand
-                    transformationId="de.cau.cs.kieler.s.kernelExpand">
-              </transformationCommand>
-           </menuContribution>
-        </menus>
-        <transformations>
-           <transformation
-                 name="Add priorities"
-                 transformation="addPrios"
-                 transformationId="de.cau.cs.kieler.s.addPrios">
-           </transformation>
-           <transformation
-                 name="Kernel expand"
-                 transformation="kernelExpand"
-                 transformationId="de.cau.cs.kieler.s.kernelExpand">
-           </transformation>
-        </transformations>
-        <package
-              class="de.cau.cs.kieler.s.s.SPackage">
-        </package>
-     </configuration>
-  </extension>
 
 
 
