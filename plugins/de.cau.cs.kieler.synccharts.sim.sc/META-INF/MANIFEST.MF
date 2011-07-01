@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SyncCharts SC Simulator
+Bundle-Name: KIELER SyncCharts SC Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sim.sc;singleton:=true
 Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.sim.sc.SCPlugin
@@ -25,4 +25,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,
  de.cau.cs.kieler.synccharts.codegen.sc,
  org.json
-Bundle-Vendor: Christian-Albrechts-University of Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
