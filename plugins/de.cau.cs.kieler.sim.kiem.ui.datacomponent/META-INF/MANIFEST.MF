@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Datacomponent
+Bundle-Name: KIELER Generic Simulation DataComponent
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.ui.datacomponent
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.ui.datacomponent.DataComponentPlugin
