@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: S2SC
+Bundle-Name: KIELER S 2 SC Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sc;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sc.S2SCPlugin

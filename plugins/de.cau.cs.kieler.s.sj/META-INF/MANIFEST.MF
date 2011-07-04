@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: s2sj
+Bundle-Name: KIELER S 2 SJ Transformation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sj;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sj.S2SJPlugin
