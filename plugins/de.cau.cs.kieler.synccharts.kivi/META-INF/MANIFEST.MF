@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER SyncCharts KIVi Extension
+Bundle-Name: KIELER View Managenment for SyncCharts
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.kivi;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.kivi.Activator
