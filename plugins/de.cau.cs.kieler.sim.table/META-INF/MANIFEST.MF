@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIEM Data Table
+Bundle-Name: KIELER Simulation Data Table
 Bundle-SymbolicName: de.cau.cs.kieler.sim.table; singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.table.TablePlugin
