@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Automated Execution UI
+Bundle-Name: KIELER Execution Manager Automated Execution UI
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem.automated.ui;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.automated.ui.KiemAutoUIPlugin
