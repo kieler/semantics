@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER Execution Manager Plug-in
+Bundle-Name: KIELER Execution Manager
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kiem;singleton:=true
 Bundle-Version: 0.5.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kiem.KiemPlugin
