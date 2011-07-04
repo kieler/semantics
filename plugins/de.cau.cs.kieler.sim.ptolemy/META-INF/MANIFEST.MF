@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Ptolemy
+Bundle-Name: KIELER Ptolemy Simulation Extensions
 Bundle-SymbolicName: de.cau.cs.kieler.sim.ptolemy;singleton:=true
 Bundle-Version: 0.3.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
