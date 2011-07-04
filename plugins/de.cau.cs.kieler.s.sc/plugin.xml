@@ -17,10 +17,13 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sc.s2sc"
-               label="Generate SC-Code (new)"
+               label="Generate SC Code (new)"
+               mnemonic="C"
                style="push">
 			<visibleWhen>
-	         <iterate>
+	         <iterate
+                ifEmpty="false"
+                operator="and">
     	        <adapt
         	          type="org.eclipse.core.resources.IFile">
             	   <test
@@ -37,7 +40,8 @@
             locationURI="menu:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.s.sc.s2sc"
-               label="Generate SC-Code (new)"
+               label="Generate SC Code (new)"
+               mnemonic="C"
                style="push"
                tooltip="generate SC-Code for the current S">
             <visibleWhen

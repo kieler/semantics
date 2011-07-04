@@ -15,10 +15,13 @@
             locationURI="popup:de.cau.cs.kieler">
          <command
                commandId="de.cau.cs.kieler.synccharts.s.synccharts2s"
-               label="Generate S code"
+               label="Generate S Code"
+               mnemonic="S"
                style="push">
 			<visibleWhen>
-	         <iterate>
+	         <iterate
+                ifEmpty="false"
+                operator="and">
     	        <adapt
         	          type="org.eclipse.core.resources.IFile">
             	   <test

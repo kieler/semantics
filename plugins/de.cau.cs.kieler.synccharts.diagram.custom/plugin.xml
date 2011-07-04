@@ -321,7 +321,9 @@
                tooltip="Reinitialize the diagram for the selected SyncCharts model, overwriting any olds &apos;kids&apos; file.">
             <visibleWhen
                   checkEnabled="false">
-               <iterate>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
                   <adapt
                         type="org.eclipse.core.resources.IResource">
                      <or>
@@ -362,12 +364,14 @@
                   locationURI="popup:de.cau.cs.kieler">
                <command
                      commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
-                     label="Expand reference-macrostates"
+                     label="Expand Reference Macro-States"
                      style="push"
                      tooltip="Expand reference-macrostates">
             <visibleWhen
                   checkEnabled="false">
-               <iterate>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
                   <adapt
                         type="org.eclipse.core.resources.IResource">
                      <or>

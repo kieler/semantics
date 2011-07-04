@@ -177,7 +177,9 @@
                tooltip="Convert the model to textual SyncCharts format">
             <visibleWhen
                   checkEnabled="false">
-               <iterate>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
                   <adapt
                         type="org.eclipse.core.resources.IResource">
                      <test
@@ -200,7 +202,9 @@
                tooltip="Convert the model to XMI-based SyncCharts format">
             <visibleWhen
                   checkEnabled="false">
-               <iterate>
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
                   <adapt
                         type="org.eclipse.core.resources.IResource">
                      <test
