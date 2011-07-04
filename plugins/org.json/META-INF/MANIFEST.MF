@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Json Java Implementation Plugin (from json.org)
+Bundle-Name: JSON Java Implementation Plugin (from json.org)
 Bundle-SymbolicName: org.json
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.json.Activator
