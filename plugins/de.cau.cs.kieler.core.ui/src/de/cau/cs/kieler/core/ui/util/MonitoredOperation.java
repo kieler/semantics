@@ -115,7 +115,8 @@ public abstract class MonitoredOperation {
     /**
      * Execute the monitored operation.
      * 
-     * @param monitor the progress monitor for the operation
+     * @param monitor the progress monitor for the operation, or {@code null} if the operation
+     *     is not run in monitored mode
      * @return a status indicating success or failure, or {@code null}
      */
     protected abstract IStatus execute(IProgressMonitor monitor);
@@ -130,10 +131,8 @@ public abstract class MonitoredOperation {
     /**
      * Executed in the UI thread after the operation has ended. The default
      * implementation does nothing.
-     * 
-     * @param status the status returned by {@link #execute(IProgressMonitor)}
      */
-    protected void postUIexec(final IStatus status) {
+    protected void postUIexec() {
     }
     
     /** the status of the last operation run. */
@@ -157,6 +156,47 @@ public abstract class MonitoredOperation {
     }
     
     /**
+     * Run the operation in the current thread without any progress monitor.
+     * 
+     */
+    public final void runUnmonitored() {
+        final Maybe<IStatus> status = new Maybe<IStatus>();
+        
+        // execute UI code prior to the actual operation
+        runInUI(new Runnable() {
+            public void run() {
+                try {
+                    preUIexec();
+                } catch (Throwable throwable) {
+                    status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                            "Error in monitored operation", throwable));
+                }
+            }
+        }, true);
+        
+        if (status.get() == null) {
+            // execute the actual operation without progress monitor
+            status.set(execute(null));
+            
+            if (status.get() == null || status.get().getSeverity() == IStatus.OK) {
+                // execute UI code after the actual operation
+                runInUI(new Runnable() {
+                    public void run() {
+                        try {
+                            postUIexec();
+                        } catch (Throwable throwable) {
+                            status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                                    "Error in monitored operation", throwable));
+                        }
+                    }
+                }, true);
+            }
+        }
+        
+        handleStatus(status);
+    }
+    
+    /**
      * Run the operation from the current thread. 
      * 
      * @param display the display that runs the UI thread
@@ -167,6 +207,7 @@ public abstract class MonitoredOperation {
         final Maybe<IStatus> status = new Maybe<IStatus>();
         
         if (isUiThread) {
+            // execute the operation in a new thread and the UI code in the current thread
             Thread thread = new Thread("Monitored Operation") { //$NON-NLS-1$
                 public void run() {
                     runOperation(display, monitor, status);
@@ -175,6 +216,7 @@ public abstract class MonitoredOperation {
             thread.start();
             runUiHandler(display, monitor, status);
         } else {
+            // execute the operation in the current thread and the UI code in the UI thread
             display.asyncExec(new Runnable() {
                 public void run() {
                     runUiHandler(display, monitor, status);
@@ -183,9 +225,19 @@ public abstract class MonitoredOperation {
             runOperation(display, monitor, status);
         }
         
+        handleStatus(status);
+    }
+    
+    /**
+     * Handle a status object.
+     * 
+     * @param status a status
+     */
+    private void handleStatus(final Maybe<IStatus> status) {
         if (status.get() != null) {
+            lastStatus = status.get();
             int handlingStyle = StatusManager.NONE;
-            switch (status.get().getSeverity()) {
+            switch (lastStatus.getSeverity()) {
             case IStatus.ERROR:
                 handlingStyle = StatusManager.SHOW | StatusManager.LOG;
                 break;
@@ -194,8 +246,7 @@ public abstract class MonitoredOperation {
                 handlingStyle = StatusManager.LOG;
                 break;
             }
-            StatusManager.getManager().handle(status.get(), handlingStyle);
-            lastStatus = status.get();
+            StatusManager.getManager().handle(lastStatus, handlingStyle);
         }
     }
     
@@ -218,7 +269,9 @@ public abstract class MonitoredOperation {
                     }
                 }
             }
-            status.set(execute(monitor.get()));
+            if (status.get() == null) {
+                status.set(execute(monitor.get()));
+            }
         } finally {
             synchronized (status) {
                 if (status.get() == null) {
@@ -239,7 +292,11 @@ public abstract class MonitoredOperation {
     private void runUiHandler(final Display display, final Maybe<IProgressMonitor> monitor,
             final Maybe<IStatus> status) {
         try {
+            
+            // execute UI code prior to the actual operation
             preUIexec();
+            
+            // execute UI handler until the operation has finished
             PlatformUI.getWorkbench().getProgressService().run(
                     false, true, new IRunnableWithProgress() {
                 public void run(final IProgressMonitor uiMonitor) {
@@ -294,7 +351,10 @@ public abstract class MonitoredOperation {
                     display.sleep();
                 }
             }
-            postUIexec(status.get());
+            
+            // execute UI code after the actual operation
+            postUIexec();
+            
         } catch (Throwable throwable) {
             synchronized (monitor) {
                 if (monitor.get() == null) {
@@ -303,9 +363,10 @@ public abstract class MonitoredOperation {
                 }
             }
             synchronized (status) {
-                if (status.get() == null) {
+                if (status.get() == null || status.get().getSeverity() == IStatus.OK) {
                     status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
                             "Error in monitored operation", throwable));
+                    handleStatus(status);
                 }
             }
         }

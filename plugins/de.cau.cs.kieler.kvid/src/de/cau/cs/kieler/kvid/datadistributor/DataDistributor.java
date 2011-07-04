@@ -40,6 +40,7 @@ import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
 import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutDataService;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutMapping;
 import de.cau.cs.kieler.kvid.KvidPlugin;
 import de.cau.cs.kieler.kvid.KvidUtil;
 import de.cau.cs.kieler.kvid.data.DataObject;
@@ -69,7 +70,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
     private List<IDataListener> listeners = new LinkedList<IDataListener>();
     
     /** The cached current layout of the regarded diagram. */
-    private KNode currentDiagramLayout = null;
+    private LayoutMapping<?> currentDiagramLayout = null;
     
     /** The editor in which the current visualization takes place. */
     private DiagramEditor currentEditor = null;
@@ -109,7 +110,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutDataService.getInstance()
                             .getManager(currentEditor, null)
-                            .buildLayoutGraph(currentEditor, null, false);
+                            .buildLayoutGraph(currentEditor, null);
                 }
             });
         }
@@ -130,7 +131,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                     //Receive the current diagram layout for path finding
                     currentDiagramLayout = EclipseLayoutDataService.getInstance()
                             .getManager(currentEditor, null)
-                            .buildLayoutGraph(currentEditor, null, false);
+                            .buildLayoutGraph(currentEditor, null);
                 }
             });
             layoutChanged = false;
@@ -234,7 +235,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         String[] uriParts = uri.getElementUri().split("\\.");
         int currentUriPart = 1;
         String currentFoundUri = ".";
-        KNode currentNode = currentDiagramLayout;
+        KNode currentNode = currentDiagramLayout.getLayoutGraph();
         while (!currentFoundUri.equals(uri.getElementUri()) && !currentNode.getChildren().isEmpty()) {
             for (KNode node : currentNode.getChildren()) {
                 if (node.getLabel().getText().equals(uriParts[currentUriPart])) {

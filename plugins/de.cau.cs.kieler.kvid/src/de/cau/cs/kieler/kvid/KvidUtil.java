@@ -38,8 +38,7 @@ import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutManager;
-import de.cau.cs.kieler.kiml.ui.layout.EclipseLayoutDataService;
+import de.cau.cs.kieler.kiml.ui.layout.LayoutMapping;
 import de.cau.cs.kieler.kiml.ui.util.KimlUiUtil;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
@@ -225,12 +224,10 @@ public final class KvidUtil {
      * 
      */
     public static List<List<Point>> getPathsByElement(final KvidUri elementUri,
-            final DiagramEditor currentEditor, final KNode diagramLayout) {
+            final DiagramEditor currentEditor, final LayoutMapping<?> diagramLayout) {
         List<List<Point>> result = new LinkedList<List<Point>>();
         String elementUriPart = elementUri.getElementUri();
         Resource resource;
-        DiagramLayoutManager manager = EclipseLayoutDataService.getInstance()
-                                            .getManager(currentEditor, null);
         if (currentEditor.getDiagram() != null && currentEditor.getDiagram().getElement() != null) {
             resource = currentEditor.getDiagram().getElement().eResource();
         } else {
@@ -275,7 +272,7 @@ public final class KvidUtil {
                 currentEditor.getDiagramEditPart(), modelElement);
         KNode currentNode = null;
         for (EditPart part : parts) {
-            currentNode = (KNode) manager.getLayoutNode(part);
+            currentNode = (KNode) diagramLayout.getGraphMap().inverse().get(part);
             if (currentNode != null) {
                 break;
             }

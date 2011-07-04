@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.ILayoutData;
 import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
@@ -41,6 +42,17 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
  * @author msp
  */
 public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
+    
+    /** the priority for annotations layout configurations. */
+    public static final int PRIORITY = 20;
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getPriority() {
+        return PRIORITY;
+    }
     
     /** a caching map for layout option data. */
     private Map<String, LayoutOptionData<?>> optionDataMap;
@@ -71,17 +83,18 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected List<LayoutOptionData<?>> getOptionData(final EObject semanticElem) {
-        List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
+    protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
         if (semanticElem instanceof Annotatable) {
+            List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
                 LayoutOptionData<?> option = getOptionData(annotation.getName());
                 if (option != null) {
                     data.add(option);
                 }
             }
+            return data.toArray(new IProperty<?>[data.size()]);
         }
-        return data;
+        return null;
     }
 
     /**
@@ -176,7 +189,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected Object getSemanticProperty(final EObject semanticElem,
+    protected Object getSemanticValue(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption) {
         if (semanticElem instanceof Annotatable) {
             Annotation annotation = getAnnotation((Annotatable) semanticElem, layoutOption.getId());
@@ -217,7 +230,7 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
      * {@inheritDoc}
      */
     @Override
-    protected void setSemanticProperty(final EObject semanticElem,
+    protected void setSemanticValue(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption, final Object value) {
         if (semanticElem instanceof Annotatable) {
             Annotatable annotatable = (Annotatable) semanticElem;
