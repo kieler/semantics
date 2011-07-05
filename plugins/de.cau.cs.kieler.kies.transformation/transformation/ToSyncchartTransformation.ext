@@ -518,6 +518,7 @@ Void rule(State s, Loop l):
 	s.regions.add(r) ->
 	r.states.add(loopState) ->
 	loopState.setIsInitial(true) ->
+	loopState.setIsFinal(true) ->
 	// setup transition
 	selfTrans.setType(TransitionType::NORMALTERMINATION) ->
  	selfTrans.connectTransition(loopState, loopState) ->
