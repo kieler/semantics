@@ -35,6 +35,13 @@ context State WARNING "KLEPTO: Suspend cannot be simulated yet!" :
   
 context Region WARNING "KLEPTO: Variables are not supported in the simulation!" :
   variables.size == 0;  
+  
+context State WARNING "KLEPTO: Textual states cannot be simulated yet! Further transform the textual state first into its graphical representation" :
+  this.type != StateType::TEXTUAL;
+
+context State WARNING "KLEPTO: Reference states cannot be simulated yet! Use an expaned version of this SyncChart!" :
+  this.type != StateType::REFERENCE; 
+  
 
 //TODO: Experimental check in order to display the warning in the correct context
 //context Transition WARNING "KLEPTO: Output signals that also occur within a trigger are not supported in the simulation!" : 

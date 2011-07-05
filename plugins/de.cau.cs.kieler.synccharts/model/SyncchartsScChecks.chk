@@ -50,7 +50,13 @@ context State
  WARNING "SC: Final states must not have outgoing transitions!" : 
  outgoingTransitions == null || outgoingTransitions.isEmpty || isFinal == false;
 
+context State WARNING "SC: Textual states cannot be simulated yet! Further transform the textual state first into its graphical representation" :
+  this.type != StateType::TEXTUAL;
 
+context State WARNING "SC: Reference states cannot be simulated yet! Use an expaned version of this SyncChart!" :
+  this.type != StateType::REFERENCE; 
+  
+  
 context State
  WARNING "SC: Final states must not have inner actions!" : 
  innerActions == null || innerActions.isEmpty || isFinal == false;
