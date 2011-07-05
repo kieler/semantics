@@ -110,10 +110,8 @@ public class AutomationJob extends Job {
                     done(new Status(IStatus.OK, KiemAutomatedPlugin.PLUGIN_ID,
                             "Execution finished"));
                 } catch (RuntimeException e0) {
-                    e0.printStackTrace();
-
                     done(new Status(IStatus.ERROR,
-                            KiemAutomatedPlugin.PLUGIN_ID, "Execution aborted"));
+                            KiemAutomatedPlugin.PLUGIN_ID, "Execution aborted", e0));
                 } finally {
                     List<IAutomationListener> autoListeners = KiemAutomatedPlugin
                             .getListeners();

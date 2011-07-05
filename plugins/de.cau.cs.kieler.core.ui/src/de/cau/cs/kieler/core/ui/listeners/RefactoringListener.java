@@ -37,6 +37,9 @@ import org.eclipse.ltk.core.refactoring.resource.MoveResourcesDescriptor;
 import org.eclipse.ltk.core.refactoring.resource.RenameResourceDescriptor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 
 /**
  * This class listens to refactoring events like delete, move, rename and
@@ -79,35 +82,30 @@ public class RefactoringListener implements IRefactoringHistoryListener {
      * {@inheritDoc}
      */
     public void historyNotification(final RefactoringHistoryEvent event) {
-        try {
-            // decide which of the cases to take
-            RefactoringDescriptor desc = event.getDescriptor()
-                    .requestDescriptor(null);
-            if (desc instanceof RenameResourceDescriptor) {
-                RenameResourceDescriptor renameDesc = (RenameResourceDescriptor) desc;
-                renameFile(renameDesc);
-            }
+        // decide which of the cases to take
+        RefactoringDescriptor desc = event.getDescriptor()
+                .requestDescriptor(null);
+        if (desc instanceof RenameResourceDescriptor) {
+            RenameResourceDescriptor renameDesc = (RenameResourceDescriptor) desc;
+            renameFile(renameDesc);
+        }
 
-            if (desc instanceof DeleteResourcesDescriptor) {
-                DeleteResourcesDescriptor deleteDesc = (DeleteResourcesDescriptor) desc;
-                deleteFile(deleteDesc);
-            }
+        if (desc instanceof DeleteResourcesDescriptor) {
+            DeleteResourcesDescriptor deleteDesc = (DeleteResourcesDescriptor) desc;
+            deleteFile(deleteDesc);
+        }
 
-            if (desc instanceof MoveResourcesDescriptor) {
-                MoveResourcesDescriptor moveDesc = (MoveResourcesDescriptor) desc;
-                moveFile(moveDesc);
-            }
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-            throw e0;
+        if (desc instanceof MoveResourcesDescriptor) {
+            MoveResourcesDescriptor moveDesc = (MoveResourcesDescriptor) desc;
+            moveFile(moveDesc);
         }
 
         try {
             // refresh workspace
             ResourcesPlugin.getWorkspace().getRoot()
                     .refreshLocal(IResource.DEPTH_INFINITE, null);
-        } catch (CoreException e0) {
-            e0.printStackTrace();
+        } catch (CoreException e) {
+            StatusManager.getManager().handle(e, CoreUIPlugin.PLUGIN_ID);
         }
     }
 

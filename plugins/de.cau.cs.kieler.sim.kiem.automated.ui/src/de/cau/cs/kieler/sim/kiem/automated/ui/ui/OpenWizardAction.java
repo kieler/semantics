@@ -97,11 +97,7 @@ public class OpenWizardAction extends Action implements IViewActionDelegate {
      * {@inheritDoc}
      */
     public void run(final IAction action) {
-        try {
-            run();
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-        }
+        run();
     }
 
     /**

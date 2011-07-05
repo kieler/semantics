@@ -166,6 +166,7 @@ public class DataObject {
      */
     public Object getHistoryValue(final int which) {
         if (which < 0 || which >= history.size()) {
+            // FIXME throw a more specific exception
             throw new RuntimeException("Tried to receive a non existing history value");
         }
         return history.get(which);

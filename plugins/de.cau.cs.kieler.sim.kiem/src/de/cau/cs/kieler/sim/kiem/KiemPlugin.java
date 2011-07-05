@@ -316,6 +316,7 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public void openFile(final IEditorInput editorInput) {
         if (!(editorInput instanceof IFileEditorInput)) {
+            // FIXME throw a more specific exception
             throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
         }
 

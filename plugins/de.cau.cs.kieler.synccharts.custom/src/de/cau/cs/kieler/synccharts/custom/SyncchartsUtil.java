@@ -27,6 +27,7 @@ import org.eclipse.gmf.runtime.notation.Diagram;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.View;
 
+import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapper;
@@ -119,7 +120,7 @@ public final class SyncchartsUtil {
                 ActionLabelProcessorWrapper.processActionLabels(diagram.getElement(),
                         ActionLabelProcessorWrapper.SERIALIZE);
             } catch (Exception e) {
-                throw new RuntimeException(MSG_LABEL_SERIAL_FAILED, e);
+                throw new WrappedException(e, MSG_LABEL_SERIAL_FAILED);
             }
         }
     }

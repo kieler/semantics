@@ -70,6 +70,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
                 ex.printStackTrace();
             }
         } else {
+            // FIXME throw a more specific exception
             throw new RuntimeException("Please chose an existing CSV file as source.");
         }
         return cache.split("\n");
@@ -101,6 +102,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
         if (csvLines.length > 0) {
             uris = csvLines[0].split(";");
         } else {
+            // FIXME throw a more specific exception
             throw new RuntimeException("Loaded empty CSV file");
         }
     }
@@ -139,8 +141,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
                                               .getExecution().getSteps()].split(";");
         } else {
             KiemPlugin.handleComponentError(this, new KiemExecutionException(
-                    "No more lines in CSV file.", true, false, false, new RuntimeException(
-                            "No more lines in CSV file.")));
+                    "No more lines in CSV file.", true, false, false, null));
             return null;
         }
         JSONObject stepData = new JSONObject();

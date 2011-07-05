@@ -157,6 +157,7 @@ public class Property {
             currentValue = values[optionNumber];
             RuntimeConfiguration.getInstance().triggerPropertyChanged(this);
         } else {
+            // FIXME throw a more specific exception
             throw new RuntimeException("Tried to set a non-existing option.");
         }
     }
@@ -181,6 +182,7 @@ public class Property {
                 return;
             }
         }
+        // FIXME throw a more specific exception
         throw new RuntimeException("Tried to set a non-existing option.");
     }
     

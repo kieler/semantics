@@ -248,9 +248,6 @@ public final class AutomationManager implements StatusListener {
                 }
             }
 
-        } catch (RuntimeException e0) {
-            // catch and throw exception, necessary to do wrap up
-            throw e0;
         } finally {
             running = false;
             KiemAutomatedPlugin.removeErrorListener(this);

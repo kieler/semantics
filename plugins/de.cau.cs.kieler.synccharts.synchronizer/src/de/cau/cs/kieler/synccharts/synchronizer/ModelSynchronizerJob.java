@@ -94,8 +94,7 @@ public class ModelSynchronizerJob extends Job {
 
             } catch (Exception e) {
                 return new Status(Status.ERROR, SyncchartsSynchronizerPlugin.PLUGIN_ID,
-                        ModelSynchronizer.MSG_NO_ACTIVE_EDITOR,
-                        new RuntimeException(ModelSynchronizer.MSG_NO_ACTIVE_EDITOR, e));
+                        ModelSynchronizer.MSG_NO_ACTIVE_EDITOR, e);
             }
         }
 

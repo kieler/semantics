@@ -68,6 +68,7 @@ public class KiemComponentEditing extends EditingSupport {
             editor = new CheckboxCellEditor(null, SWT.CHECK | SWT.READ_ONLY);
             break;
         default:
+            // FIXME throw a more specific exception
             throw new RuntimeException("Editing not supported");
         }
         this.columnIndex = columnIndexParam;

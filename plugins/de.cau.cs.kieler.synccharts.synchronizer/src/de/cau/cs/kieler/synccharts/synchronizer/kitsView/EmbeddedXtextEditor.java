@@ -121,6 +121,8 @@ import com.google.inject.Injector;
 import com.google.inject.Provider;
 import com.google.inject.name.Named;
 
+import de.cau.cs.kieler.core.WrappedException;
+
 public class EmbeddedXtextEditor {
 
 	private static final String XTEXT_UI_FORMAT_ACTION = "org.eclipse.xtext.ui.FormatAction";
@@ -284,7 +286,7 @@ public class EmbeddedXtextEditor {
 		try {
 			result.load(new StringInputStream(content, result.getEncoding()), Collections.emptyMap());
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			throw new WrappedException(e);
 		}
 		return result;
 	}

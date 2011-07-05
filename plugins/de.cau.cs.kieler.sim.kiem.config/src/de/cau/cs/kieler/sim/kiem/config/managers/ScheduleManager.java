@@ -42,6 +42,7 @@ import org.eclipse.ltk.core.refactoring.resource.RenameResourceDescriptor;
 import org.eclipse.ui.IEditorSite;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorDefinition;
@@ -388,7 +389,7 @@ public final class ScheduleManager extends AbstractManager implements
                 recImport(resource);
             }
         } catch (CoreException e0) {
-            throw new RuntimeException("", e0);
+            throw new WrappedException(e0);
         }
     }
 

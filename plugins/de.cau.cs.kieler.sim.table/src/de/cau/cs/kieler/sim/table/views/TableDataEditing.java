@@ -75,7 +75,7 @@ public class TableDataEditing extends EditingSupport {
             editor = new TextCellEditor(((DataTableViewer) viewerParam).getTree());
             break;
         default:
-            throw new RuntimeException("columnIndex out of bounds (4)");
+            throw new IndexOutOfBoundsException("columnIndex out of bounds (4)");
         }
         this.columnIndex = columnIndexParam;
     }

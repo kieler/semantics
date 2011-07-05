@@ -32,11 +32,10 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 
-import de.cau.cs.kieler.core.KielerException;
 import de.cau.cs.kieler.core.KielerModelException;
+import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 import de.cau.cs.kieler.core.ui.Messages;
 import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
 
@@ -96,20 +95,10 @@ public class ModelErrorHandler implements StatusListener {
         if (e instanceof KielerModelException && style == StatusManager.SHOW) {
             Object modelObject = ((KielerModelException) e).getModelObject();
             if (modelObject instanceof EObject) {
-                try {
-                    if (enabled) {
-                        addMarker(e.getMessage(), (EObject) modelObject);
-                    }
-                    return StatusManager.LOG;
-                } catch (KielerException e1) {
-                    /*will go on in next case */
-                    Status debugStatus = new Status(IStatus.ERROR,
-                            CoreUIPlugin.PLUGIN_ID,
-                            Messages.ModelErrorHandler_MarkerError
-                                    + e1.getClass().getName(), e1);
-                    StatusManager.getManager().handle(debugStatus,
-                            StatusManager.LOG);
+                if (enabled) {
+                    addMarker(e.getMessage(), (EObject) modelObject);
                 }
+                return StatusManager.LOG;
             }
         }
         /*
@@ -130,11 +119,8 @@ public class ModelErrorHandler implements StatusListener {
      *            String message of the marker
      * @param target
      *            target object
-     * @throws KielerException
-     *             if the marker cannot be created
      */
-    public static void addMarker(final String msg, final EObject target)
-            throws KielerException {
+    public static void addMarker(final String msg, final EObject target) {
         Job job = new AddMarkerJob(msg, target);
         job.schedule();
     }
@@ -202,7 +188,7 @@ public class ModelErrorHandler implements StatusListener {
                         if (editPart != null) {
                             EObject view = bridge.getNotationElement(editPart);
                             String elementID = "";
-                            if (view.eResource() instanceof XMLResource ) {
+                            if (view.eResource() instanceof XMLResource) {
                                     String id = ((XMLResource) view.eResource()).getID(view);
                                     if (id != null) {
                                         elementID = id;
@@ -231,13 +217,9 @@ public class ModelErrorHandler implements StatusListener {
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
-                        status = new Status(
-                                IStatus.ERROR,
-                                "de.cau.cs.kieler.core.model",
-                                msg,
-                                new KielerException(
-                                        Messages.ModelErrorHandler_MarkerCreationError,
-                                        e));
+                        status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
+                                Messages.ModelErrorHandler_MarkerCreationError
+                                + " (" + msg + ")");
                     }
                 }
             });

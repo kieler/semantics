@@ -74,6 +74,7 @@ public class KvidUri {
         if (port != null) {
             return port;
         } else {
+            // FIXME throw a more specific exception
             throw new RuntimeException("No port part specified.");
         }
     }

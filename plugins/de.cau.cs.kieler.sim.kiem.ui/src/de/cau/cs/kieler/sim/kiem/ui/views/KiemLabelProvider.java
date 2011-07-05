@@ -177,7 +177,7 @@ public class KiemLabelProvider implements ITableLabelProvider {
             case COLUMN_4: // MASTER_COLUMN
                 return "";
             default:
-                throw new RuntimeException("columnIndex out of bounds (6)");
+                throw new IndexOutOfBoundsException("columnIndex out of bounds (6)");
             }
         } else {
             DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) element;

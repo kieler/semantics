@@ -44,35 +44,28 @@ public class FixSyncChartPreferencePage extends FieldEditorPreferencePage
      */
     @Override
     protected void createFieldEditors() {
-        try {
-            List<String> keys = FixSyncChartUtils.getKeys();
+        List<String> keys = FixSyncChartUtils.getKeys();
 
-            for (String key : keys) {
-                Composite parent = getFieldEditorParent();
-                BooleanFieldEditor enablementFE = new BooleanFieldEditor(key,
-                        FixSyncChartUtils.getDisplay(key), parent);
-                enablementFE.getDescriptionControl(parent).setToolTipText(
-                        FixSyncChartUtils.getTooltip(key));
-                super.addField(enablementFE);
-            }
-
-            List<String> choiceKeys = FixSyncChartUtils.getChoiceKeys();
-
-            for (String key : choiceKeys) {
-                Composite parent2 = getFieldEditorParent();
-                String label = FixSyncChartUtils.getDisplay(key);
-                int cols = 1;
-                String[][] input = getInput(key);
-                RadioGroupFieldEditor choiceFE = new RadioGroupFieldEditor(key,
-                        label, cols, input, parent2, true);
-                super.addField(choiceFE);
-            }
-
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-            throw e0;
+        for (String key : keys) {
+            Composite parent = getFieldEditorParent();
+            BooleanFieldEditor enablementFE = new BooleanFieldEditor(key,
+                    FixSyncChartUtils.getDisplay(key), parent);
+            enablementFE.getDescriptionControl(parent).setToolTipText(
+                    FixSyncChartUtils.getTooltip(key));
+            super.addField(enablementFE);
         }
 
+        List<String> choiceKeys = FixSyncChartUtils.getChoiceKeys();
+
+        for (String key : choiceKeys) {
+            Composite parent2 = getFieldEditorParent();
+            String label = FixSyncChartUtils.getDisplay(key);
+            int cols = 1;
+            String[][] input = getInput(key);
+            RadioGroupFieldEditor choiceFE = new RadioGroupFieldEditor(key,
+                    label, cols, input, parent2, true);
+            super.addField(choiceFE);
+        }
     }
 
     private String[][] getInput(final String key) {
@@ -104,14 +97,9 @@ public class FixSyncChartPreferencePage extends FieldEditorPreferencePage
      * {@inheritDoc}
      */
     public void init(final IWorkbench workbench) {
-        try {
-            FixSyncChartUtils.loadConfiguration();
-            setPreferenceStore(SyncchartsKsbasePlugin.getDefault()
-                    .getPreferenceStore());
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-            throw e0;
-        }
+        FixSyncChartUtils.loadConfiguration();
+        setPreferenceStore(SyncchartsKsbasePlugin.getDefault()
+                .getPreferenceStore());
     }
 
 }

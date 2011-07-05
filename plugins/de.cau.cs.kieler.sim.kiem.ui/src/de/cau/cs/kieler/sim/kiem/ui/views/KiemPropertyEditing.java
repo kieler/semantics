@@ -70,6 +70,7 @@ public class KiemPropertyEditing extends EditingSupport {
                 this.tree = ((TreeViewer) viewer).getTree();
                 break;
             default:
+                // FIXME throw a more specific exception
                 throw new RuntimeException("Editing not supported");
             }
             this.parent = parentParam;

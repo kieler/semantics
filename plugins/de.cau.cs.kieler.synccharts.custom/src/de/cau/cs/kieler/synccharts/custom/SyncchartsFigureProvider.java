@@ -115,6 +115,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         } else if (input.equals("refState")) {
             return createNormalReferenceFigure(false);
         } else {
+            // FIXME throw a more specific exception
             throw new RuntimeException(input + "wasn't found in figureProvider");
         }
     }

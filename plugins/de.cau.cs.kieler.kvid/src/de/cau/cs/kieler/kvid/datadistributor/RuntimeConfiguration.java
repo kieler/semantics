@@ -89,6 +89,7 @@ public final class RuntimeConfiguration {
         if (property != null) {
             return property.getCurrentValue();
         }
+        // FIXME throw a more specific exception
         throw new RuntimeException("Unknown property name!");
     }
     

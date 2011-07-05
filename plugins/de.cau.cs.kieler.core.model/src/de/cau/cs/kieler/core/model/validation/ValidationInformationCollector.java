@@ -263,38 +263,32 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart workbenchPart) {
-        try {
-            if (workbenchPart instanceof IEditorPart) {
+        if (workbenchPart instanceof IEditorPart) {
 
-                for (String key : validateActions.keySet()) {
-                    Object o = validateActions.get(key);
+            for (String key : validateActions.keySet()) {
+                Object o = validateActions.get(key);
 
-                    if (o != null && o instanceof List<?>) {
-                        List<IValidationActionFactory> list = (List<IValidationActionFactory>) o;
+                if (o != null && o instanceof List<?>) {
+                    List<IValidationActionFactory> list = (List<IValidationActionFactory>) o;
 
-                        for (IValidationActionFactory fact : list) {
-                            if (fact.getValidationActionForEditor((IEditorPart) workbenchPart) != null) {
-                                Map<String, CheckfileDefinition> checks = checkfiles
-                                        .get(key);
-                                if (checks != null) {
-                                    for (CheckfileDefinition check : checks
-                                            .values()) {
-                                        registerCheckfile(check);
-                                    }
+                    for (IValidationActionFactory fact : list) {
+                        if (fact.getValidationActionForEditor((IEditorPart) workbenchPart) != null) {
+                            Map<String, CheckfileDefinition> checks = checkfiles
+                                    .get(key);
+                            if (checks != null) {
+                                for (CheckfileDefinition check : checks
+                                        .values()) {
+                                    registerCheckfile(check);
                                 }
-                                break;
                             }
+                            break;
                         }
-
-                        validateEditor((IEditorPart) workbenchPart);
                     }
+
+                    validateEditor((IEditorPart) workbenchPart);
                 }
             }
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-            throw e0;
         }
-
     }
 
     /**

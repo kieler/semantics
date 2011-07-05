@@ -38,6 +38,7 @@ import org.eclipse.swt.dnd.TextTransfer;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
+import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
@@ -218,10 +219,8 @@ public final class Utils {
         try {
             returnStr = XMIHelperImpl.saveString(new HashMap<Object, Object>(),
                     arrayList, "UTF-8", xmiHelper);
-        } catch (RuntimeException ex) {
-            ex.printStackTrace();
-        } catch (Exception e0) {
-            e0.printStackTrace();
+        } catch (Exception e) {
+            throw new WrappedException(e);
         }
 
         Clipboard systemClipboard = getSystemClipboard();

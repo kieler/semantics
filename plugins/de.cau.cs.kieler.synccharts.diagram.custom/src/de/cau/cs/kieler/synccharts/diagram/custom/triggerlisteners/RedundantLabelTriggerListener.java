@@ -129,41 +129,31 @@ public class RedundantLabelTriggerListener extends TriggerListener {
      * Cleanup all labels.
      */
     private void performCleanup() {
-        try {
-            if (waiting) {
-                job.cancel();
-            }
-            job = new WorkbenchJob("Redundant Label Cleanup") {
-                @Override
-                public IStatus runInUIThread(final IProgressMonitor monitor) {
-                    waiting = false;
-                    try {
-                        IEditorPart part = SyncchartsDiagramCustomPlugin
-                                .getInstance().getActiveEditorPart();
-                        IProgressMonitor dummyMonitor = new NullProgressMonitor();
-
-                        if (part instanceof SyncchartsDiagramEditor) {
-                            boolean save = !part.isDirty();
-                            lastActive = (SyncchartsDiagramEditor) part;
-                            VisibilityManager.reset(lastActive);
-                            clean(lastActive);
-                            if (save) {
-                                part.doSave(dummyMonitor);
-                            }
-                        }
-                    } catch (RuntimeException e0) {
-                        e0.printStackTrace();
-                        throw e0;
-                    }
-                    return Status.OK_STATUS;
-                }
-            };
-            waiting = true;
-            job.schedule(JOB_DELAY);
-        } catch (RuntimeException e0) {
-            e0.printStackTrace();
-            throw e0;
+        if (waiting) {
+            job.cancel();
         }
+        job = new WorkbenchJob("Redundant Label Cleanup") {
+            @Override
+            public IStatus runInUIThread(final IProgressMonitor monitor) {
+                waiting = false;
+                IEditorPart part = SyncchartsDiagramCustomPlugin
+                        .getInstance().getActiveEditorPart();
+                IProgressMonitor dummyMonitor = new NullProgressMonitor();
+
+                if (part instanceof SyncchartsDiagramEditor) {
+                    boolean save = !part.isDirty();
+                    lastActive = (SyncchartsDiagramEditor) part;
+                    VisibilityManager.reset(lastActive);
+                    clean(lastActive);
+                    if (save) {
+                        part.doSave(dummyMonitor);
+                    }
+                }
+                return Status.OK_STATUS;
+            }
+        };
+        waiting = true;
+        job.schedule(JOB_DELAY);
     }
 
     /**
