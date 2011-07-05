@@ -227,7 +227,7 @@ context Transition if (type == TransitionType::STRONGABORT)
 
 context Transition if (type == TransitionType::NORMALTERMINATION)
 	ERROR "Simple states may not have a normal termination transition" :
-	((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE));
+	((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE) || (sourceState.type == StateType::TEXTUAL));
 
 context Transition if (type == TransitionType::STRONGABORT)
     WARNING "Strong aborts on simple states don't make sense." :
