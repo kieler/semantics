@@ -100,6 +100,8 @@ public class E2STransformationCombination extends AbstractCombination {
     private String lastStepType = BUTTON_STEP;
 
     private boolean initInProgess = false;
+    
+    
 
     /**
      * Default Constructor, setting up all needed buttons.
@@ -228,7 +230,9 @@ public class E2STransformationCombination extends AbstractCombination {
             }
             initInProgess = true;
             TransformationUtil.openKidsInEditor(created);
-            ValidationManager.disableAll();
+            //@author: cmot, do not disable ALL checks by default
+//            if (ValidationManager.isEnabled(SYNCCHARTS_EDITOR_ID));
+//            ValidationManager.disableAll();
             return true;
         }
         return false;
@@ -258,10 +262,11 @@ public class E2STransformationCombination extends AbstractCombination {
             initializeDataComponents();
         }
 
-        // initialize the correct datacomponent
+        // initialize the correct DataComponent
         if (isTransformable) {
             currentDataComponent = transformingDataComponent;
         } else {
+            
             currentDataComponent = optimizingDataComponent;
         }
 
