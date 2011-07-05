@@ -20,14 +20,18 @@ List[Signal] getUnemittedSignals(Scope scope):
  scope.signals.select(e|(e.isOutput || !e.isInput) && e.signalNotEmitted(scope) && e.name != "tick")
 ;
 
+Boolean containsTextualState(Scope scope):
+  !(scope.eAllContents.typeSelect(State).select(state|state.type == StateType::TEXTUAL).isEmpty)
+;
+
 context Scope
    WARNING "The following signals in this scope are never read: " + this.getUnreadSignals().name :
-   this.getUnreadSignals().isEmpty
-   ;
+   this.getUnreadSignals().isEmpty || this.containsTextualState()
+;
 
 context Scope
     WARNING "The following signals in this scope are never emitted: " + this.getUnemittedSignals().name : 
-    this.getUnemittedSignals().isEmpty
+    this.getUnemittedSignals().isEmpty || this.containsTextualState()
     ;
 
 Boolean variableNotRead(Variable var, Scope scope):
