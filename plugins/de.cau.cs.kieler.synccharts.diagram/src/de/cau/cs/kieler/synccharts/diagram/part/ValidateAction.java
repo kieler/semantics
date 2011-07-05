@@ -62,7 +62,7 @@ public class ValidateAction extends Action {
     public void run() {
 
         IWorkbenchPart workbenchPart = EditorUtils.getLastActiveEditor();
-        if (workbenchPart != null && workbenchPart instanceof IDiagramWorkbenchPart) {
+        if (workbenchPart != null && workbenchPart instanceof SyncchartsDiagramEditor) {
 
             final IDiagramWorkbenchPart part = (IDiagramWorkbenchPart) workbenchPart;
             try {
@@ -88,7 +88,7 @@ public class ValidateAction extends Action {
 
                 IEditorPart editorPart = EditorUtils.getLastActiveEditor();
 
-                if (editorPart != null && editorPart instanceof IDiagramWorkbenchPart) {
+                if (editorPart != null && editorPart instanceof SyncchartsDiagramEditor) {
                     runValidation(((IDiagramWorkbenchPart) editorPart).getDiagramEditPart(), view);
                 } else {
                     runNonUIValidation(view);

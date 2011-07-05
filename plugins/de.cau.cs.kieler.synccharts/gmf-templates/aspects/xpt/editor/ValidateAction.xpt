@@ -62,7 +62,7 @@ public class «EXPAND className» extends org.eclipse.jface.action.Action {
 	public void run() {
 	    «REM»custom code: use util for last active editor instead«ENDREM»
 		org.eclipse.ui.IWorkbenchPart workbenchPart = de.cau.cs.kieler.core.ui.util.EditorUtils.getLastActiveEditor();
-		if (workbenchPart != null && workbenchPart instanceof org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart) {
+		if (workbenchPart != null && workbenchPart instanceof de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor) {
 			«REM»end custom code«ENDREM»
 			final org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart part =	(org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart) workbenchPart;
 			try {
@@ -95,8 +95,8 @@ public class «EXPAND className» extends org.eclipse.jface.action.Action {
 			if («getDiagramEditorUtilQualifiedClassName()».openDiagram(view.eResource())) {
 				«REM»custom code: use util for last active editor instead«ENDREM»
 				org.eclipse.ui.IEditorPart editorPart = de.cau.cs.kieler.core.ui.util.EditorUtils.getLastActiveEditor();
+				if (editorPart != null && editorPart instanceof de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor) {
 				«REM»end custom code«ENDREM»
-				if (editorPart != null && editorPart instanceof org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart) {
 					runValidation(((org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart) editorPart).
 							getDiagramEditPart(), view);
 				} else {
