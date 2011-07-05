@@ -59,6 +59,7 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
      * Trigger this TriggerListener for all events that the filters match to
      * which are specified in the constructor. {@inheritDoc}
      */
+    @SuppressWarnings("unchecked")
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
@@ -66,6 +67,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         Scope targetScope = null;
         if (type == Notification.ADD) {
             targetScope = (Scope) notification.getNewValue();
+        } else if (type == Notification.ADD_MANY) {
+            /* fix by chsch: handle the addition of multiple scopes */
+            return handleScopes((List<Scope>) notification.getNewValue());
         } else if (type == Notification.SET) {
             targetScope = (Scope) notification.getNotifier();
         }
@@ -93,6 +97,23 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
                     SyncchartsPackage.eINSTANCE.getScope_Id(), newId));
         }
         return cc;
+    }
+    
+    /**
+     * Handle the ID determination for multiple regions.
+     * Delegates {@link TriggerListenerIDs#handleScope(Scope)}
+     * 
+     * @author chsch
+     * 
+     * @param scopes a collection of newly added scopes
+     * @return a compound command realizing the determination
+     */
+    private Command handleScopes(final List<Scope> scopes) {
+        PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
+        for (Scope scope : scopes) {
+            cc.append(this.handleScope(scope));
+        }
+        return cc;        
     }
 
     /**
