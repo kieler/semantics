@@ -35,7 +35,11 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
 import de.cau.cs.kieler.core.kexpressions.OperatorType;
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValuedObject;
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.core.kexpressions.Variable;
+import de.cau.cs.kieler.synccharts.Assignment;
+import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.Scope;
 import de.cau.cs.kieler.synccharts.State;
@@ -117,21 +121,20 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
 	public IScope scope_ValuedObjectReference_valuedObject(final EObject obj,
 			final EReference reference) {
     	return new SimpleScope(this.scope_ValuedObject(obj, reference, null));
-    }
+    }	
     
-	/**
-	 * More generic scoping implementation that can be re-used.
-	 *  
-	 * @param obj
-	 * @param reference
-	 * @param logicalContainer
-	 * @return
-	 */
-	protected List<IEObjectDescription> scope_ValuedObject(
-			final EObject obj, final EReference reference,
-			final Scope logicalContainer) {
-		
-		// include all available signals
+    /**
+     * More generic scoping implementation that can be re-used.
+     * 
+     * @param obj
+     * @param reference
+     * @param logicalContainer
+     * @return
+     */
+    protected List<IEObjectDescription> scope_ValuedObject(final EObject obj,
+            final EReference reference, final Scope logicalContainer) {
+
+        // include all available signals
         List<IEObjectDescription> l = this.scope_Signal(obj, reference, logicalContainer);
 
         // this branch will be entered during linking if the valuedObjectReference
@@ -150,12 +153,11 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
                         .getOperator() == OperatorType.PRE)) {
             return l;
         }
-        
-		// add all available variables
+
+        // add all available variables
         l.addAll(this.scope_Variable(obj, reference, logicalContainer));
         return l;
     }
-
     
     /**
      * A implementation of scoping for signal emissions.
@@ -206,6 +208,27 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             	inLogicalContainer = true;
             }
         } while (scope != null);
+
+        /*
+         * FIXME this is very problematic code introduced to enable textual representations of not
+         * completely transformed synccharts models from esterel models, which may refer to signals
+         * of the esterel model
+         */
+        if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
+                && ((ValuedObjectReference) obj).getValuedObject() != null
+                && KExpressionsPackage.eINSTANCE.getSignal().isInstance(((ValuedObjectReference) obj).getValuedObject())
+                && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
+            ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
+            l.add(new EObjectDescription(vObj.getName(), vObj,
+                    (Map<String, String>) Collections.EMPTY_MAP));
+        } else if (SyncchartsPackage.eINSTANCE.getEmission().isInstance(obj)
+                && ((Emission) obj).getSignal() != null
+                && ((Emission) obj).getSignal().eResource() != obj.eResource()) {
+            Signal s = ((Emission) obj).getSignal();
+            l.add(new EObjectDescription(s.getName(), s,
+                    (Map<String, String>) Collections.EMPTY_MAP));
+        }
+        
         return l;
     }
     
@@ -259,6 +282,26 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             	inLogicalContainer = true;
             }
         } while (scope != null);
+        
+        /*
+         * FIXME this is very problematic code introduced to enable textual representations of not
+         * completely transformed synccharts models from esterel models, which may refer to signals
+         * of the esterel model
+         */
+        if (KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)
+                && ((ValuedObjectReference) obj).getValuedObject() != null
+                && KExpressionsPackage.eINSTANCE.getVariable().isInstance(((ValuedObjectReference) obj).getValuedObject())
+                && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
+            ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
+            l.add(new EObjectDescription(vObj.getName(), vObj,
+                    (Map<String, String>) Collections.EMPTY_MAP));
+        } else if (SyncchartsPackage.eINSTANCE.getAssignment().isInstance(obj)
+                && ((Assignment) obj).getVariable() != null
+                && ((Assignment) obj).getVariable().eResource() != obj.eResource()) {
+            Variable v = ((Assignment) obj).getVariable();
+            l.add(new EObjectDescription(v.getName(), v,
+                    (Map<String, String>) Collections.EMPTY_MAP));
+        }
         return l;
     }
 }
