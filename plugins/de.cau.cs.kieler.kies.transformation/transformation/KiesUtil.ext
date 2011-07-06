@@ -58,7 +58,7 @@ Void addSignalToState(Signal sig, State st):
  */ 
 Void extractLocalVariables(VariableDecl decl, State s):
 	let vars = (List[IVariable]) clone(decl.variables):
-	info(vars.type.toString()) ->
+	//info(vars.type.toString()) ->
 	vars.addVariableToState(s)
 ; 
 
