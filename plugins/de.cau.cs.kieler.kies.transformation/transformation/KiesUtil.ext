@@ -7,6 +7,7 @@ import esterel;
 
 extension feature;
 extension org::eclipse::xtend::util::stdlib::cloning; // provides clone functionality
+extension org::eclipse::xtend::util::stdlib::io;
 
  /*
   * #################################################################################
@@ -42,8 +43,10 @@ Void extractSignals(InterfaceSignalDecl decl, State s):
 		case InputOutput.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(true))
    		default : decl //no information about input/output
 	} ->
-	if clonedDecl.signals.size > 0 then
+	if clonedDecl.signals.size > 0 then (
+		copy.select(e|e.channelDescr != null).modifyHostType() ->
 		copy.addSignalToState(s)
+    )
 ;
 
 Void addSignalToState(Signal sig, State st):
@@ -55,11 +58,22 @@ Void addSignalToState(Signal sig, State st):
  */ 
 Void extractLocalVariables(VariableDecl decl, State s):
 	let vars = (List[IVariable]) clone(decl.variables):
+	info(vars.type.toString()) ->
 	vars.addVariableToState(s)
 ; 
 
 Void addVariableToState(kexpressions::Variable v, State s):
 	s.variables.add(v)
+;
+
+Void modifyHostType(ISignal copy):
+  copy.setType(ValueType::HOST) ->
+  //copy.setType(ValueType::PURE) //->
+  //info(copy.name) ->
+  //copy.setName(copy.name+"Hugo") ->
+  info(copy.name) 
+  //info(copy.name) 
+//copy.setHostType(copy.channelDescr.type.metaType.toString())
 ;
 
 /**
@@ -68,7 +82,10 @@ Void addVariableToState(kexpressions::Variable v, State s):
 Void extractLocalSignals(LocalSignalList lsl, State s):
 	if LocalSignal.isInstance(lsl) then
 		(let copy = (List[ISignal]) clone(((LocalSignal)lsl).signal):
+        	info(((LocalSignal)lsl).signal.select(e|e.channelDescr != null).name) ->
+        	copy.select(e|e.channelDescr != null).modifyHostType() ->
 		 copy.addSignalToState(s)
+		 //null
 		)
 ;
 
