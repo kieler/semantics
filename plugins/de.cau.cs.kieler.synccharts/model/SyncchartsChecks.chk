@@ -235,7 +235,7 @@ context Transition if (type == TransitionType::NORMALTERMINATION)
 
 context Transition if (type == TransitionType::STRONGABORT)
     WARNING "Strong aborts on simple states don't make sense." :
-    ((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE));
+    ((sourceState.regions.size!=0)  || (sourceState.type == StateType::REFERENCE) || (sourceState.type == StateType::TEXTUAL));
 
 
 context Transition if(sourceState.outgoingTransitions.size > 1) 
@@ -263,10 +263,10 @@ context OperatorExpression if (!((operator == OperatorType::NOT) || (operator ==
 // ================================================================================================
 // Emissions
 	
-context Emission if (signal.type == ValueType::PURE) ERROR "Pure signals cannot be assigned a value!" :
+context Emission if (signal.type == ValueType::PURE) ERROR "Pure signals cannot be assigned a value! (" +signal.name+")" :
 	newValue == null;
 	
-context Emission if (!(signal.type == ValueType::PURE)) ERROR "Valued signals must be assigned a value!" :
+context Emission if (!(signal.type == ValueType::PURE)) ERROR "Valued signals must be assigned a value! (" +signal.name+")" :
 	newValue != null;
 	
 // ================================================================================================
