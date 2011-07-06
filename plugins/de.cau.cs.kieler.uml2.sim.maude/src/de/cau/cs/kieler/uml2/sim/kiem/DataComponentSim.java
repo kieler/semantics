@@ -321,7 +321,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
 
         String pathToMaudeCode = getMaudeGenCodeLocation();
         if (isWindows()) {
-            pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
+            pathToMaudeCode = "\"" + transformToCygwinPath(pathToMaudeCode) +"\"";
         }
 
         // reset the mapping
@@ -335,7 +335,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // TODO: Initial Regions?
 
         maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                "\"" +pathToMaudeCode +"\"");
+                pathToMaudeCode );
         try {
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
