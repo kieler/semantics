@@ -6,8 +6,8 @@ import utilities;
 import esterel; 
 
 extension feature;
+extension org::eclipse::xtend::util::stdlib::io; // provides clone functionality
 extension org::eclipse::xtend::util::stdlib::cloning; // provides clone functionality
-extension org::eclipse::xtend::util::stdlib::io;
 
  /*
   * #################################################################################
@@ -144,7 +144,7 @@ Void addTrapToExpression(ISignal trap, OperatorExpression expr):
  */
 Expression convertEsterelExpression(Expression e):
 	if e != null then 
-		 convertEsterelExpressionRec(e) ->	e
+		 convertEsterelExpressionRec(e)
 ;
 // in case there is no expression at all, null is no problem here
 Expression convertEsterelExpression(Void v):
