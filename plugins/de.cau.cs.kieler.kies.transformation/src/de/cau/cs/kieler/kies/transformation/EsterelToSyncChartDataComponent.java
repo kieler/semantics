@@ -161,7 +161,12 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
                 }
                 // extension by chsch:
                 if (obj instanceof Region) {
-                    start = ((Region) obj).getParentState();
+                    Region r = (Region) obj;
+                    if (r.getParentState() != null) {
+                        start = r.getParentState();
+                    } else if (!r.getStates().isEmpty()) {
+                        start = r.getStates().get(0);
+                    }
                 }
             }
         }
