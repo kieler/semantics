@@ -73,7 +73,7 @@ Void modifyHostType(ISignal copy):
   //copy.setName(copy.name+"Hugo") ->
   //info(copy.name) 
   //info(copy.name) 
-  copy.setHostType(copy.channelDescr.type.metaType.toString())
+  copy.setHostType(copy.channelDescr.type.typeID)
 ;
 
 /**
