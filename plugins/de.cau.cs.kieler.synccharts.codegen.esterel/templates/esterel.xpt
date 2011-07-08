@@ -1,7 +1,7 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION templates::helper»
+«EXTENSION helper»
 
 «DEFINE main FOR Region-»
 «FILE states.first().label + ".strl"-»
