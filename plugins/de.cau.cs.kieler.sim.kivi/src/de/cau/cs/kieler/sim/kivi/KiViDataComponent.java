@@ -173,7 +173,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                          * until all effects have finished executing that are caused by this
                          * triggering. This way we create back pressure from the effects to KIEM.
                          */
-                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
+                        StateActivityTrigger.getInstance().step(statesByStep,
                                 diagramEditor);
                     }
                 }
