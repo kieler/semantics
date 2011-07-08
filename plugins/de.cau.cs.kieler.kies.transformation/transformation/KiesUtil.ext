@@ -82,7 +82,7 @@ Void modifyHostType(ISignal copy):
 Void extractLocalSignals(LocalSignalList lsl, State s):
 	if LocalSignal.isInstance(lsl) then
 		(let copy = (List[ISignal]) clone(((LocalSignal)lsl).signal):
-        	info(((LocalSignal)lsl).signal.select(e|e.channelDescr != null).name) ->
+        	//info(((LocalSignal)lsl).signal.select(e|e.channelDescr != null).name) ->
         	copy.select(e|e.channelDescr != null).modifyHostType() ->
 		 copy.addSignalToState(s)
 		 //null
