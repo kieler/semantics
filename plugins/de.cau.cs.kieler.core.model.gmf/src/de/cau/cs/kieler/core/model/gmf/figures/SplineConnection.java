@@ -328,7 +328,7 @@ public class SplineConnection extends PolylineConnectionEx {
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
         } else if (isRoundingBendpoints()) {
-            if (!this.isOrthogonal(this.getPoints())) {
+            if (!this.canRoundBendpoints(this.getPoints())) {
                 int origBendpointRadius = this.getRoundedBendpointsRadius();
                 this.setRoundedBendpointsRadius(0);
                 super.outlineShape(g);
@@ -467,14 +467,18 @@ public class SplineConnection extends PolylineConnectionEx {
             super.outlineShape(g);
         }
     }
-
+    
     /**
-     * method to check whether the connection is orthogonal or not.
+     * Method to determine whether the connection meets all requirements to
+     * do rounded bendpoints or not.
+     * Requirements are:
+     *  - connection is othogonal
+     *  - connection has no small bends
      * @param bendpoints the bendpoints of the connection to check
-     * @return true is orthogonal else false
+     * @return true if connection meets requirements
      */
-    private boolean isOrthogonal(final PointList bendpoints) {
-        boolean isOrthogonal = true;
+    private boolean canRoundBendpoints(final PointList bendpoints) {
+        boolean canRound = true;
         boolean horizontal;
         Point a = bendpoints.getPoint(0);
         Point b = bendpoints.getPoint(1);
@@ -486,37 +490,37 @@ public class SplineConnection extends PolylineConnectionEx {
         } else {
             return false;
         }
-            
+        
         for (int i = 1; i < (bendpoints.size() - 1); i++) {
             a = bendpoints.getPoint(i);
             b = bendpoints.getPoint(i + 1);
             if (horizontal) {
             if ((i % 2) == 1) {             
-               if (a.x != b.x) {
-                   isOrthogonal = false;
+               if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
+                   canRound = false;
                    break;
                }
             } else {
-                if (a.y != b.y) {
-                    isOrthogonal = false;
+                if ((a.y != b.y) || (Math.abs(a.x - b.x) < 4)) {
+                    canRound = false;
                     break;
                 } 
             }
             } else {
                 if ((i % 2) == 1) {             
-                    if (a.y != b.y) {
-                        isOrthogonal = false;
+                    if ((a.y != b.y) || (Math.abs(a.x - b.x) < 4)) {
+                        canRound = false;
                         break;
                     }
                  } else {
-                     if (a.x != b.x) {
-                         isOrthogonal = false;
+                     if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
+                         canRound = false;
                          break;
                      } 
                  }
             }
         }
-        return isOrthogonal;
+        return canRound;
     }
 
     // /////////////////////////////////////////////////////
