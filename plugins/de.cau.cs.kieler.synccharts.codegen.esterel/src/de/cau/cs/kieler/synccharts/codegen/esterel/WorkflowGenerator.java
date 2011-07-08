@@ -131,8 +131,12 @@ public class WorkflowGenerator {
         editor = activePage.getActiveEditor();
 
         uriString = getAbsoultePath(input);
+        System.out.println(uriString);
         
-        int index = uriString.lastIndexOf(System.getProperty("file.separator"));
+        String slash = System.getProperty("file.separator");
+        System.out.println(slash);
+        int index = uriString.lastIndexOf(slash);
+        System.out.println("index:"+ index);
         
         outPath = uriString;
         if (index != -1) {
