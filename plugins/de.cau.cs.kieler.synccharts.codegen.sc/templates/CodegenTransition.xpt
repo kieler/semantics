@@ -6,6 +6,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «REM»
 	Entry point for transitions. 

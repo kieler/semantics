@@ -5,6 +5,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «REM»
 	The main template creates the file and starts the process of generating code.

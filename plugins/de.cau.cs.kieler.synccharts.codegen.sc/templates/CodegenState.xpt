@@ -6,6 +6,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
  
 «REM»
 	Defines the entry point of a state calls Xpand templated according to their structure. 

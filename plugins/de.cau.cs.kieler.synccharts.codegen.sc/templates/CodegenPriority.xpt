@@ -5,6 +5,7 @@
 «IMPORT synccharts»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «DEFINE getRealThreadPriority FOR State-»
 	«REM»

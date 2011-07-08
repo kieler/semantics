@@ -6,6 +6,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «REM»
 	Definition of functions for inputs and outputs.

@@ -5,6 +5,7 @@
 «IMPORT synccharts»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «REM»
 	For a region all inner states will be collected and the state templated will be

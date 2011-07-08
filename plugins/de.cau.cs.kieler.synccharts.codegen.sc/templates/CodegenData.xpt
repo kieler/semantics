@@ -7,6 +7,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION templates::Helper»
+«EXTENSION Helper»
 
 «DEFINE main FOR Region-»
 «FILE states.first().id + "_data.c"-»
