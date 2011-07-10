@@ -102,8 +102,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public boolean isProducer() {
-        // return false;
-        return true;
+         return false;
+        //return true;
     }
 
     /**
@@ -173,7 +173,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                          * until all effects have finished executing that are caused by this
                          * triggering. This way we create back pressure from the effects to KIEM.
                          */
-                        StateActivityTrigger.getInstance().step(statesByStep,
+                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
                                 diagramEditor);
                     }
                 }
