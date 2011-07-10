@@ -115,6 +115,7 @@ public class WorkflowGenerator {
         ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
                 .getSelectionService().getSelection();
         File file = (File) ((TreeSelection) selection).getFirstElement();
+        System.out.println(file.getFullPath().toString());
         input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
 
         // EObject myModel = (EObject) notationElement.getElement();
