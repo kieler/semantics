@@ -77,7 +77,7 @@ public class WorkflowGenerator {
     public String getAbsoultePath(final URI uri) {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        IPath path = new Path(uri.toPlatformString(false));
+        IPath path = new Path(uri.toPlatformString(false).replace("%20", " "));
         IFile file = myWorkspaceRoot.getFile(path);
 
         IPath fullPath = file.getLocation();
@@ -94,7 +94,7 @@ public class WorkflowGenerator {
         java.io.File javaFile = fullPath.toFile();
 
         if (javaFile.exists()) {
-            String fileString = javaFile.getAbsolutePath();
+            String fileString = javaFile.getAbsolutePath().replace(" ", "%20");
             return fileString;
         }
 
