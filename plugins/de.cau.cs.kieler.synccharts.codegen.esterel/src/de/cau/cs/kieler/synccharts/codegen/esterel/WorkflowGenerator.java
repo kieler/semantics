@@ -175,7 +175,7 @@ public class WorkflowGenerator {
         esterelGenerator.addMetaModel(metaModel3);
         esterelGenerator.addOutlet(outlet);
 
-        esterelGenerator.setExpand("esterel::main FOR model");
+        esterelGenerator.setExpand("templates::esterel::main FOR model");
 
         final WorkflowContext wfx = new WorkflowContextDefaultImpl();
         final Issues issues = new IssuesImpl();
