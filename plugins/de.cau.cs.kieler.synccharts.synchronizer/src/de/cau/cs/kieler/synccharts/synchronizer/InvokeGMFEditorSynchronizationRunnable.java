@@ -18,7 +18,7 @@ import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.CanonicalEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 
-import de.cau.cs.kieler.kiml.ui.layout.DiagramLayoutEngine;
+import de.cau.cs.kieler.kiml.ui.diagram.DiagramLayoutEngine;
 
 /**
  * A Runnable encapsulating the activities for synchronizing a graphical view.

@@ -30,7 +30,7 @@ import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 
 /**
  * A Kieler Viewmanagement Combination that lets the user manually select a focus in a diagram and

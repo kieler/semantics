@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
 import de.cau.cs.kieler.kies.transformation.kivi.KiesTransformationContext;
 import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;

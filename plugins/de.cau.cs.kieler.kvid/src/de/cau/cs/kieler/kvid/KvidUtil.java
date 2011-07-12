@@ -38,7 +38,7 @@ import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kaom.Port;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
-import de.cau.cs.kieler.kiml.ui.layout.LayoutMapping;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutMapping;
 import de.cau.cs.kieler.kiml.ui.util.KimlUiUtil;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;

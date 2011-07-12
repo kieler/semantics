@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
-import de.cau.cs.kieler.kiml.SemanticLayoutConfig;
+import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.Direction;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.synccharts.Region;

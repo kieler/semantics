@@ -33,7 +33,7 @@ import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.LayoutDataService;
 import de.cau.cs.kieler.kiml.LayoutTypeData;
-import de.cau.cs.kieler.kiml.SemanticLayoutConfig;
+import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 
 /**

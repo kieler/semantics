@@ -33,7 +33,7 @@ import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.ui.layout.LayoutEffect;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
