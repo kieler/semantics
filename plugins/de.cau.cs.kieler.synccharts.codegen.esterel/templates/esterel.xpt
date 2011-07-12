@@ -2,6 +2,7 @@
 «IMPORT kexpressions»
 
 «EXTENSION helper»
+«EXTENSION templates::helper»
 
 «DEFINE main FOR Region-»
 «FILE states.first().label + ".strl"-»
