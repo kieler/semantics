@@ -26,7 +26,7 @@ import org.eclipse.xtext.validation.IDiagnosticConverter;
  * This class is used to filter the validation diagnostics. This is needed
  * since a lot of them are not valid if a sub model is shown in the KITS view.
  * Currently all of the check file based diagnostics are dropped since 
- * they can't be identified that in turn disables a more sensitive filtering
+ * they can't be identified that in turn disables a more sensitive filtering.
  * 
  * @author chsch
  */
