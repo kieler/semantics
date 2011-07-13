@@ -33,3 +33,4 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-ClassPath: .
 Export-Package: de.cau.cs.kieler.synccharts.codegen.sc
+Eclipse-BundleShape: dir
