@@ -14,6 +14,8 @@
 
 package de.cau.cs.kieler.sim.kiem.internal;
 
+import java.io.IOException;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -110,7 +112,12 @@ public class KiemProxyEditor extends MultiPageEditorPart {
         // call the KiemPlugin to open asynchronously
         (new Thread() {
             public void run() {
-                KiemPlugin.getDefault().openFile(editorInput);
+                try {
+                    KiemPlugin.getDefault().openFile(editorInput);
+                } catch (IOException e) {
+                    // Should not happen because the editorInput is always of type IFileEditorInput
+                    e.printStackTrace();
+                }
             }
         }).start();
 

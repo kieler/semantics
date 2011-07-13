@@ -38,7 +38,6 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.osgi.service.debug.DebugOptions;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
@@ -53,8 +52,6 @@ import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.Bundle;
-import org.osgi.framework.ServiceReference;
-import org.osgi.util.tracker.ServiceTracker;
 import org.eclipse.core.runtime.FileLocator;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.InitializeExecution;
@@ -313,18 +310,17 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param editorInput
      *            the file editor input to open
+     * @throws IOException 
      */
-    public void openFile(final IEditorInput editorInput) {
+    public void openFile(final IEditorInput editorInput) throws IOException {
         if (!(editorInput instanceof IFileEditorInput)) {
-            // FIXME throw a more specific exception
-            throw new RuntimeException("Invalid Input: Must be IFileEditorInput");
+            throw new IOException("Invalid Input: Must be IFileEditorInput");
         }
 
         IPath executionFile = ((IFileEditorInput) editorInput).getFile().getFullPath();
         try {
             openFile(executionFile, false);
         } catch (IOException e0) {
-            // TODO Auto-generated catch block
             // most likely can't happen
             e0.printStackTrace();
         }
