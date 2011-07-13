@@ -76,7 +76,7 @@ public class KitsUIPlugin extends AbstractUIPlugin {
             injectors.put(KITS_LANGUAGE_EMBEDDED,
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(KITS_LANGUAGE_EMBEDDED)).with(
-                            		getUiModule(KITS_LANGUAGE)))
+                            		getUiModule(KITS_LANGUAGE_EMBEDDED)))
                             		.with(getSharedStateModule())));
 
         } catch (Exception e) {
@@ -123,6 +123,9 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         if (KITS_STATE_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kitsState.ui.KitsStateUiModule(this);
         }
+        if (KITS_LANGUAGE_EMBEDDED.equals(grammar)) {
+            return new de.cau.cs.kieler.synccharts.text.kits.ui.KitsEmbeddedUIModule(this);
+    }
         throw new IllegalArgumentException(grammar);
     }
     

@@ -14,20 +14,21 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.text.kitsState.ui;
 
-import java.util.List;
-
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.xtext.validation.DiagnosticConverterImpl;
 import org.eclipse.xtext.validation.IDiagnosticConverter;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.synccharts.text.kits.ui.KitsDiagnosticConverterImpl;
 
 /**
+ * This filter realizes the filtering of the non-null-state-parentRegion-condition.
+ * The condition is imposed by the SyncCharts meta model. In case of representing a
+ * chosen state, however, this error diagnostic is not appropriate. 
+ * The filter extends the general KITS diagnostic filter in {@link KitsDiagnosticConverterImpl}.
  * 
  * @author chsch
  */
-public class KitsStateDiagnosticConverterImpl extends DiagnosticConverterImpl {
+public class KitsStateDiagnosticConverterImpl extends KitsDiagnosticConverterImpl {
 
     public void convertValidatorDiagnostic(org.eclipse.emf.common.util.Diagnostic diagnostic,
             IDiagnosticConverter.Acceptor acceptor) {
@@ -38,11 +39,5 @@ public class KitsStateDiagnosticConverterImpl extends DiagnosticConverterImpl {
             }
         }
         super.convertValidatorDiagnostic(diagnostic, acceptor);
-    }
-    
-    protected EStructuralFeature getFeature(Diagnostic diagnostic) {
-        List<?> data = diagnostic.getData();
-        Object feature = data.size() > 1 ? data.get(1) : null;
-        return resolveStructuralFeature(getCauser(diagnostic), feature);
-    }
+    }    
 }
