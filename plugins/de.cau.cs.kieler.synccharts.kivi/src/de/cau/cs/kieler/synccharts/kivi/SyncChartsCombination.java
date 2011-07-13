@@ -159,7 +159,7 @@ public class SyncChartsCombination extends AbstractCombination {
             // schedule layout effect to ensure that layout is triggered after simulation is
             //completed and all undos are executed
             this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-                    true, animate));
+                    false, animate));
             return;
         }
 
@@ -208,7 +208,7 @@ public class SyncChartsCombination extends AbstractCombination {
             focusEffect.addFocus(activeStates.getHistoryStates(), 0);
             this.schedule(focusEffect);
             this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-                    true, animate));
+                    false, animate));
         }
     }
 
