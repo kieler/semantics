@@ -150,7 +150,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                 int exitValue = process.waitFor();
 
                 if (exitValue != 0) {
-                    throw new KiemInitializationException("could not compile", true, new Exception(
+                    throw new KiemInitializationException("Could not compile the generated C code.\n\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n", true, new Exception(
                             errorString));
                 }
             }
