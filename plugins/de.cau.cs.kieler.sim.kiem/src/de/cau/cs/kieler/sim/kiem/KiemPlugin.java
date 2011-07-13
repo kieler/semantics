@@ -858,8 +858,10 @@ public class KiemPlugin extends AbstractUIPlugin {
                     if (properties != null) {
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
-                                properties[ccc].setType(dataComponent.getProperties()[ccc]
-                                        .getType());
+                                if (ccc < dataComponent.getProperties().length)  {
+                                    properties[ccc].setType(dataComponent.getProperties()[ccc]
+                                                                                          .getType());
+                                }
                             } catch (Exception e) {
                                 // warnings with unusable properties can
                                 // only occur if this is intended, i.e., the
