@@ -59,7 +59,11 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
     /** {@inheritDoc} */
     public void createInitialLayout(final IPageLayout layout) {
-//        IFolderLayout consoleFolder = layout.createFolder(IInternalDebugUIConstants.ID_CONSOLE_FOLDER_VIEW, IPageLayout.BOTTOM, (float)0.75, layout.getEditorArea());
+//        IFolderLayout consoleFolder = layout.createFolder(
+//                IInternalDebugUIConstants.ID_CONSOLE_FOLDER_VIEW,
+//                IPageLayout.BOTTOM,
+//                (float)0.75,
+//                layout.getEditorArea());
 //        consoleFolder.addView(IConsoleConstants.ID_CONSOLE_VIEW);
 //        consoleFolder.addView(IPageLayout.ID_TASK_LIST);
 //        consoleFolder.addPlaceholder(IPageLayout.ID_BOOKMARKS);
