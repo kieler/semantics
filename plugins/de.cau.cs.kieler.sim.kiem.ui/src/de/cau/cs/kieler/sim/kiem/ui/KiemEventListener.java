@@ -16,48 +16,50 @@ public class KiemEventListener implements IKiemEventListener {
     public void notifyEvent(final KiemEvent event) {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                if (event.isEvent(KiemEvent.VIEW_REFRESH)) {
-                    // KiemView.getInstance().refreshEnabledDisabledTextColors();
-                    KiemView.getInstance().updateViewAsync();
-                    KiemView.getInstance().updateEnabledEnabledDisabledUpDownAddDelete();
-                    KiemView.getInstance().getAimedStepDurationTextField().update();
-                } else if (event.isEvent(KiemEvent.SET_DIRTY)) {
-                    KiemPlugin.getDefault().setDirty(true);
-                } else if (event.isEvent(KiemEvent.DISABLE_UI)) {
-                    KiemView.getInstance().setAllEnabled(false);
-                    KiemView.getInstance().updateViewAsync();
-                } else if (event.isEvent(KiemEvent.ENABLE_UI)) {
-                    KiemView.getInstance().setAllEnabled(true);
-                    KiemView.getInstance().updateViewAsync();
-                } else if (event.isEvent(KiemEvent.SAVE)) {
-                    KiemPlugin.getDefault().setDirty(false);
-                    KiemView.getInstance().setDirty(false);
-                    // // rebuild view toolbar buttons
-                    // KiemView.getInstance().buildLocalToolBar();
-                } else if (event.isEvent(KiemEvent.LOAD)) {
-                    if (KiemPlugin.DEBUG) {
-                            System.out.println("LOAD EVENT");
-                    }
-                    //KiemView.getInstance().createPartControl();
-                    KiemPlugin.getDefault().setDirty(false);
-                    KiemView.getInstance().setDirty(false);
-                    KiemView.getInstance().updateViewAsync();
-                    // // rebuild view toolbar buttons
-                    // KiemView.getInstance().buildLocalToolBar();
-                } else if (event.isEvent(KiemEvent.CALL_FOR_SHELL)) {
-                    // set the shell for user dialogs
-                    KiemPlugin.getDefault().setShell(
-                            KiemView.getInstance().getViewSite().getShell());
-                } else if (event.isEvent(KiemEvent.STEP_INFO)) {
-                    KiemView.getInstance().updateStepsAsync();
-                } else if (event.isEvent(KiemEvent.ERROR_STOP)) {
-//                    KiemView.getInstance().setAllEnabled(true);
-                    KiemView.getInstance().updateViewAsync();
-                } else if (event.isEvent(KiemEvent.ERROR_PAUSE)) {
- //                   KiemView.getInstance().setAllEnabled(true);
-                    KiemView.getInstance().updateViewAsync();
-                }
+                if (KiemView.getInstance() != null) {
 
+                    if (event.isEvent(KiemEvent.VIEW_REFRESH)) {
+                        // KiemView.getInstance().refreshEnabledDisabledTextColors();
+                        KiemView.getInstance().updateViewAsync();
+                        KiemView.getInstance().updateEnabledEnabledDisabledUpDownAddDelete();
+                        KiemView.getInstance().getAimedStepDurationTextField().update();
+                    } else if (event.isEvent(KiemEvent.SET_DIRTY)) {
+                        KiemPlugin.getDefault().setDirty(true);
+                    } else if (event.isEvent(KiemEvent.DISABLE_UI)) {
+                        KiemView.getInstance().setAllEnabled(false);
+                        KiemView.getInstance().updateViewAsync();
+                    } else if (event.isEvent(KiemEvent.ENABLE_UI)) {
+                        KiemView.getInstance().setAllEnabled(true);
+                        KiemView.getInstance().updateViewAsync();
+                    } else if (event.isEvent(KiemEvent.SAVE)) {
+                        KiemPlugin.getDefault().setDirty(false);
+                        KiemView.getInstance().setDirty(false);
+                        // // rebuild view toolbar buttons
+                        // KiemView.getInstance().buildLocalToolBar();
+                    } else if (event.isEvent(KiemEvent.LOAD)) {
+                        if (KiemPlugin.DEBUG) {
+                                System.out.println("LOAD EVENT");
+                        }
+                        //KiemView.getInstance().createPartControl();
+                        KiemPlugin.getDefault().setDirty(false);
+                        KiemView.getInstance().setDirty(false);
+                        KiemView.getInstance().updateViewAsync();
+                        // // rebuild view toolbar buttons
+                        // KiemView.getInstance().buildLocalToolBar();
+                    } else if (event.isEvent(KiemEvent.CALL_FOR_SHELL)) {
+                        // set the shell for user dialogs
+                        KiemPlugin.getDefault().setShell(
+                                KiemView.getInstance().getViewSite().getShell());
+                    } else if (event.isEvent(KiemEvent.STEP_INFO)) {
+                            KiemView.getInstance().updateStepsAsync();
+                    } else if (event.isEvent(KiemEvent.ERROR_STOP)) {
+//                        KiemView.getInstance().setAllEnabled(true);
+                        KiemView.getInstance().updateViewAsync();
+                    } else if (event.isEvent(KiemEvent.ERROR_PAUSE)) {
+     //                   KiemView.getInstance().setAllEnabled(true);
+                        KiemView.getInstance().updateViewAsync();
+                    }
+                }
             }
         });
 

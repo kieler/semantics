@@ -32,6 +32,10 @@ public final class KiemIcons {
     // -------------------------------------------------------------------------
     // images
 
+    /** The Constant Image/ImageDescriptor KIEM. */
+    public static final Image KIEM = AbstractUIPlugin.imageDescriptorFromPlugin(
+            "de.cau.cs.kieler.sim.kiem", "icons/kiemIcon.png").createImage();
+    
     /** The Constant Image/ImageDescriptor PRODUCER_ENABLED. */
     public static final Image PRODUCER_ENABLED = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/producer.png").createImage();

@@ -220,6 +220,8 @@ public class ScheduleData {
             String locationString = Tools.getValue(Tools.LOCATION_NAME, input);
             String prioritiesString = Tools.getValue(
                     Tools.CONFIG_DATA_COMPONENT_NAME, input);
+            String pluginIdString = Tools.getValue(
+                    Tools.CONFIG_DATA_PLUGIN_ID, input);
 
             if (locationString == null) {
                 throw new KiemParserException(input, "Location");
@@ -229,6 +231,9 @@ public class ScheduleData {
             if (prioritiesString != null) {
                 result.priorities = ConfigDataComponent
                         .fromString(prioritiesString);
+            }
+            if (pluginIdString != null) {
+                result.setPluginId(pluginIdString);
             }
         }
         return result;
@@ -243,7 +248,9 @@ public class ScheduleData {
                 .toOSString());
         String prioritiesString = Tools.putValue(
                 Tools.CONFIG_DATA_COMPONENT_NAME, priorities.toString());
-        return locationString + prioritiesString;
+        String pluginIdString = Tools.putValue(
+                Tools.CONFIG_DATA_PLUGIN_ID, pluginId);
+        return locationString + prioritiesString + pluginIdString;
     }
 
     // --------------------------------------------------------------------------

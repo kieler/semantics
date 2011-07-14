@@ -113,6 +113,9 @@ public final class Tools {
     /** the name for configuration component. */
     public static final String CONFIG_DATA_COMPONENT_NAME = "CONFIG_DATA_COMP";
 
+    /** the plugin id for configuration component. */
+    public static final String CONFIG_DATA_PLUGIN_ID = "CONFIG_PLUGIN_ID";
+
     /** the name for a property. */
     public static final String PROPERTY_NAME = "KIEM_PROPERTY";
     /** the name for a property value. */

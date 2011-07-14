@@ -53,8 +53,10 @@ import org.eclipse.swt.widgets.Tree;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISaveablePart2;
+import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPartConstants;
+import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.sim.kiem.IKiemToolbarContributor;
@@ -68,6 +70,7 @@ import de.cau.cs.kieler.sim.kiem.ui.AddDataComponentDialog;
 import de.cau.cs.kieler.sim.kiem.ui.AimedStepDurationTextField;
 import de.cau.cs.kieler.sim.kiem.ui.DropDownAction;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
+import de.cau.cs.kieler.sim.kiem.ui.KiemUIPlugin;
 import de.cau.cs.kieler.sim.kiem.ui.StepTextField;
 import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
 
@@ -81,6 +84,9 @@ import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {
 
+    /** The Constant VIEW_ID. */
+    public static final String VIEW_ID = "de.cau.cs.kieler.sim.kiem.view";
+    
     /** The viewer table of DataComponentWrappers. */
     private KiemTableViewer viewer;
 
@@ -173,11 +179,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private static final int MASTER_COLOR_BLUE = 255;
 
     private static final int KEYBOARD_DELETE = 127;
-
+    
     /** True if all actions are (temporary) disabled. */
     private boolean allDisabled;
     
     private Composite parent;
+    
+    private static boolean broughtToFront = false;
 
     // -------------------------------------------------------------------------
 
@@ -206,6 +214,37 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     public static KiemView getInstance() {
         return KiemView.kIEMViewInstance;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * This method brings the Table view to the front.
+     */
+    public static void bringToFront() {
+        broughtToFront = false;
+        Display.getDefault().syncExec(new Runnable() {
+            public void run() {
+                // bring TABLE view to the front (lazy loading)
+                try {
+                    IWorkbenchWindow window = KiemUIPlugin.getDefault().getWorkbench()
+                            .getActiveWorkbenchWindow();
+                    IViewPart vP = window.getActivePage().showView(KiemView.VIEW_ID);
+                    vP.setFocus();
+                    // set done flag
+                    broughtToFront = true;
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        while (!broughtToFront) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -265,27 +304,28 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
-    public void createPartControl(final Composite parent) {
+    public void createPartControl(Composite parent) {
         this.parent = parent;
-        createPartControl();
+        this.viewer = createPartControl2(this.parent, this.viewer);
     }
     
-    public void createPartControl() {
-        viewer = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI | SWT.H_SCROLL
+    public KiemTableViewer createPartControl2(Composite parent, KiemTableViewer viewerParam) {
+        viewerParam = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI | SWT.H_SCROLL
                 | SWT.V_SCROLL | SWT.FULL_SELECTION);
-        createColumns(viewer);
-        viewer.setContentProvider(new KiemContentProvider());
-        viewer.setLabelProvider(new KiemLabelProvider(this));
-        viewer.setInput(kIEMInstance.getDataComponentWrapperList());
+        createColumns(viewerParam);
+        viewerParam.setContentProvider(new KiemContentProvider());
+        viewerParam.setLabelProvider(new KiemLabelProvider(this));
+        viewerParam.setInput(kIEMInstance.getDataComponentWrapperList());
 
         buildLocalToolBar(); // is not done anymore in checkForSingleEnabledMaster
-        hookContextMenu();
-        hookSelectionChangedAction();
-        hookTreeAction();
+        hookContextMenu(viewerParam);
+        hookSelectionChangedAction(viewerParam);
+        hookTreeAction(viewerParam);
         KiemPlugin.getDefault().checkForSingleEnabledMaster(true);
-        updateView(true);
+        updateView(true,viewerParam);
         // notify listeners that building the view was finished
         KiemPlugin.getDefault().getEventManager().notify(KiemEvent.VIEW_DONE);
+        return viewerParam;
     }
 
     // -------------------------------------------------------------------------
@@ -296,9 +336,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @param viewerParam
      *            the viewer
      */
-    private void createColumns(final KiemTableViewer viewerParam) {
+    public void createColumns(final KiemTableViewer viewerParam) {
         for (int i = 0; i < COLUMN_TITLES.length; i++) {
-            TreeViewerColumn column = new TreeViewerColumn(viewer, SWT.NONE);
+            TreeViewerColumn column = new TreeViewerColumn(viewerParam, SWT.NONE);
             column.getColumn().setResizable(true);
             column.getColumn().setMoveable(true);
             column.getColumn().setText(COLUMN_TITLES_COLLAPSED[i]);
@@ -324,8 +364,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @param collapsed
      *            the collapsed
      */
-    private void refreshTableColumns(final boolean collapsed) {
-        Tree tree = viewer.getTree();
+    private void refreshTableColumns(final boolean collapsed, final KiemTableViewer viewerParam) {
+        Tree tree = viewerParam.getTree();
         if (columnProperty == -1) {
             columnProperty = COLUMN_BOUNDS[1];
         } else {
@@ -365,11 +405,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Hook selection changed action for the table.
      */
-    private void hookSelectionChangedAction() {
-        viewer.addSelectionChangedListener(new ISelectionChangedListener() {
+    private void hookSelectionChangedAction(final KiemTableViewer viewerParam) {
+        viewerParam.addSelectionChangedListener(new ISelectionChangedListener() {
             public void selectionChanged(final SelectionChangedEvent event) {
-                updateEnabled();
-                updateColumnsCollapsed();
+                updateEnabled(viewerParam);
+                updateColumnsCollapsed(viewerParam);
                 // do not refresh, otherwise the cell editor is aborted!
             }
         });
@@ -381,13 +421,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * Hook tree action for the table. Updates the view when the tree is collapsed or expanded in
      * order to adapt the columns.
      */
-    private void hookTreeAction() {
-        viewer.addTreeListener(new ITreeViewerListener() {
+    private void hookTreeAction(final KiemTableViewer viewerParam) {
+        viewerParam.addTreeListener(new ITreeViewerListener() {
             public void treeCollapsed(final TreeExpansionEvent event) {
                 if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are collapsed
                     ((DataComponentWrapper) event.getElement()).setUnfolded(false);
-                    updateColumnsCollapsed();
+                    updateColumnsCollapsed(viewerParam);
                 }
                 updateViewAsyncKeepSelection();
             }
@@ -396,17 +436,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if (event.getElement() instanceof DataComponentWrapper) {
                     // set a flag that the properties are expanded
                     ((DataComponentWrapper) event.getElement()).setUnfolded(true);
-                    updateColumnsCollapsed();
+                    updateColumnsCollapsed(viewerParam);
                 }
                 updateViewAsyncKeepSelection();
             }
         });
-        viewer.addDoubleClickListener(new IDoubleClickListener() {
+        viewerParam.addDoubleClickListener(new IDoubleClickListener() {
             public void doubleClick(final DoubleClickEvent event) {
                 getActionEnableDisable().run();
             }
         });
-        viewer.getControl().addKeyListener(new KeyListener() {
+        viewerParam.getControl().addKeyListener(new KeyListener() {
             public void keyPressed(final KeyEvent e) {
                 // if user pressed delete
                 if (e.keyCode == KEYBOARD_DELETE) {
@@ -424,7 +464,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Hook context menu for the table and triggers the {@link #buildContextMenu(IMenuManager)}.
      */
-    private void hookContextMenu() {
+    private void hookContextMenu(final KiemTableViewer viewerParam) {
         MenuManager menuMgr = new MenuManager("#PopupMenu");
         menuMgr.setRemoveAllWhenShown(true);
         menuMgr.addMenuListener(new IMenuListener() {
@@ -432,9 +472,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 buildContextMenu(manager);
             }
         });
-        Menu menu = menuMgr.createContextMenu(viewer.getControl());
-        viewer.getControl().setMenu(menu);
-        getSite().registerContextMenu(menuMgr, viewer);
+        Menu menu = menuMgr.createContextMenu(viewerParam.getControl());
+        viewerParam.getControl().setMenu(menu);
+        getSite().registerContextMenu(menuMgr, viewerParam);
     }
 
     // -------------------------------------------------------------------------
@@ -667,6 +707,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      *            the new enabled status
      */
     public void setAllEnabled(final boolean enabled) {
+        if (viewer != null) {
+            setAllEnabled(enabled, viewer);
+        }
+    }
+    
+    // ---------------------------------------------------------------------------
+
+    /**
+     * Sets the all actions (tool bar buttons and context menu entires) to enabled or disabled. This
+     * method is used to block any user input during the initialization phase for example.
+     *
+     * @param enabled the new enabled status
+     * @param viewerParam the viewer param
+     */
+    public void setAllEnabled(final boolean enabled, final KiemTableViewer viewerParam) {
         allDisabled = !enabled;
         if (getActionEnableDisable().isEnabled() != enabled) {
             getActionEnableDisable().setEnabled(enabled);
@@ -704,7 +759,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         if (getAimedStepDurationTextField().isEnabled() != enabled) {
             getAimedStepDurationTextField().setEnabled(enabled);
         }
-        this.updateEnabled();
+        this.updateEnabled(viewerParam);
     }
 
     // -------------------------------------------------------------------------
@@ -717,7 +772,28 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * - delete.
      */
     public void updateEnabledEnabledDisabledUpDownAddDelete() {
-        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewer.getSelection())
+        if (viewer != null) {
+            updateEnabledEnabledDisabledUpDownAddDelete(viewer);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Updates the enabled disabled status of the following actions:<BR>
+     * - up<BR>
+     * - down<BR>
+     * - add<BR>
+     * - delete.
+     *
+     * @param viewerParam the viewer param
+     */
+    public void updateEnabledEnabledDisabledUpDownAddDelete(final KiemTableViewer viewerParam) {
+        if (viewerParam == null || viewerParam.getSelection() == null) {
+            return;
+        }
+        
+        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewerParam.getSelection())
                 .getFirstElement();
         if (kIEMInstance.getExecution() != null) {
             // execution is running
@@ -757,7 +833,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 getActionDown().setEnabled(false);
             }
         } else {
-            StructuredSelection structSelection = ((StructuredSelection) viewer.getSelection());
+            StructuredSelection structSelection = ((StructuredSelection) viewerParam.getSelection());
             DataComponentWrapper dataComponentWrapper = (DataComponentWrapper) structSelection
                     .getFirstElement();
             if (!getActionEnableDisable().isEnabled()) {
@@ -777,7 +853,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             }
 
             // find index of top most and bottom most selection
-            ITreeSelection selections = (ITreeSelection) (StructuredSelection) viewer
+            ITreeSelection selections = (ITreeSelection) (StructuredSelection) viewerParam
                     .getSelection();
             int listIndexMostTop = -1;
             int listIndexMostBottom = -1;
@@ -902,7 +978,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
-
+    
     /**
      * Updates the table if it is not busy.
      * 
@@ -910,8 +986,22 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      *            a table entry
      */
     protected void updateView(final boolean deselect) {
+        if (viewer != null) {
+            updateView(deselect, viewer);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Updates the table if it is not busy.
+     * 
+     * @param deselect
+     *            a table entry
+     */
+    public void updateView(final boolean deselect, final KiemTableViewer viewerParam) {
         // do not update if not necessary
-        if (!viewer.isBusy()) {
+        if (!viewerParam.isBusy()) {
             // wait
             try {
                 Thread.sleep(2);
@@ -919,9 +1009,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 // nothing
             }
         }
-        updateColumnsCollapsed();
+        updateColumnsCollapsed(viewerParam);
         try {
-            viewer.refresh(true);
+            viewerParam.refresh(true);
         } catch (Exception e) {
             // try to handle any viewer refresh errors here
             try {
@@ -934,9 +1024,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         }
         refreshEnabledDisabledTextColors();
         if (deselect) {
-            viewer.setSelection(null);
+            viewerParam.setSelection(null);
         }
-        updateEnabled();
+        updateEnabled(viewerParam);
     }
 
     // -------------------------------------------------------------------------
@@ -944,9 +1034,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Triggers the fold/unfold of the property value table column.
      */
-    private void updateColumnsCollapsed() {
+    private void updateColumnsCollapsed(final KiemTableViewer viewerParam) {
         // if selected update columns
-        ISelection selection = viewer.getSelection();
+        ISelection selection = viewerParam.getSelection();
         if (selection != null) {
             Object obj = ((IStructuredSelection) selection).getFirstElement();
             if (obj != null) {
@@ -956,14 +1046,14 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
                                 .isUnfolded()))) {
                     // unfolded - show property headers
-                    refreshTableColumns(false);
+                    refreshTableColumns(false, viewerParam);
                 } else {
                     // collapsed
-                    refreshTableColumns(true);
+                    refreshTableColumns(true, viewerParam);
                 }
             } else {
                 // default (nothing selected) also collapsed
-                refreshTableColumns(true);
+                refreshTableColumns(true, viewerParam);
             }
             this.refreshEnabledDisabledTextColors();
         }
@@ -975,9 +1065,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * Updates the enableness of the actions that control the execution. If a master is present, the
      * this functionality may be implemented by him.
      */
-    private void updateEnabled() {
+    private void updateEnabled(final KiemTableViewer viewerParam) {
         updateStepsAsync();
-        updateEnabledEnabledDisabledUpDownAddDelete();
+        updateEnabledEnabledDisabledUpDownAddDelete(viewerParam);
         if (KiemPlugin.getDefault().getCurrentMaster() != null) {
             if (!KiemPlugin.getDefault().getCurrentMaster().isMasterImplementingGUI()) {
                 // if the master is not implementing the GUI
@@ -1838,10 +1928,26 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Passing the focus request to the viewer's control. This is necessary be- cause KiemView
      * extends the ViewPart class.
+     *
+     * @param viewerParam the new focus
      */
     @Override
     public void setFocus() {
-        viewer.getControl().setFocus();
+        if (viewer != null) {
+            setFocus(viewer);
+        }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Passing the focus request to the viewer's control. This is necessary be- cause KiemView
+     * extends the ViewPart class.
+     *
+     * @param viewerParam the new focus
+     */
+    public void setFocus(final KiemTableViewer viewerParam) {
+        viewerParam.getControl().setFocus();
     }
 
     // -------------------------------------------------------------------------

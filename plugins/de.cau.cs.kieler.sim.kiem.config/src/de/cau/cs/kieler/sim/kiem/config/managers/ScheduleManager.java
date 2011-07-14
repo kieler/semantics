@@ -138,7 +138,15 @@ public final class ScheduleManager extends AbstractManager implements
     public List<ScheduleData> getMatchingSchedules(
             final EditorIdWrapper editorID, final String editorName) {
         List<ScheduleData> result = new LinkedList<ScheduleData>();
-
+        
+        if (editorID == null) {
+            for (ScheduleData data : getAllSchedules()) {
+                    result.add(data);
+            }
+            // sort by matching editor
+            Collections.sort(result, new ScheduleComparator(null));
+        }
+        
         if (!EditorManager.getInstance().getEditors().isEmpty()) {
             EditorDefinition matchingEditor = EditorManager.getInstance()
                     .findEditorById(editorID);

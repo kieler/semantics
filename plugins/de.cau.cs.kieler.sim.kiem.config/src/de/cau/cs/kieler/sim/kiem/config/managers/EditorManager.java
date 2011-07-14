@@ -85,10 +85,10 @@ public final class EditorManager extends AbstractManager {
     public EditorDefinition addEditor(final EditorDefinition newDefinition) {
         EditorDefinition result = null;
 
-        if (newDefinition != null) {
+        if (newDefinition != null && newDefinition.getEditorId() != null) {
             // check to see if editor exists
             for (EditorDefinition editor : getEditors()) {
-                if (editor != null) {
+                if (editor != null && editor.getEditorId() != null) {
                     if (editor.getEditorId()
                             .equals(newDefinition.getEditorId())) {
                         result = editor;
