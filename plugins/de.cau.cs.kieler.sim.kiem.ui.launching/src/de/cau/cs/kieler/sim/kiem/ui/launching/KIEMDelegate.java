@@ -2,6 +2,7 @@ package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.debug.core.ILaunch;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.model.ILaunchConfigurationDelegate;
@@ -22,6 +23,12 @@ public class KIEMDelegate implements ILaunchConfigurationDelegate {
 
         // Bring KiemView to front (if exists)
         KiemView.bringToFront();
+        
+        if (KiemPlugin.getDefault().isInitializingExecution()
+                ||
+            KiemPlugin.getDefault().getExecution() != null) {
+            throw new CoreException(new Status(Status.ERROR, KiemUILaunchPlugin.PLUGIN_ID, "Execution is already running!"));
+        }
         
         String scheduleDataString = configuration.getAttribute(
                 KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, "");
