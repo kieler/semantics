@@ -791,7 +791,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
         if (modelEditor == null) {
             throw new KiemPropertyException("There exists no active editor.\n"
-                    + "Please ensure that an opened editor is selected and"
+                    + "Please ensure that an opened editor is selected and "
                     + "the file name matches.\n\nIf you want the currently active editor to be"
                     + "simulated make sure the (optional) editor property is empty!");
         }
