@@ -28,19 +28,10 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
-import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
-import org.eclipse.emf.ecore.util.Diagnostician;
-import org.eclipse.emf.mwe.core.WorkflowContext;
-import org.eclipse.emf.mwe.core.WorkflowContextDefaultImpl;
-import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.emf.mwe.internal.core.Workflow;
-import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -55,21 +46,15 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.util.BundleUtility;
-import org.eclipse.xtend.XtendComponent;
-import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
@@ -82,6 +67,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
  * @kieler.rating 2010-08-15 yellow
  * 
  */
+@SuppressWarnings("restriction") // for BundleUtility
 public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent {
 
@@ -94,8 +80,8 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     /** The editor of the model being simulated. */
     protected IEditorPart modelEditor;
 
-    /** The global initial variables as JSONObjects. */
-    private JSONObject globalInitialVariables;
+//    /** The global initial variables as JSONObjects. */
+//    private JSONObject globalInitialVariables;
 
     /** The model time stamp. */
     private long modelTimeStamp;
@@ -390,7 +376,6 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         JSONObject returnObj = new JSONObject();
 
         // Check if the model conforms to all check files and no warnings left!
-        Diagnostician diagnostician = Diagnostician.INSTANCE;
         EObject rootEObject = getModelRootElement();
         
         boolean ok = checkModelValidation(rootEObject);
@@ -575,7 +560,6 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
         // .getModel());
         EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
 
         return myModel.eResource().getResourceSet();
     }
