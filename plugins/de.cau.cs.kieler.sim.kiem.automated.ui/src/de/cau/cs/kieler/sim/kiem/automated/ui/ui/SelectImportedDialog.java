@@ -141,7 +141,7 @@ public class SelectImportedDialog {
         public String getText(final Object element) {
             if (element instanceof ScheduleData) {
                 ScheduleData data = (ScheduleData) element;
-                return data.getName();
+                return data.getExtendedName();
             }
             return null;
         }

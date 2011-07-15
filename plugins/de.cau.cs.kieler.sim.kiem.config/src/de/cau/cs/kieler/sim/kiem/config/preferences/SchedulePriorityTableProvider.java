@@ -112,7 +112,7 @@ public class SchedulePriorityTableProvider extends LabelProvider implements
          */
         @Override
         public String toString() {
-            StringBuilder builder = new StringBuilder(schedule.getName());
+            StringBuilder builder = new StringBuilder(schedule.getExtendedName());
             for (Integer i : priorities) {
                 builder.append(" " + i);
             }
@@ -208,7 +208,7 @@ public class SchedulePriorityTableProvider extends LabelProvider implements
         if (element instanceof DataEntry) {
             DataEntry entry = (DataEntry) element;
             if (columnIndex == 0) {
-                return entry.getSchedule().getName();
+                return entry.getSchedule().getExtendedName();
             }
             int prio = entry.getPriorities()[columnIndex - 1];
             return prio <= ScheduleData.MIN_PRIORITY ? null : Integer
@@ -275,7 +275,7 @@ public class SchedulePriorityTableProvider extends LabelProvider implements
         calcMaxIndex(typeIndex);
         priorityTableViewer.refresh();
         String[] prios = new String[entry.getPriorities().length + 1];
-        prios[0] = entry.getSchedule().getName();
+        prios[0] = entry.getSchedule().getExtendedName();
         int index = 1;
         for (Integer prio : entry.getPriorities()) {
             prios[index++] = prio + "";

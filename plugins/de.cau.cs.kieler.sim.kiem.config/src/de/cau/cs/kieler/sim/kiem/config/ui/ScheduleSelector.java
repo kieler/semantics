@@ -212,7 +212,7 @@ public class ScheduleSelector extends ControlContribution implements
                     if (useShortNames) {
                         names[i++] = d.getShortName();
                     } else {
-                        names[i++] = d.getName();
+                        names[i++] = d.getExtendedName();
                     }
                 }
             }

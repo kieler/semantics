@@ -937,10 +937,10 @@ public class SchedulePreferencePage extends PreferencePage implements
                     String name2 = "";
 
                     if (o1 instanceof DataEntry) {
-                        name1 = ((DataEntry) o1).getSchedule().getName();
+                        name1 = ((DataEntry) o1).getSchedule().getExtendedName();
                     }
                     if (o2 instanceof DataEntry) {
-                        name2 = ((DataEntry) o2).getSchedule().getName();
+                        name2 = ((DataEntry) o2).getSchedule().getExtendedName();
                     }
 
                     if (reversed) {

@@ -66,10 +66,10 @@ public class ScheduleComparator implements Comparator<ScheduleData>,
             String string1 = "";
 
             if (arg0 != null) {
-                string0 = arg0.getName();
+                string0 = arg0.getExtendedName();
             }
             if (arg1 != null) {
-                string1 = arg1.getName();
+                string1 = arg1.getExtendedName();
             }
             return string0.compareTo(string1);
         }

@@ -1,7 +1,6 @@
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
@@ -14,13 +13,24 @@ import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
 import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseListener;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.layout.GridData;
+import org.eclipse.swt.layout.GridLayout;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Group;
+import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
@@ -40,12 +50,32 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     /** The parent. */
     private Composite parent;
+    
+    private Composite top;
+    
+    /** The Constant MARGIN_WIDTH_AND_HEIGHT. */
+    private static final int MARGIN_WIDTH_AND_HEIGHT = 15;
+    
 
-    /** The combobox for displaying and selecting configurations. */
-    private Combo combo;
+    /** The table box for displaying and selecting configurations. */
+    private Table table;
+
+    /** The label for displaying the usage hints. */
+    private Label usageLabel;
+
+//    /** The label for the list . */
+//    private Label comboLabel;
+//
+//    /** The combo label. */
+//    private static String LABEL_COMBO = "Schedule: ";
+
+    /** The usage instruction hints. */
+    private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution" +
+    		" file can be either a predefined one (tagged with '[IMPORTED]') or any execution file from the Workspace. " +
+    		"Note that an execution file from the Workspace must be available if you want to use the launch configuration.";
 
     /** list of all schedule data in the currently displayed combo. */
-    private List<ScheduleData> data;
+    private java.util.List<ScheduleData> data;
 
     private static KiemTab instance;
 
@@ -59,37 +89,48 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         return instance;
     }
 
-    public void setupCombo() {
+    public void setupTable() {
         EditorIdWrapper editorId = null;
         String editorName = null;
 
-        // get the currently opened editor
-        // this may throw a NullPointerException if no editor is open
-        if (EditorUtils.getLastActiveEditor() != null) {
-            IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
-            if (editor != null) {
-                // get the attributes from the editor
-                editorId = new EditorIdWrapper(editor.getId());
-                editorName = editor.getRegisteredName();
-            }
-        }
+//        // get the currently opened editor
+//        // this may throw a NullPointerException if no editor is open
+//        if (EditorUtils.getLastActiveEditor() != null) {
+//            IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
+//            if (editor != null) {
+//                // get the attributes from the editor
+//                editorId = new EditorIdWrapper(editor.getId());
+//                editorName = editor.getRegisteredName();
+//            }
+//        }
 
         ScheduleManager manager = ScheduleManager.getInstance();
         data = manager.getMatchingSchedules(editorId, editorName);
 
+        // clear the table
+        table.clearAll();
+        
         if (data != null) {
             // create the store for the schedule names
             String[] names = new String[data.size()];
 
             // fill array
             int i = 0;
-            for (ScheduleData d : data) {
-                names[i++] = d.getName();
+            for (ScheduleData scheduleData : data) {
+                names[i++] = scheduleData.getName();
+                TableItem item = new TableItem(table, SWT.NULL);
+                String[] stringArray = new String[3];
+                stringArray[0] = scheduleData.getName();
+                stringArray[1] = scheduleData.getPluginId();
+                stringArray[2] = scheduleData.getLocation().toOSString();
+                item.setText(stringArray);
+                item.setData(scheduleData);
+                if (scheduleData.get)
+                item.setImage(KiemIcons.KIEM);
             }
-            combo.setItems(names);
         }
 
-        combo.select(0);
+        //table.select(0);
     }
 
     protected void setDirty(boolean dirty) {
@@ -98,32 +139,81 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     }
 
     public boolean isValid(ILaunchConfiguration config) {
-        return (combo.getSelection() != null);
+        return (getSelection() != null);
     }
 
     public void createControl(Composite parent) {
-        Composite top = new Composite(parent, SWT.NONE);
+        top = new Composite(parent, SWT.NONE);
         top.setFont(parent.getFont());
 
-        combo = new Combo(top, SWT.READ_ONLY | SWT.BORDER);
-        combo.setEnabled(true);
-        combo.addModifyListener(new ModifyListener() {
-            public void modifyText(ModifyEvent e) {
+        // set the top layout
+        GridLayout gridLayout = new GridLayout();
+        gridLayout.numColumns = 1;
+        top.setLayout(gridLayout);
+        gridLayout.marginHeight = MARGIN_WIDTH_AND_HEIGHT;
+        gridLayout.marginWidth = MARGIN_WIDTH_AND_HEIGHT;
+
+        // declare a wrapping label
+        usageLabel = new Label(top, SWT.WRAP);
+        GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
+        gridData.widthHint = top.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
+        usageLabel.setLayoutData(gridData);        
+        usageLabel.setText(KiemTab.LABEL_USAGE_INSTRUCTIONS);
+        
+        // ensure that the label is really wrapped
+        top.addListener(SWT.Resize, new Listener() {
+            public void handleEvent(Event e) {
+                GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
+                gridData.widthHint = top.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
+                usageLabel.setLayoutData(gridData);   
+            }
+        });        
+        
+        // declare the table
+        table = new Table(top, SWT.BORDER | SWT.MULTI);
+        table.setEnabled(true);
+        table.addSelectionListener(new SelectionListener() {
+            public void widgetSelected(SelectionEvent e) {
                 setDirty(true);
                 try {
                     scheduleUpdateJob();
                 } catch (Exception ee) {
-
+                    // do nothing
                 }
             }
+
+            public void widgetDefaultSelected(SelectionEvent e) {
+                // do nothing
+            }
         });
-
-        setupCombo();
-
-        top.setLayout(new FillLayout());
-
+        table.addMouseListener(new MouseListener() {
+            public void mouseDoubleClick(final MouseEvent e) {
+                setDirty(true);
+                try {
+                    scheduleUpdateJob();
+                } catch (Exception ee) {
+                    // do nothing
+                }
+            }
+            public void mouseDown(final MouseEvent e) {
+            }
+            public void mouseUp(final MouseEvent e) {
+            }
+        });
+        
+        // fill the table
+        setupTable();
+        
+        // set the table layout
+        GridData gridData2 = new GridData();
+        gridData2.grabExcessHorizontalSpace = true;
+        gridData2.grabExcessVerticalSpace = true;
+        gridData2.horizontalAlignment = GridData.FILL;
+        gridData2.verticalAlignment = GridData.FILL;
+        table.setLayoutData(gridData2);
+         
+        // set focus on the table
         setControl(top);
-
     }
 
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
@@ -154,10 +244,10 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     }
 
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        ScheduleData schedData = getSelection();
-        String string = getSelection().toString();
-        configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, getSelection()
-                .toString());
+        if ( getSelection() != null ) {
+            configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, getSelection()
+                    .toString());
+        }
     }
 
     /**
@@ -166,8 +256,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
      * @return the current selection or null
      */
     public ScheduleData getSelection() {
-        if (combo != null) {
-            int index = combo.getSelectionIndex();
+        if (table != null) {
+            int index = table.getSelectionIndex();
             if (index >= 0) {
                 return data.get(index);
             }
@@ -182,14 +272,13 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
      * ILaunchConfiguration)
      */
     public void initializeFrom(ILaunchConfiguration configuration) {
-        String scheduleName;
         try {
             String scheduleDataString = configuration.getAttribute(
                     KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, "");
             ScheduleData scheduleData = ScheduleData.fromString(scheduleDataString);
             for (int i = 0; i < data.size(); i++) {
                 if (data.get(i).toString().equals(scheduleData.toString())) {
-                    combo.select(i);
+                    table.select(i);
                 }
             }
         } catch (KiemParserException e) {
