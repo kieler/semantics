@@ -125,8 +125,12 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                 stringArray[2] = scheduleData.getLocation().toOSString();
                 item.setText(stringArray);
                 item.setData(scheduleData);
-                if (scheduleData.get)
-                item.setImage(KiemIcons.KIEM);
+                if (scheduleData.isImported()) {
+                    item.setImage(KiemIcons.KIEM_DISABLED);
+                }
+                else {
+                    item.setImage(KiemIcons.KIEM);
+                }
             }
         }
 

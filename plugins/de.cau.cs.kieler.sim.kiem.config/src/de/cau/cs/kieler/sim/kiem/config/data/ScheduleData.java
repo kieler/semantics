@@ -112,12 +112,33 @@ public class ScheduleData {
     /**
      * Getter for a user friendly name.
      * 
-     * @return filename[project name]
+     * @return filename
      */
     public String getName() {
-        return getName(location);
+        return getShortName();
+    }    
+    
+    /**
+     * Getter for a user friendly name.
+     * 
+     * @return filename[project name]
+     */
+    public String getExtendedName() {
+        return getExtendedName(location);
     }
 
+    /**
+     * Checks whether this ScheduleData is imported (fixed added schedule).
+     *
+     * @return true, if is imported
+     */
+    public boolean isImported() {
+        if (location.toOSString().startsWith("bundleentry")) {
+            return true;
+        }
+        return false;
+    }
+    
     /**
      * Create a new name from an IPath object.
      * 
@@ -125,11 +146,11 @@ public class ScheduleData {
      *            the location of the .execution file
      * @return filename[project name]
      */
-    private String getName(final IPath newLocation) {
+    private String getExtendedName(final IPath newLocation) {
         String result = "";
         String[] segments = newLocation.removeFileExtension().segments();
         result += segments[segments.length - 1];
-        if (newLocation.toOSString().startsWith("bundleentry")) {
+        if (isImported()) {
             result += "[IMPORTED]";
         } else {
             result += "[" + segments[0] + "]";
