@@ -1,32 +1,19 @@
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
-import java.util.LinkedList;
-
-import org.eclipse.core.resources.IContainer;
-import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
-import org.eclipse.debug.internal.core.IInternalDebugCoreConstants;
-import org.eclipse.debug.internal.ui.IInternalDebugUIConstants;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
-import org.eclipse.debug.ui.DebugUITools;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Group;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
@@ -38,25 +25,27 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
-import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.ui.KiemIcons;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemContentProvider;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemLabelProvider;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemTableViewer;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
-import de.cau.cs.kieler.sim.kiem.ui.views.KiemLabelProvider;
 
+/**
+ * The class KiemTab implements the basic launch tab in the launch configuration page. The user is
+ * able to select from all available execution files.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2011-07-15 proposed yellow
+ * 
+ */
 public class KiemTab extends AbstractLaunchConfigurationTab {
 
-    /** The parent. */
-    private Composite parent;
-    
+    /** The top level SWT composite containing the content. */
     private Composite top;
-    
-    /** The Constant MARGIN_WIDTH_AND_HEIGHT. */
+
+    /** The constant MARGIN_WIDTH_AND_HEIGHT. */
     private static final int MARGIN_WIDTH_AND_HEIGHT = 15;
-    
+
+    /** The constant SEARCH. */
+    private static String SEARCH = "bundleentry:";
 
     /** The table box for displaying and selecting configurations. */
     private Table table;
@@ -64,95 +53,91 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     /** The label for displaying the usage hints. */
     private Label usageLabel;
 
-//    /** The label for the list . */
-//    private Label comboLabel;
-//
-//    /** The combo label. */
-//    private static String LABEL_COMBO = "Schedule: ";
-
     /** The usage instruction hints. */
-    private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution" +
-    		" file can be either a predefined one (tagged with '[IMPORTED]') or any execution file from the Workspace. " +
-    		"Note that an execution file from the Workspace must be available if you want to use the launch configuration.";
+    private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution"
+            + " file can be either a predefined one (tagged with '[IMPORTED]') or any execution file from the Workspace. "
+            + "Note that an execution file from the Workspace must be available if you want to use the launch configuration.";
 
     /** list of all schedule data in the currently displayed combo. */
     private java.util.List<ScheduleData> data;
 
-    private static KiemTab instance;
+    // --------------------------------------------------------------------------
 
-    public KiemTab() {
-        super();
-        instance = this;
-        this.data = new LinkedList<ScheduleData>();
-    }
-
-    public static KiemTab getInstance() {
-        return instance;
-    }
-
+    /**
+     * Setup the KIEM execution scheduling table.
+     */
     public void setupTable() {
+        // grab the existing schedules
         EditorIdWrapper editorId = null;
         String editorName = null;
-
-//        // get the currently opened editor
-//        // this may throw a NullPointerException if no editor is open
-//        if (EditorUtils.getLastActiveEditor() != null) {
-//            IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
-//            if (editor != null) {
-//                // get the attributes from the editor
-//                editorId = new EditorIdWrapper(editor.getId());
-//                editorName = editor.getRegisteredName();
-//            }
-//        }
-
         ScheduleManager manager = ScheduleManager.getInstance();
         data = manager.getMatchingSchedules(editorId, editorName);
 
         // clear the table
         table.clearAll();
-        
+
         if (data != null) {
             // create the store for the schedule names
             String[] names = new String[data.size()];
 
-            // fill array
+            // fill table with items
             int i = 0;
             for (ScheduleData scheduleData : data) {
                 names[i++] = scheduleData.getName();
                 TableItem item = new TableItem(table, SWT.NULL);
-                
+
                 String name = scheduleData.getName();
                 String pluginId = scheduleData.getPluginId();
                 if (pluginId == null) {
                     pluginId = "";
                 }
                 String location = scheduleData.getLocation().toOSString();
-                
-                item.setText(0,name);
-                item.setText(1,pluginId);
-                item.setText(2,location);
+
+                item.setText(0, name);
+                item.setText(1, pluginId);
+                item.setText(2, location);
                 item.setData(scheduleData);
                 if (scheduleData.isImported()) {
                     item.setImage(KiemIcons.KIEM_DISABLED);
-                }
-                else {
+                } else {
                     item.setImage(KiemIcons.KIEM);
                 }
             }
         }
-
-        //table.select(0);
     }
 
+    // --------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#setDirty(boolean)
+     */
     protected void setDirty(boolean dirty) {
         super.setDirty(dirty);
         super.updateLaunchConfigurationDialog();
     }
 
+    // --------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#isValid(org.eclipse.debug.core.
+     * ILaunchConfiguration)
+     */
     public boolean isValid(ILaunchConfiguration config) {
         return (getSelection() != null);
     }
 
+    // --------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see
+     * org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
+     */
     public void createControl(Composite parent) {
         top = new Composite(parent, SWT.NONE);
         top.setFont(parent.getFont());
@@ -166,34 +151,34 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
         // declare a wrapping label
         usageLabel = new Label(top, SWT.WRAP);
-        GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
-        gridData.widthHint = parent.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
-        usageLabel.setLayoutData(gridData);        
+        GridData gridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
+        gridData.widthHint = parent.getClientArea().width - 2 * MARGIN_WIDTH_AND_HEIGHT;
+        usageLabel.setLayoutData(gridData);
         usageLabel.setText(KiemTab.LABEL_USAGE_INSTRUCTIONS);
-        
+
         // ensure that the label is really wrapped
         parent.addListener(SWT.Resize, new Listener() {
             public void handleEvent(Event e) {
-                GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
-                System.out.println(top.getParent().getClientArea().width);
-                gridData.widthHint = top.getParent().getClientArea().width - 4*MARGIN_WIDTH_AND_HEIGHT ;
-                usageLabel.setLayoutData(gridData);   
+                GridData gridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
+                gridData.widthHint = top.getParent().getClientArea().width - 4
+                        * MARGIN_WIDTH_AND_HEIGHT;
+                usageLabel.setLayoutData(gridData);
             }
-        });        
-        
+        });
+
         // declare the table
         table = new Table(top, SWT.BORDER | SWT.FULL_SELECTION);
-        table.setHeaderVisible (true);
+        table.setHeaderVisible(true);
         TableColumn column0 = new TableColumn(table, SWT.NONE);
         TableColumn column1 = new TableColumn(table, SWT.NONE);
         TableColumn column2 = new TableColumn(table, SWT.NONE);
-        column0.setText("Name");  
+        column0.setText("Name");
         column0.setWidth(10);
-        column1.setText("Plugin");  
+        column1.setText("Plugin");
         column1.setWidth(10);
-        column2.setText("Location");  
+        column2.setText("Location");
         column2.setWidth(10);
-        
+
         table.setEnabled(true);
         table.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
@@ -218,15 +203,17 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                     // do nothing
                 }
             }
+
             public void mouseDown(final MouseEvent e) {
             }
+
             public void mouseUp(final MouseEvent e) {
             }
         });
-        
+
         // fill the table
         setupTable();
-        
+
         // set the table layout
         GridData gridData2 = new GridData();
         gridData2.grabExcessHorizontalSpace = true;
@@ -234,20 +221,45 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         gridData2.horizontalAlignment = GridData.FILL;
         gridData2.verticalAlignment = GridData.FILL;
         table.setLayoutData(gridData2);
-        
+
         // set focus on the table
         setControl(top);
-        
+
         // resize table headers NOW - if this is done before table layout, this gets messed up
         column0.setWidth(150);
         column1.setWidth(100);
         column2.setWidth(100);
     }
 
-    public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
-        // TODO Auto-generated method stub
+    // --------------------------------------------------------------------------
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.
+     * ILaunchConfigurationWorkingCopy)
+     */
+    public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+        // try to select the default execution for the currently/last opened editor
+        EditorIdWrapper editorId = null;
+        String editorName = null;
+
+        if (EditorUtils.getLastActiveEditor() != null) {
+            IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
+            if (editor != null) {
+                ScheduleManager manager = ScheduleManager.getInstance();
+                data = manager.getMatchingSchedules(editorId, editorName);
+
+                // take the first default schedule
+                if (data.size() > 0) {
+                    configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, data
+                            .get(0).toString());
+                }
+            }
+        }
     }
+
+    // --------------------------------------------------------------------------
 
     /**
      * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#getId()
@@ -258,9 +270,18 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         return "de.cau.cs.kieler.sim.kiem.ui.launching.kiemtab"; //$NON-NLS-1$
     }
 
+    // --------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
+     */
     public String getName() {
         return "Execution Schedule";
     }
+
+    // --------------------------------------------------------------------------
 
     /*
      * (non-Javadoc)
@@ -271,15 +292,26 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         return KiemIcons.KIEM;
     }
 
+    // --------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(org.eclipse.debug.core.
+     * ILaunchConfigurationWorkingCopy)
+     */
     public void performApply(ILaunchConfigurationWorkingCopy configuration) {
-        if ( getSelection() != null ) {
+        if (getSelection() != null) {
+            // if there is a meaningful selection, save the serialized string
             configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, getSelection()
                     .toString());
         }
     }
 
+    // --------------------------------------------------------------------------
+
     /**
-     * Getter for the current selection in the combo.
+     * Getter for the current selection in the table.
      * 
      * @return the current selection or null
      */
@@ -293,6 +325,29 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         return null;
     }
 
+    // --------------------------------------------------------------------------
+
+    /**
+     * Removes the "bundleentry://xxxx/" volatile part, so that it is possible to compare two
+     * locations.
+     * 
+     * @param id
+     *            the id
+     * @return the string
+     */
+    private String removeBundleentryVolatilePart(String id) {
+        String tmp = id;
+        if (tmp.contains(SEARCH)) {
+            tmp = tmp.substring(tmp.indexOf(SEARCH) + SEARCH.length());
+            String slash = tmp.substring(0, 1);
+            tmp = tmp.substring(2);
+            tmp = tmp.substring(tmp.indexOf(slash));
+        }
+        return tmp;
+    }
+
+    // --------------------------------------------------------------------------
+
     /*
      * (non-Javadoc)
      * 
@@ -305,8 +360,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                     KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, "");
             ScheduleData scheduleData = ScheduleData.fromString(scheduleDataString);
             for (int i = 0; i < data.size(); i++) {
-                String vglString0 = data.get(i).toString();
-                String vglString1 = scheduleData.toString();
+                String vglString0 = removeBundleentryVolatilePart(data.get(i).toString());
+                String vglString1 = removeBundleentryVolatilePart(scheduleData.toString());
                 if (vglString0.equals(vglString1)) {
                     table.select(i);
                 }

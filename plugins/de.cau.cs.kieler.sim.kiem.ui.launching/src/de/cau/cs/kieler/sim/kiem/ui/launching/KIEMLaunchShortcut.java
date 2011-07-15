@@ -1,11 +1,8 @@
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationType;
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.core.ILaunchManager;
-import org.eclipse.debug.ui.DebugUITools;
 import org.eclipse.debug.ui.ILaunchShortcut;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
@@ -20,10 +17,6 @@ public class KIEMLaunchShortcut implements ILaunchShortcut {
 
         ILaunchManager lm = DebugPlugin.getDefault().getLaunchManager();
         ILaunchConfigurationType type = lm.getLaunchConfigurationType(KIEM_LAUNCH_TYPE);
-//        ILaunchConfigurationWorkingCopy wcopy = type.newInstance(null, file.getName());
-//        wcopy.setAttribute(ATTR_BATCH_SCRIPT, path);
-//        ILaunchConfiguration configuration = wcopy.doSave();
-//        DebugUITools.launch(configuration, mode);         
     }
 
     public void launch(IEditorPart editor, String mode) {

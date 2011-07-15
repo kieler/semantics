@@ -1,25 +1,29 @@
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
-import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.CommonTab;
 import org.eclipse.debug.ui.ILaunchConfigurationDialog;
 import org.eclipse.debug.ui.ILaunchConfigurationTab;
 
+/**
+ * The class AbstractLaunchConfigurationTabGroup creates the tabs for the launch configuration. By
+ * convention a CommonTab is required to be created.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2011-07-15 proposed yellow
+ * 
+ */
 public class AbstractLaunchConfigurationTabGroup extends
         org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup {
 
     public AbstractLaunchConfigurationTabGroup() {
-        System.out.println("LAUNCH CONFIG TAB");
     }
 
+    // --------------------------------------------------------------------------
+
     public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
-        System.out.println("LAUNCH CONFIG TAB");
-        ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] { new KiemTab()
-//                ,new CommonTab() };
-        };
+        ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] { new KiemTab(),
+            new CommonTab() };
         setTabs(tabs);
 
     }
-
-
 }
