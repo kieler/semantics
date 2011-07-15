@@ -56,7 +56,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     /** The usage instruction hints. */
     private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution"
             + " file can be either a predefined one (darker icons, location is a plugin) or any execution file from the Workspace. "
-            + "Note that an execution file from the Workspace must be available if you want to use the launch configuration.";
+            + "Note that an execution file from the Workspace must be available at the you want to use the specific launch configuration.";
 
     /** list of all schedule data in the currently displayed combo. */
     private java.util.List<ScheduleData> data;
