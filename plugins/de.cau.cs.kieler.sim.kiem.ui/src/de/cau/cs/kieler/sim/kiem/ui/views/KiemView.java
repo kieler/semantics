@@ -86,7 +86,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /** The Constant VIEW_ID. */
     public static final String VIEW_ID = "de.cau.cs.kieler.sim.kiem.view";
-    
+
     /** The viewer table of DataComponentWrappers. */
     private KiemTableViewer viewer;
 
@@ -179,13 +179,21 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private static final int MASTER_COLOR_BLUE = 255;
 
     private static final int KEYBOARD_DELETE = 127;
-    
+
     /** True if all actions are (temporary) disabled. */
     private boolean allDisabled;
-    
+
+    /** The parent. */
     private Composite parent;
-    
+
+    /**
+     * The brought to front flag indicates that the view was already brought to front within the
+     * near past.
+     */
     private static boolean broughtToFront = false;
+
+    /** The constant DELAY_TIME for brought to flag and view synchronization. */
+    private static final int DELAY_TIME = 100;
 
     // -------------------------------------------------------------------------
 
@@ -212,12 +220,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the single instance of KiemView.
+     * 
+     * @return single instance of KiemView
+     */
     public static KiemView getInstance() {
         return KiemView.kIEMViewInstance;
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * This method brings the Table view to the front.
      */
@@ -240,7 +253,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         });
         while (!broughtToFront) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(DELAY_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -304,28 +317,40 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
      */
     @Override
-    public void createPartControl(Composite parent) {
-        this.parent = parent;
+    public void createPartControl(final Composite parentParam) {
+        this.parent = parentParam;
         this.viewer = createPartControl2(this.parent, this.viewer);
     }
-    
-    public KiemTableViewer createPartControl2(Composite parent, KiemTableViewer viewerParam) {
-        viewerParam = new KiemTableViewer(parent, SWT.HIDE_SELECTION | SWT.MULTI | SWT.H_SCROLL
-                | SWT.V_SCROLL | SWT.FULL_SELECTION);
-        createColumns(viewerParam);
-        viewerParam.setContentProvider(new KiemContentProvider());
-        viewerParam.setLabelProvider(new KiemLabelProvider(this));
-        viewerParam.setInput(kIEMInstance.getDataComponentWrapperList());
+
+    // ---------------------------------------------------------------------------
+
+    /**
+     * Creates the part control2.
+     * 
+     * @param parentParam
+     *            the parent param
+     * @param viewerParam
+     *            the viewer param
+     * @return the kiem table viewer
+     */
+    public KiemTableViewer createPartControl2(final Composite parentParam,
+            final KiemTableViewer viewerParam) {
+        KiemTableViewer viewer2 = new KiemTableViewer(parentParam, SWT.HIDE_SELECTION | SWT.MULTI
+                | SWT.H_SCROLL | SWT.V_SCROLL | SWT.FULL_SELECTION);
+        createColumns(viewer2);
+        viewer2.setContentProvider(new KiemContentProvider());
+        viewer2.setLabelProvider(new KiemLabelProvider(this));
+        viewer2.setInput(kIEMInstance.getDataComponentWrapperList());
 
         buildLocalToolBar(); // is not done anymore in checkForSingleEnabledMaster
-        hookContextMenu(viewerParam);
-        hookSelectionChangedAction(viewerParam);
-        hookTreeAction(viewerParam);
+        hookContextMenu(viewer2);
+        hookSelectionChangedAction(viewer2);
+        hookTreeAction(viewer2);
         KiemPlugin.getDefault().checkForSingleEnabledMaster(true);
-        updateView(true,viewerParam);
+        updateView(true, viewer2);
         // notify listeners that building the view was finished
         KiemPlugin.getDefault().getEventManager().notify(KiemEvent.VIEW_DONE);
-        return viewerParam;
+        return viewer2;
     }
 
     // -------------------------------------------------------------------------
@@ -614,6 +639,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // -------------------------------------------------------------------------
 
+    /** The input dialog return value. */
+    private String inputDialogReturnValue = "";
+
     /**
      * Show an input dialog with the message, a default value and a specific title.
      * 
@@ -626,8 +654,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * 
      * @return the string value entered or null if aborted
      */
-    public String inputDialogReturnValue = "";
-
     private String showInputDialog(final String title, final String message,
             final String defaultValue) {
 
@@ -711,15 +737,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             setAllEnabled(enabled, viewer);
         }
     }
-    
+
     // ---------------------------------------------------------------------------
 
     /**
      * Sets the all actions (tool bar buttons and context menu entires) to enabled or disabled. This
      * method is used to block any user input during the initialization phase for example.
-     *
-     * @param enabled the new enabled status
-     * @param viewerParam the viewer param
+     * 
+     * @param enabled
+     *            the new enabled status
+     * @param viewerParam
+     *            the viewer param
      */
     public void setAllEnabled(final boolean enabled, final KiemTableViewer viewerParam) {
         allDisabled = !enabled;
@@ -785,16 +813,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * - down<BR>
      * - add<BR>
      * - delete.
-     *
-     * @param viewerParam the viewer param
+     * 
+     * @param viewerParam
+     *            the viewer param
      */
     public void updateEnabledEnabledDisabledUpDownAddDelete(final KiemTableViewer viewerParam) {
         if (viewerParam == null || viewerParam.getSelection() == null) {
             return;
         }
-        
-        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewerParam.getSelection())
-                .getFirstElement();
+
+        Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewerParam
+                .getSelection()).getFirstElement();
         if (kIEMInstance.getExecution() != null) {
             // execution is running
             if (getActionEnableDisable().isEnabled()) {
@@ -956,11 +985,11 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             public void run() {
                 if (kIEMInstance.getExecution() != null) {
                     // update step counter if run
-                    String steps = "" + kIEMInstance.getExecution().getSteps();
+                    String steps2 = "" + kIEMInstance.getExecution().getSteps();
                     if (kIEMInstance.getExecution().isHistoryStep()) {
-                        steps = "[" + steps + "]";
+                        steps2 = "[" + steps2 + "]";
                     }
-                    getStepTextField().updateTextfield(steps);
+                    getStepTextField().updateTextfield(steps2);
                     // update StepBackButton
                     if ((kIEMInstance.getExecution().getSteps() > 0)
                             && (!kIEMInstance.getExecution().isRunning())
@@ -978,7 +1007,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Updates the table if it is not busy.
      * 
@@ -992,13 +1021,16 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Updates the table if it is not busy.
      * 
      * @param deselect
      *            a table entry
+     * @param viewerParam
+     *            the viewer
      */
+
     public void updateView(final boolean deselect, final KiemTableViewer viewerParam) {
         // do not update if not necessary
         if (!viewerParam.isBusy()) {
@@ -1015,7 +1047,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         } catch (Exception e) {
             // try to handle any viewer refresh errors here
             try {
-                // as a recovery action, clear the wrapper list (because of some internal eclipse SWT bug)
+                // as a recovery action, clear the wrapper list (because of some internal eclipse
+                // SWT bug)
                 kIEMInstance.clearDataComponentWrapperList();
             } catch (Exception e2) {
                 // we cannot do any other recovery action when something should go wrong again...
@@ -1043,7 +1076,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if ((obj instanceof KiemProperty)
                         || ((obj instanceof DataComponentWrapper)
                                 && (((DataComponentWrapper) obj).getProperties() != null)
-                                && (((DataComponentWrapper) obj).getProperties().length > 0) && (((DataComponentWrapper) obj)
+                                && (((DataComponentWrapper) obj).getProperties().length > 0) 
+                                && (((DataComponentWrapper) obj)
                                 .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false, viewerParam);
@@ -1850,13 +1884,13 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     // -------------------------------------------------------------------------
 
     // class variables for access from display thread
-    long executionTime = 0;
-    long minStepDuration = 0;
-    long wavStepDuration = 0;
-    long aveStepDuration = 0;
-    long maxStepDuration = 0;
-    long steps = 0;
-    long aimedStepDuration = 0;
+    private long executionTime = 0;
+    private long minStepDuration = 0;
+    private long wavStepDuration = 0;
+    private long aveStepDuration = 0;
+    private long maxStepDuration = 0;
+    private long steps = 0;
+    private long aimedStepDuration = 0;
 
     private void actionStopExecution() {
 
@@ -1880,16 +1914,17 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 // show execution results
-                showMessage(Messages.mTimingResultsTitle, Messages.mTimingResultsNumberOfSteps + +steps
-                        + "\n" + Messages.mTimingResultsOverallExecutionTime + +executionTime + " ms\n\n"
-                        + Messages.mTimingResultsAimedStepDuration + +aimedStepDuration + " ms\n"
-                        + Messages.mTimingResultsMinimumStepDuration + +minStepDuration + " ms\n"
-                        + Messages.mTimingResultsWheightedAverageStepDuration + +wavStepDuration + " ms\n"
-                        + Messages.mTimingResultsAverageStepDuration + +aveStepDuration + " ms\n"
-                        + Messages.mTimingResultsMaximumStepDuration + +maxStepDuration + " ms");
+                showMessage(Messages.mTimingResultsTitle, Messages.mTimingResultsNumberOfSteps
+                        + +steps + "\n" + Messages.mTimingResultsOverallExecutionTime
+                        + +executionTime + " ms\n\n" + Messages.mTimingResultsAimedStepDuration
+                        + +aimedStepDuration + " ms\n" + Messages.mTimingResultsMinimumStepDuration
+                        + +minStepDuration + " ms\n"
+                        + Messages.mTimingResultsWheightedAverageStepDuration + +wavStepDuration
+                        + " ms\n" + Messages.mTimingResultsAverageStepDuration + +aveStepDuration
+                        + " ms\n" + Messages.mTimingResultsMaximumStepDuration + +maxStepDuration
+                        + " ms");
             }
         });
-        
 
     }
 
@@ -1928,8 +1963,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Passing the focus request to the viewer's control. This is necessary be- cause KiemView
      * extends the ViewPart class.
-     *
-     * @param viewerParam the new focus
      */
     @Override
     public void setFocus() {
@@ -1943,8 +1976,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Passing the focus request to the viewer's control. This is necessary be- cause KiemView
      * extends the ViewPart class.
-     *
-     * @param viewerParam the new focus
+     * 
+     * @param viewerParam
+     *            the new focus
      */
     public void setFocus(final KiemTableViewer viewerParam) {
         viewerParam.getControl().setFocus();
@@ -1991,7 +2025,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      * @param isDirtyParam
      *            the new dirty
      */
-    public void setDirty(boolean isDirtyParam) {
+    public void setDirty(final boolean isDirtyParam) {
         KiemPlugin.getDefault().setDirty(isDirtyParam);
         firePropertyChange(IWorkbenchPartConstants.PROP_DIRTY);
     }
