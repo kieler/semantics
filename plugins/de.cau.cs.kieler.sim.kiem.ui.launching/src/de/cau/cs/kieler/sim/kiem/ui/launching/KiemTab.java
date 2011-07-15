@@ -173,7 +173,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         TableColumn column1 = new TableColumn(table, SWT.NONE);
         column0.setText("Name");
         column0.setWidth(10);
-        column1.setText("Location");
+        column1.setText("Location / Plugin");
         column1.setWidth(10);
 
         table.setEnabled(true);
