@@ -32,9 +32,11 @@ import de.cau.cs.kieler.sim.kiem.config.managers.AbstractManager;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author soh
+ * @author soh, cmot
  * @kieler.rating 2010-01-27 proposed yellow
+ * 
  */
+@SuppressWarnings("restriction")
 public class KiemConfigurationPlugin extends AbstractUIPlugin {
 
     /** path to the icon for active schedules and default editor. */
@@ -148,7 +150,6 @@ public class KiemConfigurationPlugin extends AbstractUIPlugin {
      * 
      * @return the error handler or null
      */
-    @SuppressWarnings("restriction")
     public static GenericErrorHandler getErrorHandler() {
         try {
             StatusHandlerDescriptor desc = StatusHandlerRegistry.getDefault()
