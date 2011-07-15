@@ -60,7 +60,7 @@ public class InitializeExecution implements Runnable {
      * @param kIEMInstanceParam
      *            the kiem instance
      */
-    public InitializeExecution(KiemPlugin kIEMInstanceParam) {
+    public InitializeExecution(final KiemPlugin kIEMInstanceParam) {
         this.kIEMInstance = kIEMInstanceParam;
         eventManager = this.kIEMInstance.getEventManager();
         execution = this.kIEMInstance.getExecution();
@@ -106,7 +106,7 @@ public class InitializeExecution implements Runnable {
     /**
      * Clean up before exit.
      */
-    private void cleanUpBeforeExit(boolean wasSucessfull) {
+    private void cleanUpBeforeExit(final boolean wasSucessfull) {
         successful = wasSucessfull;
         if (this.kIEMInstance.getInitializeExecution() == this) {
             // only notify if this is the last (or only) initialize execution

@@ -103,7 +103,7 @@ public class TimeoutThread extends Thread {
      * @param awaitUserResponseParam
      *            the new await user repsonse
      */
-    public static void setAwaitUserRepsonse(boolean awaitUserResponseParam) {
+    public static void setAwaitUserRepsonse(final boolean awaitUserResponseParam) {
         TimeoutThread.awaitUserResponse = awaitUserResponseParam;
     }
 

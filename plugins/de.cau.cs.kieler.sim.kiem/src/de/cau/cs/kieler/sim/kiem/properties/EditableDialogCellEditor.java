@@ -40,7 +40,10 @@ import org.eclipse.swt.widgets.Layout;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
- * @author delphino
+ * En editable DialogCell editor.
+ * 
+ * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @kieler.rating 2009-01-15 yellow
  * 
  */
 public abstract class EditableDialogCellEditor extends TextCellEditor {
@@ -97,7 +100,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * 
      * @param isEditableParam the new editable flag
      */
-    public void setEditable(boolean isEditableParam) {
+    public void setEditable(final boolean isEditableParam) {
         this.isEditable = isEditableParam;
     }
     
@@ -111,7 +114,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * Internal class for laying out the dialog.
      */
     private class DialogCellLayout extends Layout {
-        public void layout(Composite editorParam, boolean force) {
+        public void layout(final Composite editorParam, final boolean force) {
             Rectangle bounds = editorParam.getClientArea();
             Point size = button.computeSize(SWT.DEFAULT, SWT.DEFAULT, force);
             if (contents != null) {
@@ -120,8 +123,8 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
             button.setBounds(bounds.width - size.x, 0, size.x, bounds.height);
         }
 
-        public Point computeSize(Composite editorParam, int wHint, int hHint,
-                boolean force) {
+        public Point computeSize(final Composite editorParam, final int wHint, final int hHint,
+                final boolean force) {
             if (wHint != SWT.DEFAULT && hHint != SWT.DEFAULT) {
                 return new Point(wHint, hHint);
             }
@@ -149,7 +152,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * @param isEditableParam the isEditable parameter
      * @since 2.1
      */
-    public EditableDialogCellEditor(boolean isEditableParam) {
+    public EditableDialogCellEditor(final boolean isEditableParam) {
         this.isEditable = isEditableParam;
         setStyle(DEFAULT_STYLE);
     }
@@ -161,7 +164,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * @param parent the parent control
      * @param isEditableParam the isEditable parameter
      */
-    protected EditableDialogCellEditor(Composite parent, boolean isEditableParam) {
+    protected EditableDialogCellEditor(final Composite parent, final boolean isEditableParam) {
         this(parent, DEFAULT_STYLE, isEditableParam);
     }
 
@@ -174,8 +177,8 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * @param isEditableParam the isEditable parameter
      * @since 2.1
      */
-    protected EditableDialogCellEditor(Composite parent, int style,
-            boolean isEditableParam) {
+    protected EditableDialogCellEditor(final Composite parent, final int style,
+            final boolean isEditableParam) {
         this.isEditable = isEditableParam;
         //        super(parent, style);
         super.setStyle(style);
@@ -193,7 +196,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * @param parent the parent control
      * @return the new button control
      */
-    protected Button createButton(Composite parent) {
+    protected Button createButton(final Composite parent) {
         Button result = new Button(parent, SWT.DOWN);
         result.setText("..."); //$NON-NLS-1$
         return result;
@@ -203,7 +206,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * (non-Javadoc) Method declared on CellEditor.
      */
     @Override
-    protected Control createControl(Composite parent) {
+    protected Control createControl(final Composite parent) {
 
         Font font = parent.getFont();
         Color bg = parent.getBackground();
@@ -232,7 +235,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
              * 
              * @see org.eclipse.swt.events.KeyListener#keyReleased(org.eclipse.swt.events.KeyEvent)
              */
-            public void keyReleased(KeyEvent e) {
+            public void keyReleased(final KeyEvent e) {
                 if (e.character == '\u001b') { // Escape
                     fireCancelEditor();
                 }
@@ -246,7 +249,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
              * @see org.eclipse.swt.events.SelectionListener#widgetSelected(org.eclipse.swt.events.
              * SelectionEvent)
              */
-            public void widgetSelected(SelectionEvent event) {
+            public void widgetSelected(final SelectionEvent event) {
                 openingDialog = true;
 
                 // Remove the button's focus listener since it's guaranteed
@@ -336,7 +339,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
                  * org.eclipse.swt.events.FocusListener#focusGained(org.eclipse.swt.events.FocusEvent
                  * )
                  */
-                public void focusGained(FocusEvent e) {
+                public void focusGained(final FocusEvent e) {
                     // Do nothing
                 }
 
@@ -346,7 +349,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
                  * @see
                  * org.eclipse.swt.events.FocusListener#focusLost(org.eclipse.swt.events.FocusEvent)
                  */
-                public void focusLost(FocusEvent e) {
+                public void focusLost(final FocusEvent e) {
                     EditableDialogCellEditor.this.focusLost();
                 }
             };
@@ -359,7 +362,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * (non-Javadoc) Method declared on CellEditor.
      */
     @Override
-    protected void doSetValue(Object valueParam) {
+    protected void doSetValue(final Object valueParam) {
         this.value = valueParam;
         updateContents(valueParam);
         if (text != null) {
@@ -418,7 +421,7 @@ public abstract class EditableDialogCellEditor extends TextCellEditor {
      * 
      * @param valueParam the new value of this cell editor
      */
-    protected void updateContents(Object valueParam) {
+    protected void updateContents(final Object valueParam) {
 
         String text = ""; 
         if (valueParam != null) {

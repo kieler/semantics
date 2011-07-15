@@ -76,9 +76,9 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
      * Instantiates a new KiemPropertyType file.
      * 
      * @param textFieldIsEditableManually
-     *             a flag whether the user can modify the text field manually
+     *            a flag whether the user can modify the text field manually
      */
-    public KiemPropertyTypeFile(boolean textFieldIsEditableManually) {
+    public KiemPropertyTypeFile(final boolean textFieldIsEditableManually) {
         super();
         this.filterNames = DEFAULT_FILTER_NAMES;
         this.filterExts = DEFAULT_FILTER_EXTS;
@@ -90,8 +90,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String file location values (encoded as Strings in property) 
-     * and the String displayed in the String cell editor.
+     * This method bridges String file location values (encoded as Strings in property) and the
+     * String displayed in the String cell editor.
      * 
      * {@inheritDoc}
      */
@@ -102,8 +102,8 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String file location values (encoded as Strings in property) 
-     * and the String displayed in the String cell editor.
+     * This method bridges String file location values (encoded as Strings in property) and the
+     * String displayed in the String cell editor.
      * 
      * {@inheritDoc}
      */
@@ -114,7 +114,7 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the value as file.
      * 
@@ -213,10 +213,12 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
         /**
          * Instantiates a new custom dialog cell editor.
          * 
-         * @param parent the parent
-         * @param isEditableParam the isEditable parameter
+         * @param parent
+         *            the parent
+         * @param isEditableParam
+         *            the isEditable parameter
          */
-        public CustomDialogCellEditor(final Composite parent, boolean isEditableParam) {
+        public CustomDialogCellEditor(final Composite parent, final boolean isEditableParam) {
             super(parent, isEditableParam);
         }
 
@@ -237,16 +239,16 @@ public class KiemPropertyTypeFile extends KiemPropertyType implements IKiemPrope
                 try {
                     // set the default directory to the one the current file comes from
                     String fileName = (String) object;
-                    String filePath  = (new File(fileName)).getParentFile().getAbsolutePath();
-                    if (filePath.endsWith("/")) { 
+                    String filePath = (new File(fileName)).getParentFile().getAbsolutePath();
+                    if (filePath.endsWith("/")) {
                         filePath = filePath.substring(0, filePath.length());
                     }
-                    if (filePath.endsWith("\\")) { 
+                    if (filePath.endsWith("\\")) {
                         filePath = filePath.substring(0, filePath.length());
                     }
                     dlg.setFilterPath(filePath);
                 } catch (Exception e) {
-                   // ignore false paths
+                    // ignore false paths
                 }
             }
             dlg.setOverwrite(true);

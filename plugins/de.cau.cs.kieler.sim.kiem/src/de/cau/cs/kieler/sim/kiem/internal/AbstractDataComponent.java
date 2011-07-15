@@ -814,7 +814,7 @@ public abstract class AbstractDataComponent implements IDataComponent, IExecutab
     /**
      * @param currentComponentIDParam the currentComponentID to set
      */
-    public void setCurrentComponentID(String currentComponentIDParam) {
+    public void setCurrentComponentID(final String currentComponentIDParam) {
         currentComponentID = currentComponentIDParam;
     }
 
