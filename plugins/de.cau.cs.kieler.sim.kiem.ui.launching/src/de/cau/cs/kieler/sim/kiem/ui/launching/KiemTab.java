@@ -30,6 +30,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.ui.IEditorSite;
 
@@ -119,11 +120,17 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
             for (ScheduleData scheduleData : data) {
                 names[i++] = scheduleData.getName();
                 TableItem item = new TableItem(table, SWT.NULL);
-                String[] stringArray = new String[3];
-                stringArray[0] = scheduleData.getName();
-                stringArray[1] = scheduleData.getPluginId();
-                stringArray[2] = scheduleData.getLocation().toOSString();
-                item.setText(stringArray);
+                
+                String name = scheduleData.getName();
+                String pluginId = scheduleData.getPluginId();
+                if (pluginId == null) {
+                    pluginId = "";
+                }
+                String location = scheduleData.getLocation().toOSString();
+                
+                item.setText(0,name);
+                item.setText(1,pluginId);
+                item.setText(2,location);
                 item.setData(scheduleData);
                 if (scheduleData.isImported()) {
                     item.setImage(KiemIcons.KIEM_DISABLED);
@@ -160,21 +167,33 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         // declare a wrapping label
         usageLabel = new Label(top, SWT.WRAP);
         GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
-        gridData.widthHint = top.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
+        gridData.widthHint = parent.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
         usageLabel.setLayoutData(gridData);        
         usageLabel.setText(KiemTab.LABEL_USAGE_INSTRUCTIONS);
         
         // ensure that the label is really wrapped
-        top.addListener(SWT.Resize, new Listener() {
+        parent.addListener(SWT.Resize, new Listener() {
             public void handleEvent(Event e) {
                 GridData gridData = new GridData(SWT.LEFT , SWT.TOP, false, false); 
-                gridData.widthHint = top.getClientArea().width - 2*MARGIN_WIDTH_AND_HEIGHT ;
+                System.out.println(top.getParent().getClientArea().width);
+                gridData.widthHint = top.getParent().getClientArea().width - 4*MARGIN_WIDTH_AND_HEIGHT ;
                 usageLabel.setLayoutData(gridData);   
             }
         });        
         
         // declare the table
-        table = new Table(top, SWT.BORDER | SWT.MULTI);
+        table = new Table(top, SWT.BORDER | SWT.FULL_SELECTION);
+        table.setHeaderVisible (true);
+        TableColumn column0 = new TableColumn(table, SWT.NONE);
+        TableColumn column1 = new TableColumn(table, SWT.NONE);
+        TableColumn column2 = new TableColumn(table, SWT.NONE);
+        column0.setText("Name");  
+        column0.setWidth(10);
+        column1.setText("Plugin");  
+        column1.setWidth(10);
+        column2.setText("Location");  
+        column2.setWidth(10);
+        
         table.setEnabled(true);
         table.addSelectionListener(new SelectionListener() {
             public void widgetSelected(SelectionEvent e) {
@@ -215,9 +234,14 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         gridData2.horizontalAlignment = GridData.FILL;
         gridData2.verticalAlignment = GridData.FILL;
         table.setLayoutData(gridData2);
-         
+        
         // set focus on the table
         setControl(top);
+        
+        // resize table headers NOW - if this is done before table layout, this gets messed up
+        column0.setWidth(150);
+        column1.setWidth(100);
+        column2.setWidth(100);
     }
 
     public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
@@ -281,7 +305,9 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                     KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, "");
             ScheduleData scheduleData = ScheduleData.fromString(scheduleDataString);
             for (int i = 0; i < data.size(); i++) {
-                if (data.get(i).toString().equals(scheduleData.toString())) {
+                String vglString0 = data.get(i).toString();
+                String vglString1 = scheduleData.toString();
+                if (vglString0.equals(vglString1)) {
                     table.select(i);
                 }
             }
