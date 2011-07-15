@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.debug.ui.CommonTab;
@@ -15,12 +29,18 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
 public class AbstractLaunchConfigurationTabGroup extends
         org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup {
 
+    /**
+     * Instantiates a new abstract launch configuration tab group.
+     */
     public AbstractLaunchConfigurationTabGroup() {
     }
 
     // --------------------------------------------------------------------------
 
-    public void createTabs(ILaunchConfigurationDialog dialog, String mode) {
+    /**
+     * {@inheritDoc}
+     */
+    public void createTabs(final ILaunchConfigurationDialog dialog, final String mode) {
         ILaunchConfigurationTab[] tabs = new ILaunchConfigurationTab[] { new KiemTab(),
             new CommonTab() };
         setTabs(tabs);

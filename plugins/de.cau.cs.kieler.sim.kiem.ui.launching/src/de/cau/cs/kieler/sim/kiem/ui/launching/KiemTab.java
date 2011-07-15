@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.core.runtime.CoreException;
@@ -44,8 +57,14 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     /** The constant MARGIN_WIDTH_AND_HEIGHT. */
     private static final int MARGIN_WIDTH_AND_HEIGHT = 15;
 
+    /** The Constant COLUMN_WITH_NAME. */
+    private static final int COLUMN_WITH_NAME = 150;
+
+    /** The Constant COLUMN_WITH_LOCATION. */
+    private static final int COLUMN_WITH_LOCATION = 250;
+
     /** The constant SEARCH. */
-    private static String SEARCH = "bundleentry:";
+    private static final String SEARCH = "bundleentry:";
 
     /** The table box for displaying and selecting configurations. */
     private Table table;
@@ -54,11 +73,13 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     private Label usageLabel;
 
     /** The usage instruction hints. */
-    private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution"
-            + " file can be either a predefined one (darker icons, location is a plugin) or any execution file from the Workspace. "
-            + "Note that an execution file from the Workspace must be available at the time you want to use the specific launch configuration.";
+    private static final String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this "
+            + "launch configuration.\n\nThe execution file can be either a predefined one (darker"
+            + " icons, location is a plugin) or any execution file from the Workspace. Note that an"
+            + " execution file from the Workspace must be available at the time you want to use the "
+            + "specific launch configuration.";
 
-    /** list of all schedule data in the currently displayed combo. */
+    /** list of all schedule data in the currently displayed table. */
     private java.util.List<ScheduleData> data;
 
     // --------------------------------------------------------------------------
@@ -113,7 +134,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
      * 
      * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#setDirty(boolean)
      */
-    protected void setDirty(boolean dirty) {
+    @Override
+    protected void setDirty(final boolean dirty) {
         super.setDirty(dirty);
         super.updateLaunchConfigurationDialog();
     }
@@ -126,19 +148,17 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
      * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#isValid(org.eclipse.debug.core.
      * ILaunchConfiguration)
      */
-    public boolean isValid(ILaunchConfiguration config) {
+    @Override
+    public boolean isValid(final ILaunchConfiguration config) {
         return (getSelection() != null);
     }
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.eclipse.debug.ui.ILaunchConfigurationTab#createControl(org.eclipse.swt.widgets.Composite)
+    /**
+     * {@inheritDoc}
      */
-    public void createControl(Composite parent) {
+    public void createControl(final Composite parent) {
         top = new Composite(parent, SWT.NONE);
         top.setFont(parent.getFont());
 
@@ -158,9 +178,9 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
         // ensure that the label is really wrapped
         parent.addListener(SWT.Resize, new Listener() {
-            public void handleEvent(Event e) {
+            public void handleEvent(final Event e) {
                 GridData gridData = new GridData(SWT.LEFT, SWT.TOP, false, false);
-                gridData.widthHint = top.getParent().getClientArea().width - 4
+                gridData.widthHint = top.getParent().getClientArea().width - 2 * 2
                         * MARGIN_WIDTH_AND_HEIGHT;
                 usageLabel.setLayoutData(gridData);
             }
@@ -172,13 +192,13 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         TableColumn column0 = new TableColumn(table, SWT.NONE);
         TableColumn column1 = new TableColumn(table, SWT.NONE);
         column0.setText("Name");
-        column0.setWidth(10);
+        column0.setWidth(COLUMN_WITH_NAME);
         column1.setText("Location / Plugin");
-        column1.setWidth(10);
+        column1.setWidth(COLUMN_WITH_LOCATION);
 
         table.setEnabled(true);
         table.addSelectionListener(new SelectionListener() {
-            public void widgetSelected(SelectionEvent e) {
+            public void widgetSelected(final SelectionEvent e) {
                 setDirty(true);
                 try {
                     scheduleUpdateJob();
@@ -187,7 +207,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                 }
             }
 
-            public void widgetDefaultSelected(SelectionEvent e) {
+            public void widgetDefaultSelected(final SelectionEvent e) {
                 // do nothing
             }
         });
@@ -221,21 +241,14 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
         // set focus on the table
         setControl(top);
-
-        // resize table headers NOW - if this is done before table layout, this gets messed up
-        column0.setWidth(150);
-        column1.setWidth(250);
     }
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#setDefaults(org.eclipse.debug.core.
-     * ILaunchConfigurationWorkingCopy)
+    /**
+     * {@inheritDoc}
      */
-    public void setDefaults(ILaunchConfigurationWorkingCopy configuration) {
+    public void setDefaults(final ILaunchConfigurationWorkingCopy configuration) {
         // try to select the default execution for the currently/last opened editor
         EditorIdWrapper editorId = null;
         String editorName = null;
@@ -250,9 +263,9 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                 ScheduleManager manager = ScheduleManager.getInstance();
                 data = manager.getMatchingSchedules(editorId, editorName);
 
-                for (ScheduleData scheduleData: data) {
+                for (ScheduleData scheduleData : data) {
                     // take the first default schedule
-                    if (scheduleData.isImported() ) {
+                    if (scheduleData.isImported()) {
                         String scheduleDataString = scheduleData.toString();
                         configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE,
                                 scheduleDataString);
@@ -266,20 +279,21 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
     // --------------------------------------------------------------------------
 
     /**
-     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#getId()
+     * Gets the id of this tab.
      * 
+     * @return the id
+     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#getId()
      * @since 3.3
      */
+    @Override
     public String getId() {
         return "de.cau.cs.kieler.sim.kiem.ui.launching.kiemtab"; //$NON-NLS-1$
     }
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getName()
+    /**
+     * {@inheritDoc}
      */
     public String getName() {
         return "Execution Schedule";
@@ -287,10 +301,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#getImage()
+    /**
+     * {@inheritDoc}
      */
     public Image getImage() {
         return KiemIcons.KIEM;
@@ -298,13 +310,10 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#performApply(org.eclipse.debug.core.
-     * ILaunchConfigurationWorkingCopy)
+    /**
+     * {@inheritDoc}
      */
-    public void performApply(ILaunchConfigurationWorkingCopy configuration) {
+    public void performApply(final ILaunchConfigurationWorkingCopy configuration) {
         if (getSelection() != null) {
             // if there is a meaningful selection, save the serialized string
             configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, getSelection()
@@ -339,7 +348,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
      *            the id
      * @return the string
      */
-    private String removeBundleentryVolatilePart(String id) {
+    private String removeBundleentryVolatilePart(final String id) {
         String tmp = id;
         if (tmp.contains(SEARCH)) {
             tmp = tmp.substring(tmp.indexOf(SEARCH) + SEARCH.length());
@@ -352,13 +361,10 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.ILaunchConfigurationTab#initializeFrom(org.eclipse.debug.core.
-     * ILaunchConfiguration)
+    /**
+     * {@inheritDoc}
      */
-    public void initializeFrom(ILaunchConfiguration configuration) {
+    public void initializeFrom(final ILaunchConfiguration configuration) {
         try {
             String scheduleDataString = configuration.getAttribute(
                     KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, "");

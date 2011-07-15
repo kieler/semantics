@@ -1,3 +1,17 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
+
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.core.runtime.CoreException;
@@ -13,7 +27,6 @@ import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
-import de.cau.cs.kieler.sim.kiem.ui.KiemUIPlugin;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
@@ -26,15 +39,11 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  */
 public class KIEMDelegate implements ILaunchConfigurationDelegate {
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.core.model.ILaunchConfigurationDelegate#launch(org.eclipse.debug.core.
-     * ILaunchConfiguration, java.lang.String, org.eclipse.debug.core.ILaunch,
-     * org.eclipse.core.runtime.IProgressMonitor)
+    /**
+     * {@inheritDoc}
      */
-    public void launch(ILaunchConfiguration configuration, String mode, ILaunch launch,
-            IProgressMonitor monitor) throws CoreException {
+    public void launch(final ILaunchConfiguration configuration, final String mode,
+            final ILaunch launch, final IProgressMonitor monitor) throws CoreException {
 
         // bring KiemView to front
         KiemView.bringToFront();
@@ -61,17 +70,16 @@ public class KIEMDelegate implements ILaunchConfigurationDelegate {
             e.printStackTrace();
         }
 
-        // in RUN mode, start the execution and run it
         if (mode.equalsIgnoreCase("run")) {
+            // in RUN mode, start the execution and run it
             if (KiemPlugin.getDefault().initExecution()) {
                 Execution execution = KiemPlugin.getDefault().getExecution();
                 if (execution != null) {
                     execution.runExecutionSync();
                 }
             }
-        }
-        // in DEBUG mode, start the execution and pause it
-        else if (mode.equalsIgnoreCase("debug")) {
+        } else if (mode.equalsIgnoreCase("debug")) {
+            // in DEBUG mode, start the execution and pause it
             if (KiemPlugin.getDefault().initExecution()) {
                 Execution execution = KiemPlugin.getDefault().getExecution();
                 if (execution != null) {
