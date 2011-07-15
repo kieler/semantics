@@ -161,6 +161,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         if (!this.persistent) {
             justExecuted = apply(doCollapse);
         } else {
+            init();
             if (!targetEditParts.isEmpty() && doCollapse != isCollapsed()) {
                 getCollapseCommand(doCollapse).execute();
             }
