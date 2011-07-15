@@ -55,7 +55,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     /** The usage instruction hints. */
     private static String LABEL_USAGE_INSTRUCTIONS = "Select the schedule to use for this launch configuration.\n\nThe execution"
-            + " file can be either a predefined one (tagged with '[IMPORTED]') or any execution file from the Workspace. "
+            + " file can be either a predefined one (darker icons, location is a plugin) or any execution file from the Workspace. "
             + "Note that an execution file from the Workspace must be available if you want to use the launch configuration.";
 
     /** list of all schedule data in the currently displayed combo. */
@@ -94,13 +94,13 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
                 String location = scheduleData.getLocation().toOSString();
 
                 item.setText(0, name);
-                item.setText(1, pluginId);
-                item.setText(2, location);
                 item.setData(scheduleData);
                 if (scheduleData.isImported()) {
-                    item.setImage(KiemIcons.KIEM_DISABLED);
-                } else {
                     item.setImage(KiemIcons.KIEM);
+                    item.setText(1, pluginId);
+                } else {
+                    item.setImage(KiemIcons.KIEM_DISABLED);
+                    item.setText(1, location);
                 }
             }
         }
@@ -171,13 +171,10 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         table.setHeaderVisible(true);
         TableColumn column0 = new TableColumn(table, SWT.NONE);
         TableColumn column1 = new TableColumn(table, SWT.NONE);
-        TableColumn column2 = new TableColumn(table, SWT.NONE);
         column0.setText("Name");
         column0.setWidth(10);
-        column1.setText("Plugin");
+        column1.setText("Location");
         column1.setWidth(10);
-        column2.setText("Location");
-        column2.setWidth(10);
 
         table.setEnabled(true);
         table.addSelectionListener(new SelectionListener() {
@@ -227,8 +224,7 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
         // resize table headers NOW - if this is done before table layout, this gets messed up
         column0.setWidth(150);
-        column1.setWidth(100);
-        column2.setWidth(100);
+        column1.setWidth(250);
     }
 
     // --------------------------------------------------------------------------
@@ -247,13 +243,21 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         if (EditorUtils.getLastActiveEditor() != null) {
             IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
             if (editor != null) {
+                // get the attributes from the editor
+                editorId = new EditorIdWrapper(editor.getId());
+                editorName = editor.getRegisteredName();
+
                 ScheduleManager manager = ScheduleManager.getInstance();
                 data = manager.getMatchingSchedules(editorId, editorName);
 
-                // take the first default schedule
-                if (data.size() > 0) {
-                    configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE, data
-                            .get(0).toString());
+                for (ScheduleData scheduleData: data) {
+                    // take the first default schedule
+                    if (scheduleData.isImported() ) {
+                        String scheduleDataString = scheduleData.toString();
+                        configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE,
+                                scheduleDataString);
+                        break;
+                    }
                 }
             }
         }
