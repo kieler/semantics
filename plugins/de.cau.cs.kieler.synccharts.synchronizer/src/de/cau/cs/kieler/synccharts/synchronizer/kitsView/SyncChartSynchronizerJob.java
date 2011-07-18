@@ -277,7 +277,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private void serializeRegion(final Region region) {
 
         try {
-            kitsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
+            kitsEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
@@ -305,7 +305,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     state.getContents().add(copy);
                 }
 
-            }, kitsEditor.getDocument());
+            });
 
             kitsEditor.bringOnTop();
             lastActiveEditor = kitsEditor;
@@ -323,7 +323,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private void serializeState(final State state) {
 
         try {
-            kitsStateEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
+            kitsStateEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
@@ -363,7 +363,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     resource.getContents().add(copy);
                 }
 
-            }, kitsStateEditor.getDocument());
+            });
 
             kitsStateEditor.bringOnTop();
             lastActiveEditor = kitsStateEditor;
@@ -381,7 +381,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
     private void serializeTransition(final Transition transition) {
 
         try {
-            actionsEditor.getDocumentEditor().process(new IUnitOfWork.Void<XtextResource>() {
+            actionsEditor.getDocument().modify(new IUnitOfWork.Void<XtextResource>() {
 
                 @SuppressWarnings("unchecked")
                 @Override
@@ -411,7 +411,7 @@ public class SyncChartSynchronizerJob extends Job implements ISelectionListener 
                     state.getContents().add(copy);
                 }
 
-            }, actionsEditor.getDocument());
+            });
 
             actionsEditor.bringOnTop();
             lastActiveEditor = actionsEditor;

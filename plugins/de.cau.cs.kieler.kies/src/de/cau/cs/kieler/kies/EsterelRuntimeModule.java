@@ -27,13 +27,13 @@ public class EsterelRuntimeModule extends de.cau.cs.kieler.kies.AbstractEsterelR
     }
 
     // contributed by org.eclipse.xtext.generator.builder.BuilderIntegrationFragment
-    public void configureIResourceDescriptionsBuilderScope(com.google.inject.Binder binder) {
-        binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class)
-                .annotatedWith(
-                        com.google.inject.name.Names
-                                .named(org.eclipse.xtext.scoping.impl.AbstractGlobalScopeProvider.NAMED_BUILDER_SCOPE))
-                .to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
-    }
+//    public void configureIResourceDescriptionsBuilderScope(com.google.inject.Binder binder) {
+//        binder.bind(org.eclipse.xtext.resource.IResourceDescriptions.class)
+//                .annotatedWith(
+//                        com.google.inject.name.Names
+//                                .named(org.eclipse.xtext.scoping.impl.AbstractGlobalScopeProvider.NAMED_BUILDER_SCOPE))
+//                .to(org.eclipse.xtext.resource.impl.ResourceSetBasedResourceDescriptions.class);
+//    }
 
 //    /**
 //     * {@inheritDoc}

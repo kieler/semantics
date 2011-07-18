@@ -98,7 +98,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cFullStopKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
 		
 		////deprecated
-		//EndModule returns ecore::EString:
+		//EndModule:
 		//	"end" "module" | ".";
 		public ParserRule getRule() { return rule; }
 
@@ -1103,7 +1103,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cINTTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cConstantLiteralParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//ConstantAtom returns ecore::EString:
+		//ConstantAtom:
 		//	INT | ConstantLiteral;
 		public ParserRule getRule() { return rule; }
 
@@ -1125,7 +1125,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSTRINGTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
-		//ConstantLiteral returns ecore::EString:
+		//ConstantLiteral:
 		//	Float | Boolean | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
@@ -2327,7 +2327,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cEndKeyword_0 = (Keyword)cGroup.eContents().get(0);
 		private final Keyword cAwaitKeyword_1 = (Keyword)cGroup.eContents().get(1);
 		
-		//AwaitEnd returns ecore::EString:
+		//AwaitEnd:
 		//	"end" "await"?;
 		public ParserRule getRule() { return rule; }
 
@@ -4068,7 +4068,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cOrKeyword_13 = (Keyword)cAlternatives.eContents().get(13);
 		
 		//// renamings can also rename build in types and functions
-		//BuildInFunction returns ecore::EString:
+		//BuildInFunction:
 		//	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
 		public ParserRule getRule() { return rule; }
 
@@ -5304,7 +5304,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		//// ==============================================
 		//// === B.2 Namespaces and Predefined Objects  ===
 		//// ==============================================
-		//Tick returns ecore::EString:
+		//Tick:
 		//	"tick";
 		public ParserRule getRule() { return rule; }
 
@@ -5477,7 +5477,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	////deprecated
-	//EndModule returns ecore::EString:
+	//EndModule:
 	//	"end" "module" | ".";
 	public EndModuleElements getEndModuleAccess() {
 		return (pEndModule != null) ? pEndModule : (pEndModule = new EndModuleElements());
@@ -5709,7 +5709,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getConstantAccess().getRule();
 	}
 
-	//ConstantAtom returns ecore::EString:
+	//ConstantAtom:
 	//	INT | ConstantLiteral;
 	public ConstantAtomElements getConstantAtomAccess() {
 		return (pConstantAtom != null) ? pConstantAtom : (pConstantAtom = new ConstantAtomElements());
@@ -5719,7 +5719,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getConstantAtomAccess().getRule();
 	}
 
-	//ConstantLiteral returns ecore::EString:
+	//ConstantLiteral:
 	//	Float | Boolean | ID | STRING;
 	public ConstantLiteralElements getConstantLiteralAccess() {
 		return (pConstantLiteral != null) ? pConstantLiteral : (pConstantLiteral = new ConstantLiteralElements());
@@ -6014,7 +6014,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAwaitCaseAccess().getRule();
 	}
 
-	//AwaitEnd returns ecore::EString:
+	//AwaitEnd:
 	//	"end" "await"?;
 	public AwaitEndElements getAwaitEndAccess() {
 		return (pAwaitEnd != null) ? pAwaitEnd : (pAwaitEnd = new AwaitEndElements());
@@ -6442,7 +6442,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// renamings can also rename build in types and functions
-	//BuildInFunction returns ecore::EString:
+	//BuildInFunction:
 	//	"*" | "/" | "+" | "-" | "mod" | "=" | "<>" | ">" | "<" | "<=" | ">=" | "not" | "and" | "or";
 	public BuildInFunctionElements getBuildInFunctionAccess() {
 		return (pBuildInFunction != null) ? pBuildInFunction : (pBuildInFunction = new BuildInFunctionElements());
@@ -6726,7 +6726,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// ==============================================
 	//// === B.2 Namespaces and Predefined Objects  ===
 	//// ==============================================
-	//Tick returns ecore::EString:
+	//Tick:
 	//	"tick";
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
@@ -7209,7 +7209,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	// * /enum ValueType:
+	// * / enum ValueType:
 	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
 	//	| HOST="host";
 	public KExpressionsGrammarAccess.ValueTypeElements getValueTypeAccess() {

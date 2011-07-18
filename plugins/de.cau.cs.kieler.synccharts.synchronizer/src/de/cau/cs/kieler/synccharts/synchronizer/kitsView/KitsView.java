@@ -112,7 +112,8 @@ public class KitsView extends ViewPart {
             public Boolean exec(XtextResource state) throws Exception {
                 IParseResult parseResult = state.getParseResult();
                 return !state.getErrors().isEmpty() || parseResult == null
-                        || !parseResult.getParseErrors().isEmpty();
+//                        || !parseResult.getParseErrors().isEmpty();
+                        || parseResult.getSyntaxErrors().iterator().hasNext();
             }
         }));
     }

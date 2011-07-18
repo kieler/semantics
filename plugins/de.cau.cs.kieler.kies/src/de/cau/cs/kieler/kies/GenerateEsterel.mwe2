@@ -14,6 +14,7 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
+//		registerGenModelFile = "../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -39,8 +40,9 @@ Workflow {
 			// generates Java API for the generated EPackages
 			fragment = ecore.EcoreGeneratorFragment {
 				referencedGenModels =
-				"platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, 
-				 platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+				"platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+				referencedGenModels =
+				"platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 			}
 
 			// the serialization component
@@ -81,8 +83,8 @@ Workflow {
 			fragment = labeling.LabelProviderFragment {}
 
 			// outline API 
-			fragment = outline.TransformerFragment {}
-			fragment = outline.OutlineNodeAdapterFactoryFragment {}
+			fragment = outline.OutlineTreeProviderFragment {}
+			fragment = outline.QuickOutlineFragment {}
 
 			// java-based API for content assistance 
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
@@ -97,7 +99,8 @@ Workflow {
 				}
 			}
 
-			fragment = builder.BuilderIntegrationFragment {}
+// CHSCH: deactivated builder
+//			fragment = builder.BuilderIntegrationFragment {}
 
 			// project wizard (optional) 
 			/*

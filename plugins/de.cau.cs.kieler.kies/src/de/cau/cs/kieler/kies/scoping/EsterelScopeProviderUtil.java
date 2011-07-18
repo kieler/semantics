@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 
@@ -68,8 +69,8 @@ public final class EsterelScopeProviderUtil {
             if (m.getInterface() != null && m.getInterface().getIntSensorDecls() != null) {
                 for (SensorDecl sd : m.getInterface().getIntSensorDecls()) {
                     for (SensorWithType swt : sd.getSensors()) {
-                        scopeElems.add(new EObjectDescription(swt.getSensor().getName(), swt
-                                .getSensor(), getEmptyMap(String.class)));
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(swt.getSensor()
+                                .getName()), swt.getSensor(), getEmptyMap(String.class)));
                     }
                 }
             }
@@ -83,8 +84,9 @@ public final class EsterelScopeProviderUtil {
                 for (ConstantDecls decls : m.getInterface().getIntConstantDecls()) {
                     for (OneTypeConstantDecls otcd : decls.getConstants()) {
                         for (ConstantWithValue constant : otcd.getConstants()) {
-                            scopeElems.add(new EObjectDescription(constant.getConstant().getName(),
-                                    constant.getConstant(), getEmptyMap(String.class)));
+                            scopeElems.add(new EObjectDescription(QualifiedName.create(constant
+                                    .getConstant().getName()), constant.getConstant(),
+                                    getEmptyMap(String.class)));
                         }
                     }
                 }
@@ -98,7 +100,7 @@ public final class EsterelScopeProviderUtil {
             if (m.getInterface() != null && m.getInterface().getIntFunctionDecls() != null) {
                 for (FunctionDecl fd : m.getInterface().getIntFunctionDecls()) {
                     for (Function f : fd.getFunctions()) {
-                        scopeElems.add(new EObjectDescription(f.getName(), f,
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(f.getName()), f,
                                 getEmptyMap(String.class)));
                     }
                 }
@@ -113,8 +115,8 @@ public final class EsterelScopeProviderUtil {
                 for (ProcedureDecl procDecl : m.getInterface().getIntProcedureDecls()) {
                     EList<Procedure> procList = procDecl.getProcedures();
                     for (Procedure proc : procList) {
-                        scopeElems.add(new EObjectDescription(proc.getName(), proc,
-                                getEmptyMap(String.class)));
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(proc.getName()),
+                                proc, getEmptyMap(String.class)));
                     }
                 }
             }
@@ -127,7 +129,7 @@ public final class EsterelScopeProviderUtil {
             if (m.getInterface() != null && m.getInterface().getIntSignalDecls() != null) {
                 for (InterfaceSignalDecl isd : m.getInterface().getIntSignalDecls()) {
                     for (ISignal s : isd.getSignals()) {
-                        scopeElems.add(new EObjectDescription(s.getName(), s,
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                                 getEmptyMap(String.class)));
                     }
                 }
@@ -140,8 +142,8 @@ public final class EsterelScopeProviderUtil {
             if (m.getInterface() != null && m.getInterface().getIntTypeDecls() != null) {
                 for (TypeDecl typeDecl : m.getInterface().getIntTypeDecls()) {
                     for (Type type : typeDecl.getTypes()) {
-                        scopeElems.add(new EObjectDescription(type.getName(), type,
-                                getEmptyMap(String.class)));
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(type.getName()),
+                                type, getEmptyMap(String.class)));
                     }
                 }
             }
@@ -153,8 +155,8 @@ public final class EsterelScopeProviderUtil {
             if (m.getInterface() != null && m.getInterface().getIntTaskDecls() != null) {
                 for (TaskDecl taskDecl : m.getInterface().getIntTaskDecls()) {
                     for (Task task : taskDecl.getTasks()) {
-                        scopeElems.add(new EObjectDescription(task.getName(), task,
-                                getEmptyMap(String.class)));
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(task.getName()),
+                                task, getEmptyMap(String.class)));
                     }
                 }
             }
@@ -247,8 +249,8 @@ public final class EsterelScopeProviderUtil {
                 LocalSignalList localSigList = ((LocalSignalDecl) parent).getSignalList();
                 EList<ISignal> signals = ((LocalSignal) localSigList).getSignal();
                 for (ISignal s : signals) {
-                    scopeElems
-                            .add(new EObjectDescription(s.getName(), s, getEmptyMap(String.class)));
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
+                            getEmptyMap(String.class)));
                 }
             }
             parent = parent.eContainer();
@@ -276,8 +278,8 @@ public final class EsterelScopeProviderUtil {
                 EList<VariableDecl> decl = varDecl.getVarDecls();
                 for (VariableDecl vdecl : decl) {
                     for (IVariable varSingle : vdecl.getVariables()) {
-                        scopeElems.add(new EObjectDescription(varSingle.getName(), varSingle,
-                                getEmptyMap(String.class)));
+                        scopeElems.add(new EObjectDescription(QualifiedName.create(varSingle
+                                .getName()), varSingle, getEmptyMap(String.class)));
                     }
                 }
             }
@@ -304,8 +306,8 @@ public final class EsterelScopeProviderUtil {
                 EList<ISignal> trapDecl = ((Trap) parent).getTrapDeclList().getTrapDecls();
                 // add Trap to the scope
                 for (ISignal trap : trapDecl) {
-                    scopeElems.add(new EObjectDescription(trap.getName(), trap,
-                            getEmptyMap(String.class)));
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(trap.getName()),
+                            trap, getEmptyMap(String.class)));
                 }
             }
             parent = parent.eContainer();
@@ -331,8 +333,8 @@ public final class EsterelScopeProviderUtil {
                 Program p = (Program) parent;
                 // add Trap to the scope
                 for (Module m : p.getModules()) {
-                    scopeElems
-                            .add(new EObjectDescription(m.getName(), m, getEmptyMap(String.class)));
+                    scopeElems.add(new EObjectDescription(QualifiedName.create(m.getName()), m,
+                            getEmptyMap(String.class)));
                 }
                 break;
             }

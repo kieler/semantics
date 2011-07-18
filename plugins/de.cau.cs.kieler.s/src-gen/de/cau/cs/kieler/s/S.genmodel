@@ -6,50 +6,50 @@
     modelPluginID="de.cau.cs.kieler.s" forceOverwrite="true" modelName="S" updateClasspath="false"
     rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container" complianceLevel="5.0"
     copyrightFields="false" editPluginID="de.cau.cs.kieler.s.edit" editorPluginID="de.cau.cs.kieler.s.editor"
-    usedGenPackages="../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    usedGenPackages="platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="S" basePackage="de.cau.cs.kieler.s" disposableProviderFactory="true"
-      ecorePackage="S.ecore#/">
-    <genClasses ecoreClass="S.ecore#//Program">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/priority"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/signals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
+      ecorePackage="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#/">
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Program">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Program/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Program/priority"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Program/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Program/states"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//State">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//State/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/signals"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/instructions"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//State">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//State/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//State/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//State/instructions"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Instruction">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Instruction/continuation"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Instruction">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Instruction/continuation"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Pause"/>
-    <genClasses ecoreClass="S.ecore#//Term"/>
-    <genClasses ecoreClass="S.ecore#//Halt"/>
-    <genClasses ecoreClass="S.ecore#//Join"/>
-    <genClasses ecoreClass="S.ecore#//Abort"/>
-    <genClasses ecoreClass="S.ecore#//If">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//If/expression"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//If/instructions"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Pause"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Term"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Halt"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Join"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Abort"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//If">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//If/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//If/instructions"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Goto">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Goto/state"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Goto">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Goto/state"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Fork">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Fork/state"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Fork/priority"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Fork">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Fork/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Fork/priority"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Forke">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Forke/state"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Forke">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Forke/state"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Emit">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Emit/signal"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Emit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Emit/signal"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Await">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Await/signal"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Await">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Await/signal"/>
     </genClasses>
-    <genClasses ecoreClass="S.ecore#//Prio">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Prio/priority"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Prio">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.s/src-gen/de/cau/cs/kieler/s/S.ecore#//Prio/priority"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

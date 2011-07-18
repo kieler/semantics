@@ -16,10 +16,10 @@ package de.cau.cs.kieler.synccharts.synchronizer;
 import org.eclipse.emf.compare.diff.metamodel.DiffModel;
 import org.eclipse.ui.texteditor.TextOperationAction;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.edit.IDocumentEditor;
+//import org.eclipse.xtext.ui.editor.model.edit.IDocumentEditor;
 
 import de.cau.cs.kieler.core.WrappedException;
-import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
+//import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
 
 /**
  * A Runnable encapsulating the activities for synchronizing a textual view.
@@ -49,11 +49,13 @@ public class InvokeXtextEditorSynchronizationRunnable implements Runnable {
             // xtextEditor.getDocument().modify(
             // new SynchronizeXtextEditorUnitOfWork(diffModel, null, buffer));
             // } else { }
-            IDocumentEditor documentEditor = KitsUIPlugin.getInstance()
-                    .getInjector(KitsUIPlugin.KITS_LANGUAGE).getInstance(IDocumentEditor.class);
-
-            documentEditor.process(new SynchronizeXtextEditorUnitOfWork(diffModel, null),
-                    xtextEditor.getDocument());
+//            IDocumentEditor documentEditor = KitsUIPlugin.getInstance()
+//                    .getInjector(KitsUIPlugin.KITS_LANGUAGE).getInstance(IDocumentEditor.class);
+//
+//            documentEditor.process(new SynchronizeXtextEditorUnitOfWork(diffModel, null),
+//                    xtextEditor.getDocument());
+            
+            xtextEditor.getDocument().modify(new SynchronizeXtextEditorUnitOfWork(diffModel, null));
 
             // if (this.buffer != null && !Strings.isEmpty(buffer.toString())) {
             // xtextEditor.getDocument().set(buffer.toString());

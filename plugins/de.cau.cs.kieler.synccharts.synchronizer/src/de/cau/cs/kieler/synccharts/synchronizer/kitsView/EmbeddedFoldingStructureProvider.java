@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.synccharts.synchronizer.kitsView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -17,16 +18,14 @@ import org.eclipse.jface.text.source.projection.ProjectionViewer;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextSyntaxDiagnostic;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.folding.IFoldingRegion;
+import org.eclipse.xtext.ui.editor.folding.FoldedPosition;
 import org.eclipse.xtext.ui.editor.folding.IFoldingRegionProvider;
 import org.eclipse.xtext.ui.editor.folding.IFoldingStructureProvider;
-import org.eclipse.xtext.ui.editor.folding.StyledProjectionAnnotation;
 import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Iterables;
-import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 
 /**
@@ -105,23 +104,24 @@ public class EmbeddedFoldingStructureProvider implements IXtextModelListener {
 	protected void calculateProjectionAnnotationModel(boolean allowCollapse) {
 		ProjectionAnnotationModel projectionAnnotationModel = this.viewer.getProjectionAnnotationModel();
 		if (projectionAnnotationModel != null) {
-			List<IFoldingRegion> foldingRegions = foldingRegionProvider.getFoldingRegions(editor.getDocument());
-			HashBiMap<Position, IFoldingRegion> positionsMap = toPositionIndexedMap(foldingRegions);
+			Collection<FoldedPosition> foldingRegions = foldingRegionProvider.getFoldingRegions(editor.getDocument());
+			HashBiMap<Position, FoldedPosition> positionsMap = toPositionIndexedMap(foldingRegions);
 			Annotation[] newRegions = mergeFoldingRegions(positionsMap, projectionAnnotationModel);
 			updateFoldingRegions(allowCollapse, projectionAnnotationModel, positionsMap, newRegions);
 		}
 	}
 
-	protected HashBiMap<Position, IFoldingRegion> toPositionIndexedMap(List<IFoldingRegion> foldingRegions) {
-		HashBiMap<Position, IFoldingRegion> positionsMap = Maps.newHashBiMap();
-		for (IFoldingRegion foldingRegion : foldingRegions) {
-			positionsMap.put(foldingRegion.getPosition(), foldingRegion);
+	protected HashBiMap<Position, FoldedPosition> toPositionIndexedMap(Collection<FoldedPosition> foldingRegions) {
+		HashBiMap<Position, FoldedPosition> positionsMap = HashBiMap.create();
+		for (FoldedPosition foldingRegion : foldingRegions) {
+//		        positionsMap.put(foldingRegion.getPosition(), foldingRegion);
+			positionsMap.put(new Position(foldingRegion.getOffset(), foldingRegion.getLength()), foldingRegion);
 		}
 		return positionsMap;
 	}
 
 	@SuppressWarnings("unchecked")
-	protected Annotation[] mergeFoldingRegions(HashBiMap<Position, IFoldingRegion> positionsMap,
+	protected Annotation[] mergeFoldingRegions(HashBiMap<Position, FoldedPosition> positionsMap,
 			ProjectionAnnotationModel projectionAnnotationModel) {
 		List<Annotation> deletions = new ArrayList<Annotation>();
 		for (Iterator<Annotation> iterator = projectionAnnotationModel.getAnnotationIterator(); iterator.hasNext();) {
@@ -137,10 +137,10 @@ public class EmbeddedFoldingStructureProvider implements IXtextModelListener {
 	}
 
 	protected void updateFoldingRegions(boolean allowCollapse, ProjectionAnnotationModel model,
-			HashBiMap<Position, IFoldingRegion> positionsMap, Annotation[] deletions) {
+			HashBiMap<Position, FoldedPosition> positionsMap, Annotation[] deletions) {
 		Map<ProjectionAnnotation, Position> additionsMap = new HashMap<ProjectionAnnotation, Position>();
-		for (Iterator<IFoldingRegion> iterator = positionsMap.values().iterator(); iterator.hasNext();) {
-			IFoldingRegion foldingRegion = iterator.next();
+		for (Iterator<FoldedPosition> iterator = positionsMap.values().iterator(); iterator.hasNext();) {
+		    FoldedPosition foldingRegion = iterator.next();
 			addProjectionAnnotation(allowCollapse, foldingRegion, additionsMap);
 		}
 		if (deletions.length != 0 || additionsMap.size() != 0) {
@@ -148,14 +148,15 @@ public class EmbeddedFoldingStructureProvider implements IXtextModelListener {
 		}
 	}
 
-	protected void addProjectionAnnotation(boolean allowCollapse, IFoldingRegion foldingRegion,
+	protected void addProjectionAnnotation(boolean allowCollapse, FoldedPosition foldingRegion,
 			Map<ProjectionAnnotation, Position> additionsMap) {
 		ProjectionAnnotation projectionAnnotation = createProjectionAnnotation(allowCollapse, foldingRegion);
-		additionsMap.put(projectionAnnotation, foldingRegion.getPosition());
+//                additionsMap.put(projectionAnnotation, foldingRegion.getPosition());
+                additionsMap.put(projectionAnnotation, new Position(foldingRegion.getOffset(), foldingRegion.getLength()));
 	}
 
-	protected ProjectionAnnotation createProjectionAnnotation(boolean allowCollapse, IFoldingRegion foldingRegion) {
-		return new StyledProjectionAnnotation(allowCollapse, foldingRegion.getAlias());
+	protected ProjectionAnnotation createProjectionAnnotation(boolean allowCollapse, FoldedPosition foldingRegion) {
+		return new ProjectionAnnotation(allowCollapse);
 	}
 
 	/**

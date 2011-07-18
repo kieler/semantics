@@ -6,378 +6,378 @@
     modelPluginID="de.cau.cs.kieler.kies" forceOverwrite="true" modelName="Esterel"
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.kies.edit"
-    editorPluginID="de.cau.cs.kieler.kies.editor" usedGenPackages="../../../../../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
+    editorPluginID="de.cau.cs.kieler.kies.editor" usedGenPackages="platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
   <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.kies" disposableProviderFactory="true"
-      ecorePackage="Esterel.ecore#/">
-    <genClasses ecoreClass="Esterel.ecore#//Program">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Program/modules"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Module">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Module/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/interface"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Module/body"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Module/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ModuleBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleBody/statements"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ModuleInterface">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intSignalDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intTypeDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intSensorDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intConstantDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intRelationDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intTaskDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intFunctionDecls"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleInterface/intProcedureDecls"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ChannelDescription"/>
-    <genClasses ecoreClass="Esterel.ecore#//TypeIdentifier"/>
-    <genClasses ecoreClass="Esterel.ecore#//LocalSignalDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalSignalDecl/signalList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalSignalDecl/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//LocalSignalDecl/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//LocalSignalList"/>
-    <genClasses ecoreClass="Esterel.ecore#//SensorDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorDecl/sensors"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//SensorWithType">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/sensor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//SensorWithType/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//RelationDecl"/>
-    <genClasses ecoreClass="Esterel.ecore#//RelationType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//RelationType/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//RelationImplication">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationImplication/first"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationImplication/second"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//RelationIncompatibility">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//RelationIncompatibility/incomp"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TypeDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeDecl/types"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Type">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Type/name"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ConstantDecls">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantDecls/constants"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//OneTypeConstantDecls">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/constants"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//OneTypeConstantDecls/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ConstantWithValue">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantWithValue/constant"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantWithValue/value"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//FunctionDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionDecl/functions"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Function">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Function/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Function/idList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Function/type"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ProcedureDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureDecl/procedures"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Procedure">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Procedure/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Procedure/idList1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Procedure/idList2"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TaskDecl">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskDecl/tasks"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Task">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Task/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/idList1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Task/idList2"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Statement"/>
-    <genClasses ecoreClass="Esterel.ecore#//Block">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Block/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Assignment">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Assignment/var"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Assignment/expr"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Abort">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/statement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Abort/body"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AbortBody"/>
-    <genClasses ecoreClass="Esterel.ecore#//AbortInstance">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortInstance/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortInstance/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//AbortInstance/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AbortCase">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortCase/cases"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//AbortCase/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AbortCaseSingle">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortCaseSingle/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AbortCaseSingle/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbortBody"/>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbortEnd">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakAbortEnd/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbortEndAlt">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//WeakAbortEndAlt/end"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//WeakAbortEndAlt/endA"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Await">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Await/body"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AwaitBody">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//AwaitBody/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AwaitInstance">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AwaitInstance/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AwaitInstance/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//AwaitCase">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//AwaitCase/cases"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ProcCall">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/proc"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/varList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcCall/kexpressions"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Do">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/statement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Do/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//DoUpto">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DoUpto/expr"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//DoWatching">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DoWatching/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DoWatching/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//DoWatchingEnd">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DoWatchingEnd/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DoWatchingEnd/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Emit">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Emit/tick"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Emit/expr"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//EveryDo">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/delay"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//EveryDo/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//EveryDo/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Exit">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exit/trap"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exit/expression"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Halt"/>
-    <genClasses ecoreClass="Esterel.ecore#//IfTest">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/thenPart"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/elsif"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//IfTest/elsePart"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//IfTest/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ElsIf">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsIf/thenPart"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ThenPart">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ThenPart/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ElsePart">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ElsePart/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Loop">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Loop/body"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Loop/end1"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Loop/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//EndLoop">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//EndLoop/endOpt"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//LoopEach"/>
-    <genClasses ecoreClass="Esterel.ecore#//LoopDelay">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LoopDelay/delay"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//LoopBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LoopBody/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Nothing"/>
-    <genClasses ecoreClass="Esterel.ecore#//Pause"/>
-    <genClasses ecoreClass="Esterel.ecore#//Present">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/body"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Present/elsePart"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Present/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//PresentBody"/>
-    <genClasses ecoreClass="Esterel.ecore#//PresentEventBody">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentEventBody/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentEventBody/thenPart"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//PresentCaseList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCaseList/cases"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//PresentCase">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCase/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentCase/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//PresentEvent">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//PresentEvent/expression"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/fB"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/eB"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//PresentEvent/tick"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Repeat">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Repeat/positive"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Repeat/expression"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Repeat/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Repeat/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Run">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Run/module"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Run/list"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ModuleRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ModuleRenaming/module"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ModuleRenaming/newName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//RenamingList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//RenamingList/list"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Renaming">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Renaming/renamings"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TypeRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/newName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//TypeRenaming/newType"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TypeRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ConstantRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantRenaming/newName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantRenaming/newValue"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//FunctionRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/newName"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//FunctionRenaming/newFunc"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ProcedureRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureRenaming/newName"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ProcedureRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TaskRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskRenaming/newName"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TaskRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//SignalRenaming">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//SignalRenaming/newName"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//SignalRenaming/oldName"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Suspend">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/statement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Suspend/delay"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Sustain">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/signal"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Sustain/tick"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sustain/expression"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Trap">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Trap/trapDeclList"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Trap/statement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Trap/trapHandler"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Trap/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TrapDeclList">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapDeclList/trapDecls"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TrapHandler">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapHandler/trapExpr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapHandler/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//LocalVariable">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/var"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalVariable/statement"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//LocalVariable/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//DelayExpr">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/expr"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayExpr/event"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayExpr/isImmediate"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//DelayEvent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/tick"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//DelayEvent/expr"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/fB"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//DelayEvent/eB"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Exec">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/task"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/body"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/retSignal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/statement"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Exec/execCaseList"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//Exec/optEnd"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ExecBody">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecBody/vars"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecBody/kexpressions"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ExecCase">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/task"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/body"/>
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/retSignal"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//ExecCase/statement"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//EsterelTypeIdentifier">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelTypeIdentifier/func"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//EsterelType">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//EsterelType/estType"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//LocalSignal">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//LocalSignal/signal"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Relation">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Relation/relations"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Constant"/>
-    <genClasses ecoreClass="Esterel.ecore#//Parallel">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Parallel/list"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//Sequence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Sequence/list"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbort"/>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbortInstance">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakAbortInstance/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//WeakAbortCase">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//WeakAbortCase/end"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TrapDecl"/>
-    <genClasses ecoreClass="Esterel.ecore#//TrapExpression">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//TrapExpression/trap"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//FunctionExpression">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/function"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//FunctionExpression/kexpressions"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//ConstantExpression">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Esterel.ecore#//ConstantExpression/constant"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esterel.ecore#//ConstantExpression/value"/>
-    </genClasses>
-    <genClasses ecoreClass="Esterel.ecore#//TrapReferenceExpr"/>
+      ecorePackage="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#/">
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Program">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Program/modules"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Module">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Module/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Module/interface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Module/body"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Module/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleBody/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intSignalDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intTypeDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intSensorDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intConstantDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intRelationDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intTaskDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intFunctionDecls"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleInterface/intProcedureDecls"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ChannelDescription"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeIdentifier"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignalDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignalDecl/signalList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignalDecl/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignalDecl/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignalList"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SensorDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SensorDecl/sensors"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SensorWithType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SensorWithType/sensor"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SensorWithType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationDecl"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationType/type"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationImplication">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationImplication/first"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationImplication/second"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationIncompatibility">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RelationIncompatibility/incomp"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeDecl/types"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Type">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Type/name"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantDecls">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantDecls/constants"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//OneTypeConstantDecls">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//OneTypeConstantDecls/constants"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//OneTypeConstantDecls/type"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantWithValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantWithValue/constant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantWithValue/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionDecl/functions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Function">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Function/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Function/idList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Function/type"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcedureDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcedureDecl/procedures"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Procedure">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Procedure/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Procedure/idList1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Procedure/idList2"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TaskDecl">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TaskDecl/tasks"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Task">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Task/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Task/idList1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Task/idList2"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Statement"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Block">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Block/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Assignment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Assignment/var"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Assignment/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Abort">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Abort/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Abort/body"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortBody"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortInstance/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortInstance/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortInstance/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCase/cases"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCase/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCaseSingle">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCaseSingle/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AbortCaseSingle/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortBody"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortEnd">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortEnd/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortEndAlt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortEndAlt/end"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortEndAlt/endA"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Await">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Await/body"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitBody">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitBody/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitInstance/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitInstance/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//AwaitCase/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcCall/proc"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcCall/varList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcCall/kexpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Do">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Do/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Do/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoUpto">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoUpto/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatching">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatching/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatching/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatchingEnd">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatchingEnd/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DoWatchingEnd/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Emit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Emit/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Emit/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Emit/expr"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EveryDo">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EveryDo/delay"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EveryDo/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EveryDo/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exit/trap"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exit/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Halt"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest/thenPart"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest/elsif"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest/elsePart"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//IfTest/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ElsIf">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ElsIf/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ElsIf/thenPart"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ThenPart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ThenPart/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ElsePart">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ElsePart/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Loop">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Loop/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Loop/end1"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Loop/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EndLoop">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EndLoop/endOpt"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LoopEach"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LoopDelay">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LoopDelay/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LoopBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LoopBody/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Nothing"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Pause"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Present">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Present/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Present/elsePart"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Present/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentBody"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEventBody">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEventBody/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEventBody/thenPart"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentCaseList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentCaseList/cases"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentCase/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentCase/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEvent/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEvent/fB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEvent/eB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//PresentEvent/tick"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Repeat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Repeat/positive"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Repeat/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Repeat/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Repeat/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Run">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Run/module"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Run/list"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleRenaming/module"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ModuleRenaming/newName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RenamingList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//RenamingList/list"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Renaming">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Renaming/renamings"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeRenaming/newType"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TypeRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantRenaming/newValue"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionRenaming/newName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionRenaming/newFunc"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcedureRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcedureRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ProcedureRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TaskRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TaskRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TaskRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SignalRenaming">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SignalRenaming/newName"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//SignalRenaming/oldName"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Suspend">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Suspend/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Suspend/delay"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sustain">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sustain/signal"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sustain/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sustain/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Trap">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Trap/trapDeclList"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Trap/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Trap/trapHandler"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Trap/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapDeclList">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapDeclList/trapDecls"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapHandler">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapHandler/trapExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapHandler/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalVariable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalVariable/var"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalVariable/statement"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalVariable/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayExpr">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayExpr/expr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayExpr/event"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayExpr/isImmediate"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayEvent/tick"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayEvent/expr"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayEvent/fB"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//DelayEvent/eB"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/task"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/body"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/retSignal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/statement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/execCaseList"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Exec/optEnd"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecBody">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecBody/vars"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecBody/kexpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecCase">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecCase/task"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecCase/body"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecCase/retSignal"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ExecCase/statement"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EsterelTypeIdentifier">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EsterelTypeIdentifier/func"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EsterelType">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//EsterelType/estType"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignal">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//LocalSignal/signal"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Relation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Relation/relations"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Constant"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Parallel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Parallel/list"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sequence">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//Sequence/list"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbort"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortInstance">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortInstance/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//WeakAbortCase/end"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapDecl"/>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapExpression/trap"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionExpression/function"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//FunctionExpression/kexpressions"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantExpression">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantExpression/constant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//ConstantExpression/value"/>
+    </genClasses>
+    <genClasses ecoreClass="platform:/resource/de.cau.cs.kieler.kies/src-gen/de/cau/cs/kieler/kies/Esterel.ecore#//TrapReferenceExpr"/>
   </genPackages>
 </genmodel:GenModel>

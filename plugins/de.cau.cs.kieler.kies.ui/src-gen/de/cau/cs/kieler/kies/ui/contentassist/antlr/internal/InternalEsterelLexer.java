@@ -13,1892 +13,2088 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsterelLexer extends Lexer {
     public static final int RULE_ID=7;
+    public static final int T__29=29;
+    public static final int T__28=28;
+    public static final int T__27=27;
+    public static final int T__26=26;
+    public static final int T__25=25;
+    public static final int T__24=24;
+    public static final int T__23=23;
+    public static final int T__22=22;
     public static final int RULE_ANY_OTHER=16;
-    public static final int T29=29;
-    public static final int T28=28;
-    public static final int T27=27;
-    public static final int T26=26;
-    public static final int T25=25;
-    public static final int T24=24;
+    public static final int T__21=21;
+    public static final int T__20=20;
     public static final int EOF=-1;
-    public static final int T23=23;
-    public static final int T22=22;
-    public static final int T21=21;
-    public static final int T20=20;
-    public static final int T38=38;
-    public static final int T37=37;
-    public static final int T39=39;
-    public static final int T34=34;
-    public static final int T33=33;
-    public static final int T36=36;
+    public static final int T__93=93;
+    public static final int T__19=19;
+    public static final int T__94=94;
+    public static final int T__91=91;
+    public static final int T__92=92;
+    public static final int T__90=90;
+    public static final int T__18=18;
+    public static final int T__17=17;
     public static final int RULE_COMMENT_ANNOTATION=10;
-    public static final int T35=35;
-    public static final int T30=30;
+    public static final int T__99=99;
+    public static final int T__98=98;
     public static final int RULE_ESTEREL_ML_COMMENT=12;
-    public static final int T32=32;
-    public static final int T31=31;
-    public static final int T49=49;
-    public static final int T48=48;
-    public static final int T100=100;
-    public static final int T43=43;
-    public static final int T42=42;
-    public static final int T102=102;
-    public static final int T41=41;
-    public static final int T101=101;
-    public static final int T40=40;
-    public static final int T47=47;
-    public static final int T46=46;
+    public static final int T__97=97;
+    public static final int T__96=96;
+    public static final int T__95=95;
+    public static final int T__80=80;
+    public static final int T__81=81;
+    public static final int T__82=82;
+    public static final int T__83=83;
+    public static final int T__85=85;
+    public static final int T__84=84;
+    public static final int T__87=87;
+    public static final int T__86=86;
+    public static final int T__89=89;
+    public static final int T__88=88;
     public static final int RULE_ML_COMMENT=13;
-    public static final int T45=45;
-    public static final int T44=44;
-    public static final int T109=109;
-    public static final int T107=107;
-    public static final int T108=108;
     public static final int RULE_STRING=8;
-    public static final int T105=105;
-    public static final int T106=106;
-    public static final int T103=103;
-    public static final int T104=104;
-    public static final int T50=50;
-    public static final int T59=59;
-    public static final int T52=52;
-    public static final int T51=51;
-    public static final int T54=54;
-    public static final int T110=110;
-    public static final int T53=53;
-    public static final int T56=56;
-    public static final int T55=55;
-    public static final int T58=58;
-    public static final int T57=57;
-    public static final int T75=75;
+    public static final int T__71=71;
+    public static final int T__72=72;
+    public static final int T__70=70;
+    public static final int T__76=76;
+    public static final int T__75=75;
+    public static final int T__74=74;
+    public static final int T__73=73;
+    public static final int T__79=79;
+    public static final int T__78=78;
+    public static final int T__77=77;
+    public static final int T__68=68;
     public static final int RULE_BOOLEAN=6;
-    public static final int T76=76;
-    public static final int T73=73;
-    public static final int T74=74;
-    public static final int T79=79;
-    public static final int T77=77;
-    public static final int T78=78;
-    public static final int T72=72;
-    public static final int T71=71;
-    public static final int T70=70;
-    public static final int T62=62;
-    public static final int T63=63;
-    public static final int T64=64;
-    public static final int T65=65;
-    public static final int T66=66;
-    public static final int T67=67;
-    public static final int T68=68;
-    public static final int T69=69;
+    public static final int T__69=69;
+    public static final int T__66=66;
+    public static final int T__67=67;
+    public static final int T__64=64;
+    public static final int T__65=65;
+    public static final int T__62=62;
+    public static final int T__63=63;
+    public static final int T__61=61;
+    public static final int T__60=60;
+    public static final int T__55=55;
+    public static final int T__56=56;
+    public static final int T__57=57;
+    public static final int T__58=58;
+    public static final int T__51=51;
+    public static final int T__52=52;
+    public static final int T__53=53;
+    public static final int T__54=54;
+    public static final int T__107=107;
+    public static final int T__108=108;
+    public static final int T__109=109;
+    public static final int T__59=59;
+    public static final int T__103=103;
+    public static final int T__104=104;
+    public static final int T__105=105;
+    public static final int T__106=106;
+    public static final int T__110=110;
     public static final int RULE_INT=4;
-    public static final int T61=61;
+    public static final int T__50=50;
     public static final int RULE_ESTEREL_SL_COMMENT=11;
-    public static final int T60=60;
-    public static final int T99=99;
-    public static final int T97=97;
-    public static final int T98=98;
-    public static final int T95=95;
-    public static final int T96=96;
-    public static final int T94=94;
+    public static final int T__42=42;
+    public static final int T__43=43;
+    public static final int T__40=40;
+    public static final int T__41=41;
+    public static final int T__46=46;
+    public static final int T__47=47;
+    public static final int T__44=44;
+    public static final int T__45=45;
+    public static final int T__48=48;
+    public static final int T__49=49;
+    public static final int T__102=102;
+    public static final int T__101=101;
+    public static final int T__100=100;
     public static final int RULE_FLOAT=5;
-    public static final int Tokens=111;
-    public static final int T93=93;
     public static final int RULE_SL_COMMENT=14;
-    public static final int T92=92;
     public static final int RULE_HOSTCODE=9;
-    public static final int T91=91;
-    public static final int T90=90;
-    public static final int T88=88;
-    public static final int T89=89;
-    public static final int T84=84;
-    public static final int T85=85;
-    public static final int T86=86;
-    public static final int T87=87;
+    public static final int T__30=30;
+    public static final int T__31=31;
+    public static final int T__32=32;
+    public static final int T__33=33;
+    public static final int T__34=34;
+    public static final int T__35=35;
+    public static final int T__36=36;
+    public static final int T__37=37;
+    public static final int T__38=38;
+    public static final int T__39=39;
     public static final int RULE_WS=15;
-    public static final int T81=81;
-    public static final int T80=80;
-    public static final int T17=17;
-    public static final int T83=83;
-    public static final int T18=18;
-    public static final int T82=82;
-    public static final int T19=19;
+
+    // delegates
+    // delegators
+
     public InternalEsterelLexer() {;} 
     public InternalEsterelLexer(CharStream input) {
-        super(input);
+        this(input, new RecognizerSharedState());
+    }
+    public InternalEsterelLexer(CharStream input, RecognizerSharedState state) {
+        super(input,state);
+
     }
     public String getGrammarFileName() { return "../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g"; }
 
-    // $ANTLR start T17
-    public final void mT17() throws RecognitionException {
+    // $ANTLR start "T__17"
+    public final void mT__17() throws RecognitionException {
         try {
-            int _type = T17;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:10:5: ( 'tick' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:10:7: 'tick'
+            int _type = T__17;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:11:7: ( 'tick' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:11:9: 'tick'
             {
             match("tick"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T17
+    // $ANTLR end "T__17"
 
-    // $ANTLR start T18
-    public final void mT18() throws RecognitionException {
+    // $ANTLR start "T__18"
+    public final void mT__18() throws RecognitionException {
         try {
-            int _type = T18;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:11:5: ( 'pre' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:11:7: 'pre'
+            int _type = T__18;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:12:7: ( 'pre' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:12:9: 'pre'
             {
             match("pre"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T18
+    // $ANTLR end "T__18"
 
-    // $ANTLR start T19
-    public final void mT19() throws RecognitionException {
+    // $ANTLR start "T__19"
+    public final void mT__19() throws RecognitionException {
         try {
-            int _type = T19;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:12:5: ( 'or' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:12:7: 'or'
+            int _type = T__19;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:13:7: ( 'or' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:13:9: 'or'
             {
             match("or"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T19
+    // $ANTLR end "T__19"
 
-    // $ANTLR start T20
-    public final void mT20() throws RecognitionException {
+    // $ANTLR start "T__20"
+    public final void mT__20() throws RecognitionException {
         try {
-            int _type = T20;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:13:5: ( 'and' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:13:7: 'and'
+            int _type = T__20;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:14:7: ( 'and' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:14:9: 'and'
             {
             match("and"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T20
+    // $ANTLR end "T__20"
 
-    // $ANTLR start T21
-    public final void mT21() throws RecognitionException {
+    // $ANTLR start "T__21"
+    public final void mT__21() throws RecognitionException {
         try {
-            int _type = T21;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:14:5: ( 'not' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:14:7: 'not'
+            int _type = T__21;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:15:7: ( 'not' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:15:9: 'not'
             {
             match("not"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T21
+    // $ANTLR end "T__21"
 
-    // $ANTLR start T22
-    public final void mT22() throws RecognitionException {
+    // $ANTLR start "T__22"
+    public final void mT__22() throws RecognitionException {
         try {
-            int _type = T22;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:15:5: ( '+' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:15:7: '+'
+            int _type = T__22;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:16:7: ( '+' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:16:9: '+'
             {
             match('+'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T22
+    // $ANTLR end "T__22"
 
-    // $ANTLR start T23
-    public final void mT23() throws RecognitionException {
+    // $ANTLR start "T__23"
+    public final void mT__23() throws RecognitionException {
         try {
-            int _type = T23;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:16:5: ( '-' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:16:7: '-'
+            int _type = T__23;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:17:7: ( '-' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:17:9: '-'
             {
             match('-'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T23
+    // $ANTLR end "T__23"
 
-    // $ANTLR start T24
-    public final void mT24() throws RecognitionException {
+    // $ANTLR start "T__24"
+    public final void mT__24() throws RecognitionException {
         try {
-            int _type = T24;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:17:5: ( '*' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:17:7: '*'
+            int _type = T__24;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:18:7: ( '*' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:18:9: '*'
             {
             match('*'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T24
+    // $ANTLR end "T__24"
 
-    // $ANTLR start T25
-    public final void mT25() throws RecognitionException {
+    // $ANTLR start "T__25"
+    public final void mT__25() throws RecognitionException {
         try {
-            int _type = T25;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:18:5: ( 'mod' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:18:7: 'mod'
+            int _type = T__25;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:19:7: ( 'mod' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:19:9: 'mod'
             {
             match("mod"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T25
+    // $ANTLR end "T__25"
 
-    // $ANTLR start T26
-    public final void mT26() throws RecognitionException {
+    // $ANTLR start "T__26"
+    public final void mT__26() throws RecognitionException {
         try {
-            int _type = T26;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:19:5: ( '/' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:19:7: '/'
+            int _type = T__26;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:20:7: ( '/' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:20:9: '/'
             {
             match('/'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T26
+    // $ANTLR end "T__26"
 
-    // $ANTLR start T27
-    public final void mT27() throws RecognitionException {
+    // $ANTLR start "T__27"
+    public final void mT__27() throws RecognitionException {
         try {
-            int _type = T27;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:20:5: ( '?' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:20:7: '?'
+            int _type = T__27;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:21:7: ( '?' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:21:9: '?'
             {
             match('?'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T27
+    // $ANTLR end "T__27"
 
-    // $ANTLR start T28
-    public final void mT28() throws RecognitionException {
+    // $ANTLR start "T__28"
+    public final void mT__28() throws RecognitionException {
         try {
-            int _type = T28;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:21:5: ( '.' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:21:7: '.'
+            int _type = T__28;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:22:7: ( '.' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:22:9: '.'
             {
             match('.'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T28
+    // $ANTLR end "T__28"
 
-    // $ANTLR start T29
-    public final void mT29() throws RecognitionException {
+    // $ANTLR start "T__29"
+    public final void mT__29() throws RecognitionException {
         try {
-            int _type = T29;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:22:5: ( '=' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:22:7: '='
+            int _type = T__29;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:23:7: ( '=' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:23:9: '='
             {
             match('='); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T29
+    // $ANTLR end "T__29"
 
-    // $ANTLR start T30
-    public final void mT30() throws RecognitionException {
+    // $ANTLR start "T__30"
+    public final void mT__30() throws RecognitionException {
         try {
-            int _type = T30;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:23:5: ( '<>' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:23:7: '<>'
+            int _type = T__30;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:24:7: ( '<>' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:24:9: '<>'
             {
             match("<>"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T30
+    // $ANTLR end "T__30"
 
-    // $ANTLR start T31
-    public final void mT31() throws RecognitionException {
+    // $ANTLR start "T__31"
+    public final void mT__31() throws RecognitionException {
         try {
-            int _type = T31;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:24:5: ( '>' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:24:7: '>'
+            int _type = T__31;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:25:7: ( '>' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:25:9: '>'
             {
             match('>'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T31
+    // $ANTLR end "T__31"
 
-    // $ANTLR start T32
-    public final void mT32() throws RecognitionException {
+    // $ANTLR start "T__32"
+    public final void mT__32() throws RecognitionException {
         try {
-            int _type = T32;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:25:5: ( '<' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:25:7: '<'
+            int _type = T__32;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:26:7: ( '<' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:26:9: '<'
             {
             match('<'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T32
+    // $ANTLR end "T__32"
 
-    // $ANTLR start T33
-    public final void mT33() throws RecognitionException {
+    // $ANTLR start "T__33"
+    public final void mT__33() throws RecognitionException {
         try {
-            int _type = T33;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:26:5: ( '<=' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:26:7: '<='
+            int _type = T__33;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:27:7: ( '<=' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:27:9: '<='
             {
             match("<="); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T33
+    // $ANTLR end "T__33"
 
-    // $ANTLR start T34
-    public final void mT34() throws RecognitionException {
+    // $ANTLR start "T__34"
+    public final void mT__34() throws RecognitionException {
         try {
-            int _type = T34;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:27:5: ( '>=' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:27:7: '>='
+            int _type = T__34;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:28:7: ( '>=' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:28:9: '>='
             {
             match(">="); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T34
+    // $ANTLR end "T__34"
 
-    // $ANTLR start T35
-    public final void mT35() throws RecognitionException {
+    // $ANTLR start "T__35"
+    public final void mT__35() throws RecognitionException {
         try {
-            int _type = T35;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:28:5: ( 'pure' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:28:7: 'pure'
+            int _type = T__35;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:29:7: ( 'pure' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:29:9: 'pure'
             {
             match("pure"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T35
+    // $ANTLR end "T__35"
 
-    // $ANTLR start T36
-    public final void mT36() throws RecognitionException {
+    // $ANTLR start "T__36"
+    public final void mT__36() throws RecognitionException {
         try {
-            int _type = T36;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:29:5: ( 'boolean' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:29:7: 'boolean'
+            int _type = T__36;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30:7: ( 'boolean' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30:9: 'boolean'
             {
             match("boolean"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T36
+    // $ANTLR end "T__36"
 
-    // $ANTLR start T37
-    public final void mT37() throws RecognitionException {
+    // $ANTLR start "T__37"
+    public final void mT__37() throws RecognitionException {
         try {
-            int _type = T37;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30:5: ( 'unsigned' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:30:7: 'unsigned'
+            int _type = T__37;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31:7: ( 'unsigned' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31:9: 'unsigned'
             {
             match("unsigned"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T37
+    // $ANTLR end "T__37"
 
-    // $ANTLR start T38
-    public final void mT38() throws RecognitionException {
+    // $ANTLR start "T__38"
+    public final void mT__38() throws RecognitionException {
         try {
-            int _type = T38;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31:5: ( 'integer' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:31:7: 'integer'
+            int _type = T__38;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32:7: ( 'integer' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32:9: 'integer'
             {
             match("integer"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T38
+    // $ANTLR end "T__38"
 
-    // $ANTLR start T39
-    public final void mT39() throws RecognitionException {
+    // $ANTLR start "T__39"
+    public final void mT__39() throws RecognitionException {
         try {
-            int _type = T39;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32:5: ( 'float' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32:7: 'float'
+            int _type = T__39;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:33:7: ( 'float' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:33:9: 'float'
             {
             match("float"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T39
+    // $ANTLR end "T__39"
 
-    // $ANTLR start T40
-    public final void mT40() throws RecognitionException {
+    // $ANTLR start "T__40"
+    public final void mT__40() throws RecognitionException {
         try {
-            int _type = T40;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:33:5: ( 'double' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:33:7: 'double'
+            int _type = T__40;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:34:7: ( 'double' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:34:9: 'double'
             {
             match("double"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T40
+    // $ANTLR end "T__40"
 
-    // $ANTLR start T41
-    public final void mT41() throws RecognitionException {
+    // $ANTLR start "T__41"
+    public final void mT__41() throws RecognitionException {
         try {
-            int _type = T41;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:34:5: ( 'string' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:34:7: 'string'
+            int _type = T__41;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:35:7: ( 'string' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:35:9: 'string'
             {
             match("string"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T41
+    // $ANTLR end "T__41"
 
-    // $ANTLR start T42
-    public final void mT42() throws RecognitionException {
+    // $ANTLR start "T__42"
+    public final void mT__42() throws RecognitionException {
         try {
-            int _type = T42;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:35:5: ( 'host' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:35:7: 'host'
+            int _type = T__42;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:36:7: ( 'host' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:36:9: 'host'
             {
             match("host"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T42
+    // $ANTLR end "T__42"
 
-    // $ANTLR start T43
-    public final void mT43() throws RecognitionException {
+    // $ANTLR start "T__43"
+    public final void mT__43() throws RecognitionException {
         try {
-            int _type = T43;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:36:5: ( 'none' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:36:7: 'none'
+            int _type = T__43;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:37:7: ( 'none' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:37:9: 'none'
             {
             match("none"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T43
+    // $ANTLR end "T__43"
 
-    // $ANTLR start T44
-    public final void mT44() throws RecognitionException {
+    // $ANTLR start "T__44"
+    public final void mT__44() throws RecognitionException {
         try {
-            int _type = T44;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:37:5: ( 'max' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:37:7: 'max'
+            int _type = T__44;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:38:7: ( 'max' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:38:9: 'max'
             {
             match("max"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T44
+    // $ANTLR end "T__44"
 
-    // $ANTLR start T45
-    public final void mT45() throws RecognitionException {
+    // $ANTLR start "T__45"
+    public final void mT__45() throws RecognitionException {
         try {
-            int _type = T45;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:38:5: ( 'min' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:38:7: 'min'
+            int _type = T__45;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:39:7: ( 'min' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:39:9: 'min'
             {
             match("min"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T45
+    // $ANTLR end "T__45"
 
-    // $ANTLR start T46
-    public final void mT46() throws RecognitionException {
+    // $ANTLR start "T__46"
+    public final void mT__46() throws RecognitionException {
         try {
-            int _type = T46;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:39:5: ( 'module' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:39:7: 'module'
+            int _type = T__46;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:40:7: ( 'module' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:40:9: 'module'
             {
             match("module"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T46
+    // $ANTLR end "T__46"
 
-    // $ANTLR start T47
-    public final void mT47() throws RecognitionException {
+    // $ANTLR start "T__47"
+    public final void mT__47() throws RecognitionException {
         try {
-            int _type = T47;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:40:5: ( ':' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:40:7: ':'
+            int _type = T__47;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:41:7: ( ':' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:41:9: ':'
             {
             match(':'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T47
+    // $ANTLR end "T__47"
 
-    // $ANTLR start T48
-    public final void mT48() throws RecognitionException {
+    // $ANTLR start "T__48"
+    public final void mT__48() throws RecognitionException {
         try {
-            int _type = T48;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:41:5: ( 'end' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:41:7: 'end'
+            int _type = T__48;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:42:7: ( 'end' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:42:9: 'end'
             {
             match("end"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T48
+    // $ANTLR end "T__48"
 
-    // $ANTLR start T49
-    public final void mT49() throws RecognitionException {
+    // $ANTLR start "T__49"
+    public final void mT__49() throws RecognitionException {
         try {
-            int _type = T49;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:42:5: ( '(' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:42:7: '('
+            int _type = T__49;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:43:7: ( '(' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:43:9: '('
             {
             match('('); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T49
+    // $ANTLR end "T__49"
 
-    // $ANTLR start T50
-    public final void mT50() throws RecognitionException {
+    // $ANTLR start "T__50"
+    public final void mT__50() throws RecognitionException {
         try {
-            int _type = T50;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:43:5: ( ')' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:43:7: ')'
+            int _type = T__50;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:44:7: ( ')' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:44:9: ')'
             {
             match(')'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T50
+    // $ANTLR end "T__50"
 
-    // $ANTLR start T51
-    public final void mT51() throws RecognitionException {
+    // $ANTLR start "T__51"
+    public final void mT__51() throws RecognitionException {
         try {
-            int _type = T51;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:44:5: ( ':=' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:44:7: ':='
+            int _type = T__51;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:45:7: ( ':=' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:45:9: ':='
             {
             match(":="); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T51
+    // $ANTLR end "T__51"
 
-    // $ANTLR start T52
-    public final void mT52() throws RecognitionException {
+    // $ANTLR start "T__52"
+    public final void mT__52() throws RecognitionException {
         try {
-            int _type = T52;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:45:5: ( 'combine' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:45:7: 'combine'
+            int _type = T__52;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:46:7: ( 'combine' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:46:9: 'combine'
             {
             match("combine"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T52
+    // $ANTLR end "T__52"
 
-    // $ANTLR start T53
-    public final void mT53() throws RecognitionException {
+    // $ANTLR start "T__53"
+    public final void mT__53() throws RecognitionException {
         try {
-            int _type = T53;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:46:5: ( 'with' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:46:7: 'with'
+            int _type = T__53;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:47:7: ( 'with' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:47:9: 'with'
             {
             match("with"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T53
+    // $ANTLR end "T__53"
 
-    // $ANTLR start T54
-    public final void mT54() throws RecognitionException {
+    // $ANTLR start "T__54"
+    public final void mT__54() throws RecognitionException {
         try {
-            int _type = T54;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:47:5: ( 'signal' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:47:7: 'signal'
+            int _type = T__54;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:48:7: ( 'signal' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:48:9: 'signal'
             {
             match("signal"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T54
+    // $ANTLR end "T__54"
 
-    // $ANTLR start T55
-    public final void mT55() throws RecognitionException {
+    // $ANTLR start "T__55"
+    public final void mT__55() throws RecognitionException {
         try {
-            int _type = T55;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:48:5: ( 'in' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:48:7: 'in'
+            int _type = T__55;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:49:7: ( 'in' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:49:9: 'in'
             {
             match("in"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T55
+    // $ANTLR end "T__55"
 
-    // $ANTLR start T56
-    public final void mT56() throws RecognitionException {
+    // $ANTLR start "T__56"
+    public final void mT__56() throws RecognitionException {
         try {
-            int _type = T56;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:49:5: ( ',' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:49:7: ','
+            int _type = T__56;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:50:7: ( ',' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:50:9: ','
             {
             match(','); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T56
+    // $ANTLR end "T__56"
 
-    // $ANTLR start T57
-    public final void mT57() throws RecognitionException {
+    // $ANTLR start "T__57"
+    public final void mT__57() throws RecognitionException {
         try {
-            int _type = T57;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:50:5: ( 'sensor' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:50:7: 'sensor'
+            int _type = T__57;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:51:7: ( 'sensor' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:51:9: 'sensor'
             {
             match("sensor"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T57
+    // $ANTLR end "T__57"
 
-    // $ANTLR start T58
-    public final void mT58() throws RecognitionException {
+    // $ANTLR start "T__58"
+    public final void mT__58() throws RecognitionException {
         try {
-            int _type = T58;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:51:5: ( ';' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:51:7: ';'
+            int _type = T__58;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:52:7: ( ';' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:52:9: ';'
             {
             match(';'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T58
+    // $ANTLR end "T__58"
 
-    // $ANTLR start T59
-    public final void mT59() throws RecognitionException {
+    // $ANTLR start "T__59"
+    public final void mT__59() throws RecognitionException {
         try {
-            int _type = T59;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:52:5: ( 'relation' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:52:7: 'relation'
+            int _type = T__59;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:53:7: ( 'relation' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:53:9: 'relation'
             {
             match("relation"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T59
+    // $ANTLR end "T__59"
 
-    // $ANTLR start T60
-    public final void mT60() throws RecognitionException {
+    // $ANTLR start "T__60"
+    public final void mT__60() throws RecognitionException {
         try {
-            int _type = T60;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:53:5: ( '#' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:53:7: '#'
+            int _type = T__60;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:54:7: ( '#' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:54:9: '#'
             {
             match('#'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T60
+    // $ANTLR end "T__60"
 
-    // $ANTLR start T61
-    public final void mT61() throws RecognitionException {
+    // $ANTLR start "T__61"
+    public final void mT__61() throws RecognitionException {
         try {
-            int _type = T61;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:54:5: ( 'type' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:54:7: 'type'
+            int _type = T__61;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:55:7: ( 'type' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:55:9: 'type'
             {
             match("type"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T61
+    // $ANTLR end "T__61"
 
-    // $ANTLR start T62
-    public final void mT62() throws RecognitionException {
+    // $ANTLR start "T__62"
+    public final void mT__62() throws RecognitionException {
         try {
-            int _type = T62;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:55:5: ( 'constant' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:55:7: 'constant'
+            int _type = T__62;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:56:7: ( 'constant' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:56:9: 'constant'
             {
             match("constant"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T62
+    // $ANTLR end "T__62"
 
-    // $ANTLR start T63
-    public final void mT63() throws RecognitionException {
+    // $ANTLR start "T__63"
+    public final void mT__63() throws RecognitionException {
         try {
-            int _type = T63;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:56:5: ( 'function' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:56:7: 'function'
+            int _type = T__63;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:57:7: ( 'function' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:57:9: 'function'
             {
             match("function"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T63
+    // $ANTLR end "T__63"
 
-    // $ANTLR start T64
-    public final void mT64() throws RecognitionException {
+    // $ANTLR start "T__64"
+    public final void mT__64() throws RecognitionException {
         try {
-            int _type = T64;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:57:5: ( 'procedure' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:57:7: 'procedure'
+            int _type = T__64;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:58:7: ( 'procedure' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:58:9: 'procedure'
             {
             match("procedure"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T64
+    // $ANTLR end "T__64"
 
-    // $ANTLR start T65
-    public final void mT65() throws RecognitionException {
+    // $ANTLR start "T__65"
+    public final void mT__65() throws RecognitionException {
         try {
-            int _type = T65;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:58:5: ( 'task' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:58:7: 'task'
+            int _type = T__65;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:59:7: ( 'task' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:59:9: 'task'
             {
             match("task"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T65
+    // $ANTLR end "T__65"
 
-    // $ANTLR start T66
-    public final void mT66() throws RecognitionException {
+    // $ANTLR start "T__66"
+    public final void mT__66() throws RecognitionException {
         try {
-            int _type = T66;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:59:5: ( '||' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:59:7: '||'
+            int _type = T__66;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:60:7: ( '||' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:60:9: '||'
             {
             match("||"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T66
+    // $ANTLR end "T__66"
 
-    // $ANTLR start T67
-    public final void mT67() throws RecognitionException {
+    // $ANTLR start "T__67"
+    public final void mT__67() throws RecognitionException {
         try {
-            int _type = T67;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:60:5: ( '[' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:60:7: '['
+            int _type = T__67;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:61:7: ( '[' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:61:9: '['
             {
             match('['); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T67
+    // $ANTLR end "T__67"
 
-    // $ANTLR start T68
-    public final void mT68() throws RecognitionException {
+    // $ANTLR start "T__68"
+    public final void mT__68() throws RecognitionException {
         try {
-            int _type = T68;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:61:5: ( ']' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:61:7: ']'
+            int _type = T__68;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:62:7: ( ']' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:62:9: ']'
             {
             match(']'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T68
+    // $ANTLR end "T__68"
 
-    // $ANTLR start T69
-    public final void mT69() throws RecognitionException {
+    // $ANTLR start "T__69"
+    public final void mT__69() throws RecognitionException {
         try {
-            int _type = T69;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:62:5: ( 'abort' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:62:7: 'abort'
+            int _type = T__69;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:63:7: ( 'abort' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:63:9: 'abort'
             {
             match("abort"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T69
+    // $ANTLR end "T__69"
 
-    // $ANTLR start T70
-    public final void mT70() throws RecognitionException {
+    // $ANTLR start "T__70"
+    public final void mT__70() throws RecognitionException {
         try {
-            int _type = T70;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:63:5: ( 'when' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:63:7: 'when'
+            int _type = T__70;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:64:7: ( 'when' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:64:9: 'when'
             {
             match("when"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T70
+    // $ANTLR end "T__70"
 
-    // $ANTLR start T71
-    public final void mT71() throws RecognitionException {
+    // $ANTLR start "T__71"
+    public final void mT__71() throws RecognitionException {
         try {
-            int _type = T71;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:64:5: ( 'do' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:64:7: 'do'
+            int _type = T__71;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:65:7: ( 'do' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:65:9: 'do'
             {
             match("do"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T71
+    // $ANTLR end "T__71"
 
-    // $ANTLR start T72
-    public final void mT72() throws RecognitionException {
+    // $ANTLR start "T__72"
+    public final void mT__72() throws RecognitionException {
         try {
-            int _type = T72;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:65:5: ( 'case' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:65:7: 'case'
+            int _type = T__72;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:66:7: ( 'case' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:66:9: 'case'
             {
             match("case"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T72
+    // $ANTLR end "T__72"
 
-    // $ANTLR start T73
-    public final void mT73() throws RecognitionException {
+    // $ANTLR start "T__73"
+    public final void mT__73() throws RecognitionException {
         try {
-            int _type = T73;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:66:5: ( 'weak' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:66:7: 'weak'
+            int _type = T__73;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:67:7: ( 'weak' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:67:9: 'weak'
             {
             match("weak"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T73
+    // $ANTLR end "T__73"
 
-    // $ANTLR start T74
-    public final void mT74() throws RecognitionException {
+    // $ANTLR start "T__74"
+    public final void mT__74() throws RecognitionException {
         try {
-            int _type = T74;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:67:5: ( 'await' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:67:7: 'await'
+            int _type = T__74;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:68:7: ( 'await' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:68:9: 'await'
             {
             match("await"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T74
+    // $ANTLR end "T__74"
 
-    // $ANTLR start T75
-    public final void mT75() throws RecognitionException {
+    // $ANTLR start "T__75"
+    public final void mT__75() throws RecognitionException {
         try {
-            int _type = T75;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:68:5: ( 'call' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:68:7: 'call'
+            int _type = T__75;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:69:7: ( 'call' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:69:9: 'call'
             {
             match("call"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T75
+    // $ANTLR end "T__75"
 
-    // $ANTLR start T76
-    public final void mT76() throws RecognitionException {
+    // $ANTLR start "T__76"
+    public final void mT__76() throws RecognitionException {
         try {
-            int _type = T76;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:69:5: ( 'upto' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:69:7: 'upto'
+            int _type = T__76;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:70:7: ( 'upto' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:70:9: 'upto'
             {
             match("upto"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T76
+    // $ANTLR end "T__76"
 
-    // $ANTLR start T77
-    public final void mT77() throws RecognitionException {
+    // $ANTLR start "T__77"
+    public final void mT__77() throws RecognitionException {
         try {
-            int _type = T77;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:70:5: ( 'watching' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:70:7: 'watching'
+            int _type = T__77;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:71:7: ( 'watching' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:71:9: 'watching'
             {
             match("watching"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T77
+    // $ANTLR end "T__77"
 
-    // $ANTLR start T78
-    public final void mT78() throws RecognitionException {
+    // $ANTLR start "T__78"
+    public final void mT__78() throws RecognitionException {
         try {
-            int _type = T78;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:71:5: ( 'timeout' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:71:7: 'timeout'
+            int _type = T__78;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:72:7: ( 'timeout' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:72:9: 'timeout'
             {
             match("timeout"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T78
+    // $ANTLR end "T__78"
 
-    // $ANTLR start T79
-    public final void mT79() throws RecognitionException {
+    // $ANTLR start "T__79"
+    public final void mT__79() throws RecognitionException {
         try {
-            int _type = T79;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:72:5: ( 'emit' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:72:7: 'emit'
+            int _type = T__79;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:73:7: ( 'emit' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:73:9: 'emit'
             {
             match("emit"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T79
+    // $ANTLR end "T__79"
 
-    // $ANTLR start T80
-    public final void mT80() throws RecognitionException {
+    // $ANTLR start "T__80"
+    public final void mT__80() throws RecognitionException {
         try {
-            int _type = T80;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:73:5: ( 'every' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:73:7: 'every'
+            int _type = T__80;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:74:7: ( 'every' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:74:9: 'every'
             {
             match("every"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T80
+    // $ANTLR end "T__80"
 
-    // $ANTLR start T81
-    public final void mT81() throws RecognitionException {
+    // $ANTLR start "T__81"
+    public final void mT__81() throws RecognitionException {
         try {
-            int _type = T81;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:74:5: ( 'exit' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:74:7: 'exit'
+            int _type = T__81;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:75:7: ( 'exit' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:75:9: 'exit'
             {
             match("exit"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T81
+    // $ANTLR end "T__81"
 
-    // $ANTLR start T82
-    public final void mT82() throws RecognitionException {
+    // $ANTLR start "T__82"
+    public final void mT__82() throws RecognitionException {
         try {
-            int _type = T82;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:75:5: ( 'halt' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:75:7: 'halt'
+            int _type = T__82;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:76:7: ( 'halt' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:76:9: 'halt'
             {
             match("halt"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T82
+    // $ANTLR end "T__82"
 
-    // $ANTLR start T83
-    public final void mT83() throws RecognitionException {
+    // $ANTLR start "T__83"
+    public final void mT__83() throws RecognitionException {
         try {
-            int _type = T83;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:76:5: ( 'if' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:76:7: 'if'
+            int _type = T__83;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:77:7: ( 'if' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:77:9: 'if'
             {
             match("if"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T83
+    // $ANTLR end "T__83"
 
-    // $ANTLR start T84
-    public final void mT84() throws RecognitionException {
+    // $ANTLR start "T__84"
+    public final void mT__84() throws RecognitionException {
         try {
-            int _type = T84;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:77:5: ( 'elsif' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:77:7: 'elsif'
+            int _type = T__84;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:78:7: ( 'elsif' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:78:9: 'elsif'
             {
             match("elsif"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T84
+    // $ANTLR end "T__84"
 
-    // $ANTLR start T85
-    public final void mT85() throws RecognitionException {
+    // $ANTLR start "T__85"
+    public final void mT__85() throws RecognitionException {
         try {
-            int _type = T85;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:78:5: ( 'then' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:78:7: 'then'
+            int _type = T__85;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:79:7: ( 'then' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:79:9: 'then'
             {
             match("then"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T85
+    // $ANTLR end "T__85"
 
-    // $ANTLR start T86
-    public final void mT86() throws RecognitionException {
+    // $ANTLR start "T__86"
+    public final void mT__86() throws RecognitionException {
         try {
-            int _type = T86;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:79:5: ( 'else' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:79:7: 'else'
+            int _type = T__86;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:80:7: ( 'else' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:80:9: 'else'
             {
             match("else"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T86
+    // $ANTLR end "T__86"
 
-    // $ANTLR start T87
-    public final void mT87() throws RecognitionException {
+    // $ANTLR start "T__87"
+    public final void mT__87() throws RecognitionException {
         try {
-            int _type = T87;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:80:5: ( 'loop' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:80:7: 'loop'
+            int _type = T__87;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:81:7: ( 'loop' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:81:9: 'loop'
             {
             match("loop"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T87
+    // $ANTLR end "T__87"
 
-    // $ANTLR start T88
-    public final void mT88() throws RecognitionException {
+    // $ANTLR start "T__88"
+    public final void mT__88() throws RecognitionException {
         try {
-            int _type = T88;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:81:5: ( 'each' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:81:7: 'each'
+            int _type = T__88;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:82:7: ( 'each' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:82:9: 'each'
             {
             match("each"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T88
+    // $ANTLR end "T__88"
 
-    // $ANTLR start T89
-    public final void mT89() throws RecognitionException {
+    // $ANTLR start "T__89"
+    public final void mT__89() throws RecognitionException {
         try {
-            int _type = T89;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:82:5: ( 'nothing' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:82:7: 'nothing'
+            int _type = T__89;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:83:7: ( 'nothing' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:83:9: 'nothing'
             {
             match("nothing"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T89
+    // $ANTLR end "T__89"
 
-    // $ANTLR start T90
-    public final void mT90() throws RecognitionException {
+    // $ANTLR start "T__90"
+    public final void mT__90() throws RecognitionException {
         try {
-            int _type = T90;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:83:5: ( 'pause' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:83:7: 'pause'
+            int _type = T__90;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:84:7: ( 'pause' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:84:9: 'pause'
             {
             match("pause"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T90
+    // $ANTLR end "T__90"
 
-    // $ANTLR start T91
-    public final void mT91() throws RecognitionException {
+    // $ANTLR start "T__91"
+    public final void mT__91() throws RecognitionException {
         try {
-            int _type = T91;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:84:5: ( 'present' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:84:7: 'present'
+            int _type = T__91;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:85:7: ( 'present' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:85:9: 'present'
             {
             match("present"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T91
+    // $ANTLR end "T__91"
 
-    // $ANTLR start T92
-    public final void mT92() throws RecognitionException {
+    // $ANTLR start "T__92"
+    public final void mT__92() throws RecognitionException {
         try {
-            int _type = T92;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:85:5: ( 'repeat' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:85:7: 'repeat'
+            int _type = T__92;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:86:7: ( 'repeat' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:86:9: 'repeat'
             {
             match("repeat"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T92
+    // $ANTLR end "T__92"
 
-    // $ANTLR start T93
-    public final void mT93() throws RecognitionException {
+    // $ANTLR start "T__93"
+    public final void mT__93() throws RecognitionException {
         try {
-            int _type = T93;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:86:5: ( 'times' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:86:7: 'times'
+            int _type = T__93;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:87:7: ( 'times' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:87:9: 'times'
             {
             match("times"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T93
+    // $ANTLR end "T__93"
 
-    // $ANTLR start T94
-    public final void mT94() throws RecognitionException {
+    // $ANTLR start "T__94"
+    public final void mT__94() throws RecognitionException {
         try {
-            int _type = T94;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:87:5: ( 'run' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:87:7: 'run'
+            int _type = T__94;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:88:7: ( 'run' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:88:9: 'run'
             {
             match("run"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T94
+    // $ANTLR end "T__94"
 
-    // $ANTLR start T95
-    public final void mT95() throws RecognitionException {
+    // $ANTLR start "T__95"
+    public final void mT__95() throws RecognitionException {
         try {
-            int _type = T95;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:88:5: ( 'copymodule' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:88:7: 'copymodule'
+            int _type = T__95;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:89:7: ( 'copymodule' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:89:9: 'copymodule'
             {
             match("copymodule"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T95
+    // $ANTLR end "T__95"
 
-    // $ANTLR start T96
-    public final void mT96() throws RecognitionException {
+    // $ANTLR start "T__96"
+    public final void mT__96() throws RecognitionException {
         try {
-            int _type = T96;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:89:5: ( 'suspend' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:89:7: 'suspend'
+            int _type = T__96;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:90:7: ( 'suspend' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:90:9: 'suspend'
             {
             match("suspend"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T96
+    // $ANTLR end "T__96"
 
-    // $ANTLR start T97
-    public final void mT97() throws RecognitionException {
+    // $ANTLR start "T__97"
+    public final void mT__97() throws RecognitionException {
         try {
-            int _type = T97;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:90:5: ( 'sustain' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:90:7: 'sustain'
+            int _type = T__97;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:91:7: ( 'sustain' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:91:9: 'sustain'
             {
             match("sustain"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T97
+    // $ANTLR end "T__97"
 
-    // $ANTLR start T98
-    public final void mT98() throws RecognitionException {
+    // $ANTLR start "T__98"
+    public final void mT__98() throws RecognitionException {
         try {
-            int _type = T98;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:91:5: ( 'trap' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:91:7: 'trap'
+            int _type = T__98;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:92:7: ( 'trap' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:92:9: 'trap'
             {
             match("trap"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T98
+    // $ANTLR end "T__98"
 
-    // $ANTLR start T99
-    public final void mT99() throws RecognitionException {
+    // $ANTLR start "T__99"
+    public final void mT__99() throws RecognitionException {
         try {
-            int _type = T99;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:92:5: ( 'handle' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:92:7: 'handle'
+            int _type = T__99;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:93:7: ( 'handle' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:93:9: 'handle'
             {
             match("handle"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T99
+    // $ANTLR end "T__99"
 
-    // $ANTLR start T100
-    public final void mT100() throws RecognitionException {
+    // $ANTLR start "T__100"
+    public final void mT__100() throws RecognitionException {
         try {
-            int _type = T100;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:93:6: ( '??' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:93:8: '??'
+            int _type = T__100;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:94:8: ( '??' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:94:10: '??'
             {
             match("??"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T100
+    // $ANTLR end "T__100"
 
-    // $ANTLR start T101
-    public final void mT101() throws RecognitionException {
+    // $ANTLR start "T__101"
+    public final void mT__101() throws RecognitionException {
         try {
-            int _type = T101;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:94:6: ( 'exec' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:94:8: 'exec'
+            int _type = T__101;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:95:8: ( 'exec' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:95:10: 'exec'
             {
             match("exec"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T101
+    // $ANTLR end "T__101"
 
-    // $ANTLR start T102
-    public final void mT102() throws RecognitionException {
+    // $ANTLR start "T__102"
+    public final void mT__102() throws RecognitionException {
         try {
-            int _type = T102;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:95:6: ( 'return' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:95:8: 'return'
+            int _type = T__102;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:96:8: ( 'return' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:96:10: 'return'
             {
             match("return"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T102
+    // $ANTLR end "T__102"
 
-    // $ANTLR start T103
-    public final void mT103() throws RecognitionException {
+    // $ANTLR start "T__103"
+    public final void mT__103() throws RecognitionException {
         try {
-            int _type = T103;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:96:6: ( 'input' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:96:8: 'input'
+            int _type = T__103;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:97:8: ( 'input' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:97:10: 'input'
             {
             match("input"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T103
+    // $ANTLR end "T__103"
 
-    // $ANTLR start T104
-    public final void mT104() throws RecognitionException {
+    // $ANTLR start "T__104"
+    public final void mT__104() throws RecognitionException {
         try {
-            int _type = T104;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:97:6: ( 'output' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:97:8: 'output'
+            int _type = T__104;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:98:8: ( 'output' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:98:10: 'output'
             {
             match("output"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T104
+    // $ANTLR end "T__104"
 
-    // $ANTLR start T105
-    public final void mT105() throws RecognitionException {
+    // $ANTLR start "T__105"
+    public final void mT__105() throws RecognitionException {
         try {
-            int _type = T105;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:98:6: ( 'inputoutput' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:98:8: 'inputoutput'
+            int _type = T__105;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:99:8: ( 'inputoutput' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:99:10: 'inputoutput'
             {
             match("inputoutput"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T105
+    // $ANTLR end "T__105"
 
-    // $ANTLR start T106
-    public final void mT106() throws RecognitionException {
+    // $ANTLR start "T__106"
+    public final void mT__106() throws RecognitionException {
         try {
-            int _type = T106;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:99:6: ( 'var' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:99:8: 'var'
+            int _type = T__106;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:100:8: ( 'var' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:100:10: 'var'
             {
             match("var"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T106
+    // $ANTLR end "T__106"
 
-    // $ANTLR start T107
-    public final void mT107() throws RecognitionException {
+    // $ANTLR start "T__107"
+    public final void mT__107() throws RecognitionException {
         try {
-            int _type = T107;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:100:6: ( '@' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:100:8: '@'
+            int _type = T__107;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:101:8: ( '@' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:101:10: '@'
             {
             match('@'); 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T107
+    // $ANTLR end "T__107"
 
-    // $ANTLR start T108
-    public final void mT108() throws RecognitionException {
+    // $ANTLR start "T__108"
+    public final void mT__108() throws RecognitionException {
         try {
-            int _type = T108;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:101:6: ( '=>' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:101:8: '=>'
+            int _type = T__108;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:102:8: ( '=>' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:102:10: '=>'
             {
             match("=>"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T108
+    // $ANTLR end "T__108"
 
-    // $ANTLR start T109
-    public final void mT109() throws RecognitionException {
+    // $ANTLR start "T__109"
+    public final void mT__109() throws RecognitionException {
         try {
-            int _type = T109;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:102:6: ( 'positive' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:102:8: 'positive'
+            int _type = T__109;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:103:8: ( 'positive' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:103:10: 'positive'
             {
             match("positive"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T109
+    // $ANTLR end "T__109"
 
-    // $ANTLR start T110
-    public final void mT110() throws RecognitionException {
+    // $ANTLR start "T__110"
+    public final void mT__110() throws RecognitionException {
         try {
-            int _type = T110;
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:103:6: ( 'immediate' )
-            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:103:8: 'immediate'
+            int _type = T__110;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:104:8: ( 'immediate' )
+            // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:104:10: 'immediate'
             {
             match("immediate"); 
 
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end T110
+    // $ANTLR end "T__110"
 
-    // $ANTLR start RULE_ESTEREL_SL_COMMENT
+    // $ANTLR start "RULE_ESTEREL_SL_COMMENT"
     public final void mRULE_ESTEREL_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ESTEREL_SL_COMMENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32304:25: ( '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32304:27: '%' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
@@ -1909,7 +2105,7 @@ public class InternalEsterelLexer extends Lexer {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( ((LA1_0>='\u0000' && LA1_0<='\t')||(LA1_0>='\u000B' && LA1_0<='\f')||(LA1_0>='\u000E' && LA1_0<='\uFFFE')) ) {
+                if ( ((LA1_0>='\u0000' && LA1_0<='\t')||(LA1_0>='\u000B' && LA1_0<='\f')||(LA1_0>='\u000E' && LA1_0<='\uFFFF')) ) {
                     alt1=1;
                 }
 
@@ -1918,15 +2114,14 @@ public class InternalEsterelLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32304:31: ~ ( ( '\\n' | '\\r' ) )
             	    {
-            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -1976,17 +2171,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_ESTEREL_SL_COMMENT
+    // $ANTLR end "RULE_ESTEREL_SL_COMMENT"
 
-    // $ANTLR start RULE_ESTEREL_ML_COMMENT
+    // $ANTLR start "RULE_ESTEREL_ML_COMMENT"
     public final void mRULE_ESTEREL_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ESTEREL_ML_COMMENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32306:25: ( '%' '{' ( options {greedy=false; } : . )* '}' '%' )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32306:27: '%' '{' ( options {greedy=false; } : . )* '}' '%'
             {
@@ -2004,13 +2201,13 @@ public class InternalEsterelLexer extends Lexer {
                     if ( (LA4_1=='%') ) {
                         alt4=2;
                     }
-                    else if ( ((LA4_1>='\u0000' && LA4_1<='$')||(LA4_1>='&' && LA4_1<='\uFFFE')) ) {
+                    else if ( ((LA4_1>='\u0000' && LA4_1<='$')||(LA4_1>='&' && LA4_1<='\uFFFF')) ) {
                         alt4=1;
                     }
 
 
                 }
-                else if ( ((LA4_0>='\u0000' && LA4_0<='|')||(LA4_0>='~' && LA4_0<='\uFFFE')) ) {
+                else if ( ((LA4_0>='\u0000' && LA4_0<='|')||(LA4_0>='~' && LA4_0<='\uFFFF')) ) {
                     alt4=1;
                 }
 
@@ -2034,17 +2231,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_ESTEREL_ML_COMMENT
+    // $ANTLR end "RULE_ESTEREL_ML_COMMENT"
 
-    // $ANTLR start RULE_STRING
+    // $ANTLR start "RULE_STRING"
     public final void mRULE_STRING() throws RecognitionException {
         try {
             int _type = RULE_STRING;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32308:13: ( '\"' (~ ( '\"' ) | '\"' '\"' )* '\"' )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32308:15: '\"' (~ ( '\"' ) | '\"' '\"' )* '\"'
             {
@@ -2064,7 +2263,7 @@ public class InternalEsterelLexer extends Lexer {
 
 
                 }
-                else if ( ((LA5_0>='\u0000' && LA5_0<='!')||(LA5_0>='#' && LA5_0<='\uFFFE')) ) {
+                else if ( ((LA5_0>='\u0000' && LA5_0<='!')||(LA5_0>='#' && LA5_0<='\uFFFF')) ) {
                     alt5=1;
                 }
 
@@ -2073,15 +2272,14 @@ public class InternalEsterelLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32308:20: ~ ( '\"' )
             	    {
-            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFE') ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2104,17 +2302,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_STRING
+    // $ANTLR end "RULE_STRING"
 
-    // $ANTLR start RULE_HOSTCODE
+    // $ANTLR start "RULE_HOSTCODE"
     public final void mRULE_HOSTCODE() throws RecognitionException {
         try {
             int _type = RULE_HOSTCODE;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32310:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32310:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
@@ -2128,7 +2328,7 @@ public class InternalEsterelLexer extends Lexer {
                 if ( (LA6_0=='\\') ) {
                     alt6=1;
                 }
-                else if ( ((LA6_0>='\u0000' && LA6_0<='&')||(LA6_0>='(' && LA6_0<='[')||(LA6_0>=']' && LA6_0<='\uFFFE')) ) {
+                else if ( ((LA6_0>='\u0000' && LA6_0<='&')||(LA6_0>='(' && LA6_0<='[')||(LA6_0>=']' && LA6_0<='\uFFFF')) ) {
                     alt6=2;
                 }
 
@@ -2143,10 +2343,9 @@ public class InternalEsterelLexer extends Lexer {
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2154,15 +2353,14 @@ public class InternalEsterelLexer extends Lexer {
             	case 2 :
             	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32310:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
-            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFE') ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2177,17 +2375,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_HOSTCODE
+    // $ANTLR end "RULE_HOSTCODE"
 
-    // $ANTLR start RULE_COMMENT_ANNOTATION
+    // $ANTLR start "RULE_COMMENT_ANNOTATION"
     public final void mRULE_COMMENT_ANNOTATION() throws RecognitionException {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32312:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32312:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
@@ -2205,13 +2405,13 @@ public class InternalEsterelLexer extends Lexer {
                     if ( (LA7_1=='/') ) {
                         alt7=2;
                     }
-                    else if ( ((LA7_1>='\u0000' && LA7_1<='.')||(LA7_1>='0' && LA7_1<='\uFFFE')) ) {
+                    else if ( ((LA7_1>='\u0000' && LA7_1<='.')||(LA7_1>='0' && LA7_1<='\uFFFF')) ) {
                         alt7=1;
                     }
 
 
                 }
-                else if ( ((LA7_0>='\u0000' && LA7_0<=')')||(LA7_0>='+' && LA7_0<='\uFFFE')) ) {
+                else if ( ((LA7_0>='\u0000' && LA7_0<=')')||(LA7_0>='+' && LA7_0<='\uFFFF')) ) {
                     alt7=1;
                 }
 
@@ -2235,31 +2435,32 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_COMMENT_ANNOTATION
+    // $ANTLR end "RULE_COMMENT_ANNOTATION"
 
-    // $ANTLR start RULE_ML_COMMENT
+    // $ANTLR start "RULE_ML_COMMENT"
     public final void mRULE_ML_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_ML_COMMENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32314:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32314:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
-            if ( (input.LA(1)>='\u0000' && input.LA(1)<=')')||(input.LA(1)>='+' && input.LA(1)<='\uFFFE') ) {
+            if ( (input.LA(1)>='\u0000' && input.LA(1)<=')')||(input.LA(1)>='+' && input.LA(1)<='\uFFFF') ) {
                 input.consume();
 
             }
             else {
-                MismatchedSetException mse =
-                    new MismatchedSetException(null,input);
-                recover(mse);    throw mse;
-            }
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
 
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32314:31: ( options {greedy=false; } : . )*
             loop8:
@@ -2273,13 +2474,13 @@ public class InternalEsterelLexer extends Lexer {
                     if ( (LA8_1=='/') ) {
                         alt8=2;
                     }
-                    else if ( ((LA8_1>='\u0000' && LA8_1<='.')||(LA8_1>='0' && LA8_1<='\uFFFE')) ) {
+                    else if ( ((LA8_1>='\u0000' && LA8_1<='.')||(LA8_1>='0' && LA8_1<='\uFFFF')) ) {
                         alt8=1;
                     }
 
 
                 }
-                else if ( ((LA8_0>='\u0000' && LA8_0<=')')||(LA8_0>='+' && LA8_0<='\uFFFE')) ) {
+                else if ( ((LA8_0>='\u0000' && LA8_0<=')')||(LA8_0>='+' && LA8_0<='\uFFFF')) ) {
                     alt8=1;
                 }
 
@@ -2303,17 +2504,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_ML_COMMENT
+    // $ANTLR end "RULE_ML_COMMENT"
 
-    // $ANTLR start RULE_INT
+    // $ANTLR start "RULE_INT"
     public final void mRULE_INT() throws RecognitionException {
         try {
             int _type = RULE_INT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32316:10: ( ( '-' )? ( '0' .. '9' )+ )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32316:12: ( '-' )? ( '0' .. '9' )+
             {
@@ -2368,17 +2571,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_INT
+    // $ANTLR end "RULE_INT"
 
-    // $ANTLR start RULE_FLOAT
+    // $ANTLR start "RULE_FLOAT"
     public final void mRULE_FLOAT() throws RecognitionException {
         try {
             int _type = RULE_FLOAT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32318:12: ( ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' ) )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32318:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
             {
@@ -2479,10 +2684,9 @@ public class InternalEsterelLexer extends Lexer {
 
                             }
                             else {
-                                MismatchedSetException mse =
-                                    new MismatchedSetException(null,input);
-                                recover(mse);    throw mse;
-                            }
+                                MismatchedSetException mse = new MismatchedSetException(null,input);
+                                recover(mse);
+                                throw mse;}
 
                             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32318:59: ( '+' | '-' )?
                             int alt14=2;
@@ -2500,10 +2704,9 @@ public class InternalEsterelLexer extends Lexer {
 
                                     }
                                     else {
-                                        MismatchedSetException mse =
-                                            new MismatchedSetException(null,input);
-                                        recover(mse);    throw mse;
-                                    }
+                                        MismatchedSetException mse = new MismatchedSetException(null,input);
+                                        recover(mse);
+                                        throw mse;}
 
 
                                     }
@@ -2629,17 +2832,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_FLOAT
+    // $ANTLR end "RULE_FLOAT"
 
-    // $ANTLR start RULE_BOOLEAN
+    // $ANTLR start "RULE_BOOLEAN"
     public final void mRULE_BOOLEAN() throws RecognitionException {
         try {
             int _type = RULE_BOOLEAN;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32320:14: ( ( 'true' | 'false' ) )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32320:16: ( 'true' | 'false' )
             {
@@ -2655,7 +2860,7 @@ public class InternalEsterelLexer extends Lexer {
             }
             else {
                 NoViableAltException nvae =
-                    new NoViableAltException("32320:16: ( 'true' | 'false' )", 21, 0, input);
+                    new NoViableAltException("", 21, 0, input);
 
                 throw nvae;
             }
@@ -2682,17 +2887,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_BOOLEAN
+    // $ANTLR end "RULE_BOOLEAN"
 
-    // $ANTLR start RULE_ID
+    // $ANTLR start "RULE_ID"
     public final void mRULE_ID() throws RecognitionException {
         try {
             int _type = RULE_ID;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32322:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32322:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
@@ -2719,10 +2926,9 @@ public class InternalEsterelLexer extends Lexer {
 
             }
             else {
-                MismatchedSetException mse =
-                    new MismatchedSetException(null,input);
-                recover(mse);    throw mse;
-            }
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
 
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32322:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop23:
@@ -2744,10 +2950,9 @@ public class InternalEsterelLexer extends Lexer {
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2761,17 +2966,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_ID
+    // $ANTLR end "RULE_ID"
 
-    // $ANTLR start RULE_SL_COMMENT
+    // $ANTLR start "RULE_SL_COMMENT"
     public final void mRULE_SL_COMMENT() throws RecognitionException {
         try {
             int _type = RULE_SL_COMMENT;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32324:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32324:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
@@ -2783,7 +2990,7 @@ public class InternalEsterelLexer extends Lexer {
                 int alt24=2;
                 int LA24_0 = input.LA(1);
 
-                if ( ((LA24_0>='\u0000' && LA24_0<='\t')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\uFFFE')) ) {
+                if ( ((LA24_0>='\u0000' && LA24_0<='\t')||(LA24_0>='\u000B' && LA24_0<='\f')||(LA24_0>='\u000E' && LA24_0<='\uFFFF')) ) {
                     alt24=1;
                 }
 
@@ -2792,15 +2999,14 @@ public class InternalEsterelLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32324:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
-            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFE') ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2850,17 +3056,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_SL_COMMENT
+    // $ANTLR end "RULE_SL_COMMENT"
 
-    // $ANTLR start RULE_WS
+    // $ANTLR start "RULE_WS"
     public final void mRULE_WS() throws RecognitionException {
         try {
             int _type = RULE_WS;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32326:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32326:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
@@ -2885,10 +3093,9 @@ public class InternalEsterelLexer extends Lexer {
 
             	    }
             	    else {
-            	        MismatchedSetException mse =
-            	            new MismatchedSetException(null,input);
-            	        recover(mse);    throw mse;
-            	    }
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
 
 
             	    }
@@ -2906,17 +3113,19 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_WS
+    // $ANTLR end "RULE_WS"
 
-    // $ANTLR start RULE_ANY_OTHER
+    // $ANTLR start "RULE_ANY_OTHER"
     public final void mRULE_ANY_OTHER() throws RecognitionException {
         try {
             int _type = RULE_ANY_OTHER;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32328:16: ( . )
             // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:32328:18: .
             {
@@ -2924,762 +3133,763 @@ public class InternalEsterelLexer extends Lexer {
 
             }
 
-            this.type = _type;
+            state.type = _type;
+            state.channel = _channel;
         }
         finally {
         }
     }
-    // $ANTLR end RULE_ANY_OTHER
+    // $ANTLR end "RULE_ANY_OTHER"
 
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:8: ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
+        // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:8: ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER )
         int alt28=107;
         alt28 = dfa28.predict(input);
         switch (alt28) {
             case 1 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:10: T17
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:10: T__17
                 {
-                mT17(); 
+                mT__17(); 
 
                 }
                 break;
             case 2 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:14: T18
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:16: T__18
                 {
-                mT18(); 
+                mT__18(); 
 
                 }
                 break;
             case 3 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:18: T19
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:22: T__19
                 {
-                mT19(); 
+                mT__19(); 
 
                 }
                 break;
             case 4 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:22: T20
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:28: T__20
                 {
-                mT20(); 
+                mT__20(); 
 
                 }
                 break;
             case 5 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:26: T21
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:34: T__21
                 {
-                mT21(); 
+                mT__21(); 
 
                 }
                 break;
             case 6 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:30: T22
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:40: T__22
                 {
-                mT22(); 
+                mT__22(); 
 
                 }
                 break;
             case 7 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:34: T23
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:46: T__23
                 {
-                mT23(); 
+                mT__23(); 
 
                 }
                 break;
             case 8 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:38: T24
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:52: T__24
                 {
-                mT24(); 
+                mT__24(); 
 
                 }
                 break;
             case 9 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:42: T25
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:58: T__25
                 {
-                mT25(); 
+                mT__25(); 
 
                 }
                 break;
             case 10 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:46: T26
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:64: T__26
                 {
-                mT26(); 
+                mT__26(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:50: T27
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:70: T__27
                 {
-                mT27(); 
+                mT__27(); 
 
                 }
                 break;
             case 12 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:54: T28
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:76: T__28
                 {
-                mT28(); 
+                mT__28(); 
 
                 }
                 break;
             case 13 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:58: T29
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:82: T__29
                 {
-                mT29(); 
+                mT__29(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:62: T30
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:88: T__30
                 {
-                mT30(); 
+                mT__30(); 
 
                 }
                 break;
             case 15 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:66: T31
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:94: T__31
                 {
-                mT31(); 
+                mT__31(); 
 
                 }
                 break;
             case 16 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:70: T32
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:100: T__32
                 {
-                mT32(); 
+                mT__32(); 
 
                 }
                 break;
             case 17 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:74: T33
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:106: T__33
                 {
-                mT33(); 
+                mT__33(); 
 
                 }
                 break;
             case 18 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:78: T34
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:112: T__34
                 {
-                mT34(); 
+                mT__34(); 
 
                 }
                 break;
             case 19 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:82: T35
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:118: T__35
                 {
-                mT35(); 
+                mT__35(); 
 
                 }
                 break;
             case 20 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:86: T36
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:124: T__36
                 {
-                mT36(); 
+                mT__36(); 
 
                 }
                 break;
             case 21 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:90: T37
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:130: T__37
                 {
-                mT37(); 
+                mT__37(); 
 
                 }
                 break;
             case 22 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:94: T38
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:136: T__38
                 {
-                mT38(); 
+                mT__38(); 
 
                 }
                 break;
             case 23 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:98: T39
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:142: T__39
                 {
-                mT39(); 
+                mT__39(); 
 
                 }
                 break;
             case 24 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:102: T40
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:148: T__40
                 {
-                mT40(); 
+                mT__40(); 
 
                 }
                 break;
             case 25 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:106: T41
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:154: T__41
                 {
-                mT41(); 
+                mT__41(); 
 
                 }
                 break;
             case 26 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:110: T42
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:160: T__42
                 {
-                mT42(); 
+                mT__42(); 
 
                 }
                 break;
             case 27 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:114: T43
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:166: T__43
                 {
-                mT43(); 
+                mT__43(); 
 
                 }
                 break;
             case 28 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:118: T44
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:172: T__44
                 {
-                mT44(); 
+                mT__44(); 
 
                 }
                 break;
             case 29 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:122: T45
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:178: T__45
                 {
-                mT45(); 
+                mT__45(); 
 
                 }
                 break;
             case 30 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:126: T46
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:184: T__46
                 {
-                mT46(); 
+                mT__46(); 
 
                 }
                 break;
             case 31 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:130: T47
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:190: T__47
                 {
-                mT47(); 
+                mT__47(); 
 
                 }
                 break;
             case 32 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:134: T48
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:196: T__48
                 {
-                mT48(); 
+                mT__48(); 
 
                 }
                 break;
             case 33 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:138: T49
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:202: T__49
                 {
-                mT49(); 
+                mT__49(); 
 
                 }
                 break;
             case 34 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:142: T50
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:208: T__50
                 {
-                mT50(); 
+                mT__50(); 
 
                 }
                 break;
             case 35 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:146: T51
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:214: T__51
                 {
-                mT51(); 
+                mT__51(); 
 
                 }
                 break;
             case 36 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:150: T52
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:220: T__52
                 {
-                mT52(); 
+                mT__52(); 
 
                 }
                 break;
             case 37 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:154: T53
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:226: T__53
                 {
-                mT53(); 
+                mT__53(); 
 
                 }
                 break;
             case 38 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:158: T54
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:232: T__54
                 {
-                mT54(); 
+                mT__54(); 
 
                 }
                 break;
             case 39 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:162: T55
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:238: T__55
                 {
-                mT55(); 
+                mT__55(); 
 
                 }
                 break;
             case 40 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:166: T56
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:244: T__56
                 {
-                mT56(); 
+                mT__56(); 
 
                 }
                 break;
             case 41 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:170: T57
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:250: T__57
                 {
-                mT57(); 
+                mT__57(); 
 
                 }
                 break;
             case 42 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:174: T58
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:256: T__58
                 {
-                mT58(); 
+                mT__58(); 
 
                 }
                 break;
             case 43 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:178: T59
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:262: T__59
                 {
-                mT59(); 
+                mT__59(); 
 
                 }
                 break;
             case 44 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:182: T60
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:268: T__60
                 {
-                mT60(); 
+                mT__60(); 
 
                 }
                 break;
             case 45 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:186: T61
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:274: T__61
                 {
-                mT61(); 
+                mT__61(); 
 
                 }
                 break;
             case 46 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:190: T62
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:280: T__62
                 {
-                mT62(); 
+                mT__62(); 
 
                 }
                 break;
             case 47 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:194: T63
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:286: T__63
                 {
-                mT63(); 
+                mT__63(); 
 
                 }
                 break;
             case 48 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:198: T64
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:292: T__64
                 {
-                mT64(); 
+                mT__64(); 
 
                 }
                 break;
             case 49 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:202: T65
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:298: T__65
                 {
-                mT65(); 
+                mT__65(); 
 
                 }
                 break;
             case 50 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:206: T66
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:304: T__66
                 {
-                mT66(); 
+                mT__66(); 
 
                 }
                 break;
             case 51 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:210: T67
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:310: T__67
                 {
-                mT67(); 
+                mT__67(); 
 
                 }
                 break;
             case 52 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:214: T68
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:316: T__68
                 {
-                mT68(); 
+                mT__68(); 
 
                 }
                 break;
             case 53 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:218: T69
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:322: T__69
                 {
-                mT69(); 
+                mT__69(); 
 
                 }
                 break;
             case 54 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:222: T70
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:328: T__70
                 {
-                mT70(); 
+                mT__70(); 
 
                 }
                 break;
             case 55 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:226: T71
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:334: T__71
                 {
-                mT71(); 
+                mT__71(); 
 
                 }
                 break;
             case 56 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:230: T72
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:340: T__72
                 {
-                mT72(); 
+                mT__72(); 
 
                 }
                 break;
             case 57 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:234: T73
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:346: T__73
                 {
-                mT73(); 
+                mT__73(); 
 
                 }
                 break;
             case 58 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:238: T74
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:352: T__74
                 {
-                mT74(); 
+                mT__74(); 
 
                 }
                 break;
             case 59 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:242: T75
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:358: T__75
                 {
-                mT75(); 
+                mT__75(); 
 
                 }
                 break;
             case 60 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:246: T76
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:364: T__76
                 {
-                mT76(); 
+                mT__76(); 
 
                 }
                 break;
             case 61 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:250: T77
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:370: T__77
                 {
-                mT77(); 
+                mT__77(); 
 
                 }
                 break;
             case 62 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:254: T78
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:376: T__78
                 {
-                mT78(); 
+                mT__78(); 
 
                 }
                 break;
             case 63 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:258: T79
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:382: T__79
                 {
-                mT79(); 
+                mT__79(); 
 
                 }
                 break;
             case 64 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:262: T80
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:388: T__80
                 {
-                mT80(); 
+                mT__80(); 
 
                 }
                 break;
             case 65 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:266: T81
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:394: T__81
                 {
-                mT81(); 
+                mT__81(); 
 
                 }
                 break;
             case 66 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:270: T82
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:400: T__82
                 {
-                mT82(); 
+                mT__82(); 
 
                 }
                 break;
             case 67 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:274: T83
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:406: T__83
                 {
-                mT83(); 
+                mT__83(); 
 
                 }
                 break;
             case 68 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:278: T84
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:412: T__84
                 {
-                mT84(); 
+                mT__84(); 
 
                 }
                 break;
             case 69 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:282: T85
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:418: T__85
                 {
-                mT85(); 
+                mT__85(); 
 
                 }
                 break;
             case 70 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:286: T86
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:424: T__86
                 {
-                mT86(); 
+                mT__86(); 
 
                 }
                 break;
             case 71 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:290: T87
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:430: T__87
                 {
-                mT87(); 
+                mT__87(); 
 
                 }
                 break;
             case 72 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:294: T88
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:436: T__88
                 {
-                mT88(); 
+                mT__88(); 
 
                 }
                 break;
             case 73 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:298: T89
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:442: T__89
                 {
-                mT89(); 
+                mT__89(); 
 
                 }
                 break;
             case 74 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:302: T90
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:448: T__90
                 {
-                mT90(); 
+                mT__90(); 
 
                 }
                 break;
             case 75 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:306: T91
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:454: T__91
                 {
-                mT91(); 
+                mT__91(); 
 
                 }
                 break;
             case 76 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:310: T92
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:460: T__92
                 {
-                mT92(); 
+                mT__92(); 
 
                 }
                 break;
             case 77 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:314: T93
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:466: T__93
                 {
-                mT93(); 
+                mT__93(); 
 
                 }
                 break;
             case 78 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:318: T94
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:472: T__94
                 {
-                mT94(); 
+                mT__94(); 
 
                 }
                 break;
             case 79 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:322: T95
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:478: T__95
                 {
-                mT95(); 
+                mT__95(); 
 
                 }
                 break;
             case 80 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:326: T96
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:484: T__96
                 {
-                mT96(); 
+                mT__96(); 
 
                 }
                 break;
             case 81 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:330: T97
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:490: T__97
                 {
-                mT97(); 
+                mT__97(); 
 
                 }
                 break;
             case 82 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:334: T98
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:496: T__98
                 {
-                mT98(); 
+                mT__98(); 
 
                 }
                 break;
             case 83 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:338: T99
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:502: T__99
                 {
-                mT99(); 
+                mT__99(); 
 
                 }
                 break;
             case 84 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:342: T100
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:508: T__100
                 {
-                mT100(); 
+                mT__100(); 
 
                 }
                 break;
             case 85 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:347: T101
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:515: T__101
                 {
-                mT101(); 
+                mT__101(); 
 
                 }
                 break;
             case 86 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:352: T102
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:522: T__102
                 {
-                mT102(); 
+                mT__102(); 
 
                 }
                 break;
             case 87 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:357: T103
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:529: T__103
                 {
-                mT103(); 
+                mT__103(); 
 
                 }
                 break;
             case 88 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:362: T104
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:536: T__104
                 {
-                mT104(); 
+                mT__104(); 
 
                 }
                 break;
             case 89 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:367: T105
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:543: T__105
                 {
-                mT105(); 
+                mT__105(); 
 
                 }
                 break;
             case 90 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:372: T106
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:550: T__106
                 {
-                mT106(); 
+                mT__106(); 
 
                 }
                 break;
             case 91 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:377: T107
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:557: T__107
                 {
-                mT107(); 
+                mT__107(); 
 
                 }
                 break;
             case 92 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:382: T108
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:564: T__108
                 {
-                mT108(); 
+                mT__108(); 
 
                 }
                 break;
             case 93 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:387: T109
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:571: T__109
                 {
-                mT109(); 
+                mT__109(); 
 
                 }
                 break;
             case 94 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:392: T110
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:578: T__110
                 {
-                mT110(); 
+                mT__110(); 
 
                 }
                 break;
             case 95 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:397: RULE_ESTEREL_SL_COMMENT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:585: RULE_ESTEREL_SL_COMMENT
                 {
                 mRULE_ESTEREL_SL_COMMENT(); 
 
                 }
                 break;
             case 96 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:421: RULE_ESTEREL_ML_COMMENT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:609: RULE_ESTEREL_ML_COMMENT
                 {
                 mRULE_ESTEREL_ML_COMMENT(); 
 
                 }
                 break;
             case 97 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:445: RULE_STRING
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:633: RULE_STRING
                 {
                 mRULE_STRING(); 
 
                 }
                 break;
             case 98 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:457: RULE_HOSTCODE
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:645: RULE_HOSTCODE
                 {
                 mRULE_HOSTCODE(); 
 
                 }
                 break;
             case 99 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:471: RULE_COMMENT_ANNOTATION
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:659: RULE_COMMENT_ANNOTATION
                 {
                 mRULE_COMMENT_ANNOTATION(); 
 
                 }
                 break;
             case 100 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:495: RULE_ML_COMMENT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:683: RULE_ML_COMMENT
                 {
                 mRULE_ML_COMMENT(); 
 
                 }
                 break;
             case 101 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:511: RULE_INT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:699: RULE_INT
                 {
                 mRULE_INT(); 
 
                 }
                 break;
             case 102 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:520: RULE_FLOAT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:708: RULE_FLOAT
                 {
                 mRULE_FLOAT(); 
 
                 }
                 break;
             case 103 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:531: RULE_BOOLEAN
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:719: RULE_BOOLEAN
                 {
                 mRULE_BOOLEAN(); 
 
                 }
                 break;
             case 104 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:544: RULE_ID
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:732: RULE_ID
                 {
                 mRULE_ID(); 
 
                 }
                 break;
             case 105 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:552: RULE_SL_COMMENT
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:740: RULE_SL_COMMENT
                 {
                 mRULE_SL_COMMENT(); 
 
                 }
                 break;
             case 106 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:568: RULE_WS
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:756: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
             case 107 :
-                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:576: RULE_ANY_OTHER
+                // ../de.cau.cs.kieler.kies.ui/src-gen/de/cau/cs/kieler/kies/ui/contentassist/antlr/internal/InternalEsterel.g:1:764: RULE_ANY_OTHER
                 {
                 mRULE_ANY_OTHER(); 
 
@@ -3750,152 +3960,152 @@ public class InternalEsterelLexer extends Lexer {
         "\1\uffff\5\64\1\uffff\1\100\1\uffff\1\64\1\110\1\112\1\uffff\1\115"+
         "\1\120\1\122\7\64\1\144\1\64\2\uffff\2\64\2\uffff\1\64\1\uffff\1"+
         "\56\2\uffff\2\64\1\uffff\1\177\2\56\1\u0082\1\56\3\uffff\5\64\1"+
-        "\uffff\4\64\1\u0091\5\64\2\uffff\1\u0082\1\uffff\3\64\15\uffff\4"+
-        "\64\1\u00a3\1\u00a4\3\64\1\u00a9\6\64\2\uffff\6\64\2\uffff\6\64"+
-        "\2\uffff\2\64\4\uffff\2\64\1\uffff\1\177\6\uffff\10\64\1\u00d4\3"+
-        "\64\1\uffff\1\64\1\u00d9\3\64\1\u00de\1\u00e0\1\u00e1\1\u00e2\2"+
-        "\uffff\6\64\2\uffff\4\64\1\uffff\7\64\1\u00f5\22\64\1\u0109\1\64"+
-        "\1\u010b\1\177\1\uffff\2\177\1\u010e\1\u010f\1\64\1\u0112\1\u0113"+
-        "\1\u0114\1\u0115\2\64\1\uffff\1\64\1\u0119\2\64\1\uffff\2\64\1\u011e"+
-        "\1\64\1\uffff\1\64\3\uffff\2\64\1\u0123\14\64\1\u0130\1\64\1\u0132"+
-        "\1\uffff\1\u0133\1\64\1\u0135\1\u0136\1\64\1\u0138\1\u0139\3\64"+
-        "\1\u013d\1\u013e\1\u013f\1\64\1\u0141\1\u0142\3\64\1\uffff\1\u0146"+
-        "\1\uffff\1\177\3\uffff\1\u0147\1\64\4\uffff\3\64\1\uffff\1\u014c"+
-        "\1\64\1\u014e\1\u014f\1\uffff\4\64\1\uffff\2\64\1\u0157\1\u010e"+
-        "\1\u0158\7\64\1\uffff\1\64\2\uffff\1\u0161\2\uffff\1\u0162\2\uffff"+
-        "\3\64\3\uffff\1\64\2\uffff\3\64\2\uffff\4\64\1\uffff\1\u016e\2\uffff"+
-        "\1\64\1\u0170\5\64\2\uffff\1\64\1\u0177\1\u0178\1\u0179\1\u017a"+
-        "\2\64\1\u017d\2\uffff\4\64\1\u0182\1\u0183\1\64\1\u0185\1\64\1\u0187"+
-        "\1\64\1\uffff\1\u0189\1\uffff\1\u018a\2\64\1\u018d\2\64\4\uffff"+
-        "\1\u0190\1\u0191\1\uffff\1\u0192\3\64\2\uffff\1\64\1\uffff\1\u0197"+
-        "\1\uffff\1\64\2\uffff\1\u0199\1\64\1\uffff\1\64\1\u019c\3\uffff"+
-        "\1\u019d\1\64\1\u019f\1\u01a0\1\uffff\1\u01a1\1\uffff\1\u01a2\1"+
-        "\64\2\uffff\1\64\4\uffff\1\64\1\u01a6\1\u01a7\2\uffff";
+        "\uffff\4\64\1\u0091\5\64\2\uffff\1\u0082\1\uffff\3\64\15\uffff\3"+
+        "\64\1\u00a2\1\u00a3\4\64\1\u00a9\6\64\2\uffff\6\64\2\uffff\6\64"+
+        "\2\uffff\2\64\4\uffff\2\64\1\uffff\1\177\6\uffff\7\64\1\u00d3\4"+
+        "\64\1\uffff\1\64\1\u00d9\2\64\1\u00dd\1\64\1\u00e0\1\u00e1\1\u00e2"+
+        "\2\uffff\5\64\2\uffff\5\64\1\uffff\7\64\1\u00f5\22\64\1\u0109\1"+
+        "\64\1\u010b\1\177\1\uffff\2\177\1\u010e\1\64\1\u0111\1\u0112\1\u0113"+
+        "\1\u0114\1\u0115\1\64\1\uffff\1\64\1\u0118\3\64\1\uffff\3\64\1\uffff"+
+        "\1\u011f\1\64\3\uffff\2\64\1\u0123\14\64\1\u0130\1\u0131\1\64\1"+
+        "\uffff\1\u0133\1\64\1\u0135\1\u0136\1\64\1\u0138\1\u0139\3\64\1"+
+        "\u013d\1\u013e\1\u013f\1\u0140\1\u0141\4\64\1\uffff\1\u0146\1\uffff"+
+        "\1\177\2\uffff\1\64\1\u0148\5\uffff\2\64\1\uffff\1\u014b\2\64\1"+
+        "\u014e\1\u014f\1\64\1\uffff\3\64\1\uffff\1\64\1\u0156\1\64\1\u0158"+
+        "\1\64\1\u0115\6\64\2\uffff\1\64\1\uffff\1\u0161\2\uffff\1\u0162"+
+        "\2\uffff\3\64\5\uffff\4\64\1\uffff\1\64\1\uffff\2\64\1\uffff\1\64"+
+        "\1\u016e\2\uffff\1\64\1\u0170\4\64\1\uffff\1\64\1\uffff\1\64\1\u0177"+
+        "\1\u0178\1\u0179\1\u017a\2\64\1\u017d\2\uffff\5\64\1\u0183\1\u0184"+
+        "\1\u0185\1\u0186\2\64\1\uffff\1\u0189\1\uffff\1\u018a\1\64\1\u018c"+
+        "\3\64\4\uffff\1\u0190\1\u0191\1\uffff\1\u0192\4\64\4\uffff\1\64"+
+        "\1\u0198\2\uffff\1\u0199\1\uffff\2\64\1\u019c\3\uffff\1\u019d\1"+
+        "\64\1\u019f\1\u01a0\1\u01a1\2\uffff\1\64\1\u01a3\2\uffff\1\64\3"+
+        "\uffff\1\64\1\uffff\1\u01a6\1\u01a7\2\uffff";
     static final String DFA28_eofS =
         "\u01a8\uffff";
     static final String DFA28_minS =
         "\1\0\2\141\1\162\1\142\1\157\1\uffff\1\60\1\uffff\1\141\1\52\1\77"+
         "\1\uffff\1\76\2\75\1\157\1\156\1\146\1\141\1\157\1\145\1\141\1\75"+
         "\1\141\2\uffff\2\141\2\uffff\1\145\1\uffff\1\174\2\uffff\1\157\1"+
-        "\141\1\uffff\1\173\2\0\1\56\1\101\3\uffff\1\141\1\143\1\163\1\160"+
-        "\1\145\1\uffff\1\163\1\145\1\162\1\165\1\60\1\164\1\144\1\141\1"+
-        "\157\1\156\2\uffff\1\56\1\uffff\1\144\1\156\1\170\1\0\14\uffff\1"+
-        "\157\1\163\1\164\1\155\2\60\1\154\1\157\1\156\1\60\1\162\1\156\1"+
-        "\147\2\163\1\154\2\uffff\1\144\1\151\1\145\1\143\1\163\1\145\2\uffff"+
-        "\1\155\1\154\2\164\1\141\1\145\2\uffff\1\154\1\156\4\uffff\1\157"+
-        "\1\162\1\uffff\1\0\6\uffff\1\145\1\160\1\145\2\153\1\145\1\156\1"+
-        "\151\1\60\1\143\1\145\1\163\1\uffff\1\160\1\60\1\151\1\162\1\145"+
-        "\4\60\2\uffff\1\154\1\151\1\157\2\145\1\165\2\uffff\1\163\1\141"+
-        "\1\143\1\142\1\uffff\1\151\1\163\1\156\1\160\1\164\1\144\1\164\1"+
-        "\60\1\164\1\162\1\150\1\145\1\164\1\143\1\142\1\163\1\171\1\154"+
-        "\1\145\1\150\1\143\1\153\1\156\1\145\1\165\1\141\1\60\1\160\1\60"+
-        "\4\0\2\60\1\157\4\60\1\164\1\145\1\uffff\1\145\1\60\1\145\1\165"+
-        "\1\uffff\2\164\1\60\1\151\1\uffff\1\154\3\uffff\1\145\1\147\1\60"+
-        "\1\144\1\147\1\164\1\145\2\164\1\154\1\156\1\157\1\141\1\145\1\141"+
-        "\1\60\1\154\1\60\1\uffff\1\60\1\171\2\60\1\146\2\60\1\151\1\164"+
-        "\1\155\3\60\1\150\2\60\1\141\1\162\1\164\1\uffff\1\60\1\uffff\1"+
-        "\0\3\uffff\1\60\1\165\4\uffff\1\151\1\156\1\144\1\uffff\1\60\1\164"+
-        "\2\60\1\uffff\1\156\1\145\1\141\1\156\1\uffff\1\151\1\145\3\60\1"+
-        "\151\1\145\1\147\1\162\1\154\1\156\1\151\1\uffff\1\145\2\uffff\1"+
-        "\60\2\uffff\1\60\2\uffff\1\156\1\141\1\157\3\uffff\1\151\2\uffff"+
-        "\1\164\1\156\1\151\2\uffff\1\164\1\166\1\164\1\165\1\uffff\1\60"+
-        "\2\uffff\1\147\1\60\1\156\1\145\1\141\1\162\1\165\2\uffff\1\157"+
-        "\4\60\1\144\1\156\1\60\2\uffff\1\145\1\156\1\144\1\156\2\60\1\157"+
-        "\1\60\1\145\1\60\1\162\1\uffff\1\60\1\uffff\1\60\1\144\1\164\1\60"+
-        "\1\164\1\156\4\uffff\2\60\1\uffff\1\60\1\164\1\165\1\147\2\uffff"+
-        "\1\156\1\uffff\1\60\1\uffff\1\145\2\uffff\1\60\1\145\1\uffff\1\160"+
-        "\1\60\3\uffff\1\60\1\154\2\60\1\uffff\1\60\1\uffff\1\60\1\165\2"+
-        "\uffff\1\145\4\uffff\1\164\2\60\2\uffff";
+        "\141\1\uffff\1\173\2\0\1\56\1\101\3\uffff\1\143\1\160\1\163\1\145"+
+        "\1\141\1\uffff\1\145\1\162\1\165\1\163\1\60\1\164\1\144\1\157\1"+
+        "\141\1\156\2\uffff\1\56\1\uffff\1\144\1\170\1\156\1\0\14\uffff\1"+
+        "\157\1\163\1\164\2\60\1\155\1\157\1\156\1\154\1\60\1\162\1\147\1"+
+        "\156\2\163\1\154\2\uffff\1\144\1\151\2\145\1\163\1\143\2\uffff\1"+
+        "\155\1\154\1\164\1\145\1\141\1\164\2\uffff\1\154\1\156\4\uffff\1"+
+        "\157\1\162\1\uffff\1\0\6\uffff\1\153\2\145\1\153\1\156\1\160\1\145"+
+        "\1\60\1\143\1\145\1\163\1\151\1\uffff\1\160\1\60\1\162\1\151\1\60"+
+        "\1\145\3\60\2\uffff\1\154\1\151\1\157\1\145\1\165\2\uffff\1\145"+
+        "\1\141\1\143\1\163\1\142\1\uffff\1\151\1\156\1\163\1\160\2\164\1"+
+        "\144\1\60\1\164\1\162\1\164\1\143\1\145\1\150\1\142\1\163\1\171"+
+        "\1\145\1\154\1\150\1\156\1\153\1\143\1\141\1\145\1\165\1\60\1\160"+
+        "\1\60\4\0\1\60\1\157\5\60\1\145\1\uffff\1\145\1\60\1\145\1\164\1"+
+        "\165\1\uffff\2\164\1\151\1\uffff\1\60\1\154\3\uffff\1\145\1\147"+
+        "\1\60\1\147\1\164\1\144\2\164\1\145\1\154\1\156\1\141\1\157\1\145"+
+        "\1\141\2\60\1\154\1\uffff\1\60\1\171\2\60\1\146\2\60\1\151\1\164"+
+        "\1\155\5\60\1\150\1\164\1\141\1\162\1\uffff\1\60\1\uffff\1\0\2\uffff"+
+        "\1\165\1\60\5\uffff\1\156\1\144\1\uffff\1\60\1\151\1\164\2\60\1"+
+        "\156\1\uffff\1\145\1\141\1\156\1\uffff\1\145\1\60\1\151\1\60\1\151"+
+        "\1\60\1\145\1\147\1\154\1\162\1\156\1\151\2\uffff\1\145\1\uffff"+
+        "\1\60\2\uffff\1\60\2\uffff\1\156\1\141\1\157\5\uffff\2\151\1\164"+
+        "\1\156\1\uffff\1\164\1\uffff\1\164\1\165\1\uffff\1\166\1\60\2\uffff"+
+        "\1\147\1\60\1\156\1\145\1\162\1\165\1\uffff\1\141\1\uffff\1\157"+
+        "\4\60\1\144\1\156\1\60\2\uffff\1\145\1\156\1\144\1\156\1\157\4\60"+
+        "\1\162\1\145\1\uffff\1\60\1\uffff\1\60\1\144\1\60\2\164\1\156\4"+
+        "\uffff\2\60\1\uffff\1\60\1\164\1\165\1\147\1\156\4\uffff\1\145\1"+
+        "\60\2\uffff\1\60\1\uffff\1\160\1\145\1\60\3\uffff\1\60\1\154\3\60"+
+        "\2\uffff\1\165\1\60\2\uffff\1\145\3\uffff\1\164\1\uffff\2\60\2\uffff";
     static final String DFA28_maxS =
-        "\1\ufffe\1\171\2\165\1\167\1\157\1\uffff\1\71\1\uffff\1\157\1\57"+
+        "\1\uffff\1\171\2\165\1\167\1\157\1\uffff\1\71\1\uffff\1\157\1\57"+
         "\1\77\1\uffff\2\76\1\75\1\157\1\160\1\156\1\165\1\157\1\165\1\157"+
         "\1\75\1\170\2\uffff\1\157\1\151\2\uffff\1\165\1\uffff\1\174\2\uffff"+
-        "\1\157\1\141\1\uffff\1\173\2\ufffe\1\146\1\172\3\uffff\1\165\1\155"+
-        "\1\163\1\160\1\145\1\uffff\1\163\1\157\1\162\1\165\1\172\1\164\1"+
-        "\144\1\141\1\157\1\164\2\uffff\1\146\1\uffff\1\144\1\156\1\170\1"+
-        "\ufffe\14\uffff\1\157\1\163\1\164\1\155\2\172\1\154\1\157\1\156"+
-        "\1\172\1\162\1\156\1\147\2\163\1\156\2\uffff\1\144\1\151\1\145\1"+
-        "\143\1\163\1\151\2\uffff\1\160\1\163\2\164\1\141\1\145\2\uffff\1"+
-        "\164\1\156\4\uffff\1\157\1\162\1\uffff\1\ufffe\6\uffff\1\145\1\160"+
-        "\1\145\2\153\1\145\1\156\1\151\1\172\1\143\1\145\1\163\1\uffff\1"+
-        "\160\1\172\1\151\1\162\1\145\4\172\2\uffff\1\154\1\151\1\157\2\145"+
-        "\1\165\2\uffff\1\163\1\141\1\143\1\142\1\uffff\1\151\1\163\1\156"+
-        "\2\164\1\144\1\164\1\172\1\164\1\162\1\150\1\151\1\164\1\143\1\142"+
-        "\1\163\1\171\1\154\1\145\1\150\1\143\1\153\1\156\1\145\1\165\1\141"+
-        "\1\172\1\160\1\172\4\ufffe\2\172\1\163\4\172\1\164\1\145\1\uffff"+
-        "\1\145\1\172\1\145\1\165\1\uffff\2\164\1\172\1\151\1\uffff\1\154"+
-        "\3\uffff\1\145\1\147\1\172\1\144\1\147\1\164\1\145\2\164\1\154\1"+
-        "\156\1\157\1\141\1\145\1\141\1\172\1\154\1\172\1\uffff\1\172\1\171"+
-        "\2\172\1\146\2\172\1\151\1\164\1\155\3\172\1\150\2\172\1\141\1\162"+
-        "\1\164\1\uffff\1\172\1\uffff\1\ufffe\3\uffff\1\172\1\165\4\uffff"+
-        "\1\151\1\156\1\144\1\uffff\1\172\1\164\2\172\1\uffff\1\156\1\145"+
-        "\1\141\1\156\1\uffff\1\151\1\145\3\172\1\151\1\145\1\147\1\162\1"+
-        "\154\1\156\1\151\1\uffff\1\145\2\uffff\1\172\2\uffff\1\172\2\uffff"+
-        "\1\156\1\141\1\157\3\uffff\1\151\2\uffff\1\164\1\156\1\151\2\uffff"+
-        "\1\164\1\166\1\164\1\165\1\uffff\1\172\2\uffff\1\147\1\172\1\156"+
-        "\1\145\1\141\1\162\1\165\2\uffff\1\157\4\172\1\144\1\156\1\172\2"+
-        "\uffff\1\145\1\156\1\144\1\156\2\172\1\157\1\172\1\145\1\172\1\162"+
-        "\1\uffff\1\172\1\uffff\1\172\1\144\1\164\1\172\1\164\1\156\4\uffff"+
-        "\2\172\1\uffff\1\172\1\164\1\165\1\147\2\uffff\1\156\1\uffff\1\172"+
-        "\1\uffff\1\145\2\uffff\1\172\1\145\1\uffff\1\160\1\172\3\uffff\1"+
-        "\172\1\154\2\172\1\uffff\1\172\1\uffff\1\172\1\165\2\uffff\1\145"+
-        "\4\uffff\1\164\2\172\2\uffff";
+        "\1\157\1\141\1\uffff\1\173\2\uffff\1\146\1\172\3\uffff\1\155\1\160"+
+        "\1\163\1\145\1\165\1\uffff\1\157\1\162\1\165\1\163\1\172\1\164\1"+
+        "\144\1\157\1\141\1\164\2\uffff\1\146\1\uffff\1\144\1\170\1\156\1"+
+        "\uffff\14\uffff\1\157\1\163\1\164\2\172\1\155\1\157\1\156\1\154"+
+        "\1\172\1\162\1\147\1\156\2\163\1\156\2\uffff\1\144\1\151\1\145\1"+
+        "\151\1\163\1\143\2\uffff\1\160\1\163\1\164\1\145\1\141\1\164\2\uffff"+
+        "\1\164\1\156\4\uffff\1\157\1\162\1\uffff\1\uffff\6\uffff\1\153\2"+
+        "\145\1\153\1\156\1\160\1\145\1\172\1\143\1\145\1\163\1\151\1\uffff"+
+        "\1\160\1\172\1\162\1\151\1\172\1\145\3\172\2\uffff\1\154\1\151\1"+
+        "\157\1\145\1\165\2\uffff\1\145\1\141\1\143\1\163\1\142\1\uffff\1"+
+        "\151\1\156\1\163\3\164\1\144\1\172\1\164\1\162\1\164\1\143\1\151"+
+        "\1\150\1\142\1\163\1\171\1\145\1\154\1\150\1\156\1\153\1\143\1\141"+
+        "\1\145\1\165\1\172\1\160\1\172\4\uffff\1\172\1\163\5\172\1\145\1"+
+        "\uffff\1\145\1\172\1\145\1\164\1\165\1\uffff\2\164\1\151\1\uffff"+
+        "\1\172\1\154\3\uffff\1\145\1\147\1\172\1\147\1\164\1\144\2\164\1"+
+        "\145\1\154\1\156\1\141\1\157\1\145\1\141\2\172\1\154\1\uffff\1\172"+
+        "\1\171\2\172\1\146\2\172\1\151\1\164\1\155\5\172\1\150\1\164\1\141"+
+        "\1\162\1\uffff\1\172\1\uffff\1\uffff\2\uffff\1\165\1\172\5\uffff"+
+        "\1\156\1\144\1\uffff\1\172\1\151\1\164\2\172\1\156\1\uffff\1\145"+
+        "\1\141\1\156\1\uffff\1\145\1\172\1\151\1\172\1\151\1\172\1\145\1"+
+        "\147\1\154\1\162\1\156\1\151\2\uffff\1\145\1\uffff\1\172\2\uffff"+
+        "\1\172\2\uffff\1\156\1\141\1\157\5\uffff\2\151\1\164\1\156\1\uffff"+
+        "\1\164\1\uffff\1\164\1\165\1\uffff\1\166\1\172\2\uffff\1\147\1\172"+
+        "\1\156\1\145\1\162\1\165\1\uffff\1\141\1\uffff\1\157\4\172\1\144"+
+        "\1\156\1\172\2\uffff\1\145\1\156\1\144\1\156\1\157\4\172\1\162\1"+
+        "\145\1\uffff\1\172\1\uffff\1\172\1\144\1\172\2\164\1\156\4\uffff"+
+        "\2\172\1\uffff\1\172\1\164\1\165\1\147\1\156\4\uffff\1\145\1\172"+
+        "\2\uffff\1\172\1\uffff\1\160\1\145\1\172\3\uffff\1\172\1\154\3\172"+
+        "\2\uffff\1\165\1\172\2\uffff\1\145\3\uffff\1\164\1\uffff\2\172\2"+
+        "\uffff";
     static final String DFA28_acceptS =
         "\6\uffff\1\6\1\uffff\1\10\3\uffff\1\14\14\uffff\1\41\1\42\2\uffff"+
         "\1\50\1\52\1\uffff\1\54\1\uffff\1\63\1\64\2\uffff\1\133\5\uffff"+
         "\1\150\1\152\1\153\5\uffff\1\150\12\uffff\1\6\1\7\1\uffff\1\10\4"+
-        "\uffff\1\151\1\12\1\124\1\13\1\14\1\134\1\15\1\21\1\16\1\20\1\22"+
+        "\uffff\1\151\1\12\1\124\1\13\1\14\1\134\1\15\1\16\1\21\1\20\1\22"+
         "\1\17\20\uffff\1\43\1\37\6\uffff\1\41\1\42\6\uffff\1\50\1\52\2\uffff"+
         "\1\54\1\62\1\63\1\64\2\uffff\1\133\1\uffff\1\137\1\141\1\142\1\145"+
-        "\1\146\1\152\14\uffff\1\3\11\uffff\1\143\1\144\6\uffff\1\47\1\103"+
-        "\4\uffff\1\67\52\uffff\1\2\4\uffff\1\4\4\uffff\1\5\1\uffff\1\11"+
-        "\1\35\1\34\22\uffff\1\40\23\uffff\1\116\1\uffff\1\132\1\uffff\1"+
-        "\140\1\147\1\122\2\uffff\1\1\1\61\1\55\1\105\3\uffff\1\23\4\uffff"+
-        "\1\33\4\uffff\1\74\14\uffff\1\32\1\uffff\1\102\1\77\1\uffff\1\110"+
-        "\1\106\1\uffff\1\101\1\125\3\uffff\1\73\1\70\1\45\1\uffff\1\71\1"+
-        "\66\3\uffff\1\107\1\115\4\uffff\1\112\1\uffff\1\72\1\65\7\uffff"+
-        "\1\127\1\27\10\uffff\1\100\1\104\13\uffff\1\130\1\uffff\1\36\6\uffff"+
-        "\1\30\1\31\1\51\1\46\2\uffff\1\123\4\uffff\1\114\1\126\1\uffff\1"+
-        "\76\1\uffff\1\113\1\uffff\1\111\1\24\2\uffff\1\26\2\uffff\1\120"+
-        "\1\121\1\44\4\uffff\1\135\1\uffff\1\25\2\uffff\1\57\1\56\1\uffff"+
-        "\1\75\1\53\1\60\1\136\3\uffff\1\117\1\131";
+        "\1\146\1\152\14\uffff\1\3\11\uffff\1\143\1\144\5\uffff\1\47\1\103"+
+        "\5\uffff\1\67\51\uffff\1\2\5\uffff\1\4\3\uffff\1\5\2\uffff\1\11"+
+        "\1\34\1\35\22\uffff\1\40\23\uffff\1\116\1\uffff\1\132\1\uffff\1"+
+        "\140\1\1\2\uffff\1\55\1\61\1\105\1\122\1\147\2\uffff\1\23\6\uffff"+
+        "\1\33\3\uffff\1\74\14\uffff\1\32\1\102\1\uffff\1\77\1\uffff\1\101"+
+        "\1\125\1\uffff\1\106\1\110\3\uffff\1\70\1\73\1\45\1\66\1\71\4\uffff"+
+        "\1\107\1\uffff\1\115\2\uffff\1\112\2\uffff\1\65\1\72\6\uffff\1\127"+
+        "\1\uffff\1\27\10\uffff\1\100\1\104\13\uffff\1\130\1\uffff\1\36\6"+
+        "\uffff\1\30\1\31\1\46\1\51\2\uffff\1\123\5\uffff\1\114\1\126\1\76"+
+        "\1\113\2\uffff\1\111\1\24\1\uffff\1\26\3\uffff\1\120\1\121\1\44"+
+        "\5\uffff\1\135\1\25\2\uffff\1\57\1\56\1\uffff\1\75\1\53\1\60\1\uffff"+
+        "\1\136\2\uffff\1\117\1\131";
     static final String DFA28_specialS =
-        "\u01a8\uffff}>";
+        "\1\10\47\uffff\1\0\1\6\34\uffff\1\11\67\uffff\1\3\110\uffff\1\5"+
+        "\1\1\1\2\1\4\101\uffff\1\7\u009b\uffff}>";
     static final String[] DFA28_transitionS = {
             "\11\56\2\55\2\56\1\55\22\56\1\55\1\56\1\50\1\40\1\56\1\47\1"+
             "\56\1\51\1\31\1\32\1\10\1\6\1\35\1\7\1\14\1\12\12\52\1\27\1"+
             "\36\1\16\1\15\1\17\1\13\1\46\32\54\1\42\1\56\1\43\1\53\1\54"+
             "\1\56\1\4\1\20\1\33\1\24\1\30\1\23\1\54\1\26\1\22\2\54\1\44"+
             "\1\11\1\5\1\3\1\2\1\54\1\37\1\25\1\1\1\21\1\45\1\34\3\54\1\56"+
-            "\1\41\uff82\56",
-            "\1\61\6\uffff\1\63\1\60\10\uffff\1\57\6\uffff\1\62",
-            "\1\70\15\uffff\1\65\2\uffff\1\66\2\uffff\1\67",
+            "\1\41\uff83\56",
+            "\1\61\6\uffff\1\62\1\57\10\uffff\1\63\6\uffff\1\60",
+            "\1\67\15\uffff\1\70\2\uffff\1\65\2\uffff\1\66",
             "\1\71\2\uffff\1\72",
-            "\1\75\13\uffff\1\73\10\uffff\1\74",
+            "\1\74\13\uffff\1\73\10\uffff\1\75",
             "\1\76",
             "",
             "\12\101",
             "",
-            "\1\105\7\uffff\1\104\5\uffff\1\103",
+            "\1\104\7\uffff\1\105\5\uffff\1\103",
             "\1\106\4\uffff\1\107",
             "\1\111",
             "",
             "\1\114",
-            "\1\116\1\117",
+            "\1\117\1\116",
             "\1\121",
             "\1\123",
             "\1\124\1\uffff\1\125",
-            "\1\130\6\uffff\1\126\1\127",
-            "\1\131\12\uffff\1\132\10\uffff\1\133",
+            "\1\127\6\uffff\1\130\1\126",
+            "\1\133\12\uffff\1\131\10\uffff\1\132",
             "\1\134",
-            "\1\136\3\uffff\1\137\12\uffff\1\135\1\140",
+            "\1\137\3\uffff\1\136\12\uffff\1\135\1\140",
             "\1\142\15\uffff\1\141",
             "\1\143",
-            "\1\150\12\uffff\1\151\1\146\1\145\7\uffff\1\147\1\uffff\1\152",
+            "\1\152\12\uffff\1\151\1\146\1\145\7\uffff\1\147\1\uffff\1\150",
             "",
             "",
             "\1\156\15\uffff\1\155",
-            "\1\160\3\uffff\1\161\2\uffff\1\162\1\157",
+            "\1\162\3\uffff\1\161\2\uffff\1\160\1\157",
             "",
             "",
             "\1\165\17\uffff\1\166",
@@ -3907,21 +4117,21 @@ public class InternalEsterelLexer extends Lexer {
             "\1\174",
             "",
             "\1\176",
-            "\uffff\u0080",
-            "\uffff\u0081",
+            "\0\u0080",
+            "\0\u0081",
             "\1\u0083\1\uffff\12\101\54\uffff\1\u0083",
             "\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
             "",
             "",
-            "\1\u0086\23\uffff\1\u0085",
-            "\1\u0088\11\uffff\1\u0087",
+            "\1\u0085\11\uffff\1\u0086",
+            "\1\u0087",
+            "\1\u0088",
             "\1\u0089",
-            "\1\u008a",
-            "\1\u008b",
+            "\1\u008a\23\uffff\1\u008b",
             "",
-            "\1\u008c",
-            "\1\u008d\11\uffff\1\u008e",
+            "\1\u008c\11\uffff\1\u008d",
+            "\1\u008e",
             "\1\u008f",
             "\1\u0090",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
@@ -3929,7 +4139,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0093",
             "\1\u0094",
             "\1\u0095",
-            "\1\u0096\5\uffff\1\u0097",
+            "\1\u0097\5\uffff\1\u0096",
             "",
             "",
             "\1\u0083\1\uffff\12\101\54\uffff\1\u0083",
@@ -3937,7 +4147,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0098",
             "\1\u0099",
             "\1\u009a",
-            "\52\u009c\1\u009b\uffd4\u009c",
+            "\52\u009c\1\u009b\uffd5\u009c",
             "",
             "",
             "",
@@ -3953,10 +4163,10 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u009d",
             "\1\u009e",
             "\1\u009f",
-            "\1\u00a0",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\17\64\1\u00a2\3\64"+
-            "\1\u00a1\6\64",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\17\64\1\u00a1\3\64"+
+            "\1\u00a0\6\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u00a4",
             "\1\u00a5",
             "\1\u00a6",
             "\1\u00a7",
@@ -3966,26 +4176,26 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00ac",
             "\1\u00ad",
             "\1\u00ae",
-            "\1\u00b0\1\uffff\1\u00af",
+            "\1\u00af\1\uffff\1\u00b0",
             "",
             "",
             "\1\u00b1",
             "\1\u00b2",
             "\1\u00b3",
-            "\1\u00b4",
-            "\1\u00b5",
-            "\1\u00b7\3\uffff\1\u00b6",
+            "\1\u00b5\3\uffff\1\u00b4",
+            "\1\u00b6",
+            "\1\u00b7",
             "",
             "",
             "\1\u00b8\1\u00b9\1\uffff\1\u00ba",
-            "\1\u00bb\6\uffff\1\u00bc",
+            "\1\u00bc\6\uffff\1\u00bb",
             "\1\u00bd",
             "\1\u00be",
             "\1\u00bf",
             "\1\u00c0",
             "",
             "",
-            "\1\u00c3\3\uffff\1\u00c1\3\uffff\1\u00c2",
+            "\1\u00c1\3\uffff\1\u00c2\3\uffff\1\u00c3",
             "\1\u00c4",
             "",
             "",
@@ -3994,7 +4204,7 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00c5",
             "\1\u00c6",
             "",
-            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff81\u00ca",
+            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff82\u00ca",
             "",
             "",
             "",
@@ -4008,8 +4218,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00cf",
             "\1\u00d0",
             "\1\u00d1",
-            "\1\u00d2",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\22\64\1\u00d3\7\64",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\22\64\1\u00d2\7\64",
+            "\1\u00d4",
             "\1\u00d5",
             "\1\u00d6",
             "\1\u00d7",
@@ -4018,8 +4228,8 @@ public class InternalEsterelLexer extends Lexer {
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u00da",
             "\1\u00db",
-            "\1\u00dc",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\7\64\1\u00dd\22\64",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\7\64\1\u00dc\22\64",
+            "\1\u00de",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\24\64\1\u00df\5\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
@@ -4030,9 +4240,9 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00e5",
             "\1\u00e6",
             "\1\u00e7",
+            "",
+            "",
             "\1\u00e8",
-            "",
-            "",
             "\1\u00e9",
             "\1\u00ea",
             "\1\u00eb",
@@ -4049,8 +4259,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u00f6",
             "\1\u00f7",
             "\1\u00f8",
-            "\1\u00f9\3\uffff\1\u00fa",
-            "\1\u00fb",
+            "\1\u00f9",
+            "\1\u00fb\3\uffff\1\u00fa",
             "\1\u00fc",
             "\1\u00fd",
             "\1\u00fe",
@@ -4068,30 +4278,30 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u010a",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\27\u00ca\1\u010c\127\u00ca"+
-            "\1\u00c7\uff81\u00ca",
-            "\12\u010d\1\u00c9\ufff4\u010d",
-            "\uffff\u010d",
-            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff81\u00ca",
+            "\1\u00c7\uff82\u00ca",
+            "\12\u010d\1\u00c9\ufff5\u010d",
+            "\0\u010d",
+            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff82\u00ca",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u010f\3\uffff\1\u0110",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0111\3\uffff\1\u0110",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u0116",
-            "\1\u0117",
             "",
-            "\1\u0118",
+            "\1\u0117",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u0119",
             "\1\u011a",
             "\1\u011b",
             "",
             "\1\u011c",
             "\1\u011d",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u011f",
+            "\1\u011e",
             "",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u0120",
             "",
             "",
@@ -4112,8 +4322,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u012e",
             "\1\u012f",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0131",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u0132",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u0134",
@@ -4128,45 +4338,46 @@ public class InternalEsterelLexer extends Lexer {
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0140",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u0142",
             "\1\u0143",
             "\1\u0144",
             "\1\u0145",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
-            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff81\u00ca",
+            "\12\u00ca\1\u00c9\2\u00ca\1\u00c8\157\u00ca\1\u00c7\uff82\u00ca",
             "",
             "",
-            "",
+            "\1\u0147",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0148",
+            "",
             "",
             "",
             "",
             "",
             "\1\u0149",
             "\1\u014a",
-            "\1\u014b",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u014c",
             "\1\u014d",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "",
             "\1\u0150",
+            "",
             "\1\u0151",
             "\1\u0152",
             "\1\u0153",
             "",
             "\1\u0154",
-            "\1\u0155",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\16\64\1\u0156\13\64",
-            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\16\64\1\u0155\13"+
+            "\64",
+            "\1\u0157",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u0159",
+            "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u015a",
             "\1\u015b",
             "\1\u015c",
@@ -4174,8 +4385,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u015e",
             "\1\u015f",
             "",
-            "\1\u0160",
             "",
+            "\1\u0160",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
@@ -4189,19 +4400,19 @@ public class InternalEsterelLexer extends Lexer {
             "",
             "",
             "",
+            "",
+            "",
             "\1\u0166",
-            "",
-            "",
             "\1\u0167",
             "\1\u0168",
             "\1\u0169",
             "",
-            "",
             "\1\u016a",
+            "",
             "\1\u016b",
             "\1\u016c",
-            "\1\u016d",
             "",
+            "\1\u016d",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
             "",
@@ -4211,8 +4422,8 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0172",
             "\1\u0173",
             "\1\u0174",
-            "\1\u0175",
             "",
+            "\1\u0175",
             "",
             "\1\u0176",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
@@ -4228,20 +4439,20 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u017f",
             "\1\u0180",
             "\1\u0181",
+            "\1\u0182",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0184",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u0186",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u0187",
             "\1\u0188",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\1\u018b",
-            "\1\u018c",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "\1\u018d",
             "\1\u018e",
             "\1\u018f",
             "",
@@ -4255,18 +4466,18 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u0193",
             "\1\u0194",
             "\1\u0195",
-            "",
-            "",
             "\1\u0196",
             "",
+            "",
+            "",
+            "",
+            "\1\u0197",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
-            "\1\u0198",
-            "",
             "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
+            "",
             "\1\u019a",
-            "",
             "\1\u019b",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
@@ -4276,19 +4487,19 @@ public class InternalEsterelLexer extends Lexer {
             "\1\u019e",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
+            "",
+            "\1\u01a2",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
-            "\1\u01a3",
             "",
             "",
             "\1\u01a4",
             "",
             "",
             "",
-            "",
             "\1\u01a5",
+            "",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "\12\64\7\uffff\32\64\4\uffff\1\64\1\uffff\32\64",
             "",
@@ -4325,7 +4536,231 @@ public class InternalEsterelLexer extends Lexer {
             this.transition = DFA28_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T17 | T18 | T19 | T20 | T21 | T22 | T23 | T24 | T25 | T26 | T27 | T28 | T29 | T30 | T31 | T32 | T33 | T34 | T35 | T36 | T37 | T38 | T39 | T40 | T41 | T42 | T43 | T44 | T45 | T46 | T47 | T48 | T49 | T50 | T51 | T52 | T53 | T54 | T55 | T56 | T57 | T58 | T59 | T60 | T61 | T62 | T63 | T64 | T65 | T66 | T67 | T68 | T69 | T70 | T71 | T72 | T73 | T74 | T75 | T76 | T77 | T78 | T79 | T80 | T81 | T82 | T83 | T84 | T85 | T86 | T87 | T88 | T89 | T90 | T91 | T92 | T93 | T94 | T95 | T96 | T97 | T98 | T99 | T100 | T101 | T102 | T103 | T104 | T105 | T106 | T107 | T108 | T109 | T110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+            return "1:1: Tokens : ( T__17 | T__18 | T__19 | T__20 | T__21 | T__22 | T__23 | T__24 | T__25 | T__26 | T__27 | T__28 | T__29 | T__30 | T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | T__107 | T__108 | T__109 | T__110 | RULE_ESTEREL_SL_COMMENT | RULE_ESTEREL_ML_COMMENT | RULE_STRING | RULE_HOSTCODE | RULE_COMMENT_ANNOTATION | RULE_ML_COMMENT | RULE_INT | RULE_FLOAT | RULE_BOOLEAN | RULE_ID | RULE_SL_COMMENT | RULE_WS | RULE_ANY_OTHER );";
+        }
+        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
+            IntStream input = _input;
+        	int _s = s;
+            switch ( s ) {
+                    case 0 : 
+                        int LA28_40 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_40>='\u0000' && LA28_40<='\uFFFF')) ) {s = 128;}
+
+                        else s = 46;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 1 : 
+                        int LA28_200 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_200=='\n') ) {s = 201;}
+
+                        else if ( ((LA28_200>='\u0000' && LA28_200<='\t')||(LA28_200>='\u000B' && LA28_200<='\uFFFF')) ) {s = 269;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA28_201 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_201>='\u0000' && LA28_201<='\uFFFF')) ) {s = 269;}
+
+                        else s = 127;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA28_126 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_126=='}') ) {s = 199;}
+
+                        else if ( (LA28_126=='\r') ) {s = 200;}
+
+                        else if ( (LA28_126=='\n') ) {s = 201;}
+
+                        else if ( ((LA28_126>='\u0000' && LA28_126<='\t')||(LA28_126>='\u000B' && LA28_126<='\f')||(LA28_126>='\u000E' && LA28_126<='|')||(LA28_126>='~' && LA28_126<='\uFFFF')) ) {s = 202;}
+
+                        else s = 127;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 4 : 
+                        int LA28_202 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_202=='}') ) {s = 199;}
+
+                        else if ( (LA28_202=='\r') ) {s = 200;}
+
+                        else if ( (LA28_202=='\n') ) {s = 201;}
+
+                        else if ( ((LA28_202>='\u0000' && LA28_202<='\t')||(LA28_202>='\u000B' && LA28_202<='\f')||(LA28_202>='\u000E' && LA28_202<='|')||(LA28_202>='~' && LA28_202<='\uFFFF')) ) {s = 202;}
+
+                        else s = 127;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 5 : 
+                        int LA28_199 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_199=='%') ) {s = 268;}
+
+                        else if ( (LA28_199=='}') ) {s = 199;}
+
+                        else if ( (LA28_199=='\r') ) {s = 200;}
+
+                        else if ( (LA28_199=='\n') ) {s = 201;}
+
+                        else if ( ((LA28_199>='\u0000' && LA28_199<='\t')||(LA28_199>='\u000B' && LA28_199<='\f')||(LA28_199>='\u000E' && LA28_199<='$')||(LA28_199>='&' && LA28_199<='|')||(LA28_199>='~' && LA28_199<='\uFFFF')) ) {s = 202;}
+
+                        else s = 127;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 6 : 
+                        int LA28_41 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA28_41>='\u0000' && LA28_41<='\uFFFF')) ) {s = 129;}
+
+                        else s = 46;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 7 : 
+                        int LA28_268 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_268=='}') ) {s = 199;}
+
+                        else if ( (LA28_268=='\r') ) {s = 200;}
+
+                        else if ( (LA28_268=='\n') ) {s = 201;}
+
+                        else if ( ((LA28_268>='\u0000' && LA28_268<='\t')||(LA28_268>='\u000B' && LA28_268<='\f')||(LA28_268>='\u000E' && LA28_268<='|')||(LA28_268>='~' && LA28_268<='\uFFFF')) ) {s = 202;}
+
+                        else s = 127;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 8 : 
+                        int LA28_0 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_0=='t') ) {s = 1;}
+
+                        else if ( (LA28_0=='p') ) {s = 2;}
+
+                        else if ( (LA28_0=='o') ) {s = 3;}
+
+                        else if ( (LA28_0=='a') ) {s = 4;}
+
+                        else if ( (LA28_0=='n') ) {s = 5;}
+
+                        else if ( (LA28_0=='+') ) {s = 6;}
+
+                        else if ( (LA28_0=='-') ) {s = 7;}
+
+                        else if ( (LA28_0=='*') ) {s = 8;}
+
+                        else if ( (LA28_0=='m') ) {s = 9;}
+
+                        else if ( (LA28_0=='/') ) {s = 10;}
+
+                        else if ( (LA28_0=='?') ) {s = 11;}
+
+                        else if ( (LA28_0=='.') ) {s = 12;}
+
+                        else if ( (LA28_0=='=') ) {s = 13;}
+
+                        else if ( (LA28_0=='<') ) {s = 14;}
+
+                        else if ( (LA28_0=='>') ) {s = 15;}
+
+                        else if ( (LA28_0=='b') ) {s = 16;}
+
+                        else if ( (LA28_0=='u') ) {s = 17;}
+
+                        else if ( (LA28_0=='i') ) {s = 18;}
+
+                        else if ( (LA28_0=='f') ) {s = 19;}
+
+                        else if ( (LA28_0=='d') ) {s = 20;}
+
+                        else if ( (LA28_0=='s') ) {s = 21;}
+
+                        else if ( (LA28_0=='h') ) {s = 22;}
+
+                        else if ( (LA28_0==':') ) {s = 23;}
+
+                        else if ( (LA28_0=='e') ) {s = 24;}
+
+                        else if ( (LA28_0=='(') ) {s = 25;}
+
+                        else if ( (LA28_0==')') ) {s = 26;}
+
+                        else if ( (LA28_0=='c') ) {s = 27;}
+
+                        else if ( (LA28_0=='w') ) {s = 28;}
+
+                        else if ( (LA28_0==',') ) {s = 29;}
+
+                        else if ( (LA28_0==';') ) {s = 30;}
+
+                        else if ( (LA28_0=='r') ) {s = 31;}
+
+                        else if ( (LA28_0=='#') ) {s = 32;}
+
+                        else if ( (LA28_0=='|') ) {s = 33;}
+
+                        else if ( (LA28_0=='[') ) {s = 34;}
+
+                        else if ( (LA28_0==']') ) {s = 35;}
+
+                        else if ( (LA28_0=='l') ) {s = 36;}
+
+                        else if ( (LA28_0=='v') ) {s = 37;}
+
+                        else if ( (LA28_0=='@') ) {s = 38;}
+
+                        else if ( (LA28_0=='%') ) {s = 39;}
+
+                        else if ( (LA28_0=='\"') ) {s = 40;}
+
+                        else if ( (LA28_0=='\'') ) {s = 41;}
+
+                        else if ( ((LA28_0>='0' && LA28_0<='9')) ) {s = 42;}
+
+                        else if ( (LA28_0=='^') ) {s = 43;}
+
+                        else if ( ((LA28_0>='A' && LA28_0<='Z')||LA28_0=='_'||LA28_0=='g'||(LA28_0>='j' && LA28_0<='k')||LA28_0=='q'||(LA28_0>='x' && LA28_0<='z')) ) {s = 44;}
+
+                        else if ( ((LA28_0>='\t' && LA28_0<='\n')||LA28_0=='\r'||LA28_0==' ') ) {s = 45;}
+
+                        else if ( ((LA28_0>='\u0000' && LA28_0<='\b')||(LA28_0>='\u000B' && LA28_0<='\f')||(LA28_0>='\u000E' && LA28_0<='\u001F')||LA28_0=='!'||LA28_0=='$'||LA28_0=='&'||LA28_0=='\\'||LA28_0=='`'||LA28_0=='{'||(LA28_0>='}' && LA28_0<='\uFFFF')) ) {s = 46;}
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 9 : 
+                        int LA28_70 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA28_70=='*') ) {s = 155;}
+
+                        else if ( ((LA28_70>='\u0000' && LA28_70<=')')||(LA28_70>='+' && LA28_70<='\uFFFF')) ) {s = 156;}
+
+                        if ( s>=0 ) return s;
+                        break;
+            }
+            NoViableAltException nvae =
+                new NoViableAltException(getDescription(), 28, _s, input);
+            error(nvae);
+            throw nvae;
         }
     }
  

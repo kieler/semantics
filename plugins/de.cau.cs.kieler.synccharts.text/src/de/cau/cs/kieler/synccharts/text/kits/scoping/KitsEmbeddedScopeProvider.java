@@ -45,11 +45,11 @@ public class KitsEmbeddedScopeProvider extends KitsScopeProvider {
         if (trans.eContainer().eContainer() == null) {
             l = new ArrayList<IEObjectDescription>();
             l.add(new EObjectDescription(QualifiedName.create(((State) trans.eContainer()).getId()),
-                    trans.eContainer(), Collections.EMPTY_MAP));
+                    trans.eContainer(), Collections.<String, String> emptyMap()));
             if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
                 for (State s : ((Region) logicalContainer).getStates()) {
                     l.add(new EObjectDescription(QualifiedName.create(s.getId()), s,
-                            Collections.EMPTY_MAP));
+                            Collections.<String, String> emptyMap()));
                 }
             }
             return new SimpleScope(l);

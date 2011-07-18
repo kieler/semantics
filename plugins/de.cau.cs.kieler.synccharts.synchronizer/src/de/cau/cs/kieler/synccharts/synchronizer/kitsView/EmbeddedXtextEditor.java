@@ -54,6 +54,7 @@ import org.eclipse.jface.text.source.AnnotationRulerColumn;
 import org.eclipse.jface.text.source.CompositeRuler;
 import org.eclipse.jface.text.source.IAnnotationAccess;
 import org.eclipse.jface.text.source.IAnnotationAccessExtension;
+import org.eclipse.jface.text.source.ICharacterPairMatcher;
 import org.eclipse.jface.text.source.IOverviewRuler;
 import org.eclipse.jface.text.source.ISharedTextColors;
 import org.eclipse.jface.text.source.ISourceViewer;
@@ -98,10 +99,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextSourceViewer;
 import org.eclipse.xtext.ui.editor.XtextSourceViewerConfiguration;
 import org.eclipse.xtext.ui.editor.bracketmatching.BracketMatchingPreferencesInitializer;
-import org.eclipse.xtext.ui.editor.bracketmatching.CharacterPairMatcher;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
-import org.eclipse.xtext.ui.editor.model.edit.IDocumentEditor;
 import org.eclipse.xtext.ui.editor.preferences.IPreferenceStoreAccess;
 import org.eclipse.xtext.ui.editor.quickfix.IssueResolutionProvider;
 import org.eclipse.xtext.ui.editor.validation.AnnotationIssueProcessor;
@@ -166,15 +165,15 @@ public class EmbeddedXtextEditor {
 	private IPreferenceStoreAccess fPreferenceStoreAccess;
 	
 	@Inject
-	private CharacterPairMatcher characterPairMatcher;
+	private ICharacterPairMatcher characterPairMatcher;
 	
 	@Inject(optional = true)
 	private AnnotationPainter.IDrawingStrategy projectionAnnotationDrawingStrategy;
 	
 
-	// CHSCH:
-	@Inject
-	private IDocumentEditor documentEditor;
+//	// CHSCH:
+//	@Inject
+//	private IDocumentEditor documentEditor;
 	
 	private IPreferenceStore fPreferenceStore;
 
@@ -251,9 +250,9 @@ public class EmbeddedXtextEditor {
 		return fDocument;
 	}
 	
-	public IDocumentEditor getDocumentEditor() {
-		return documentEditor;
-	}
+//	public IDocumentEditor getDocumentEditor() {
+//		return documentEditor;
+//	}
 	
 	/**
 	 * Should be called only once, during initialization. 
@@ -640,7 +639,8 @@ public class EmbeddedXtextEditor {
 				// ignore
 			}
 			
-			if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() != null && !asStringResource.getParseResult().getParseErrors().isEmpty())) {
+//                        if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() != null && !asStringResource.getParseResult().getParseErrors().isEmpty())) {
+                        if (!asStringResource.getErrors().isEmpty() || (asStringResource.getParseResult() != null && !asStringResource.getParseResult().getSyntaxErrors().iterator().hasNext())) {
 				// if there are parsing errors in the saved string, then we update with it
 				update(asString);
 			} else if (asStringEObject != null) {
