@@ -28,7 +28,6 @@ import org.json.JSONObject;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Multimaps;
 
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
@@ -58,7 +57,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
     private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
     private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
 
-    private ArrayListMultimap<Integer, State> stateHierarchy = Multimaps.newArrayListMultimap();
+    private ArrayListMultimap<Integer, State> stateHierarchy = ArrayListMultimap.create();
     private LinkedList<State> flattenedStates = new LinkedList<State>();
 
     /**

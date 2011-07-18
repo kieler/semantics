@@ -38,10 +38,10 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 import de.cau.cs.kieler.core.model.effects.TransformationEffect;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
@@ -82,7 +82,7 @@ public class TimeMeasurement {
 
 	private File[] filesTest = null;
 
-	private Multimap<String, Long> times = Multimaps.newHashMultimap();
+	private Multimap<String, Long> times = HashMultimap.create();
 
 	private ImmutableList<String> badFiles = ImmutableList.of("test-all1.strl",
 			"test-atds-100-smaller.strl", "test-counter16b.strl",
@@ -683,7 +683,7 @@ public class TimeMeasurement {
 
 	}
 
-	Multimap<Integer, State> levels = Multimaps.newHashMultimap();
+	Multimap<Integer, State> levels = HashMultimap.create();
 	int maxlevel = 0;
 
 	private void addLevel(Region r, int level) {
