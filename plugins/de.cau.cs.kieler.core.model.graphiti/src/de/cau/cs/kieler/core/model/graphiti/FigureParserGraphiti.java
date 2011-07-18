@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.graphiti.mm.GraphicsAlgorithmContainer;
+import org.eclipse.graphiti.mm.algorithms.AbstractText;
 import org.eclipse.graphiti.mm.algorithms.Ellipse;
 import org.eclipse.graphiti.mm.algorithms.GraphicsAlgorithm;
 import org.eclipse.graphiti.mm.algorithms.Polygon;
@@ -301,15 +302,15 @@ public class FigureParserGraphiti {
                     // some hacked size stuff without having a fitting font.
                 } else if (name.equals("font-size")) {
                     int size = Integer.parseInt(value);
-                    if (ga instanceof Text) {
-                        Text text = (Text) ga;
+                    if (ga instanceof AbstractText) {
+                        AbstractText text = (AbstractText) ga;
                         // FontData[] fonts = PlatformUI.getWorkbench().getDisplay()
                         // .getFontList("arial", true);
                         // FontData fd = fonts[0];
                         // fd.setHeight(size - 2);
                         // Font font = new Font(PlatformUI.getWorkbench().getDisplay(), fd);
 
-                        Font font = gaService.createFont(text, "arial", size);
+                        Font font = gaService.manageFont(diagram, "arial", size);
                         text.setFont(font);
                     }
                 }
