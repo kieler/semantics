@@ -19,8 +19,9 @@ import java.util.List;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.mwe.core.issues.MWEDiagnostic;
+import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
-import org.eclipse.xtext.validation.IDiagnosticConverter;
+import org.eclipse.xtext.validation.Issue;
 
 /**
  * This class is used to filter the validation diagnostics. This is needed
@@ -33,7 +34,7 @@ import org.eclipse.xtext.validation.IDiagnosticConverter;
 public class KitsDiagnosticConverterImpl extends DiagnosticConverterImpl {
 
     public void convertValidatorDiagnostic(org.eclipse.emf.common.util.Diagnostic diagnostic,
-            IDiagnosticConverter.Acceptor acceptor) {
+            IAcceptor<Issue> acceptor) {
         if (diagnostic instanceof MWEDiagnostic) {
             return;
         }

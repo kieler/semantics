@@ -4,15 +4,16 @@ import java.util.List;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.xtext.util.IAcceptor;
 import org.eclipse.xtext.validation.DiagnosticConverterImpl;
-import org.eclipse.xtext.validation.IDiagnosticConverter;
+import org.eclipse.xtext.validation.Issue;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 public class ActionsDiagnosticConverterImpl extends DiagnosticConverterImpl {
 
     public void convertValidatorDiagnostic(org.eclipse.emf.common.util.Diagnostic diagnostic,
-            IDiagnosticConverter.Acceptor acceptor) {
+            IAcceptor<Issue> acceptor) {
         if (SyncchartsPackage.eINSTANCE.getTransition().isInstance(getCauser(diagnostic))) {
             EStructuralFeature feature = getFeature(diagnostic);
             if (SyncchartsPackage.eINSTANCE.getTransition_SourceState().equals(feature)

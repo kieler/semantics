@@ -4,9 +4,7 @@
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-
-import org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper;
-
+import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper;
 
 /**
  * Use this class to register components to be used within the IDE.

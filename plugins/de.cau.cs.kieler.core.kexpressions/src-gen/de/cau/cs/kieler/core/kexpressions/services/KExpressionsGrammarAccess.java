@@ -1592,7 +1592,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		/// *
 		//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-		// * /enum ValueType:
+		// * / enum ValueType:
 		//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
 		//	| HOST="host";
 		public EnumRule getRule() { return rule; }
@@ -2279,7 +2279,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *
 	//   the following declarations are re-used in Actions.xtext, Interface.xtext, Kits.xtext 
-	// * /enum ValueType:
+	// * / enum ValueType:
 	//	PURE="pure" | BOOL="boolean" | UNSIGNED="unsigned" | INT="integer" | FLOAT="float" | DOUBLE="double" | STRING="string"
 	//	| HOST="host";
 	public ValueTypeElements getValueTypeAccess() {

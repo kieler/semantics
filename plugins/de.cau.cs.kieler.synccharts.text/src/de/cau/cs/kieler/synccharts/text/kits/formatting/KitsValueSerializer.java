@@ -18,7 +18,7 @@ import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.XtextPackage;
-import org.eclipse.xtext.parsetree.AbstractNode;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
 import org.eclipse.xtext.parsetree.reconstr.ITransientValueService;
 import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
@@ -134,7 +134,7 @@ public class KitsValueSerializer extends ValueSerializer {
     }
 
     public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value,
-            AbstractNode node) {
+            INode node) {
 
         if (SyncchartsPackage.eINSTANCE.getScope().isInstance(context)
                 && XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {

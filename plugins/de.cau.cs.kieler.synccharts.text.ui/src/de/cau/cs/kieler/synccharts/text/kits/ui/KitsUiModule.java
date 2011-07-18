@@ -29,7 +29,7 @@ public class KitsUiModule extends de.cau.cs.kieler.synccharts.text.kits.ui.Abstr
     }
 
     /* e.g. declares '-->' '>->' to be highlighted as usual keywords */
-    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.antlr.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
         return KitsAntlrTokenToAttributeIdMapper.class;
     }
 

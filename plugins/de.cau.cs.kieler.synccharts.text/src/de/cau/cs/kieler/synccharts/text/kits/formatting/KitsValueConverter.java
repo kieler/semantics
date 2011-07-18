@@ -15,8 +15,8 @@ package de.cau.cs.kieler.synccharts.text.kits.formatting;
 
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
-import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.nodemodel.INode;
 
 import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsValueConverter;
 
@@ -53,7 +53,7 @@ public class KitsValueConverter extends ActionsValueConverter {
         public IValueConverter<String> TransitionLabalString() {
                 return new IValueConverter<String>() {
 
-                        public String toValue(String string, AbstractNode node) {
+                        public String toValue(String string, INode node) {
                                 return string.replace("%", "").trim();
                         }
 

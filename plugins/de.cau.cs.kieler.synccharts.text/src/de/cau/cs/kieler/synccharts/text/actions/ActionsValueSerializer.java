@@ -4,7 +4,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.XtextPackage;
-import org.eclipse.xtext.parsetree.AbstractNode;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parsetree.reconstr.impl.ValueSerializer;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
@@ -23,7 +23,7 @@ public class ActionsValueSerializer extends ValueSerializer {
 	 * 
 	 * Method is currently not used, behavior will be realized by the transient value service.
 	 */
-	public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value, AbstractNode node) {
+	public String serializeAssignedValue(EObject context, RuleCall ruleCall, Object value, INode node) {
 		if (SyncchartsPackage.eINSTANCE.getAction().isInstance(context)
 				&& XtextPackage.eINSTANCE.getAssignment().isInstance(ruleCall.eContainer())) {
 				Assignment assigment = (Assignment) ruleCall.eContainer();
@@ -36,7 +36,7 @@ public class ActionsValueSerializer extends ValueSerializer {
 		return super.serializeAssignedValue(context, ruleCall, value, node);
 	}
 
-	public String serializeUnassignedValue(EObject context, RuleCall ruleCall, AbstractNode node) {
+	public String serializeUnassignedValue(EObject context, RuleCall ruleCall, INode node) {
 		return super.serializeUnassignedValue(context, ruleCall, node);
 	}
 	

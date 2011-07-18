@@ -3,15 +3,6 @@
 
 <plugin>
 
-  <extension point="org.eclipse.emf.ecore.generated_package">
-    <package 
-       uri = "http://kieler.cs.cau.de/synccharts/interfaces" 
-       class = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
-       genModel = "de/cau/cs/kieler/synccharts/text/interfaces/Interfaces.genmodel" /> 
-	
-  </extension>
-
-
 
 
 

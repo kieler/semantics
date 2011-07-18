@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
-import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;

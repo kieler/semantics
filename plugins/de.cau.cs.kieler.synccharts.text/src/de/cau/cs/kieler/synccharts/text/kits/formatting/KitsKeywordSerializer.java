@@ -15,7 +15,7 @@ package de.cau.cs.kieler.synccharts.text.kits.formatting;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.Keyword;
-import org.eclipse.xtext.parsetree.AbstractNode;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parsetree.reconstr.ITokenSerializer;
 import org.eclipse.xtext.parsetree.reconstr.impl.KeywordSerializer;
 import org.eclipse.xtext.util.Strings;
@@ -44,7 +44,7 @@ public class KitsKeywordSerializer extends KeywordSerializer {
     @Inject
     KitsGrammarAccess grammarAccess;
 
-    public String serializeUnassignedKeyword(EObject context, Keyword keyword, AbstractNode node) {
+    public String serializeUnassignedKeyword(EObject context, Keyword keyword, INode node) {
         if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_1_1()
                 || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_1_4()) {
             Region region = (Region) context;

@@ -25,9 +25,9 @@ import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.linking.impl.AbstractCleaningLinker;
 import org.eclipse.xtext.linking.impl.LinkingHelper;
-import org.eclipse.xtext.parsetree.AbstractNode;
-import org.eclipse.xtext.parsetree.CompositeNode;
-import org.eclipse.xtext.parsetree.NodeUtil;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.INode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 
 import com.google.inject.Inject;
 
@@ -68,10 +68,10 @@ public class KitsLinker extends AbstractCleaningLinker {
                     || KExpressionsPackage.eINSTANCE.getValuedObjectReference().isInstance(obj)) {
 
                 /* reveal the dedicated parse tree element */
-                final CompositeNode node = NodeUtil.getNodeAdapter(obj).getParserNode();
+                final ICompositeNode node = NodeModelUtils.getNode(obj);
 
                 /* iterate on the parse tree element's children */
-                for (AbstractNode childNode : node.getChildren()) {
+                for (INode childNode : node.getChildren()) {
 
                     /* process cross references only */
                     if (childNode.getGrammarElement() instanceof CrossReference) {

@@ -14,10 +14,12 @@
 package de.cau.cs.kieler.synccharts.text.kits.scoping;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
@@ -42,11 +44,12 @@ public class KitsEmbeddedScopeProvider extends KitsScopeProvider {
         List<IEObjectDescription> l;
         if (trans.eContainer().eContainer() == null) {
             l = new ArrayList<IEObjectDescription>();
-            l.add(new EObjectDescription(((State) trans.eContainer()).getId(), trans.eContainer(),
-                    null));
+            l.add(new EObjectDescription(QualifiedName.create(((State) trans.eContainer()).getId()),
+                    trans.eContainer(), Collections.EMPTY_MAP));
             if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(logicalContainer)) {
                 for (State s : ((Region) logicalContainer).getStates()) {
-                    l.add(new EObjectDescription(s.getId(), s, null));
+                    l.add(new EObjectDescription(QualifiedName.create(s.getId()), s,
+                            Collections.EMPTY_MAP));
                 }
             }
             return new SimpleScope(l);

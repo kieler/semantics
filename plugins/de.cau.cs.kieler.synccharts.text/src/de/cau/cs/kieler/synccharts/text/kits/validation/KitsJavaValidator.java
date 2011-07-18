@@ -37,18 +37,18 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements
     public static final String NO_PRIO_1_TRANSITION = "no_prio_1_transition";
     public static final String UNSORTED_PRIOS = "unsorted_prios";
 
-    @Override
-    protected List<EPackage> getEPackages() {
-        List<EPackage> result = new ArrayList<EPackage>();
-        // result.add(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
-        return result;
-    }
+//    @Override
+//    protected List<EPackage> getEPackages() {
+//        List<EPackage> result = new ArrayList<EPackage>();
+//         result.add(de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
+//        return result;
+//    }
 
     // @Check
     public void checkTypeNameStartsWithCapital(
             final de.cau.cs.kieler.synccharts.State s) {
         if (!Character.isUpperCase(s.getId().charAt(0))) {
-            warning("Name should start with a capital", s,
+            warning("Name should start with a capital", SyncchartsPackage.eINSTANCE.getScope_Id(),
                     SyncchartsPackage.SCOPE__ID, BAD_ID);
         }
     }
@@ -75,14 +75,16 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements
                 startsWithOne = true;
             }
             if (t.getPriority() == 0) {
-                error("Priority must be assigned.", t,
+                error("Priority must be assigned.",
+                        SyncchartsPackage.eINSTANCE.getTransition_Priority(),
                         SyncchartsPackage.TRANSITION__PRIORITY, MISSING_PRIO);
             } else {
                 if (t.getPriority() < highestPrioTransition.getPriority()) {
                     highestPrioTransition = t;
                 }
                 if (prios.contains(Integer.valueOf(t.getPriority()))) {
-                    error("Priority is not unique.", t,
+                    error("Priority is not unique.",
+                            SyncchartsPackage.eINSTANCE.getTransition_Priority(),
                             SyncchartsPackage.TRANSITION__PRIORITY,
                             NON_UNIQUE_PRIO);
                 } else {
@@ -100,19 +102,19 @@ public class KitsJavaValidator extends AbstractKitsJavaValidator implements
 
         if (!startsWithOne) {
             warning("Transition priorities should start with value 1",
-                    highestPrioTransition,
+                    SyncchartsPackage.eINSTANCE.getTransition_Priority(),
                     SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
                     NO_PRIO_1_TRANSITION);
         } else {
             if (!subsequent) {
-                warning("Priorities are not subsequent.", s
-                        .getOutgoingTransitions().get(0),
+                warning("Priorities are not subsequent.",
+                        SyncchartsPackage.eINSTANCE.getTransition_Priority(),
                         SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
                         NON_SUCCEEDING_PRIOS);
             } else {
                 if (!sorted) {
                     warning("Transition are not sorted according to their priorities.",
-                            s.getOutgoingTransitions().get(0),
+                            SyncchartsPackage.eINSTANCE.getTransition_Priority(),
                             SyncchartsPackage.STATE__OUTGOING_TRANSITIONS,
                             UNSORTED_PRIOS);
                 }

@@ -17,8 +17,8 @@ import org.eclipse.xtext.common.services.DefaultTerminalConverters;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
-import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.nodemodel.INode;
 
 /**
  * @author chsch
@@ -35,7 +35,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
     public IValueConverter<String> CommentAnnotation() {
         return new IValueConverter<String>() {
 
-            public String toValue(String string, AbstractNode node) {
+            public String toValue(String string, INode node) {
                 return string.replace("/**", "").replace("*/", "").trim();
             }
 
@@ -59,7 +59,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
     public IValueConverter<String> TypeId() {
         return new IValueConverter<String>() {
 
-            public String toValue(String string, AbstractNode node) {
+            public String toValue(String string, INode node) {
                 return string.substring(1, string.length() - 1).trim();
             }
 
@@ -82,7 +82,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
     public IValueConverter<String> EString() {
         return new IValueConverter<String>() {
 
-            public String toValue(String string, AbstractNode node) {
+            public String toValue(String string, INode node) {
                 if (!Strings.isEmpty(string)) {
                     if (string.startsWith("\"") || string.startsWith("'")) {
                         return string.substring(1, string.length() - 1);

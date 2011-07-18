@@ -15,7 +15,8 @@
 package de.cau.cs.kieler.synccharts.text.kitsState.ui;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.xtext.validation.IDiagnosticConverter;
+import org.eclipse.xtext.util.IAcceptor;
+import org.eclipse.xtext.validation.Issue;
 
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.text.kits.ui.KitsDiagnosticConverterImpl;
@@ -31,7 +32,7 @@ import de.cau.cs.kieler.synccharts.text.kits.ui.KitsDiagnosticConverterImpl;
 public class KitsStateDiagnosticConverterImpl extends KitsDiagnosticConverterImpl {
 
     public void convertValidatorDiagnostic(org.eclipse.emf.common.util.Diagnostic diagnostic,
-            IDiagnosticConverter.Acceptor acceptor) {
+            IAcceptor<Issue> acceptor) {
         if (SyncchartsPackage.eINSTANCE.getState().isInstance(getCauser(diagnostic))) {
             EStructuralFeature feature = getFeature(diagnostic);
             if (SyncchartsPackage.eINSTANCE.getState_ParentRegion().equals(feature)) {

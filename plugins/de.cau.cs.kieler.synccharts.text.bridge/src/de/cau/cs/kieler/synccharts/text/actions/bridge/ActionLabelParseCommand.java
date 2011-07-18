@@ -32,7 +32,7 @@ import org.eclipse.emf.transaction.util.TransactionUtil;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
+import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
@@ -72,7 +72,7 @@ public class ActionLabelParseCommand extends AbstractCommand {
      *            the Xtext Guice Injector
      */
     public ActionLabelParseCommand(final IAdaptable theElement,
-            final String theNewString, final IAntlrParser parser,
+            final String theNewString, final IParser parser,
             final Injector theInjector) {
         // the editing domain might be null if the object to be edited
         // does not belong to some resource, i.e. is not really part

@@ -25,6 +25,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtext.naming.QualifiedName;
 import org.eclipse.xtext.resource.EObjectDescription;
 import org.eclipse.xtext.resource.IEObjectDescription;
 import org.eclipse.xtext.scoping.IScope;
@@ -71,7 +72,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
             if (m.contains(key)) {
                 key = s.getId();
             }
-            l.add(new EObjectDescription(key, s, Collections.EMPTY_MAP));
+            l.add(new EObjectDescription(QualifiedName.create(key), s, Collections.EMPTY_MAP));
             m.add(key);
 
         }
@@ -97,8 +98,9 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
                 EObject obj = null;
                 for (Iterator<EObject> it = r.getAllContents(); it.hasNext();) {
                     obj = it.next();
-                    if (!((InternalEObject) obj).eIsProxy() && SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
-                        l.add(new EObjectDescription(((State) obj).getId(), obj,
+                    if (!((InternalEObject) obj).eIsProxy()
+                            && SyncchartsPackage.eINSTANCE.getState().isInstance(obj)) {
+                        l.add(new EObjectDescription(QualifiedName.create(((State) obj).getId()), obj,
                                 Collections.EMPTY_MAP));
                     }
                 }
@@ -198,7 +200,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         Scope scope = (Scope) container;
         do {
             for (Signal s : scope.getSignals()) {
-                l.add(new EObjectDescription(s.getName(), s,
+                l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                         (Map<String, String>) Collections.EMPTY_MAP));
             }
             
@@ -219,13 +221,13 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
                 && KExpressionsPackage.eINSTANCE.getSignal().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
-            l.add(new EObjectDescription(vObj.getName(), vObj,
+            l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                     (Map<String, String>) Collections.EMPTY_MAP));
         } else if (SyncchartsPackage.eINSTANCE.getEmission().isInstance(obj)
                 && ((Emission) obj).getSignal() != null
                 && ((Emission) obj).getSignal().eResource() != obj.eResource()) {
             Signal s = ((Emission) obj).getSignal();
-            l.add(new EObjectDescription(s.getName(), s,
+            l.add(new EObjectDescription(QualifiedName.create(s.getName()), s,
                     (Map<String, String>) Collections.EMPTY_MAP));
         }
         
@@ -272,7 +274,7 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
         Scope scope = (Scope) container;
         do {
             for (Variable v : scope.getVariables()) {
-                l.add(new EObjectDescription(v.getName(), v,
+                l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
                         (Map<String, String>) Collections.EMPTY_MAP));
             }
             
@@ -293,13 +295,13 @@ public class KitsScopeProvider extends AbstractDeclarativeScopeProvider {
                 && KExpressionsPackage.eINSTANCE.getVariable().isInstance(((ValuedObjectReference) obj).getValuedObject())
                 && ((ValuedObjectReference) obj).getValuedObject().eResource() != obj.eResource()) {
             ValuedObject vObj = ((ValuedObjectReference) obj).getValuedObject();
-            l.add(new EObjectDescription(vObj.getName(), vObj,
+            l.add(new EObjectDescription(QualifiedName.create(vObj.getName()), vObj,
                     (Map<String, String>) Collections.EMPTY_MAP));
         } else if (SyncchartsPackage.eINSTANCE.getAssignment().isInstance(obj)
                 && ((Assignment) obj).getVariable() != null
                 && ((Assignment) obj).getVariable().eResource() != obj.eResource()) {
             Variable v = ((Assignment) obj).getVariable();
-            l.add(new EObjectDescription(v.getName(), v,
+            l.add(new EObjectDescription(QualifiedName.create(v.getName()), v,
                     (Map<String, String>) Collections.EMPTY_MAP));
         }
         return l;

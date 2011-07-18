@@ -18,7 +18,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
+import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Before;
@@ -37,7 +37,6 @@ import de.cau.cs.kieler.synccharts.SyncchartsFactory;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup;
 import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseCommand;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelSerializer;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its serializer.
@@ -54,7 +53,7 @@ public class ParserSerializerTest {
 
     private Injector injector;
     // SerializerUtil serializerUtil;
-    private IAntlrParser parser;
+    private IParser parser;
 
     private static final int A = 65;
     private static final int Z = 90;
@@ -120,7 +119,7 @@ public class ParserSerializerTest {
     public void setUpParserAndSerializer() throws Exception {
         injector = new ActionsStandaloneSetup().createInjectorAndDoEMFRegistration();
         // serializerUtil = injector.getInstance(SerializerUtil.class);
-        parser = injector.getInstance(IAntlrParser.class);
+        parser = injector.getInstance(IParser.class);
     }
 
     /**

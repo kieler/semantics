@@ -16,8 +16,8 @@ package de.cau.cs.kieler.core.kexpressions.formatting;
 import org.eclipse.xtext.conversion.IValueConverter;
 import org.eclipse.xtext.conversion.ValueConverter;
 import org.eclipse.xtext.conversion.ValueConverterException;
-import org.eclipse.xtext.parsetree.AbstractNode;
 import org.eclipse.xtext.util.Strings;
+import org.eclipse.xtext.nodemodel.INode;
 
 import de.cau.cs.kieler.core.annotations.formatting.AnnotationsValueConverter;
 
@@ -38,7 +38,7 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
     public IValueConverter<Boolean> Boolean() {
         return new IValueConverter<Boolean>() {
 
-            public Boolean toValue(String string, AbstractNode node) {
+            public Boolean toValue(String string, INode node) {
                 if (Strings.isEmpty(string))
                     throw new ValueConverterException("Couldn't convert empty string to boolean",
                             node, null);
@@ -92,7 +92,7 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
     public IValueConverter<Float> Float() {
         return new IValueConverter<Float>() {
 
-            public Float toValue(String string, AbstractNode node) {
+            public Float toValue(String string, INode node) {
                 if (Strings.isEmpty(string))
                     throw new ValueConverterException("Couldn't convert empty string to float",
                             node, null);

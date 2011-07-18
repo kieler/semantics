@@ -5,7 +5,7 @@ import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
 var grammarURI = "classpath:/de/cau/cs/kieler/core/annotations/Annotations.xtext"
-var file.extensions = "expr"
+var file.extensions = "anno"
 var projectName = "de.cau.cs.kieler.core.annotations"
 var runtimeProject = "../${projectName}"
 
@@ -84,8 +84,8 @@ Workflow {
 			fragment = labeling.LabelProviderFragment {}
 
 			// outline API 
-			fragment = outline.TransformerFragment {}
-			fragment = outline.OutlineNodeAdapterFactoryFragment {}
+			fragment = outline.OutlineTreeProviderFragment {}
+			fragment = outline.QuickOutlineFragment {}
 
 			// java-based API for content assistance 
 			fragment = contentAssist.JavaBasedContentAssistFragment {}

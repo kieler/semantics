@@ -36,8 +36,6 @@ public class KitsUIPlugin extends AbstractUIPlugin {
 
     public static final String ACTIONS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.actions.Actions";
 
-    public static final String INTERFACES_LANGUAGE = "de.cau.cs.kieler.synccharts.text.interfaces.Interfaces";
-
     public static final String KITS_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kits.Kits";
 
     public static final String KITS_STATE_LANGUAGE = "de.cau.cs.kieler.synccharts.text.kitsState.KitsState";
@@ -61,10 +59,6 @@ public class KitsUIPlugin extends AbstractUIPlugin {
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(ACTIONS_LANGUAGE)).with(
                                     getUiModule(ACTIONS_LANGUAGE))).with(getSharedStateModule())));
-            injectors.put(INTERFACES_LANGUAGE,
-                    Guice.createInjector(Modules.override(
-                            Modules.override(getRuntimeModule(INTERFACES_LANGUAGE)).with(
-                                    getUiModule(INTERFACES_LANGUAGE))).with(getSharedStateModule())));
             injectors.put(KITS_LANGUAGE,
                     Guice.createInjector(Modules.override(
                             Modules.override(getRuntimeModule(KITS_LANGUAGE)).with(
@@ -94,9 +88,6 @@ public class KitsUIPlugin extends AbstractUIPlugin {
         if (ACTIONS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.actions.ActionsRuntimeModule();
         }
-        if (INTERFACES_LANGUAGE.equals(grammar)) {
-            return new de.cau.cs.kieler.synccharts.text.interfaces.InterfacesRuntimeModule();
-        }
         if (KITS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kits.KitsRuntimeModule();
         }
@@ -113,9 +104,6 @@ public class KitsUIPlugin extends AbstractUIPlugin {
 
         if (ACTIONS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.actions.ui.ActionsUiModule(this);
-        }
-        if (INTERFACES_LANGUAGE.equals(grammar)) {
-            return new de.cau.cs.kieler.synccharts.text.interfaces.ui.InterfacesUiModule(this);
         }
         if (KITS_LANGUAGE.equals(grammar)) {
             return new de.cau.cs.kieler.synccharts.text.kits.ui.KitsUiModule(this);

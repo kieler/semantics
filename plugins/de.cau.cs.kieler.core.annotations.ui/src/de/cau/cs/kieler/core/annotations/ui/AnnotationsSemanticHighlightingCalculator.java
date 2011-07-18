@@ -14,8 +14,7 @@
 package de.cau.cs.kieler.core.annotations.ui;
 
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.xtext.parsetree.AbstractNode;
-import org.eclipse.xtext.parsetree.NodeUtil;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
@@ -35,15 +34,16 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
     private AnnotationsGrammarAccess g;
 
     public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
-        Iterable<AbstractNode> allNodes = NodeUtil.getAllContents(resource.getParseResult()
-                .getRootNode());
-
-        for (AbstractNode node : allNodes) {
-            provideHighlightingFor(node, acceptor);
-        }
+        // FIXME ????
+//        Iterable<INode> allNodes = NodeUtil.getAllContents(resource.getParseResult()
+//                .getRootNode());
+//
+//        for (INode node : allNodes) {
+//            provideHighlightingFor(node, acceptor);
+//        }
     }
 
-    public void provideHighlightingFor(AbstractNode node, IHighlightedPositionAcceptor acceptor) {
+    public void provideHighlightingFor(INode node, IHighlightedPositionAcceptor acceptor) {
         EObject grammarElement = node.getGrammarElement();
 
         // colorize the whole annotations like '(@bool true)' or '/** comment */'
