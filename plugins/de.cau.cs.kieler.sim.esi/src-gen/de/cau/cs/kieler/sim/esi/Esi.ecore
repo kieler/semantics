@@ -5,17 +5,21 @@
     nsURI="http://www.cau.de/cs/kieler/sim/esi/Esi" nsPrefix="esi">
   <eClassifiers xsi:type="ecore:EClass" name="tracelist">
     <eStructuralFeatures xsi:type="ecore:EReference" name="traces" upperBound="-1"
-        eType="#//trace" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//trace"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="trace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ticks" upperBound="-1"
-        eType="#//tick" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//tick"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="tick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="input" upperBound="-1"
-        eType="#//signal" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//signal"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="output" upperBound="-1"
-        eType="#//signal" containment="true"/>
+        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//signal"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="n" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="signal">

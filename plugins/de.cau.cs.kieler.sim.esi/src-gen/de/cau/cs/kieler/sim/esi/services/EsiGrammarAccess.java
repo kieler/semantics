@@ -29,7 +29,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTracesTraceParserRuleCall_1_3_0 = (RuleCall)cTracesAssignment_1_3.eContents().get(0);
 		
 		//tracelist:
-		//  traces+=trace? ("!" "reset" ";" traces+=trace)+;
+		//	traces+=trace? ("!" "reset" ";" traces+=trace)+;
 		public ParserRule getRule() { return rule; }
 
 		//traces+=trace? ("!" "reset" ";" traces+=trace)+
@@ -68,7 +68,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cTicksTickParserRuleCall_1_0 = (RuleCall)cTicksAssignment_1.eContents().get(0);
 		
 		//trace:
-		//  {trace} ticks+=tick+;
+		//	{trace} ticks+=tick+;
 		public ParserRule getRule() { return rule; }
 
 		//{trace} ticks+=tick+
@@ -99,7 +99,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cNSemicolonKeyword_2_0 = (Keyword)cNAssignment_2.eContents().get(0);
 		
 		//tick:
-		//  input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+		//	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
 		public ParserRule getRule() { return rule; }
 
 		//input+=signal* ("%" "Output" ":" output+=signal*)? n=";"
@@ -149,7 +149,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//signal:
-		//  name=ID (valued?="(" val=NUM ")")?;
+		//	name=ID (valued?="(" val=NUM ")")?;
 		public ParserRule getRule() { return rule; }
 
 		//name=ID (valued?="(" val=NUM ")")?
@@ -185,12 +185,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	private TraceElements pTrace;
 	private TickElements pTick;
 	private SignalElements pSignal;
+	private TerminalRule tDigit;
+	private TerminalRule tLetter;
 	private TerminalRule tID;
 	private TerminalRule tNUM;
 	private TerminalRule tWS;
 	private TerminalRule tCOMMENT;
-	private TerminalRule tDigit;
-	private TerminalRule tLetter;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -206,7 +206,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//tracelist:
-	//  traces+=trace? ("!" "reset" ";" traces+=trace)+;
+	//	traces+=trace? ("!" "reset" ";" traces+=trace)+;
 	public TracelistElements getTracelistAccess() {
 		return (pTracelist != null) ? pTracelist : (pTracelist = new TracelistElements());
 	}
@@ -216,7 +216,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//trace:
-	//  {trace} ticks+=tick+;
+	//	{trace} ticks+=tick+;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}
@@ -226,7 +226,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//tick:
-	//  input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+	//	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
 	}
@@ -236,7 +236,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//signal:
-	//  name=ID (valued?="(" val=NUM ")")?;
+	//	name=ID (valued?="(" val=NUM ")")?;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -247,41 +247,39 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 
 	/// *------------------------------------------------------------------
 	// * LEXER RULES
-	// *------------------------------------------------------------------* /
-	//
-	//terminal ID:
-	//  (Letter | "_") (Letter | Digit | "_")*;
-	public TerminalRule getIDRule() {
-		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
-	} 
-
-	//terminal NUM returns ecore::EInt:
-	//  ("+" | "-")? Digit+;
-	public TerminalRule getNUMRule() {
-		return (tNUM != null) ? tNUM : (tNUM = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUM"));
-	} 
-
-	//terminal WS:
-	//  "\t" | " " | "\r" | "\n";
-	public TerminalRule getWSRule() {
-		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
-	} 
-
-	//terminal COMMENT:
-	//  "%" ("A".."N" | "P".."Z")->"\n";
-	public TerminalRule getCOMMENTRule() {
-		return (tCOMMENT != null) ? tCOMMENT : (tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT"));
-	} 
-
-	//terminal Digit:
-	//  "0".."9";
+	// *------------------------------------------------------------------* / terminal Digit:
+	//	"0".."9";
 	public TerminalRule getDigitRule() {
 		return (tDigit != null) ? tDigit : (tDigit = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Digit"));
 	} 
 
 	//terminal Letter:
-	//  "a".."z" | "A".."Z";
+	//	"a".."z" | "A".."Z";
 	public TerminalRule getLetterRule() {
 		return (tLetter != null) ? tLetter : (tLetter = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Letter"));
+	} 
+
+	//terminal ID:
+	//	(Letter | "_") (Letter | Digit | "_")*;
+	public TerminalRule getIDRule() {
+		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
+	} 
+
+	//terminal NUM returns ecore::EInt:
+	//	("+" | "-")? Digit+;
+	public TerminalRule getNUMRule() {
+		return (tNUM != null) ? tNUM : (tNUM = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUM"));
+	} 
+
+	//terminal WS:
+	//	"\t" | " " | "\r" | "\n";
+	public TerminalRule getWSRule() {
+		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
+	} 
+
+	//terminal COMMENT:
+	//	"%" ("A".."N" | "P".."Z")->"\n";
+	public TerminalRule getCOMMENTRule() {
+		return (tCOMMENT != null) ? tCOMMENT : (tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT"));
 	} 
 }

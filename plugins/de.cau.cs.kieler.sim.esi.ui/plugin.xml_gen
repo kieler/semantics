@@ -9,7 +9,7 @@
             class="de.cau.cs.kieler.sim.esi.ui.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
-            extensions="esi,eso"
+            extensions="esi"
             id="de.cau.cs.kieler.sim.esi.Esi"
             name="Esi Editor">
         </editor>
@@ -137,21 +137,40 @@
         </resourceServiceProvider>
     </extension>
 
+
+
+	<!-- Quick Outline -->
 	<extension
-		point="org.eclipse.emf.ecore.extension_parser">
-		<parser
-			class="de.cau.cs.kieler.sim.esi.ui.EsiExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
-			type="eso">
-		</parser>
+		point="org.eclipse.ui.handlers">
+		<handler 
+			class="de.cau.cs.kieler.sim.esi.ui.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
+			<activeWhen>
+				<reference
+					definitionId="de.cau.cs.kieler.sim.esi.Esi.Editor.opened">
+				</reference>
+			</activeWhen>
+		</handler>
 	</extension>
-	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
-        <resourceServiceProvider
-            class="de.cau.cs.kieler.sim.esi.ui.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
-            uriExtension="eso">
-        </resourceServiceProvider>
-    </extension>
-
-
-
+	<extension
+		point="org.eclipse.ui.commands">
+		<command
+			description="Open the quick outline."
+			id="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+			name="Quick Outline">
+		</command>
+	</extension>
+	<extension point="org.eclipse.ui.menus">
+		<menuContribution
+			locationURI="popup:#TextEditorContext?after=group.open">
+			<command commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline"
+				style="push"
+				tooltip="Open Quick Outline">
+				<visibleWhen checkEnabled="false">
+					<reference definitionId="de.cau.cs.kieler.sim.esi.Esi.Editor.opened"/>
+				</visibleWhen>
+			</command>
+		</menuContribution>
+	</extension>
 
 </plugin>

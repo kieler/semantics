@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.esi;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,7 +25,7 @@ import java.util.Set;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
+import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -36,7 +37,6 @@ import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
 import de.cau.cs.kieler.sim.trace.ITrace;
-import de.cau.cs.kieler.sim.trace.ITraceList;
 import de.cau.cs.kieler.sim.trace.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
@@ -190,11 +190,11 @@ public class EsiFile implements ITraceProvider {
             }
 
             Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
+            IParser parser = inj.getInstance(IParser.class);
+            IParseResult parseResult = parser.parse(new InputStreamReader(in));
+            if (parseResult.getSyntaxErrors().iterator().hasNext()) {
                 throw new KiemInitializationException("Parse error: "
-                        + parseResult.getParseErrors().get(0).toString(), true, null);
+                        + parseResult.getSyntaxErrors().iterator().next().toString(), true, null);
             }
             traceList = (tracelist) parseResult.getRootASTElement();
         } catch (FileNotFoundException e) {

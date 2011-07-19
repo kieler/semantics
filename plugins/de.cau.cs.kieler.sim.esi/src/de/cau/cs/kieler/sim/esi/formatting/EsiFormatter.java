@@ -23,7 +23,6 @@ public class EsiFormatter extends AbstractDeclarativeFormatter {
         de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess f = (de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess) getGrammarAccess();
         Iterable<Keyword> keywords = GrammarUtil.containedKeywords(f.getGrammar());
 
-        c.setIndentationSpace("  ");
         for (Keyword keyword : keywords) {
             if (("!".equals(keyword.getValue()))) {
                 c.setNoSpace().after(keyword);

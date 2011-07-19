@@ -23,22 +23,38 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_NUM", "RULE_LETTER", "RULE_DIGIT", "RULE_WS", "RULE_COMMENT", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "')'", "'('"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ID", "RULE_NUM", "RULE_DIGIT", "RULE_LETTER", "RULE_WS", "RULE_COMMENT", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "')'", "'('"
     };
     public static final int RULE_ID=4;
+    public static final int T__16=16;
+    public static final int T__15=15;
+    public static final int T__17=17;
+    public static final int T__12=12;
+    public static final int T__11=11;
+    public static final int T__14=14;
+    public static final int T__13=13;
+    public static final int T__10=10;
     public static final int RULE_COMMENT=9;
     public static final int RULE_WS=8;
+    public static final int RULE_DIGIT=6;
     public static final int EOF=-1;
-    public static final int RULE_DIGIT=7;
-    public static final int RULE_LETTER=6;
+    public static final int RULE_LETTER=7;
     public static final int RULE_NUM=5;
 
+    // delegates
+    // delegators
+
+
         public InternalEsiParser(TokenStream input) {
-            super(input);
+            this(input, new RecognizerSharedState());
+        }
+        public InternalEsiParser(TokenStream input, RecognizerSharedState state) {
+            super(input, state);
+             
         }
         
 
-    public String[] getTokenNames() { return tokenNames; }
+    public String[] getTokenNames() { return InternalEsiParser.tokenNames; }
     public String getGrammarFileName() { return "../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g"; }
 
 
@@ -62,7 +78,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
 
 
 
-    // $ANTLR start entryRuletracelist
+    // $ANTLR start "entryRuletracelist"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:61:1: entryRuletracelist : ruletracelist EOF ;
     public final void entryRuletracelist() throws RecognitionException {
         try {
@@ -72,7 +88,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTracelistRule()); 
             pushFollow(FOLLOW_ruletracelist_in_entryRuletracelist61);
             ruletracelist();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTracelistRule()); 
             match(input,EOF,FOLLOW_EOF_in_entryRuletracelist68); 
@@ -88,10 +105,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end entryRuletracelist
+    // $ANTLR end "entryRuletracelist"
 
 
-    // $ANTLR start ruletracelist
+    // $ANTLR start "ruletracelist"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:70:1: ruletracelist : ( ( rule__Tracelist__Group__0 ) ) ;
     public final void ruletracelist() throws RecognitionException {
 
@@ -110,7 +127,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group__0_in_ruletracelist94);
             rule__Tracelist__Group__0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -134,10 +152,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end ruletracelist
+    // $ANTLR end "ruletracelist"
 
 
-    // $ANTLR start entryRuletrace
+    // $ANTLR start "entryRuletrace"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:89:1: entryRuletrace : ruletrace EOF ;
     public final void entryRuletrace() throws RecognitionException {
         try {
@@ -147,7 +165,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTraceRule()); 
             pushFollow(FOLLOW_ruletrace_in_entryRuletrace121);
             ruletrace();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTraceRule()); 
             match(input,EOF,FOLLOW_EOF_in_entryRuletrace128); 
@@ -163,10 +182,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end entryRuletrace
+    // $ANTLR end "entryRuletrace"
 
 
-    // $ANTLR start ruletrace
+    // $ANTLR start "ruletrace"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:98:1: ruletrace : ( ( rule__Trace__Group__0 ) ) ;
     public final void ruletrace() throws RecognitionException {
 
@@ -185,7 +204,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Trace__Group__0_in_ruletrace154);
             rule__Trace__Group__0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -209,10 +229,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end ruletrace
+    // $ANTLR end "ruletrace"
 
 
-    // $ANTLR start entryRuletick
+    // $ANTLR start "entryRuletick"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:117:1: entryRuletick : ruletick EOF ;
     public final void entryRuletick() throws RecognitionException {
         try {
@@ -222,7 +242,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTickRule()); 
             pushFollow(FOLLOW_ruletick_in_entryRuletick181);
             ruletick();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTickRule()); 
             match(input,EOF,FOLLOW_EOF_in_entryRuletick188); 
@@ -238,10 +259,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end entryRuletick
+    // $ANTLR end "entryRuletick"
 
 
-    // $ANTLR start ruletick
+    // $ANTLR start "ruletick"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:126:1: ruletick : ( ( rule__Tick__Group__0 ) ) ;
     public final void ruletick() throws RecognitionException {
 
@@ -260,7 +281,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group__0_in_ruletick214);
             rule__Tick__Group__0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -284,10 +306,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end ruletick
+    // $ANTLR end "ruletick"
 
 
-    // $ANTLR start entryRulesignal
+    // $ANTLR start "entryRulesignal"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:145:1: entryRulesignal : rulesignal EOF ;
     public final void entryRulesignal() throws RecognitionException {
         try {
@@ -297,7 +319,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getSignalRule()); 
             pushFollow(FOLLOW_rulesignal_in_entryRulesignal241);
             rulesignal();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getSignalRule()); 
             match(input,EOF,FOLLOW_EOF_in_entryRulesignal248); 
@@ -313,10 +336,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end entryRulesignal
+    // $ANTLR end "entryRulesignal"
 
 
-    // $ANTLR start rulesignal
+    // $ANTLR start "rulesignal"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:154:1: rulesignal : ( ( rule__Signal__Group__0 ) ) ;
     public final void rulesignal() throws RecognitionException {
 
@@ -335,7 +358,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group__0_in_rulesignal274);
             rule__Signal__Group__0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -359,10 +383,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rulesignal
+    // $ANTLR end "rulesignal"
 
 
-    // $ANTLR start rule__Tracelist__Group__0
+    // $ANTLR start "rule__Tracelist__Group__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:175:1: rule__Tracelist__Group__0 : rule__Tracelist__Group__0__Impl rule__Tracelist__Group__1 ;
     public final void rule__Tracelist__Group__0() throws RecognitionException {
 
@@ -374,11 +398,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group__0__Impl_in_rule__Tracelist__Group__0308);
             rule__Tracelist__Group__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tracelist__Group__1_in_rule__Tracelist__Group__0311);
             rule__Tracelist__Group__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -395,10 +421,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group__0
+    // $ANTLR end "rule__Tracelist__Group__0"
 
 
-    // $ANTLR start rule__Tracelist__Group__0__Impl
+    // $ANTLR start "rule__Tracelist__Group__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:187:1: rule__Tracelist__Group__0__Impl : ( ( rule__Tracelist__TracesAssignment_0 )? ) ;
     public final void rule__Tracelist__Group__0__Impl() throws RecognitionException {
 
@@ -425,7 +451,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     {
                     pushFollow(FOLLOW_rule__Tracelist__TracesAssignment_0_in_rule__Tracelist__Group__0__Impl338);
                     rule__Tracelist__TracesAssignment_0();
-                    _fsp--;
+
+                    state._fsp--;
 
 
                     }
@@ -452,10 +479,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group__0__Impl
+    // $ANTLR end "rule__Tracelist__Group__0__Impl"
 
 
-    // $ANTLR start rule__Tracelist__Group__1
+    // $ANTLR start "rule__Tracelist__Group__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:204:1: rule__Tracelist__Group__1 : rule__Tracelist__Group__1__Impl ;
     public final void rule__Tracelist__Group__1() throws RecognitionException {
 
@@ -467,7 +494,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group__1__Impl_in_rule__Tracelist__Group__1369);
             rule__Tracelist__Group__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -484,10 +512,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group__1
+    // $ANTLR end "rule__Tracelist__Group__1"
 
 
-    // $ANTLR start rule__Tracelist__Group__1__Impl
+    // $ANTLR start "rule__Tracelist__Group__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:215:1: rule__Tracelist__Group__1__Impl : ( ( ( rule__Tracelist__Group_1__0 ) ) ( ( rule__Tracelist__Group_1__0 )* ) ) ;
     public final void rule__Tracelist__Group__1__Impl() throws RecognitionException {
 
@@ -509,7 +537,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group_1__0_in_rule__Tracelist__Group__1__Impl398);
             rule__Tracelist__Group_1__0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -539,7 +568,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             	    {
             	    pushFollow(FOLLOW_rule__Tracelist__Group_1__0_in_rule__Tracelist__Group__1__Impl410);
             	    rule__Tracelist__Group_1__0();
-            	    _fsp--;
+
+            	    state._fsp--;
 
 
             	    }
@@ -572,10 +602,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group__1__Impl
+    // $ANTLR end "rule__Tracelist__Group__1__Impl"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__0
+    // $ANTLR start "rule__Tracelist__Group_1__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:243:1: rule__Tracelist__Group_1__0 : rule__Tracelist__Group_1__0__Impl rule__Tracelist__Group_1__1 ;
     public final void rule__Tracelist__Group_1__0() throws RecognitionException {
 
@@ -587,11 +617,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group_1__0__Impl_in_rule__Tracelist__Group_1__0447);
             rule__Tracelist__Group_1__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tracelist__Group_1__1_in_rule__Tracelist__Group_1__0450);
             rule__Tracelist__Group_1__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -608,10 +640,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__0
+    // $ANTLR end "rule__Tracelist__Group_1__0"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__0__Impl
+    // $ANTLR start "rule__Tracelist__Group_1__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:255:1: rule__Tracelist__Group_1__0__Impl : ( '!' ) ;
     public final void rule__Tracelist__Group_1__0__Impl() throws RecognitionException {
 
@@ -645,10 +677,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__0__Impl
+    // $ANTLR end "rule__Tracelist__Group_1__0__Impl"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__1
+    // $ANTLR start "rule__Tracelist__Group_1__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:274:1: rule__Tracelist__Group_1__1 : rule__Tracelist__Group_1__1__Impl rule__Tracelist__Group_1__2 ;
     public final void rule__Tracelist__Group_1__1() throws RecognitionException {
 
@@ -660,11 +692,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group_1__1__Impl_in_rule__Tracelist__Group_1__1509);
             rule__Tracelist__Group_1__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tracelist__Group_1__2_in_rule__Tracelist__Group_1__1512);
             rule__Tracelist__Group_1__2();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -681,10 +715,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__1
+    // $ANTLR end "rule__Tracelist__Group_1__1"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__1__Impl
+    // $ANTLR start "rule__Tracelist__Group_1__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:286:1: rule__Tracelist__Group_1__1__Impl : ( 'reset' ) ;
     public final void rule__Tracelist__Group_1__1__Impl() throws RecognitionException {
 
@@ -718,10 +752,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__1__Impl
+    // $ANTLR end "rule__Tracelist__Group_1__1__Impl"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__2
+    // $ANTLR start "rule__Tracelist__Group_1__2"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:305:1: rule__Tracelist__Group_1__2 : rule__Tracelist__Group_1__2__Impl rule__Tracelist__Group_1__3 ;
     public final void rule__Tracelist__Group_1__2() throws RecognitionException {
 
@@ -733,11 +767,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group_1__2__Impl_in_rule__Tracelist__Group_1__2571);
             rule__Tracelist__Group_1__2__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tracelist__Group_1__3_in_rule__Tracelist__Group_1__2574);
             rule__Tracelist__Group_1__3();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -754,10 +790,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__2
+    // $ANTLR end "rule__Tracelist__Group_1__2"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__2__Impl
+    // $ANTLR start "rule__Tracelist__Group_1__2__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:317:1: rule__Tracelist__Group_1__2__Impl : ( ';' ) ;
     public final void rule__Tracelist__Group_1__2__Impl() throws RecognitionException {
 
@@ -791,10 +827,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__2__Impl
+    // $ANTLR end "rule__Tracelist__Group_1__2__Impl"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__3
+    // $ANTLR start "rule__Tracelist__Group_1__3"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:336:1: rule__Tracelist__Group_1__3 : rule__Tracelist__Group_1__3__Impl ;
     public final void rule__Tracelist__Group_1__3() throws RecognitionException {
 
@@ -806,7 +842,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__Group_1__3__Impl_in_rule__Tracelist__Group_1__3633);
             rule__Tracelist__Group_1__3__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -823,10 +860,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__3
+    // $ANTLR end "rule__Tracelist__Group_1__3"
 
 
-    // $ANTLR start rule__Tracelist__Group_1__3__Impl
+    // $ANTLR start "rule__Tracelist__Group_1__3__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:347:1: rule__Tracelist__Group_1__3__Impl : ( ( rule__Tracelist__TracesAssignment_1_3 ) ) ;
     public final void rule__Tracelist__Group_1__3__Impl() throws RecognitionException {
 
@@ -845,7 +882,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tracelist__TracesAssignment_1_3_in_rule__Tracelist__Group_1__3__Impl660);
             rule__Tracelist__TracesAssignment_1_3();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -869,10 +907,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__Group_1__3__Impl
+    // $ANTLR end "rule__Tracelist__Group_1__3__Impl"
 
 
-    // $ANTLR start rule__Trace__Group__0
+    // $ANTLR start "rule__Trace__Group__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:372:1: rule__Trace__Group__0 : rule__Trace__Group__0__Impl rule__Trace__Group__1 ;
     public final void rule__Trace__Group__0() throws RecognitionException {
 
@@ -884,11 +922,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Trace__Group__0__Impl_in_rule__Trace__Group__0698);
             rule__Trace__Group__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0701);
             rule__Trace__Group__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -905,10 +945,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Trace__Group__0
+    // $ANTLR end "rule__Trace__Group__0"
 
 
-    // $ANTLR start rule__Trace__Group__0__Impl
+    // $ANTLR start "rule__Trace__Group__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:384:1: rule__Trace__Group__0__Impl : ( () ) ;
     public final void rule__Trace__Group__0__Impl() throws RecognitionException {
 
@@ -942,10 +982,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Trace__Group__0__Impl
+    // $ANTLR end "rule__Trace__Group__0__Impl"
 
 
-    // $ANTLR start rule__Trace__Group__1
+    // $ANTLR start "rule__Trace__Group__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:403:1: rule__Trace__Group__1 : rule__Trace__Group__1__Impl ;
     public final void rule__Trace__Group__1() throws RecognitionException {
 
@@ -957,7 +997,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Trace__Group__1__Impl_in_rule__Trace__Group__1759);
             rule__Trace__Group__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -974,10 +1015,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Trace__Group__1
+    // $ANTLR end "rule__Trace__Group__1"
 
 
-    // $ANTLR start rule__Trace__Group__1__Impl
+    // $ANTLR start "rule__Trace__Group__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:414:1: rule__Trace__Group__1__Impl : ( ( ( rule__Trace__TicksAssignment_1 ) ) ( ( rule__Trace__TicksAssignment_1 )* ) ) ;
     public final void rule__Trace__Group__1__Impl() throws RecognitionException {
 
@@ -999,7 +1040,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Trace__TicksAssignment_1_in_rule__Trace__Group__1__Impl788);
             rule__Trace__TicksAssignment_1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1029,7 +1071,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             	    {
             	    pushFollow(FOLLOW_rule__Trace__TicksAssignment_1_in_rule__Trace__Group__1__Impl800);
             	    rule__Trace__TicksAssignment_1();
-            	    _fsp--;
+
+            	    state._fsp--;
 
 
             	    }
@@ -1062,10 +1105,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Trace__Group__1__Impl
+    // $ANTLR end "rule__Trace__Group__1__Impl"
 
 
-    // $ANTLR start rule__Tick__Group__0
+    // $ANTLR start "rule__Tick__Group__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:442:1: rule__Tick__Group__0 : rule__Tick__Group__0__Impl rule__Tick__Group__1 ;
     public final void rule__Tick__Group__0() throws RecognitionException {
 
@@ -1077,11 +1120,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__0837);
             rule__Tick__Group__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__0840);
             rule__Tick__Group__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1098,10 +1143,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__0
+    // $ANTLR end "rule__Tick__Group__0"
 
 
-    // $ANTLR start rule__Tick__Group__0__Impl
+    // $ANTLR start "rule__Tick__Group__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:454:1: rule__Tick__Group__0__Impl : ( ( rule__Tick__InputAssignment_0 )* ) ;
     public final void rule__Tick__Group__0__Impl() throws RecognitionException {
 
@@ -1132,7 +1177,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             	    {
             	    pushFollow(FOLLOW_rule__Tick__InputAssignment_0_in_rule__Tick__Group__0__Impl867);
             	    rule__Tick__InputAssignment_0();
-            	    _fsp--;
+
+            	    state._fsp--;
 
 
             	    }
@@ -1162,10 +1208,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__0__Impl
+    // $ANTLR end "rule__Tick__Group__0__Impl"
 
 
-    // $ANTLR start rule__Tick__Group__1
+    // $ANTLR start "rule__Tick__Group__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:471:1: rule__Tick__Group__1 : rule__Tick__Group__1__Impl rule__Tick__Group__2 ;
     public final void rule__Tick__Group__1() throws RecognitionException {
 
@@ -1177,11 +1223,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__1898);
             rule__Tick__Group__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__1901);
             rule__Tick__Group__2();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1198,10 +1246,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__1
+    // $ANTLR end "rule__Tick__Group__1"
 
 
-    // $ANTLR start rule__Tick__Group__1__Impl
+    // $ANTLR start "rule__Tick__Group__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:483:1: rule__Tick__Group__1__Impl : ( ( rule__Tick__Group_1__0 )? ) ;
     public final void rule__Tick__Group__1__Impl() throws RecognitionException {
 
@@ -1228,7 +1276,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     {
                     pushFollow(FOLLOW_rule__Tick__Group_1__0_in_rule__Tick__Group__1__Impl928);
                     rule__Tick__Group_1__0();
-                    _fsp--;
+
+                    state._fsp--;
 
 
                     }
@@ -1255,10 +1304,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__1__Impl
+    // $ANTLR end "rule__Tick__Group__1__Impl"
 
 
-    // $ANTLR start rule__Tick__Group__2
+    // $ANTLR start "rule__Tick__Group__2"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:500:1: rule__Tick__Group__2 : rule__Tick__Group__2__Impl ;
     public final void rule__Tick__Group__2() throws RecognitionException {
 
@@ -1270,7 +1319,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__2959);
             rule__Tick__Group__2__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1287,10 +1337,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__2
+    // $ANTLR end "rule__Tick__Group__2"
 
 
-    // $ANTLR start rule__Tick__Group__2__Impl
+    // $ANTLR start "rule__Tick__Group__2__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:511:1: rule__Tick__Group__2__Impl : ( ( rule__Tick__NAssignment_2 ) ) ;
     public final void rule__Tick__Group__2__Impl() throws RecognitionException {
 
@@ -1309,7 +1359,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__NAssignment_2_in_rule__Tick__Group__2__Impl986);
             rule__Tick__NAssignment_2();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1333,10 +1384,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group__2__Impl
+    // $ANTLR end "rule__Tick__Group__2__Impl"
 
 
-    // $ANTLR start rule__Tick__Group_1__0
+    // $ANTLR start "rule__Tick__Group_1__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:534:1: rule__Tick__Group_1__0 : rule__Tick__Group_1__0__Impl rule__Tick__Group_1__1 ;
     public final void rule__Tick__Group_1__0() throws RecognitionException {
 
@@ -1348,11 +1399,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group_1__0__Impl_in_rule__Tick__Group_1__01022);
             rule__Tick__Group_1__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tick__Group_1__1_in_rule__Tick__Group_1__01025);
             rule__Tick__Group_1__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1369,10 +1422,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__0
+    // $ANTLR end "rule__Tick__Group_1__0"
 
 
-    // $ANTLR start rule__Tick__Group_1__0__Impl
+    // $ANTLR start "rule__Tick__Group_1__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:546:1: rule__Tick__Group_1__0__Impl : ( '%' ) ;
     public final void rule__Tick__Group_1__0__Impl() throws RecognitionException {
 
@@ -1406,10 +1459,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__0__Impl
+    // $ANTLR end "rule__Tick__Group_1__0__Impl"
 
 
-    // $ANTLR start rule__Tick__Group_1__1
+    // $ANTLR start "rule__Tick__Group_1__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:565:1: rule__Tick__Group_1__1 : rule__Tick__Group_1__1__Impl rule__Tick__Group_1__2 ;
     public final void rule__Tick__Group_1__1() throws RecognitionException {
 
@@ -1421,11 +1474,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group_1__1__Impl_in_rule__Tick__Group_1__11084);
             rule__Tick__Group_1__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tick__Group_1__2_in_rule__Tick__Group_1__11087);
             rule__Tick__Group_1__2();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1442,10 +1497,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__1
+    // $ANTLR end "rule__Tick__Group_1__1"
 
 
-    // $ANTLR start rule__Tick__Group_1__1__Impl
+    // $ANTLR start "rule__Tick__Group_1__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:577:1: rule__Tick__Group_1__1__Impl : ( 'Output' ) ;
     public final void rule__Tick__Group_1__1__Impl() throws RecognitionException {
 
@@ -1479,10 +1534,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__1__Impl
+    // $ANTLR end "rule__Tick__Group_1__1__Impl"
 
 
-    // $ANTLR start rule__Tick__Group_1__2
+    // $ANTLR start "rule__Tick__Group_1__2"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:596:1: rule__Tick__Group_1__2 : rule__Tick__Group_1__2__Impl rule__Tick__Group_1__3 ;
     public final void rule__Tick__Group_1__2() throws RecognitionException {
 
@@ -1494,11 +1549,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group_1__2__Impl_in_rule__Tick__Group_1__21146);
             rule__Tick__Group_1__2__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Tick__Group_1__3_in_rule__Tick__Group_1__21149);
             rule__Tick__Group_1__3();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1515,10 +1572,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__2
+    // $ANTLR end "rule__Tick__Group_1__2"
 
 
-    // $ANTLR start rule__Tick__Group_1__2__Impl
+    // $ANTLR start "rule__Tick__Group_1__2__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:608:1: rule__Tick__Group_1__2__Impl : ( ':' ) ;
     public final void rule__Tick__Group_1__2__Impl() throws RecognitionException {
 
@@ -1552,10 +1609,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__2__Impl
+    // $ANTLR end "rule__Tick__Group_1__2__Impl"
 
 
-    // $ANTLR start rule__Tick__Group_1__3
+    // $ANTLR start "rule__Tick__Group_1__3"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:627:1: rule__Tick__Group_1__3 : rule__Tick__Group_1__3__Impl ;
     public final void rule__Tick__Group_1__3() throws RecognitionException {
 
@@ -1567,7 +1624,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Tick__Group_1__3__Impl_in_rule__Tick__Group_1__31208);
             rule__Tick__Group_1__3__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1584,10 +1642,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__3
+    // $ANTLR end "rule__Tick__Group_1__3"
 
 
-    // $ANTLR start rule__Tick__Group_1__3__Impl
+    // $ANTLR start "rule__Tick__Group_1__3__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:638:1: rule__Tick__Group_1__3__Impl : ( ( rule__Tick__OutputAssignment_1_3 )* ) ;
     public final void rule__Tick__Group_1__3__Impl() throws RecognitionException {
 
@@ -1618,7 +1676,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             	    {
             	    pushFollow(FOLLOW_rule__Tick__OutputAssignment_1_3_in_rule__Tick__Group_1__3__Impl1235);
             	    rule__Tick__OutputAssignment_1_3();
-            	    _fsp--;
+
+            	    state._fsp--;
 
 
             	    }
@@ -1648,10 +1707,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__Group_1__3__Impl
+    // $ANTLR end "rule__Tick__Group_1__3__Impl"
 
 
-    // $ANTLR start rule__Signal__Group__0
+    // $ANTLR start "rule__Signal__Group__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:663:1: rule__Signal__Group__0 : rule__Signal__Group__0__Impl rule__Signal__Group__1 ;
     public final void rule__Signal__Group__0() throws RecognitionException {
 
@@ -1663,11 +1722,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01274);
             rule__Signal__Group__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__01277);
             rule__Signal__Group__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1684,10 +1745,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group__0
+    // $ANTLR end "rule__Signal__Group__0"
 
 
-    // $ANTLR start rule__Signal__Group__0__Impl
+    // $ANTLR start "rule__Signal__Group__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:675:1: rule__Signal__Group__0__Impl : ( ( rule__Signal__NameAssignment_0 ) ) ;
     public final void rule__Signal__Group__0__Impl() throws RecognitionException {
 
@@ -1706,7 +1767,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl1304);
             rule__Signal__NameAssignment_0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1730,10 +1792,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group__0__Impl
+    // $ANTLR end "rule__Signal__Group__0__Impl"
 
 
-    // $ANTLR start rule__Signal__Group__1
+    // $ANTLR start "rule__Signal__Group__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:692:1: rule__Signal__Group__1 : rule__Signal__Group__1__Impl ;
     public final void rule__Signal__Group__1() throws RecognitionException {
 
@@ -1745,7 +1807,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__11334);
             rule__Signal__Group__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1762,10 +1825,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group__1
+    // $ANTLR end "rule__Signal__Group__1"
 
 
-    // $ANTLR start rule__Signal__Group__1__Impl
+    // $ANTLR start "rule__Signal__Group__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:703:1: rule__Signal__Group__1__Impl : ( ( rule__Signal__Group_1__0 )? ) ;
     public final void rule__Signal__Group__1__Impl() throws RecognitionException {
 
@@ -1792,7 +1855,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     {
                     pushFollow(FOLLOW_rule__Signal__Group_1__0_in_rule__Signal__Group__1__Impl1361);
                     rule__Signal__Group_1__0();
-                    _fsp--;
+
+                    state._fsp--;
 
 
                     }
@@ -1819,10 +1883,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group__1__Impl
+    // $ANTLR end "rule__Signal__Group__1__Impl"
 
 
-    // $ANTLR start rule__Signal__Group_1__0
+    // $ANTLR start "rule__Signal__Group_1__0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:724:1: rule__Signal__Group_1__0 : rule__Signal__Group_1__0__Impl rule__Signal__Group_1__1 ;
     public final void rule__Signal__Group_1__0() throws RecognitionException {
 
@@ -1834,11 +1898,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group_1__0__Impl_in_rule__Signal__Group_1__01396);
             rule__Signal__Group_1__0__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__01399);
             rule__Signal__Group_1__1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1855,10 +1921,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__0
+    // $ANTLR end "rule__Signal__Group_1__0"
 
 
-    // $ANTLR start rule__Signal__Group_1__0__Impl
+    // $ANTLR start "rule__Signal__Group_1__0__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:736:1: rule__Signal__Group_1__0__Impl : ( ( rule__Signal__ValuedAssignment_1_0 ) ) ;
     public final void rule__Signal__Group_1__0__Impl() throws RecognitionException {
 
@@ -1877,7 +1943,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__ValuedAssignment_1_0_in_rule__Signal__Group_1__0__Impl1426);
             rule__Signal__ValuedAssignment_1_0();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1901,10 +1968,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__0__Impl
+    // $ANTLR end "rule__Signal__Group_1__0__Impl"
 
 
-    // $ANTLR start rule__Signal__Group_1__1
+    // $ANTLR start "rule__Signal__Group_1__1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:753:1: rule__Signal__Group_1__1 : rule__Signal__Group_1__1__Impl rule__Signal__Group_1__2 ;
     public final void rule__Signal__Group_1__1() throws RecognitionException {
 
@@ -1916,11 +1983,13 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group_1__1__Impl_in_rule__Signal__Group_1__11456);
             rule__Signal__Group_1__1__Impl();
-            _fsp--;
+
+            state._fsp--;
 
             pushFollow(FOLLOW_rule__Signal__Group_1__2_in_rule__Signal__Group_1__11459);
             rule__Signal__Group_1__2();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1937,10 +2006,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__1
+    // $ANTLR end "rule__Signal__Group_1__1"
 
 
-    // $ANTLR start rule__Signal__Group_1__1__Impl
+    // $ANTLR start "rule__Signal__Group_1__1__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:765:1: rule__Signal__Group_1__1__Impl : ( ( rule__Signal__ValAssignment_1_1 ) ) ;
     public final void rule__Signal__Group_1__1__Impl() throws RecognitionException {
 
@@ -1959,7 +2028,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__ValAssignment_1_1_in_rule__Signal__Group_1__1__Impl1486);
             rule__Signal__ValAssignment_1_1();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -1983,10 +2053,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__1__Impl
+    // $ANTLR end "rule__Signal__Group_1__1__Impl"
 
 
-    // $ANTLR start rule__Signal__Group_1__2
+    // $ANTLR start "rule__Signal__Group_1__2"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:782:1: rule__Signal__Group_1__2 : rule__Signal__Group_1__2__Impl ;
     public final void rule__Signal__Group_1__2() throws RecognitionException {
 
@@ -1998,7 +2068,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             {
             pushFollow(FOLLOW_rule__Signal__Group_1__2__Impl_in_rule__Signal__Group_1__21516);
             rule__Signal__Group_1__2__Impl();
-            _fsp--;
+
+            state._fsp--;
 
 
             }
@@ -2015,10 +2086,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__2
+    // $ANTLR end "rule__Signal__Group_1__2"
 
 
-    // $ANTLR start rule__Signal__Group_1__2__Impl
+    // $ANTLR start "rule__Signal__Group_1__2__Impl"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:793:1: rule__Signal__Group_1__2__Impl : ( ')' ) ;
     public final void rule__Signal__Group_1__2__Impl() throws RecognitionException {
 
@@ -2052,10 +2123,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__Group_1__2__Impl
+    // $ANTLR end "rule__Signal__Group_1__2__Impl"
 
 
-    // $ANTLR start rule__Tracelist__TracesAssignment_0
+    // $ANTLR start "rule__Tracelist__TracesAssignment_0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:819:1: rule__Tracelist__TracesAssignment_0 : ( ruletrace ) ;
     public final void rule__Tracelist__TracesAssignment_0() throws RecognitionException {
 
@@ -2071,7 +2142,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTracelistAccess().getTracesTraceParserRuleCall_0_0()); 
             pushFollow(FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment_01586);
             ruletrace();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTracelistAccess().getTracesTraceParserRuleCall_0_0()); 
 
@@ -2092,10 +2164,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__TracesAssignment_0
+    // $ANTLR end "rule__Tracelist__TracesAssignment_0"
 
 
-    // $ANTLR start rule__Tracelist__TracesAssignment_1_3
+    // $ANTLR start "rule__Tracelist__TracesAssignment_1_3"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:834:1: rule__Tracelist__TracesAssignment_1_3 : ( ruletrace ) ;
     public final void rule__Tracelist__TracesAssignment_1_3() throws RecognitionException {
 
@@ -2111,7 +2183,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTracelistAccess().getTracesTraceParserRuleCall_1_3_0()); 
             pushFollow(FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment_1_31617);
             ruletrace();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTracelistAccess().getTracesTraceParserRuleCall_1_3_0()); 
 
@@ -2132,10 +2205,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tracelist__TracesAssignment_1_3
+    // $ANTLR end "rule__Tracelist__TracesAssignment_1_3"
 
 
-    // $ANTLR start rule__Trace__TicksAssignment_1
+    // $ANTLR start "rule__Trace__TicksAssignment_1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:849:1: rule__Trace__TicksAssignment_1 : ( ruletick ) ;
     public final void rule__Trace__TicksAssignment_1() throws RecognitionException {
 
@@ -2151,7 +2224,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_1_0()); 
             pushFollow(FOLLOW_ruletick_in_rule__Trace__TicksAssignment_11648);
             ruletick();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTraceAccess().getTicksTickParserRuleCall_1_0()); 
 
@@ -2172,10 +2246,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Trace__TicksAssignment_1
+    // $ANTLR end "rule__Trace__TicksAssignment_1"
 
 
-    // $ANTLR start rule__Tick__InputAssignment_0
+    // $ANTLR start "rule__Tick__InputAssignment_0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:864:1: rule__Tick__InputAssignment_0 : ( rulesignal ) ;
     public final void rule__Tick__InputAssignment_0() throws RecognitionException {
 
@@ -2191,7 +2265,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTickAccess().getInputSignalParserRuleCall_0_0()); 
             pushFollow(FOLLOW_rulesignal_in_rule__Tick__InputAssignment_01679);
             rulesignal();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTickAccess().getInputSignalParserRuleCall_0_0()); 
 
@@ -2212,10 +2287,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__InputAssignment_0
+    // $ANTLR end "rule__Tick__InputAssignment_0"
 
 
-    // $ANTLR start rule__Tick__OutputAssignment_1_3
+    // $ANTLR start "rule__Tick__OutputAssignment_1_3"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:879:1: rule__Tick__OutputAssignment_1_3 : ( rulesignal ) ;
     public final void rule__Tick__OutputAssignment_1_3() throws RecognitionException {
 
@@ -2231,7 +2306,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
              before(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_1_3_0()); 
             pushFollow(FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_1_31710);
             rulesignal();
-            _fsp--;
+
+            state._fsp--;
 
              after(grammarAccess.getTickAccess().getOutputSignalParserRuleCall_1_3_0()); 
 
@@ -2252,10 +2328,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__OutputAssignment_1_3
+    // $ANTLR end "rule__Tick__OutputAssignment_1_3"
 
 
-    // $ANTLR start rule__Tick__NAssignment_2
+    // $ANTLR start "rule__Tick__NAssignment_2"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:894:1: rule__Tick__NAssignment_2 : ( ( ';' ) ) ;
     public final void rule__Tick__NAssignment_2() throws RecognitionException {
 
@@ -2297,10 +2373,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Tick__NAssignment_2
+    // $ANTLR end "rule__Tick__NAssignment_2"
 
 
-    // $ANTLR start rule__Signal__NameAssignment_0
+    // $ANTLR start "rule__Signal__NameAssignment_0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:917:1: rule__Signal__NameAssignment_0 : ( RULE_ID ) ;
     public final void rule__Signal__NameAssignment_0() throws RecognitionException {
 
@@ -2334,10 +2410,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__NameAssignment_0
+    // $ANTLR end "rule__Signal__NameAssignment_0"
 
 
-    // $ANTLR start rule__Signal__ValuedAssignment_1_0
+    // $ANTLR start "rule__Signal__ValuedAssignment_1_0"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:932:1: rule__Signal__ValuedAssignment_1_0 : ( ( '(' ) ) ;
     public final void rule__Signal__ValuedAssignment_1_0() throws RecognitionException {
 
@@ -2379,10 +2455,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__ValuedAssignment_1_0
+    // $ANTLR end "rule__Signal__ValuedAssignment_1_0"
 
 
-    // $ANTLR start rule__Signal__ValAssignment_1_1
+    // $ANTLR start "rule__Signal__ValAssignment_1_1"
     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:955:1: rule__Signal__ValAssignment_1_1 : ( RULE_NUM ) ;
     public final void rule__Signal__ValAssignment_1_1() throws RecognitionException {
 
@@ -2416,7 +2492,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end rule__Signal__ValAssignment_1_1
+    // $ANTLR end "rule__Signal__ValAssignment_1_1"
+
+    // Delegated rules
 
 
  
@@ -2455,10 +2533,10 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Trace__Group__1__Impl_in_rule__Trace__Group__1759 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Trace__TicksAssignment_1_in_rule__Trace__Group__1__Impl788 = new BitSet(new long[]{0x0000000000003012L});
     public static final BitSet FOLLOW_rule__Trace__TicksAssignment_1_in_rule__Trace__Group__1__Impl800 = new BitSet(new long[]{0x0000000000003012L});
-    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__0837 = new BitSet(new long[]{0x0000000000003000L});
+    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__0837 = new BitSet(new long[]{0x0000000000003010L});
     public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__0840 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__InputAssignment_0_in_rule__Tick__Group__0__Impl867 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__1898 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__1898 = new BitSet(new long[]{0x0000000000003010L});
     public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__1901 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_1__0_in_rule__Tick__Group__1__Impl928 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__2959 = new BitSet(new long[]{0x0000000000000002L});
@@ -2469,12 +2547,12 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Tick__Group_1__1__Impl_in_rule__Tick__Group_1__11084 = new BitSet(new long[]{0x0000000000008000L});
     public static final BitSet FOLLOW_rule__Tick__Group_1__2_in_rule__Tick__Group_1__11087 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_14_in_rule__Tick__Group_1__1__Impl1115 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_1__2__Impl_in_rule__Tick__Group_1__21146 = new BitSet(new long[]{0x0000000000000012L});
+    public static final BitSet FOLLOW_rule__Tick__Group_1__2__Impl_in_rule__Tick__Group_1__21146 = new BitSet(new long[]{0x0000000000000010L});
     public static final BitSet FOLLOW_rule__Tick__Group_1__3_in_rule__Tick__Group_1__21149 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_15_in_rule__Tick__Group_1__2__Impl1177 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_1__3__Impl_in_rule__Tick__Group_1__31208 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__OutputAssignment_1_3_in_rule__Tick__Group_1__3__Impl1235 = new BitSet(new long[]{0x0000000000000012L});
-    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01274 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01274 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__01277 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl1304 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__11334 = new BitSet(new long[]{0x0000000000000002L});

@@ -12,6 +12,7 @@ import de.cau.cs.kieler.sim.esi.services.EsiGrammarAccess;
 
 import com.google.inject.Inject;
 
+@SuppressWarnings("all")
 public class EsiParsetreeConstructor extends AbstractParseTreeConstructor {
 		
 	@Inject
@@ -43,7 +44,7 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule tracelist ****************
  *
  * tracelist:
- *   traces+=trace? ("!" "reset" ";" traces+=trace)+;
+ * 	traces+=trace? ("!" "reset" ";" traces+=trace)+;
  *
  **/
 
@@ -264,7 +265,7 @@ protected class Tracelist_TracesAssignment_1_3 extends AssignmentToken  {
 /************ begin Rule trace ****************
  *
  * trace:
- *   {trace} ticks+=tick+;
+ * 	{trace} ticks+=tick+;
  *
  **/
 
@@ -377,7 +378,7 @@ protected class Trace_TicksAssignment_1 extends AssignmentToken  {
 /************ begin Rule tick ****************
  *
  * tick:
- *   input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+ * 	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
  *
  **/
 
@@ -618,7 +619,7 @@ protected class Tick_NAssignment_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("n",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("n");
-		if(";".equals(value)) { // org::eclipse::xtext::impl::KeywordImpl
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getTickAccess().getNSemicolonKeyword_2_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
 			element = grammarAccess.getTickAccess().getNSemicolonKeyword_2_0();
 			return obj;
@@ -635,7 +636,7 @@ protected class Tick_NAssignment_2 extends AssignmentToken  {
 /************ begin Rule signal ****************
  *
  * signal:
- *   name=ID (valued?="(" val=NUM ")")?;
+ * 	name=ID (valued?="(" val=NUM ")")?;
  *
  **/
 

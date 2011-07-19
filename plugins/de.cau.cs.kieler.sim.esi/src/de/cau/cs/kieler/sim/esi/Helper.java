@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.esi;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.util.URI;
@@ -26,7 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.antlr.IAntlrParser;
+import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.IResourceFactory;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -99,9 +100,9 @@ public class Helper {
             }
 
             Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
+            IParser parser = inj.getInstance(IParser.class);
+            IParseResult parseResult = parser.parse(new InputStreamReader(in));
+            if (parseResult.getSyntaxErrors().iterator().hasNext()) {
                 throw new KiemInitializationException("Parse error", true, null);
             }
             res = (tracelist) parseResult.getRootASTElement();
@@ -139,9 +140,9 @@ public class Helper {
             }
 
             Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
+            IParser parser = inj.getInstance(IParser.class);
+            IParseResult parseResult = parser.parse(new InputStreamReader(in));
+            if (parseResult.getSyntaxErrors().iterator().hasNext()) {
                 throw new KiemInitializationException("Parse error", true, null);
             }
             res = (tracelist) parseResult.getRootASTElement();

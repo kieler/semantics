@@ -29,15 +29,14 @@ signal:
 * LEXER RULES
 *------------------------------------------------------------------*/
 
+terminal Digit : ('0' .. '9') ;
+
+terminal Letter : 'a'..'z'|'A'..'Z';
+
 terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
 
-terminal NUM	 returns ecore::EInt : ('+'|'-')?(Digit)+ ;
+terminal NUM returns ecore::EInt : ('+'|'-')?(Digit)+ ;
 
 terminal WS :  '\t' | ' ' | '\r' | '\n';
 
 terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
-
-terminal Digit : ('0' .. '9') ;
-
-terminal Letter 
-	:	'a'..'z'|'A'..'Z';

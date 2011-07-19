@@ -968,6 +968,10 @@ finally {
 }
 
 
+RULE_DIGIT : '0'..'9';
+
+RULE_LETTER : ('a'..'z'|'A'..'Z');
+
 RULE_ID : (RULE_LETTER|'_') (RULE_LETTER|RULE_DIGIT|'_')*;
 
 RULE_NUM : ('+'|'-')? RULE_DIGIT+;
@@ -975,9 +979,5 @@ RULE_NUM : ('+'|'-')? RULE_DIGIT+;
 RULE_WS : ('\t'|' '|'\r'|'\n');
 
 RULE_COMMENT : '%' ('A'..'N'|'P'..'Z') ( options {greedy=false;} : . )*'\n';
-
-RULE_DIGIT : '0'..'9';
-
-RULE_LETTER : ('a'..'z'|'A'..'Z');
 
 
