@@ -14,7 +14,6 @@ Workflow {
 		platformUri = "${runtimeProject}/.."
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
-//		registerGenModelFile = "../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -30,6 +29,7 @@ Workflow {
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		
 		language = {
 			uri = grammarURI
 			fileExtensions = file.extensions

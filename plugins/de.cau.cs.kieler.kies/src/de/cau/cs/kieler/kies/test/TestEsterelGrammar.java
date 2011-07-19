@@ -26,7 +26,6 @@ import java.util.HashMap;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
 import org.eclipse.emf.ecore.util.EcoreUtil;
-import org.eclipse.xtext.junit.AbstractXtextTests;
 import org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor.TreeConstructionDiagnostic;
 import org.eclipse.xtext.parsetree.reconstr.Serializer;
 import org.eclipse.xtext.parsetree.reconstr.XtextSerializationException;
@@ -52,7 +51,7 @@ import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
  * @author uru
  * 
  */
-public class TestEsterelGrammar extends AbstractXtextTests {
+public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
 
     /** in ms. */
     private static final int SERIALIZATION_TIME_LIMIT = 4000;
