@@ -167,5 +167,8 @@ This Agreement is governed by the laws of the State of New York and the intellec
       <feature id="de.cau.cs.kieler.klots" version="0.1.0.qualifier"/>
    </features>
 
+   <configurations>
+      <property name="osgi.instance.area.default" value="@user.home/kieler-workspace" />
+   </configurations>
 
 </product>
