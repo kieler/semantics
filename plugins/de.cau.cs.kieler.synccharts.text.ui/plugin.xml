@@ -96,9 +96,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.synccharts.text.kits.Kits"
-            name="Kits">
+              category="de.cau.cs.kieler"
+              class="de.cau.cs.kieler.synccharts.text.kits.ui.CustomizedKitsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.synccharts.text.kits.Kits"
+              name="KITS">
             <keywordReference id="de.cau.cs.kieler.synccharts.text.kits.ui.keyword_Kits"/>
         </page>
         <page

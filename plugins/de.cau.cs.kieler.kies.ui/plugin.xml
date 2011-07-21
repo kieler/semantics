@@ -50,9 +50,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.kies.Esterel"
-            name="Esterel">
+              category="de.cau.cs.kieler"
+              class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.kies.Esterel"
+              name="Esterel">
             <keywordReference id="de.cau.cs.kieler.kies.ui.keyword_Esterel"/>
         </page>
         <page

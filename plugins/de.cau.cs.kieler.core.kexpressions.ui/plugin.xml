@@ -50,9 +50,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.core.kexpressions.KExpressions"
-            name="KExpressions">
+              category="de.cau.cs.kieler"
+              class="de.cau.cs.kieler.core.kexpressions.ui.KExpressionsExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.core.kexpressions.KExpressions"
+              name="KExpressions">
             <keywordReference id="de.cau.cs.kieler.core.kexpressions.ui.keyword_KExpressions"/>
         </page>
         <page
