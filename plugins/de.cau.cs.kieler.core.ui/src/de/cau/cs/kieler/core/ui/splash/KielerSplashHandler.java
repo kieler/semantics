@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.core.ui.splash;
 
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+import org.eclipse.equinox.internal.app.ProductExtensionBranding;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
@@ -24,15 +27,21 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.splash.BasicSplashHandler;
 
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+
 /**
  * Provides a splash screen handler that shows a progress bar, a message line and a version
  * number. Currently, the version number is hard-coded. In the next release, however, the
  * version number is to be dynamic.
  * 
- * TODO: Make version number dynamic.
+ * todo: Make version number dynamic.
+ * chsch: Done so far as possible: Version property must be maintained in the product extension
+ *   in de.cau.cs.kieler.core.ui's plugin.xml since the version won't be transferred from the
+ *   product file automatically. Furthermore, the product file is not part of the RCA installation.
  * 
  * @author cds
  */
+@SuppressWarnings("restriction")
 public class KielerSplashHandler extends BasicSplashHandler {
     
     // UI CONTROLS
@@ -41,6 +50,10 @@ public class KielerSplashHandler extends BasicSplashHandler {
     private Font versionLabelFont;
     private Color versionLabelColor;
     
+    private static final String PI_RUNTIME = "org.eclipse.core.runtime"; //$NON-NLS-1$
+    private static final String PT_PRODUCTS = "products"; //$NON-NLS-1$
+    private static final String PROP_PRODUCT = "eclipse.product"; //$NON-NLS-1$
+    private static final String PROP_VERSION = "version"; //$NON-NLS-1$
 
     /**
      * 
@@ -68,12 +81,25 @@ public class KielerSplashHandler extends BasicSplashHandler {
         setProgressRect(new Rectangle(10, 305, 480, 15));
         setMessageRect(new Rectangle(15, 285, 470, 15));
         contentComposite = (Composite) getBundleProgressMonitor();
+        // CHECKSTYLEON MagicNumber
+
         
         // Create the version number label
         versionLabel = createVersionLabel(contentComposite);
-        versionLabel.setText("0.5.0");
-        
-        // CHECKSTYLEON MagicNumber
+
+        String productId = CoreUIPlugin.getDefault().getBundle().getBundleContext()
+                .getProperty(PROP_PRODUCT);
+        IConfigurationElement[] entries = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(PI_RUNTIME, PT_PRODUCTS, productId);        
+
+        String version = "N.N.";
+        if (entries.length != 0) {
+            String version2 = new ProductExtensionBranding(productId, entries[0]).getProperty(PROP_VERSION);
+            if (version2 != null) {
+                version = version2;
+            }
+        }
+        versionLabel.setText(version);        
     }
     
     /** the grey value for label color. */
