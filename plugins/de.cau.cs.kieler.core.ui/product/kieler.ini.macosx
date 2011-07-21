@@ -1,7 +1,7 @@
 -startup
 ../../../plugins/org.eclipse.equinox.launcher_1.2.0.v20110502.jar
 --launcher.library
-../../../plugins/org.eclipse.equinox.launcher.cocoa.macosx.x86_64_1.1.100.v20110502
+../../../plugins/org.eclipse.equinox.launcher.cocoa.macosx_1.1.100.v20110502
 -showsplash
 org.eclipse.platform
 --launcher.XXPermSize
