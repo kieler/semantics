@@ -36,7 +36,7 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * 
  * todo: Make version number dynamic.
  * chsch: Done so far as possible: Version property must be maintained in the product extension
- *   in de.cau.cs.kieler.core.ui's plugin.xml since the version won't be transferred from the
+ *   in de.cau.cs.kieler.core.ui's plugin.xml by hand since the version won't be transferred from the
  *   product file automatically. Furthermore, the product file is not part of the RCA installation.
  * 
  * @author cds
@@ -94,7 +94,8 @@ public class KielerSplashHandler extends BasicSplashHandler {
 
         String version = "N.N.";
         if (entries.length != 0) {
-            String version2 = new ProductExtensionBranding(productId, entries[0]).getProperty(PROP_VERSION);
+            String version2 = new ProductExtensionBranding(productId, entries[0])
+                    .getProperty(PROP_VERSION);
             if (version2 != null) {
                 version = version2;
             }
