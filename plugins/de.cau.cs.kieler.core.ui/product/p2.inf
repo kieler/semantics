@@ -3,8 +3,8 @@ instructions.configure=\
   addRepository(type:1,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
   addRepository(type:0,name:The Eclipse Project Updates, location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
   addRepository(type:1,name:The Eclipse Project Updates, location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
-  addRepository(type:0,name:Helios, location:http${#58}//download.eclipse.org/releases/indigo);\
-  addRepository(type:1,name:Helios, location:http${#58}//download.eclipse.org/releases/indigo);\
+  addRepository(type:0,name:Indigo, location:http${#58}//download.eclipse.org/releases/indigo);\
+  addRepository(type:1,name:Indigo, location:http${#58}//download.eclipse.org/releases/indigo);\
   addRepository(type:0,name:MDT/Papyrus Modeling Tools, location:http${#58}//download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo);\
   addRepository(type:1,name:MDT/Papyrus Modeling Tools, location:http${#58}//download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo);\
   
