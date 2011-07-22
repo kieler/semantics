@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.gmf.figures;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
@@ -26,7 +27,6 @@ import org.eclipse.draw2d.geometry.Point;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.PolylineConnectionEx;
-import org.eclipse.gmf.runtime.draw2d.ui.geometry.PointListUtilities;
 import org.eclipse.gmf.runtime.draw2d.ui.mapmode.MapModeUtil;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.SWTException;
@@ -38,7 +38,7 @@ import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
  * Temporary class implementing the spline extension to polylines until the changes are merged into
  * GMF.
  * 
- * @author mmu
+ * @author mmu, ckru
  * 
  */
 public class SplineConnection extends PolylineConnectionEx {
@@ -284,6 +284,9 @@ public class SplineConnection extends PolylineConnectionEx {
      */
     @Override
     public void outlineShape(final Graphics g) {
+        if (this.joinPointDecoration != null) {
+            this.drawJoinPointDecoration();
+        }
         if (getSplineMode() == SPLINE_CUBIC) {
             try {
                 int size = getPoints().size();
@@ -467,14 +470,13 @@ public class SplineConnection extends PolylineConnectionEx {
             super.outlineShape(g);
         }
     }
-    
+
     /**
-     * Method to determine whether the connection meets all requirements to
-     * do rounded bendpoints or not.
-     * Requirements are:
-     *  - connection is othogonal
-     *  - connection has no small bends
-     * @param bendpoints the bendpoints of the connection to check
+     * Method to determine whether the connection meets all requirements to do rounded bendpoints or
+     * not. Requirements are: - connection is othogonal - connection has no small bends
+     * 
+     * @param bendpoints
+     *            the bendpoints of the connection to check
      * @return true if connection meets requirements
      */
     private boolean canRoundBendpoints(final PointList bendpoints) {
@@ -482,7 +484,7 @@ public class SplineConnection extends PolylineConnectionEx {
         boolean horizontal;
         Point a = bendpoints.getPoint(0);
         Point b = bendpoints.getPoint(1);
-        
+
         if (a.x == b.x) {
             horizontal = false;
         } else if (a.y == b.y) {
@@ -490,34 +492,34 @@ public class SplineConnection extends PolylineConnectionEx {
         } else {
             return false;
         }
-        
+
         for (int i = 1; i < (bendpoints.size() - 1); i++) {
             a = bendpoints.getPoint(i);
             b = bendpoints.getPoint(i + 1);
             if (horizontal) {
-            if ((i % 2) == 1) {             
-               if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
-                   canRound = false;
-                   break;
-               }
-            } else {
-                if ((a.y != b.y) || (Math.abs(a.x - b.x) < 4)) {
-                    canRound = false;
-                    break;
-                } 
-            }
-            } else {
-                if ((i % 2) == 1) {             
+                if ((i % 2) == 1) {
+                    if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
+                        canRound = false;
+                        break;
+                    }
+                } else {
                     if ((a.y != b.y) || (Math.abs(a.x - b.x) < 4)) {
                         canRound = false;
                         break;
                     }
-                 } else {
-                     if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
-                         canRound = false;
-                         break;
-                     } 
-                 }
+                }
+            } else {
+                if ((i % 2) == 1) {
+                    if ((a.y != b.y) || (Math.abs(a.x - b.x) < 4)) {
+                        canRound = false;
+                        break;
+                    }
+                } else {
+                    if ((a.x != b.x) || (Math.abs(a.y - b.y) < 4)) {
+                        canRound = false;
+                        break;
+                    }
+                }
             }
         }
         return canRound;
@@ -530,18 +532,91 @@ public class SplineConnection extends PolylineConnectionEx {
     private Hashtable<Integer, Integer> rForBendpointArc;
 
     @Override
-    public PointList getRoundedCornersPoints(boolean calculateAppoxPoints) {
+    public PointList getRoundedCornersPoints(final boolean calculateAppoxPoints) {
         if (rForBendpointArc != null) {
             rForBendpointArc.clear();
         } else {
             rForBendpointArc = new Hashtable<Integer, Integer>();
         }
-
         return SplineUtilities.calcRoundedCornersPolyline(getPoints(),
                 getRoundedBendpointsRadius(), rForBendpointArc, calculateAppoxPoints);
     }
 
     // bugfix end
+
+    private IFigure joinPointDecoration = null;
+
+    /**
+     * Get the current join point decoration. If it is null the mechanism is deactivated.
+     * 
+     * @return the join point decoration or null
+     */
+    public IFigure getJoinPointDecoration() {
+        return joinPointDecoration;
+    }
+
+    /**
+     * Set a join point decoration. Set it to null to not draw join points.
+     * 
+     * @param dec
+     *            the new join point decoration
+     */
+    public void setJoinPointDecoration(final IFigure dec) {
+        if (joinPointDecoration != null) {
+            if (this.getChildren().contains(joinPointDecoration)) {
+                this.remove(joinPointDecoration);
+            }
+            joinPointDecoration = null;
+        }
+        joinPointDecoration = dec;
+    }
+
+    /**
+     * Check if we have to draw those JoinPoints and calculate their location.
+     */
+    private void drawJoinPointDecoration() {
+        IFigure parent = this.getParent();
+        List<IFigure> children = parent.getChildren();
+        // compare yourself with all the other connections
+        for (IFigure child : children) {
+            if ((child instanceof SplineConnection) && (this != child)) {
+                SplineConnection connection = (SplineConnection) child;
+                Point joinPoint = null;
+                // if there are two consecutive points that are intersections assume this is
+                // one of those joins we want to draw that starts with the first one
+                for (int i = 0; i < (this.getPoints().size() - 1); i++) {
+                    Point pointA = this.getPoints().getPoint(i);
+                    if (connection.getPoints().polygonContainsPoint(pointA.x, pointA.y)) {
+                        Point pointB = this.getPoints().getPoint(i + 1);
+                        if (connection.getPoints().polygonContainsPoint(pointB.x, pointB.y)) {
+                            joinPoint = pointA;
+                        }
+                    }
+                }
+                // if this is null there is no join so don't draw anything
+                if (joinPoint != null) {
+                    // if decoration exists and location hasn't changed stop here
+                    // otherwise it would end in an infinite loop
+                    if ((this.getChildren().contains(joinPointDecoration))
+                            && (joinPointDecoration.getBounds().getLocation().equals(joinPoint))) {
+                        return;
+                    }
+                    // offset so that the center of the figure is at the joinpoint.
+                    int yOffset = joinPointDecoration.getBounds().height / 2;
+                    int xOffset = joinPointDecoration.getBounds().width / 2;
+                    joinPointDecoration.getBounds().setLocation(
+                            new Point(joinPoint.x - xOffset, joinPoint.y - yOffset));
+                    this.add(joinPointDecoration);
+                    return;
+                }
+            }
+        }
+
+        // if no joins are found for any other connection stop drawing this joinpoin
+        if (this.getChildren().contains(joinPointDecoration)) {
+            this.remove(joinPointDecoration);
+        }
+    }
 
     /*
      * (non-Javadoc)
