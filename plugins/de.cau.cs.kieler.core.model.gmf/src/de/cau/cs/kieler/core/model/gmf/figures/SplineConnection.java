@@ -589,7 +589,16 @@ public class SplineConnection extends PolylineConnectionEx {
                     if (connection.getPoints().polygonContainsPoint(pointA.x, pointA.y)) {
                         Point pointB = this.getPoints().getPoint(i + 1);
                         if (connection.getPoints().polygonContainsPoint(pointB.x, pointB.y)) {
-                            joinPoint = pointA;
+                            //if connections have same source take the latter point
+                            if (this.getPoints().getFirstPoint().equals(connection.getPoints().getFirstPoint())) {
+                                joinPoint = pointB;
+                            //if connections have same target take the first point
+                            } else if (this.getPoints().getLastPoint().equals(connection.getPoints().getLastPoint())) { 
+                                joinPoint = pointA;
+                            } else {
+                            //the connections have neither the same target nor source so don't draw joinpoint for them
+                                joinPoint = null;
+                            }
                         }
                     }
                 }
