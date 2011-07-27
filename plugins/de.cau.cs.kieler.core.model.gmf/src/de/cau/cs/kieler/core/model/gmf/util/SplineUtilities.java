@@ -74,7 +74,7 @@ public final class SplineUtilities {
             spline.add(new KVector(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
             spline.add(new KVector(control.getPoint(i + 2).x, control.getPoint(i + 2).y));
             for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
-                points.addPoint(new Point(p.x, p.y));
+                points.addPoint(new PrecisionPoint(p.x, p.y));
             }
         }
         switch (control.size() - i) {
@@ -87,7 +87,7 @@ public final class SplineUtilities {
             spline.add(new KVector(control.getPoint(i).x, control.getPoint(i).y));
             spline.add(new KVector(control.getPoint(i + 1).x, control.getPoint(i + 1).y));
             for (KVector p : KielerMath.calcBezierPoints(spline, approxCount(spline))) {
-                points.addPoint(new Point(p.x, p.y));
+                points.addPoint(new PrecisionPoint(p.x, p.y));
             }
             break;
         default: // nothing
@@ -108,7 +108,8 @@ public final class SplineUtilities {
         long distance = 0;
         KVector start = spline.get(0);
         KVector end = spline.get(spline.size() - 1);
-        LineSeg line = new LineSeg(new Point(start.x, start.y), new Point(end.x, end.y));
+        LineSeg line = new LineSeg(new PrecisionPoint(start.x, start.y),
+                new PrecisionPoint(end.x, end.y));
         for (int i = 1; i < spline.size() - 1; i++) {
             KVector k = spline.get(i);
             distance += line.distanceToPoint((int) k.x, (int) k.y);
@@ -140,7 +141,8 @@ public final class SplineUtilities {
         Point p1 = points.getPoint(0);
         Point p2 = points.getPoint(1);
         double scale = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)) / distance;
-        Point scaledPoint = new Point(p1.x + (p2.x - p1.x) / scale, p1.y + (p2.y - p1.y) / scale);
+        Point scaledPoint = new PrecisionPoint(p1.x + (p2.x - p1.x) / scale,
+                p1.y + (p2.y - p1.y) / scale);
 
         // get first spline segment
         Point splinePoint = new Point();
@@ -175,7 +177,8 @@ public final class SplineUtilities {
         Point p1 = points.getPoint(points.size() - 1);
         Point p2 = points.getPoint(points.size() - 2);
         double scale = Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2)) / distance;
-        Point scaledPoint = new Point(p1.x + (p2.x - p1.x) / scale, p1.y + (p2.y - p1.y) / scale);
+        Point scaledPoint = new PrecisionPoint(p1.x + (p2.x - p1.x) / scale, p1.y + (p2.y - p1.y)
+                / scale);
 
         // get last spline segment
         Point splinePoint = new Point();
@@ -306,13 +309,13 @@ public final class SplineUtilities {
 
         // Compare distances of P5 to all candidates, and to t=0, and t=1
         // Check distance to beginning of curve, where t = 0
-        double minDistance = pa.getDistance2(new PrecisionPoint(start));
+        long minDistance = getDistance2(pa, start);
         double t = 0.0;
 
         // Find distances for candidate points
         for (int i = 0; i < nSolutions; i++) {
             PrecisionPoint p = bezier(v, DEGREE, tCandidate[i], null, null);
-            double distance = pa.getDistance2(p);
+            long distance = getDistance2(pa, p);
             if (distance < minDistance) {
                 minDistance = distance;
                 t = tCandidate[i];
@@ -320,7 +323,7 @@ public final class SplineUtilities {
         }
 
         // Finally, look at distance to end point, where t = 1.0
-        double distance = pa.getDistance2(new PrecisionPoint(end));
+        long distance = getDistance2(pa, new PrecisionPoint(end));
         if (distance < minDistance) {
             minDistance = distance;
             t = 1.0;
@@ -329,7 +332,19 @@ public final class SplineUtilities {
         // Return the point on the curve at parameter value t
         pn.setLocation(bezier(v, DEGREE, t, null, null));
         nearest.setLocation(pn);
-        return Math.sqrt(pn.getDistance2(pa));
+        return pn.getDistance(pa);
+    }
+    
+    /**
+     * Calculates the distance squared between this Point and the one specified.
+     * 
+     * @param p The reference Point
+     * @return distance<sup>2</sup>
+     */
+    private static long getDistance2(final Point p1, final Point p2) {
+        long i = p2.x() - p1.x();
+        long j = p2.y() - p1.y();
+        return i * i + j * j;
     }
 
     /**
@@ -352,7 +367,7 @@ public final class SplineUtilities {
             // Stop recursion when the tree is deep enough
             // if deep enough, return 1 solution at midpoint
             if (depth >= MAXDEPTH) {
-                t[0] = (w[0].preciseX + w[W_DEGREE].preciseX) / 2.0;
+                t[0] = (w[0].preciseX() + w[W_DEGREE].preciseX()) / 2.0;
                 return 1;
             }
             if (controlPolygonFlatEnough(w, degree)) {
@@ -414,23 +429,23 @@ public final class SplineUtilities {
         // Determine the c's -- these are vectors created by subtracting
         // point pa from each of the control points
         for (int i = 0; i <= DEGREE; i++) {
-            c[i] = new PrecisionPoint(v[i].preciseX - pa.preciseX, v[i].preciseY - pa.preciseY);
+            c[i] = new PrecisionPoint(v[i].preciseX() - pa.preciseX(), v[i].preciseY() - pa.preciseY());
         }
 
         // Determine the d's -- these are vectors created by subtracting
         // each control point from the next
         double s = DEGREE;
         for (int i = 0; i <= DEGREE - 1; i++) {
-            d[i] = new PrecisionPoint(s * (v[i + 1].preciseX - v[i].preciseX), s
-                    * (v[i + 1].preciseY - v[i].preciseY));
+            d[i] = new PrecisionPoint(s * (v[i + 1].preciseX() - v[i].preciseX()), s
+                    * (v[i + 1].preciseY() - v[i].preciseY()));
         }
 
         // Create the c,d table -- this is a table of dot products of the
         // c's and d's */
         for (int row = 0; row <= DEGREE - 1; row++) {
             for (int column = 0; column <= DEGREE; column++) {
-                cdTable[row][column] = (d[row].preciseX * c[column].preciseX)
-                        + (d[row].preciseY * c[column].preciseY);
+                cdTable[row][column] = (d[row].preciseX() * c[column].preciseX())
+                        + (d[row].preciseY() * c[column].preciseY());
             }
         }
 
@@ -447,7 +462,7 @@ public final class SplineUtilities {
             int ub = Math.min(k, n);
             for (int i = lb; i <= ub; i++) {
                 int j = k - i;
-                w[i + j].preciseY = w[i + j].preciseY + cdTable[j][i] * CUBIC_Z[j][i];
+                w[i + j].setPreciseY(w[i + j].preciseY() + cdTable[j][i] * CUBIC_Z[j][i]);
             }
         }
 
@@ -464,10 +479,10 @@ public final class SplineUtilities {
      */
     private static int crossingCount(final PrecisionPoint[] v, final int degree) {
         int nCrossings = 0;
-        int sign = v[0].preciseY < 0 ? -1 : 1;
+        int sign = v[0].preciseY() < 0 ? -1 : 1;
         int oldSign = sign;
         for (int i = 1; i <= degree; i++) {
-            sign = v[i].preciseY < 0 ? -1 : 1;
+            sign = v[i].preciseY() < 0 ? -1 : 1;
             if (sign != oldSign) {
                 nCrossings++;
             }
@@ -492,9 +507,9 @@ public final class SplineUtilities {
 
         // Derive the implicit equation for line connecting first
         // and last control points
-        double a = v[0].preciseY - v[degree].preciseY;
-        double b = v[degree].preciseX - v[0].preciseX;
-        double c = v[0].preciseX * v[degree].preciseY - v[degree].preciseX * v[0].preciseY;
+        double a = v[0].preciseY() - v[degree].preciseY();
+        double b = v[degree].preciseX() - v[0].preciseX();
+        double c = v[0].preciseX() * v[degree].preciseY() - v[degree].preciseX() * v[0].preciseY();
 
         double abSquared = (a * a) + (b * b);
         double[] distance = new double[degree + 1]; // Distances from pts to
@@ -502,7 +517,7 @@ public final class SplineUtilities {
 
         for (int i = 1; i < degree; i++) {
             // Compute distance from each of the points to that line
-            distance[i] = a * v[i].preciseX + b * v[i].preciseY + c;
+            distance[i] = a * v[i].preciseX() + b * v[i].preciseY() + c;
             if (distance[i] > 0.0) {
                 distance[i] = (distance[i] * distance[i]) / abSquared;
             }
@@ -568,10 +583,10 @@ public final class SplineUtilities {
      */
     private static double computeXIntercept(final PrecisionPoint[] v, final int degree) {
 
-        double xnm = v[degree].preciseX - v[0].preciseX;
-        double ynm = v[degree].preciseY - v[0].preciseY;
-        double xmk = v[0].preciseX;
-        double ymk = v[0].preciseY;
+        double xnm = v[degree].preciseX() - v[0].preciseX();
+        double ynm = v[degree].preciseY() - v[0].preciseY();
+        double xmk = v[0].preciseX();
+        double ymk = v[0].preciseY();
 
         double detInv = -1.0 / ynm;
 
@@ -602,9 +617,9 @@ public final class SplineUtilities {
 
         for (int i = 1; i <= degree; i++) {
             for (int j = 0; j <= degree - i; j++) {
-                p[i][j] = new PrecisionPoint((1.0 - t) * p[i - 1][j].preciseX + t
-                        * p[i - 1][j + 1].preciseX, (1.0 - t) * p[i - 1][j].preciseY + t
-                        * p[i - 1][j + 1].preciseY);
+                p[i][j] = new PrecisionPoint((1.0 - t) * p[i - 1][j].preciseX() + t
+                        * p[i - 1][j + 1].preciseX(), (1.0 - t) * p[i - 1][j].preciseY() + t
+                        * p[i - 1][j + 1].preciseY());
             }
         }
 
@@ -625,145 +640,161 @@ public final class SplineUtilities {
     
     ///////////////////////////////////////////////////////
     /////////////Temporary gmf bugfix//////////////////////
-    //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+    //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886
     ///////////////////////////////////////////////////////
-    public final static int DEFAULT_CORNER_APPROXIMATION_PTS = 15;
+    private static final int DEFAULT_CORNER_APPROXIMATION_PTS = 15;
     public static PointList calcRoundedCornersPolyline(PointList points, int r, 
             Hashtable<Integer, Integer> rForBendpoint, boolean calculateAppoxPoints) {
-    PointList newPoints = new PointList();
-    // First, clean up the points list if needed. Each segment is defined by two end points,
-    // so if it happens that the segment has points in between, remove them since there is no
-    // use for them, they can just create problems.
-    int k = 1;
-    while (k < points.size() - 1) {
-            int x0 = points.getPoint(k-1).x;
-            int y0 = points.getPoint(k-1).y;
-            int x1 = points.getPoint(k).x;
-            int y1 = points.getPoint(k).y;
-            int x2 = points.getPoint(k+1).x;
-            int y2 = points.getPoint(k+1).y;
-            if ((x0 == x1 && x1 == x2) || (y0 == y1 && y1 == y2)) {
-                    // (x1, y1) is not needed, remove it
-                    points.removePoint(k);
-            } else {
-                    k++;
-            }
+        PointList newPoints = new PointList();
+        // First, clean up the points list if needed. Each segment is defined by two end points,
+        // so if it happens that the segment has points in between, remove them since there is no
+        // use for them, they can just create problems.
+        int k = 1;
+        while (k < points.size() - 1) {
+                int x0 = points.getPoint(k - 1).x;
+                int y0 = points.getPoint(k - 1).y;
+                int x1 = points.getPoint(k).x;
+                int y1 = points.getPoint(k).y;
+                int x2 = points.getPoint(k + 1).x;
+                int y2 = points.getPoint(k + 1).y;
+                if ((x0 == x1 && x1 == x2) || (y0 == y1 && y1 == y2)) {
+                        // (x1, y1) is not needed, remove it
+                        points.removePoint(k);
+                } else {
+                        k++;
+                }
+        }
+        newPoints.addPoint(points.getFirstPoint()); 
+        int rDefault = r;
+        for (int i = 1; i < points.size() - 1; i++) {
+                int x0 = points.getPoint(i - 1).x;
+                int y0 = points.getPoint(i - 1).y;
+                int x1 = points.getPoint(i).x; // x of bendpoint to be replaced
+                int y1 = points.getPoint(i).y; // y of bendpoint to be replaced
+                int x2 = points.getPoint(i + 1).x;
+                int y2 = points.getPoint(i + 1).y;
+                // there are 8 possibilities: four types of corners, each can be traversed in two
+                // directions
+                int cornerCase;
+                if (x0 == x1 && x2 > x1 && y0 < y1 && y2 == y1) {
+                        cornerCase = 1;
+                } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 < y1) {
+                        cornerCase = 2;                         
+                } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 < y1) {
+                        cornerCase = 3;
+                } else if (x0 == x1 && x2 < x1 && y0 < y1 && y2 == y1) {
+                        cornerCase = 4;
+                } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 > y1) {
+                        cornerCase = 5;
+                } else if (x0 == x1 && x2 > x1 && y0 > y1 && y2 == y1) {
+                        cornerCase = 6;
+                } else if (x0 == x1 && x2 < x1 && y0 > y1 && y2 == y1) {
+                        cornerCase = 7;
+                } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 > y1) {
+                        cornerCase = 8;
+                } else {
+                        return null; // not rectilinear routing - shouldn't happen
+                }
+                // It is possible that the distance between (x0, y0) and (x1, y1), or (x1, y1) and
+                // (x2, y2) is smaller than the desired arc width and heighr r. In that case, we have
+                // to shrink the arc to fit whatever space we have. Add changed r in rForBendpoint so
+                // it can be used later.
+                r = rDefault;
+                int distance = Math.min(
+                        getDistanceOrthogonal(points.getPoint(i - 1), points.getPoint(i)),
+                        getDistanceOrthogonal(points.getPoint(i), points.getPoint(i + 1)));
+                if (r >= distance / 2) {
+                        r = distance / 2 - 1;
+                        rForBendpoint.put(new Integer(i), new Integer(r));
+                }
+                        
+                // Find the coordinates of the arc center, as well as the sign (+ or -) for the
+                // circle equation                 
+                int sign = 1;
+                int p, q; // coordinates of the arc center              
+                switch (cornerCase) {
+                case 1:
+                case 2:
+                        p = x1 + r;
+                        q = y1 - r; 
+                        break;
+                case 3:
+                case 4:
+                        p = x1 - r;
+                        q = y1 - r;                     
+                        break;
+                case 5:
+                case 6:
+                        p = x1 + r;
+                        q = y1 + r;  
+                        sign = -1;
+                        break;
+                default: // 7 and 8
+                        p = x1 - r;
+                        q = y1 + r;
+                        sign = -1;
+                        break;
+                }
+                // Find the first and last point of the arc, and add the first point to the result list
+                Point lastPoint = null; // last point in bendpoint approximation                
+                switch (cornerCase) {
+                case 1:
+                case 4:
+                case 6:
+                case 7:
+                        newPoints.addPoint(new Point(x1, q));
+                        lastPoint = new Point(p, y1);
+                        break;
+                default:
+                        newPoints.addPoint(new Point(p, y1));
+                        lastPoint = new Point(x1, q);
+                        break;                          
+                }
+                // Find out if x will be decreasing or increasing while calculating approximation points.
+                int incrementSign = 1;
+                switch (cornerCase) {
+                case 2:
+                case 4:
+                case 5:
+                case 7:
+                        incrementSign = -1;
+                        break;
+                }
+                // If arcs need to be approximated: for given x find y so that (x, y)
+                // is on the arc
+                if (calculateAppoxPoints) {     
+                        int x = newPoints.getLastPoint().x;
+                        int rSq = r * r; 
+                        int increment = incrementSign * r / DEFAULT_CORNER_APPROXIMATION_PTS;
+                        int nrOfIncrement = DEFAULT_CORNER_APPROXIMATION_PTS;
+                        if (increment == 0) {
+                                increment = incrementSign * 1;
+                                nrOfIncrement = r;
+                        }
+                        for (int j = 1; j < nrOfIncrement; j++) {
+                                x += increment;
+                                // calculate y with given x so that (x, y) is on the arc
+                                int y = (int) (q + sign * Math.sqrt(rSq - (x - p) * (x - p)));
+                                newPoints.addPoint(new Point(x, y));
+                        }
+                }
+                // Add the last point to the result list
+                newPoints.addPoint(lastPoint);
+        }
+        newPoints.addPoint(points.getLastPoint());
+        return newPoints;
     }
-    newPoints.addPoint(points.getFirstPoint()); 
-    int rDefault = r;
-    for (int i = 1; i < points.size() - 1; i++) {
-            int x0 = points.getPoint(i-1).x;
-            int y0 = points.getPoint(i-1).y;
-            int x1 = points.getPoint(i).x; // x of bendpoint to be replaced
-            int y1 = points.getPoint(i).y; // y of bendpoint to be replaced
-            int x2 = points.getPoint(i+1).x;
-            int y2 = points.getPoint(i+1).y;
-            // there are 8 possibilities: four types of corners, each can be traversed in two directions
-            int cornerCase;
-            if (x0 == x1 && x2 > x1 && y0 < y1 && y2 == y1) {
-                    cornerCase = 1;
-            } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 < y1) {
-                    cornerCase = 2;                         
-            } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 < y1) {
-                    cornerCase = 3;
-            } else if (x0 == x1 && x2 < x1 && y0 < y1 && y2 == y1) {
-                    cornerCase = 4;                         
-            } else if (x0 > x1 && x2 == x1 && y0 == y1 && y2 > y1) {
-                    cornerCase = 5;
-            } else if (x0 == x1 && x2 > x1 && y0 > y1 && y2 == y1) {
-                    cornerCase = 6;
-            } else if (x0 == x1 && x2 < x1 && y0 > y1 && y2 == y1) {
-                    cornerCase = 7;
-            } else if (x0 < x1 && x2 == x1 && y0 == y1 && y2 > y1) {
-                    cornerCase = 8;
-            } else {
-                    return null; // not rectilinear routing - shouldn't happen
-            }
-            // It is possible that the distance between (x0, y0) and (x1, y1), or (x1, y1) and (x2, y2) 
-            // is smaller than the desired arc width and heighr r. In that case, we have to shrink the arc
-            // to fit whatever space we have. Add changed r in rForBendpoint so it can be used later.
-            r = rDefault;
-            int distance = Math.min(points.getPoint(i-1).getDistanceOrthogonal(points.getPoint(i)),
-                            points.getPoint(i).getDistanceOrthogonal(points.getPoint(i+1)));
-            if (r >= distance / 2) {
-                    r = distance / 2 - 1;
-                    rForBendpoint.put(new Integer(i), new Integer(r));
-            }
-                    
-            // Find the coordinates of the arc center, as well as the sign (+ or -) for the circle equasion                 
-            int sign = 1;
-            int p, q; // coordinates of the arc center              
-            switch (cornerCase) {
-            case 1:
-            case 2:
-                    p = x1 + r;
-                    q = y1 - r; 
-                    break;
-            case 3:
-            case 4:
-                    p = x1 - r;
-                    q = y1 - r;                     
-                    break;
-            case 5:
-            case 6:
-                    p = x1 + r;
-                    q = y1 + r;  
-                    sign = -1;
-                    break;
-            default: // 7 and 8
-                    p = x1 - r;
-                    q = y1 + r;
-                    sign = -1;
-                    break;
-            }
-            // Find the first and last point of the arc, and add the first point to the result list
-            Point lastPoint = null; // last point in bendpoint approximation                
-            switch (cornerCase) {
-            case 1:
-            case 4:
-            case 6:
-            case 7:
-                    newPoints.addPoint(new Point(x1, q));
-                    lastPoint = new Point(p, y1);
-                    break;
-            default:
-                    newPoints.addPoint(new Point(p, y1));
-                    lastPoint = new Point(x1, q);
-                    break;                          
-            }
-            // Find out if x will be decreasing or increasing while calculating approximation points.
-            int incrementSign = 1;
-            switch (cornerCase) {
-            case 2:
-            case 4:
-            case 5:
-            case 7:
-                    incrementSign = -1;
-                    break;
-            }
-            // If arcs need to be approximated: for given x find y so that (x, y)
-            // is on the arc
-            if (calculateAppoxPoints) {     
-                    int x = newPoints.getLastPoint().x;
-                    int rSq = r*r; 
-                    int increment = incrementSign * r / DEFAULT_CORNER_APPROXIMATION_PTS;
-                    int nrOfIncrement = DEFAULT_CORNER_APPROXIMATION_PTS;
-                    if (increment == 0) {
-                            increment = incrementSign * 1;
-                            nrOfIncrement = r;
-                    }
-                    for (int j = 1; j < nrOfIncrement; j++) {
-                            x += increment;
-                            // calculate y with given x so that (x, y) is on the arc                        
-                            int y = (int) (q + sign*Math.sqrt(rSq - (x - p)*(x - p)));
-                            newPoints.addPoint(new Point(x, y));
-                    }
-            }
-            // Add the last point to the result list
-            newPoints.addPoint(lastPoint);
+    
+    /**
+     * Calculates the orthogonal distance between the specified points. The orthogonal
+     * distance is the sum of the horizontal and vertical differences.
+     * 
+     * @param p1 first point
+     * @param p2 second point
+     * @return the orthogonal distance
+     */
+    private static int getDistanceOrthogonal(final Point p1, final Point p2) {
+        return Math.abs(p1.y() - p2.y()) + Math.abs(p1.x() - p2.x());
     }
-    newPoints.addPoint(points.getLastPoint());
-    return newPoints;
-}
 
 }

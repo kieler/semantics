@@ -289,20 +289,21 @@ public class SplineConnection extends PolylineConnectionEx {
         }
         if (getSplineMode() == SPLINE_CUBIC) {
             try {
-                int size = getPoints().size();
+                PointList points = getPoints();
+                int size = points.size();
                 if (size < 1) {
                     return; // nothing to do
                 }
                 Path p = new Path(null);
-                p.moveTo(getPoints().getFirstPoint().x, getPoints().getFirstPoint().y);
+                p.moveTo(points.getFirstPoint().x, points.getFirstPoint().y);
 
                 // draw cubic sections
                 int pI = 1;
                 // CHECKSTYLEOFF MagicNumber
                 for (; pI < size - 2; pI += 3) {
-                    p.cubicTo(getPoints().getPoint(pI).x, getPoints().getPoint(pI).y, getPoints()
-                            .getPoint(pI + 1).x, getPoints().getPoint(pI + 1).y, getPoints()
-                            .getPoint(pI + 2).x, getPoints().getPoint(pI + 2).y);
+                    p.cubicTo(points.getPoint(pI).x, points.getPoint(pI).y,
+                            points.getPoint(pI + 1).x, points.getPoint(pI + 1).y,
+                            points.getPoint(pI + 2).x, points.getPoint(pI + 2).y);
                 }
                 // CHECKSTYLEON MagicNumber
 
@@ -311,11 +312,11 @@ public class SplineConnection extends PolylineConnectionEx {
                 // size-2: one quadratic
                 switch (size - pI) {
                 case 1:
-                    p.lineTo(getPoints().getPoint(pI).x, getPoints().getPoint(pI).y);
+                    p.lineTo(points.getPoint(pI).x, points.getPoint(pI).y);
                     break;
                 case 2:
-                    p.quadTo(getPoints().getPoint(pI).x, getPoints().getPoint(pI).y, getPoints()
-                            .getPoint(pI + 1).x, getPoints().getPoint(pI + 1).y);
+                    p.quadTo(points.getPoint(pI).x, points.getPoint(pI).y,
+                            points.getPoint(pI + 1).x, points.getPoint(pI + 1).y);
                     break;
                 }
 
@@ -339,7 +340,7 @@ public class SplineConnection extends PolylineConnectionEx {
             } else {
                 // /////////////////////////////////////////////////////
                 // ///////////Temporary gmf bugfix//////////////////////
-                // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+                // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886
                 // /////////////////////////////////////////////////////
 
                 PointList displayPoints = getSmoothPoints(false);
@@ -350,8 +351,7 @@ public class SplineConnection extends PolylineConnectionEx {
                     originalDisplayPoints.put(displayPoints.getPoint(i), new Integer(i));
                 }
                 // In originalDisplayPoints, each bendpoint will be replaced with two points: start
-                // and
-                // end point of the arc.
+                // and end point of the arc.
                 // If jump links is on, then displayPoints will also contain points identifying jump
                 // links, if any.
                 int i = 1;
@@ -527,7 +527,7 @@ public class SplineConnection extends PolylineConnectionEx {
 
     // /////////////////////////////////////////////////////
     // ///////////Temporary gmf bugfix//////////////////////
-    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886/
+    // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886
     // /////////////////////////////////////////////////////
     private Hashtable<Integer, Integer> rForBendpointArc;
 
@@ -589,14 +589,17 @@ public class SplineConnection extends PolylineConnectionEx {
                     if (connection.getPoints().polygonContainsPoint(pointA.x, pointA.y)) {
                         Point pointB = this.getPoints().getPoint(i + 1);
                         if (connection.getPoints().polygonContainsPoint(pointB.x, pointB.y)) {
-                            //if connections have same source take the latter point
-                            if (this.getPoints().getFirstPoint().equals(connection.getPoints().getFirstPoint())) {
+                            // if connections have same source take the latter point
+                            if (this.getPoints().getFirstPoint()
+                                    .equals(connection.getPoints().getFirstPoint())) {
                                 joinPoint = pointB;
-                            //if connections have same target take the first point
-                            } else if (this.getPoints().getLastPoint().equals(connection.getPoints().getLastPoint())) { 
+                                // if connections have same target take the first point
+                            } else if (this.getPoints().getLastPoint()
+                                    .equals(connection.getPoints().getLastPoint())) {
                                 joinPoint = pointA;
                             } else {
-                            //the connections have neither the same target nor source so don't draw joinpoint for them
+                                // the connections have neither the same target nor source so don't
+                                // draw joinpoint for them
                                 joinPoint = null;
                             }
                         }
