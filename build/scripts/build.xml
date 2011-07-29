@@ -245,7 +245,8 @@
         <property name="configs"       value="${product.configs}" />
             <!-- we need the product.configs, i.e. the list of platforms, as kieler.krep contains platform specific fragments
                  that won't be build when configs equals ${feature.configs} := *,*,* (os,ws,arch); -->
-        <property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
+        <!-- property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/ -->
+            <!-- new default genericTargets works well -->
         <!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
             <!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be executed -->
         <!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
@@ -711,7 +712,6 @@
         <property name="p2.gathering"  value="true" />
         <property name="p2.build.repo" value="file:/${updatesite.autobuild}" />
         <property name="configs"       value="${feature.configs}" />
-        <property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/>
 
         <echo message="STARTING p2 stuff" />
 
@@ -872,7 +872,8 @@
         <!-- customTargets property can't be set as it is defined through an <available> task in called build file;
              defining leads to 'DEPRECATED' echo, property will be overwritten exceptionally!
              Therefor the builder property is defined pointing to the folder customTargets is expected to be located -->
-        <property name="genericTargets"  location="${scriptdir}/genericTargets.xml" />
+        <!-- property name="genericTargets"  location="${scriptdir}/genericTargets.xml" / -->
+    	    <!-- new default genericTargets works well -->
         <property name="allElementsFile" location="${scriptdir}/allElements.xml" />
                 
         <tstamp />
