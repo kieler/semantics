@@ -905,7 +905,8 @@
         
         <ant antfile="${eclipse.pdebuild.scripts}/productBuild/productBuild.xml" />
 
-        <antcall target="postprocess.rca" />
+    	<!-- this call is not needed anymore since PDE build works now as expected --> 
+        <!-- antcall target="postprocess.rca" / -->
 
     </target>
     
@@ -937,6 +938,7 @@
     
     <!-- =========================================================================================== -->
 
+	<!-- this target is not needed anymore since PDE build works now as expected --> 
     <target name="postprocess.rca" description="target platform specific post processings">
 
         <!-- to zip the customized config.ini into our product
@@ -963,6 +965,7 @@
     
     <!-- =========================================================================================== -->
 
+	<!-- this target is not needed anymore since PDE build works now as expected --> 
     <target name="update.launcher"
         description="private target for updating the permission flags of the launcher and other binaries">
         <!-- will put the binaries in a unique temporary folder, touch and re-zip with 755
@@ -987,6 +990,7 @@
     
     <!-- =========================================================================================== -->
 
+	<!-- this target is not needed anymore since PDE build works now as expected --> 
     <target name="update.config"
         description="private target for replacing the config.ini (default workspace), modifying the ${basename}.ini (more PermGen memory) and special macosx fixes">
 
