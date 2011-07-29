@@ -42,10 +42,12 @@ public class KitsView extends ViewPart {
     private EmbeddedXtextEditor actionsEditor;
 
     private SyncChartSynchronizerJob synchronizer;
+    
+    private StackLayout layout;
 
     @Override
     public void createPartControl(Composite parent) {
-        StackLayout layout = new StackLayout();        
+        layout = new StackLayout();        
         parent.setLayout(layout);
 
         Injector actionsInjector = KitsUIPlugin.getInstance().getInjector(
@@ -118,16 +120,25 @@ public class KitsView extends ViewPart {
         }));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void dispose() {
         ((ISelectionService) getSite().getService(ISelectionService.class))
                 .removeSelectionListener(synchronizer);
         kitsEditor.dispose();
+        kitsStateEditor.dispose();
+        actionsEditor.dispose();
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setFocus() {
-
+        layout.topControl.setFocus();
     }
+    
 
 }
