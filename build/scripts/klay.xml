@@ -22,14 +22,18 @@
         <unjar dest="${build.basedir}/content" overwrite="true">
           <fileset dir="${build.basedir}/plugins" includes="*.jar"/>
           <patternset>
-              <exclude name="MANIFEST.MF"/>
-              <exclude name="*.xml"/>
-              <exclude name="*.html"/>
-              <exclude name="*.ecore"/>
-              <exclude name="*.genmodel"/>
-              <exclude name="*.ecorediag"/>
-              <exclude name="*.png"/>
-              <exclude name="*.gif"/>
+              <exclude name="META-INF/*"/>
+              <exclude name="about.*"/>
+              <exclude name="**/*.xml"/>
+              <exclude name="**/*.html"/>
+              <exclude name="**/*.exsd"/>
+              <exclude name="**/*.xsd"/>
+              <exclude name="**/*.ecore"/>
+              <exclude name="**/*.genmodel"/>
+              <exclude name="**/*.ecorediag"/>
+              <exclude name="**/*.png"/>
+              <exclude name="**/*.gif"/>
+              <exclude name="**/*.pdf"/>
           </patternset>
         </unjar>
         <delete dir="${build.basedir}/plugins"/>
