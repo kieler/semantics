@@ -20,7 +20,7 @@
             </fileset>
         </copy>
         <unjar dest="${build.basedir}/content" overwrite="true">
-          <fileset dir="${build.basedir}/plugins/*.jar" includes="*.jar"/>
+          <fileset dir="${build.basedir}/plugins" includes="*.jar"/>
           <patternset>
               <exclude name="MANIFEST.MF"/>
               <exclude name="*.xml"/>
