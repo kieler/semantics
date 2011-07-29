@@ -246,7 +246,8 @@
             <!-- we need the product.configs, i.e. the list of platforms, as kieler.krep contains platform specific fragments
                  that won't be build when configs equals ${feature.configs} := *,*,* (os,ws,arch); -->
         <!-- property name="genericTargets"  location="${scriptdir}/genericTargets.xml"/ -->
-            <!-- new default genericTargets works well -->
+            <!-- new default genericTargets now works well -->
+        <property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml" />
         <!-- property name="customTargets"   location="${eclipse.pdebuild.templates}/headless-build/customTargets.xml"/ -->
             <!-- customTargets is not needed as we directly call the features buildfile -> no prebuild, postbuild, ... will be executed -->
         <!-- property name="allElementsFile" location="${eclipse.pdebuild.templates}/headless-build/allElements.xml"/ -->
@@ -873,9 +874,10 @@
              defining leads to 'DEPRECATED' echo, property will be overwritten exceptionally!
              Therefor the builder property is defined pointing to the folder customTargets is expected to be located -->
         <!-- property name="genericTargets"  location="${scriptdir}/genericTargets.xml" / -->
-    	    <!-- new default genericTargets works well -->
+    	    <!-- new default genericTargets now works well -->
+        <property name="genericTargets"  location="${eclipse.pdebuild.scripts}/genericTargets.xml" />
         <property name="allElementsFile" location="${scriptdir}/allElements.xml" />
-                
+
         <tstamp />
         <property name="forceContextQualifier" value="v${DSTAMP}${TSTAMP}" />
         <!-- <tstamp> provides the above referenced properties, they're not declared explicitly -->
