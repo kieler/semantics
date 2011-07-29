@@ -35,7 +35,9 @@ Void addTriggerToTransition(synccharts::Action t, DelayExpr delay):
  */
 Void extractSignals(InterfaceSignalDecl decl, State s):
 	let clonedDecl = (InterfaceSignalDecl) clone(decl):
-	let copy = (List[Signal]) copyList(clonedDecl.signals):
+	//let copy = (List[Signal]) copyList(clonedDecl.signals):
+	// CHSCH: changed list to be a list of ISignal, was Signal
+	let copy = (List[ISignal]) copyList(clonedDecl.signals):
 	switch {
 		// clone loses the information
 		case Input.isInstance(decl) : (copy.setIsInput(true) ->  copy.setIsOutput(false))
@@ -460,6 +462,6 @@ Void informUser(String s):
 	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.raiseStatus(java.lang.String)
 ;
 
-Void debug(Object obj):
+/* Void debug(Object obj):
 	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(java.lang.Object)
-;
+; */
