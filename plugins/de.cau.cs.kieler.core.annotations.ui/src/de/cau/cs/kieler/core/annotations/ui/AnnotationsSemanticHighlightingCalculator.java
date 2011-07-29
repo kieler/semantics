@@ -34,13 +34,11 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
     private AnnotationsGrammarAccess g;
 
     public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
-        // FIXME ????
-//        Iterable<INode> allNodes = NodeUtil.getAllContents(resource.getParseResult()
-//                .getRootNode());
-//
-//        for (INode node : allNodes) {
-//            provideHighlightingFor(node, acceptor);
-//        }
+        Iterable<INode> allNodes = resource.getParseResult().getRootNode().getAsTreeIterable();
+                //NodeUtil.getAllContents(resource.getParseResult().getRootNode());
+        for (INode node : allNodes) {
+            provideHighlightingFor(node, acceptor);
+        }
     }
 
     public void provideHighlightingFor(INode node, IHighlightedPositionAcceptor acceptor) {
