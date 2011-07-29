@@ -24,6 +24,9 @@
           <patternset>
               <exclude name="META-INF/*"/>
               <exclude name="about.*"/>
+              <exclude name="images"/>
+              <exclude name="model"/>
+              <exclude name="schema"/>
               <exclude name="**/*.xml"/>
               <exclude name="**/*.html"/>
               <exclude name="**/*.exsd"/>
