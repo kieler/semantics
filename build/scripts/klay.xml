@@ -1,0 +1,40 @@
+<project name="build KLay" default="klay">
+    
+    <property environment="system"/>
+    <property name="eclipseLocation"       location="${system.eclipseLocation}" />
+    <property name="build.basedir"         location="${system.WORKSPACE}" />
+
+    <target name="klay">
+        <mkdir dir="${build.basedir}/plugins"/>
+        <copy todir="${build.basedir}/plugins">
+            <fileset dir="${pluginPath}/plugins">
+                <include name="de.cau.cs.kieler.core_*.jar"/>
+                <include name="de.cau.cs.kieler.core.kgraph_*.jar"/>
+                <include name="de.cau.cs.kieler.kiml_*.jar"/>
+                <include name="de.cau.cs.kieler.klay.layered_*.jar"/>
+            </fileset>
+            <fileset dir="${eclipseLocation}/plugins">
+                <include name="org.eclipse.emf.common_*.jar"/>
+                <include name="org.eclipse.emf.ecore_*.jar"/>
+                <include name="org.eclipse.emf.ecore.xmi_*.jar"/>
+            </fileset>
+        </copy>
+        <unjar dest="${build.basedir}/content" overwrite="true">
+          <fileset dir="${build.basedir}/plugins/*.jar" includes="*.jar"/>
+          <patternset>
+              <exclude name="MANIFEST.MF"/>
+              <exclude name="*.xml"/>
+              <exclude name="*.html"/>
+              <exclude name="*.ecore"/>
+              <exclude name="*.genmodel"/>
+              <exclude name="*.ecorediag"/>
+              <exclude name="*.png"/>
+              <exclude name="*.gif"/>
+          </patternset>
+        </unjar>
+        <delete dir="${build.basedir}/plugins"/>
+        <jar destfile="${build.basedir}/${destFile}" basedir="${build.basedir}/content"/>
+    </target>
+
+</project>
+
