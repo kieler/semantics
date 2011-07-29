@@ -27,6 +27,7 @@
               <exclude name="images"/>
               <exclude name="model"/>
               <exclude name="schema"/>
+              <exclude name="plugin.properties"/>
               <exclude name="**/*.xml"/>
               <exclude name="**/*.html"/>
               <exclude name="**/*.exsd"/>
