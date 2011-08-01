@@ -19,6 +19,7 @@
                 <include name="org.eclipse.emf.ecore.xmi_*.jar"/>
             </fileset>
         </copy>
+        <delete dir="${build.basedir}/content"/>
         <unjar dest="${build.basedir}/content" overwrite="true">
           <fileset dir="${build.basedir}/plugins" includes="*.jar"/>
           <patternset>
@@ -41,6 +42,8 @@
           </patternset>
         </unjar>
         <delete dir="${build.basedir}/plugins"/>
+        <delete file="${build.basedir}/${destFile}"/>
+        <copy file="${licenseFile}" todir="${build.basedir}/content"/>
         <jar destfile="${build.basedir}/${destFile}" basedir="${build.basedir}/content"/>
     </target>
 
