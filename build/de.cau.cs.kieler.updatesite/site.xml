@@ -52,6 +52,12 @@
    <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient
