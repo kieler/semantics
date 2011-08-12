@@ -238,7 +238,11 @@ Void rule(State s, esterel::Assignment assign):
  	sa.setVariable(assign.var) ->
 	// care to convert the expression prior adding it
 	if (assign.expr != null) then
-		(sa.setExpression(((Expression) clone(assign.expr)).convertEsterelExpression())) ->
+		(sa.setExpression(
+		  let clone = ((Expression) clone(assign.expr)).convertEsterelExpression():
+          // this is an ugly hack needed with the Indigo release
+		  {clone}.flatten().first()
+		 )) ->
 	// add assignment to the transition
 	t.effects.add(sa) ->
 	initS
@@ -376,7 +380,11 @@ Void rule(State s, Emit e):
 	// add the effect
 	emitTrans.setIsImmediate(true) ->
 	emission.setSignal(e.signal) ->
-	emission.setNewValue(convertEsterelExpression((Expression)clone(e.expr))) ->
+	emission.setNewValue(
+	  let clone = ((Expression)clone(e.expr)).convertEsterelExpression():
+	  // this is an ugly hack needed with the Indigo release
+	  {clone}.flatten().first()
+	 ) ->
 	emitTrans.effects.add(emission) ->
 	// add transition to state
 	emitTrans.connectTransition(initS, finalS) ->
@@ -451,7 +459,11 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 	
 	// setup transition
 	if (e != null) then
-		(ifT.setTrigger(convertEsterelExpression((Expression) clone(e)))) ->
+		(ifT.setTrigger(
+		  let clone = ((Expression) clone(e)).convertEsterelExpression():
+          // this is an ugly hack needed with the Indigo release
+		  {clone}.flatten().first()
+		 )) ->
 	
 	ifT.connectTransition(previous, ifS) ->
 	ifT.setPriority(prio) ->
