@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
 import de.cau.cs.kieler.synccharts.text.actions.validation.ActionsJavaValidator;
-import org.eclipse.xtext.validation.ComposedChecks;
 
-@ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class, org.eclipse.xtext.validation.NamesAreUniqueValidator.class})
 public class AbstractKitsJavaValidator extends ActionsJavaValidator {
 
 	@Override

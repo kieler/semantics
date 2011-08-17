@@ -38,9 +38,7 @@ Workflow {
 			fragment = grammarAccess.GrammarAccessFragment {}
 
 			// generates Java API for the generated EPackages 
-			fragment = ecore.EcoreGeneratorFragment {
-			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
-			}
+			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel, platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel" }
 
 			// the serialization component
 			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
@@ -49,32 +47,33 @@ Workflow {
 			fragment = resourceFactory.ResourceFactoryFragment {
 				fileExtensions = file.extensions
 			}	
-			//fragment = AntlrDelegatingFragment {}
-			fragment = parser.antlr.XtextAntlrGeneratorFragment{
+
+			// the Antlr parser
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment {
 				options = {
+					classSplitting = true
 					backtrack = true
-					memoize = false
 				}
 			}
 
 			// java-based API for validation 
 			fragment = validation.JavaValidatorFragment {
-				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
-				// registerForImportedPackages = true
-			}
-
+            //    composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
+            //    composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+            }
+            
 			// scoping and exporting API
-			// fragment = scoping.ImportURIScopingFragment {}
-			// fragment = exporting.SimpleNamesFragment {}
-
+			fragment = scoping.ImportURIScopingFragment {}
+			fragment = exporting.SimpleNamesFragment {}
+			
 			// scoping and exporting API 
-			fragment = scoping.ImportNamespacesScopingFragment {}
-			fragment = exporting.QualifiedNamesFragment {}
-			fragment = builder.BuilderIntegrationFragment {}
+			
+			// fragment = scoping.ImportNamespacesScopingFragment {}
+			// fragment = exporting.QualifiedNamesFragment {}
+
 
 			// formatter API 
-			fragment = formatting.FormatterFragment {}
+			fragment = ecore2xtext.FormatterFragment {}
 
 			// labeling API 
 			fragment = labeling.LabelProviderFragment {}
@@ -83,21 +82,28 @@ Workflow {
 			fragment = outline.OutlineTreeProviderFragment {}
 			fragment = outline.QuickOutlineFragment {}
 
-			// quickfix API 
-			fragment = quickfix.QuickfixProviderFragment {}
-
-			// content assist API  
+			// java-based API for content assistance 
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
-
-			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
-			options = {
-					backtrack = true
-					memoize = false
-				}
 			
+			// antlr parser generator tailored for content assist 
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment { 
+				options = {
+					classSplitting = true
+					backtrack = true
+				}
 			}
 
+			//fragment = builder.BuilderIntegrationFragment {}
+
+			// project wizard (optional) 
+			
+			// fragment = projectWizard.SimpleProjectWizardFragment {
+			//	generatorProjectName = "${projectName}.generator" 
+			//	modelFileExtension = file.extensions
+			// }
+			
+			// quickfix API 
+			fragment = quickfix.QuickfixProviderFragment {}			
 		}
 	}
 }
