@@ -67,8 +67,8 @@ public class SyncchartsDiagramEditor extends DiagramDocumentEditor implements IG
         getGraphicalViewer().flush();
 
         // remove the dirty state of the editor
-        this.getCommandStack().dispose();
-        ((SyncchartsDocumentProvider) this.getDocumentProvider()).setCanBeSaved(false);
+        this.getEditingDomain().getCommandStack().flush();
+//        ((SyncchartsDocumentProvider) this.getDocumentProvider()).setCanBeSaved(false);
     }
 
     /**
