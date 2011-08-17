@@ -20,7 +20,6 @@ import java.util.List;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.Command;
 import org.eclipse.emf.common.notify.Notification;
@@ -138,16 +137,18 @@ public class RedundantLabelTriggerListener extends TriggerListener {
                 waiting = false;
                 IEditorPart part = SyncchartsDiagramCustomPlugin
                         .getInstance().getActiveEditorPart();
-                IProgressMonitor dummyMonitor = new NullProgressMonitor();
+                // IProgressMonitor dummyMonitor = new NullProgressMonitor();
 
                 if (part instanceof SyncchartsDiagramEditor) {
-                    boolean save = !part.isDirty();
+                    // boolean save = !part.isDirty();
                     lastActive = (SyncchartsDiagramEditor) part;
                     VisibilityManager.reset(lastActive);
                     clean(lastActive);
-                    if (save) {
-                        part.doSave(dummyMonitor);
-                    }
+                    // chsch: in combination with Xtext this can be a big mess!!
+                    // if (save) {
+                    // part.doSave(dummyMonitor);
+                    // }
+                    
                 }
                 return Status.OK_STATUS;
             }
