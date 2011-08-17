@@ -20,19 +20,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.command.AbstractCommand;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
-import org.eclipse.emf.transaction.TransactionalEditingDomain;
-import org.eclipse.emf.transaction.util.TransactionUtil;
-import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 
@@ -60,42 +55,43 @@ public class ActionLabelParseCommand extends AbstractCommand {
     private Injector injector;
 
     private EObject element;
-
-    /**
-     * @param theElement
-     *            the target element
-     * @param theNewString
-     *            the String to be parsed
-     * @param parser
-     *            the internal Xtext parser
-     * @param theInjector
-     *            the Xtext Guice Injector
-     */
-    public ActionLabelParseCommand(final IAdaptable theElement,
-            final String theNewString, final IParser parser,
-            final Injector theInjector) {
-        // the editing domain might be null if the object to be edited
-        // does not belong to some resource, i.e. is not really part
-        // of the model yet. Then this command will fail.
-        super();
-        this.newString = theNewString;
-        this.injector = theInjector;
-        this.element = ((Action) (((EObjectAdapter) theElement).getRealObject()));
-
-        TransactionalEditingDomain domain = TransactionUtil
-                .getEditingDomain(((Action) (((EObjectAdapter) theElement)
-                        .getRealObject())));
-        if (domain == null) {
-            // this is very evil, because then the element is not contained
-            // by any resource, especially not by the diagram model
-            Status myStatus = new Status(IStatus.ERROR, LabelParserBridgePlugin.PLUGIN_ID,
-                    "Parser failed to parse the action string \""
-                            + theNewString
-                            + "\"! The action object is not part of the model "
-                            + "and hence has no editing domain.", null);
-            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
-        }
-    }
+    
+// chsch: commented constructor out since it is obviously not used
+//    /**
+//     * @param theElement
+//     *            the target element
+//     * @param theNewString
+//     *            the String to be parsed
+//     * @param parser
+//     *            the internal Xtext parser
+//     * @param theInjector
+//     *            the Xtext Guice Injector
+//     */
+//    public ActionLabelParseCommand(final IAdaptable theElement,
+//            final String theNewString, final IParser parser,
+//            final Injector theInjector) {
+//        // the editing domain might be null if the object to be edited
+//        // does not belong to some resource, i.e. is not really part
+//        // of the model yet. Then this command will fail.
+//        super();
+//        this.newString = theNewString;
+//        this.injector = theInjector;
+//        this.element = ((Action) (((EObjectAdapter) theElement).getRealObject()));
+//
+//        TransactionalEditingDomain domain = TransactionUtil
+//                .getEditingDomain(((Action) (((EObjectAdapter) theElement)
+//                        .getRealObject())));
+//        if (domain == null) {
+//            // this is very evil, because then the element is not contained
+//            // by any resource, especially not by the diagram model
+//            Status myStatus = new Status(IStatus.ERROR, LabelParserBridgePlugin.PLUGIN_ID,
+//                    "Parser failed to parse the action string \""
+//                            + theNewString
+//                            + "\"! The action object is not part of the model "
+//                            + "and hence has no editing domain.", null);
+//            StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
+//        }
+//    }
 
     /**
      * @param theElement
