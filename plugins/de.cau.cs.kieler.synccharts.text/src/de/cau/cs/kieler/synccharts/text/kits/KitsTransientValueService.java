@@ -70,6 +70,7 @@ public class KitsTransientValueService extends DefaultTransientValueService {
     /**
      * Decides whether an owner's feature (or one of its elements are not to be serialized).
      */
+    @SuppressWarnings("unchecked")
     @Override
     public boolean isTransient(EObject owner, EStructuralFeature feature, int index) {
 
@@ -108,10 +109,6 @@ public class KitsTransientValueService extends DefaultTransientValueService {
             return true;
         }
         
-//        if (SyncchartsPackage.eINSTANCE.getState().isInstance(owner)
-//                && feature == SyncchartsPackage.eINSTANCE.getScope_BodyText()) {
-//            return true;
-//        }
                 
         /* suppress id serialization if id is equals to "" */
         if (SyncchartsPackage.eINSTANCE.getRegion().isInstance(owner)
@@ -211,6 +208,9 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                 return ((Region) owner).getSignals().get(index).getName().equals("tick");
             }
             
+            // During the esterel2synccharts transformation, TrapDecls may occur in SyncCharts models.
+            //  Since Traps are Esterel stuff and the SyncCharts stuff must not have any dependency
+            //  on this I cannot explicitly check "instanceof TrapDecl".
             // what an evil hack ... :-(
             if (((EList<Signal>) owner.eGet(feature)).get(index).eClass().getName()
                     .startsWith("T")) {

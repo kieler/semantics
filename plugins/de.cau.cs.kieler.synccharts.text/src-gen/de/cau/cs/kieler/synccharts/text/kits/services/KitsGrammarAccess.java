@@ -1609,8 +1609,8 @@ public class KitsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 	//Action returns synccharts::Action:
-	//	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-	//	effects+=Effect)*)?;
+	//	{synccharts::Action} //    (annotations += Annotation)*
+	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
 	public ActionsGrammarAccess.ActionElements getActionAccess() {
 		return gaActions.getActionAccess();
 	}

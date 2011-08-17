@@ -6418,13 +6418,13 @@ protected class Substitution_FormalAssignment_2 extends AssignmentToken  {
  *
  * // chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
  * Action returns synccharts::Action:
- * 	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
- * 	effects+=Effect)*)?;
+ * 	{synccharts::Action} //    (annotations += Annotation)*
+ * 	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
  *
  **/
 
-// {synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-// effects+=Effect)*)?
+// {synccharts::Action} //    (annotations += Annotation)*
+// isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?
 protected class Action_Group extends GroupToken {
 	
 	public Action_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {

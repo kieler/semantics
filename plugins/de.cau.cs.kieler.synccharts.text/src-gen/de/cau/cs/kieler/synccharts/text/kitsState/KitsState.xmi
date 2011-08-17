@@ -597,6 +597,9 @@
             <classifier xsi:type="ecore:EClass" href="http://kieler.cs.cau.de/synccharts/0.2.4#//Transition"/>
           </type>
         </elements>
+        <elements xsi:type="xtext:Assignment" cardinality="*" feature="annotations" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/4/@rules.0"/>
+        </elements>
         <elements xsi:type="xtext:Assignment" cardinality="?" feature="isImmediate" operator="?=">
           <terminal xsi:type="xtext:Keyword" value="#"/>
         </elements>

@@ -22,78 +22,86 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Transition");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Action cTransitionAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cIsImmediateAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Keyword cIsImmediateNumberSignKeyword_1_0 = (Keyword)cIsImmediateAssignment_1.eContents().get(0);
-		private final Assignment cDelayAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cDelayINTTerminalRuleCall_2_0 = (RuleCall)cDelayAssignment_2.eContents().get(0);
-		private final Assignment cTriggerAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cTriggerBooleanExpressionParserRuleCall_3_0 = (RuleCall)cTriggerAssignment_3.eContents().get(0);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cSolidusKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Assignment cEffectsAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_4_1_0 = (RuleCall)cEffectsAssignment_4_1.eContents().get(0);
-		private final Group cGroup_4_2 = (Group)cGroup_4.eContents().get(2);
-		private final Keyword cCommaKeyword_4_2_0 = (Keyword)cGroup_4_2.eContents().get(0);
-		private final Assignment cEffectsAssignment_4_2_1 = (Assignment)cGroup_4_2.eContents().get(1);
-		private final RuleCall cEffectsEffectParserRuleCall_4_2_1_0 = (RuleCall)cEffectsAssignment_4_2_1.eContents().get(0);
+		private final Assignment cAnnotationsAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cAnnotationsAnnotationParserRuleCall_1_0 = (RuleCall)cAnnotationsAssignment_1.eContents().get(0);
+		private final Assignment cIsImmediateAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Keyword cIsImmediateNumberSignKeyword_2_0 = (Keyword)cIsImmediateAssignment_2.eContents().get(0);
+		private final Assignment cDelayAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cDelayINTTerminalRuleCall_3_0 = (RuleCall)cDelayAssignment_3.eContents().get(0);
+		private final Assignment cTriggerAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cTriggerBooleanExpressionParserRuleCall_4_0 = (RuleCall)cTriggerAssignment_4.eContents().get(0);
+		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
+		private final Keyword cSolidusKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
+		private final Assignment cEffectsAssignment_5_1 = (Assignment)cGroup_5.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_5_1_0 = (RuleCall)cEffectsAssignment_5_1.eContents().get(0);
+		private final Group cGroup_5_2 = (Group)cGroup_5.eContents().get(2);
+		private final Keyword cCommaKeyword_5_2_0 = (Keyword)cGroup_5_2.eContents().get(0);
+		private final Assignment cEffectsAssignment_5_2_1 = (Assignment)cGroup_5_2.eContents().get(1);
+		private final RuleCall cEffectsEffectParserRuleCall_5_2_1_0 = (RuleCall)cEffectsAssignment_5_2_1.eContents().get(0);
 		
 		//// haf: We need a Rule for transitions in order to serialize them
 		//// here we only want to have the features isImmediate, delay, trigger and effects
 		//// the features type, targetState, priority, isHistory are ignored and set as transient
 		//// you need to override the rule to support transitions properly
 		//Transition returns synccharts::Transition:
-		//	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//	effects+=Effect)*)?;
+		//	{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
+		//	effects+=Effect ("," effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//effects+=Effect)*)?
+		//{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
+		//effects+=Effect ("," effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{synccharts::Transition}
 		public Action getTransitionAction_0() { return cTransitionAction_0; }
 
+		//annotations+=Annotation*
+		public Assignment getAnnotationsAssignment_1() { return cAnnotationsAssignment_1; }
+
+		//Annotation
+		public RuleCall getAnnotationsAnnotationParserRuleCall_1_0() { return cAnnotationsAnnotationParserRuleCall_1_0; }
+
 		//isImmediate?="#"?
-		public Assignment getIsImmediateAssignment_1() { return cIsImmediateAssignment_1; }
+		public Assignment getIsImmediateAssignment_2() { return cIsImmediateAssignment_2; }
 
 		//"#"
-		public Keyword getIsImmediateNumberSignKeyword_1_0() { return cIsImmediateNumberSignKeyword_1_0; }
+		public Keyword getIsImmediateNumberSignKeyword_2_0() { return cIsImmediateNumberSignKeyword_2_0; }
 
 		//delay=INT?
-		public Assignment getDelayAssignment_2() { return cDelayAssignment_2; }
+		public Assignment getDelayAssignment_3() { return cDelayAssignment_3; }
 
 		//INT
-		public RuleCall getDelayINTTerminalRuleCall_2_0() { return cDelayINTTerminalRuleCall_2_0; }
+		public RuleCall getDelayINTTerminalRuleCall_3_0() { return cDelayINTTerminalRuleCall_3_0; }
 
 		//trigger=BooleanExpression?
-		public Assignment getTriggerAssignment_3() { return cTriggerAssignment_3; }
+		public Assignment getTriggerAssignment_4() { return cTriggerAssignment_4; }
 
 		//BooleanExpression
-		public RuleCall getTriggerBooleanExpressionParserRuleCall_3_0() { return cTriggerBooleanExpressionParserRuleCall_3_0; }
+		public RuleCall getTriggerBooleanExpressionParserRuleCall_4_0() { return cTriggerBooleanExpressionParserRuleCall_4_0; }
 
 		//("/" effects+=Effect ("," effects+=Effect)*)?
-		public Group getGroup_4() { return cGroup_4; }
+		public Group getGroup_5() { return cGroup_5; }
 
 		//"/"
-		public Keyword getSolidusKeyword_4_0() { return cSolidusKeyword_4_0; }
+		public Keyword getSolidusKeyword_5_0() { return cSolidusKeyword_5_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_4_1() { return cEffectsAssignment_4_1; }
+		public Assignment getEffectsAssignment_5_1() { return cEffectsAssignment_5_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_4_1_0() { return cEffectsEffectParserRuleCall_4_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_5_1_0() { return cEffectsEffectParserRuleCall_5_1_0; }
 
 		//("," effects+=Effect)*
-		public Group getGroup_4_2() { return cGroup_4_2; }
+		public Group getGroup_5_2() { return cGroup_5_2; }
 
 		//","
-		public Keyword getCommaKeyword_4_2_0() { return cCommaKeyword_4_2_0; }
+		public Keyword getCommaKeyword_5_2_0() { return cCommaKeyword_5_2_0; }
 
 		//effects+=Effect
-		public Assignment getEffectsAssignment_4_2_1() { return cEffectsAssignment_4_2_1; }
+		public Assignment getEffectsAssignment_5_2_1() { return cEffectsAssignment_5_2_1; }
 
 		//Effect
-		public RuleCall getEffectsEffectParserRuleCall_4_2_1_0() { return cEffectsEffectParserRuleCall_4_2_1_0; }
+		public RuleCall getEffectsEffectParserRuleCall_5_2_1_0() { return cEffectsEffectParserRuleCall_5_2_1_0; }
 	}
 
 	public class ActionElements extends AbstractParserRuleElementFinder {
@@ -117,12 +125,12 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 		//Action returns synccharts::Action:
-		//	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//	effects+=Effect)*)?;
+		//	{synccharts::Action} //    (annotations += Annotation)*
+		//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
 		public ParserRule getRule() { return rule; }
 
-		//{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-		//effects+=Effect)*)?
+		//{synccharts::Action} //    (annotations += Annotation)*
+		//isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?
 		public Group getGroup() { return cGroup; }
 
 		//{synccharts::Action}
@@ -366,8 +374,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// the features type, targetState, priority, isHistory are ignored and set as transient
 	//// you need to override the rule to support transitions properly
 	//Transition returns synccharts::Transition:
-	//	{synccharts::Transition} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-	//	effects+=Effect)*)?;
+	//	{synccharts::Transition} annotations+=Annotation* isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/"
+	//	effects+=Effect ("," effects+=Effect)*)?;
 	public TransitionElements getTransitionAccess() {
 		return (pTransition != null) ? pTransition : (pTransition = new TransitionElements());
 	}
@@ -378,8 +386,8 @@ public class ActionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 	//Action returns synccharts::Action:
-	//	{synccharts::Action} isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect (","
-	//	effects+=Effect)*)?;
+	//	{synccharts::Action} //    (annotations += Annotation)*
+	//	isImmediate?="#"? delay=INT? trigger=BooleanExpression? ("/" effects+=Effect ("," effects+=Effect)*)?;
 	public ActionElements getActionAccess() {
 		return (pAction != null) ? pAction : (pAction = new ActionElements());
 	}

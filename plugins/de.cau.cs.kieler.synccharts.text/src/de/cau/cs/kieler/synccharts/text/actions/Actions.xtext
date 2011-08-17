@@ -15,12 +15,14 @@ import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions
 
 Transition returns synccharts::Transition:
 	{synccharts::Transition}
+    (annotations += Annotation)*
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 
 
 
 // chsch: The action rule is used in Kits.xtext for entry-, inner-, exitActions, suspensionTrigger 
 Action returns synccharts::Action:
     {synccharts::Action}
+//    (annotations += Annotation)*
 	(isImmediate?='#')? (delay=INT)? (trigger=BooleanExpression)? ("/" effects+=Effect ((',') effects+=Effect)*)?; 		
 
 
