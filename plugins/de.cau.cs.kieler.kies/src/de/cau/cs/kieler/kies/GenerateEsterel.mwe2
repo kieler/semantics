@@ -39,10 +39,10 @@ Workflow {
 
 			// generates Java API for the generated EPackages
 			fragment = ecore.EcoreGeneratorFragment {
-				referencedGenModels =
-				"platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
-				referencedGenModels =
-				"platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+            // referencedGenModels =
+            // "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+            // referencedGenModels =
+            // "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 			}
 
 			// the serialization component
