@@ -15,10 +15,12 @@ package de.cau.cs.kieler.core.model.xtext.triggers;
 
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
@@ -270,6 +272,16 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
          */
         public XtextEditor getEditor() {
             return this.editor;
+        }
+
+        /**
+         * Getter for the editor field.
+         * 
+         * @return the value of the editor field.
+         */
+        public IPath getEditorInputPath() {
+            assert this.editor.getEditorInput().getClass().equals(FileEditorInput.class);
+            return ((FileEditorInput) this.editor.getEditorInput()).getPath();
         }
 
         /**
