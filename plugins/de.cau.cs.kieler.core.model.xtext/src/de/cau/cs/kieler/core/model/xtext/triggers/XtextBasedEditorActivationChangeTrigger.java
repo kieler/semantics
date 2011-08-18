@@ -43,22 +43,22 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * 
  * @author chsch
  */
-public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger implements
-        ITrigger, IXtextModelListener, IPartListener {
+public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger implements ITrigger,
+        IXtextModelListener, IPartListener {
 
-    
     /**
      * Default constructor, needed by KIVi.
      */
-    public XtextBasedEditorActivationChangeTrigger() {        
+    public XtextBasedEditorActivationChangeTrigger() {
     }
-    
+
     /**
      * The Xtext-based editor the trigger is attached to.
      */
     private XtextEditor currentEditor = null;
-//    private Map<XtextEditor, XtextModelChangeState> editorsTriggerStatesMap
-//            = new HashMap<XtextEditor, XtextModelChangeState>();
+
+    // private Map<XtextEditor, XtextModelChangeState> editorsTriggerStatesMap
+    // = new HashMap<XtextEditor, XtextModelChangeState>();
 
     /**
      * {@inheritDoc}
@@ -69,7 +69,6 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         this.partActivated(EditorUtils.getLastActiveEditor());
     }
 
-
     /**
      * {@inheritDoc}
      */
@@ -78,7 +77,6 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         CombinedWorkbenchListener.removePartListener(this);
     }
 
-    
     private void attachToXtextEditor(final XtextEditor editor, final boolean opened) {
         this.currentEditor = editor;
 
@@ -94,19 +92,19 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
             }
         });
     }
-    
+
     private void detachFromCurrentXtextEditor() {
         if (currentEditor != null) {
             currentEditor.getDocument().removeModelListener(this);
         }
         this.currentEditor = null;
-        
+
     }
-    
+
     private void xtextEditorClosed(final XtextEditor editor) {
         this.trigger(new XtextModelChangeState(editor, EventType.CLOSED));
     }
-    
+
     private boolean checkAndIndicateErrors(final XtextResource resource) {
         final String msg = ": Model contains critical errors, hence no the KIVi is not triggered.";
         if (resource.getErrors().isEmpty()) {
@@ -125,33 +123,32 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
             return true;
         }
     }
-    
-    
-    /* ------------------------------------------------------ 
-     * the IXtextModelListener parts
-     * ------------------------------------------------------ */
-    
+
+    /*
+     * ------------------------------------------------------ the IXtextModelListener parts
+     * ------------------------------------------------------
+     */
+
     /**
      * {@inheritDoc}
      */
     public void modelChanged(final XtextResource resource) {
         if (checkAndIndicateErrors(resource)) {
-//            System.out.println(Calendar.getInstance().get(Calendar.MINUTE) + " TRIGGER");
+            // System.out.println(Calendar.getInstance().get(Calendar.MINUTE) + " TRIGGER");
             this.trigger(new XtextModelChangeState(this.currentEditor, EventType.MODIFIED, resource));
         }
     }
-    
-    
-    /* ------------------------------------------------------ 
-     * the IPartListener parts
-     * ------------------------------------------------------ */
-    
+
+    /*
+     * ------------------------------------------------------ the IPartListener parts
+     * ------------------------------------------------------
+     */
+
     /**
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        if (part instanceof XtextEditor
-                && !part.equals(this.currentEditor)) {
+        if (part instanceof XtextEditor && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
             this.attachToXtextEditor((XtextEditor) part, true);
         }
@@ -161,33 +158,31 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      * {@inheritDoc}
      */
     public void partBroughtToTop(final IWorkbenchPart part) {
-        if (part instanceof XtextEditor
-                && !part.equals(this.currentEditor)) {
+        if (part instanceof XtextEditor && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
             this.attachToXtextEditor((XtextEditor) part, false);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public void partActivated(final IWorkbenchPart part) {
-        if (part instanceof XtextEditor
-                && !part.equals(this.currentEditor)) {
+        if (part instanceof XtextEditor && !part.equals(this.currentEditor)) {
             this.detachFromCurrentXtextEditor();
             this.attachToXtextEditor((XtextEditor) part, false);
         }
     }
-    
+
     /**
      * {@inheritDoc}
      */
     public void partDeactivated(final IWorkbenchPart part) {
-//        if (part.equals(this.currentEditor)) {
-//            this.detachFromCurrentXtextEditor();
-//        }
+        // if (part.equals(this.currentEditor)) {
+        // this.detachFromCurrentXtextEditor();
+        // }
     }
-    
+
     /**
      * {@inheritDoc}
      */
@@ -200,31 +195,41 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         }
     }
 
+    /*
+     * ------------------------------------------------------ the ITriggerState implementation
+     * ------------------------------------------------------
+     */
 
-    /* ------------------------------------------------------ 
-     * the ITriggerState implementation
-     * ------------------------------------------------------ */
-    
     /**
-     * An {@link ITriggerState} indicating opening, modifying, or closing events of Xtext-based editors.
+     * An {@link ITriggerState} indicating opening, modifying, or closing events of Xtext-based
+     * editors.
      * 
      * @author chsch
-     */    
+     */
     public static class XtextModelChangeState extends AbstractTriggerState implements ITriggerState {
-        
+
         /**
-         * Type of event to be denoted. 
+         * Type of event to be denoted.
          */
-        public enum EventType { OPENED, FOCUSED, MODIFIED, CLOSED }
-        
+        public enum EventType {
+            /** */
+            OPENED,
+            /** */
+            FOCUSED,
+            /** */
+            MODIFIED,
+            /** */
+            CLOSED
+        }
+
         private XtextEditor editor = null;
         private EventType eventType = EventType.OPENED;
         private XtextResource resource = null;
-        
+
         /**
          * Default constructor.
          */
-        public XtextModelChangeState() {            
+        public XtextModelChangeState() {
         }
 
         /**
@@ -264,7 +269,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         public Class<? extends ITrigger> getTriggerClass() {
             return XtextBasedEditorActivationChangeTrigger.class;
         }
-        
+
         /**
          * Getter for the editor field.
          * 
@@ -275,9 +280,12 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         }
 
         /**
-         * Getter for the editor field.
+         * Reveals the path of the denoted editor's {@link org.eclipse.ui.IEditorInput}. That
+         * {@link org.eclipse.ui.IEditorInput} is assumed to be a
+         * {@link org.eclipse.ui.part.FileEditorInput}.
          * 
-         * @return the value of the editor field.
+         * @return the {@link org.eclipse.core.runtime.IPath} of the denoted editor's
+         *         {@link org.eclipse.ui.IEditorInput}.
          */
         public IPath getEditorInputPath() {
             assert this.editor.getEditorInput().getClass().equals(FileEditorInput.class);
@@ -305,7 +313,8 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         /**
          * Setter for the editor field.
          * 
-         * @param theEditor the new value for the editor field.
+         * @param theEditor
+         *            the new value for the editor field.
          * @return the currently manipulated {@link ITriggerState} object.
          */
         public ITriggerState setEditor(final XtextEditor theEditor) {
@@ -316,18 +325,20 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
         /**
          * Setter for the eventType field.
          * 
-         * @param theEventType the new value for the eventType field.
+         * @param theEventType
+         *            the new value for the eventType field.
          * @return the currently manipulated {@link ITriggerState} object.
          */
         public ITriggerState setEventType(final EventType theEventType) {
             this.eventType = theEventType;
             return this;
         }
-        
+
         /**
          * Setter for the resource field.
          * 
-         * @param theResource the new value for the resource field.
+         * @param theResource
+         *            the new value for the resource field.
          * @return the currently manipulated {@link ITriggerState} object.
          */
         public ITriggerState setResource(final XtextResource theResource) {
