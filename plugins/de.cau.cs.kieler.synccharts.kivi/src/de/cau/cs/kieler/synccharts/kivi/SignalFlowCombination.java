@@ -33,6 +33,7 @@ import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
+import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
@@ -54,7 +55,8 @@ public class SignalFlowCombination extends AbstractCombination {
     public static final String ARROW_COLOR = SignalFlowCombination.class.getCanonicalName()
             + ".arrowColor";
 
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] { new CombinationParameter(
+    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
+        new CombinationParameter(
             ARROW_COLOR, getPreferenceStore(), "Arrow Color",
             "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
             CombinationParameter.RGB_TYPE) };
@@ -67,16 +69,17 @@ public class SignalFlowCombination extends AbstractCombination {
         super();
         ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/signalflow.gif");
-        String tooltip = "Show the Dual Model of the current SyncChart. It shows the data communication from effects to triggers.";
+        String tooltip = "Show the Dual Model of the current SyncChart. "
+                + "It shows the data communication from effects to triggers.";
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model",
-                tooltip, icon, SWT.CHECK, null,
+                tooltip, icon, SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null,
                 "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
     }
 
     /**
      * Execute the combination using the signal flow active state and the selection state.
      * 
-     * @param active
+     * @param button
      *            the signal flow active state
      * @param selection
      *            the selection state
@@ -90,7 +93,7 @@ public class SignalFlowCombination extends AbstractCombination {
             }
 
             if (!shouldExecute(button, selection)) {
-                return;// keep arrows as-is, eg for exporting images
+                return; // keep arrows as-is, eg for exporting images
             }
 
             undoRecordedEffects(); // remove old arrows

@@ -23,6 +23,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
+import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
@@ -36,7 +37,7 @@ public class ShowHierarchyCombination extends AbstractCombination {
 
     private static final String ID = "de.cau.cs.kieler.core.model.showhierarchy";
 
-    private final static String[] EDITOR_IDS = { 
+    private static final String[] EDITOR_IDS = { 
         "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID",
         "de.cau.cs.kieler.kaom.diagram.part.KaomDiagramEditorID"};
     
@@ -47,9 +48,9 @@ public class ShowHierarchyCombination extends AbstractCombination {
         ImageDescriptor icon = CoreModelPlugin.imageDescriptorFromPlugin(
                 CoreModelPlugin.PLUGIN_ID, "icons/rainbow.gif");
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, ID,
-                "Show Hierarchy", "Colorize hierarchical objects to make the hierarchy structure clearer.", icon,
-                SWT.CHECK, null, EDITOR_IDS);
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, ID, "Show Hierarchy",
+                "Colorize hierarchical objects to make the hierarchy structure clearer.", icon,
+                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS);
     }
     
     /**
@@ -83,7 +84,8 @@ public class ShowHierarchyCombination extends AbstractCombination {
         return level + 1;
     }
 
-    private void paintRecursively(IWorkbenchPart editor, final EObject element, final int level, final int maxLevel) {
+    private void paintRecursively(final IWorkbenchPart editor, final EObject element,
+            final int level, final int maxLevel) {
         for (EObject child : element.eContents()) {
             paintRecursively(editor, child, level + 1, maxLevel);
         }

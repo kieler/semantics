@@ -24,6 +24,7 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
+import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
@@ -75,21 +76,22 @@ public class ManualFocusCombination extends AbstractCombination {
         ImageDescriptor iconMinus = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/focusContextMinus.png");
 
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, FOCUS_BUTTON_ID, "Manual Focus",
-                "Focus selected model objects and do a semantic zooming.", iconFC, SWT.CHECK, null,
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, FOCUS_BUTTON_ID,
+                "Manual Focus", "Focus selected model objects and do a semantic zooming.", iconFC,
+                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null,
                 EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, PLUS_BUTTON_ID, "Focus more",
-                "Increase Focus/Context zoom level.", iconPlus, SWT.PUSH, null,
-                EDITOR_IDS.toArray(new String[2]));
+                "Increase Focus/Context zoom level.", iconPlus, SWT.PUSH,
+                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, MINUS_BUTTON_ID, "Focus less",
-                "Decrease Focus/Context zoom level.", iconMinus, SWT.PUSH, null,
-                EDITOR_IDS.toArray(new String[2]));
+                "Decrease Focus/Context zoom level.", iconMinus, SWT.PUSH,
+                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, ALL_BUTTON_ID, "Focus all",
-                "Show all hierarchy levels.", iconPlusPlus, SWT.PUSH, null,
-                EDITOR_IDS.toArray(new String[2]));
+                "Show all hierarchy levels.", iconPlusPlus, SWT.PUSH,
+                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
     }
 
     /**
