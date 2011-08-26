@@ -1,6 +1,6 @@
 
 fmod TRANSITIONSYNTAX is
-  including EVENTSSYNTAX .
+  including EVENTSET .
   including VERTSSYNTAX .
   including ACTIONSSYNTAX .
 

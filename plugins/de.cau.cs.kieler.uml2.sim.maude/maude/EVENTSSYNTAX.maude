@@ -1,32 +1,24 @@
-****************************************************************
-*** ToDos in diesem File
-*** - noevent nicht mehr verwenden, nachschauen was nil/empty in 
-*** - brauche ich die Sorte Event, view usw. noch? Denke nein. Raus.
-****************************************************************
-
-
-
 fmod EVENT is
   sort Event .
+  op ev:_ : String -> Event [ctor] .
+  protecting STRING .
 endfm
 
-
-
-view Event from TRIV to EVENT is
+fmod TESTEVENT is
+  including EVENT .
+  ops e0 e1 e2 e3 e4 e5 e6 e7 e8 e9 : -> Event [ctor] .
+endfm  
+   
+view Event from TRIV to TESTEVENT is
   sort Elt to Event .
 endv
 
-
-
-
-fmod EVENTSSYNTAX is 
-	including SET{Event} * (sort Set{Event} to Events, sort NeSet{Event} to NeEvents) .
-    protecting STRING .
-	
-    op noevent : -> Event [ctor] .
-    
-    op ev:_ : String -> Event [ctor] .
-        
+fmod EVENTSET is
+  including SET{Event} * (sort Set{Event} to EventSet, sort NeSet{Event} to NeEventSet) .
+  op emptyEventSet : -> EventSet .
+  eq emptyEventSet = (empty).EventSet .
+  op someevents : -> EventSet .
+  eq someevents = e0, e1, e2, e3, e4, e5, e6, e7, e8, e9 .
+  
 endfm
-
 

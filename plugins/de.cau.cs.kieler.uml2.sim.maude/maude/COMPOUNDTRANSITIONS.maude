@@ -12,7 +12,6 @@ fmod COMPOUNDTRANSITIONS is
   vars st st2 : Transition .
   vars src tgt src2 tgt2 C : Verts . 
   vars e e2 fe : Event .
-  vars E1 : Events .
   vars g g2 : Guard .
   vars A AF AJ A2 AF2 AJ2 actions : Actions .
   vars a af aj a2 af2 aj2 action : Action .

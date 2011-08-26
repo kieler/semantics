@@ -34,8 +34,8 @@ mod SEMANTICS is
     vars hc : HistoryConf .
     vars C2 leaveStates enterStates : Verts . *** Konfiguration
     vars fe : Event . *** event selected for this rtc step
-    vars E E2 : Events .
-    vars ES ES2 : Events .
+    vars E E2 : EventSet .
+    vars ES ES2 : EventSet .
     vars C C' V V2 S : Verts .
     vars NeT : NeCompoundtransitions .    
     vars T T1 T2 F : Compoundtransitions .

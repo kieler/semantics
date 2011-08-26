@@ -1,0 +1,53 @@
+load ACCS
+load QUEUESEMANTICS 
+
+mod BFAIRPOOL is
+	including ACCSTEST .
+	including QUEUESEMANTICS .
+	sort EpStatus . *** status of the event pool
+	
+ op ready__ : QueueStatus AccsStatus -> EpStatus .
+ op schedule___ : QueueStatus AccsStatus Event -> EpStatus .
+ op initBFairPool : -> EpStatus .
+  vars queuest queuest' : QueueStatus .
+  vars accsst accsst' : AccsStatus .
+  var epstatus : EpStatus .
+   var equeue : EventQueue .
+  vars accs accs2 : AcctupSet .
+  var eventset : EventSet .
+  var event : Event .
+
+ crl ready queuest accsst => schedule <schedule equeue event > <schedule eventset accs event > event 
+   if queuest => <schedule equeue event > /\ 
+     accsst => <schedule eventset accs event > [print "scheduled " event].
+ crl schedule <schedule equeue event > <schedule eventset accs event > event => 
+    ready queuest accsst
+   if <schedule equeue event > => queuest /\ 
+     <schedule eventset accs event > => accsst .
+ rl initBFairPool => ready <initQueue> <initAccs tups >  . 
+endm
+
+
+mod BFAIRPOOLPREDS is 
+    including BFAIRPOOL .
+    including SATISFACTION .
+    subsort EpStatus < State .
+
+    vars evs1 evs2 evs3 : EventSet .
+    vars eve : Event .
+    vars accs accs2 : AcctupSet .
+  vars queuest queuest' : QueueStatus .
+  vars accsst accsst' : AccsStatus .
+  var epstatus : EpStatus .
+   var equeue : EventQueue .
+  var eventset : EventSet .
+  var event : Event .
+
+    *** falls nicht alle events in den Acceptancetuples ist das immer false  
+    op deadlock_ : EpStatus -> Bool .
+    eq deadlock (ready queuest <ready evs1 accs >) = allowed evs1 accs emptyEventSet == emptyEventSet .
+endm
+
+ 
+
+

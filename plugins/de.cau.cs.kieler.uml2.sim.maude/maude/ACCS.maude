@@ -1,0 +1,154 @@
+load EVENT
+load model-checker
+
+fmod ACCTUP is
+  protecting STRING .
+  including EVENTSET .
+  including NAT .
+  sort Acctup .
+    *** Constructor for an acceptance tuple, i.e. :
+    *** E and F are sets of events, the tuple ensures that
+    *** at most L times may an event from F be scheduled before an event
+    *** E is required, the tuples are extended by a counter U for the number of times
+    *** they have been used
+
+  op acc:(E)_(F)_(L)_(U)_ : EventSet EventSet Nat Nat -> Acctup [ctor] .
+endfm
+
+view Acctup from TRIV to ACCTUP is
+  sort Elt to Acctup .
+endv
+
+
+mod ACCS is 
+    protecting SET{Acctup} * (sort Set{Acctup} to AcctupSet, sort NeSet{Acctup} to NeAcctupSet) .
+    
+    including NAT .
+    vars evs1 evs2 : EventSet .
+    vars ev1 : Event .
+    vars limit used : Nat .
+    vars accs : AcctupSet .     
+    vars neaccs : NeAcctupSet .  
+    op emptyAcctupSet : -> AcctupSet .
+    eq emptyAcctupSet = (empty).AcctupSet .  
+    op getEvents_ : AcctupSet -> EventSet [memo] .
+    eq getEvents ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = evs1, evs2, (getEvents neaccs) .
+    eq getEvents (acc:(E)evs1(F)evs2(L)limit(U)used) = evs1, evs2 .
+      
+    *** operation tr computes whether event ev1 may be scheduled according to 
+    *** the acceptance tuples
+    op tr__ : Event AcctupSet -> Bool .
+    ceq tr ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), accs) =
+        false if (ev1 in evs2) and (used >= limit) .
+    *** if a tuple negates scheduling then return false
+    ceq tr ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = 
+        tr ev1 neaccs if not((ev1 in evs2) and (used >= limit)) .
+    *** if a tuple does not negate scheduling then continue with the 
+    *** remaining tuples
+    eq tr ev1 (acc:(E)evs1(F)evs2(L)limit(U)used) = 
+        not((ev1 in evs2) and (used >= limit)) .
+  
+  
+    
+    *** allowed computes the events in the first argument that can 
+    *** be scheduled bounded fair according the third argument 
+    *** i.e. the currunt state of scheduling defined by a set
+    *** of extended acceptance tuples
+    *** during computation the allowed events are gathered in the
+    *** second argument     
+    op allowed___ : EventSet AcctupSet EventSet -> EventSet .
+    ceq allowed (ev1, evs1) accs evs2 = 
+        allowed evs1 accs (ev1, evs2) if tr ev1 accs .
+    ceq allowed (ev1, evs1) accs evs2 = 
+        allowed evs1 accs evs2 if not tr ev1 accs .
+    ceq allowed ev1 accs evs2 = (ev1, evs2) if tr ev1 accs .
+    ceq allowed ev1 accs evs2 = evs2 if not tr ev1 accs .
+
+    *** upd updates the usage counters according to the provided event
+    op upd__ : Event AcctupSet -> AcctupSet [ctor] .
+    ceq upd ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)used + 1), ( upd ev1 neaccs) 
+        if (ev1 in evs2) and not(ev1 in evs1).
+    *** the acceptance tuple is used, thus increase the usage counter   
+    ceq upd ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)used), (upd ev1 neaccs) 
+        if not(ev1 in evs2) and not(ev1 in evs1).
+    ***the event has no influence on the acceptance tuple   
+    ceq upd ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)0), (upd ev1 neaccs) 
+        if not(ev1 in evs2) and (ev1 in evs1).
+    *** the acceptance tuple is reseted, thus the usage counter is set 0
+    ceq upd ev1 (acc:(E)evs1(F)evs2(L)limit(U)used) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)used + 1) 
+        if (ev1 in evs2) and not(ev1 in evs1).
+    *** the last acceptance tuple is used, thus increase the usage counter          
+    ceq upd ev1 (acc:(E)evs1(F)evs2(L)limit(U)used) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)used)
+        if not(ev1 in evs2) and not(ev1 in evs1).
+    ***the event has no influence on the last acceptance tuple          
+    ceq upd ev1 (acc:(E)evs1(F)evs2(L)limit(U)used) = 
+        (acc:(E)evs1(F)evs2(L)limit(U)0)
+        if not(ev1 in evs2) and (ev1 in evs1).
+    *** the last acceptance tuple is reseted, thus the usage counter is set 0
+endm
+
+
+mod ACCSSEMANTICS is 
+    including ACCS .
+    including EVENTSET .
+    including NAT .
+    sort AccsStatus .
+    vars evs1 evs2 evs3 : EventSet .
+    vars eve : Event .
+    vars accs accs2 : AcctupSet .
+    *** explain 
+    op <ready__ > : EventSet AcctupSet -> AccsStatus .
+    op <schedule___ > : EventSet AcctupSet Event -> AccsStatus .
+    op <initAccs_ > : AcctupSet -> AccsStatus .
+
+    crl <ready (eve, evs1) accs > => <schedule (eve, evs1) accs eve > if tr eve accs .
+    rl <schedule evs1 accs eve > => <ready evs1 (upd eve accs) > .
+    rl <initAccs accs > => <ready (getEvents accs) accs > . 
+endm
+
+mod ACCSPREDS is 
+    including ACCSSEMANTICS .
+    including SATISFACTION .
+    subsort AccsStatus < State .
+
+    vars evs1 evs2 evs3 : EventSet .
+    vars eve : Event .
+    vars accs accs2 : AcctupSet .
+
+    *** falls nicht alle events in den Acceptancetuples ist das immer false  
+    op deadlock_ : AccsStatus -> Bool .
+    eq deadlock <ready evs1 accs > = allowed evs1 accs emptyEventSet == emptyEventSet .
+endm
+
+
+mod ACCSTEST is 
+    including ACCSPREDS .
+    ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 : -> Acctup .
+    eq tup1 = acc:(E)(e1)(F)(e4, e3)(L)1(U)0 .
+    eq tup2 = acc:(E)(e2)(F)(e5, e3)(L)1(U)0 .
+    eq tup3 = acc:(E)(e4)(F)(e6)(L)1(U)0 .
+    eq tup4 = acc:(E)(e5)(F)(e7)(L)1(U)0 .
+    eq tup5 = acc:(E)(e6)(F)(e2)(L)1(U)0 .
+    eq tup6 = acc:(E)(e7)(F)(e1)(L)1(U)0 . 
+    eq tup7 = acc:(E)(someevents)(F)(emptyEventSet)(L)1(U)0 . 
+     
+
+    ops tups : -> AcctupSet .
+    eq tups = (tup1, tup2, tup3, tup4, tup5, tup6, tup7) .
+    
+    
+    ops nwptTup1 nwptTup2 : -> Acctup .
+    eq nwptTup1 = acc:(E)e1(F)(e2, e3)(L)1(U)0 .
+    eq nwptTup2 = acc:(E)e2(F)(e1, e3)(L)1(U)0 .
+
+    ops nwptTups : -> AcctupSet .
+    eq nwptTups = (nwptTup1, nwptTup2) .
+endm
+
+***search initAccs tups =>! X:AccsStatus .
+***search initAccs nwptTups =>! X:AccsStatus .
