@@ -1,4 +1,4 @@
-load EVENT
+load EVENTSSYNTAX
 load model-checker
 
 fmod ACCTUP is

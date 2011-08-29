@@ -14,6 +14,7 @@ extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back 
 String trigger2(Transition transition):
   let transitionLabel = transition.name:
   let returnTrigger = getTrigger(transitionLabel.toString()):
+  //TODO remove the noevents introduced by initial transitions
   if (returnTrigger != null && returnTrigger.length > 0) then
     returnTrigger
   else
@@ -60,8 +61,10 @@ String getGuard(String transitionLabel, Transition transition):
 // Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(Package package):
  let transitions = package.getTransitions() :
- transitions.select(e|e.name != null).trigger2()
+ transitions.select(e|e.name != null && !(e.source.isInitial())).trigger2()
 ;
+  //TODO remove the noevents introduced by initial transitions
+
 
 // Get all trigger events that are used in the statemachine.
 Set[String] getTriggerEvents(StateMachine sm):

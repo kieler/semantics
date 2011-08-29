@@ -49,7 +49,7 @@ view Transition from TRIV to TRANSITIONSYNTAX is
 endv
 
 fmod COMPOUNDTRANSITIONSYNTAX is
-  including EVENTSSYNTAX .
+  including EVENTSET .
   including VERTSSYNTAX .
   including ACTIONSSYNTAX .
   including SET{Transition} * (sort Set{Transition} to Transitions, sort NeSet{Transition} to NeTransitions) .
