@@ -27,30 +27,6 @@ load «((String)(GLOBALVAR maudebasecode))»EVENTSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONSSYNTAX
 load «((String)(GLOBALVAR maudebasecode))»STATEMACHINESYNTAX
 load «((String)(GLOBALVAR maudebasecode))»SEMANTICSSYNTAX
-load «((String)(GLOBALVAR maudebasecode))»QUEUESEMANTICS
-
-mod QUEUESEMANTICS is 
- including QUEUESIGNATURE .
-     sort QueueStatus .
- var el : EventList .
- var event : Event .
- var equeue : EventQueue .
-
-   ops «FOREACH this.getTriggerEvents() AS event SEPARATOR " "-»«event-»«ENDFOREACH-» : -> Event .
-
- «FOREACH this.getTriggerEvents() AS event SEPARATOR '\n'-»rl QUEUE el ENDQUEUE => QUEUE el («event-») ENDQUEUE .«ENDFOREACH-»
-
- op <ready_ > : EventQueue -> QueueStatus .
- op <schedule__ > : EventQueue Event -> QueueStatus .
- op <initQueue> : -> QueueStatus .
-  
- rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .
- rl <schedule equeue event >  => <ready equeue > .
- rl <initQueue> => <ready emptyQueue > . 
-
-endm
-
-
 
 fmod eclipseInterface is
   including COMPOUNDTRANSITIONSSYNTAX .
@@ -190,20 +166,6 @@ fmod eclipseInterface is
 
 endfm
 
-«REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
-
-load model-checker
-*** next we need getter functions for the SM
-load «((String)(GLOBALVAR maudebasecode))»SMGETTER
-load «((String)(GLOBALVAR maudebasecode))»VERTS .
-load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
-*** so far there is no need for event semantics
-load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
-load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
-load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
-load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
-load «((String)(GLOBALVAR maudebasecode))»ACCS
-load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
 
 mod INIT is
 	including SEMANTICS .
@@ -233,6 +195,42 @@ mod INIT is
 	eq isDone msst = false [owise] .
 	
 endm
+
+«REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
+
+load model-checker
+*** next we need getter functions for the SM
+load «((String)(GLOBALVAR maudebasecode))»SMGETTER
+load «((String)(GLOBALVAR maudebasecode))»VERTS .
+load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
+*** so far there is no need for event semantics
+load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
+load «((String)(GLOBALVAR maudebasecode))»ACCS
+load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
+
+ mod QUEUESEMANTICS is 
+ including QUEUESIGNATURE .
+     sort QueueStatus .
+ var el : EventList .
+ var event : Event .
+ var equeue : EventQueue .
+
+ «FOREACH this.getTriggerEvents() AS event SEPARATOR '\n'-»rl QUEUE el ENDQUEUE => QUEUE el («event-») ENDQUEUE .«ENDFOREACH-»
+
+ op <ready_ > : EventQueue -> QueueStatus .
+ op <schedule__ > : EventQueue Event -> QueueStatus .
+ op <initQueue> : -> QueueStatus .
+  
+ rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .
+ rl <schedule equeue event >  => <ready equeue > .
+ rl <initQueue> => <ready emptyQueue > . 
+
+endm
+
+
 «REM»
 
 ***(
