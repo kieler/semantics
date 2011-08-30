@@ -228,7 +228,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             String part = parts[number];
 
             int start = part.lastIndexOf("{") + 1;
-            int end = part.lastIndexOf(",");
+            // end = part.lastIndexOf(",");
+            int end = part.lastIndexOf("\")") + 2;
             String value = part.substring(start, end);
             return value;
         }
