@@ -1,6 +1,8 @@
 package de.cau.cs.kieler.uml2.sim.kiem;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -247,10 +249,16 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * @return the string[]
      */
     private String[] extractStates(String rawValue) {
+        LinkedList<String> stringList = new LinkedList<String>();
+        // if invalid data return empty list
+        if (rawValue.indexOf("(") == -1) {
+        	return (stringList.toArray(new String[0]));
+        }
+        
+        
         // consume "maState stableC (" or similar
         rawValue = rawValue.substring(rawValue.indexOf("("));
 
-        LinkedList<String> stringList = new LinkedList<String>();
 
         boolean consuming = false;
         String consumedPart = "";
@@ -377,6 +385,66 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         }
 
     }
+    // -------------------------------------------------------------------------
+
+    static final String EVENT_FILE_NAME = "events-gen.maude";
+    static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" +
+    		" including QUEUESIGNATURE .\n" +
+    		"     sort QueueStatus .\n" +
+    		" var el : EventList .\n" +
+    		" var event : Event .\n" +
+    		" var equeue : EventQueue .\n";
+    static final String EVENT_POSTLUDE = " op <ready_ > : EventQueue -> QueueStatus .\n" +
+    		" op <schedule__ > : EventQueue Event -> QueueStatus .\n" +
+    		" op <initQueue> : -> QueueStatus .\n" +
+    		" rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .\n" +
+    		" rl <schedule equeue event >  => <ready equeue > .\n" +
+    		" rl <initQueue> => <ready emptyQueue > .\n" +
+    		"endm\n";
+    static final String EVENT_LINE_START = "rl QUEUE el ENDQUEUE => QUEUE el (";
+    static final String EVENT_LINE_END   = ") ENDQUEUE .\n";
+    
+    public void writeAndReloadSelectedEvents(JSONObject signals) throws KiemExecutionException {
+    	// This is the additional Maude code to write
+    	String maudeCode = "";
+    	
+    	maudeCode += EVENT_PRELUDE;
+        String[] signalNames = JSONObject.getNames(signals);
+        for (String signalName : signalNames) {
+        	try {
+				if (JSONSignalValues.isPresent(signals.get(signalName))) {
+					maudeCode += EVENT_LINE_START;
+					maudeCode += signalName;
+					maudeCode += EVENT_LINE_END;
+				}
+			} catch (JSONException e) {
+				//TODO: handle these errors properly
+				// ignore JSON parser errors for now
+			}
+        }
+    	maudeCode += EVENT_POSTLUDE;
+    	
+    	// Write this out to file
+    	String path = super.outPath;
+    	try {
+    		BufferedWriter out = new BufferedWriter(new FileWriter(path + "/" +  EVENT_FILE_NAME));
+    		out.write(maudeCode);
+    		out.close();
+   		}
+   		catch (IOException e) {
+    		throw new KiemExecutionException("Java IO Error. Cannot write event file.", false, e);
+   		}
+    	
+    	
+    	// (Re)Load into Maude
+        try {
+            String result = MaudeInterfacePlugin.getDefault().queryMaude(maudeCode, maudeSessionId);
+        } catch (Exception e) {
+            throw new KiemExecutionException("A Maude error occurred when trying to reload events.", false, e);
+        }
+    	
+    }
+    
 
     // -------------------------------------------------------------------------
 
@@ -395,6 +463,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         // If this component is in the zero tick, then we do the check, otherwise we are in replay
         // mode and do NOTHING!
         if (!modelCheckDone) {
+        	// First reload events/signals
+        	writeAndReloadSelectedEvents(signals);
+        	
             // do not modelcheck another time
             modelCheckDone = true;
 
