@@ -166,7 +166,15 @@ fmod eclipseInterface is
 
 endfm
 
-
+load model-checker
+*** next we need getter functions for the SM
+load «((String)(GLOBALVAR maudebasecode))»SMGETTER
+load «((String)(GLOBALVAR maudebasecode))»VERTS .
+load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
+load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
+load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
+load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
+load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
 mod INIT is
 	including SEMANTICS .
 	including SATISFACTION .
@@ -198,19 +206,6 @@ endm
 
 «REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
 
-load model-checker
-*** next we need getter functions for the SM
-load «((String)(GLOBALVAR maudebasecode))»SMGETTER
-load «((String)(GLOBALVAR maudebasecode))»VERTS .
-load «((String)(GLOBALVAR maudebasecode))»ACTIONS .
-*** so far there is no need for event semantics
-load «((String)(GLOBALVAR maudebasecode))»UMLPRIORITY
-load «((String)(GLOBALVAR maudebasecode))»COMPOUNDTRANSITIONS
-load «((String)(GLOBALVAR maudebasecode))»STATEMACHINE
-load «((String)(GLOBALVAR maudebasecode))»SEMANTICS
-load «((String)(GLOBALVAR maudebasecode))»ACCS
-load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
-
  mod QUEUESEMANTICS is 
  including QUEUESIGNATURE .
      sort QueueStatus .
@@ -230,6 +225,12 @@ load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
 
 endm
 
+*** so far there is no need for event semantics
+
+***(
+***load «((String)(GLOBALVAR maudebasecode))»ACCS
+***load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
+)***
 
 «REM»
 
