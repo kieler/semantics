@@ -18,7 +18,7 @@ endv
 fmod STATE-DEFAULT is
   including VERTSSYNTAX .
   sort Default .
-  op _default_ : Region State -> Default [ctor format (d b o n)] .
+  op _default_ : Region ModState -> Default [ctor format (d b o n)] .
 endfm
 
 view Default from TRIV to STATE-DEFAULT is
@@ -28,7 +28,7 @@ endv
 fmod DEEP-DEFAULT is
   including VERTSSYNTAX .
   sort DeepDefault .
-  op _deepdefault_ : Region State -> DeepDefault [ctor format (d b o n)] .
+  op _deepdefault_ : Region ModState -> DeepDefault [ctor format (d b o n)] .
 endfm
 
 view DeepDefault from TRIV to DEEP-DEFAULT is
@@ -38,7 +38,7 @@ endv
 fmod SHALLOW-DEFAULT is
   including VERTSSYNTAX .
   sort ShallowDefault .
-  op _shallowdefault_ : Region State -> ShallowDefault [ctor format (d b o n)] .
+  op _shallowdefault_ : Region ModState -> ShallowDefault [ctor format (d b o n)] .
 endfm
 
 view ShallowDefault from TRIV to SHALLOW-DEFAULT is
@@ -48,7 +48,7 @@ endv
 fmod HISTORY-CONF is
   including VERTSSYNTAX .
   sort HistoryConf .
-  op historyconf __ : Region State ->  HistoryConf [ctor format (b o d n)]  .
+  op historyconf __ : Region ModState ->  HistoryConf [ctor format (b o d n)]  .
   
 endfm
 

@@ -40,7 +40,7 @@ fmod VERTSSYNTAX is
  
   sorts 
   	Region 
-  	State
+  	ModState
 ***  	Default 
   	Composite 
   	Final 
@@ -57,9 +57,9 @@ fmod VERTSSYNTAX is
     Join
     Fork
     Choice 
-    HistShallow < State .
+    HistShallow < ModState .
 
-  subsort State Region < Vert .
+  subsort ModState Region < Vert .
     
   op F_ : String -> FinalID [ctor] .
   op C_ : String -> CompositeID [ctor] .
@@ -99,7 +99,7 @@ fmod VERTSSYNTAX is
   eq last (v, V) = (last v) , (last V) .
    
   *** getSubVerts x Y: get all subregions of x in Y .
-  op getSubVerts__ : State Verts -> Verts [memo] .
+  op getSubVerts__ : ModState Verts -> Verts [memo] .
   ceq getSubVerts v (v2, V) = v2,  getSubVerts v V
     if (v == start v2) .
   ceq getSubVerts v (v2, V) = getSubVerts v V

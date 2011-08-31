@@ -2,12 +2,12 @@ fmod HISTORY-CONF is
   including VERTSSYNTAX .
   sort HistoryConf .
   var r : Region .
-  var s : State .
+  var s : ModState .
   var V : Verts .
 
   *** function history is a set of tuples of regions and their last active
   *** state
-  op historyconf __ : Region State ->  HistoryConf [ctor format (b o d n)]  .
+  op historyconf __ : Region ModState ->  HistoryConf [ctor format (b o d n)]  .
   
 endfm
 
@@ -59,7 +59,7 @@ fmod STATEMACHINE is
   vars A af aj a2 af2 aj2 actions : Actions .
   var sm : StateMachine .
   vars S S2 : Verts .
-  vars hst s s2 s3 ds1 ds2 : State .
+  vars hst s s2 s3 ds1 ds2 : ModState .
   vars R : Verts .
   vars r r2 r3 : Region .
   vars V V2 src tgt C src2 tgt2 smAllVerts curVerts tgtStates curVert : Verts .  
@@ -176,16 +176,16 @@ fmod STATEMACHINE is
   eq getDefault r (d ,  D) = (getDefault r d) ,  (getDefault r D) .
   eq getDefault (r ,  R) D = (getDefault r D) ,  (getDefault R D) .
 
-  op getDefault __ : State Defaults -> Verts [format (g o d n)] .
+  op getDefault __ : ModState Defaults -> Verts [format (g o d n)] .
   ceq getDefault s D = getDefault (start s) D if typeFinal s .
   
     *** get the history default state of 
-  op getDeepDefault __ : Region DeepDefaults -> State .
+  op getDeepDefault __ : Region DeepDefaults -> ModState .
   ceq getDeepDefault r (DH ,  (r2 deepdefault v)) = getDeepDefault r DH
     if r =/= r2 .
   eq getDeepDefault r (DH ,  (r deepdefault v)) = v .
 
-  op getShallowDefault __ : Region ShallowDefaults -> State .
+  op getShallowDefault __ : Region ShallowDefaults -> ModState .
   eq getShallowDefault r (SH ,  (r shallowdefault v)) = v .
   ceq getShallowDefault r (SH  ,   (r2 shallowdefault v)) = 
     getShallowDefault r SH if r =/= r2 .
@@ -216,7 +216,7 @@ fmod STATEMACHINE is
   eq nonVisited r HC = ((getHC r HC) == empty) or
     (typeFinal (getHC r HC)) .
 
-  op genDeepTgts__ : State Verts -> Verts .
+  op genDeepTgts__ : ModState Verts -> Verts .
   ceq genDeepTgts v V = $genDeepTgts (getSubRegions v V) 
         if |(getSubs v V)| > 0 . 
   eq genDeepTgts v V = empty [owise] .

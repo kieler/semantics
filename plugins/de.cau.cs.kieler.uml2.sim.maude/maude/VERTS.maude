@@ -8,7 +8,7 @@ fmod VERTS is
   vars V V2 : Verts .
   vars id : VertID .
   vars ids : VertIDs .
-  vars s : State .
+  vars s : ModState .
   vars r : Region .
   vars name : String .
   
@@ -54,7 +54,7 @@ fmod VERTS is
   eq getSubStates r empty = empty .
 
   *** getSubRegions x Y: get all subregions of x in Y .
-  op getSubRegions__ : State Verts -> Verts [memo] .
+  op getSubRegions__ : ModState Verts -> Verts [memo] .
   ceq getSubRegions s (v, V) = v,  getSubRegions s V
     if (s == start v) .
   ceq getSubRegions s (v, V) = getSubRegions s V
@@ -84,7 +84,7 @@ fmod VERTS is
   
     *** functions determining the type (state, final state, region and 
   ***  history) of a given state
-  op typeFinal_ : State -> Bool .
+  op typeFinal_ : ModState -> Bool .
   eq typeFinal (v : (F name)) = true .
   eq typeFinal v = false [owise] .
 

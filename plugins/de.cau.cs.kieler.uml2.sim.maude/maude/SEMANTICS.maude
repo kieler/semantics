@@ -43,8 +43,8 @@ mod SEMANTICS is
     vars sT sT1 sT2 sF : BasicTransitions .
     vars st st1 st2 : BasicTransition .
     vars S2 : Verts .
-    vars s : State .
-    vars s2 s3 ds1 ds2 : State .
+    vars s : ModState .
+    vars s2 s3 ds1 ds2 : ModState .
     vars V_vert V_vert2 v : Vert .
     vars R : Verts .
     vars r r2 r3 : Region .

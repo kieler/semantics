@@ -46,7 +46,7 @@ fmod eclipseInterface is
 
 ***// States //
   «IF  this.getStates().size > 0-»
-  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> State .	
+  ops «FOREACH this.getStates() AS state SEPARATOR " "-»«((State)state).getId()-»«ENDFOREACH-» : -> ModState .	
 	«FOREACH this.getMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .	
   «ENDIF-»
   	
@@ -54,12 +54,12 @@ fmod eclipseInterface is
 ***// PseudoStates //
 *** history
   «IF  this.getHistoryStates().size > 0-»
-  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> State .	
+  ops «FOREACH this.getHistoryStates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .	
 	«FOREACH this.getHistoryMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
   «ENDIF-»
 *** choice
   «IF  this.getRelevantPseudotates().size > 0-»
-  ops «FOREACH this.getRelevantPseudotates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> State .	
+  ops «FOREACH this.getRelevantPseudotates() AS pseudostate SEPARATOR " "-»«((Pseudostate)pseudostate).getId()-»«ENDFOREACH-» : -> ModState .	
 	«FOREACH this.getPseudoMaudeStates() AS state SEPARATOR " .\n"-»«state-»«ENDFOREACH-» .
   «ENDIF-»
 
