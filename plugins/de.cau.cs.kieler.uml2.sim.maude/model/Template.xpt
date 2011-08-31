@@ -205,7 +205,7 @@ mod INIT is
 endm
 
 «REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem «ENDREM»
-
+load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  mod QUEUESEMANTICS is 
  including QUEUESIGNATURE .
      sort QueueStatus .
@@ -221,7 +221,7 @@ endm
   
  rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .
  rl <schedule equeue event >  => <ready equeue > .
- rl <initQueue> => <ready emptyQueue > . 
+ rl <initQueue>s => <ready emptyQueue > . 
 
 endm
 
