@@ -110,7 +110,7 @@ fmod eclipseInterface is
 *******************      
 *** ToDo: Add trigger statt noevent!!
   ops «FOREACH this.getTransitions().select(e|e.isBasicTrans())  AS transition SEPARATOR "  "-»tr«transition.getId()-»«ENDFOREACH-»
-      : -> Transition .
+      : -> BasicTransition .
 
 *******************
 *** compound transitions op declaration

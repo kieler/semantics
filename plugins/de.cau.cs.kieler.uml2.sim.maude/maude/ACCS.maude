@@ -111,6 +111,7 @@ mod ACCSSEMANTICS is
     rl <initAccs accs > => <ready (getEvents accs) accs > . 
 endm
 
+***(
 mod ACCSPREDS is 
     including ACCSSEMANTICS .
     including SATISFACTION .
@@ -149,6 +150,6 @@ mod ACCSTEST is
     ops nwptTups : -> AcctupSet .
     eq nwptTups = (nwptTup1, nwptTup2) .
 endm
-
+)***
 ***search initAccs tups =>! X:AccsStatus .
 ***search initAccs nwptTups =>! X:AccsStatus .

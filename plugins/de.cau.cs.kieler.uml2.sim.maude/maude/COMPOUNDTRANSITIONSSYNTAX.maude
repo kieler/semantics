@@ -4,12 +4,12 @@ fmod TRANSITIONSYNTAX is
   including VERTSSYNTAX .
   including ACTIONSSYNTAX .
 
-  sorts Guard Transition Fireset .
+  sorts Guard BasicTransition Fireset .
 
   op basicTrans_____ : String Vert Guard Action Vert -> 
-	  Transition [ctor] .
+	  BasicTransition [ctor] .
   op ____ : Vert Guard Action Vert -> 
-      Transition [ctor] .
+      BasicTransition [ctor] .
   
   
 	  
@@ -44,44 +44,44 @@ fmod TRANSITIONSYNTAX is
 endfm
 
 
-view Transition from TRIV to TRANSITIONSYNTAX is
-  sort Elt to Transition .
+view BasicTransition from TRIV to TRANSITIONSYNTAX is
+  sort Elt to BasicTransition .
 endv
 
 fmod COMPOUNDTRANSITIONSYNTAX is
   including EVENTSET .
   including VERTSSYNTAX .
   including ACTIONSSYNTAX .
-  including SET{Transition} * (sort Set{Transition} to Transitions, sort NeSet{Transition} to NeTransitions) .
+  including SET{BasicTransition} * (sort Set{BasicTransition} to BasicTransitions, sort NeSet{BasicTransition} to NeBasicTransitions) .
   
   sort Compoundtransition Menge .
 
   vars g g1 : Guard .
   var e : Event .
-  var t : Transition .
-  var T : Transitions .
+  var t : BasicTransition .
+  var T : BasicTransitions .
   var ct : Compoundtransition .
   var reg : Region .
   var a : Action .
   var src tgt : Vert .
   var strid : String .
   
-  op joinTrans____ : Event Transitions Transition Region -> Compoundtransition [format (d d d d d n) ctor] .
-  op forkTrans____ : Event Transition Transitions Region -> Compoundtransition [format (d d d d d n) ctor] .
-  op choiceTrans____ : Event Transition Transitions Region -> Compoundtransition [format (d d d d d n) ctor] .
-  op simpleTrans___ : Event Transition Region -> Compoundtransition [format (d d d d n) ctor] .
+  op joinTrans____ : Event BasicTransitions BasicTransition Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op forkTrans____ : Event BasicTransition BasicTransitions Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op choiceTrans____ : Event BasicTransition BasicTransitions Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op simpleTrans___ : Event BasicTransition Region -> Compoundtransition [format (d d d d n) ctor] .
   
-  op joinTrans_____ : String Event Transitions Transition Region -> Compoundtransition [format (d d d d d d n) ctor] .
-  op forkTrans_____ : String Event Transition Transitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
-  op choiceTrans_____ : String Event Transition Transitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
-  op simpleTrans____ : String Event Transition Region -> Compoundtransition [format (d d d d d n) ctor] .
+  op joinTrans_____ : String Event BasicTransitions BasicTransition Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op forkTrans_____ : String Event BasicTransition BasicTransitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op choiceTrans_____ : String Event BasicTransition BasicTransitions Region -> Compoundtransition [format (d d d d d d n) ctor] .
+  op simpleTrans____ : String Event BasicTransition Region -> Compoundtransition [format (d d d d d n) ctor] .
   
 
-  op action_ : Transition -> Action .
+  op action_ : BasicTransition -> Action .
   eq action (src g a tgt) = a .
   eq action (basicTrans strid src g a tgt) = a .
 
-  op guard_ : Transitions -> Guard .
+  op guard_ : BasicTransitions -> Guard .
   eq guard ((src g a tgt), T) = g andGd (guard T) .
   eq guard ((basicTrans strid src g a tgt), T) = g andGd (guard T) .
   eq guard empty = true .
@@ -116,11 +116,11 @@ fmod COMPOUNDTRANSITIONSYNTAX is
 
 
 
-  op $source_ : Transitions -> Verts .
+  op $source_ : BasicTransitions -> Verts .
   eq $source (t, T) = ($$source t), ($source T) .
   eq $source empty = empty .
 
-  op $$source_ : Transition -> Verts .
+  op $$source_ : BasicTransition -> Verts .
   eq $$source (basicTrans strid src g a tgt) = src .
   eq $$source (src g a tgt) = src .
 
@@ -135,11 +135,11 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq source (choiceTrans strid e t T reg) = ($$source t) .
   eq source (joinTrans strid e T t reg) = ($source T) .
 
-  op target_ : Transitions -> Verts .
+  op target_ : BasicTransitions -> Verts .
   eq target (t, T) = ($target t), (target T) .
   eq target empty = empty .
   
-  op $target_ : Transition -> Verts .
+  op $target_ : BasicTransition -> Verts .
   eq $target (src g a tgt) = tgt .
   eq $target (basicTrans strid src g a tgt) = tgt .
 
@@ -177,7 +177,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq event (choiceTrans strid e t T reg) = e .
   eq event (joinTrans strid e T t reg) = e .
   
-  op outTrans_ : Compoundtransition -> Transitions .
+  op outTrans_ : Compoundtransition -> BasicTransitions .
   eq outTrans (simpleTrans e t reg) = t .
   eq outTrans (forkTrans e t T reg) = T .  
   *** how should choice outTranss be handeled
@@ -189,7 +189,7 @@ fmod COMPOUNDTRANSITIONSYNTAX is
   eq outTrans (choiceTrans strid e t T reg) = T .
   eq outTrans (joinTrans strid e T t reg) = t .
   
-  op inTrans_ : Compoundtransition -> Transitions .
+  op inTrans_ : Compoundtransition -> BasicTransitions .
   eq inTrans (simpleTrans e t reg) = empty .
   eq inTrans (forkTrans e t T reg) = t .  
   *** how should choice inTranss be handeled

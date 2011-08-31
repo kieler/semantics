@@ -8,8 +8,8 @@ fmod COMPOUNDTRANSITIONS is
   vars T T2 F : Compoundtransitions .
   vars NeT : NeCompoundtransitions .
   vars t t2 : Compoundtransition .
-  vars sT sT2 sF : Transitions .
-  vars st st2 : Transition .
+  vars sT sT2 sF : BasicTransitions .
+  vars st st2 : BasicTransition .
   vars src tgt src2 tgt2 C : Verts . 
   vars e e2 fe : Event .
   vars g g2 : Guard .
@@ -32,7 +32,7 @@ fmod COMPOUNDTRANSITIONS is
   op chooseChoice__ : Compoundtransition Verts -> Compoundtransition .
   eq chooseChoice (choiceTrans strid e st sT reg) C = (choiceTrans strid e st ($chooseChoice empty C sT) reg) .
   
-  op $chooseChoice___ : Transition Verts Transitions -> Transition .
+  op $chooseChoice___ : BasicTransition Verts BasicTransitions -> BasicTransition .
   ceq $chooseChoice st C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .
   ceq $chooseChoice st C (st2, sT) = st2 if (evalGuard (guard st2) C) .
   ceq $chooseChoice empty C (st2, sT) = $chooseChoice st2 C sT if ((guard st2) == choiceelse) .

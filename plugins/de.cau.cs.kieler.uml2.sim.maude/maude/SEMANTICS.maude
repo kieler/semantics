@@ -40,8 +40,8 @@ mod SEMANTICS is
     vars NeT : NeCompoundtransitions .    
     vars T T1 T2 F : Compoundtransitions .
     vars t t1 t2 : Compoundtransition .
-    vars sT sT1 sT2 sF : Transitions .
-    vars st st1 st2 : Transition .
+    vars sT sT1 sT2 sF : BasicTransitions .
+    vars st st1 st2 : BasicTransition .
     vars S2 : Verts .
     vars s : State .
     vars s2 s3 ds1 ds2 : State .
