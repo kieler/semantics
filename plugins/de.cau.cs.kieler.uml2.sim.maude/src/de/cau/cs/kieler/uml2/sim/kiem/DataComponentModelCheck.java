@@ -390,6 +390,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     static final String EVENT_FILE_NAME = "events-gen.maude";
     static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" +
     		" including QUEUESIGNATURE .\n" +
+    		" including eclipseInterface .\n" +
     		"     sort QueueStatus .\n" +
     		" var el : EventList .\n" +
     		" var event : Event .\n" +
