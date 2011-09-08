@@ -23,7 +23,7 @@ import java.io.PrintWriter;
 public class MaudeSession {
 
     /** The constant for the Maude timeout. */
-    private static final int MAUDETIMEOUT = 90000;
+    private static final int MAUDETIMEOUT = 900000;
 
     /** The path to maude.exe. */
     private String pathToMaude;
@@ -166,13 +166,16 @@ public class MaudeSession {
         }
 
         boolean done = false;
-
+        boolean fmready = false;
+        boolean erready = false;
         long startTime = System.currentTimeMillis();
         
         while (!done) {
+        	erready = error.ready(); 
             while (error.ready()) {
                 returnValue += (((char) error.read() + ""));
             }
+            fmready = fromMaude.ready(); 
             while (fromMaude.ready()) {
                 returnValue += ((char) fromMaude.read() + "");
             }
