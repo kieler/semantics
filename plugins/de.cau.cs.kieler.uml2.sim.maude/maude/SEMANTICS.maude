@@ -61,132 +61,130 @@ mod SEMANTICS is
     vars MN : Sets .
 
 
-	rl [noevents] : maState (stableC<STATEC>V<HISTC>HC<ENDCONF>) (ev: "noevent") => 
-	maState (doneC<STATEC>V<HISTC>HC<ENDCONF> empty .
+	rl [noevents] : maState (stableC<STATEC>  V  <HISTC>  HC  <ENDCONF>) (ev: "noevent") => 
+	maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) empty .
 	
-	crl [selectEventFSetESINT] : maState (stableC<STATEC>V<HISTC>HC<ENDCONF>) (e2, ES) => 
-	maState (eventSelC<STATEC>V<HISTC>HC<EVENT>e2<ENDCONF> (ES, e2) if (e2 =/= empty) and (e2 =/= (ev: "noevent")) [print "selected " e2] .
+	crl [selectEventFSetESINT] : maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
+	maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES, e2) if (e2 =/= empty) and (e2 =/= (ev: "noevent")) [print "selected " e2] .
 	
-	crl [discardFSetESINT] : maState (eventSelC<STATEC>V<HISTC>HC<EVENT>e2<ENDCONF> (ES) => 
-		maState (doneC<STATEC>V<HISTC>HC<ENDCONF> (ES) if 
+	crl [discardFSetESINT] : maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES) => 
+		maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) (ES) if 
 		(enabled V e2) == empty [print "discarded " e2]  .
     
     rl [doneExecTrans] : maState 
-    (unstableC<STATEC>V<HISTC>HC<TRANSITIONS>empty<ACTIONS>A<ENDCONF>)
+    (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> empty <ACTIONS> A  <ENDCONF>)
     ES =>
-     maState (doneC<STATEC>V<HISTC>(succHC V HC)<ENDCONF>) ES [print "done executing all transitions "] .
+     maState (doneC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES [print "done executing all transitions "] .
 	
-	crl [computeFSetESINT] : maState (eventSelC<STATEC>V<HISTC>HC<EVENT>e2<ENDCONF> (ES) => 
-		maState (fireC<STATEC>V<HISTC>HC<TRANSSETS> 
+	crl [computeFSetESINT] : maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES) => 
+		maState (fireC<STATEC> V <HISTC> HC <TRANSSETS> 
 			(fireableSets 
 				(remLowPrio 
 					(enabled 
 						V 
 						e2
 					)
-				))<ENDCONF> 
+				))  <ENDCONF> 
 		) (ES) if 
 		(enabled V e2) =/= empty 
 		*** [print "firesets for " e2] 
 		.
 	
-	rl [finishedRTCESINT] : maState (doneC<STATEC>V<HISTC>HC<ENDCONF> ES => 
-		maState (stableC<STATEC>V<HISTC>HC<ENDCONF>) ES .
+	rl [finishedRTCESINT] : maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) ES => 
+		maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) ES .
 	
-	rl [fireFSetESINT] : maState (fireC<STATEC>V<HISTC>HC<TRANSSETS>(mm(NeT), MN)<ENDCONF>) ES => 
-		maState (unstableC<STATEC>V<HISTC>HC<TRANSITIONS>NeT<ACTIONS>noac<ENDCONF>) ES 
+	rl [fireFSetESINT] : maState (fireC<STATEC> V <HISTC> HC <TRANSSETS>(mm(NeT), MN)  <ENDCONF>) ES => 
+		maState (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> NeT <ACTIONS> noac  <ENDCONF>) ES 
 		[print "choosen " NeT " not considered " MN] 
 		.
     
-    rl [fireTrans] : maState (unstableC<STATEC>V<HISTC>HC<TRANSITIONS>(t, T)<ACTIONS>A<ENDCONF>) ES =>
-       maState (leaveC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>(inTrans t)<OUTGOINGBASICTR>(outTrans t)<LEAVESTATES>(leave V t)<ACTIONS>A<ENDCONF>) ES 
+    rl [fireTrans] : maState (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> (t, T) <ACTIONS> A  <ENDCONF>) ES =>
+       maState (leaveC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> (inTrans t) <OUTGOINGBASICTR> (outTrans t) <LEAVESTATES> (leave V t) <ACTIONS> A <ENDCONF>) ES 
        *** . 
        [print "fire CTrans " t] .
     
-    rl [fireTrans] : maState (unstableC<STATEC>V<HISTC>HC<TRANSITIONS>t<ACTIONS>A<ENDCONF>) ES =>
-       maState (leaveC<STATEC>V<HISTC>HC<TRANSITIONS>empty<NEXTTR>t<INCOMINGBASICTR>(inTrans t)<OUTGOINGBASICTR>(outTrans t)<LEAVESTATES>(leave V t)<ACTIONS>A<ENDCONF>) ES 
+    rl [fireTrans] : maState (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> t <ACTIONS> A <ENDCONF>) ES =>
+       maState (leaveC<STATEC> V <HISTC> HC <TRANSITIONS> empty <NEXTTR> t <INCOMINGBASICTR> (inTrans t) <OUTGOINGBASICTR> (outTrans t) <LEAVESTATES> (leave V t) <ACTIONS> A <ENDCONF>) ES 
        *** .
        [print "fire CTrans " t] .
     
     crl [leaveState] : maState 
-    (leaveC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<LEAVESTATES>(v, leaveStates)<ACTIONS>A<ENDCONF>)
+    (leaveC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <LEAVESTATES> (v, leaveStates) <ACTIONS> A <ENDCONF>)
     ES =>
      maState 
-    (leaveC<STATEC>(V \ v)<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<LEAVESTATES>leaveStates<ACTIONS>A<ENDCONF>)
+    (leaveC<STATEC> (V \ v) <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <LEAVESTATES> leaveStates <ACTIONS> A <ENDCONF>)
      ES 
      if (((intersection (leaveStates, (getSubVerts v))) == empty) and not(typeRegion v)) [print "leaving " v] .
     
     crl [leaveState] : maState 
-     (leaveC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<LEAVESTATES>(v, leaveStates)<ACTIONS>A<ENDCONF>)
+     (leaveC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <LEAVESTATES> (v, leaveStates) <ACTIONS> A <ENDCONF>)
     ES =>
      maState 
-     (leaveC<STATEC>(V \ v)<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<LEAVESTATES>leaveStates<ACTIONS>A<ENDCONF>)
+     (leaveC<STATEC> (V \ v) <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <LEAVESTATES> leaveStates <ACTIONS> A <ENDCONF>)
      ES 
      if ((intersection (leaveStates, (getSubVerts v)) == empty) and (typeRegion v)) [print "leaving " v] .
     *** add the effect of the transition to the actions, valuations
     
     rl [execBTransincomingPstate] : maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>(st, sT)<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> (st, sT) <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
     ES => maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
     ES .
     
     crl [execBTrans2] : maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>(st, sT1)<ACTIONS>A<ENDCONF>)    
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> (st, sT1) <ACTIONS> A <ENDCONF>)    
     ES => maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)        
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)        
     ES if not(isChoice t) .
     
-    rl [statesLeft] : maState (leaveC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<LEAVESTATES>empty<ACTIONS>A<ENDCONF>) ES => 
+    rl [statesLeft] : maState (leaveC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <LEAVESTATES> empty <ACTIONS> A <ENDCONF>) ES => 
     maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>sT<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> sT <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
     ES [print "states left for " t] .
 
     crl [execBTrans2] : maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
     ES => maState 
-    (execChoiceOut<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execChoiceOut<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
      ES if (isChoice t) .
     
     rl [enterStatesForNonChoiceTrans] : maState 
-    (execTransC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>empty<ACTIONS>A<ENDCONF>)
+    (execTransC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> empty <ACTIONS> A <ENDCONF>)
     ES => 
      maState
-	(enterC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>(enterH HC t)<ACTIONS>A<ENDCONF>)
+	(enterC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> (enterH HC t) <ACTIONS> A <ENDCONF>)
 	ES .
 
     rl [enterStatesForChoiceTrans] : maState 
-    (execChoiceOut V HC T t empty sT1 A)
-    (execChoiceOut<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<INCOMINGBASICTR>empty<OUTGOINGBASICTR>sT1<ACTIONS>A<ENDCONF>)
+    (execChoiceOut<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <INCOMINGBASICTR> empty <OUTGOINGBASICTR> sT1 <ACTIONS> A <ENDCONF>)
      ES => 
      maState
-     (enterC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>(enterH HC (chooseChoice t V))<ACTIONS>A<ENDCONF>)
+     (enterC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> (enterH HC (chooseChoice t V)) <ACTIONS> A <ENDCONF>)
      ES .
 
 
     crl [enterState] : maState 
-    (enterC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>(v, enterStates)<ACTIONS>A<ENDCONF>)
+    (enterC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> (v, enterStates) <ACTIONS> A <ENDCONF>)
      ES => 
      maState 
-   (enterC<STATEC>(V, v)<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>enterStates<ACTIONS>A<ENDCONF>)
+   (enterC<STATEC> (V, v) <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> enterStates <ACTIONS> A <ENDCONF>)
       ES 
      if (((intersection (enterStates, (start v))) == empty) and not(typeRegion v)) [print "entering state " v V] .
 
     crl [enterState] : maState 
-    (enterC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>(v, enterStates)<ACTIONS>A<ENDCONF>)    
+    (enterC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> (v, enterStates) <ACTIONS> A <ENDCONF>)    
     ES =>
      maState 
-     (enterC<STATEC>(V, v)<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>enterStates<ACTIONS>A<ENDCONF>)
+     (enterC<STATEC> (V, v) <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> enterStates <ACTIONS> A <ENDCONF>)
      ES 
      if ((intersection (enterStates, (start v)) == empty) and (typeRegion v))  [print "entering region " v V] .
 
     rl [doneExecTrans] : maState 
-    (enterC<STATEC>V<HISTC>HC<TRANSITIONS>T<NEXTTR>t<ENTERSTATES>empty<ACTIONS>A<ENDCONF>)
+    (enterC<STATEC> V <HISTC> HC <TRANSITIONS> T <NEXTTR> t <ENTERSTATES> empty <ACTIONS> A <ENDCONF>)
     ES =>
      maState 
-     (unstableC<STATEC>V<HISTC>HC<TRANSITIONS>T<ACTIONS>A<ENDCONF>)
+     (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> T <ACTIONS> A <ENDCONF>)
      ES [print "done executing " t] .
-
     
 endm
 ***( 

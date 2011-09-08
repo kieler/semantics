@@ -27,7 +27,7 @@ fmod SEMANTICSSYNTAX is
   op leaveC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<LEAVESTATES>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Verts Action -> Configuration .
   op enterC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<ENTERSTATES>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition Verts Action -> Configuration .
   op execTransC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration .
-  op execChoiceOut<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_ACTIONS_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration .
+  op execChoiceOut<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration .
   op execC<STATEC>_<HISTC>_<TRANSITIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions -> Configuration .
   op stableC<STATEC>_<HISTC>_<ENDCONF> : Verts HistoryConfs -> Configuration .  
   op doneC<STATEC>_<HISTC>_<ENDCONF> : Verts HistoryConfs -> Configuration .

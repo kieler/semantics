@@ -194,12 +194,12 @@ mod INIT is
 	
 	op aCf : Actions -> Prop .
 	op inC : Verts -> Prop .
-    ceq maState (stableC V HC) E |= inC(V2) = true if (V2 subset V)  .
+    ceq maState (stableC<STATEC> V <HISTC> HC <ENDCONF>) E |= inC(V2) = true if (V2 subset V)  .
 	eq msst |= inC(V) = false [owise] .
 
 	
 	op isDone_ : MState -> Bool .
-	eq isDone (maState (doneC<STATEC>V<HISTC>HC<ENDCONF>) E) = true .
+	eq isDone (maState (doneC<STATEC> V <HISTC> HC <ENDCONF>) E) = true .
 	eq isDone msst = false [owise] .
 	
 endm
