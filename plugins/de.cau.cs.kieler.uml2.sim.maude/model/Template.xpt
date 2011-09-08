@@ -203,9 +203,8 @@ mod INIT is
 	eq isDone msst = false [owise] .
 	
 endm
-set trace on .
 
-«REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem
+
 load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  mod QUEUESEMANTICS is 
  including eclipseInterface .
@@ -215,25 +214,18 @@ load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  var event : Event .
  var equeue : EventQueue .
 
- «FOREACH this.getTriggerEvents() AS event SEPARATOR '\n'-»rl QUEUE el ENDQUEUE => QUEUE el («event-») ENDQUEUE .«ENDFOREACH-»
-
  op <ready_ > : EventQueue -> QueueStatus .
  op <schedule__ > : EventQueue Event -> QueueStatus .
  op <initQueue> : -> QueueStatus .
   
  rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .
  rl <schedule equeue event >  => <ready equeue > .
- rl <initQueue>s => <ready emptyQueue > . 
+ rl <initQueue> => <ready emptyQueue > . 
 
 endm
-*** so far there is no need for event semantics
 
-«ENDREM»
-
-***(
 ***load «((String)(GLOBALVAR maudebasecode))»ACCS
 ***load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
-)***
 
 «REM»
 

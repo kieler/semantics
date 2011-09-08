@@ -385,8 +385,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         }
 
     }
+
+    
     // -------------------------------------------------------------------------
 
+    
+    
     static final String EVENT_FILE_NAME = "events-gen.maude";
     static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" +
     		" including QUEUESIGNATURE .\n" +
@@ -439,7 +443,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     	
     	// (Re)Load into Maude
         try {
-            String result = MaudeInterfacePlugin.getDefault().queryMaude("bla", maudeSessionId);
+            String result = MaudeInterfacePlugin.getDefault().queryMaude(maudeCode, maudeSessionId);
         } catch (Exception e) {
             throw new KiemExecutionException("A Maude error occurred when trying to reload events.", false, e);
         }
@@ -519,9 +523,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
             //TODO: empty == history conf string
-            String queryRequest = "red modelCheck ((maState (stableC ((" + 
-                    currentStatesQuery + ")) empty) ("
-                    + triggerEventsQuery + ")), " + checkingRule + ") . \n";
+            String queryRequest = "red 2 . \n "+
+            		"red "+ currentStatesQuery + " .\n"+
+            		"red " + triggerEventsQuery + " .\n"+
+            		"red modelCheck(maState (stableC<STATEC> " + 
+                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+                    + triggerEventsQuery + "), " + checkingRule + ") . \n";
 
             // Debug output query request
             printConsole(queryRequest);
