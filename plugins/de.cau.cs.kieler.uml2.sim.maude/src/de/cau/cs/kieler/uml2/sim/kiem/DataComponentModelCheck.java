@@ -400,7 +400,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     		" op <initQueue> : -> QueueStatus .\n" +
     		" rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .\n" +
     		" rl <schedule equeue event >  => <ready equeue > .\n" +
-    		" rl <initQueue> => <ready emptyQueue > .\n" +
+    		" rl <initQueue> => <ready emptyQueue > .\n " +
     		"endm\n";
     static final String EVENT_LINE_START = "rl QUEUE el ENDQUEUE => QUEUE el (";
     static final String EVENT_LINE_END   = ") ENDQUEUE .\n";
