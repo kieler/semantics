@@ -31,7 +31,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
     // FIXME: the has to be adapted to the new syntax -> check
-    private static final String MAUDEPARSESTATESTARTER = "--> maState doneC ("; // FALSCH!
+    private static final String MAUDEPARSESTATESTARTER = "--> maState doneC<STATEC>("; // FALSCH!
                                                                                 // "--> maState  doneC (r";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
@@ -120,6 +120,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
             }
         }
         // if no events selected, produce this dummy event for maude
+        // TODO remove noevent here?
         if (triggerEventsQuery.equals("")) {
             triggerEventsQuery = "ev: \"noevent\"";
         }
@@ -143,8 +144,8 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // search (maState (stableC (prettyVerts (R-990928836 ,
         // susp441237549)) empty) (res,
         // ee1)) =>* mastate such that isDone mastate .
-        String queryRequest = "search (maState (stableC (" + currentStatesRegionsQuery
-                + ") empty) (" + triggerEventsQuery
+        String queryRequest = "search (maState (stableC<STATEC>(" + currentStatesRegionsQuery
+                + ")<HISTC>empty<ENDCONF>) (" + triggerEventsQuery
                 + ")) =>* mastate such that isDone mastate . \n";
 
         // Debug output query request

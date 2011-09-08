@@ -21,17 +21,17 @@ fmod SEMANTICSSYNTAX is
 
   
   sort Configuration .
-  op fireC___ : Verts HistoryConfs Sets -> Configuration .
-  op unstableC____ : Verts HistoryConfs Compoundtransitions Action -> Configuration .
-  op unstableExecC______ : Verts HistoryConfs Compoundtransitions BasicTransitions BasicTransitions Action -> Configuration .
-  op leaveC________ : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Verts Action -> Configuration .
-  op enterC______ : Verts HistoryConfs Compoundtransitions Compoundtransition Verts Action -> Configuration .
-  op execTransC_______ : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration [format (n n n n n n n n n)] .
-  op execChoiceOut_______ : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration [format (n n n n n n n n n)] .
-  op execC___ : Verts HistoryConfs Compoundtransitions -> Configuration .
-  op stableC__ : Verts HistoryConfs -> Configuration .  
-  op doneC__ : Verts HistoryConfs -> Configuration .
-  op eventSelC___ : Verts HistoryConfs Event -> Configuration .
+  op fireC<STATEC>_<HISTC>_<TRANSSETS>_<ENDCONF> : Verts HistoryConfs Sets -> Configuration .
+  op unstableC<STATEC>_<HISTC>_<TRANSITIONS>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Action -> Configuration .
+  op unstableExecC<STATEC>_<HISTC>_<TRANSITIONS>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions BasicTransitions BasicTransitions Action -> Configuration .
+  op leaveC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<LEAVESTATES>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Verts Action -> Configuration .
+  op enterC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<ENTERSTATES>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition Verts Action -> Configuration .
+  op execTransC<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_<ACTIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration .
+  op execChoiceOut<STATEC>_<HISTC>_<TRANSITIONS>_<NEXTTR>_<INCOMINGBASICTR>_<OUTGOINGBASICTR>_ACTIONS_<ENDCONF> : Verts HistoryConfs Compoundtransitions Compoundtransition BasicTransitions BasicTransitions Action -> Configuration .
+  op execC<STATEC>_<HISTC>_<TRANSITIONS>_<ENDCONF> : Verts HistoryConfs Compoundtransitions -> Configuration .
+  op stableC<STATEC>_<HISTC>_<ENDCONF> : Verts HistoryConfs -> Configuration .  
+  op doneC<STATEC>_<HISTC>_<ENDCONF> : Verts HistoryConfs -> Configuration .
+  op eventSelC<STATEC>_<HISTC>_<EVENT>_<ENDCONF> : Verts HistoryConfs Event -> Configuration .
 
 *** These are for the execution of single compoundtransitions
 

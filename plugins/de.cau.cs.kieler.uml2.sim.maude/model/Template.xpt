@@ -199,7 +199,7 @@ mod INIT is
 
 	
 	op isDone_ : MState -> Bool .
-	eq isDone (maState (doneC V HC) E) = true .
+	eq isDone (maState (doneC<STATEC>V<HISTC>HC<ENDCONF>) E) = true .
 	eq isDone msst = false [owise] .
 	
 endm
