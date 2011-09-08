@@ -439,7 +439,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     	
     	// (Re)Load into Maude
         try {
-            String result = MaudeInterfacePlugin.getDefault().queryMaude(maudeCode, maudeSessionId);
+            String result = MaudeInterfacePlugin.getDefault().queryMaude("bla", maudeSessionId);
         } catch (Exception e) {
             throw new KiemExecutionException("A Maude error occurred when trying to reload events.", false, e);
         }

@@ -203,6 +203,7 @@ mod INIT is
 	eq isDone msst = false [owise] .
 	
 endm
+set trace on .
 
 «REM» state machine definition ends here, following the Eclipse interface module referenced by maude core step sem
 load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
