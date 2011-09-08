@@ -128,15 +128,15 @@ public class PanningEffect extends AbstractEffect {
         if (finalCoords != null) {
             MonitoredOperation.runInUI(new Runnable() {
                 public void run() {
+                    if (zoom) {
+                        zoomManager.setZoom(zoomLevel);                            
+                    }
                     if (animate) {
                         canvas.scrollSmoothTo(finalCoords.x, finalCoords.y);
                         
                     } else {
                         canvas.scrollTo(finalCoords.x, finalCoords.y);
-                    }
-                    if (zoom) {
-                        zoomManager.setZoom(zoomLevel);                            
-                    }
+                    }                  
                 }
             }, false);
         }
