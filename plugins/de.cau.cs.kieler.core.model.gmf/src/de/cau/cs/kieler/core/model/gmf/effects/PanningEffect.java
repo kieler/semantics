@@ -107,6 +107,40 @@ public class PanningEffect extends AbstractEffect {
     }
 
     /**
+     * Helper method to get the absolute coordinates of an model element to scroll to that location.
+     * @param part the edit part of the modelelement
+     * @param point the relative location of the model element
+     * @return the absolute location of the model element
+     */
+    private Point getAbsoluteCoords(final GraphicalEditPart part, final Point point) {
+        int x = point.x;
+        int y = point.y;
+        EObject parentObject = part.getNotationView().getElement().eContainer();
+        if (parentObject != null) {
+            EditPart parent = this.editor.getDiagramEditPart().findEditPart(
+                    editor.getDiagramEditPart(), parentObject);
+            if (parent instanceof GraphicalEditPart) {
+                Point parentLocation = ((GraphicalEditPart) parent).getFigure().getBounds()
+                        .getLocation();
+                x += parentLocation.x;
+                y += parentLocation.y;
+            }
+            while (parentObject.eContainer() != null) {
+                parentObject = parentObject.eContainer();
+                parent = this.editor.getDiagramEditPart().findEditPart(editor.getDiagramEditPart(),
+                        parentObject);
+                if (parent instanceof GraphicalEditPart) {
+                    Point parentLocation = ((GraphicalEditPart) parent).getFigure().getBounds()
+                            .getLocation();
+                    x += parentLocation.x;
+                    y += parentLocation.y;
+                }
+            }
+        }
+        return new Point(x, y);
+    }
+
+    /**
      * {@inheritDoc}
      */
     public void execute() {
@@ -118,8 +152,9 @@ public class PanningEffect extends AbstractEffect {
                     target);
             if (part instanceof GraphicalEditPart) {
                 GraphicalEditPart graphicalPart = (GraphicalEditPart) part;
-                coords = graphicalPart.getFigure().getBounds().getLocation();
-                graphicalPart.getFigure().translateToAbsolute(coords);
+                coords = graphicalPart.getFigure().getBounds().getLocation().getCopy();
+                // graphicalPart.getFigure().translateToAbsolute(coords);
+                coords = this.getAbsoluteCoords(graphicalPart, coords);
             }
         } else if (coordinates != null) {
             coords = coordinates;
@@ -129,14 +164,14 @@ public class PanningEffect extends AbstractEffect {
             MonitoredOperation.runInUI(new Runnable() {
                 public void run() {
                     if (zoom) {
-                        zoomManager.setZoom(zoomLevel);                            
+                        zoomManager.setZoom(zoomLevel);
                     }
                     if (animate) {
                         canvas.scrollSmoothTo(finalCoords.x, finalCoords.y);
-                        
+
                     } else {
                         canvas.scrollTo(finalCoords.x, finalCoords.y);
-                    }                  
+                    }
                 }
             }, false);
         }
