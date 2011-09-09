@@ -1,0 +1,116 @@
+
+
+mod BFPOOLANDSM is
+	including BFAIRPOOL .
+	including SEMANTICS .
+	sort BFPSMStatus . 
+	
+ op readyBFPSM__ : EpStatus MState -> BFPSMStatus .
+ op scheduleBFPSM__ : EpStatus MState -> BFPSMStatus .
+
+  vars queuest queuest' : QueueStatus .
+  vars accsst accsst' : AccsStatus .
+  var epstatus : EpStatus .
+   var equeue : EventQueue .
+  vars accs accs2 : AcctupSet .
+  var eventset : EventSet .
+  var event : Event .
+var mastate : MState .	
+	var mstate : MState .
+
+    vars src tgt src2 tgt2 : Verts . 
+    vars e e2 : Event .
+    vars g g2 : Guard .
+    vars a af aj a2 af2 aj2 action : Actions .
+    vars A AF AJ A2 AF2 AJ2 actions : Actions .
+    vars lreg lreg2 : Vert .
+	
+
+
+    vars  ENA : EntryActions .
+    vars  EXA : ExitActions .
+
+    vars sm : StateMachine .
+    vars HC : HistoryConfs .
+    vars hc : HistoryConf .
+    vars C2 leaveStates enterStates : Verts . *** Konfiguration
+    vars fe : Event . 
+    vars E E2 : EventSet .
+    vars ES ES2 : EventSet .
+    vars C C' V V2 S : Verts .
+    vars NeT : NeCompoundtransitions .    
+    vars T T1 T2 F : Compoundtransitions .
+    vars t t1 t2 : Compoundtransition .
+    vars sT sT1 sT2 sF : BasicTransitions .
+    vars st st1 st2 : BasicTransition .
+    vars S2 : Verts .
+    vars s : ModState .
+    vars s2 s3 ds1 ds2 : ModState .
+    vars V_vert V_vert2 v : Vert .
+    vars R : Verts .
+    vars r r2 r3 : Region .
+    vars c : CompositeID .
+    vars shn : HistShallowID .
+    vars dhn : HistDeepID .
+    vars D : Defaults .
+    vars d : Default .
+    vars SH : ShallowDefaults .
+    vars sh : ShallowDefault .
+    vars DH : DeepDefaults .
+    vars dh : DeepDefault .
+    vars str : String .
+    vars MN : Sets .
+
+  crl readyBFPSM(ready queuest accsst)
+  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) =>
+  	scheduleBFPSM (schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
+  		(maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES))
+  if ready queuest accsst => schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
+  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
+		maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES) .
+  crl scheduleBFPSM(schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
+		  (maState 
+		    (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> empty <ACTIONS> A  <ENDCONF>)
+		    ES)
+  => 
+    readyBFPSM(ready queuest accsst) (maState (doneC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES)
+  if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 => 
+    ready queuest accsst /\
+    maState 
+		    (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> empty <ACTIONS> A  <ENDCONF>)
+		    ES => maState (doneC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES .
+    
+
+endm
+
+mod MCBFPOOLANDSM is
+	including BFPOOLANDSM .
+	including SATISFACTION .
+	including LTL .
+	including MODEL-CHECKER .
+	including LTL-SIMPLIFIER .
+	
+	
+	subsort BFPSMStatus < State .
+    vars accsst accsst' : AccsStatus .
+  var epstatus : EpStatus .
+   var equeue : EventQueue .
+  vars accs accs2 : AcctupSet .
+  var eventset : EventSet .
+  vars event e2 : Event .
+      vars E E2 : EventSet .
+    vars ES ES2 : EventSet .
+  
+  vars queuest queuest' : QueueStatus .
+	vars msst mastate : BFPSMStatus .
+	vars V V2 : Verts .
+	var E : EventSet .
+	vars HC : HistoryConfs .
+	
+	
+	op inC : Verts -> Prop .
+    ceq readyBFPSM(ready queuest accsst)
+  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) |= inC(V2) = true if (V2 subset V)  .
+	eq msst |= inC(V) = false [owise] .
+	
+endm

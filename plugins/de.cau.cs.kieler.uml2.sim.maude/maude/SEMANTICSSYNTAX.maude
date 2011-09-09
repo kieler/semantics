@@ -15,10 +15,12 @@ fmod SEMANTICSSYNTAX is
   sorts LtsState .
   sort MState .  
   
-  op maState__ : Configuration EventSet -> MState [ctor format (r d d n)] .
+  op maState__ : Configuration EventSet -> MState .
+  op initMState : -> MState .
+***(
   op maState__ : Configuration EventSet 
     -> MState [ctor format (r d d d n)] .
-
+)***
   
   sort Configuration .
   op fireC<STATEC>_<HISTC>_<TRANSSETS>_<ENDCONF> : Verts HistoryConfs Sets -> Configuration .

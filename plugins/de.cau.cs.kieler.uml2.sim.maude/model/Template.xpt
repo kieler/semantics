@@ -224,9 +224,9 @@ load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
 
 endm
 
-***load «((String)(GLOBALVAR maudebasecode))»ACCS
-***load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
-
+load «((String)(GLOBALVAR maudebasecode))»ACCS
+load «((String)(GLOBALVAR maudebasecode))»BFAIRPOOL
+load «((String)(GLOBALVAR maudebasecode))»BFPOOLANDSM
 «REM»
 
 ***(

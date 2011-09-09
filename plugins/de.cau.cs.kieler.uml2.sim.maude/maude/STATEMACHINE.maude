@@ -307,6 +307,4 @@ fmod STATEMACHINE is
   eq $$$succHC r V HC1 HC = HC, (historyconf r (getsub r V)) [owise] .
 )***
 
-
-
 endfm

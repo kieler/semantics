@@ -1,8 +1,7 @@
-load ACCS
-load QUEUESEMANTICS 
+
 
 mod BFAIRPOOL is
-	including ACCSTEST .
+	including ACCSSEMANTICS .
 	including QUEUESEMANTICS .
 	sort EpStatus . *** status of the event pool
 	
@@ -24,7 +23,7 @@ mod BFAIRPOOL is
     ready queuest accsst
    if <schedule equeue event > => queuest /\ 
      <schedule eventset accs event > => accsst .
- rl initBFairPool => ready <initQueue> <initAccs tups >  . 
+ rl initBFairPool => ready <initQueue> <initAccs empty >  . 
 endm
 
 
