@@ -54,7 +54,8 @@ public class PanningEffect extends AbstractEffect {
      * @param animate
      *            true if scrolling should be animated
      * @param zoom
-     *            true if zooming should be done
+     *            true if zooming should be done (its bugged at the moment an should not be used)
+     *            FIXME on different zoom levels the coordinates get mixed up
      * @param zoomLevel
      *            the desired zoom level (i.e. 1.5 = 150%)
      */
