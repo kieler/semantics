@@ -523,13 +523,40 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
             //TODO: empty == history conf string
-            String queryRequest = "red 2 . \n "+
-            		"red "+ currentStatesQuery + " .\n"+
-            		"red " + triggerEventsQuery + " .\n"+
-            		"red modelCheck(maState (stableC<STATEC> " + 
-                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-                    + triggerEventsQuery + "), " + checkingRule + ") . \n";
+            String queryRequest = 
+        //  		"set trace on .\n"+
+          //  		"red 2 . \n "+
+          //  		"red in MCBFPOOLANDSM : "+ currentStatesQuery + " .\n"+
+          //  		"red " + triggerEventsQuery + " .\n"+
+  	//	"red in MCBFPOOLANDSM :  tups .\n" +
+  	//	"red in MCBFPOOLANDSM : emptyQueue .\n" +      
+  	//	"red in MCBFPOOLANDSM : <ready (a, b) tups > .\n" +  		
+  	//	"red in MCBFPOOLANDSM : ready <ready emptyQueue > <ready (a, b) tups > .\n" +
+  	//	"red in MCBFPOOLANDSM : maState (stableC<STATEC> " + 
+    //      currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+    //      + triggerEventsQuery + ") .\n"+
 
+    //        		"red in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+    //        		"(maState (stableC<STATEC> " + 
+    //                currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+    //                + triggerEventsQuery + ")) .\n"
+    //                +
+
+            	                    
+           	            		"rew [500] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+            	            		"(maState (stableC<STATEC> " + 
+            	                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+            	                    + triggerEventsQuery + ")) . \n"
+            	                    
+//
+//            		
+//            		"red in MCBFPOOLANDSM : modelCheck(" +
+//            		"readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+//            		"(maState (stableC<STATEC> " + 
+//                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+//                    + triggerEventsQuery + ")), " + checkingRule + ") . \n"
+                    ;
+            
             // Debug output query request
             printConsole(queryRequest);
 

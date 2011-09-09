@@ -89,8 +89,17 @@ mod MCBFPOOLANDSM is
 	including LTL .
 	including MODEL-CHECKER .
 	including LTL-SIMPLIFIER .
-	
-	
+    including ACCS .
+    including QUEQUESEMANTICS .
+    ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 : -> Acctup .
+    eq tup1 = acc:(E)(a)(F)(b)(L)5(U)0 .
+    eq tup2 = acc:(E)(b)(F)(a)(L)5(U)0 .
+     
+
+    ops tups : -> AcctupSet .
+    eq tups = (tup1, tup2) .
+    
+
 	subsort BFPSMStatus < State .
     vars accsst accsst' : AccsStatus .
   var epstatus : EpStatus .
