@@ -16,7 +16,6 @@ fmod SEMANTICSSYNTAX is
   sort MState .  
   
   op maState__ : Configuration EventSet -> MState .
-  op initMState : -> MState .
 ***(
   op maState__ : Configuration EventSet 
     -> MState [ctor format (r d d d n)] .

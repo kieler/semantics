@@ -256,8 +256,34 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         }
         
         
+//        
+//        result (sort not calculated): readyBFPSM schedule <ready QUEUE a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+//        a b a b a b a b a ENDQUEUE > <ready (b, a) (acc:(E)b(F)a(L)5(U)0, acc:(E)a(
+//        F)b(L)5(U)1) > b maState eventSelC<STATEC> root R "R1280114252", root R
+//        "R1280114252" : C "State0--402295417", root R "R1280114252" : C
+//        "State0--402295417" : R "R-775518637", root R "R1280114252" : C
+//        "State0--402295417" : R "R-775518637" : C "State2--412151283" <HISTC> empty
+//        <EVENT> b <ENDCONF> (b, a)
+//        
+        
         // consume "maState stableC (" or similar
-        rawValue = rawValue.substring(rawValue.indexOf("("));
+        rawValue = rawValue.substring(rawValue.indexOf("<STATEC>")+8);
 
 
         boolean consuming = false;
@@ -273,7 +299,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 // do not consume "-character
                 continue;
             }
-            if (character.equals(")")) {
+            if (character.equals("<")) {
                 break;
             }
             if (consuming) {
@@ -524,7 +550,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // ee1)) =>* mastate such that isDone mastate .
             //TODO: empty == history conf string
             String queryRequest = 
-        //  		"set trace on .\n"+
+//          		"set trace on .\n"+
           //  		"red 2 . \n "+
           //  		"red in MCBFPOOLANDSM : "+ currentStatesQuery + " .\n"+
           //  		"red " + triggerEventsQuery + " .\n"+
@@ -543,7 +569,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     //                +
 
             	                    
-           	            		"rew [500] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+           	            		"frew [5000] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
             	            		"(maState (stableC<STATEC> " + 
             	                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
             	                    + triggerEventsQuery + ")) . \n"

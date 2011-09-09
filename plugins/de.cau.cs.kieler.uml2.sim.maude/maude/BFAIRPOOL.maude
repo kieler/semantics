@@ -19,10 +19,12 @@ mod BFAIRPOOL is
  crl ready queuest accsst => schedule <schedule equeue event > <schedule eventset accs event > event 
    if queuest => <schedule equeue event > /\ 
      accsst => <schedule eventset accs event > [print "scheduled " event].
+
+
  crl schedule <schedule equeue event > <schedule eventset accs event > event => 
     ready queuest accsst
-   if <schedule equeue event > => queuest /\ 
-     <schedule eventset accs event > => accsst .
+   if <schedule equeue event > =>! queuest /\ 
+     <schedule eventset accs event > =>! accsst .
  rl initBFairPool => ready <initQueue> <initAccs empty >  . 
 endm
 
