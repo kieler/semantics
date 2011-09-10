@@ -569,10 +569,10 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     //                +
 
             	                    
-           	            		"frew [5000] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
-            	            		"(maState (stableC<STATEC> " + 
-            	                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-            	                    + triggerEventsQuery + ")) . \n"
+//           	            		"frew [5000] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+//            	            		"(maState (stableC<STATEC> " + 
+//            	                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+//            	                    + triggerEventsQuery + ")) . \n"
             	                    
 //
 //            		
@@ -581,6 +581,15 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 //            		"(maState (stableC<STATEC> " + 
 //                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
 //                    + triggerEventsQuery + ")), " + checkingRule + ") . \n"
+
+               		"search [5] in MCBFPOOLANDSM : " +
+            		"readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+            		"(maState (stableC<STATEC> " + 
+                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
+                    + triggerEventsQuery + ")) =>+ mastate . \n"
+
+                    
+                    
                     ;
             
             // Debug output query request

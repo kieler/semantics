@@ -16,15 +16,15 @@ mod BFAIRPOOL is
   var eventset : EventSet .
   var event : Event .
 
- crl ready queuest accsst => schedule <schedule equeue event > <schedule eventset accs event > event 
-   if queuest =>1 <schedule equeue event > /\ 
-     accsst =>1 <schedule eventset accs event > [print "scheduled " event].
+ crl ready <ready equeue > <ready eventset accs > => schedule <schedule equeue event > <schedule eventset accs event > event 
+   if <ready equeue > => <schedule equeue event > /\ 
+     <ready eventset accs > => <schedule eventset accs event > [print "scheduled " event].
 
 
  crl schedule <schedule equeue event > <schedule eventset accs event > event => 
-    ready queuest accsst
-   if <schedule equeue event > =>1 queuest /\ 
-     <schedule eventset accs event > =>1 accsst .
+    ready <ready equeue > <ready eventset accs >
+   if <schedule equeue event > => <ready equeue > /\ 
+     <schedule eventset accs event > => <ready eventset accs > .
  rl initBFairPool => ready <initQueue> <initAccs empty >  . 
 endm
 

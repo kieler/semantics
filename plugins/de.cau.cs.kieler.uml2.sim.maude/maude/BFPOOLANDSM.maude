@@ -61,20 +61,20 @@ var mastate : MState .
     vars str : String .
     vars MN : Sets .
 
-  crl readyBFPSM(ready queuest accsst)
+  crl readyBFPSM(ready <ready equeue > <ready eventset accs >)
   		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) =>
   	scheduleBFPSM (schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
   		(maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES))
-  if ready queuest accsst =>1 schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
-  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) =>1 
+  if ready <ready equeue > <ready eventset accs > => schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
+  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
 		maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES) .
  
   crl scheduleBFPSM(schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
 		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
   => 
-    readyBFPSM(ready queuest accsst) (maState (stableC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES)
-  if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 =>1 
-    ready queuest accsst .
+    readyBFPSM(ready <ready equeue > <ready eventset accs >) (maState (stableC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES)
+  if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 =>
+    ready <ready equeue > <ready eventset accs > .
     
   rl readyBFPSM(ready <ready equeue > <ready eventset accs >) 
 		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
@@ -117,10 +117,16 @@ mod MCBFPOOLANDSM is
 	var E : EventSet .
 	vars HC : HistoryConfs .
 	
+	var P : Prop .
 	
 	op inC : Verts -> Prop .
     ceq readyBFPSM(ready queuest accsst)
-  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) |= inC(V2) = true if (V2 subset V)  .
-	eq msst |= inC(V) = false [owise] .
+  		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) ES) |= inC(V2) = true if (V2 subset V)  .
+  	op doneC BFPSMStatus : -> Prop .
+  	eq doneC (readyBFPSM(ready queuest accsst)
+  		(maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) ES)) .
+  		
+  		
+	eq msst |= P = false [owise] .
 	
 endm
