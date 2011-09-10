@@ -65,14 +65,14 @@ var mastate : MState .
   		(maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES)) =>
   	scheduleBFPSM (schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
   		(maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES))
-  if ready queuest accsst => schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
-  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
+  if ready queuest accsst =>1 schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 /\  
+  	maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) =>1 
 		maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (e2, ES) .
   crl scheduleBFPSM(schedule <schedule equeue e2 > <schedule eventset accs e2 > e2) 
 		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
   => 
     readyBFPSM(ready queuest accsst) (maState (stableC<STATEC> V <HISTC> (succHC V HC)  <ENDCONF>) ES)
-  if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 =>! 
+  if schedule <schedule equeue e2 > <schedule eventset accs e2 > e2 =>1 
     ready queuest accsst .
     
 

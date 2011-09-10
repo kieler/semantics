@@ -17,14 +17,14 @@ mod BFAIRPOOL is
   var event : Event .
 
  crl ready queuest accsst => schedule <schedule equeue event > <schedule eventset accs event > event 
-   if queuest => <schedule equeue event > /\ 
-     accsst => <schedule eventset accs event > [print "scheduled " event].
+   if queuest =>1 <schedule equeue event > /\ 
+     accsst =>1 <schedule eventset accs event > [print "scheduled " event].
 
 
  crl schedule <schedule equeue event > <schedule eventset accs event > event => 
     ready queuest accsst
-   if <schedule equeue event > =>! queuest /\ 
-     <schedule eventset accs event > =>! accsst .
+   if <schedule equeue event > =>1 queuest /\ 
+     <schedule eventset accs event > =>1 accsst .
  rl initBFairPool => ready <initQueue> <initAccs empty >  . 
 endm
 
