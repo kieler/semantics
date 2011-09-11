@@ -422,17 +422,21 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     		" including QUEUESIGNATURE .\n" +
     		" including eclipseInterface .\n" +
     		"     sort QueueStatus .\n" +
-    		" var el : EventList .\n" +
+    		" var el : EventSet .\n" +
     		" var event : Event .\n" +
-    		" var equeue : EventQueue .\n";
-    static final String EVENT_POSTLUDE = " op <ready_ > : EventQueue -> QueueStatus .\n" +
+    		" var equeue : EventQueue .\n "+
+    		" op allEvs : -> EventSet .\n"+
+    		" eq allEvs = empty";
+    static final String EVENT_POSTLUDE = 
+    		"  .\n" +
+    		" op <ready_ > : EventQueue -> QueueStatus .\n" +
     		" op <schedule__ > : EventQueue Event -> QueueStatus .\n" +
     		" op <initQueue> : -> QueueStatus .\n" +
-    		" rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .\n" +
+    		" rl <ready (QUEUE event, el ENDQUEUE) > => <schedule (QUEUE el, event ENDQUEUE) event > .\n" +
     		" rl <schedule equeue event >  => <ready equeue > .\n" +
-    		" rl <initQueue> => <ready emptyQueue > .\n " +
+    		" rl <initQueue> => <ready (QUEUE allEvs ENDQUEUE) > .\n " +
     		"endm\n";
-    static final String EVENT_LINE_START = "rl QUEUE el ENDQUEUE => QUEUE el (";
+    static final String EVENT_LINE_START = "***   rl QUEUE el ENDQUEUE => QUEUE el (";
     static final String EVENT_LINE_END   = ") ENDQUEUE .\n";
     
     public void writeAndReloadSelectedEvents(JSONObject signals) throws KiemExecutionException {
@@ -444,9 +448,10 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         for (String signalName : signalNames) {
         	try {
 				if (JSONSignalValues.isPresent(signals.get(signalName))) {
-					maudeCode += EVENT_LINE_START;
-					maudeCode += signalName;
-					maudeCode += EVENT_LINE_END;
+//					maudeCode += EVENT_LINE_START;
+					maudeCode += (", "+signalName);
+//					maudeCode += EVENT_LINE_END;
+					
 				}
 			} catch (JSONException e) {
 				//TODO: handle these errors properly
@@ -558,37 +563,15 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
   	//	"red in MCBFPOOLANDSM : emptyQueue .\n" +      
   	//	"red in MCBFPOOLANDSM : <ready (a, b) tups > .\n" +  		
   	//	"red in MCBFPOOLANDSM : ready <ready emptyQueue > <ready (a, b) tups > .\n" +
-  	//	"red in MCBFPOOLANDSM : maState (stableC<STATEC> " + 
-    //      currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-    //      + triggerEventsQuery + ") .\n"+
-
-    //        		"red in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
-    //        		"(maState (stableC<STATEC> " + 
-    //                currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-    //                + triggerEventsQuery + ")) .\n"
-    //                +
-
-            	                    
-//           	            		"frew [5000] in MCBFPOOLANDSM : readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
-//            	            		"(maState (stableC<STATEC> " + 
-//            	                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-//            	                    + triggerEventsQuery + ")) . \n"
-            	                    
+           	                    
 //
 //            		
-//            		"red in MCBFPOOLANDSM : modelCheck(" +
-//            		"readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
-//            		"(maState (stableC<STATEC> " + 
-//                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-//                    + triggerEventsQuery + ")), " + checkingRule + ") . \n"
-
-               		"search [5] in MCBFPOOLANDSM : " +
-            		"readyBFPSM(ready <ready emptyQueue > <ready (a, b) tups >)" +
+            		"red in MCBFPOOLANDSM : modelCheck(" +
+            		"readyBFPSM(ready <ready QUEUE "+ triggerEventsQuery +" ENDQUEUE > <ready ("+ triggerEventsQuery +") tups >)" +
             		"(maState (stableC<STATEC> " + 
                     currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-                    + triggerEventsQuery + ")) =>+ mastate . \n"
+                    + triggerEventsQuery + ")), " + checkingRule + ") . \n"
 
-                    
                     
                     ;
             

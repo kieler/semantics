@@ -210,7 +210,7 @@ load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  including eclipseInterface .
  including QUEUESIGNATURE .
      sort QueueStatus .
- var el : EventList .
+ var el : EventSet .
  var event : Event .
  var equeue : EventQueue .
 
@@ -218,7 +218,7 @@ load «((String)(GLOBALVAR maudebasecode))»QUEUESYNTAX
  op <schedule__ > : EventQueue Event -> QueueStatus .
  op <initQueue> : -> QueueStatus .
   
- rl <ready (QUEUE event el ENDQUEUE) > => <schedule (QUEUE el ENDQUEUE) event > .
+ rl <ready (QUEUE event, el ENDQUEUE) > => <schedule (QUEUE el, event ENDQUEUE) event > .
  rl <schedule equeue event >  => <ready equeue > .
  rl <initQueue> => <ready emptyQueue > . 
 

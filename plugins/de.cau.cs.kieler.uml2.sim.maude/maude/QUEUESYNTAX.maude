@@ -1,15 +1,13 @@
-load EVENTSSYNTAX .
+*** load EVENTSSYNTAX .
 
 fmod QUEUESIGNATURE is 
-  including LIST{Event} * (sort List{Event} to EventList, sort NeList{Event} to NeEventList) .
+  including SET{Event} * (sort Set{Event} to EventSet, sort NeSet{Event} to NeEventSet) .
   sort EventQueue .
-  op QUEUE_ENDQUEUE : EventList -> EventQueue .
+  op QUEUE_ENDQUEUE : EventSet -> EventQueue .
   op emptyQueue : -> EventQueue .
-  eq emptyQueue = QUEUE nil ENDQUEUE .        
+  eq emptyQueue = QUEUE empty ENDQUEUE .        
 endfm
 
 
-
-
-***rew [50] initQueue .
+red 2 .
 
