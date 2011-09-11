@@ -80,7 +80,7 @@ var mastate : MState .
 		  (maState (doneC<STATEC> V <HISTC>  HC  <ENDCONF>) ES)
   => 
     readyBFPSM(ready <ready equeue > <ready eventset accs >) 
-		  (maState (stableC<STATEC> V <HISTC>  HC  <ENDCONF>) ES) .
+		  (maState (stableC<STATEC> V <HISTC>  HC  <ENDCONF>) ES) [label 'finishedRTCESINT] .
 
 endm
 
@@ -93,8 +93,8 @@ mod MCBFPOOLANDSM is
     including ACCS .
     including QUEUESEMANTICS .
     ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 : -> Acctup .
-    eq tup1 = acc:(E)(a)(F)(b)(L)4(U)0 .
-    eq tup2 = acc:(E)(b)(F)(a)(L)4(U)0 .
+    eq tup1 = acc:(E)(a)(F)(b)(L)2(U)0 .
+    eq tup2 = acc:(E)(b)(F)(a)(L)2(U)0 .
      
 
     ops tups : -> AcctupSet .

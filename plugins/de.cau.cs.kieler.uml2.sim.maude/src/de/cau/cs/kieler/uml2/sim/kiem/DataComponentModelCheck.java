@@ -1,7 +1,11 @@
 package de.cau.cs.kieler.uml2.sim.kiem;
 
+//TODO: check if necessary
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
@@ -230,8 +235,8 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             String part = parts[number];
 
             int start = part.lastIndexOf("{") + 1;
-            // end = part.lastIndexOf(",");
-            int end = part.lastIndexOf("\")") + 2;
+            int end = part.lastIndexOf(",");
+            //int end = part.lastIndexOf("\")") + 2;
             String value = part.substring(start, end);
             return value;
         }
@@ -418,6 +423,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
     
     
     static final String EVENT_FILE_NAME = "events-gen.maude";
+    static final String RESULT_FILE_NAME = "out.txt";
     static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" +
     		" including QUEUESIGNATURE .\n" +
     		" including eclipseInterface .\n" +
@@ -579,8 +585,22 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             printConsole(queryRequest);
 
             String result = "";
+            String path = super.outPath;
+            
             try {
-                result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+            	    StringBuilder text = new StringBuilder();
+            	    String NL = System.getProperty("line.separator");
+            	    Scanner scanner = new Scanner(new FileInputStream(path + "/" +  RESULT_FILE_NAME));
+            	    try {
+            	      while (scanner.hasNextLine()){
+            	        result += (scanner.nextLine() + NL);
+            	      }
+            	    }
+            	    finally{
+            	      scanner.close();
+            	    }
+
+            		  //result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
             } catch (Exception e) {
                 throw new KiemExecutionException("A Maude model checking error occurred.", false, e);
             }
