@@ -42,7 +42,7 @@ mod ACCS is
         false if (ev1 in evs2) and (used >= limit) .
     *** if a tuple negates scheduling then return false
     ceq tr ev1 ((acc:(E)evs1(F)evs2(L)limit(U)used), neaccs) = 
-        tr ev1 neaccs if not((ev1 in evs2) and (used >= limit)) .
+        tr ev1 neaccs if not(ev1 in evs2) .
     *** if a tuple does not negate scheduling then continue with the 
     *** remaining tuples
     eq tr ev1 (acc:(E)evs1(F)evs2(L)limit(U)used) = 

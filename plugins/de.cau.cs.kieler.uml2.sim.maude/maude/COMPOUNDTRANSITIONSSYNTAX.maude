@@ -16,12 +16,13 @@ fmod TRANSITIONSYNTAX is
   var bv : Bool .
   vars src tgt conf states : Verts . 
   vars g g1 : Guard .
-  vars lreg : Vert .
+  vars lreg state : Vert .
   vars id strId : String .
  
   *** guards are abstract	  
   op Gd : -> Guard [ctor] .
   op true : -> Guard [ctor] .
+***  op inStates_ : Verts -> Guard .
   op inStates_ : Verts -> Guard .
   op inState_ : Vert -> Guard .
   op choiceelse : -> Guard .
@@ -32,8 +33,10 @@ fmod TRANSITIONSYNTAX is
   op evalGuard__ : Guard Verts -> Bool .
   eq evalGuard(notGd g) conf = not (evalGuard g conf) .
   eq evalGuard(g andGd g1) conf = (evalGuard g conf) and (evalGuard g1 conf) .
-  eq evalGuard(inStates states) conf = states subset conf . 
+***  eq evalGuard(inStates states) conf = states subset conf . 
   eq evalGuard(inState states) conf = states subset conf . 
+  eq evalGuard(inStates (state, states)) (state, conf) = true .
+  eq evalGuard(inStates states) conf = false [owise] .   
   eq evalGuard true conf = true .
   
   *** FIXME eq evalGuard g conf = g [owise] .

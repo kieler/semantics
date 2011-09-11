@@ -92,14 +92,32 @@ mod MCBFPOOLANDSM is
 	including LTL-SIMPLIFIER .
     including ACCS .
     including QUEUESEMANTICS .
-    ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 : -> Acctup .
-    eq tup1 = acc:(E)(a)(F)(b)(L)2(U)0 .
-    eq tup2 = acc:(E)(b)(F)(a)(L)2(U)0 .
-     
+    ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 tup8 tup9 tup10 : -> Acctup .
+ 
+    eq tup1 = acc:(E) 1takeLeftFork (F) 1getsHungry, 1begin, 1done, 1takeRightFork, 0takeRightFork, 0begin, 0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
 
-    ops tups : -> AcctupSet .
-    eq tups = (tup1, tup2) .
+    eq tup2 = acc:(E) 1getsHungry (F) 1takeLeftFork, 1begin,  1done, 1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
+ 
+     eq tup3 = acc:(E) 1begin (F) 1takeLeftFork, 1getsHungry, 1done, 1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
+ 
+      eq tup4 = acc:(E) 1done (F) 1takeLeftFork, 1getsHungry, 1begin,  1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
     
+        eq tup5 = acc:(E) 1takeRightFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
+        eq tup6 = acc:(E) 0begin (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0takeRightFork, 0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
+
+            eq tup7 = acc:(E) 0takeRightFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
+
+    
+            eq tup8 = acc:(E) 0takeLeftFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeRightFork, 0getsHungry, 0done (L)1(U)0 .
+            eq tup9 = acc:(E) 0getsHungry (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0takeRightFork, 0done (L)1(U)0 .
+           eq tup10 = acc:(E) 0done (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0takeRightFork, 0getsHungry  (L)1(U)0 .
+            
+  
+    ops tups : -> AcctupSet .
+    eq tups = (tup1, tup2, tup3, tup4, tup5, tup6, tup7, tup8, tup9, tup10) .
+    
+    op allEvs : -> EventSet .
+    eq allEvs = 1takeLeftFork, 1getsHungry, 1begin, 1done, 1takeRightFork, 0takeRightFork, 0begin, 0takeLeftFork, 0getsHungry, 0done .
 
 	subsort BFPSMStatus < State .
     vars accsst accsst' : AccsStatus .
