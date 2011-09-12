@@ -65,12 +65,13 @@ mod SEMANTICS is
 	maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) empty .
 	
 	crl [selectEventFSetESINT] : maState (stableC<STATEC> V <HISTC> HC  <ENDCONF>) (e2, ES) => 
-	maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES, e2) if (e2 =/= empty) and (e2 =/= (ev: "noevent")) [print "selected " e2] .
+	maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES, e2) if (e2 =/= empty) and (e2 =/= (ev: "noevent")) and not((enabled V e2) == empty) [print "selected " e2] .
 	
+***(
 	crl [discardFSetESINT] : maState (eventSelC<STATEC> V <HISTC> HC <EVENT> e2  <ENDCONF>) (ES) => 
 		maState (doneC<STATEC> V <HISTC> HC  <ENDCONF>) (ES) if 
 		(enabled V e2) == empty [print "discarded " e2]  .
-    
+    )***
     rl [doneExecTrans] : maState 
     (unstableC<STATEC> V <HISTC> HC <TRANSITIONS> empty <ACTIONS> A  <ENDCONF>)
     ES =>
