@@ -167,12 +167,12 @@ public class PanningEffect extends AbstractEffect {
                         zoomManager.setZoom(zoomLevel);
                     }
                     if (animate) {
-                        canvas.scrollSmoothTo((int) (finalCoords.x * zoomLevel), 
-                                (int) (finalCoords.y * zoomLevel));
+                        canvas.scrollSmoothTo((int) (finalCoords.x * zoomManager.getZoom()), 
+                                (int) (finalCoords.y * zoomManager.getZoom()));
 
                     } else {
-                        canvas.scrollTo((int) (finalCoords.x * zoomLevel), 
-                                (int) (finalCoords.y * zoomLevel));
+                        canvas.scrollTo((int) (finalCoords.x * zoomManager.getZoom()), 
+                                (int) (finalCoords.y * zoomManager.getZoom()));
                     }
                 }
             }, false);
