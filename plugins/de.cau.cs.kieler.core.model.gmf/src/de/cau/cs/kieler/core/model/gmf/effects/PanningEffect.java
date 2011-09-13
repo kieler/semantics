@@ -54,8 +54,7 @@ public class PanningEffect extends AbstractEffect {
      * @param animate
      *            true if scrolling should be animated
      * @param zoom
-     *            true if zooming should be done (its bugged at the moment an should not be used)
-     *            FIXME on different zoom levels the coordinates get mixed up
+     *            true if zooming should be done 
      * @param zoomLevel
      *            the desired zoom level (i.e. 1.5 = 150%)
      */
@@ -168,10 +167,12 @@ public class PanningEffect extends AbstractEffect {
                         zoomManager.setZoom(zoomLevel);
                     }
                     if (animate) {
-                        canvas.scrollSmoothTo(finalCoords.x, finalCoords.y);
+                        canvas.scrollSmoothTo((int) (finalCoords.x * zoomLevel), 
+                                (int) (finalCoords.y * zoomLevel));
 
                     } else {
-                        canvas.scrollTo(finalCoords.x, finalCoords.y);
+                        canvas.scrollTo((int) (finalCoords.x * zoomLevel), 
+                                (int) (finalCoords.y * zoomLevel));
                     }
                 }
             }, false);
