@@ -127,54 +127,46 @@
           <transformation
                 icon="icons/action.gif"
                 keyboardShortcut="M1+R A"
+                menu="true"
                 name="Create Successor"
+                popup="false"
+                popupbar="false"
+                separated="false"
+                toolbar="true"
                 transformation="activityCreateSuccessor"
                 transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
           </transformation>
           <transformation
                 icon="icons/flow.gif"
                 keyboardShortcut="M1+R F"
+                menu="true"
                 name="Create Control Flow"
+                popup="false"
+                popupbar="false"
+                separated="false"
+                toolbar="true"
                 transformation="activityControlFlow"
                 transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
           </transformation>
           <transformation
                 icon="icons/toggle_action.gif"
                 keyboardShortcut="M1+R T"
+                menu="true"
                 name="Toggle Action"
+                popup="false"
+                popupbar="false"
+                separated="false"
+                toolbar="true"
                 transformation="activityToggleAction"
                 transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
           </transformation>
        </transformations>
-       <menus>
-          <menuContribution
-                locationURI="menu:de.cau.cs.kieler">
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
-             </transformationCommand>
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
-             </transformationCommand>
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
-             </transformationCommand>
-          </menuContribution>
-          <menuContribution
-                locationURI="toolbar:de.cau.cs.kieler">
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.createSuccessor">
-             </transformationCommand>
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.controlFlow">
-             </transformationCommand>
-             <transformationCommand
-                   transformationId="de.cau.cs.kieler.uml2.activity.toggleAction">
-             </transformationCommand>
-          </menuContribution>
-       </menus>
        <package
              class="org.eclipse.uml2.uml.UMLPackage">
        </package>
+       <XtendTransformationFile
+             TransformationFile="src/activity.ext">
+       </XtendTransformationFile>
       </configuration>
       <configuration
             TransformationFile="src/statem.ext"
@@ -183,135 +175,155 @@
             editorId="org.eclipse.uml2.diagram.statemachine.part.UMLDiagramEditorID">
          <transformations>
             <transformation
+                  menu="true"
                   name="Create Composite"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="statemCreateComposite"
                   transformationId="de.cau.cs.kieler.uml2.statem.createComposite">
             </transformation>
          </transformations>
-         <menus>
-            <menuContribution
-                  locationURI="menu:de.cau.cs.kieler">
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.statem.createComposite">
-               </transformationCommand>
-            </menuContribution>
-         </menus>
          <package
                class="org.eclipse.uml2.uml.UMLPackage">
          </package>
+         <XtendTransformationFile
+               TransformationFile="src/statem.ext">
+         </XtendTransformationFile>
       </configuration>
       <configuration
             TransformationFile="src/usecase.ext"
             checkVisibility="true"
             contextId="org.eclipse.uml2.diagram.usecase.ui.diagramContext"
             editorId="org.eclipse.uml2.diagram.usecase.part.UMLDiagramEditorID">
-         <menus>
-            <menuContribution
-                  locationURI="menu:de.cau.cs.kieler">
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.startUp">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addActorToUseCase">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addUseCasetoSubject">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseToActor">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addActorGeneralization">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseExtension">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseGeneralization">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseInclusion">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.inclusionToExtend">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.extendToInclusion">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.extendToGeneralization">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.includeToGeneralization">
-               </transformationCommand>
-               <transformationCommand
-                     transformationId="de.cau.cs.kieler.uml2.usecase.addConstraintToExtension">
-               </transformationCommand>
-            </menuContribution>
-         </menus>
          <transformations>
             <transformation
+                  menu="true"
                   name="StartUp"
+                  popup="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="startUp"
                   transformationId="de.cau.cs.kieler.uml2.usecase.startUp">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddActorToUseCase"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addActorToUseCase"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addActorToUseCase">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddUseCasetoSubject"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addUseCasetoSubject"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addUseCasetoSubject">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddUseCaseToActor"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addUseCaseToActor"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseToActor">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddActorGeneralization"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addActorGeneralization"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addActorGeneralization">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddUseCaseExtension"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addUseCaseExtension"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseExtension">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddUseCaseGeneralization"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addUseCaseGeneralization"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseGeneralization">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddUseCaseInclusion"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addUseCaseInclusion"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addUseCaseInclusion">
             </transformation>
             <transformation
+                  menu="true"
                   name="InclusionToExtend"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="inclusionToExtend"
                   transformationId="de.cau.cs.kieler.uml2.usecase.inclusionToExtend">
             </transformation>
             <transformation
+                  menu="true"
                   name="ExtendToInclusion"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="extendToInclusion"
                   transformationId="de.cau.cs.kieler.uml2.usecase.extendToInclusion">
             </transformation>
             <transformation
+                  menu="true"
                   name="ExtendToGeneralization"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="extendToGeneralization"
                   transformationId="de.cau.cs.kieler.uml2.usecase.extendToGeneralization">
             </transformation>
             <transformation
+                  menu="true"
                   name="IncludeToGeneralization"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="includeToGeneralization"
                   transformationId="de.cau.cs.kieler.uml2.usecase.includeToGeneralization">
             </transformation>
             <transformation
+                  menu="true"
                   name="AddConstraintToExtension"
+                  popup="false"
+                  popupbar="false"
+                  separated="false"
+                  toolbar="false"
                   transformation="addConstraintToExtension"
                   transformationId="de.cau.cs.kieler.uml2.usecase.addConstraintToExtension">
             </transformation>
@@ -319,6 +331,9 @@
          <package
                class="org.eclipse.uml2.uml.UMLPackage">
          </package>
+         <XtendTransformationFile
+               TransformationFile="src/usecase.ext">
+         </XtendTransformationFile>
       </configuration>
    </extension>
    <extension
