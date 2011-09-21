@@ -1367,6 +1367,13 @@ Void deleteModalModelPort() :
 Void deleteModalModelPort(EntityType modalModel, String portName) :
  	let controller = (EntityType) modalModel.entity.select
  									(e|e.name.matches("_Controller")).first():
+
+	// We need to delete the port from any refinements too!
+	let refinements = (List[EntityType]) modalModel.entity.select 			
+									(e|e.class1.matches("ptolemy.domains.modal.modal.Refinement")):				
+	refinements.removePortRecursive(portName) ->
+ 	dump("DELETE"+portName+ "IN REFINEMENTS "+refinements.flatten()) ->
+			
 	//debug output
  	dump("DELETE "+portName +" IN " + modalModel.name) ->
  	
@@ -1396,6 +1403,13 @@ Void removeLinkRecursive(EntityType modalModel, String portName) :
 	    removeLinkRecursive(modalModel, portName)
 	else 
 		null
+;
+
+// Deletes all ports that may exist in this refinement
+Void removePortRecursive(EntityType refinement, String portName) :
+	refinement.port.remove(refinement.port
+			  .select(e|e.name.matches(portName)).first()) ->
+	null
 ;
 
 

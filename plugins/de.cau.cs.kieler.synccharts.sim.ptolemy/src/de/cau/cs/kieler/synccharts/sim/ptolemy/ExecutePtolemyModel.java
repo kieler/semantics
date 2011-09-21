@@ -471,10 +471,11 @@ public class ExecutePtolemyModel {
 //                    FSMDirector fsmDirector = (FSMDirector) director;
                     // fsmDirector._getLastChosenTransition();
                 }
-                Transition transition = ctrl.getLastChosenTransition();
-                if (transition != null) {
+                //TODO: Fix here for a chain of transitions not only a single one
+                List<Transition> transition = ctrl.getLastChosenTransition();
+                if (transition != null && transition.size() > 0) {
                     SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION:"
-                            + transition.getAttribute("EmfFragmentURI").toString());
+                            + transition.get(0).getAttribute("EmfFragmentURI").toString());
 
                 } else {
                     SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION == NULL");
