@@ -2265,7 +2265,7 @@ create RelationType this createRelation(String name,
 	let p7 = new PropertyType:
 	let p8 = new PropertyType:
 	let p9 = new PropertyType:
-		p1.setName("EmfFragmentURI") ->
+		p1.setName("elementURIFragment") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p1.setValue(getURIFragment(transition)) ->
 //		p2.setName("outputActions") ->

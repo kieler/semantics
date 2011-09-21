@@ -176,9 +176,12 @@ public class SyncchartsSimDataComponent extends
         // the return object to construct
         JSONObject returnObj = new JSONObject();
 
-        // contains the current state
-        String currentState = "";
+        // contains the currently active state
+        String activeStates = "";
 
+        // contains the currently active transitions
+        String activeTransitions = "";
+        
         try {
             // set current input data
             PTOEXE.setData(jSONObject);
@@ -186,8 +189,11 @@ public class SyncchartsSimDataComponent extends
             // perform an synchronous step in PtolemyExecutor
             PTOEXE.executionStep();
 
-            // get the current states
-            currentState = PTOEXE.getCurrentState();
+            // get the currently active states
+            activeStates = PTOEXE.getActiveStates();
+            // get the currently active transitions
+            activeTransitions = PTOEXE.getActiveTransitions();
+
         } catch (Exception e) {
             throw (new KiemExecutionException(
                     "Ptolemy Model cannot make a step.\n\n"
@@ -235,10 +241,17 @@ public class SyncchartsSimDataComponent extends
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[1].getValue();
 
+//        // the transitionName is the third KIEM property
+//        String transitionName = this.getProperties()[2].getValue();
+        
         try {
-            returnObj.accumulate(stateName, currentState);
+            returnObj.accumulate(stateName, activeStates + "," + activeTransitions);
         } catch (Exception e) {
         }
+//        try {
+//            returnObj.accumulate(transitionName, activeTransitions);
+//        } catch (Exception e) {
+//        }
         return returnObj;
     }
 
@@ -471,6 +484,7 @@ public class SyncchartsSimDataComponent extends
     public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[5];
         properties[0] = new KiemProperty("State Name", "state");
+//        properties[1] = new KiemProperty("Transition Name", "transition");
         properties[1] = new KiemProperty("Raise local signals", true);
         properties[2] = new KiemProperty("Allow write inputs, read outputs", true);
         properties[3] = new KiemProperty("Optimize signal input ports", true);

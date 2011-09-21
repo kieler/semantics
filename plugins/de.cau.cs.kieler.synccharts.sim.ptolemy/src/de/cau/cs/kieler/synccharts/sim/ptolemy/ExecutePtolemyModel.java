@@ -41,6 +41,7 @@ import ptolemy.domains.modal.kernel.FSMDirector;
 import ptolemy.domains.modal.kernel.State;
 import ptolemy.domains.modal.kernel.Transition;
 import ptolemy.kernel.InstantiableNamedObj;
+import ptolemy.kernel.util.Attribute;
 import ptolemy.kernel.util.KernelException;
 import ptolemy.kernel.util.NamedObj;
 import ptolemy.kernel.util.StringAttribute;
@@ -80,15 +81,19 @@ public class ExecutePtolemyModel {
     /** The Ptolemy model to execute. */
     private String PtolemyModel;
 
-    /** The currently active state of the EMF model as FragmentURI. */
-    private String currentState;
-
     /** The Ptolemy manager. */
     private Manager manager;
 
     // the outer most actor
     private CompositeActor modelActor;
 
+    
+    /** The currently active state of the EMF model as FragmentURI. */
+    private String activeStates;
+    
+    /** The currently active transitions of the EMF model as FragmentURI. */
+    private String activeTransitions;
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -107,8 +112,9 @@ public class ExecutePtolemyModel {
         // e.printStackTrace();
         // }
         this.PtolemyModel = PtolemyModel;
-        this.currentState = "";
         this.kielerIOList = null;
+        this.activeStates = "";
+        this.activeTransitions = "";
     }
 
     // -------------------------------------------------------------------------
@@ -197,9 +203,20 @@ public class ExecutePtolemyModel {
      * 
      * @return the current state
      */
-    public String getCurrentState() {
-        return currentState;
+    public String getActiveStates() {
+        return activeStates;
     }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the currently active state as URIFragment.
+     * 
+     * @return the current state
+     */
+    public String getActiveTransitions() {
+        return activeTransitions;
+    }    
 
     // -------------------------------------------------------------------------
 
@@ -239,10 +256,13 @@ public class ExecutePtolemyModel {
 
             // iterate thru all modal models and concatenate
             // the fragment URIs with a colon
-            currentState = "";
-
             List<InstantiableNamedObj> list = extracted();
-            currentState = searchForActiveStates(list, null);
+            //reset both Strings first
+            activeStates = "";
+            activeTransitions = "";
+            
+            searchForActiveStatesAndTransitions(list, null);
+            
             // for (int c = 0; c < modalModelList.size(); c++) {
             // ModalModel modalModel = modalModelList.get(c);
             // //if more than one active state
@@ -386,18 +406,17 @@ public class ExecutePtolemyModel {
      *            the children to walk thru
      */
     @SuppressWarnings("unchecked")
-    private String searchForActiveStates(List<InstantiableNamedObj> children, String activeStateName) {
+    private void searchForActiveStatesAndTransitions(List<InstantiableNamedObj> children, String activeStateName) {
 
             SyncchartsSimPtolemyPlugin.DEBUG("-------------------");
 
         // if no further children
         if (children == null)
-            return "";
+            return;
         if (children.size() == 0)
-            return "";
+            return;
 
-        String activeStates = "";
-            SyncchartsSimPtolemyPlugin.DEBUG("   ACTIVE:" + activeStateName);
+        SyncchartsSimPtolemyPlugin.DEBUG("   ACTIVE:" + activeStateName);
 
         // do recursively for children
         for (int c = 0; c < children.size(); c++) {
@@ -430,7 +449,7 @@ public class ExecutePtolemyModel {
 
                 // if it contains any more children...
                 // denote current state
-                activeStates += searchForActiveStates(modalModel.entityList(), modalModel
+                searchForActiveStatesAndTransitions(modalModel.entityList(), modalModel
                         .getController().currentState().getName());
             }
 
@@ -444,12 +463,12 @@ public class ExecutePtolemyModel {
                 if (activeStateName == null) {
                     SyncchartsSimPtolemyPlugin.DEBUG("---> CALL INNER STATES (null)");
                     // for active states only search deeper!
-                    activeStates += searchForActiveStates(compositeActor.entityList(),
+                    searchForActiveStatesAndTransitions(compositeActor.entityList(),
                             activeStateName);
                 } else if (compositeActorName.equals(activeStateName)) {
                     SyncchartsSimPtolemyPlugin.DEBUG("---> CALL INNER STATES (name active)");
                     // for active states only search deeper!
-                    activeStates += searchForActiveStates(compositeActor.entityList(),
+                    searchForActiveStatesAndTransitions(compositeActor.entityList(),
                             activeStateName);
                 }
             }
@@ -472,10 +491,19 @@ public class ExecutePtolemyModel {
                     // fsmDirector._getLastChosenTransition();
                 }
                 //TODO: Fix here for a chain of transitions not only a single one
-                List<Transition> transition = ctrl.getLastChosenTransition();
-                if (transition != null && transition.size() > 0) {
-                    SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION:"
-                            + transition.get(0).getAttribute("EmfFragmentURI").toString());
+                List<Transition> transitionList = ctrl.getLastChosenTransition();
+                if (transitionList != null && transitionList.size() > 0) {
+                    for (Transition activeTransition: transitionList) {
+                        // add state name
+                        Attribute attribute = activeTransition.getAttribute("elementURIFragment");
+                        if (attribute instanceof StringAttribute) {
+                            if (!activeTransitions.equals(""))
+                            	activeTransitions += ", ";
+                            activeTransitions += ((StringAttribute) (activeTransition.getAttribute("elementURIFragment")))
+                                    .getValueAsString();
+                        }
+                    }
+                    
 
                 } else {
                     SyncchartsSimPtolemyPlugin.DEBUG("LAST CHOSEN TRANSITION == NULL");
@@ -483,16 +511,11 @@ public class ExecutePtolemyModel {
 
                 // if it contains any more children...
                 // denote current state
-                activeStates += searchForActiveStates(modalController.entityList(), modalController
+                searchForActiveStatesAndTransitions(modalController.entityList(), modalController
                         .currentState().getName());
             }
 
         }// end while
-
-        if (!activeStates.equals(""))
-            activeStates = ", " + activeStates;
-
-        return activeStates;
     }
 
     // -------------------------------------------------------------------------
