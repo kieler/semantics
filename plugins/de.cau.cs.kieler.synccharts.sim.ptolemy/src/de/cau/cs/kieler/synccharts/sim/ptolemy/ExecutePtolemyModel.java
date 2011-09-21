@@ -26,8 +26,8 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ptolemy.domains.sr.lib.Combine;
 import ptolemy.actor.kiel.KielerIO;
+import ptolemy.actor.lib.Const;
 import ptolemy.actor.Actor;
 import ptolemy.actor.CompositeActor;
 import ptolemy.actor.Director;
@@ -62,9 +62,9 @@ public class ExecutePtolemyModel {
     public class ModelOutput {
         public String signalName;
         public boolean present;
-        public Combine actor;
+        public Const actor;
 
-        public ModelOutput(String signalName, Combine actor) {
+        public ModelOutput(String signalName, Const actor) {
             this.signalName = signalName;
             this.actor = actor;
             this.present = false;
@@ -289,7 +289,7 @@ public class ExecutePtolemyModel {
     // -------------------------------------------------------------------------
 
     /**
-     * Fills the kielerCombine list by recursively going thru the models elements.
+     * Fills the Combine list by recursively going thru the models elements.
      * 
      * @param modalModelList
      *            the list of ModalModels to fill
@@ -306,8 +306,8 @@ public class ExecutePtolemyModel {
         // do *NOT* recursively for children, just a flat top-level search
         for (int c = 0; c < children.size(); c++) {
             Object child = children.get(c);
-            if (child instanceof Combine) {
-                Combine as = (Combine) child;
+            if (child instanceof Const) {
+                Const as = (Const) child;
                 if (as.getAttribute("signal name") != null) {
                     // this is only true for output not for local signals
                     String signalName = ((Parameter) as.getAttribute("signal name"))
@@ -576,7 +576,7 @@ public class ExecutePtolemyModel {
 
                 SyncchartsSimPtolemyPlugin.DEBUG("#9");
 
-                // go thru the model and add fill the kielerCombine (Outputs)
+                // go thru the model and add fill the Combine (Outputs)
                 fillModelOutputList(modelOutputList, extracted());
 
                 SyncchartsSimPtolemyPlugin.DEBUG("#10");

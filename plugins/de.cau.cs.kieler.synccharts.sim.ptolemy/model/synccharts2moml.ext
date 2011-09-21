@@ -82,21 +82,65 @@ Void addVertexRelation(EntityType baseEntity, String name, String property) :
 
 //Add a KIELER combine function for local signals (within baseEntity).
 //Only iff this actor does not already exist. 
+//Void addCombineFunction(EntityType baseEntity, String name) :
+//   let e = new EntityType:
+//   let p1 = new PropertyType:
+//   let display = new DisplayType:								 	
+//   e.setName(name) ->
+//   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
+//   display.setName("Combine") ->
+//   e.display.add(display) ->
+//   	p1.setName("combine function") ->
+//   	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
+//   	p1.setValue("1") ->
+//   //if not already exists
+//   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
+//	   baseEntity.entity.add(e) : null
+//;   
+
+//Add a KIELER combine function for local signals (within baseEntity).
+//Only iff this actor does not already exist. 
 Void addCombineFunction(EntityType baseEntity, String name) :
    let e = new EntityType:
    let p1 = new PropertyType:
    let display = new DisplayType:								 	
    e.setName(name) ->
-   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
+   e.setClass1("ptolemy.actor.lib.Const") ->
    display.setName("Combine") ->
    e.display.add(display) ->
-   	p1.setName("combine function") ->
-   	p1.setClass("ptolemy.kernel.util.StringAttribute") ->
-   	p1.setValue("1") ->
    //if not already exists
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
 ;   
+
+
+//Add a KIELER combine function for environment signals (within baseEntity).
+//Only iff this actor does not already exist. 
+//Void addEnvironmentCombineFunction(EntityType baseEntity, 
+//								   String name, 
+//								   String signalID) :
+//  let e = new EntityType:
+//   let p1 = new PropertyType:
+//   let p2 = new PropertyType:
+//   let display = new DisplayType:								 	
+//   e.setName(name) ->
+//   display.setName("Combine") ->
+//   e.display.add(display) ->
+//   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
+//   	p2.setName("combine function") ->
+//   	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
+//   	p2.setValue("1") ->
+//   	p1.setName("signal name") ->
+//   	p1.setClass("ptolemy.data.expr.Parameter") ->
+//   	p1.setValue("'"+signalID+"'") ->
+//   e.property.add(p1) ->
+//   e.property.add(p2) ->
+//   //if not already exists
+//   (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
+//	   baseEntity.entity.add(e) : null
+//;   
+
+
 
 
 //Add a KIELER combine function for environment signals (within baseEntity).
@@ -111,15 +155,11 @@ Void addEnvironmentCombineFunction(EntityType baseEntity,
    e.setName(name) ->
    display.setName("Combine") ->
    e.display.add(display) ->
-   e.setClass1("ptolemy.domains.sr.lib.Combine") ->
-   	p2.setName("combine function") ->
-   	p2.setClass("ptolemy.kernel.util.StringAttribute") ->
-   	p2.setValue("1") ->
+   e.setClass1("ptolemy.actor.lib.Const") ->
    	p1.setName("signal name") ->
    	p1.setClass("ptolemy.data.expr.Parameter") ->
    	p1.setValue("'"+signalID+"'") ->
    e.property.add(p1) ->
-   e.property.add(p2) ->
    //if not already exists
    (baseEntity.entity.select(ee|ee.name.matches(e.name)).size == 0) ?
 	   baseEntity.entity.add(e) : null
@@ -757,10 +797,11 @@ create EntityType this createBaseEntity(synccharts::Region mainRegion):
 //  				"terminated"+outerStateURIHash) -> 
    				
    //post processing: reconsider priorities
-   ConsiderTransitionPriorities(this.entity) ->
-   
+   ConsiderTransitionPriorities(this.entity)
+  
+//FIXME: adapt to using constant Actor instead of dedicated combine actor   
    //post processing: remove unnecessary combine actors
-   RemoveUnnecessaryCombineActors(this.entity) 
+//   RemoveUnnecessaryCombineActors(this.entity) 
    
 ;
 
@@ -1453,7 +1494,7 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 		            "local_output") : null ->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
 		addLink(baseEntity, 
-		        firstPort.name + "_COMBINE.input", 
+		        firstPort.name + "_COMBINE.trigger", 
 		        firstPort.name + modalModelName + "_COMBINERELATION" ) : null->
 	(firstPort.property.select(e|e.name.matches("local_output")).size > 0) ?
 		addLink(baseEntity, 
@@ -1480,7 +1521,7 @@ Void ConnectTopmostInputSignalsHelper(EntityType baseEntity,
 					"environment_output") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addLink(baseEntity, 
-				firstPort.name + "_COMBINE.input", 
+				firstPort.name + "_COMBINE.trigger", 
 				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	(firstPort.property.select(e|e.name.matches("environment_output")).size > 0) ?
 		addLink(baseEntity, 
@@ -1650,7 +1691,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	((firstPort.property.select(e|e.name.matches("local_output")).size > 0) 
 	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
-				firstPort.name + "_COMBINE.input", 
+				firstPort.name + "_COMBINE.trigger", 
 				firstPort.name + modalModelName + "_COMBINERELATION" ) : null->
 				
     //only add a link from the ModalModel output to the combine relation iff there is 
@@ -1677,7 +1718,7 @@ Void ConnectNestedInputSignalsHelper(EntityType baseEntity,
 	((firstPort.property.select(e|e.name.matches("environment_output")).size > 0) 
 	  && modalModel.port.select(e|e.name.matches(firstPort.name)).size > 0) ?
 		addLink(baseEntity, 
-				firstPort.name + "_COMBINE.input", 
+				firstPort.name + "_COMBINE.trigger", 
 				firstPort.name + modalModelName + "_COMBINERELATION") : null ->
 	
 	
