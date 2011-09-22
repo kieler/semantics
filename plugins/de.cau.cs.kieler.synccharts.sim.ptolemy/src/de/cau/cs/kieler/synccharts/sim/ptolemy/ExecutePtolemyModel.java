@@ -491,7 +491,8 @@ public class ExecutePtolemyModel {
                     // fsmDirector._getLastChosenTransition();
                 }
                 //TODO: Fix here for a chain of transitions not only a single one
-                List<Transition> transitionList = ctrl.getLastChosenTransition();
+                //FIXME: as soon as the Ptolemy.jar is update, call getLastChosenTransition()
+                List<Transition> transitionList = null; //ctrl.getLastChosenTransition();
                 if (transitionList != null && transitionList.size() > 0) {
                     for (Transition activeTransition: transitionList) {
                         // add state name
