@@ -13,26 +13,24 @@
  */
 package de.cau.cs.kieler.core.model.xtext.triggers;
 
+import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IMarker;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextModelListener;
 import org.eclipse.xtext.ui.util.ResourceUtil;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
+import de.cau.cs.kieler.core.WrappedException;
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
-import de.cau.cs.kieler.core.model.xtext.ModelXtextPlugin;
 import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType; // SUPPRESS CHECKSTYLE LineLength
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
@@ -46,6 +44,9 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
 public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger implements ITrigger,
         IXtextModelListener, IPartListener {
 
+    private static final String KIELER_XTEXT_ERROR_MARKER_ID
+            = "de.cau.cs.kieler.core.model.xtext.errorMarker";     
+    
     /**
      * Default constructor, needed by KIVi.
      */
@@ -57,8 +58,6 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      */
     private XtextEditor currentEditor = null;
 
-    // private Map<XtextEditor, XtextModelChangeState> editorsTriggerStatesMap
-    // = new HashMap<XtextEditor, XtextModelChangeState>();
 
     /**
      * {@inheritDoc}
@@ -106,21 +105,44 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     }
 
     private boolean checkAndIndicateErrors(final XtextResource resource) {
-        final String msg = ": Model contains critical errors, hence no the KIVi is not triggered.";
-        if (resource.getErrors().isEmpty()) {
-            return true;
-        } else {
-            try {
-                IMarker marker;
-                marker = ResourceUtil.getUnderlyingFile(resource).createMarker(IMarker.PROBLEM);
-                marker.setAttribute(IMarker.MESSAGE, "Test");
-                marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
-            } catch (CoreException e) {
-                StatusManager.getManager().handle(
-                        new Status(IStatus.INFO, ModelXtextPlugin.PLUGIN_ID, resource.getURI()
-                                .lastSegment() + msg));
+        final String msg = "Model contains syntactic errors, so KIVi is not triggered.";
+        IFile underlyingFile = ResourceUtil.getUnderlyingFile(resource);
+        IMarker marker = null;
+        try {
+            /* examine the files error markers, whether one of is created by this mechanisms */
+            for (IMarker m : underlyingFile.findMarkers(IMarker.PROBLEM, false, 1)) {
+                if (m.getAttribute(KIELER_XTEXT_ERROR_MARKER_ID, false)) {
+                    marker = m;
+                    break;
+                }
+            }
+            
+            /* if model is correct... */
+            if (resource.getErrors().isEmpty()) {
+                /* ...and a marker exists remove it and finish! */
+                if (marker != null) {
+                    marker.delete();
+                }
+                return true;
+
+            } else {
+                /* Otherwise create a marker if no one already exists. */
+                if (marker == null) {
+                    marker = ResourceUtil.getUnderlyingFile(resource).createMarker(IMarker.PROBLEM);
+                    marker.setAttribute(KIELER_XTEXT_ERROR_MARKER_ID, true);
+                    marker.setAttribute(IMarker.MESSAGE, msg);
+                    marker.setAttribute(IMarker.SEVERITY, IMarker.SEVERITY_ERROR);
+                    marker.setAttribute(IMarker.LINE_NUMBER, 1);
+                }
+                // old version:
+                //  StatusManager.getManager().handle(
+                //    new Status(IStatus.INFO, ModelXtextPlugin.PLUGIN_ID, resource.getURI()
+                //       .lastSegment() + ": " + msg));
             }
             return true;
+        } catch (CoreException e) {
+            /* in this case something went heavily wrong */
+            throw new WrappedException(e);
         }
     }
 
@@ -288,8 +310,14 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
          *         {@link org.eclipse.ui.IEditorInput}.
          */
         public IPath getEditorInputPath() {
-            assert this.editor.getEditorInput().getClass().equals(FileEditorInput.class);
-            return ((FileEditorInput) this.editor.getEditorInput()).getPath();
+            if (this.editor.getEditorInput().getClass().equals(FileEditorInput.class)
+                    && ((FileEditorInput) this.editor.getEditorInput()).getFile() != null
+                    && ((FileEditorInput) this.editor.getEditorInput()).getFile()
+                            .getLocationURI() != null) {
+                return ((FileEditorInput) this.editor.getEditorInput()).getPath();
+            } else {
+                return null;
+            }
         }
 
         /**
