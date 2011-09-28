@@ -18,6 +18,7 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPreferencePage;
 
 import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.ui.Messages;
 
 /**
  * Main preference page for the KIELER project. All subprojects should put their
@@ -33,7 +34,7 @@ public class KielerPreferencePage extends FieldEditorPreferencePage
      */
     public KielerPreferencePage() {
         super(GRID);
-        setDescription("Main preference page for the KIELER project");
+        setDescription(Messages.KielerPreferencePage_Text);
     }
 
     /**

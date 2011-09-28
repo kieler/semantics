@@ -53,6 +53,7 @@ public final class Messages extends NLS {
     public static String FileSystemResourcesPage_targetGroup_browse;
     public static String FileSystemResourcesPage_targetGroup_text;
     public static String FileSystemResourcesPage_title;
+    public static String KielerPreferencePage_Text;
     public static String ResourceTreeAndListPage_deselectAllButton_text;
     public static String ResourceTreeAndListPage_selectAllButton_text;
     public static String ResourceTreeAndListPage_task_itemDiscovery;
