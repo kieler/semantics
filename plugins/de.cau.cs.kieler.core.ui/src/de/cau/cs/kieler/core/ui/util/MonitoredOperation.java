@@ -353,7 +353,9 @@ public abstract class MonitoredOperation {
             }
             
             // execute UI code after the actual operation
-            postUIexec();
+            if (status.get().getSeverity() == IStatus.OK) {
+                postUIexec();
+            }
             
         } catch (Throwable throwable) {
             synchronized (monitor) {
