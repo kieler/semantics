@@ -130,8 +130,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
             if ((parent == null && c.getParent() != null) || (parent != null && c.getParent() == null)) {
                 System.out.println("hier");
             }
+            // cmot, added "(parent != null && c.getParent() != null) &&" because of a possible null-pointer exception
             if ((parent == null && c.getParent() == null)
-                    || c.getParent().equals(parent)
+                    || (parent != null && c.getParent() != null) && c.getParent().equals(parent)
                     && c.getAttribute().equals(attribute)) {
                 cache = c;
             }
