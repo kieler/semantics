@@ -131,13 +131,13 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
      * Sends out the event of a scroll bar's value having changed. May be overridden.
      */
     protected void notifiyOfValueChange() {
-        if (horizontalBar != null) {
+        if (horizontalBar != null && horizontalBar.isEnabled()) {
             Event event = new Event();
             event.widget = horizontalBar;
             horizontalBar.notifyListeners(SWT.Selection, event);
         }
 
-        if (verticalBar != null) {
+        if (verticalBar != null && verticalBar.isEnabled()) {
             Event event = new Event();
             event.widget = verticalBar;
             verticalBar.notifyListeners(SWT.Selection, event);
@@ -153,7 +153,7 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
             int value;
 
             // Horizontal scrolling
-            if (horizontalBar != null) {
+            if (horizontalBar != null && horizontalBar.isEnabled()) {
                 value = barValues.x + origin.x - mouseLocation.x;
                 horizontalBar.setSelection(
                         Math.max(
@@ -164,7 +164,7 @@ public class DragDropScrollHandler implements MouseListener, MouseMoveListener {
             }
             
             // Vertical scrolling
-            if (verticalBar != null) {
+            if (verticalBar != null && verticalBar.isEnabled()) {
                 value = barValues.y + origin.y - mouseLocation.y;
                 verticalBar.setSelection(
                         Math.max(
