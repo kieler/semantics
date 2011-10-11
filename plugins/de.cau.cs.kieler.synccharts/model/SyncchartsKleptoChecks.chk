@@ -7,8 +7,8 @@ import kexpressions;
 context Action if (delay != 1) WARNING "KLEPTO: Delays <> 1 cannot be simulated yet!" :
   false;
   
-context Action WARNING "KLEPTO: Immediate transitions cannot be simulated yet!" :
-  isImmediate == false;
+context Transition WARNING "KLEPTO: Immediate transitions from initial states cannot be simulated yet!" :
+  isImmediate == false || sourceState.isInitial == false;
   
 context Signal if (type != ValueType::PURE) WARNING "KLEPTO: Only pure signals are supported in the simulation!" :
   false;  
