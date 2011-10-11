@@ -117,21 +117,21 @@ public class E2STransformationCombination extends AbstractCombination {
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepBackIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "Step Back",
-                "Step Back", iconStepBack, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
+                "Step Back", iconStepBack, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
                 SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### step
         ImageDescriptor iconStep = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", "Step",
-                iconStep, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, SYNCCHARTS_EDITOR_ID,
+                iconStep, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null, SYNCCHARTS_EDITOR_ID,
                 ESTEREL_EDITOR_ID);
 
         // #### expand (complete transformation)
         ImageDescriptor iconExpand = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/expandIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND, "Expand",
-                "Expand", iconExpand, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
+                "Expand", iconExpand, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
                 SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### expand and optimize
@@ -139,7 +139,7 @@ public class E2STransformationCombination extends AbstractCombination {
                 Activator.PLUGIN_ID, "icons/expandAndOptimizeIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE,
                 "Expand and Optimize", "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH,
-                LocationScheme.MENU_POPUP_TOOLBAR, null, null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
+                LocationScheme.MENU_POPUP_TOOLBAR, null, null, null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();

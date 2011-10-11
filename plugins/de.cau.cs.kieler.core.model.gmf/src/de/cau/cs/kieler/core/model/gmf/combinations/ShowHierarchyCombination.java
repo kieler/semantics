@@ -50,7 +50,7 @@ public class ShowHierarchyCombination extends AbstractCombination {
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, ID, "Show Hierarchy",
                 "Colorize hierarchical objects to make the hierarchy structure clearer.", icon,
-                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, null,  EDITOR_IDS);
+                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,  EDITOR_IDS);
     }
     
     /**
