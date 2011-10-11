@@ -17,6 +17,7 @@ import java.io.File;
 import java.net.URL;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.eclipse.emf.common.util.URI;
 
@@ -492,17 +493,17 @@ public class ExecutePtolemyModel {
                 }
                 //TODO: Fix here for a chain of transitions not only a single one
                 //FIXME: as soon as the Ptolemy.jar is update, call getLastChosenTransition()
-                List<Transition> transitionList = null; //ctrl.getLastChosenTransition();
+                List<Transition> transitionList = ctrl.getLastTakenTransitions();
                 if (transitionList != null && transitionList.size() > 0) {
                     for (Transition activeTransition: transitionList) {
-                        // add state name
-                        Attribute attribute = activeTransition.getAttribute("elementURIFragment");
-                        if (attribute instanceof StringAttribute) {
-                            if (!activeTransitions.equals(""))
-                            	activeTransitions += ", ";
-                            activeTransitions += ((StringAttribute) (activeTransition.getAttribute("elementURIFragment")))
-                                    .getValueAsString();
-                        }
+                            // add state name
+                            Attribute attribute = activeTransition.getAttribute("elementURIFragment");
+                            if (attribute instanceof StringAttribute) {
+                                if (!activeTransitions.equals(""))
+                                	activeTransitions += ", ";
+                                activeTransitions += ((StringAttribute) (activeTransition.getAttribute("elementURIFragment")))
+                                        .getValueAsString();
+                            }
                     }
                     
 

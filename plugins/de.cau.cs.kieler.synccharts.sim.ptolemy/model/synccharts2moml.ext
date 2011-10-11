@@ -2226,7 +2226,7 @@ Void addTransition(	synccharts::Transition transition,
 	link2.setRelation(name) ->
 	entity.relation.add(createRelation(name, transition)) ->
 	entity.link.add(link1) ->
-	entity.link.add(link2) 
+	entity.link.add(link2)
 ;
 
 
@@ -2265,6 +2265,7 @@ create RelationType this createRelation(String name,
 	let p7 = new PropertyType:
 	let p8 = new PropertyType:
 	let p9 = new PropertyType:
+	let p10 = new PropertyType:
 		p1.setName("elementURIFragment") ->
 		p1.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p1.setValue(getURIFragment(transition)) ->
@@ -2295,6 +2296,12 @@ create RelationType this createRelation(String name,
 		p9.setName("priority") ->
 		p9.setClass("ptolemy.kernel.util.StringAttribute") ->
 		p9.setValue(""+transition.priority) ->
+		// set transition to be immediate
+		p10.setName("immediate") ->
+		p10.setClass("ptolemy.data.expr.Parameter") ->
+		(transition.isImmediate) ? 
+								p10.setValue("true") : p10.setValue("false") ->
+		
     this.setName(name) ->
 	this.property.add(p1) ->
 //	this.property.add(p2) ->
@@ -2305,6 +2312,7 @@ create RelationType this createRelation(String name,
 	this.property.add(p7) ->
 	this.property.add(p8) ->
 	this.property.add(p9) ->
+	this.property.add(p10) ->
 	addTrigger(this, transition) ->
 	addEmission(this, transition)
 ;
