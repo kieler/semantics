@@ -78,20 +78,20 @@ public class ManualFocusCombination extends AbstractCombination {
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, FOCUS_BUTTON_ID,
                 "Manual Focus", "Focus selected model objects and do a semantic zooming.", iconFC,
-                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null,
+                SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
                 EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, PLUS_BUTTON_ID, "Focus more",
                 "Increase Focus/Context zoom level.", iconPlus, SWT.PUSH,
-                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
+                LocationScheme.MENU_POPUP_TOOLBAR, null, null, EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, MINUS_BUTTON_ID, "Focus less",
                 "Decrease Focus/Context zoom level.", iconMinus, SWT.PUSH,
-                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
+                LocationScheme.MENU_POPUP_TOOLBAR, null, null, EDITOR_IDS.toArray(new String[2]));
 
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, ALL_BUTTON_ID, "Focus all",
                 "Show all hierarchy levels.", iconPlusPlus, SWT.PUSH,
-                LocationScheme.MENU_POPUP_TOOLBAR, null, EDITOR_IDS.toArray(new String[2]));
+                LocationScheme.MENU_POPUP_TOOLBAR, null, null, EDITOR_IDS.toArray(new String[2]));
     }
 
     /**

@@ -72,7 +72,7 @@ public class SignalFlowCombination extends AbstractCombination {
         String tooltip = "Show the Dual Model of the current SyncChart. "
                 + "It shows the data communication from effects to triggers.";
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model",
-                tooltip, icon, SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null,
+                tooltip, icon, SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
                 "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
     }
 
