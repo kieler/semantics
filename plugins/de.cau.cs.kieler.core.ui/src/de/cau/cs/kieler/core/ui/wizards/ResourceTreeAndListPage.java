@@ -15,7 +15,6 @@
 package de.cau.cs.kieler.core.ui.wizards;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -391,9 +390,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                             (IStructuredSelection) event.getSelection();
                         visitTreeItem(selection.isEmpty() ? null : selection.getFirstElement(),
                                 true);
-                        
-                        // Nothing to validate, since nothing has changed in terms of
-                        // checked states
+                        validate();
                     }
                 });
             }
@@ -411,9 +408,19 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
             }
         });
         
+        resourceListViewer.addSelectionChangedListener(new ISelectionChangedListener() {
+            public void selectionChanged(final SelectionChangedEvent event) {
+                BusyIndicator.showWhile(resourceList.getDisplay(), new Runnable() {
+                    public void run() {
+                        validate();
+                    }
+                });
+            }
+        });
+        
         resourceListViewer.addCheckStateListener(new ICheckStateListener() {
             public void checkStateChanged(final CheckStateChangedEvent event) {
-                BusyIndicator.showWhile(resourceTree.getDisplay(), new Runnable() {
+                BusyIndicator.showWhile(resourceList.getDisplay(), new Runnable() {
                     public void run() {
                         listCheckStateChanged(event.getElement(), event.getChecked());
                         validate();
@@ -574,14 +581,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      */
     protected final void selectAllListItems() {
         Object listInput = resourceListViewer.getInput();
+        Object[] listElements = resourceListContentProvider.getElements(listInput);
         
-        if (listInput != null) {
-            checkedListItems.removeAll(listInput);
-            checkedListItems.putAll(listInput, Arrays.asList(
-                    resourceListContentProvider.getElements(listInput)));
-            
-            visitTreeItem(listInput, true);
+        // Select each and every list item
+        for (Object listElement : listElements) {
+            listCheckStateChanged(listElement, true);
         }
+        
+        // Make sure the selection is displayed
+        visitTreeItem(listInput, true);
     }
     
     /**
@@ -591,12 +599,15 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      */
     protected final void deselectAllListItems() {
         Object listInput = resourceListViewer.getInput();
+        Object[] listElements = resourceListContentProvider.getElements(listInput);
         
-        if (listInput != null) {
-            checkedListItems.removeAll(listInput);
-            
-            visitTreeItem(listInput, true);
+        // Select each and every list item
+        for (Object listElement : listElements) {
+            listCheckStateChanged(listElement, false);
         }
+        
+        // Make sure the selection is displayed
+        visitTreeItem(listInput, true);
     }
     
     
@@ -978,11 +989,14 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
      *         {@code false} otherwise.
      */
     protected boolean doValidate() {
+        boolean enable = resourceList.getItemCount() > 0;
+        
         // Enable or disable the select / deselect all buttons
         if (buttonBarSelectAllButton != null) {
-            boolean enable = resourceList.getItemCount() > 0;
-            
             buttonBarSelectAllButton.setEnabled(enable);
+        }
+
+        if (buttonBarDeselectAllButton != null) {
             buttonBarDeselectAllButton.setEnabled(enable);
         }
         
