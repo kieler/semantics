@@ -202,14 +202,16 @@ public class SyncChartsCombination extends AbstractCombination {
                 // }
             }
         }
-
-        if (isFC()) {
-            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
-            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
-            this.schedule(focusEffect);
-            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-                    false, animate));
-        }
+        
+// FIXME: cmot, see Ticket #1775
+// Focus & Context currently not working properly, coloring inactive (gray) or active (red) states accidentially with its original color (black)!        
+//        if (isFC()) {
+//            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
+//            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
+//            this.schedule(focusEffect);
+//            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
+//                    false, animate));
+//        }
     }
 
     /**
