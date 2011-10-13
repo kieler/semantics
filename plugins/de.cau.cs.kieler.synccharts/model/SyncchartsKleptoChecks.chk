@@ -9,11 +9,16 @@ context Action if (delay != 1) WARNING "KLEPTO: Delays <> 1 cannot be simulated 
   
 context Transition WARNING "KLEPTO: Immediate transitions from initial states cannot be simulated yet!" :
   isImmediate == false || sourceState.isInitial == false;
+
+
+context Transition WARNING "KLEPTO: Only strong aborting immediate transitions can currently be simulated!" :
+  isImmediate == false || sourceState.regions.size == 0 || type == TransitionType::STRONGABORT;
+  
   
 context Signal if (type != ValueType::PURE) WARNING "KLEPTO: Only pure signals are supported in the simulation!" :
   false;  
   
-context State if (type != StateType::NORMAL) WARNING "KLEPTO: Only normal states are supported in the simulation!" :
+context State if (type != StateType::NORMAL) && (type != StateType::CONDITIONAL) WARNING "KLEPTO: Only normal and conditional states are supported in the simulation!" :
   false;  
 
 //FIXME: In Ptolemy there is currently no complete Cannot-Analysis 
