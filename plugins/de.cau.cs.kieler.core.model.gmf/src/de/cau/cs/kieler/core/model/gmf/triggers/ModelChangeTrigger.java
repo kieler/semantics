@@ -82,8 +82,12 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
     @Override
     public void unregister() {
         CombinedWorkbenchListener.removePartListener(this);
+        // cmot: Fixed null pointer exception when trying to disable KIVi
         if (currentEditor != null) {
-            getEditingDomain(currentEditor).removeResourceSetListener(this);
+        	TransactionalEditingDomain transactionalEditingDomain = getEditingDomain(currentEditor);
+        	if (transactionalEditingDomain != null) {
+        		transactionalEditingDomain.removeResourceSetListener(this);
+        	}
         }
     }
 
