@@ -213,25 +213,71 @@ litigation.
       <update label="KIELER Nightly Builds" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly/"/>
    </url>
 
+   <requires>
+      <import feature="com.google.guava.runtime.feature" version="9.0.0"/>
+   </requires>
+
    <plugin
          id="de.cau.cs.kieler.core.annotations"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.annotations.edit"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.annotations.ui"
          download-size="0"
          install-size="0"
-         version="0.0.0"
+         version="0.2.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core"
+         download-size="0"
+         install-size="0"
+         version="0.6.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.model"
+         download-size="0"
+         install-size="0"
+         version="0.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.ui"
+         download-size="0"
+         install-size="0"
+         version="0.5.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.kiml"
+         download-size="0"
+         install-size="0"
+         version="0.9.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kgraph"
+         download-size="0"
+         install-size="0"
+         version="0.3.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.2.0.qualifier"
          unpack="false"/>
 
 </feature>
