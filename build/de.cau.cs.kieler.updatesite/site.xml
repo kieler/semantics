@@ -52,11 +52,23 @@
    <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.source" version="0.1.0.qualifier">
       <category name="KIELER Sources"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.feature_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.source" version="0.1.0.qualifier">
       <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.source" version="0.1.0.qualifier">
+      <category name="KIELER"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.core.annotations_0.2.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations" version="0.2.0.qualifier">
+      <category name="KIELER Developer"/>
+   </feature>
+   <feature url="features/de.cau.cs.kieler.core.annotations.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.source" version="0.2.0.qualifier">
+      <category name="KIELER Sources"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
@@ -66,6 +78,11 @@
    <category-def name="KIELER Sources" label="KIELER Sources">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient, nightly build (sources)
+      </description>
+   </category-def>
+   <category-def name="KIELER Developer" label="KIELER Developer">
+      <description>
+         Additional features for developers who are employing KIELER.
       </description>
    </category-def>
 </site>
