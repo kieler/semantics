@@ -882,7 +882,7 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
              */
             @Override
             public void widgetSelected(final SelectionEvent e) {
-                applyNewSource(targetGroupTargetCombo.getText());
+                applyNewTarget(targetGroupTargetCombo.getText());
                 validate();
             }
         });
