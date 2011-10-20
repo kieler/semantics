@@ -1155,7 +1155,7 @@ public class InternalAnnotationsLexer extends Lexer {
         }
     }
 
-    class DFA14 extends DFA {
+    static class DFA14 extends DFA {
 
         public DFA14(BaseRecognizer recognizer) {
             this.recognizer = recognizer;

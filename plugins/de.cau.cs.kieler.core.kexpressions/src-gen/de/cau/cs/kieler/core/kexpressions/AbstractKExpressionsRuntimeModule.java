@@ -104,11 +104,6 @@ public abstract class AbstractKExpressionsRuntimeModule extends DefaultRuntimeMo
 		binder.bindConstant().annotatedWith(org.eclipse.xtext.scoping.IgnoreCaseLinking.class).to(false);
 	}
 
-	// contributed by org.eclipse.xtext.generator.exporting.SimpleNamesFragment
-	public Class<? extends org.eclipse.xtext.naming.IQualifiedNameProvider> bindIQualifiedNameProvider() {
-		return org.eclipse.xtext.naming.SimpleNameProvider.class;
-	}
-
 	// contributed by org.eclipse.xtext.generator.formatting.FormatterFragment
 	public Class<? extends org.eclipse.xtext.formatting.IFormatter> bindIFormatter() {
 		return de.cau.cs.kieler.core.kexpressions.formatting.KExpressionsFormatter.class;

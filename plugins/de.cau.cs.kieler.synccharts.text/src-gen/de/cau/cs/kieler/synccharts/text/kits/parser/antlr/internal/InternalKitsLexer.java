@@ -2962,7 +2962,7 @@ public class InternalKitsLexer extends Lexer {
         }
     }
 
-    class DFA15 extends DFA {
+    static class DFA15 extends DFA {
 
         public DFA15(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
