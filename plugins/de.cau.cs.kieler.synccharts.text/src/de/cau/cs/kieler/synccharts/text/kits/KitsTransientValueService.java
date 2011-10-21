@@ -23,6 +23,7 @@ import org.eclipse.xtext.util.Strings;
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
+import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
 import de.cau.cs.kieler.core.kexpressions.CombineOperator;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kexpressions.Signal;
@@ -242,6 +243,10 @@ public class KitsTransientValueService extends DefaultTransientValueService {
                     ((Annotatable) owner).getAnnotations().get(index))) {
                 StringAnnotation a = (StringAnnotation) ((Annotatable)  owner).getAnnotations().get(index);
                 return Strings.isEmpty(a.getName()) && Strings.isEmpty(a.getValue());
+            }
+            if (((Annotatable) owner).getAnnotations().get(index).getClass().equals(AnnotationImpl.class)) {
+                /* I don't like that! Need a better way to filter Annotation objects and ignore subclass objects */ 
+                return false;
             }
             return true;            
         }

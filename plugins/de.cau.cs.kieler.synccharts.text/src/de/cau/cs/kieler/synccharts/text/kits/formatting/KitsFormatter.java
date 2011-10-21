@@ -60,12 +60,8 @@ public class KitsFormatter extends ActionsFormatter {
         // this does not work, probably due to the absence of any common tail terminal
         // c.setLinewrap(2).between(f.getSingleRegionRule(), f.getRegionRule());
         // c.setLinewrap(2).between(f.getRegionRule(), f.getRegionRule());
-        
-        c.setLinewrap(2).before(f.getRegionAccess().getAnnotationsAnnotationParserRuleCall_1_0());
-        c.setLinewrap(1).between(f.getRegionAccess().getAnnotationsAssignment_1(), f.getRegionAccess().getAnnotationsAssignment_1());
 
-        // suppress any leading empty lines
-        c.setNoLinewrap().before(f.getRootRegionAccess().getStatesAssignment_3());
+
         // works but is wrong in many cases
 ////        c.setLinewrap(2).before(f.getRegionAccess().getRegionKeyword_2());
 //                
