@@ -14,6 +14,9 @@
 package de.cau.cs.kieler.core.kexpressions.formatting;
 
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
+import org.eclipse.xtext.util.Pair;
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Keyword;
 
 import de.cau.cs.kieler.core.annotations.formatting.AnnotationsFormatter;
@@ -26,44 +29,49 @@ import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
  * 
  */
 public class KExpressionsFormatter extends AnnotationsFormatter {
-	
+
     /**
      * Delegates to customConfigureFormatting.
      */
-	@Override
-	protected void configureFormatting(FormattingConfig c) {
-		customConfigureFormatting(c, (KExpressionsGrammarAccess) getGrammarAccess());
-	}
-	
-	/**
-	 * Method contains actual formatting instructions while GrammarAccess class
-	 * maybe parameterized allowing the reuse within ActionsFormatter. 
-	 * @param c FormattingConfig provided by caller
-	 * @param f GrammarAccess provided by caller
-	 */
-	protected void customConfigureFormatting(FormattingConfig c, KExpressionsGrammarAccess f) {
-	        super.customConfigureFormatting(c, f.getAnnotationsGrammarAccess());
-		
-		for(Keyword comma: f.findKeywords(",")) {
-			c.setNoLinewrap().before(comma);
-			c.setNoSpace().before(comma);
-		}
-		
-		//Don't insert space after left parenthesis
-		c.setNoSpace().after(f.getValueTestOperatorRule());
-		for (Keyword lPar : f.findKeywords("(")) {
-			c.setNoSpace().after(lPar);
-		}
+    @Override
+    protected void configureFormatting(FormattingConfig c) {
+        customConfigureFormatting(c, (KExpressionsGrammarAccess) getGrammarAccess());
+    }
 
-		//Don't insert space before right parenthesis
-		for (Keyword lPar : f.findKeywords(")")) {
-			c.setNoSpace().before(lPar);
-		}
-		
-		//Don't insert space after value test operator ('?')
-		c.setNoSpace().after(f.getPreOperatorRule());
-		
-//		c.setNoSpace().before(f.getTextExpressionRule());
-	}
-	
+    /**
+     * Method contains actual formatting instructions while GrammarAccess class maybe parameterized
+     * allowing the reuse within ActionsFormatter.
+     * 
+     * @param c
+     *            FormattingConfig provided by caller
+     * @param f
+     *            GrammarAccess provided by caller
+     */
+    protected void customConfigureFormatting(FormattingConfig c, KExpressionsGrammarAccess f) {
+        super.customConfigureFormatting(c, f.getAnnotationsGrammarAccess());
+
+        for (Keyword comma : f.findKeywords(",")) {
+            c.setNoLinewrap().before(comma);
+            c.setNoSpace().before(comma);
+        }
+
+        // Don't insert space after value test ('?') and 'pre' Operator
+        c.setNoSpace().after(f.getValueTestOperatorRule());
+        c.setNoSpace().after(f.getPreOperatorRule());
+
+        for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {
+            Grammar g = EcoreUtil2.getContainerOfType(pair.getFirst(), Grammar.class);
+
+            // For all pairs '(' ')' that are introduced in KExpression and Grammars
+            //  leveraging KExpressions (i.e. not Annotations) ...
+            if (g != null && !g.getName().equals(AnnotationsFormatter.LANGUAGE_NAME)) {
+                // ... don't insert space after left parenthesis
+                c.setNoSpace().after(pair.getFirst());
+                // ... don't insert space before right parenthesis
+                c.setNoSpace().before(pair.getSecond());
+                c.setNoLinewrap().after(pair.getSecond());
+            }
+        }
+    }
+
 }

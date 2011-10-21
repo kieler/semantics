@@ -1,0 +1,9 @@
+module de.cau.cs.kieler.synccharts.text.kits.Both
+
+Workflow {
+	
+	component =  @de.cau.cs.kieler.synccharts.text.kits.Kits {}
+
+	component =  @de.cau.cs.kieler.synccharts.text.kitsState.Kits {}
+	
+}

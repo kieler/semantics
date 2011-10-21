@@ -45,8 +45,8 @@ public class KitsKeywordSerializer extends KeywordSerializer {
     KitsGrammarAccess grammarAccess;
 
     public String serializeUnassignedKeyword(EObject context, Keyword keyword, INode node) {
-        if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_1_1()
-                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_1_4()) {
+        if (keyword == grammarAccess.getRootRegionAccess().getRegionKeyword_2_1()
+                || keyword == grammarAccess.getRootRegionAccess().getColonKeyword_2_4()) {
             Region region = (Region) context;
             if (Strings.isEmpty(region.getId())
                     && Strings.isEmpty(region.getLabel())
@@ -56,8 +56,8 @@ public class KitsKeywordSerializer extends KeywordSerializer {
                 return null;
             }
         }
-        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_0_1()
-                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_0_4()) {
+        if (keyword == grammarAccess.getSingleRegionAccess().getRegionKeyword_1_1()
+                || keyword == grammarAccess.getSingleRegionAccess().getColonKeyword_1_4()) {
             Region region = (Region) context;
             if (region.eContainer() != null
                     && ((State) region.eContainer()).getRegions().size() == 1

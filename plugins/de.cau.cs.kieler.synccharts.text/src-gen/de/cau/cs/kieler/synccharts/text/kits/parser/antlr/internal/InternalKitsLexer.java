@@ -150,10 +150,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:7: ( 'textual' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:9: 'textual'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:7: ( 'init' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:13:9: 'init'
             {
-            match("textual"); 
+            match("init"); 
 
 
             }
@@ -171,10 +171,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:7: ( 'code' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:9: 'code'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:7: ( 'final' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:14:9: 'final'
             {
-            match("code"); 
+            match("final"); 
 
 
             }
@@ -192,10 +192,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__19;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:7: ( '(' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:9: '('
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:7: ( 'state' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:15:9: 'state'
             {
-            match('('); 
+            match("state"); 
+
 
             }
 
@@ -212,10 +213,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__20;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:7: ( ')' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:9: ')'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:7: ( '@' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:16:9: '@'
             {
-            match(')'); 
+            match('@'); 
 
             }
 
@@ -232,11 +233,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__21;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:7: ( 'init' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:9: 'init'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:7: ( '[' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:17:9: '['
             {
-            match("init"); 
-
+            match('['); 
 
             }
 
@@ -253,11 +253,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__22;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:7: ( 'final' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:9: 'final'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:7: ( ',' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:18:9: ','
             {
-            match("final"); 
-
+            match(','); 
 
             }
 
@@ -274,11 +273,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__23;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:7: ( 'state' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:9: 'state'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:7: ( ']' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:19:9: ']'
             {
-            match("state"); 
-
+            match(']'); 
 
             }
 
@@ -295,10 +293,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__24;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:7: ( '@' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:9: '@'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:7: ( '{' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:20:9: '{'
             {
-            match('@'); 
+            match('{'); 
 
             }
 
@@ -315,10 +313,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__25;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:7: ( '[' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:9: '['
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:7: ( 'onentry' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:21:9: 'onentry'
             {
-            match('['); 
+            match("onentry"); 
+
 
             }
 
@@ -335,10 +334,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__26;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:7: ( ',' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:9: ','
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:7: ( 'oninner' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:22:9: 'oninner'
             {
-            match(','); 
+            match("oninner"); 
+
 
             }
 
@@ -355,10 +355,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__27;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:7: ( ']' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:9: ']'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:7: ( 'onexit' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:23:9: 'onexit'
             {
-            match(']'); 
+            match("onexit"); 
+
 
             }
 
@@ -375,10 +376,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__28;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:7: ( '{' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:9: '{'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:7: ( 'suspension' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:24:9: 'suspension'
             {
-            match('{'); 
+            match("suspension"); 
+
 
             }
 
@@ -395,11 +397,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__29;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:7: ( 'onentry' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:9: 'onentry'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:7: ( '}' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:25:9: '}'
             {
-            match("onentry"); 
-
+            match('}'); 
 
             }
 
@@ -416,11 +417,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__30;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:7: ( 'oninner' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:9: 'oninner'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:7: ( ';' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:26:9: ';'
             {
-            match("oninner"); 
-
+            match(';'); 
 
             }
 
@@ -437,10 +437,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__31;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:7: ( 'onexit' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:9: 'onexit'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:7: ( 'with' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:27:9: 'with'
             {
-            match("onexit"); 
+            match("with"); 
 
 
             }
@@ -458,11 +458,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__32;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:7: ( 'suspension' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:9: 'suspension'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:7: ( '#' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:28:9: '#'
             {
-            match("suspension"); 
-
+            match('#'); 
 
             }
 
@@ -479,10 +478,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__33;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:7: ( '}' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:9: '}'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:7: ( '/' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:29:9: '/'
             {
-            match('}'); 
+            match('/'); 
 
             }
 
@@ -499,10 +498,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__34;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:7: ( 'with' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:9: 'with'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:7: ( 'history' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:30:9: 'history'
             {
-            match("with"); 
+            match("history"); 
 
 
             }
@@ -520,10 +519,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__35;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:7: ( '#' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:9: '#'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:7: ( 'input' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:31:9: 'input'
             {
-            match('#'); 
+            match("input"); 
+
 
             }
 
@@ -540,10 +540,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__36;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:7: ( '/' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:9: '/'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:7: ( 'output' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:32:9: 'output'
             {
-            match('/'); 
+            match("output"); 
+
 
             }
 
@@ -560,10 +561,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__37;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:7: ( 'history' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:9: 'history'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:7: ( 'signal' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:33:9: 'signal'
             {
-            match("history"); 
+            match("signal"); 
 
 
             }
@@ -581,10 +582,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__38;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:7: ( 'input' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:9: 'input'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:7: ( ':=' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:34:9: ':='
             {
-            match("input"); 
+            match(":="); 
 
 
             }
@@ -602,10 +603,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__39;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:7: ( 'output' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:9: 'output'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:7: ( 'combine' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:35:9: 'combine'
             {
-            match("output"); 
+            match("combine"); 
 
 
             }
@@ -623,10 +624,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__40;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:7: ( 'signal' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:9: 'signal'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:7: ( 'var' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:36:9: 'var'
             {
-            match("signal"); 
+            match("var"); 
 
 
             }
@@ -644,10 +645,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__41;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:7: ( ':=' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:9: ':='
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:7: ( 'textual' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:37:9: 'textual'
             {
-            match(":="); 
+            match("textual"); 
 
 
             }
@@ -665,10 +666,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__42;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:7: ( 'combine' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:9: 'combine'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:7: ( 'code' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:38:9: 'code'
             {
-            match("combine"); 
+            match("code"); 
 
 
             }
@@ -686,11 +687,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__43;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:7: ( 'var' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:9: 'var'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:7: ( '(' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:39:9: '('
             {
-            match("var"); 
-
+            match('('); 
 
             }
 
@@ -707,10 +707,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = T__44;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:7: ( ';' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:9: ';'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:7: ( ')' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:40:9: ')'
             {
-            match(';'); 
+            match(')'); 
 
             }
 
@@ -1475,11 +1475,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_HOSTCODE;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5817:15: ( '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\'' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5817:17: '\\'' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )* '\\''
             {
             match('\''); 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5817:22: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\\'' ) ) )*
             loop1:
             do {
                 int alt1=3;
@@ -1495,7 +1495,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt1) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5817:23: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -1511,7 +1511,7 @@ public class InternalKitsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5786:64: ~ ( ( '\\\\' | '\\'' ) )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5817:64: ~ ( ( '\\\\' | '\\'' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -1548,12 +1548,12 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_COMMENT_ANNOTATION;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5788:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5788:27: '/**' ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5819:25: ( '/**' ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5819:27: '/**' ( options {greedy=false; } : . )* '*/'
             {
             match("/**"); 
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5788:33: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5819:33: ( options {greedy=false; } : . )*
             loop2:
             do {
                 int alt2=2;
@@ -1578,7 +1578,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5788:61: .
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5819:61: .
             	    {
             	    matchAny(); 
 
@@ -1608,8 +1608,8 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_ML_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5790:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5790:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5821:17: ( '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5821:19: '/*' ~ ( '*' ) ( options {greedy=false; } : . )* '*/'
             {
             match("/*"); 
 
@@ -1622,7 +1622,7 @@ public class InternalKitsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5790:31: ( options {greedy=false; } : . )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5821:31: ( options {greedy=false; } : . )*
             loop3:
             do {
                 int alt3=2;
@@ -1647,7 +1647,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt3) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5790:59: .
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5821:59: .
             	    {
             	    matchAny(); 
 
@@ -1677,10 +1677,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_INT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:10: ( ( '-' )? ( '0' .. '9' )+ )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:12: ( '-' )? ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:10: ( ( '-' )? ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:12: ( '-' )? ( '0' .. '9' )+
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:12: ( '-' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:12: ( '-' )?
             int alt4=2;
             int LA4_0 = input.LA(1);
 
@@ -1689,7 +1689,7 @@ public class InternalKitsLexer extends Lexer {
             }
             switch (alt4) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:12: '-'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:12: '-'
                     {
                     match('-'); 
 
@@ -1698,7 +1698,7 @@ public class InternalKitsLexer extends Lexer {
 
             }
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:17: ( '0' .. '9' )+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:17: ( '0' .. '9' )+
             int cnt5=0;
             loop5:
             do {
@@ -1712,7 +1712,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt5) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5792:18: '0' .. '9'
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5823:18: '0' .. '9'
             	    {
             	    matchRange('0','9'); 
 
@@ -1744,17 +1744,17 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_FLOAT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:12: ( ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' ) )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:12: ( ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )
             int alt15=2;
             alt15 = dfa15.predict(input);
             switch (alt15) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:15: ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:15: ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )?
                     {
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:15: ( '-' )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:15: ( '-' )?
                     int alt6=2;
                     int LA6_0 = input.LA(1);
 
@@ -1763,7 +1763,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     switch (alt6) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:15: '-'
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:15: '-'
                             {
                             match('-'); 
 
@@ -1772,7 +1772,7 @@ public class InternalKitsLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:20: ( '0' .. '9' )+
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:20: ( '0' .. '9' )+
                     int cnt7=0;
                     loop7:
                     do {
@@ -1786,7 +1786,7 @@ public class InternalKitsLexer extends Lexer {
 
                         switch (alt7) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:21: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:21: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1803,7 +1803,7 @@ public class InternalKitsLexer extends Lexer {
                     } while (true);
 
                     match('.'); 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:36: ( '0' .. '9' )*
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:36: ( '0' .. '9' )*
                     loop8:
                     do {
                         int alt8=2;
@@ -1816,7 +1816,7 @@ public class InternalKitsLexer extends Lexer {
 
                         switch (alt8) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:37: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:37: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -1828,7 +1828,7 @@ public class InternalKitsLexer extends Lexer {
                         }
                     } while (true);
 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:48: ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )?
                     int alt11=2;
                     int LA11_0 = input.LA(1);
 
@@ -1837,7 +1837,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     switch (alt11) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:49: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:49: ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+
                             {
                             if ( input.LA(1)=='E'||input.LA(1)=='e' ) {
                                 input.consume();
@@ -1848,7 +1848,7 @@ public class InternalKitsLexer extends Lexer {
                                 recover(mse);
                                 throw mse;}
 
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:59: ( '+' | '-' )?
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:59: ( '+' | '-' )?
                             int alt9=2;
                             int LA9_0 = input.LA(1);
 
@@ -1874,7 +1874,7 @@ public class InternalKitsLexer extends Lexer {
 
                             }
 
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:70: ( '0' .. '9' )+
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:70: ( '0' .. '9' )+
                             int cnt10=0;
                             loop10:
                             do {
@@ -1888,7 +1888,7 @@ public class InternalKitsLexer extends Lexer {
 
                                 switch (alt10) {
                             	case 1 :
-                            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:71: '0' .. '9'
+                            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:71: '0' .. '9'
                             	    {
                             	    matchRange('0','9'); 
 
@@ -1910,7 +1910,7 @@ public class InternalKitsLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:84: ( 'f' )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:84: ( 'f' )?
                     int alt12=2;
                     int LA12_0 = input.LA(1);
 
@@ -1919,7 +1919,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     switch (alt12) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:84: 'f'
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:84: 'f'
                             {
                             match('f'); 
 
@@ -1932,9 +1932,9 @@ public class InternalKitsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:89: ( '-' )? ( '0' .. '9' )+ 'f'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:89: ( '-' )? ( '0' .. '9' )+ 'f'
                     {
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:89: ( '-' )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:89: ( '-' )?
                     int alt13=2;
                     int LA13_0 = input.LA(1);
 
@@ -1943,7 +1943,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     switch (alt13) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:89: '-'
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:89: '-'
                             {
                             match('-'); 
 
@@ -1952,7 +1952,7 @@ public class InternalKitsLexer extends Lexer {
 
                     }
 
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:94: ( '0' .. '9' )+
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:94: ( '0' .. '9' )+
                     int cnt14=0;
                     loop14:
                     do {
@@ -1966,7 +1966,7 @@ public class InternalKitsLexer extends Lexer {
 
                         switch (alt14) {
                     	case 1 :
-                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5794:95: '0' .. '9'
+                    	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5825:95: '0' .. '9'
                     	    {
                     	    matchRange('0','9'); 
 
@@ -2005,10 +2005,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_BOOLEAN;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5796:14: ( ( 'true' | 'false' ) )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5796:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5827:14: ( ( 'true' | 'false' ) )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5827:16: ( 'true' | 'false' )
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5796:16: ( 'true' | 'false' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5827:16: ( 'true' | 'false' )
             int alt16=2;
             int LA16_0 = input.LA(1);
 
@@ -2026,7 +2026,7 @@ public class InternalKitsLexer extends Lexer {
             }
             switch (alt16) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5796:17: 'true'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5827:17: 'true'
                     {
                     match("true"); 
 
@@ -2034,7 +2034,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5796:24: 'false'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5827:24: 'false'
                     {
                     match("false"); 
 
@@ -2060,11 +2060,11 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_STRING;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5798:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5798:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5829:13: ( '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"' )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5829:15: '\"' ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )* '\"'
             {
             match('\"'); 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5798:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5829:19: ( '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' ) | ~ ( ( '\\\\' | '\"' ) ) )*
             loop17:
             do {
                 int alt17=3;
@@ -2080,7 +2080,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt17) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5798:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5829:20: '\\\\' ( 'b' | 't' | 'n' | 'f' | 'r' | '\"' | '\\'' | '\\\\' )
             	    {
             	    match('\\'); 
             	    if ( input.LA(1)=='\"'||input.LA(1)=='\''||input.LA(1)=='\\'||input.LA(1)=='b'||input.LA(1)=='f'||input.LA(1)=='n'||input.LA(1)=='r'||input.LA(1)=='t' ) {
@@ -2096,7 +2096,7 @@ public class InternalKitsLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5798:61: ~ ( ( '\\\\' | '\"' ) )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5829:61: ~ ( ( '\\\\' | '\"' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2133,10 +2133,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_ID;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5800:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5800:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5831:9: ( ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )* )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5831:11: ( '^' )? ( 'a' .. 'z' | 'A' .. 'Z' | '_' ) ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5800:11: ( '^' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5831:11: ( '^' )?
             int alt18=2;
             int LA18_0 = input.LA(1);
 
@@ -2145,7 +2145,7 @@ public class InternalKitsLexer extends Lexer {
             }
             switch (alt18) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5800:11: '^'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5831:11: '^'
                     {
                     match('^'); 
 
@@ -2163,7 +2163,7 @@ public class InternalKitsLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5800:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5831:40: ( 'a' .. 'z' | 'A' .. 'Z' | '_' | '0' .. '9' )*
             loop19:
             do {
                 int alt19=2;
@@ -2212,12 +2212,12 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_SL_COMMENT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:17: ( '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )? )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:19: '//' (~ ( ( '\\n' | '\\r' ) ) )* ( ( '\\r' )? '\\n' )?
             {
             match("//"); 
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:24: (~ ( ( '\\n' | '\\r' ) ) )*
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:24: (~ ( ( '\\n' | '\\r' ) ) )*
             loop20:
             do {
                 int alt20=2;
@@ -2230,7 +2230,7 @@ public class InternalKitsLexer extends Lexer {
 
                 switch (alt20) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:24: ~ ( ( '\\n' | '\\r' ) )
+            	    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:24: ~ ( ( '\\n' | '\\r' ) )
             	    {
             	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
@@ -2250,7 +2250,7 @@ public class InternalKitsLexer extends Lexer {
                 }
             } while (true);
 
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:40: ( ( '\\r' )? '\\n' )?
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:40: ( ( '\\r' )? '\\n' )?
             int alt22=2;
             int LA22_0 = input.LA(1);
 
@@ -2259,9 +2259,9 @@ public class InternalKitsLexer extends Lexer {
             }
             switch (alt22) {
                 case 1 :
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:41: ( '\\r' )? '\\n'
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:41: ( '\\r' )? '\\n'
                     {
-                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:41: ( '\\r' )?
+                    // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:41: ( '\\r' )?
                     int alt21=2;
                     int LA21_0 = input.LA(1);
 
@@ -2270,7 +2270,7 @@ public class InternalKitsLexer extends Lexer {
                     }
                     switch (alt21) {
                         case 1 :
-                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5802:41: '\\r'
+                            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5833:41: '\\r'
                             {
                             match('\r'); 
 
@@ -2302,10 +2302,10 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5804:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5804:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5835:9: ( ( ' ' | '\\t' | '\\r' | '\\n' )+ )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5835:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             {
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5804:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5835:11: ( ' ' | '\\t' | '\\r' | '\\n' )+
             int cnt23=0;
             loop23:
             do {
@@ -2359,8 +2359,8 @@ public class InternalKitsLexer extends Lexer {
         try {
             int _type = RULE_ANY_OTHER;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5806:16: ( . )
-            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5806:18: .
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5837:16: ( . )
+            // ../de.cau.cs.kieler.synccharts.text/src-gen/de/cau/cs/kieler/synccharts/text/kits/parser/antlr/internal/InternalKits.g:5837:18: .
             {
             matchAny(); 
 
@@ -2976,119 +2976,120 @@ public class InternalKitsLexer extends Lexer {
             this.transition = DFA15_transition;
         }
         public String getDescription() {
-            return "5794:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )";
+            return "5825:14: ( ( '-' )? ( '0' .. '9' )+ '.' ( '0' .. '9' )* ( ( 'e' | 'E' ) ( '+' | '-' )? ( '0' .. '9' )+ )? ( 'f' )? | ( '-' )? ( '0' .. '9' )+ 'f' )";
         }
     }
     static final String DFA24_eotS =
-        "\1\uffff\1\56\1\60\2\56\2\uffff\3\56\5\uffff\1\56\1\uffff\1\56\1"+
-        "\uffff\1\114\2\56\2\uffff\1\56\1\125\1\130\1\uffff\1\134\2\56\2"+
-        "\uffff\1\56\1\uffff\3\56\1\54\1\152\2\54\3\uffff\1\56\3\uffff\3"+
-        "\56\2\uffff\10\56\5\uffff\2\56\1\uffff\1\u0084\1\uffff\1\56\4\uffff"+
-        "\3\56\2\uffff\1\56\1\uffff\1\152\10\uffff\3\56\2\uffff\3\56\1\uffff"+
-        "\3\56\5\uffff\26\56\1\uffff\1\56\2\uffff\2\56\1\u00b1\1\56\1\u00b3"+
-        "\1\56\1\u00b5\1\56\1\u00b7\1\u00b8\1\u00b9\1\u00ba\7\56\1\u00c2"+
-        "\1\u00c3\2\56\1\u00c6\16\56\1\u00d5\1\56\1\u00d7\1\uffff\1\56\1"+
-        "\uffff\1\u00d9\1\uffff\1\u00da\4\uffff\7\56\2\uffff\2\56\1\uffff"+
-        "\1\u00e5\2\56\1\u00e8\1\u00e9\1\u00c2\1\u00ea\7\56\1\uffff\1\56"+
-        "\1\uffff\1\56\2\uffff\3\56\1\u00f7\1\u00f8\5\56\1\uffff\1\56\1\u00ff"+
-        "\3\uffff\1\u0100\1\56\1\u0102\1\56\1\u0104\1\56\1\u0106\1\56\1\u0108"+
-        "\2\56\1\u010b\2\uffff\1\56\1\u010d\1\u010e\2\56\1\u0111\2\uffff"+
-        "\1\56\1\uffff\1\u0113\1\uffff\1\u0114\1\uffff\1\u0115\1\uffff\1"+
-        "\u0116\1\56\1\uffff\1\56\2\uffff\2\56\1\uffff\1\56\4\uffff\1\u011c"+
-        "\1\u011d\3\56\2\uffff\2\56\1\u0123\1\u0124\1\u0125\3\uffff";
+        "\1\uffff\1\56\1\60\3\56\5\uffff\1\56\2\uffff\1\56\1\uffff\1\110"+
+        "\4\56\3\uffff\1\56\1\125\1\130\1\uffff\1\134\2\56\2\uffff\1\56\1"+
+        "\uffff\3\56\1\54\1\152\2\54\3\uffff\1\56\3\uffff\10\56\5\uffff\2"+
+        "\56\1\uffff\1\177\2\uffff\1\56\4\uffff\6\56\3\uffff\1\56\1\uffff"+
+        "\1\152\10\uffff\3\56\2\uffff\3\56\1\uffff\3\56\5\uffff\21\56\1\uffff"+
+        "\1\56\2\uffff\5\56\1\u00af\3\56\1\u00b3\1\56\1\u00b5\1\56\1\u00b7"+
+        "\1\u00b8\1\u00b9\1\u00ba\6\56\1\u00c1\16\56\1\u00d0\1\56\1\u00d2"+
+        "\1\56\1\u00d4\1\56\1\uffff\1\56\1\u00d7\1\56\1\uffff\1\u00d9\1\uffff"+
+        "\1\u00da\4\uffff\6\56\1\uffff\1\u00e2\2\56\1\u00e5\1\u00e6\1\u00d7"+
+        "\1\u00e7\7\56\1\uffff\1\56\1\uffff\1\56\1\uffff\2\56\1\uffff\1\56"+
+        "\2\uffff\3\56\1\u00f7\1\u00f8\2\56\1\uffff\1\56\1\u00fc\3\uffff"+
+        "\1\u00fd\1\56\1\u00ff\1\56\1\u0101\1\56\1\u0103\4\56\1\u0108\2\56"+
+        "\1\u010b\2\uffff\2\56\1\u010e\2\uffff\1\56\1\uffff\1\u0110\1\uffff"+
+        "\1\u0111\1\uffff\1\u0112\1\u0113\1\56\1\u0115\1\uffff\1\u0116\1"+
+        "\56\1\uffff\2\56\1\uffff\1\56\4\uffff\1\56\2\uffff\1\u011c\1\u011d"+
+        "\3\56\2\uffff\1\56\1\u0122\1\56\1\u0124\1\uffff\1\u0125\2\uffff";
     static final String DFA24_eofS =
         "\u0126\uffff";
     static final String DFA24_minS =
-        "\1\0\1\145\1\75\1\145\1\157\2\uffff\1\155\1\141\1\151\5\uffff\1"+
-        "\55\1\uffff\1\151\1\uffff\1\52\1\151\1\141\2\uffff\1\157\2\55\1"+
-        "\uffff\1\75\1\162\1\156\2\uffff\1\141\1\uffff\1\157\1\156\1\157"+
-        "\1\0\1\56\1\0\1\101\3\uffff\1\146\3\uffff\1\170\1\165\1\144\2\uffff"+
-        "\1\151\1\160\1\156\1\157\1\154\1\141\1\163\1\147\5\uffff\1\145\1"+
-        "\164\1\uffff\1\60\1\uffff\1\164\1\uffff\1\0\2\uffff\2\163\1\162"+
-        "\2\uffff\1\156\1\uffff\1\56\10\uffff\1\145\1\162\1\144\2\uffff\1"+
-        "\144\1\170\1\156\1\uffff\1\157\1\163\1\165\5\uffff\1\151\1\165\1"+
-        "\145\1\164\2\145\1\142\1\144\1\164\1\165\1\145\1\157\2\141\1\163"+
-        "\1\164\1\151\1\160\3\156\1\160\1\uffff\1\150\2\uffff\2\164\1\60"+
-        "\1\155\1\60\1\145\1\60\1\145\4\60\1\154\1\151\1\142\1\157\2\162"+
-        "\1\165\2\60\2\151\1\60\1\164\1\147\1\162\1\154\1\164\2\145\1\156"+
-        "\1\145\1\141\1\164\1\151\1\156\1\165\1\60\1\157\1\60\1\uffff\1\141"+
-        "\1\uffff\1\60\1\uffff\1\60\4\uffff\1\145\1\147\1\154\2\156\1\145"+
-        "\1\141\2\uffff\1\156\1\164\1\uffff\1\60\1\145\1\164\4\60\1\147\1"+
-        "\156\1\154\1\162\1\164\1\145\1\164\1\uffff\1\162\1\uffff\1\154\2"+
-        "\uffff\1\141\1\156\1\145\2\60\1\156\1\154\1\145\1\151\1\165\1\uffff"+
-        "\1\162\1\60\3\uffff\1\60\1\163\1\60\1\171\1\60\1\162\1\60\1\171"+
-        "\1\60\1\156\1\145\1\60\2\uffff\1\143\2\60\1\157\1\164\1\60\2\uffff"+
-        "\1\151\1\uffff\1\60\1\uffff\1\60\1\uffff\1\60\1\uffff\1\60\1\144"+
-        "\1\uffff\1\145\2\uffff\1\156\1\160\1\uffff\1\157\4\uffff\2\60\1"+
-        "\141\1\165\1\156\2\uffff\1\154\1\164\3\60\3\uffff";
+        "\1\0\1\145\1\75\1\155\1\141\1\151\5\uffff\1\55\2\uffff\1\151\1\uffff"+
+        "\1\52\1\151\1\157\1\141\1\145\3\uffff\1\157\2\55\1\uffff\1\75\1"+
+        "\162\1\156\2\uffff\1\141\1\uffff\1\157\1\156\1\157\1\0\1\56\1\0"+
+        "\1\101\3\uffff\1\146\3\uffff\1\151\1\160\1\156\1\157\1\154\1\141"+
+        "\1\163\1\147\5\uffff\1\145\1\164\1\uffff\1\60\2\uffff\1\164\1\uffff"+
+        "\1\0\2\uffff\2\163\1\144\1\162\1\170\1\165\3\uffff\1\156\1\uffff"+
+        "\1\56\10\uffff\1\145\1\162\1\144\2\uffff\1\144\1\170\1\156\1\uffff"+
+        "\1\157\1\163\1\165\5\uffff\1\151\1\165\1\145\1\164\1\165\1\145\1"+
+        "\157\2\141\1\163\1\164\1\151\1\160\3\156\1\160\1\uffff\1\150\2\uffff"+
+        "\2\164\1\142\1\145\1\144\1\60\1\164\1\145\1\155\1\60\1\145\1\60"+
+        "\1\145\4\60\1\154\1\151\1\142\1\157\2\162\1\60\1\164\1\147\1\162"+
+        "\1\154\1\164\2\145\1\156\1\145\1\141\1\164\1\151\1\156\1\165\1\60"+
+        "\1\157\1\60\1\151\1\60\1\151\1\uffff\1\165\1\60\1\141\1\uffff\1"+
+        "\60\1\uffff\1\60\4\uffff\1\145\1\147\1\154\2\156\1\145\1\uffff\1"+
+        "\60\1\145\1\164\4\60\1\147\1\156\1\154\1\162\1\164\1\145\1\164\1"+
+        "\uffff\1\162\1\uffff\1\156\1\uffff\1\164\1\141\1\uffff\1\154\2\uffff"+
+        "\1\141\1\156\1\145\2\60\1\156\1\165\1\uffff\1\162\1\60\3\uffff\1"+
+        "\60\1\163\1\60\1\171\1\60\1\162\1\60\1\171\1\145\1\151\1\154\1\60"+
+        "\1\156\1\145\1\60\2\uffff\1\143\1\164\1\60\2\uffff\1\151\1\uffff"+
+        "\1\60\1\uffff\1\60\1\uffff\2\60\1\157\1\60\1\uffff\1\60\1\144\1"+
+        "\uffff\1\145\1\160\1\uffff\1\157\4\uffff\1\156\2\uffff\2\60\1\165"+
+        "\1\156\1\141\2\uffff\1\164\1\60\1\154\1\60\1\uffff\1\60\2\uffff";
     static final String DFA24_maxS =
-        "\1\uffff\1\145\1\75\1\162\1\157\2\uffff\1\156\1\154\1\165\5\uffff"+
-        "\1\165\1\uffff\1\151\1\uffff\1\57\1\157\1\141\2\uffff\1\157\1\71"+
-        "\1\75\1\uffff\1\76\1\165\1\156\2\uffff\1\157\1\uffff\1\157\1\156"+
-        "\1\157\1\uffff\1\146\1\uffff\1\172\3\uffff\1\164\3\uffff\1\170\1"+
-        "\165\1\156\2\uffff\1\164\1\160\1\156\1\157\1\154\1\162\1\163\1\147"+
-        "\5\uffff\1\151\1\164\1\uffff\1\172\1\uffff\1\164\1\uffff\1\uffff"+
-        "\2\uffff\2\163\1\162\2\uffff\1\164\1\uffff\1\146\10\uffff\1\145"+
-        "\1\162\1\144\2\uffff\1\144\1\170\1\156\1\uffff\1\157\1\163\1\165"+
-        "\5\uffff\1\151\1\165\1\145\1\164\2\145\1\142\1\144\1\164\1\165\1"+
-        "\145\1\157\2\141\1\163\1\164\1\151\1\160\1\156\1\170\1\156\1\160"+
-        "\1\uffff\1\150\2\uffff\2\164\1\172\1\155\1\172\1\145\1\172\1\145"+
-        "\4\172\1\154\1\151\1\142\1\157\2\162\1\165\2\172\2\151\1\172\1\164"+
-        "\1\147\1\162\1\154\1\164\2\145\1\156\1\145\1\141\1\164\1\151\1\156"+
-        "\1\165\1\172\1\157\1\172\1\uffff\1\141\1\uffff\1\172\1\uffff\1\172"+
-        "\4\uffff\1\145\1\147\1\154\2\156\1\145\1\141\2\uffff\1\156\1\164"+
-        "\1\uffff\1\172\1\145\1\164\4\172\1\147\1\156\1\154\1\162\1\164\1"+
-        "\145\1\164\1\uffff\1\162\1\uffff\1\154\2\uffff\1\141\1\156\1\145"+
-        "\2\172\1\156\1\154\1\145\1\151\1\165\1\uffff\1\162\1\172\3\uffff"+
-        "\1\172\1\163\1\172\1\171\1\172\1\162\1\172\1\171\1\172\1\156\1\145"+
-        "\1\172\2\uffff\1\143\2\172\1\157\1\164\1\172\2\uffff\1\151\1\uffff"+
-        "\1\172\1\uffff\1\172\1\uffff\1\172\1\uffff\1\172\1\144\1\uffff\1"+
-        "\145\2\uffff\1\156\1\160\1\uffff\1\157\4\uffff\2\172\1\141\1\165"+
-        "\1\156\2\uffff\1\154\1\164\3\172\3\uffff";
+        "\1\uffff\1\145\1\75\1\156\1\154\1\165\5\uffff\1\165\2\uffff\1\151"+
+        "\1\uffff\1\57\2\157\1\141\1\162\3\uffff\1\157\1\71\1\75\1\uffff"+
+        "\1\76\1\165\1\156\2\uffff\1\157\1\uffff\1\157\1\156\1\157\1\uffff"+
+        "\1\146\1\uffff\1\172\3\uffff\1\164\3\uffff\1\164\1\160\1\156\1\157"+
+        "\1\154\1\162\1\163\1\147\5\uffff\1\151\1\164\1\uffff\1\172\2\uffff"+
+        "\1\164\1\uffff\1\uffff\2\uffff\2\163\1\156\1\162\1\170\1\165\3\uffff"+
+        "\1\164\1\uffff\1\146\10\uffff\1\145\1\162\1\144\2\uffff\1\144\1"+
+        "\170\1\156\1\uffff\1\157\1\163\1\165\5\uffff\1\151\1\165\1\145\1"+
+        "\164\1\165\1\145\1\157\2\141\1\163\1\164\1\151\1\160\1\156\1\170"+
+        "\1\156\1\160\1\uffff\1\150\2\uffff\2\164\1\142\1\145\1\144\1\172"+
+        "\1\164\1\145\1\155\1\172\1\145\1\172\1\145\4\172\1\154\1\151\1\142"+
+        "\1\157\2\162\1\172\1\164\1\147\1\162\1\154\1\164\2\145\1\156\1\145"+
+        "\1\141\1\164\1\151\1\156\1\165\1\172\1\157\1\172\1\151\1\172\1\151"+
+        "\1\uffff\1\165\1\172\1\141\1\uffff\1\172\1\uffff\1\172\4\uffff\1"+
+        "\145\1\147\1\154\2\156\1\145\1\uffff\1\172\1\145\1\164\4\172\1\147"+
+        "\1\156\1\154\1\162\1\164\1\145\1\164\1\uffff\1\162\1\uffff\1\156"+
+        "\1\uffff\1\164\1\141\1\uffff\1\154\2\uffff\1\141\1\156\1\145\2\172"+
+        "\1\156\1\165\1\uffff\1\162\1\172\3\uffff\1\172\1\163\1\172\1\171"+
+        "\1\172\1\162\1\172\1\171\1\145\1\151\1\154\1\172\1\156\1\145\1\172"+
+        "\2\uffff\1\143\1\164\1\172\2\uffff\1\151\1\uffff\1\172\1\uffff\1"+
+        "\172\1\uffff\2\172\1\157\1\172\1\uffff\1\172\1\144\1\uffff\1\145"+
+        "\1\160\1\uffff\1\157\4\uffff\1\156\2\uffff\2\172\1\165\1\156\1\141"+
+        "\2\uffff\1\164\1\172\1\154\1\172\1\uffff\1\172\2\uffff";
     static final String DFA24_acceptS =
-        "\5\uffff\1\5\1\6\3\uffff\1\12\1\13\1\14\1\15\1\16\1\uffff\1\23\1"+
-        "\uffff\1\25\3\uffff\1\36\1\42\3\uffff\1\51\3\uffff\1\63\1\65\1\uffff"+
-        "\1\67\7\uffff\1\112\1\114\1\115\1\uffff\1\112\1\33\1\2\3\uffff\1"+
-        "\5\1\6\10\uffff\1\12\1\13\1\14\1\15\1\16\2\uffff\1\47\1\uffff\1"+
-        "\23\1\uffff\1\25\1\uffff\1\113\1\26\3\uffff\1\36\1\42\1\uffff\1"+
-        "\46\1\uffff\1\64\1\50\1\55\1\54\1\51\1\53\1\56\1\52\3\uffff\1\63"+
-        "\1\65\3\uffff\1\67\3\uffff\1\103\1\106\1\107\1\111\1\114\26\uffff"+
-        "\1\60\1\uffff\1\104\1\105\51\uffff\1\35\1\uffff\1\62\1\uffff\1\57"+
-        "\1\uffff\1\61\1\66\1\101\1\102\7\uffff\1\110\1\4\2\uffff\1\7\16"+
-        "\uffff\1\24\1\uffff\1\77\1\uffff\1\100\1\70\12\uffff\1\30\2\uffff"+
-        "\1\10\1\74\1\11\14\uffff\1\1\1\40\6\uffff\1\41\1\76\1\uffff\1\32"+
-        "\1\uffff\1\21\1\uffff\1\31\1\uffff\1\43\2\uffff\1\75\1\uffff\1\3"+
-        "\1\34\2\uffff\1\73\1\uffff\1\17\1\20\1\27\1\71\5\uffff\1\72\1\45"+
-        "\5\uffff\1\22\1\44\1\37";
+        "\6\uffff\1\6\1\7\1\10\1\11\1\12\1\uffff\1\17\1\20\1\uffff\1\22\5"+
+        "\uffff\1\35\1\36\1\42\3\uffff\1\51\3\uffff\1\63\1\65\1\uffff\1\67"+
+        "\7\uffff\1\112\1\114\1\115\1\uffff\1\112\1\30\1\2\10\uffff\1\6\1"+
+        "\7\1\10\1\11\1\12\2\uffff\1\47\1\uffff\1\17\1\20\1\uffff\1\22\1"+
+        "\uffff\1\113\1\23\6\uffff\1\35\1\36\1\42\1\uffff\1\46\1\uffff\1"+
+        "\64\1\50\1\55\1\54\1\51\1\53\1\56\1\52\3\uffff\1\63\1\65\3\uffff"+
+        "\1\67\3\uffff\1\103\1\106\1\107\1\111\1\114\21\uffff\1\60\1\uffff"+
+        "\1\104\1\105\54\uffff\1\32\3\uffff\1\62\1\uffff\1\57\1\uffff\1\61"+
+        "\1\66\1\101\1\102\6\uffff\1\3\16\uffff\1\21\1\uffff\1\77\1\uffff"+
+        "\1\34\2\uffff\1\110\1\uffff\1\100\1\70\7\uffff\1\25\2\uffff\1\4"+
+        "\1\74\1\5\17\uffff\1\1\1\40\3\uffff\1\41\1\76\1\uffff\1\27\1\uffff"+
+        "\1\15\1\uffff\1\26\4\uffff\1\43\2\uffff\1\75\2\uffff\1\73\1\uffff"+
+        "\1\13\1\14\1\24\1\31\1\uffff\1\33\1\71\5\uffff\1\72\1\45\4\uffff"+
+        "\1\16\1\uffff\1\37\1\44";
     static final String DFA24_specialS =
-        "\1\2\45\uffff\1\0\1\uffff\1\1\41\uffff\1\3\u00db\uffff}>";
+        "\1\0\45\uffff\1\1\1\uffff\1\2\35\uffff\1\3\u00df\uffff}>";
     static final String[] DFA24_transitionS = {
-            "\11\54\2\53\2\54\1\53\22\54\1\53\1\54\1\50\1\22\3\54\1\46\1"+
-            "\5\1\6\1\40\1\37\1\14\1\31\1\27\1\23\12\47\1\2\1\26\1\34\1\33"+
-            "\1\32\1\42\1\12\32\52\1\13\1\54\1\15\1\51\1\52\1\54\1\36\1\43"+
-            "\1\4\1\45\1\52\1\10\1\52\1\24\1\7\3\52\1\41\1\30\1\17\1\35\1"+
-            "\52\1\1\1\11\1\3\1\44\1\25\1\21\3\52\1\16\1\54\1\20\uff82\54",
+            "\11\54\2\53\2\54\1\53\22\54\1\53\1\54\1\50\1\17\3\54\1\46\1"+
+            "\25\1\26\1\40\1\37\1\10\1\31\1\27\1\20\12\47\1\2\1\15\1\34\1"+
+            "\33\1\32\1\42\1\6\32\52\1\7\1\54\1\11\1\51\1\52\1\54\1\36\1"+
+            "\43\1\22\1\45\1\52\1\4\1\52\1\21\1\3\3\52\1\41\1\30\1\13\1\35"+
+            "\1\52\1\1\1\5\1\24\1\44\1\23\1\16\3\52\1\12\1\54\1\14\uff82"+
+            "\54",
             "\1\55",
             "\1\57",
-            "\1\61\14\uffff\1\62",
-            "\1\63",
-            "",
-            "",
-            "\1\67\1\66",
-            "\1\72\7\uffff\1\70\2\uffff\1\71",
-            "\1\75\12\uffff\1\73\1\74",
+            "\1\62\1\61",
+            "\1\65\7\uffff\1\63\2\uffff\1\64",
+            "\1\70\12\uffff\1\66\1\67",
             "",
             "",
             "",
             "",
             "",
-            "\1\105\100\uffff\1\103\3\uffff\1\106\2\uffff\1\104",
+            "\1\100\100\uffff\1\76\3\uffff\1\101\2\uffff\1\77",
             "",
-            "\1\110",
             "",
-            "\1\112\4\uffff\1\113",
-            "\1\115\5\uffff\1\116",
-            "\1\117",
+            "\1\104",
+            "",
+            "\1\106\4\uffff\1\107",
+            "\1\111\5\uffff\1\112",
+            "\1\113",
+            "\1\114",
+            "\1\115\14\uffff\1\116",
+            "",
             "",
             "",
             "\1\122",
@@ -3116,37 +3117,37 @@ public class InternalKitsLexer extends Lexer {
             "",
             "",
             "",
-            "\1\161",
-            "\1\162",
-            "\1\163\10\uffff\1\164\1\165",
-            "",
-            "",
-            "\1\166\6\uffff\1\167\3\uffff\1\170",
-            "\1\171",
+            "\1\161\6\uffff\1\162\3\uffff\1\163",
+            "\1\164",
+            "\1\165",
+            "\1\166",
+            "\1\167",
+            "\1\170\20\uffff\1\171",
             "\1\172",
             "\1\173",
-            "\1\174",
-            "\1\175\20\uffff\1\176",
-            "\1\177",
-            "\1\u0080",
             "",
             "",
             "",
             "",
             "",
-            "\1\u0081\3\uffff\1\u0082",
-            "\1\u0083",
+            "\1\174\3\uffff\1\175",
+            "\1\176",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
-            "\1\u0085",
             "",
-            "\52\u0087\1\u0086\uffd5\u0087",
+            "\1\u0080",
+            "",
+            "\52\u0082\1\u0081\uffd5\u0082",
             "",
             "",
+            "\1\u0083",
+            "\1\u0084",
+            "\1\u0086\10\uffff\1\u0085\1\u0087",
             "\1\u0088",
             "\1\u0089",
             "\1\u008a",
+            "",
             "",
             "",
             "\1\u008d\3\uffff\1\u008b\1\uffff\1\u008c",
@@ -3191,21 +3192,21 @@ public class InternalKitsLexer extends Lexer {
             "\1\u00a2",
             "\1\u00a3",
             "\1\u00a4",
-            "\1\u00a5",
-            "\1\u00a6",
+            "\1\u00a5\11\uffff\1\u00a6",
             "\1\u00a7",
             "\1\u00a8",
+            "",
             "\1\u00a9",
-            "\1\u00aa\11\uffff\1\u00ab",
+            "",
+            "",
+            "\1\u00aa",
+            "\1\u00ab",
             "\1\u00ac",
             "\1\u00ad",
-            "",
             "\1\u00ae",
-            "",
-            "",
-            "\1\u00af",
-            "\1\u00b0",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00b0",
+            "\1\u00b1",
             "\1\u00b2",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\1\u00b4",
@@ -3221,12 +3222,12 @@ public class InternalKitsLexer extends Lexer {
             "\1\u00be",
             "\1\u00bf",
             "\1\u00c0",
-            "\1\u00c1",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00c2",
+            "\1\u00c3",
             "\1\u00c4",
             "\1\u00c5",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00c6",
             "\1\u00c7",
             "\1\u00c8",
             "\1\u00c9",
@@ -3236,15 +3237,15 @@ public class InternalKitsLexer extends Lexer {
             "\1\u00cd",
             "\1\u00ce",
             "\1\u00cf",
-            "\1\u00d0",
-            "\1\u00d1",
-            "\1\u00d2",
-            "\1\u00d3",
-            "\1\u00d4",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00d1",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00d3",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00d5",
+            "",
             "\1\u00d6",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
             "\1\u00d8",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
@@ -3260,28 +3261,28 @@ public class InternalKitsLexer extends Lexer {
             "\1\u00de",
             "\1\u00df",
             "\1\u00e0",
-            "\1\u00e1",
             "",
-            "",
-            "\1\u00e2",
-            "\1\u00e3",
-            "",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\16\56\1\u00e4\13"+
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\16\56\1\u00e1\13"+
             "\56",
-            "\1\u00e6",
-            "\1\u00e7",
+            "\1\u00e3",
+            "\1\u00e4",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u00e8",
+            "\1\u00e9",
+            "\1\u00ea",
             "\1\u00eb",
             "\1\u00ec",
             "\1\u00ed",
             "\1\u00ee",
-            "\1\u00ef",
-            "\1\u00f0",
-            "\1\u00f1",
             "",
+            "\1\u00ef",
+            "",
+            "\1\u00f0",
+            "",
+            "\1\u00f1",
             "\1\u00f2",
             "",
             "\1\u00f3",
@@ -3294,22 +3295,22 @@ public class InternalKitsLexer extends Lexer {
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\1\u00f9",
             "\1\u00fa",
-            "\1\u00fb",
-            "\1\u00fc",
-            "\1\u00fd",
             "",
+            "\1\u00fb",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "",
+            "",
+            "",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\1\u00fe",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "",
+            "\1\u0100",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0101",
+            "\1\u0102",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\1\u0103",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u0104",
             "\1\u0105",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u0106",
             "\1\u0107",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\1\u0109",
@@ -3318,33 +3319,33 @@ public class InternalKitsLexer extends Lexer {
             "",
             "",
             "\1\u010c",
+            "\1\u010d",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "",
+            "",
             "\1\u010f",
-            "\1\u0110",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "",
-            "",
-            "\1\u0112",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u0114",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "\1\u0117",
             "",
             "\1\u0118",
-            "",
-            "",
             "\1\u0119",
+            "",
             "\1\u011a",
             "",
+            "",
+            "",
+            "",
             "\1\u011b",
-            "",
-            "",
             "",
             "",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
@@ -3355,11 +3356,11 @@ public class InternalKitsLexer extends Lexer {
             "",
             "",
             "\1\u0121",
-            "\1\u0122",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
-            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
+            "\1\u0123",
             "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
+            "\12\56\7\uffff\32\56\4\uffff\1\56\1\uffff\32\56",
             "",
             ""
     };
@@ -3401,26 +3402,6 @@ public class InternalKitsLexer extends Lexer {
         	int _s = s;
             switch ( s ) {
                     case 0 : 
-                        int LA24_38 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_38>='\u0000' && LA24_38<='\uFFFF')) ) {s = 105;}
-
-                        else s = 44;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA24_40 = input.LA(1);
-
-                        s = -1;
-                        if ( ((LA24_40>='\u0000' && LA24_40<='\uFFFF')) ) {s = 108;}
-
-                        else s = 44;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 2 : 
                         int LA24_0 = input.LA(1);
 
                         s = -1;
@@ -3428,45 +3409,45 @@ public class InternalKitsLexer extends Lexer {
 
                         else if ( (LA24_0==':') ) {s = 2;}
 
-                        else if ( (LA24_0=='t') ) {s = 3;}
+                        else if ( (LA24_0=='i') ) {s = 3;}
 
-                        else if ( (LA24_0=='c') ) {s = 4;}
+                        else if ( (LA24_0=='f') ) {s = 4;}
 
-                        else if ( (LA24_0=='(') ) {s = 5;}
+                        else if ( (LA24_0=='s') ) {s = 5;}
 
-                        else if ( (LA24_0==')') ) {s = 6;}
+                        else if ( (LA24_0=='@') ) {s = 6;}
 
-                        else if ( (LA24_0=='i') ) {s = 7;}
+                        else if ( (LA24_0=='[') ) {s = 7;}
 
-                        else if ( (LA24_0=='f') ) {s = 8;}
+                        else if ( (LA24_0==',') ) {s = 8;}
 
-                        else if ( (LA24_0=='s') ) {s = 9;}
+                        else if ( (LA24_0==']') ) {s = 9;}
 
-                        else if ( (LA24_0=='@') ) {s = 10;}
+                        else if ( (LA24_0=='{') ) {s = 10;}
 
-                        else if ( (LA24_0=='[') ) {s = 11;}
+                        else if ( (LA24_0=='o') ) {s = 11;}
 
-                        else if ( (LA24_0==',') ) {s = 12;}
+                        else if ( (LA24_0=='}') ) {s = 12;}
 
-                        else if ( (LA24_0==']') ) {s = 13;}
+                        else if ( (LA24_0==';') ) {s = 13;}
 
-                        else if ( (LA24_0=='{') ) {s = 14;}
+                        else if ( (LA24_0=='w') ) {s = 14;}
 
-                        else if ( (LA24_0=='o') ) {s = 15;}
+                        else if ( (LA24_0=='#') ) {s = 15;}
 
-                        else if ( (LA24_0=='}') ) {s = 16;}
+                        else if ( (LA24_0=='/') ) {s = 16;}
 
-                        else if ( (LA24_0=='w') ) {s = 17;}
+                        else if ( (LA24_0=='h') ) {s = 17;}
 
-                        else if ( (LA24_0=='#') ) {s = 18;}
+                        else if ( (LA24_0=='c') ) {s = 18;}
 
-                        else if ( (LA24_0=='/') ) {s = 19;}
+                        else if ( (LA24_0=='v') ) {s = 19;}
 
-                        else if ( (LA24_0=='h') ) {s = 20;}
+                        else if ( (LA24_0=='t') ) {s = 20;}
 
-                        else if ( (LA24_0=='v') ) {s = 21;}
+                        else if ( (LA24_0=='(') ) {s = 21;}
 
-                        else if ( (LA24_0==';') ) {s = 22;}
+                        else if ( (LA24_0==')') ) {s = 22;}
 
                         else if ( (LA24_0=='.') ) {s = 23;}
 
@@ -3514,13 +3495,33 @@ public class InternalKitsLexer extends Lexer {
 
                         if ( s>=0 ) return s;
                         break;
-                    case 3 : 
-                        int LA24_74 = input.LA(1);
+                    case 1 : 
+                        int LA24_38 = input.LA(1);
 
                         s = -1;
-                        if ( (LA24_74=='*') ) {s = 134;}
+                        if ( ((LA24_38>='\u0000' && LA24_38<='\uFFFF')) ) {s = 105;}
 
-                        else if ( ((LA24_74>='\u0000' && LA24_74<=')')||(LA24_74>='+' && LA24_74<='\uFFFF')) ) {s = 135;}
+                        else s = 44;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 2 : 
+                        int LA24_40 = input.LA(1);
+
+                        s = -1;
+                        if ( ((LA24_40>='\u0000' && LA24_40<='\uFFFF')) ) {s = 108;}
+
+                        else s = 44;
+
+                        if ( s>=0 ) return s;
+                        break;
+                    case 3 : 
+                        int LA24_70 = input.LA(1);
+
+                        s = -1;
+                        if ( (LA24_70=='*') ) {s = 129;}
+
+                        else if ( ((LA24_70>='\u0000' && LA24_70<=')')||(LA24_70>='+' && LA24_70<='\uFFFF')) ) {s = 130;}
 
                         if ( s>=0 ) return s;
                         break;

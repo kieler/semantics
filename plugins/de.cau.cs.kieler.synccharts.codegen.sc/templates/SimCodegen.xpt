@@ -4,7 +4,6 @@
 «IMPORT synccharts»
 «IMPORT kexpressions»
 
-«EXTENSION templates::Helper»
 «EXTENSION Helper»
 
 «REM»

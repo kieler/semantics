@@ -24,7 +24,6 @@ import org.eclipse.xtext.GrammarUtil;
 import org.eclipse.xtext.diagnostics.IDiagnosticConsumer;
 import org.eclipse.xtext.linking.ILinkingService;
 import org.eclipse.xtext.linking.impl.AbstractCleaningLinker;
-import org.eclipse.xtext.linking.impl.LinkingHelper;
 import org.eclipse.xtext.nodemodel.ICompositeNode;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
@@ -48,8 +47,8 @@ public class KitsLinker extends AbstractCleaningLinker {
     @Inject
     private ILinkingService linkingService;
 
-    @Inject
-    private LinkingHelper linkingHelper;
+//    @Inject
+//    private LinkingHelper linkingHelper;
 
     protected void doLinkModel(EObject model, IDiagnosticConsumer diagnosticsConsumer) {
 

@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.core.annotations.formatting;
 
+import org.eclipse.xtext.EcoreUtil2;
+import org.eclipse.xtext.Grammar;
 import org.eclipse.xtext.Keyword;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
@@ -31,12 +33,23 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
      * {@link AnnotationsFormatter#customConfigureFormatting(FormattingConfig, AnnotationsGrammarAccess)}
      * .
      * 
-     * @param c the provided {@link FormattingConfig} accepting the provided instructions. 
+     * @param c
+     *            the provided {@link FormattingConfig} accepting the provided instructions.
      */
     @Override
     protected void configureFormatting(final FormattingConfig c) {
         customConfigureFormatting(c, (AnnotationsGrammarAccess) getGrammarAccess());
     }
+
+    /**
+     * Name of the annotations language. Need it to distinguish the formatting for 
+     * parantheses in the annotations language and further languages like KExpressions.
+     * 
+     * Injecting this value does not work, doing so reveals e.g. the name of the KITS language.
+     * 
+     * @author chsch
+     */
+    public static final String LANGUAGE_NAME = "de.cau.cs.kieler.core.annotations.Annotations";
 
     /**
      * Method contains actual formatting instructions while GrammarAccess class maybe parameterized
@@ -49,6 +62,31 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
      */
     protected void customConfigureFormatting(final FormattingConfig c,
             final AnnotationsGrammarAccess f) {
+
+        c.setLinewrap().after(f.getImportAnnotationRule());
+
+        c.setLinewrap().before(f.getCOMMENT_ANNOTATIONRule());
+        c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
+        c.setLinewrap().before(f.getTagAnnotationRule());
+        c.setLinewrap().after(f.getTagAnnotationRule());
+        c.setLinewrap().before(f.getKeyStringValueAnnotationRule());
+        c.setLinewrap().after(f.getKeyStringValueAnnotationRule());
+        c.setLinewrap().before(f.getKeyBooleanValueAnnotationRule());
+        c.setLinewrap().after(f.getKeyBooleanValueAnnotationRule());
+        c.setLinewrap().before(f.getKeyIntValueAnnotationRule());
+        c.setLinewrap().after(f.getKeyIntValueAnnotationRule());
+        c.setLinewrap().before(f.getKeyFloatValueAnnotationRule());
+        c.setLinewrap().after(f.getKeyFloatValueAnnotationRule());
+        c.setLinewrap().before(f.getTypedKeyStringValueAnnotationRule());
+        c.setLinewrap().after(f.getTypedKeyStringValueAnnotationRule());
+
+        // have no space between '@' and the annotation name
+        for (Keyword at : f.findKeywords("@")) {
+            c.setNoSpace().after(at);
+        }
+
+        // have no spaces in a typed string annotation
+        // like "@position[de.cau.cs.kieler.core.math.KVector]"
         c.setNoSpace().before(
                 f.getTypedKeyStringValueAnnotationAccess().getLeftSquareBracketKeyword_2());
         c.setNoSpace().after(
@@ -56,33 +94,17 @@ public class AnnotationsFormatter extends AbstractDeclarativeFormatter {
         c.setNoSpace().before(
                 f.getTypedKeyStringValueAnnotationAccess().getRightSquareBracketKeyword_4());
 
-        c.setLinewrap().after(f.getImportAnnotationRule());
-
-        c.setLinewrap().after(f.getCOMMENT_ANNOTATIONRule());
-        c.setLinewrap().after(f.getTagAnnotationRule());
-        c.setLinewrap().after(f.getKeyStringValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyBooleanValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyIntValueAnnotationRule());
-        c.setLinewrap().after(f.getKeyFloatValueAnnotationRule());
-        c.setLinewrap().after(f.getTypedKeyStringValueAnnotationRule());
-
-        c.setLinewrap().after(
-                f.getCommentAnnotationAccess().getValueCOMMENT_ANNOTATIONTerminalRuleCall_0());
-        c.setLinewrap().after(f.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0());
-        c.setLinewrap().after(
-                f.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0());
-        c.setLinewrap().after(
-                f.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0());
-        c.setLinewrap().after(f.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0());
-        c.setLinewrap().after(
-                f.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0());
-
-        for (Keyword at : f.findKeywords("@")) {
-            c.setNoSpace().after(at);
-        }
-
+        // NESTED ANNOTATIONS
+        // establish correct indentations and line breaks in case of nested annotations
         for (Pair<Keyword, Keyword> pair : f.findKeywordPairs("(", ")")) {
-            c.setIndentation(pair.getFirst(), pair.getSecond());
+            Grammar g = EcoreUtil2.getContainerOfType(pair.getFirst(), Grammar.class);
+            if (g != null && g.getName().equals(LANGUAGE_NAME)) {
+                // i.e. for all pairs of '(' and ')' declared in the Annotations grammar do...
+                c.setIndentation(pair.getFirst(), pair.getSecond());
+                c.setLinewrap().after(pair.getFirst());
+                c.setLinewrap().before(pair.getSecond());
+                c.setLinewrap().after(pair.getSecond());
+            }
         }
     }
 }

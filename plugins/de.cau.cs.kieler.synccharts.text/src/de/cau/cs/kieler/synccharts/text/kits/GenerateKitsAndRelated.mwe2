@@ -1,0 +1,16 @@
+module de.menges.logic.LogicAndIE
+
+
+Workflow {
+	
+	component =  @de.cau.cs.kieler.core.annotations.Annotations auto-inject {}
+	
+	component =  @de.cau.cs.kieler.core.kexpressions.KExpressions auto-inject {}
+
+	component =  @de.cau.cs.kieler.synccharts.text.actions.Actions auto-inject {}
+
+	component =  @de.cau.cs.kieler.synccharts.text.kits.Kits auto-inject {}
+
+	component =  @de.cau.cs.kieler.synccharts.text.kitsState.Kits auto-inject {}
+	
+}

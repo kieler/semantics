@@ -67,8 +67,8 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//RootRegion returns synccharts::Region:
-	//	annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
-	//	signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
+	//	{synccharts::Region} annotations+=ImportAnnotation* (annotations+=Annotation* "region" id=ID? label=STRING? ":"
+	//	(variables+=Variable | signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 	public KitsGrammarAccess.RootRegionElements getRootRegionAccess() {
 		return gaKits.getRootRegionAccess();
 	}
@@ -79,8 +79,8 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// ---------------------------------------------------------------------------------------------------
 	//SingleRegion returns synccharts::Region:
-	//	(annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
-	//	bodyText+=TextualCode*)? states+=State*;
+	//	{synccharts::Region} (annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+	//	signals+=Signal)* bodyText+=TextualCode*)? states+=State*;
 	public KitsGrammarAccess.SingleRegionElements getSingleRegionAccess() {
 		return gaKits.getSingleRegionAccess();
 	}
@@ -90,19 +90,9 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
-	//TextualCode returns kexpressions::TextualCode:
-	//	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
-	public KitsGrammarAccess.TextualCodeElements getTextualCodeAccess() {
-		return gaKits.getTextualCodeAccess();
-	}
-	
-	public ParserRule getTextualCodeRule() {
-		return getTextualCodeAccess().getRule();
-	}
-
 	//Region returns synccharts::Region:
-	//	annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable | signals+=Signal)*
-	//	bodyText+=TextualCode* states+=State+;
+	//	{synccharts::Region} annotations+=Annotation* "region" id=ID? label=STRING? ":" (variables+=Variable |
+	//	signals+=Signal)* bodyText+=TextualCode* states+=State+;
 	public KitsGrammarAccess.RegionElements getRegionAccess() {
 		return gaKits.getRegionAccess();
 	}
@@ -117,7 +107,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	//	"state" id=ID label=STRING? ("@" bodyReference=[synccharts::State] ("[" renamings+=Substitution (","
 	//	renamings+=Substitution)* "]")? | "{" ((signals+=Signal | variables+=Variable | "onentry" entryActions+=Action |
 	//	"oninner" innerActions+=Action | "onexit" exitActions+=Action | "suspension" suspensionTrigger=Action)*
-	//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition*;
+	//	bodyText+=TextualCode* (regions+=SingleRegion regions+=Region*)?) "}")? outgoingTransitions+=Transition* ";";
 	public KitsGrammarAccess.StateElements getStateAccess() {
 		return gaKits.getStateAccess();
 	}
@@ -203,6 +193,17 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getIVariableRule() {
 		return getIVariableAccess().getRule();
+	}
+
+	//// ---------------------------------------------------------------------------------------------------
+	//TextualCode returns kexpressions::TextualCode:
+	//	"textual" "code" ("(" type=ID ")")? ":" code=STRING;
+	public KitsGrammarAccess.TextualCodeElements getTextualCodeAccess() {
+		return gaKits.getTextualCodeAccess();
+	}
+	
+	public ParserRule getTextualCodeRule() {
+		return getTextualCodeAccess().getRule();
 	}
 
 	//// ---------------------------------------------------------------------------------------------------
