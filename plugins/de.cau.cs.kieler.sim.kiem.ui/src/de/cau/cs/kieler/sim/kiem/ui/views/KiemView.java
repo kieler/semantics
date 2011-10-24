@@ -991,9 +991,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     }
                     getStepTextField().updateTextfield(steps2);
                     // update StepBackButton
-                    if ((kIEMInstance.getExecution().getSteps() > 0)
+                    if ((kIEMInstance.getExecution() != null) &&
+                       ((kIEMInstance.getExecution().getSteps() > 0)
                             && (!kIEMInstance.getExecution().isRunning())
-                            && (getActionStep().isEnabled())) {
+                            && (getActionStep().isEnabled()))) {
                         getActionStepBack().setEnabled(true);
                     } else {
                         getActionStepBack().setEnabled(false);
