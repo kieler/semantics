@@ -484,6 +484,28 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     }
 
     // -------------------------------------------------------------------------
+    
+    protected String getInputWorkspaceModel() {
+        IEditorPart diagramEditor = this.getInputEditor();
+
+      // now extract the file
+      View notationElement = getNotationElement(diagramEditor);
+      if (notationElement == null) {
+          return null;
+      }
+        
+        EObject myModel = (EObject) notationElement.getElement();
+        URI uri = myModel.eResource().getURI();
+
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        
+        IPath path = new Path(uri.toPlatformString(false));
+        IFile file = myWorkspaceRoot.getFile(path);
+        
+        return file.toString();
+    }
+
+    // -------------------------------------------------------------------------
 
     protected String getInputModel() {
         IEditorPart diagramEditor = this.getInputEditor();
