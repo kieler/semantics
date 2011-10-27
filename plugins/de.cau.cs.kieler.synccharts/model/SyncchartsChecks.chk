@@ -12,6 +12,14 @@ Boolean signalNotEmitted(Signal signal, Scope scope):
  scope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name.matches(signal.name)).isEmpty
 ;
 
+List[Signal] getDuplicateSignals(Scope scope):
+  scope.signals.select(e|!scope.signals.forAll(s| (s.name != e.name) || (s == e)))
+;
+
+List[Variable] getDuplicateVariables(Scope scope):
+  scope.variables.select(e|!scope.variables.forAll(s| (s.name != e.name) || (s == e)))
+;
+
 List[Signal] getUnreadSignals(Scope scope):
  scope.signals.select(e|(e.isInput || !e.isOutput) && e.signalNotRead(scope) && e.name != "tick")
 ;
@@ -22,6 +30,16 @@ List[Signal] getUnemittedSignals(Scope scope):
 
 Boolean containsTextualState(Scope scope):
   !(scope.eAllContents.typeSelect(State).select(state|state.type == StateType::TEXTUAL).isEmpty)
+;
+
+context Scope
+   ERROR "The following signals in this scope are duplicates but signals should be unique: " + this.getDuplicateSignals().name :
+   this.getDuplicateSignals().isEmpty || this.containsTextualState()
+;
+
+context Scope
+   ERROR "The following variables in this scope are duplicates but signals should be unique: " + this.getDuplicateVariables().name :
+   this.getDuplicateVariables().isEmpty || this.containsTextualState()
 ;
 
 context Scope
@@ -178,26 +196,7 @@ context Signal if ((initialValue == null) || (initialValue == ""))
     ERROR "Only valued signals may have a combine type other than NONE!" :
 	combineOperator == CombineOperator::NONE;
 	
-context Signal
-	ERROR "Signals need unique names in a State or Region declaration." :
-	this.eContainer != null && ((Scope)this.eContainer).signals.forAll(s| (s.name != name) || (s == this))
-	;
 		
-context Signal if (isInput || !isOutput)
-	WARNING "Signal never read." :
-	this.eContainer != null && !this.signalNotRead(((Scope)this.eContainer)) //!parentScope.eAllContents.typeSelect(SignalReference).select(reference|reference.signal.name == this.name).isEmpty
-	;
-	
-context Signal if (isOutput || !isInput)
-	WARNING "Signal never emitted." :
-	this.eContainer != null && !this.signalNotEmitted(((Scope)this.eContainer)) //!parentScope.eAllContents.typeSelect(Emission).select(emission|emission.signal.name == this.name).isEmpty
-	;
-	
-context Variable
-	ERROR "Variables need unique names in a State or Region declaration." :
-	this.eContainer != null && ((Scope)this.eContainer).variables.forAll(s| (s.name != name) || (s == this))
-	;
-
 context ValuedObject
 	ERROR "Variable and Signal names should be of standard identifier type, i.e. only contain characters, numbers and the _ sign." :
 	(name.matches("\\w*"));
