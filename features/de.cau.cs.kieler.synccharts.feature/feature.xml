@@ -218,14 +218,14 @@ litigation.
    </url>
 
    <requires>
-      <import feature="com.google.guava.runtime.feature" version="9.0.0"/>
-      <import feature="org.eclipse.emf" version="2.6.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.emf.compare" version="1.1.2" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gmf" version="1.4.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.gmf.runtime.notation" version="1.4.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtend" version="1.0.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.runtime" version="1.0.1" match="greaterOrEqual"/>
-      <import feature="org.eclipse.xtext.ui" version="1.0.1" match="greaterOrEqual"/>
+      <import feature="com.google.guava.runtime.feature" version="9.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf" version="2.6.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.emf.compare" version="1.1.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf" version="1.4.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.gmf.runtime.notation" version="1.4.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtend" version="1.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.runtime" version="2.0.0" match="greaterOrEqual"/>
+      <import feature="org.eclipse.xtext.ui" version="2.0.0" match="greaterOrEqual"/>
    </requires>
 
    <plugin
@@ -731,20 +731,6 @@ litigation.
 
    <plugin
          id="de.cau.cs.kieler.sim.kiem.ui.launching"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kwebs"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.kwebs.client"
          download-size="0"
          install-size="0"
          version="0.0.0"
