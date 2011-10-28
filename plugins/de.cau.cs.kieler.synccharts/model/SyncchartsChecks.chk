@@ -33,12 +33,12 @@ Boolean containsTextualState(Scope scope):
 ;
 
 context Scope
-   ERROR "The following signals in this scope are duplicates but signals should be unique: " + this.getDuplicateSignals().name :
+   ERROR "The following signals in this scope are duplicates but signals must be unique: " + this.getDuplicateSignals().name :
    this.getDuplicateSignals().isEmpty || this.containsTextualState()
 ;
 
 context Scope
-   ERROR "The following variables in this scope are duplicates but signals should be unique: " + this.getDuplicateVariables().name :
+   ERROR "The following variables in this scope are duplicates but signals must be unique: " + this.getDuplicateVariables().name :
    this.getDuplicateVariables().isEmpty || this.containsTextualState()
 ;
 
