@@ -1,0 +1,8 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER product contribution
+Bundle-SymbolicName: de.cau.cs.kieler.core.product
+Bundle-Version: 0.6.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
