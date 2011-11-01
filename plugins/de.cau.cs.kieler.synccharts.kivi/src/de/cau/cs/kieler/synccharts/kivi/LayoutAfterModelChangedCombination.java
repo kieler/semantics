@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import java.util.List;
+
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.transaction.NotificationFilter;
@@ -32,11 +34,10 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * 
  * @deprecated (haf) this combination might trigger layout very often, i.e. at every small model
  *             change. This calls layout even during a more complex model change that involves
- *             multiple small changes. Running layout during model changes sometimes result
- *             ConcurrentModificationExceptions.
+ *             multiple small changes.
  * 
- * @author mmu, haf
- * 
+ * @author mmu
+ * @author haf
  */
 public class LayoutAfterModelChangedCombination extends AbstractCombination {
 
@@ -84,7 +85,11 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
         IPreferenceStore preferenceStore = getPreferenceStore();
         boolean animate = preferenceStore.getBoolean(ANIMATE);
         boolean zoom = preferenceStore.getBoolean(ZOOM_TO_FIT);
-        for (Notification notification : modelState.getChange().getNotifications()) {
+        // Create a copy of the notifications list, since the transaction could still be active,
+        // which could lead to concurrent modification exceptions.
+        List<Notification> list = modelState.getChange().getNotifications();
+        Notification[] notifications = list.toArray(new Notification[list.size()]);
+        for (Notification notification : notifications) {
             // call layout for every relevant model change. layout effects will be merged by
             // KiVi to avoid too many effects and to guarantee that the right parent is layouted
             if (modelFilter.matches(notification) && notification.getNotifier() instanceof EObject) {

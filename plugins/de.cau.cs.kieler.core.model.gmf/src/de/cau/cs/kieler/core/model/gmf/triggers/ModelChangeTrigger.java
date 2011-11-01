@@ -26,7 +26,6 @@ import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.RollbackException;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
@@ -48,7 +47,6 @@ import de.cau.cs.kieler.core.ui.util.EditorUtils;
  * available, one for the semantic model, one for the GMF notation model.
  * 
  * @author haf
- * 
  */
 public class ModelChangeTrigger extends AbstractTrigger implements IPartListener,
         ResourceSetListener {
@@ -84,10 +82,10 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         CombinedWorkbenchListener.removePartListener(this);
         // cmot: Fixed null pointer exception when trying to disable KIVi
         if (currentEditor != null) {
-        	TransactionalEditingDomain transactionalEditingDomain = getEditingDomain(currentEditor);
-        	if (transactionalEditingDomain != null) {
-        		transactionalEditingDomain.removeResourceSetListener(this);
-        	}
+            TransactionalEditingDomain transactionalEditingDomain = getEditingDomain(currentEditor);
+            if (transactionalEditingDomain != null) {
+                transactionalEditingDomain.removeResourceSetListener(this);
+            }
         }
     }
 
@@ -131,7 +129,6 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        // trigger(new ActiveEditorState(null, part, null));
     }
 
     /**
@@ -154,6 +151,9 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
             }
             if (!triggeredSemantic && notationFilter.negated().matches(notification)) {
                 triggeredSemantic = true;
+            }
+            if (triggeredNotation && triggeredSemantic) {
+                break;
             }
         }
         if (triggeredNotation) {
@@ -197,7 +197,8 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
      * Test if the given WorkbenchPart (Editor/View) contains a Model supported by this Trigger.
      * Uses the GraphicalFrameworkService to test if there can be a root EditPart obtained.
      * 
-     * @param part part to check
+     * @param part
+     *            part to check
      * @return true if part is supported by the {@link GraphicalFrameworkService}
      */
     protected static boolean isDiagram(final IWorkbenchPart part) {
@@ -326,25 +327,7 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
          * @return the event
          */
         public ResourceSetChangeEvent getChange() {
-            if (event != null) {
-                return event;
-            } else {
-                return null; // FIXME sane default value
-            }
-        }
-
-        /**
-         * Get the editor where the change happened.
-         * 
-         * @deprecated this only works for GMF editors. Use getWorkbenchPart instead
-         * @return the diagram editor
-         */
-        public DiagramEditor getDiagramEditor() {
-            if (diagramEditor != null && diagramEditor instanceof DiagramEditor) {
-                return (DiagramEditor) diagramEditor;
-            } else {
-                return null; // FIXME sane default value
-            }
+            return event;
         }
 
         /**
@@ -432,28 +415,12 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         }
 
         /**
-         * @return the lastActiveEditor
-         * @deprecated use {@link #getLastActiveWorkbenchPart()} instead
-         */
-        public IWorkbenchPart getLastActiveEditor() {
-            return lastActiveEditor;
-        }
-
-        /**
          * Get the most recently opened editor or view. Maybe null if there is no such.
          * 
          * @return editor or view
          */
         public IWorkbenchPart getLastActiveWorkbenchPart() {
             return lastActiveEditor;
-        }
-
-        /**
-         * @return the lastActiveDiagramEditor
-         * @deprecated use {@link #getLastActiveDiagram()}
-         */
-        public IWorkbenchPart getLastActiveDiagramEditor() {
-            return lastActiveDiagramEditor;
         }
 
         /**
@@ -464,18 +431,6 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
          */
         public IWorkbenchPart getLastActiveDiagram() {
             return lastActiveDiagramEditor;
-        }
-
-        /**
-         * Get a list of all IWorkbenchParts (editors and views) that contain a diagram supported by
-         * the {@link GraphicalFrameworkService}. The order in the list is starting with the last
-         * activated part. It will include all currently active parts.
-         * 
-         * @deprecated use {@link #getOpenDiagrams()} instead
-         * @return the openDiagramEditors
-         */
-        public List<IWorkbenchPart> getOpenDiagramEditors() {
-            return openDiagramEditors;
         }
 
         /**
