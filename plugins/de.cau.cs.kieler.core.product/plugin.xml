@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="product"
+         point="org.eclipse.core.runtime.products">
+      <product
+            application="org.eclipse.ui.ide.workbench"
+            description="%productDescription"
+            name="KIELER">
+         <property
+               name="aboutText"
+               value="KIELER - a research project on enhancing the model-based design of complex systems.&#x0A;&#x0A;http://www.informatik.uni-kiel.de/rtsys/kieler/&#x0A;&#x0A;Copyright 2010 by Christian-Albrechts-University of Kiel, Department of Computer Science, Real-Time and Embedded Systems Group.">
+         </property>
+         <property
+               name="aboutImage"
+               value="images/about.png">
+         </property>
+         <property
+               name="appName"
+               value="KIELER">
+         </property>
+         <property
+               name="preferenceCustomization"
+               value="plugin_customization.ini">
+         </property>
+         <property
+               name="introTitle"
+               value="KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client">
+         </property>
+         <property
+               name="startupForegroundColor"
+               value="000000">
+         </property>
+         <property
+               name="startupProgressRect"
+               value="5,275,445,15">
+         </property>
+         <property
+               name="version"
+               value="0.6.0">
+         </property>
+         <property
+               name="windowImages"
+               value="icons/kiel_16.gif,icons/kiel_32.gif,icons/kiel_48.gif,icons/kiel_64.gif,icons/kiel_128.gif">
+         </property>
+         <property
+               name="introBrandingImage"
+               value="product:icons/kiel_64.gif">
+         </property>
+         <property
+               name="introBrandingImageText"
+               value="KIELER by Christian-Albrechts-Universität zu Kiel">
+         </property>
+         <property
+               name="startupMessageRect"
+               value="7,252,445,20">
+         </property>
+      </product>
+   </extension>
+
+</plugin>
