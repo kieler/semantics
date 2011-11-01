@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?pde version="3.5"?>
 
-<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.ui.product" application="org.eclipse.ui.ide.workbench" version="0.6.0.qualifier" useFeatures="true" includeLaunchers="true">
+<product name="KIELER" uid="de.cau.cs.kieler.product" id="de.cau.cs.kieler.core.product.product" application="org.eclipse.ui.ide.workbench" version="0.6.0.qualifier" useFeatures="true" includeLaunchers="true">
 
    <aboutInfo>
-      <image path="/de.cau.cs.kieler.core.ui/images/about.png"/>
+      <image path="/de.cau.cs.kieler.core.product/images/about.png"/>
       <text>
          KIELER - a research project on enhancing the model-based design of complex systems.
 
@@ -26,7 +26,8 @@ Copyright 2010 by Christian-Albrechts-University of Kiel, Department of Computer
 org.eclipse.platform
 --launcher.defaultAction
 openFile</programArgsMac>
-      <vmArgs>-Xms512m
+      <vmArgs>-Xss4m
+-Xms512m
 -Xmn256m
 -Xmx1024m 
 -XX:PermSize=128m
@@ -39,22 +40,23 @@ openFile</programArgsMac>
 -Xdock:icon=../Resources/kiel.icns</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/de.cau.cs.kieler.core.ui/icons/kiel_16.gif" i32="/de.cau.cs.kieler.core.ui/icons/kiel_32.gif" i48="/de.cau.cs.kieler.core.ui/icons/kiel_48.gif" i64="/de.cau.cs.kieler.core.ui/icons/kiel_64.gif" i128="/de.cau.cs.kieler.core.ui/icons/kiel_128.gif"/>
+   <windowImages i16="/de.cau.cs.kieler.core.product/icons/kiel_16.gif" i32="/de.cau.cs.kieler.core.product/icons/kiel_32.gif" i48="/de.cau.cs.kieler.core.product/icons/kiel_48.gif" i64="/de.cau.cs.kieler.core.product/icons/kiel_64.gif" i128="/de.cau.cs.kieler.core.product/icons/kiel_128.gif"/>
 
    <splash
-      location="de.cau.cs.kieler.core.ui"
-      startupProgressRect="10,310,480,15"
-      startupMessageRect="10,287,480,20"
+      location="de.cau.cs.kieler.core.product"
+      startupProgressRect="5,275,445,15"
+      startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="kieler">
-      <linux icon="/de.cau.cs.kieler.core.ui/icons/kiel_64.xpm"/>
-      <macosx icon="/de.cau.cs.kieler.core.ui/icons/kiel.icns"/>
+      <linux icon="/de.cau.cs.kieler.core.product/icons/kiel_64.xpm"/>
+      <macosx icon="/de.cau.cs.kieler.core.product/icons/kiel.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/de.cau.cs.kieler.core.ui/icons/kiel.ico"/>
+         <ico path="/de.cau.cs.kieler.core.product/icons/kiel.ico"/>
          <bmp/>
       </win>
    </launcher>
+
 
    <vm>
    </vm>
