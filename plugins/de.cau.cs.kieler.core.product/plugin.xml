@@ -59,5 +59,16 @@
          </property>
       </product>
    </extension>
+   <extension
+         point="org.eclipse.ui.splashHandlers">
+      <splashHandler
+            class="de.cau.cs.kieler.core.product.splash.KielerSplashHandler"
+            id="de.cau.cs.kieler.core.product.splash.extensible">
+      </splashHandler>
+      <splashHandlerProductBinding
+            productId="de.cau.cs.kieler.core.product.product"
+            splashId="de.cau.cs.kieler.core.product.splash.extensible">
+      </splashHandlerProductBinding>
+   </extension>
 
 </plugin>
