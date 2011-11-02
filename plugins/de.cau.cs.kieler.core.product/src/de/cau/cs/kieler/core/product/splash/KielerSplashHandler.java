@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.ui.splash;
+package de.cau.cs.kieler.core.product.splash;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -27,7 +27,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.splash.BasicSplashHandler;
 
-import de.cau.cs.kieler.core.ui.CoreUIPlugin;
+import de.cau.cs.kieler.core.product.CoreProductPlugin;
 
 /**
  * Provides a splash screen handler that shows a progress bar, a message line and a version
@@ -39,7 +39,7 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  *   in de.cau.cs.kieler.core.ui's plugin.xml by hand since the version won't be transferred from the
  *   product file automatically. Furthermore, the product file is not part of the RCA installation.
  * 
- * @author cds
+ * @author cds, chsch
  */
 @SuppressWarnings("restriction")
 public class KielerSplashHandler extends BasicSplashHandler {
@@ -87,7 +87,7 @@ public class KielerSplashHandler extends BasicSplashHandler {
         // Create the version number label
         versionLabel = createVersionLabel(contentComposite);
 
-        String productId = CoreUIPlugin.getDefault().getBundle().getBundleContext()
+        String productId = CoreProductPlugin.getDefault().getBundle().getBundleContext()
                 .getProperty(PROP_PRODUCT);
         IConfigurationElement[] entries = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(PI_RUNTIME, PT_PRODUCTS, productId);        

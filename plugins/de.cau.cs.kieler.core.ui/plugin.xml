@@ -155,17 +155,6 @@
       </category>
    </extension>
 
-   <extension
-         point="org.eclipse.ui.splashHandlers">
-      <splashHandler
-            class="de.cau.cs.kieler.core.ui.splash.KielerSplashHandler"
-            id="de.cau.cs.kieler.core.ui.splash.extensible">
-      </splashHandler>
-      <splashHandlerProductBinding
-            productId="de.cau.cs.kieler.core.product.product"
-            splashId="de.cau.cs.kieler.core.ui.splash.extensible">
-      </splashHandlerProductBinding>
-   </extension>
  <!--  <extension
          point="org.eclipse.ui.intro.config">
       <config

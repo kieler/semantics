@@ -4,5 +4,9 @@ Bundle-Name: KIELER product contribution
 Bundle-SymbolicName: de.cau.cs.kieler.core.product;singleton:=true
 Bundle-Version: 0.6.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.core.runtime
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.swt,
+ org.eclipse.ui.workbench
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
+Bundle-Activator: de.cau.cs.kieler.core.product.CoreProductPlugin
