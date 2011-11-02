@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.core.annotations.ui;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -29,10 +27,8 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.properties.IProperty;
 import de.cau.cs.kieler.kiml.ILayoutData;
-import de.cau.cs.kieler.kiml.LayoutAlgorithmData;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
 import de.cau.cs.kieler.kiml.LayoutDataService;
-import de.cau.cs.kieler.kiml.LayoutTypeData;
 import de.cau.cs.kieler.kiml.config.SemanticLayoutConfig;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 
@@ -54,40 +50,16 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
         return PRIORITY;
     }
     
-    /** a caching map for layout option data. */
-    private Map<String, LayoutOptionData<?>> optionDataMap;
-    
-    /**
-     * Return a layout option data for the given identifier.
-     * 
-     * @param id an identifier
-     * @return the corresponding option data
-     */
-    private LayoutOptionData<?> getOptionData(final String id) {
-        if (optionDataMap == null) {
-            optionDataMap = new HashMap<String, LayoutOptionData<?>>();
-            LayoutDataService layoutServices = LayoutDataService.getInstance();
-            for (LayoutOptionData<?> optionData : layoutServices.getOptionData()) {
-                String optionId = optionData.getId();
-                int dotIndex = optionId.lastIndexOf('.');
-                if (dotIndex >= 0) {
-                    optionDataMap.put(optionId.substring(dotIndex + 1), optionData);
-                }
-                optionDataMap.put(optionId, optionData);
-            }
-        }
-        return optionDataMap.get(id);
-    }
-    
     /**
      * {@inheritDoc}
      */
     @Override
     protected IProperty<?>[] getAffectedOptions(final EObject semanticElem) {
         if (semanticElem instanceof Annotatable) {
+            LayoutDataService dataService = LayoutDataService.getInstance();
             List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
-                LayoutOptionData<?> option = getOptionData(annotation.getName());
+                LayoutOptionData<?> option = dataService.getOptionDataBySuffix(annotation.getName());
                 if (option != null) {
                     data.add(option);
                 }
@@ -127,7 +99,12 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
         if (annotation instanceof StringAnnotation) {
             String value = ((StringAnnotation) annotation).getValue();
             if (optionData.getId().equals(LayoutOptions.ALGORITHM_ID)) {
-                ILayoutData layoutData = getAlgorithmData(value);
+                LayoutDataService dataService = LayoutDataService.getInstance();
+                ILayoutData layoutData = dataService.getAlgorithmDataBySuffix(value);
+                if (layoutData != null) {
+                    return layoutData.getId();
+                }
+                layoutData = dataService.getTypeDataBySuffix(value);
                 if (layoutData != null) {
                     return layoutData.getId();
                 }
@@ -148,41 +125,6 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
             }
         }
         return null;
-    }
-    
-    /** a caching map for layout algorithm data. */
-    private Map<String, ILayoutData> algorithmDataMap;
-    
-    /**
-     * Return a layout algorithm data for the given identifier.
-     * 
-     * @param id an identifier
-     * @return the corresponding algorithm data
-     */
-    private ILayoutData getAlgorithmData(final String id) {
-        if (algorithmDataMap == null) {
-            algorithmDataMap = new HashMap<String, ILayoutData>();
-            LayoutDataService layoutServices = LayoutDataService.getInstance();
-            // add layout type data to the cache
-            for (LayoutTypeData typeData : layoutServices.getTypeData()) {
-                String typeId = typeData.getId();
-                int dotIndex = typeId.lastIndexOf('.');
-                if (dotIndex >= 0) {
-                    algorithmDataMap.put(typeId.substring(dotIndex + 1), typeData);
-                }
-                algorithmDataMap.put(typeId, typeData);
-            }
-            // add layout algorithm data to the cache
-            for (LayoutAlgorithmData algorithmData : layoutServices.getAlgorithmData()) {
-                String algoId = algorithmData.getId();
-                int dotIndex = algoId.lastIndexOf('.');
-                if (dotIndex >= 0) {
-                    algorithmDataMap.put(algoId.substring(dotIndex + 1), algorithmData);
-                }
-                algorithmDataMap.put(algoId, algorithmData);
-            }
-        }
-        return algorithmDataMap.get(id);
     }
 
     /**
