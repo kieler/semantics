@@ -362,7 +362,7 @@
          class="de.cau.cs.kieler.core.annotations.AnnotationsPackage">
    </package>
    <XtendTransformationFile
-         TransformationFile="transformations/feature.ext">
+         TransformationFile="feature.ext">
    </XtendTransformationFile>
 		</configuration>
 		
