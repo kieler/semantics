@@ -263,6 +263,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * Executes a transformation.
      * 
      * @return The return value from XtendFacade.call()
+     * @throws TransformException in case the transformation fails
      */
     public Object executeTransformation() throws TransformException {
         Object result = null;
@@ -301,7 +302,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 Reader reader = new InputStreamReader(fileName.openStream());
                 Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
                 if (o != null) {
-                    LinkedList<AbstractTransformation> transformations = new LinkedList<AbstractTransformation>();
+                    LinkedList<AbstractTransformation> transformations =
+                            new LinkedList<AbstractTransformation>();
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods
