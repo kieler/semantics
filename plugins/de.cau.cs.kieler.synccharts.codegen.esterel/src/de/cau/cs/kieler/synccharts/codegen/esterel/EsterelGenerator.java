@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.synccharts.codegen.s;
+package de.cau.cs.kieler.synccharts.codegen.esterel;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -43,7 +43,7 @@ import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
+import de.cau.cs.kieler.synccharts.codegen.esterel.xtend.Synccharts2Esterel;
 
 // Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
 import com.google.inject.AbstractModule;
@@ -55,7 +55,7 @@ import com.google.inject.Guice;
  *         Generate S Code from a SyncChart using new Xtend language.
  * 
  */
-public class SGenerator implements IHandler {
+public class EsterelGenerator implements IHandler {
 
 	public void addHandlerListener(IHandlerListener handlerListener) {
 		// TODO Auto-generated method stub
@@ -88,7 +88,7 @@ public class SGenerator implements IHandler {
 			// Apply transformation
 			// Because for @Inject tags we cannot use the standard NEW keyword
 			//    Synccharts2S transform = new Synccharts2S();
-			Synccharts2S transform = Guice.createInjector().getInstance(Synccharts2S.class);
+			Synccharts2Esterel transform = Guice.createInjector().getInstance(Synccharts2Esterel.class);
 			Program program = transform.transform(rootRegion);
 
 			// Calculate output path

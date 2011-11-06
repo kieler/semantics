@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.codegen.s;
+package de.cau.cs.kieler.synccharts.codegen.esterel;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

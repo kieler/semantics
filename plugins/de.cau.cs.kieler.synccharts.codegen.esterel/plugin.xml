@@ -30,7 +30,7 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="de.cau.cs.kieler.synccharts.codegen.s.SGenerator"
+            defaultHandler="de.cau.cs.kieler.synccharts.codegen.esterel.EsterelGenerator"
             id="de.cau.cs.kieler.synccharts.codegen.s.genS"
             name="genS">
       </command>

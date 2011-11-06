@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.synccharts.codegen.s.xtend
+package de.cau.cs.kieler.synccharts.codegen.esterel.xtend
 
 import de.cau.cs.kieler.synccharts.*
 import de.cau.cs.kieler.s.s.SFactory
@@ -7,7 +7,7 @@ import java.util.*
 import com.google.inject.Inject
 
 
-class Synccharts2S {
+class Synccharts2Esterel {
 
 	@Inject extension Helper helper
 
