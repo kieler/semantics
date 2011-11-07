@@ -40,9 +40,9 @@ import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.kies.esterel.Program;
 import de.cau.cs.kieler.synccharts.codegen.esterel.xtend.Synccharts2Esterel;
 
 // Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
