@@ -68,712 +68,712 @@ import org.eclipse.emf.ecore.util.InternalEList;
  */
 public abstract class ScopeImpl extends AnnotatableImpl implements Scope {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The default value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String ID_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getId()
-     * @generated
-     * @ordered
-     */
+	 * @see #getId()
+	 * @generated
+	 * @ordered
+	 */
     protected String id = ID_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String LABEL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getLabel() <em>Label</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getLabel()
-     * @generated
-     * @ordered
-     */
+	 * @see #getLabel()
+	 * @generated
+	 * @ordered
+	 */
     protected String label = LABEL_EDEFAULT;
 
     /**
-     * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSignals()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSignals()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Signal> signals;
 
     /**
-     * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getVariables() <em>Variables</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getVariables()
-     * @generated
-     * @ordered
-     */
+	 * @see #getVariables()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Variable> variables;
 
     /**
-     * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getSuspensionTrigger() <em>Suspension Trigger</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getSuspensionTrigger()
-     * @generated
-     * @ordered
-     */
+	 * @see #getSuspensionTrigger()
+	 * @generated
+	 * @ordered
+	 */
     protected Action suspensionTrigger;
 
     /**
-     * The cached value of the '{@link #getExitActions() <em>Exit Actions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getExitActions() <em>Exit Actions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getExitActions()
-     * @generated
-     * @ordered
-     */
+	 * @see #getExitActions()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Action> exitActions;
 
     /**
-     * The cached value of the '{@link #getInnerActions() <em>Inner Actions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getInnerActions() <em>Inner Actions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInnerActions()
-     * @generated
-     * @ordered
-     */
+	 * @see #getInnerActions()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Action> innerActions;
 
     /**
-     * The cached value of the '{@link #getEntryActions() <em>Entry Actions</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getEntryActions() <em>Entry Actions</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getEntryActions()
-     * @generated
-     * @ordered
-     */
+	 * @see #getEntryActions()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Action> entryActions;
 
     /**
-     * The cached value of the '{@link #getBodyReference() <em>Body Reference</em>}' reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyReference() <em>Body Reference</em>}' reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyReference()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyReference()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject bodyReference;
 
     /**
-     * The cached value of the '{@link #getBodyContents() <em>Body Contents</em>}' containment reference.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyContents() <em>Body Contents</em>}' containment reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyContents()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyContents()
+	 * @generated
+	 * @ordered
+	 */
     protected EObject bodyContents;
 
     /**
-     * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getBodyText() <em>Body Text</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getBodyText()
-     * @generated
-     * @ordered
-     */
+	 * @see #getBodyText()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<TextualCode> bodyText;
 
     /**
-     * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getRenamings() <em>Renamings</em>}' containment reference list.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getRenamings()
-     * @generated
-     * @ordered
-     */
+	 * @see #getRenamings()
+	 * @generated
+	 * @ordered
+	 */
     protected EList<Substitution> renamings;
 
     /**
-     * The default value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInterfaceDeclaration()
-     * @generated
-     * @ordered
-     */
+	 * @see #getInterfaceDeclaration()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String INTERFACE_DECLARATION_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getInterfaceDeclaration() <em>Interface Declaration</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getInterfaceDeclaration()
-     * @generated
-     * @ordered
-     */
+	 * @see #getInterfaceDeclaration()
+	 * @generated
+	 * @ordered
+	 */
     protected String interfaceDeclaration = INTERFACE_DECLARATION_EDEFAULT;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected ScopeImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.SCOPE;
-    }
+		return SyncchartsPackage.Literals.SCOPE;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getId() {
-        return id;
-    }
+		return id;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setId(String newId) {
-        String oldId = id;
-        id = newId;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__ID, oldId, id));
-    }
+		String oldId = id;
+		id = newId;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__ID, oldId, id));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getLabel() {
-        return label;
-    }
+		return label;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setLabel(String newLabel) {
-        String oldLabel = label;
-        label = newLabel;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__LABEL, oldLabel, label));
-    }
+		String oldLabel = label;
+		label = newLabel;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__LABEL, oldLabel, label));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Signal> getSignals() {
-        if (signals == null) {
-            signals = new EObjectContainmentEList<Signal>(Signal.class, this, SyncchartsPackage.SCOPE__SIGNALS);
-        }
-        return signals;
-    }
+		if (signals == null) {
+			signals = new EObjectContainmentEList<Signal>(Signal.class, this, SyncchartsPackage.SCOPE__SIGNALS);
+		}
+		return signals;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Variable> getVariables() {
-        if (variables == null) {
-            variables = new EObjectContainmentEList<Variable>(Variable.class, this, SyncchartsPackage.SCOPE__VARIABLES);
-        }
-        return variables;
-    }
+		if (variables == null) {
+			variables = new EObjectContainmentEList<Variable>(Variable.class, this, SyncchartsPackage.SCOPE__VARIABLES);
+		}
+		return variables;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Action getSuspensionTrigger() {
-        return suspensionTrigger;
-    }
+		return suspensionTrigger;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetSuspensionTrigger(Action newSuspensionTrigger, NotificationChain msgs) {
-        Action oldSuspensionTrigger = suspensionTrigger;
-        suspensionTrigger = newSuspensionTrigger;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, oldSuspensionTrigger, newSuspensionTrigger);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		Action oldSuspensionTrigger = suspensionTrigger;
+		suspensionTrigger = newSuspensionTrigger;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, oldSuspensionTrigger, newSuspensionTrigger);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setSuspensionTrigger(Action newSuspensionTrigger) {
-        if (newSuspensionTrigger != suspensionTrigger) {
-            NotificationChain msgs = null;
-            if (suspensionTrigger != null)
-                msgs = ((InternalEObject)suspensionTrigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
-            if (newSuspensionTrigger != null)
-                msgs = ((InternalEObject)newSuspensionTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
-            msgs = basicSetSuspensionTrigger(newSuspensionTrigger, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, newSuspensionTrigger, newSuspensionTrigger));
-    }
+		if (newSuspensionTrigger != suspensionTrigger) {
+			NotificationChain msgs = null;
+			if (suspensionTrigger != null)
+				msgs = ((InternalEObject)suspensionTrigger).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
+			if (newSuspensionTrigger != null)
+				msgs = ((InternalEObject)newSuspensionTrigger).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, null, msgs);
+			msgs = basicSetSuspensionTrigger(newSuspensionTrigger, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER, newSuspensionTrigger, newSuspensionTrigger));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Action> getExitActions() {
-        if (exitActions == null) {
-            exitActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__EXIT_ACTIONS);
-        }
-        return exitActions;
-    }
+		if (exitActions == null) {
+			exitActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__EXIT_ACTIONS);
+		}
+		return exitActions;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Action> getInnerActions() {
-        if (innerActions == null) {
-            innerActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__INNER_ACTIONS);
-        }
-        return innerActions;
-    }
+		if (innerActions == null) {
+			innerActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__INNER_ACTIONS);
+		}
+		return innerActions;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Action> getEntryActions() {
-        if (entryActions == null) {
-            entryActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__ENTRY_ACTIONS);
-        }
-        return entryActions;
-    }
+		if (entryActions == null) {
+			entryActions = new EObjectContainmentEList<Action>(Action.class, this, SyncchartsPackage.SCOPE__ENTRY_ACTIONS);
+		}
+		return entryActions;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getBodyReference() {
-        if (bodyReference != null && bodyReference.eIsProxy()) {
-            InternalEObject oldBodyReference = (InternalEObject)bodyReference;
-            bodyReference = eResolveProxy(oldBodyReference);
-            if (bodyReference != oldBodyReference) {
-                if (eNotificationRequired())
-                    eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
-            }
-        }
-        return bodyReference;
-    }
+		if (bodyReference != null && bodyReference.eIsProxy()) {
+			InternalEObject oldBodyReference = (InternalEObject)bodyReference;
+			bodyReference = eResolveProxy(oldBodyReference);
+			if (bodyReference != oldBodyReference) {
+				if (eNotificationRequired())
+					eNotify(new ENotificationImpl(this, Notification.RESOLVE, SyncchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+			}
+		}
+		return bodyReference;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject basicGetBodyReference() {
-        return bodyReference;
-    }
+		return bodyReference;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setBodyReference(EObject newBodyReference) {
-        EObject oldBodyReference = bodyReference;
-        bodyReference = newBodyReference;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
-    }
+		EObject oldBodyReference = bodyReference;
+		bodyReference = newBodyReference;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_REFERENCE, oldBodyReference, bodyReference));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EObject getBodyContents() {
-        return bodyContents;
-    }
+		return bodyContents;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetBodyContents(EObject newBodyContents, NotificationChain msgs) {
-        EObject oldBodyContents = bodyContents;
-        bodyContents = newBodyContents;
-        if (eNotificationRequired()) {
-            ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
-            if (msgs == null) msgs = notification; else msgs.add(notification);
-        }
-        return msgs;
-    }
+		EObject oldBodyContents = bodyContents;
+		bodyContents = newBodyContents;
+		if (eNotificationRequired()) {
+			ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_CONTENTS, oldBodyContents, newBodyContents);
+			if (msgs == null) msgs = notification; else msgs.add(notification);
+		}
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setBodyContents(EObject newBodyContents) {
-        if (newBodyContents != bodyContents) {
-            NotificationChain msgs = null;
-            if (bodyContents != null)
-                msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            if (newBodyContents != null)
-                msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
-            msgs = basicSetBodyContents(newBodyContents, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
-    }
+		if (newBodyContents != bodyContents) {
+			NotificationChain msgs = null;
+			if (bodyContents != null)
+				msgs = ((InternalEObject)bodyContents).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+			if (newBodyContents != null)
+				msgs = ((InternalEObject)newBodyContents).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SyncchartsPackage.SCOPE__BODY_CONTENTS, null, msgs);
+			msgs = basicSetBodyContents(newBodyContents, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__BODY_CONTENTS, newBodyContents, newBodyContents));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<TextualCode> getBodyText() {
-        if (bodyText == null) {
-            bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, SyncchartsPackage.SCOPE__BODY_TEXT);
-        }
-        return bodyText;
-    }
+		if (bodyText == null) {
+			bodyText = new EObjectContainmentEList<TextualCode>(TextualCode.class, this, SyncchartsPackage.SCOPE__BODY_TEXT);
+		}
+		return bodyText;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public EList<Substitution> getRenamings() {
-        if (renamings == null) {
-            renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SyncchartsPackage.SCOPE__RENAMINGS, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE);
-        }
-        return renamings;
-    }
+		if (renamings == null) {
+			renamings = new EObjectContainmentWithInverseEList<Substitution>(Substitution.class, this, SyncchartsPackage.SCOPE__RENAMINGS, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE);
+		}
+		return renamings;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getInterfaceDeclaration() {
-        return interfaceDeclaration;
-    }
+		return interfaceDeclaration;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setInterfaceDeclaration(String newInterfaceDeclaration) {
-        String oldInterfaceDeclaration = interfaceDeclaration;
-        interfaceDeclaration = newInterfaceDeclaration;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__INTERFACE_DECLARATION, oldInterfaceDeclaration, interfaceDeclaration));
-    }
+		String oldInterfaceDeclaration = interfaceDeclaration;
+		interfaceDeclaration = newInterfaceDeclaration;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SCOPE__INTERFACE_DECLARATION, oldInterfaceDeclaration, interfaceDeclaration));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				return ((InternalEList<InternalEObject>)(InternalEList<?>)getRenamings()).basicAdd(otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__SIGNALS:
-                return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__VARIABLES:
-                return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
-                return basicSetSuspensionTrigger(null, msgs);
-            case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
-                return ((InternalEList<?>)getExitActions()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__INNER_ACTIONS:
-                return ((InternalEList<?>)getInnerActions()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
-                return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__BODY_CONTENTS:
-                return basicSetBodyContents(null, msgs);
-            case SyncchartsPackage.SCOPE__BODY_TEXT:
-                return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__SIGNALS:
+				return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__VARIABLES:
+				return ((InternalEList<?>)getVariables()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+				return basicSetSuspensionTrigger(null, msgs);
+			case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
+				return ((InternalEList<?>)getExitActions()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__INNER_ACTIONS:
+				return ((InternalEList<?>)getInnerActions()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
+				return ((InternalEList<?>)getEntryActions()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__BODY_CONTENTS:
+				return basicSetBodyContents(null, msgs);
+			case SyncchartsPackage.SCOPE__BODY_TEXT:
+				return ((InternalEList<?>)getBodyText()).basicRemove(otherEnd, msgs);
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				return ((InternalEList<?>)getRenamings()).basicRemove(otherEnd, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__ID:
-                return getId();
-            case SyncchartsPackage.SCOPE__LABEL:
-                return getLabel();
-            case SyncchartsPackage.SCOPE__SIGNALS:
-                return getSignals();
-            case SyncchartsPackage.SCOPE__VARIABLES:
-                return getVariables();
-            case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
-                return getSuspensionTrigger();
-            case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
-                return getExitActions();
-            case SyncchartsPackage.SCOPE__INNER_ACTIONS:
-                return getInnerActions();
-            case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
-                return getEntryActions();
-            case SyncchartsPackage.SCOPE__BODY_REFERENCE:
-                if (resolve) return getBodyReference();
-                return basicGetBodyReference();
-            case SyncchartsPackage.SCOPE__BODY_CONTENTS:
-                return getBodyContents();
-            case SyncchartsPackage.SCOPE__BODY_TEXT:
-                return getBodyText();
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                return getRenamings();
-            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
-                return getInterfaceDeclaration();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__ID:
+				return getId();
+			case SyncchartsPackage.SCOPE__LABEL:
+				return getLabel();
+			case SyncchartsPackage.SCOPE__SIGNALS:
+				return getSignals();
+			case SyncchartsPackage.SCOPE__VARIABLES:
+				return getVariables();
+			case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+				return getSuspensionTrigger();
+			case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
+				return getExitActions();
+			case SyncchartsPackage.SCOPE__INNER_ACTIONS:
+				return getInnerActions();
+			case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
+				return getEntryActions();
+			case SyncchartsPackage.SCOPE__BODY_REFERENCE:
+				if (resolve) return getBodyReference();
+				return basicGetBodyReference();
+			case SyncchartsPackage.SCOPE__BODY_CONTENTS:
+				return getBodyContents();
+			case SyncchartsPackage.SCOPE__BODY_TEXT:
+				return getBodyText();
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				return getRenamings();
+			case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
+				return getInterfaceDeclaration();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @SuppressWarnings("unchecked")
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__ID:
-                setId((String)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__LABEL:
-                setLabel((String)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__SIGNALS:
-                getSignals().clear();
-                getSignals().addAll((Collection<? extends Signal>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__VARIABLES:
-                getVariables().clear();
-                getVariables().addAll((Collection<? extends Variable>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
-                setSuspensionTrigger((Action)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
-                getExitActions().clear();
-                getExitActions().addAll((Collection<? extends Action>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__INNER_ACTIONS:
-                getInnerActions().clear();
-                getInnerActions().addAll((Collection<? extends Action>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
-                getEntryActions().clear();
-                getEntryActions().addAll((Collection<? extends Action>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                getBodyText().addAll((Collection<? extends TextualCode>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
-                getRenamings().addAll((Collection<? extends Substitution>)newValue);
-                return;
-            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
-                setInterfaceDeclaration((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__ID:
+				setId((String)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__LABEL:
+				setLabel((String)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__SIGNALS:
+				getSignals().clear();
+				getSignals().addAll((Collection<? extends Signal>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__VARIABLES:
+				getVariables().clear();
+				getVariables().addAll((Collection<? extends Variable>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+				setSuspensionTrigger((Action)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
+				getExitActions().clear();
+				getExitActions().addAll((Collection<? extends Action>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__INNER_ACTIONS:
+				getInnerActions().clear();
+				getInnerActions().addAll((Collection<? extends Action>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
+				getEntryActions().clear();
+				getEntryActions().addAll((Collection<? extends Action>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__BODY_REFERENCE:
+				setBodyReference((EObject)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__BODY_CONTENTS:
+				setBodyContents((EObject)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__BODY_TEXT:
+				getBodyText().clear();
+				getBodyText().addAll((Collection<? extends TextualCode>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				getRenamings().clear();
+				getRenamings().addAll((Collection<? extends Substitution>)newValue);
+				return;
+			case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
+				setInterfaceDeclaration((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__ID:
-                setId(ID_EDEFAULT);
-                return;
-            case SyncchartsPackage.SCOPE__LABEL:
-                setLabel(LABEL_EDEFAULT);
-                return;
-            case SyncchartsPackage.SCOPE__SIGNALS:
-                getSignals().clear();
-                return;
-            case SyncchartsPackage.SCOPE__VARIABLES:
-                getVariables().clear();
-                return;
-            case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
-                setSuspensionTrigger((Action)null);
-                return;
-            case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
-                getExitActions().clear();
-                return;
-            case SyncchartsPackage.SCOPE__INNER_ACTIONS:
-                getInnerActions().clear();
-                return;
-            case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
-                getEntryActions().clear();
-                return;
-            case SyncchartsPackage.SCOPE__BODY_REFERENCE:
-                setBodyReference((EObject)null);
-                return;
-            case SyncchartsPackage.SCOPE__BODY_CONTENTS:
-                setBodyContents((EObject)null);
-                return;
-            case SyncchartsPackage.SCOPE__BODY_TEXT:
-                getBodyText().clear();
-                return;
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                getRenamings().clear();
-                return;
-            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
-                setInterfaceDeclaration(INTERFACE_DECLARATION_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__ID:
+				setId(ID_EDEFAULT);
+				return;
+			case SyncchartsPackage.SCOPE__LABEL:
+				setLabel(LABEL_EDEFAULT);
+				return;
+			case SyncchartsPackage.SCOPE__SIGNALS:
+				getSignals().clear();
+				return;
+			case SyncchartsPackage.SCOPE__VARIABLES:
+				getVariables().clear();
+				return;
+			case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+				setSuspensionTrigger((Action)null);
+				return;
+			case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
+				getExitActions().clear();
+				return;
+			case SyncchartsPackage.SCOPE__INNER_ACTIONS:
+				getInnerActions().clear();
+				return;
+			case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
+				getEntryActions().clear();
+				return;
+			case SyncchartsPackage.SCOPE__BODY_REFERENCE:
+				setBodyReference((EObject)null);
+				return;
+			case SyncchartsPackage.SCOPE__BODY_CONTENTS:
+				setBodyContents((EObject)null);
+				return;
+			case SyncchartsPackage.SCOPE__BODY_TEXT:
+				getBodyText().clear();
+				return;
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				getRenamings().clear();
+				return;
+			case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
+				setInterfaceDeclaration(INTERFACE_DECLARATION_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.SCOPE__ID:
-                return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
-            case SyncchartsPackage.SCOPE__LABEL:
-                return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
-            case SyncchartsPackage.SCOPE__SIGNALS:
-                return signals != null && !signals.isEmpty();
-            case SyncchartsPackage.SCOPE__VARIABLES:
-                return variables != null && !variables.isEmpty();
-            case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
-                return suspensionTrigger != null;
-            case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
-                return exitActions != null && !exitActions.isEmpty();
-            case SyncchartsPackage.SCOPE__INNER_ACTIONS:
-                return innerActions != null && !innerActions.isEmpty();
-            case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
-                return entryActions != null && !entryActions.isEmpty();
-            case SyncchartsPackage.SCOPE__BODY_REFERENCE:
-                return bodyReference != null;
-            case SyncchartsPackage.SCOPE__BODY_CONTENTS:
-                return bodyContents != null;
-            case SyncchartsPackage.SCOPE__BODY_TEXT:
-                return bodyText != null && !bodyText.isEmpty();
-            case SyncchartsPackage.SCOPE__RENAMINGS:
-                return renamings != null && !renamings.isEmpty();
-            case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
-                return INTERFACE_DECLARATION_EDEFAULT == null ? interfaceDeclaration != null : !INTERFACE_DECLARATION_EDEFAULT.equals(interfaceDeclaration);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SCOPE__ID:
+				return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+			case SyncchartsPackage.SCOPE__LABEL:
+				return LABEL_EDEFAULT == null ? label != null : !LABEL_EDEFAULT.equals(label);
+			case SyncchartsPackage.SCOPE__SIGNALS:
+				return signals != null && !signals.isEmpty();
+			case SyncchartsPackage.SCOPE__VARIABLES:
+				return variables != null && !variables.isEmpty();
+			case SyncchartsPackage.SCOPE__SUSPENSION_TRIGGER:
+				return suspensionTrigger != null;
+			case SyncchartsPackage.SCOPE__EXIT_ACTIONS:
+				return exitActions != null && !exitActions.isEmpty();
+			case SyncchartsPackage.SCOPE__INNER_ACTIONS:
+				return innerActions != null && !innerActions.isEmpty();
+			case SyncchartsPackage.SCOPE__ENTRY_ACTIONS:
+				return entryActions != null && !entryActions.isEmpty();
+			case SyncchartsPackage.SCOPE__BODY_REFERENCE:
+				return bodyReference != null;
+			case SyncchartsPackage.SCOPE__BODY_CONTENTS:
+				return bodyContents != null;
+			case SyncchartsPackage.SCOPE__BODY_TEXT:
+				return bodyText != null && !bodyText.isEmpty();
+			case SyncchartsPackage.SCOPE__RENAMINGS:
+				return renamings != null && !renamings.isEmpty();
+			case SyncchartsPackage.SCOPE__INTERFACE_DECLARATION:
+				return INTERFACE_DECLARATION_EDEFAULT == null ? interfaceDeclaration != null : !INTERFACE_DECLARATION_EDEFAULT.equals(interfaceDeclaration);
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (id: ");
-        result.append(id);
-        result.append(", label: ");
-        result.append(label);
-        result.append(", interfaceDeclaration: ");
-        result.append(interfaceDeclaration);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (id: ");
+		result.append(id);
+		result.append(", label: ");
+		result.append(label);
+		result.append(", interfaceDeclaration: ");
+		result.append(interfaceDeclaration);
+		result.append(')');
+		return result.toString();
+	}
 
 } //ScopeImpl

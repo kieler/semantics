@@ -45,56 +45,56 @@ import org.eclipse.emf.common.util.EList;
  */
 public interface Region extends Scope {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * Returns the value of the '<em><b>States</b></em>' containment reference list.
-     * The list contents are of type {@link de.cau.cs.kieler.synccharts.State}.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getParentRegion <em>Parent Region</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>States</b></em>' containment reference list.
+	 * The list contents are of type {@link de.cau.cs.kieler.synccharts.State}.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getParentRegion <em>Parent Region</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>States</em>' containment reference list isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>States</em>' containment reference list.
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_States()
-     * @see de.cau.cs.kieler.synccharts.State#getParentRegion
-     * @model opposite="parentRegion" containment="true"
-     * @generated
-     */
+	 * @return the value of the '<em>States</em>' containment reference list.
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_States()
+	 * @see de.cau.cs.kieler.synccharts.State#getParentRegion
+	 * @model opposite="parentRegion" containment="true"
+	 * @generated
+	 */
     EList<State> getStates();
 
     /**
-     * Returns the value of the '<em><b>Parent State</b></em>' container reference.
-     * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getRegions <em>Regions</em>}'.
-     * <!-- begin-user-doc -->
+	 * Returns the value of the '<em><b>Parent State</b></em>' container reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.State#getRegions <em>Regions</em>}'.
+	 * <!-- begin-user-doc -->
      * <p>
      * If the meaning of the '<em>Parent State</em>' container reference isn't clear,
      * there really should be more of a description here...
      * </p>
      * <!-- end-user-doc -->
-     * @return the value of the '<em>Parent State</em>' container reference.
-     * @see #setParentState(State)
-     * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_ParentState()
-     * @see de.cau.cs.kieler.synccharts.State#getRegions
-     * @model opposite="regions" transient="false"
-     * @generated
-     */
+	 * @return the value of the '<em>Parent State</em>' container reference.
+	 * @see #setParentState(State)
+	 * @see de.cau.cs.kieler.synccharts.SyncchartsPackage#getRegion_ParentState()
+	 * @see de.cau.cs.kieler.synccharts.State#getRegions
+	 * @model opposite="regions" transient="false"
+	 * @generated
+	 */
     State getParentState();
 
     /**
-     * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Region#getParentState <em>Parent State</em>}' container reference.
-     * <!-- begin-user-doc -->
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.Region#getParentState <em>Parent State</em>}' container reference.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @param value the new value of the '<em>Parent State</em>' container reference.
-     * @see #getParentState()
-     * @generated
-     */
+	 * @param value the new value of the '<em>Parent State</em>' container reference.
+	 * @see #getParentState()
+	 * @generated
+	 */
     void setParentState(State value);
 
 } // Region

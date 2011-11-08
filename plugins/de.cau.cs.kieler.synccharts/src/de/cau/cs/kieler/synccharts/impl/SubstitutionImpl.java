@@ -45,292 +45,292 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  */
 public class SubstitutionImpl extends EObjectImpl implements Substitution {
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public static final String copyright = "KIELER - Kiel Integrated Environment for Layout Eclipse RichClient\n\nhttp://www.informatik.uni-kiel.de/rtsys/kieler/\n\nCopyright 2009 by\n+ Christian-Albrechts-University of Kiel\n  + Department of Computer Science\n    + Real-Time and Embedded Systems Group\n\nThis code is provided under the terms of the Eclipse Public License (EPL).\nSee the file epl-v10.html for the license text.";
 
     /**
-     * The default value of the '{@link #getFormal() <em>Formal</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getFormal() <em>Formal</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFormal()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFormal()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String FORMAL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getFormal() <em>Formal</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getFormal() <em>Formal</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getFormal()
-     * @generated
-     * @ordered
-     */
+	 * @see #getFormal()
+	 * @generated
+	 * @ordered
+	 */
     protected String formal = FORMAL_EDEFAULT;
 
     /**
-     * The default value of the '{@link #getActual() <em>Actual</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The default value of the '{@link #getActual() <em>Actual</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getActual()
-     * @generated
-     * @ordered
-     */
+	 * @see #getActual()
+	 * @generated
+	 * @ordered
+	 */
     protected static final String ACTUAL_EDEFAULT = null;
 
     /**
-     * The cached value of the '{@link #getActual() <em>Actual</em>}' attribute.
-     * <!-- begin-user-doc -->
+	 * The cached value of the '{@link #getActual() <em>Actual</em>}' attribute.
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see #getActual()
-     * @generated
-     * @ordered
-     */
+	 * @see #getActual()
+	 * @generated
+	 * @ordered
+	 */
     protected String actual = ACTUAL_EDEFAULT;
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     protected SubstitutionImpl() {
-        super();
-    }
+		super();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     protected EClass eStaticClass() {
-        return SyncchartsPackage.Literals.SUBSTITUTION;
-    }
+		return SyncchartsPackage.Literals.SUBSTITUTION;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public Scope getParentScope() {
-        if (eContainerFeatureID() != SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE) return null;
-        return (Scope)eContainer();
-    }
+		if (eContainerFeatureID() != SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE) return null;
+		return (Scope)eContainer();
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public NotificationChain basicSetParentScope(Scope newParentScope, NotificationChain msgs) {
-        msgs = eBasicSetContainer((InternalEObject)newParentScope, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE, msgs);
-        return msgs;
-    }
+		msgs = eBasicSetContainer((InternalEObject)newParentScope, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE, msgs);
+		return msgs;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setParentScope(Scope newParentScope) {
-        if (newParentScope != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE && newParentScope != null)) {
-            if (EcoreUtil.isAncestor(this, newParentScope))
-                throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
-            NotificationChain msgs = null;
-            if (eInternalContainer() != null)
-                msgs = eBasicRemoveFromContainer(msgs);
-            if (newParentScope != null)
-                msgs = ((InternalEObject)newParentScope).eInverseAdd(this, SyncchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
-            msgs = basicSetParentScope(newParentScope, msgs);
-            if (msgs != null) msgs.dispatch();
-        }
-        else if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE, newParentScope, newParentScope));
-    }
+		if (newParentScope != eInternalContainer() || (eContainerFeatureID() != SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE && newParentScope != null)) {
+			if (EcoreUtil.isAncestor(this, newParentScope))
+				throw new IllegalArgumentException("Recursive containment not allowed for " + toString());
+			NotificationChain msgs = null;
+			if (eInternalContainer() != null)
+				msgs = eBasicRemoveFromContainer(msgs);
+			if (newParentScope != null)
+				msgs = ((InternalEObject)newParentScope).eInverseAdd(this, SyncchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
+			msgs = basicSetParentScope(newParentScope, msgs);
+			if (msgs != null) msgs.dispatch();
+		}
+		else if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE, newParentScope, newParentScope));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getFormal() {
-        return formal;
-    }
+		return formal;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setFormal(String newFormal) {
-        String oldFormal = formal;
-        formal = newFormal;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__FORMAL, oldFormal, formal));
-    }
+		String oldFormal = formal;
+		formal = newFormal;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__FORMAL, oldFormal, formal));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public String getActual() {
-        return actual;
-    }
+		return actual;
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     public void setActual(String newActual) {
-        String oldActual = actual;
-        actual = newActual;
-        if (eNotificationRequired())
-            eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__ACTUAL, oldActual, actual));
-    }
+		String oldActual = actual;
+		actual = newActual;
+		if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, SyncchartsPackage.SUBSTITUTION__ACTUAL, oldActual, actual));
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                if (eInternalContainer() != null)
-                    msgs = eBasicRemoveFromContainer(msgs);
-                return basicSetParentScope((Scope)otherEnd, msgs);
-        }
-        return super.eInverseAdd(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				if (eInternalContainer() != null)
+					msgs = eBasicRemoveFromContainer(msgs);
+				return basicSetParentScope((Scope)otherEnd, msgs);
+		}
+		return super.eInverseAdd(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                return basicSetParentScope(null, msgs);
-        }
-        return super.eInverseRemove(otherEnd, featureID, msgs);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				return basicSetParentScope(null, msgs);
+		}
+		return super.eInverseRemove(otherEnd, featureID, msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public NotificationChain eBasicRemoveFromContainerFeature(NotificationChain msgs) {
-        switch (eContainerFeatureID()) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                return eInternalContainer().eInverseRemove(this, SyncchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
-        }
-        return super.eBasicRemoveFromContainerFeature(msgs);
-    }
+		switch (eContainerFeatureID()) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				return eInternalContainer().eInverseRemove(this, SyncchartsPackage.SCOPE__RENAMINGS, Scope.class, msgs);
+		}
+		return super.eBasicRemoveFromContainerFeature(msgs);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public Object eGet(int featureID, boolean resolve, boolean coreType) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                return getParentScope();
-            case SyncchartsPackage.SUBSTITUTION__FORMAL:
-                return getFormal();
-            case SyncchartsPackage.SUBSTITUTION__ACTUAL:
-                return getActual();
-        }
-        return super.eGet(featureID, resolve, coreType);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				return getParentScope();
+			case SyncchartsPackage.SUBSTITUTION__FORMAL:
+				return getFormal();
+			case SyncchartsPackage.SUBSTITUTION__ACTUAL:
+				return getActual();
+		}
+		return super.eGet(featureID, resolve, coreType);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eSet(int featureID, Object newValue) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                setParentScope((Scope)newValue);
-                return;
-            case SyncchartsPackage.SUBSTITUTION__FORMAL:
-                setFormal((String)newValue);
-                return;
-            case SyncchartsPackage.SUBSTITUTION__ACTUAL:
-                setActual((String)newValue);
-                return;
-        }
-        super.eSet(featureID, newValue);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				setParentScope((Scope)newValue);
+				return;
+			case SyncchartsPackage.SUBSTITUTION__FORMAL:
+				setFormal((String)newValue);
+				return;
+			case SyncchartsPackage.SUBSTITUTION__ACTUAL:
+				setActual((String)newValue);
+				return;
+		}
+		super.eSet(featureID, newValue);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public void eUnset(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                setParentScope((Scope)null);
-                return;
-            case SyncchartsPackage.SUBSTITUTION__FORMAL:
-                setFormal(FORMAL_EDEFAULT);
-                return;
-            case SyncchartsPackage.SUBSTITUTION__ACTUAL:
-                setActual(ACTUAL_EDEFAULT);
-                return;
-        }
-        super.eUnset(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				setParentScope((Scope)null);
+				return;
+			case SyncchartsPackage.SUBSTITUTION__FORMAL:
+				setFormal(FORMAL_EDEFAULT);
+				return;
+			case SyncchartsPackage.SUBSTITUTION__ACTUAL:
+				setActual(ACTUAL_EDEFAULT);
+				return;
+		}
+		super.eUnset(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public boolean eIsSet(int featureID) {
-        switch (featureID) {
-            case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
-                return getParentScope() != null;
-            case SyncchartsPackage.SUBSTITUTION__FORMAL:
-                return FORMAL_EDEFAULT == null ? formal != null : !FORMAL_EDEFAULT.equals(formal);
-            case SyncchartsPackage.SUBSTITUTION__ACTUAL:
-                return ACTUAL_EDEFAULT == null ? actual != null : !ACTUAL_EDEFAULT.equals(actual);
-        }
-        return super.eIsSet(featureID);
-    }
+		switch (featureID) {
+			case SyncchartsPackage.SUBSTITUTION__PARENT_SCOPE:
+				return getParentScope() != null;
+			case SyncchartsPackage.SUBSTITUTION__FORMAL:
+				return FORMAL_EDEFAULT == null ? formal != null : !FORMAL_EDEFAULT.equals(formal);
+			case SyncchartsPackage.SUBSTITUTION__ACTUAL:
+				return ACTUAL_EDEFAULT == null ? actual != null : !ACTUAL_EDEFAULT.equals(actual);
+		}
+		return super.eIsSet(featureID);
+	}
 
     /**
-     * <!-- begin-user-doc -->
+	 * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @generated
-     */
+	 * @generated
+	 */
     @Override
     public String toString() {
-        if (eIsProxy()) return super.toString();
+		if (eIsProxy()) return super.toString();
 
-        StringBuffer result = new StringBuffer(super.toString());
-        result.append(" (formal: ");
-        result.append(formal);
-        result.append(", actual: ");
-        result.append(actual);
-        result.append(')');
-        return result.toString();
-    }
+		StringBuffer result = new StringBuffer(super.toString());
+		result.append(" (formal: ");
+		result.append(formal);
+		result.append(", actual: ");
+		result.append(actual);
+		result.append(')');
+		return result.toString();
+	}
 
 } //SubstitutionImpl
