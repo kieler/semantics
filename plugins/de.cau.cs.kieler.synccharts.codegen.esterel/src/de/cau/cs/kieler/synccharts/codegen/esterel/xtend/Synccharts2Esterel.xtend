@@ -19,7 +19,7 @@ class Synccharts2Esterel {
 		
 		// Add a pause statement to a body of the main module
 		body.statements.add(pause)
-		module.setBody(body)
+		module.setBody(body) 
 		target.modules.add(module)
 		
 	}		
