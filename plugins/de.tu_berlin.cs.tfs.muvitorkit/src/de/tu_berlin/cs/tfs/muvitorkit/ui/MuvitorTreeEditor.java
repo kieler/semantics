@@ -13,7 +13,6 @@ import java.util.Map;
 
 import de.tu_berlin.cs.tfs.muvitorkit.actions.ExportViewerImageAction;
 import de.tu_berlin.cs.tfs.muvitorkit.actions.GenericGraphLayoutAction;
-import de.tu_berlin.cs.tfs.muvitorkit.actions.GenericGraphLayoutActionZEST;
 import de.tu_berlin.cs.tfs.muvitorkit.actions.MoveNodeAction;
 import de.tu_berlin.cs.tfs.muvitorkit.actions.MuvitorActionBarContributor;
 import de.tu_berlin.cs.tfs.muvitorkit.actions.MuvitorToggleGridAction;
@@ -549,7 +548,6 @@ public abstract class MuvitorTreeEditor extends EditorPart implements
 		registerAction(new ExportViewerImageAction(this));
 		registerAction(new TrimViewerAction(this));
 		registerActionOnToolBar(new GenericGraphLayoutAction(this));
-		registerActionOnToolBar(new GenericGraphLayoutActionZEST(this));
 		registerActionOnToolBar(new MuvitorToggleRulerVisibilityAction(this));
 		registerActionOnToolBar(new MuvitorToggleGridAction(this));
 
