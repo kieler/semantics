@@ -9,27 +9,13 @@
                defautlIcon="icons/obj16/State.gif"
                editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
 			<transformations>
-				<transformation
-          icon="icons/successor_state.gif"
-          keyboardShortcut="M1+R S"
-          menu="true"
-          name="Add Successor State"
-          popup="true"
-          popupbar="false"
-          separated="false"
-          toolbar="true"
-          tooltip="Create a successor for the selected states"
-          transformation="addSuccessorStates"
-          transformationId="de.cau.cs.kieler.ksbase.addSuc"
-          validation="isNoRootState">
-				</transformation>
     <transformation
           icon="icons/successor_state.gif"
           menu="false"
           name="Add Single Successor State"
           popup="false"
           popupbar="true"
-          separated="false"
+          separated="true"
           toolbar="false"
           tooltip="Create a successor for the selected state"
           transformation="addSuccessorState"
@@ -37,13 +23,27 @@
           validation="isNoRootState">
     </transformation>
 				<transformation
+          icon="icons/successor_state.gif"
+          keyboardShortcut="M1+R S"
+          menu="true"
+          name="Add Successor State"
+          popup="true"
+          popupbar="false"
+          separated="true"
+          toolbar="true"
+          tooltip="Create a successor for the selected states"
+          transformation="addSuccessorStates"
+          transformationId="de.cau.cs.kieler.ksbase.addSuc"
+          validation="isNoRootState">
+				</transformation>
+				<transformation
           icon="icons/predecessor_state.gif"
           keyboardShortcut="M1+R P"
           menu="true"
           name="Add Predecessor State"
           popup="true"
           popupbar="true"
-          separated="true"
+          separated="false"
           toolbar="false"
           tooltip="Create a predecessor for the selected state"
           transformation="addPredecessorState"
