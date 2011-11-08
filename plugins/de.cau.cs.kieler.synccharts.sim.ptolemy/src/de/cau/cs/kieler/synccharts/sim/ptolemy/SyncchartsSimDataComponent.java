@@ -279,7 +279,18 @@ public class SyncchartsSimDataComponent extends
 //                + ".moml").getAbsolutePath());
         
         URI fileUri = getInputModelAsURI();
-        fileUri = URI.createURI(fileUri.toString().substring(0,fileUri.toString().lastIndexOf(".kixs")) + ".moml");
+        // also support kits files
+        String extension = ".kixs";
+        if (!fileUri.toString().contains(extension)) {
+        	extension = ".kits";
+        	if (!fileUri.toString().contains(extension)) {
+        		throw new KiemInitializationException(
+                        "Ptolemy Model could not be generated\n\n"
+                                + "unsupported model file. Only *.kixs and *.kits files are supported.\n\n",
+                        true, null);
+        	}
+        }
+        fileUri = URI.createURI(fileUri.toString().substring(0,fileUri.toString().lastIndexOf(extension)) + ".moml");
         
         ptolemyModel = resourceSet.createResource(fileUri);
         
