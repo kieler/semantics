@@ -79,6 +79,7 @@
       description="This example shows the producer-consumer-principle in SyncCharts."
       generation_date="Tue Nov 02 21:11:03 CET 2010"
       id="de.cau.cs.kieler.synccharts.producer_consumer"
+      overview_pic="images/producer_consumer.png"
       root_directory="examples"
       title="Producer Consumer">
 <resource direct_open="false" local_path="examples/producer_consumer" resource_type="folder"/>
@@ -112,6 +113,32 @@
 <resource direct_open="false" local_path="examples/token_ring" resource_type="folder"/>
 <resource direct_open="true" local_path="examples/token_ring/tokenring.kids" resource_type="file"/>
 <resource direct_open="false" local_path="examples/token_ring/tokenring.kixs" resource_type="file"/>
+</example>
+<example
+      author="KIELER Workgroup"
+      category="de.cau.cs.kieler.synccharts"
+      contact="kieler@informatik.uni-kiel.de"
+      description="This encountes the synchronous schizophrenia problem also present in SyncCharts."
+      generation_date="Fri Jul 07 09:05:16 CEST 2010"
+      id="de.cau.cs.kieler.synccharts.schizo"
+      overview_pic="images/schizo.png"
+      root_directory="examples/"
+      title="Schizophrenia Problem">
+   <resource
+         direct_open="false"
+         local_path="examples/schizo/"
+         resource_type="folder">
+   </resource>
+   <resource
+         direct_open="true"
+         local_path="examples/schizo/schizo.kids"
+         resource_type="file">
+   </resource>
+   <resource
+         direct_open="false"
+         local_path="examples/schizo/schizo.kixs"
+         resource_type="file">
+   </resource>
 </example>
 </extension>
 </plugin>
