@@ -7,6 +7,7 @@ import ecore;
 
 extension KiesUtil;
 extension org::eclipse::xtend::util::stdlib::cloning;
+extension org::eclipse::xtend::util::stdlib::io; // provides clone functionality
 
 /**
  * 
@@ -216,8 +217,20 @@ Boolean rule6applies(State s):
 	switch {
 		// TODO check if just test for interfaceDecls or signals and vars is enough
 		case !hasOutWeakTransitions(s) && !hasOutStrongTransitions(s) && !isSimpleState(s) &&
-			!hasSignalsVariables(s) && hasParentMacroState(s) && !isParallelMacroState(s):
-				true
+			!hasSignalsVariables(s) && hasParentMacroState(s) && !isParallelMacroState(s): (
+                    let p = s.parentRegion.parentState:
+					// check now if suspension actions can be combined
+					(if (s.suspensionTrigger != null && p.suspensionTrigger != null) then (
+  	                       (if (s.suspensionTrigger.delay == p.suspensionTrigger.delay
+  	                           && s.suspensionTrigger.isImmediate == p.suspensionTrigger.isImmediate) then (
+  	                             true
+  	                          )
+  	                          else 
+  	                             false)
+  	                )
+  	                else
+  	                  true)
+	    )
 		default: false
 	}
 ;
@@ -253,6 +266,7 @@ Void rule6(State s, List[State] states):
 		finalMacros.copyNormalTransitionFrom(normalTerms.get(0))
 	)
 	: s
+
 	
 	// copy whole stuff 
 	->
@@ -267,6 +281,32 @@ Void rule6(State s, List[State] states):
 	// remove old normal termination and old state
 	if (!normalTerms.isEmpty) then
 		normalTerms.removeTransition() ->
+		
+	// combine any suspension triggers
+	(
+	if (s.suspensionTrigger != null) then (
+   	  let p = s.parentRegion.parentState:
+	  if (p.suspensionTrigger != null) then (
+	     // combine both actions to one
+	     let action = new Action:
+	     let expression = new OperatorExpression:
+	     action.effects.addAll(p.suspensionTrigger.effects) ->
+	     action.effects.addAll(s.suspensionTrigger.effects) ->
+	     action.setDelay(initial.suspensionTrigger.delay) -> // must be equal
+	     action.setIsImmediate(s.suspensionTrigger.isImmediate) -> //must be equal  
+	     expression.subExpressions.add(p.suspensionTrigger.trigger) ->
+	     expression.subExpressions.add(s.suspensionTrigger.trigger) ->
+	     expression.setOperator(OperatorType::OR) ->
+	     action.setTrigger(expression) ->
+	     r.setSuspensionTrigger(action)
+	  )
+	  else (
+	     p.setSuspensionTrigger(s.suspensionTrigger)
+	  )
+	)
+	) ->
+
+	// remove unnecessary state			
 	s.removeStateFromRegion()
 ;
 

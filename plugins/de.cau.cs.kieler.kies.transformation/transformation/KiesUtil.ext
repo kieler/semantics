@@ -359,6 +359,7 @@ Boolean hasSignalsVariables(State state):
  	scopeHasSignalsVariables(state)
 ;
 
+
 Boolean hasOnlySelfLoop(State s):
 	let self = s.incomingTransitions.select(e|e.targetState == e.sourceState):
 	self.size > 0 && self.size == s.outgoingTransitions.size
