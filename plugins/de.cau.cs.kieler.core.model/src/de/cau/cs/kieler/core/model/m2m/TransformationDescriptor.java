@@ -18,7 +18,8 @@ package de.cau.cs.kieler.core.model.m2m;
  * parameters that should be passed to this method.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 proposed yellow uru
+ * @kieler.rating 2011-02-14 green
+ *      review by msp, haf
  */
 public class TransformationDescriptor {
 

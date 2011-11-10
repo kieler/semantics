@@ -18,7 +18,8 @@ package de.cau.cs.kieler.core.model.m2m;
  * transformation.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 proposed yellow uru
+ * @kieler.rating 2011-02-14 green
+ *      review by msp, haf
  */
 public interface ITransformationContext {
 
@@ -30,6 +31,6 @@ public interface ITransformationContext {
      *            The {@link TransformationDescriptor} containing information about the explicit
      *            transformation to execute.
      */
-    void execute(final TransformationDescriptor descriptor);
+    void execute(TransformationDescriptor descriptor);
 
 }

@@ -29,7 +29,8 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * {@link ITransformationContext} for the execution of Xtend transformations.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 proposed yellow uru
+ * @kieler.rating 2011-02-14 green
+ *      review by msp, haf
  */
 public class XtendTransformationContext implements ITransformationContext {
 
