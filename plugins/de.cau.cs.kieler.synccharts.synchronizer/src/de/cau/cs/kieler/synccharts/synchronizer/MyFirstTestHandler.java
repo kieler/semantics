@@ -39,7 +39,7 @@ public class MyFirstTestHandler extends AbstractHandler {
 			
 			if (structSelection.size() == 2) {
 				List<?> list = structSelection.toList();
-				System.out.println("Hier2");
+//				System.out.println("Hier2");
 				
 				first = (list.get(0) instanceof File ? (File) list.get(0) : null);
 				second = (list.get(1) instanceof File ? (File) list.get(1) : null);

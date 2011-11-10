@@ -35,7 +35,7 @@ public class ModelChangeTriggerListener extends TriggerListener {
 
     @Override
     protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
-        System.out.println("Hier");
+//        System.out.println("Hier");
         return null;
     }
 

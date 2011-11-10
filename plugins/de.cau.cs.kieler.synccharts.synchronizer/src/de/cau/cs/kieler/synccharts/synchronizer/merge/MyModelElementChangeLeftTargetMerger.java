@@ -57,9 +57,9 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
         final EObject origin = theDiff.getRightParent();
         final EObject element = theDiff.getLeftElement();
         
-        if (origin instanceof Transition) {
+//        if (origin instanceof Transition) {
 //            System.out.println("Hier " + origin.eResource());
-        }
+//        }
         
         if (KExpressionsPackage.eINSTANCE.getValuedObject().isInstance(element)
                 && Strings.isEmpty(((ValuedObject) element).getName())) {
@@ -135,7 +135,7 @@ public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
         final EMFCompareEObjectCopier copier = MergeService.getCopier(diff);
         final EObject result = copier.copy(eObject);
 //        if (result.eAdapters().contains(ModelSynchronizer.getModelChangeListener())) {
-//            System.out.println("€tsch");
+//            System.out.println("ï¿½tsch");
 //        }
         // copier.copyReferences();
         // copier.copyXMIIDs();
