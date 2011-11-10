@@ -1,10 +1,10 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: JSON Java Implementation Plugin (from json.org)
+Bundle-Name: JSON Java Implementation Plugin
 Bundle-SymbolicName: org.json
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: org.json.Activator
-Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Vendor: json.org
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

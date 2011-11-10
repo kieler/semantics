@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.esterel.cec.macosx.x86
+Bundle-Name: KIELER CEC Distribution (Mac OS X x86)
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.macosx.x86
 Bundle-Version: 0.1.0.qualifier
 Fragment-Host: de.cau.cs.kieler.esterel.cec;bundle-version="0.1.0"

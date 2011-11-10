@@ -4,7 +4,7 @@ Bundle-Name: KIELER Maude Interface
 Bundle-SymbolicName: de.cau.cs.kieler.maude
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.maude.MaudeInterfacePlugin
-Bundle-Vendor: Christian-Albrechs-Universität zu Kiel
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

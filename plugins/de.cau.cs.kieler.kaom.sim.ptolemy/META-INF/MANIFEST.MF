@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KAOM Ptolemy Simulator
+Bundle-Name: KIELER KAOM Ptolemy Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.kaom.sim.ptolemy;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kaom.sim.ptolemy.KaomSimPtolemyPlugin

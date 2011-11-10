@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER product contribution
+Bundle-Name: KIELER Product Contribution
 Bundle-SymbolicName: de.cau.cs.kieler.core.product;singleton:=true
 Bundle-Version: 0.6.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

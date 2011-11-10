@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Estere Code Generation
+Bundle-Name: KIELER Esterel Code Generation
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.esterel;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.esterel.Activator

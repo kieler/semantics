@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: de.cau.cs.kieler.esterel.cec.sim
+Bundle-Name: KIELER Esterel Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim;singleton:=true
 Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.Activator

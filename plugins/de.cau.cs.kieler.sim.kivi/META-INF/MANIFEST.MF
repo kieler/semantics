@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER Simulation KIVi DataComponent
+Bundle-Name: KIELER Simulation KIVi Data Component
 Bundle-SymbolicName: de.cau.cs.kieler.sim.kivi
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kivi.Activator
