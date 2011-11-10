@@ -272,7 +272,10 @@ public final class KvidUtil {
                 currentEditor.getDiagramEditPart(), modelElement);
         KNode currentNode = null;
         for (EditPart part : parts) {
-            currentNode = (KNode) diagramLayout.getGraphMap().inverse().get(part);
+        	Object obj = diagramLayout.getGraphMap().inverse().get(part);
+            if (obj instanceof KNode) {
+                currentNode = (KNode) obj;
+            }
             if (currentNode != null) {
                 break;
             }
