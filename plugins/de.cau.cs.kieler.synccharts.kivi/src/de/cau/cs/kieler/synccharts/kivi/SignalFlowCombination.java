@@ -25,6 +25,7 @@ import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
@@ -34,11 +35,9 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
-import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.kivi.SignalFlowTrigger.SignalFlowActiveState;
 
 /**
  * Started by the signal flow button, visualizes the flow of signals in a SyncChart diagram.
@@ -55,23 +54,25 @@ public class SignalFlowCombination extends AbstractCombination {
     public static final String ARROW_COLOR = SignalFlowCombination.class.getCanonicalName()
             + ".arrowColor";
 
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-        new CombinationParameter(
-            ARROW_COLOR, getPreferenceStore(), "Arrow Color",
-            "The color to paint the signal flow arrows in", ColorConstants.red.getRGB(),
-            CombinationParameter.RGB_TYPE) };
+    private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
+            new CombinationParameter<RGB>(ARROW_COLOR, getPreferenceStore(), "Arrow Color",
+                    "The color to paint the signal flow arrows in", ColorConstants.red.getRGB())
+    };
 
     private static final int DEFAULT_LENGTH = 15;
 
-    private static final String buttonId = "de.cau.cs.kieler.synccharts.kivi.signalflow";
+    private static final String BUTTON_ID = "de.cau.cs.kieler.synccharts.kivi.signalflow";
 
+    /**
+     * Create a signal flow combination.
+     */
     public SignalFlowCombination() {
         super();
         ImageDescriptor icon = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/signalflow.gif");
         String tooltip = "Show the Dual Model of the current SyncChart. "
                 + "It shows the data communication from effects to triggers.";
-        KiviMenuContributionService.INSTANCE.addToolbarButton(this, buttonId, "Dual Model",
+        KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_ID, "Dual Model",
                 tooltip, icon, SWT.CHECK, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
                 "de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID");
     }
@@ -85,7 +86,7 @@ public class SignalFlowCombination extends AbstractCombination {
      *            the selection state
      */
     public void execute(final ButtonState button, final SelectionState selection) {
-        if (button.getButtonId().equals(buttonId)) {
+        if (button.getButtonId().equals(BUTTON_ID)) {
 
             if (!button.isPushedIn()) {
                 undoRecordedEffects(); // remove old arrows
@@ -222,7 +223,7 @@ public class SignalFlowCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    public static CombinationParameter[] getParameters() {
+    public static CombinationParameter<?>[] getParameters() {
         return PARAMETERS;
     }
 

@@ -102,34 +102,32 @@ public class SyncChartsCombination extends AbstractCombination {
         this.enableEffectRecording();
     }
     
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-            new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
-                    "The color to use for highlighting active states", ColorConstants.red.getRGB(),
-                    CombinationParameter.RGB_TYPE),
-            new CombinationParameter(HIGHLIGHT_BGCOLOR, getPreferenceStore(),
+    private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
+            new CombinationParameter<RGB>(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
+                    "The color to use for highlighting active states", ColorConstants.red.getRGB()),
+            new CombinationParameter<RGB>(HIGHLIGHT_BGCOLOR, getPreferenceStore(),
                     "Highlight Background Color",
                     "The background color to use for highlighting active states",
-                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
+                    ColorConstants.white.getRGB()),
+            new CombinationParameter<RGB>(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
-                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(HISTORY_BGCOLOR, getPreferenceStore(),
+                    ColorConstants.blue.getRGB()),
+            new CombinationParameter<RGB>(HISTORY_BGCOLOR, getPreferenceStore(),
                     "History Background Color",
                     "The background color to use for highlighting previously active states",
-                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(INACTIVE_COLOR, getPreferenceStore(), "Inactive Color",
+                    ColorConstants.white.getRGB()),
+            new CombinationParameter<RGB>(INACTIVE_COLOR, getPreferenceStore(), "Inactive Color",
                     "The color to use for highlighting inactive states",
-                    ColorConstants.gray.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(INACTIVE_BGCOLOR, getPreferenceStore(),
+                    ColorConstants.gray.getRGB()),
+            new CombinationParameter<RGB>(INACTIVE_BGCOLOR, getPreferenceStore(),
                     "Inactive Background Color",
                     "The background color to use for highlighting inactive states",
-                    ColorConstants.white.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(BW_MODE, getPreferenceStore(), "Black && White",
-                    "Dashed lines for active states, dotted lines for history states.", false,
-                    CombinationParameter.BOOLEAN_TYPE),
-            new CombinationParameter(FC_MODE, getPreferenceStore(), "Focus && Context",
-                    "Collapse inactive states, expand active/history states.", true,
-                    CombinationParameter.BOOLEAN_TYPE) };
+                    ColorConstants.white.getRGB()),
+            new CombinationParameter<Boolean>(BW_MODE, getPreferenceStore(), "Black && White",
+                    "Dashed lines for active states, dotted lines for history states.", false),
+            new CombinationParameter<Boolean>(FC_MODE, getPreferenceStore(), "Focus && Context",
+                    "Collapse inactive states, expand active/history states.", true)
+    };
 
     /**
      * Execute this combination using the active states state.
@@ -206,7 +204,7 @@ public class SyncChartsCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    public static CombinationParameter[] getParameters() {
+    public static CombinationParameter<?>[] getParameters() {
         return PARAMETERS;
     }
 

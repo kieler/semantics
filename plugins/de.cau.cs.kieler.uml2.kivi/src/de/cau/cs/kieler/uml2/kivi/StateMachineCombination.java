@@ -55,16 +55,15 @@ public class StateMachineCombination extends AbstractCombination {
     public static final String BW_MODE = StateMachineCombination.class.getCanonicalName()
             + ".bwMode";
 
-    private static final CombinationParameter[] PARAMETERS = new CombinationParameter[] {
-            new CombinationParameter(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
-                    "The color to use for highlighting active states", ColorConstants.red.getRGB(),
-                    CombinationParameter.RGB_TYPE),
-            new CombinationParameter(HISTORY_COLOR, getPreferenceStore(), "History Color",
+    private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
+            new CombinationParameter<RGB>(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
+                    "The color to use for highlighting active states", ColorConstants.red.getRGB()),
+            new CombinationParameter<RGB>(HISTORY_COLOR, getPreferenceStore(), "History Color",
                     "The color to use for highlighting previously active states",
-                    ColorConstants.blue.getRGB(), CombinationParameter.RGB_TYPE),
-            new CombinationParameter(BW_MODE, getPreferenceStore(), "Black && White",
-                    "Dashed lines for active states, dotted lines for history states.", false,
-                    CombinationParameter.BOOLEAN_TYPE) };
+                    ColorConstants.blue.getRGB()),
+            new CombinationParameter<Boolean>(BW_MODE, getPreferenceStore(), "Black && White",
+                    "Dashed lines for active states, dotted lines for history states.", false)
+    };
 
     /**
      * Execute this combination using the active states state.
@@ -103,7 +102,7 @@ public class StateMachineCombination extends AbstractCombination {
      * 
      * @return the parameters
      */
-    public static CombinationParameter[] getParameters() {
+    public static CombinationParameter<?>[] getParameters() {
         return PARAMETERS;
     }
 
