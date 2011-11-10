@@ -127,9 +127,6 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         UniqueStringCache cache = null;
         EAttribute attribute = SyncchartsPackage.eINSTANCE.getScope_Id();
         for (UniqueStringCache c : caches) {
-            if ((parent == null && c.getParent() != null) || (parent != null && c.getParent() == null)) {
-                System.out.println("hier");
-            }
             // cmot, added "(parent != null && c.getParent() != null) &&" because of a possible null-pointer exception
             if ((parent == null && c.getParent() == null)
                     || (parent != null && c.getParent() != null) && c.getParent().equals(parent)
