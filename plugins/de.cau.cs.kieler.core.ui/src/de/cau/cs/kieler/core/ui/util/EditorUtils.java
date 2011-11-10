@@ -44,6 +44,10 @@ public final class EditorUtils {
      * @author haf
      *
      * @return the last open active editor, which may be {@code null} if there is no open editor
+     * @deprecated Using such a static method is a cheap way to get around the problem of
+     *     finding the right context for an operation. This may fail in some situations. Therefore,
+     *     a more generic and reliable solution for managing the context of things that happen
+     *     in view management must be found.
      */
     public static IEditorPart getLastActiveEditor() {
         final Maybe<IEditorPart> editor = Maybe.create();
