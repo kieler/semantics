@@ -13,13 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
@@ -28,15 +26,12 @@ import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.gmf.effects.CompartmentCollapseExpandEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
-import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.sim.kivi.StateActivityTrigger.ActiveStates;
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -143,16 +138,17 @@ public class SyncChartsCombination extends AbstractCombination {
      *            the active states
      */
     public void execute(final ActiveStates activeStates) {
-        IPreferenceStore layoutPrefStore = getKIMLPreferenceStore();
-        boolean animate = layoutPrefStore.getBoolean(ANIMATE);
-        boolean zoom = layoutPrefStore.getBoolean(ZOOM_TO_FIT);
-        boolean progressBar = layoutPrefStore.getBoolean(PROGRESS_BAR);
-        
         // papyrus and synccharts share one trigger state
         if (!(activeStates.getDiagramEditor() instanceof SyncchartsDiagramEditor)) {
             return;
         }
-        undoRecordedEffects(); // reset all formerly painted states
+        IPreferenceStore layoutPrefStore = KimlUiPlugin.getDefault().getPreferenceStore();
+        boolean animate = layoutPrefStore.getBoolean(ANIMATE);
+        boolean zoom = layoutPrefStore.getBoolean(ZOOM_TO_FIT);
+        boolean progressBar = layoutPrefStore.getBoolean(PROGRESS_BAR);
+        
+        // reset all formerly painted states
+        undoRecordedEffects();
         // if there are no active states, the simulation has finished.
         if (activeStates.getActiveStates().isEmpty()
                 || activeStates.getActiveStates().get(0).isEmpty()) {
@@ -162,11 +158,15 @@ public class SyncChartsCombination extends AbstractCombination {
                     false, animate));
             return;
         }
-
-        // if (isFC()) {
-        // // initially collapse all states
-        // collapseAll(activeStates.getDiagramEditor());
-        // }
+        
+        // collapse / expand states as necessary and perform a new layout
+        if (getPreferenceStore().getBoolean(FC_MODE)) {
+            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
+            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
+            this.schedule(focusEffect);
+            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
+                    false, animate));
+        }
 
         // coloring all states inactive/gray
         EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
@@ -187,7 +187,7 @@ public class SyncChartsCombination extends AbstractCombination {
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
             List<EObject> currentStep = activeStates.getActiveStates().get(i);
             for (EObject e : currentStep) {
-                if (isBW() && i != 0) {
+                if (getPreferenceStore().getBoolean(BW_MODE) && i != 0) {
                     schedule(new HighlightEffect(e, activeStates.getDiagramEditor(), getColor(i,
                             activeStates.getActiveStates().size()), getBackgroundColor(i,
                             activeStates.getActiveStates().size()), SWT.LINE_DASH));
@@ -196,44 +196,9 @@ public class SyncChartsCombination extends AbstractCombination {
                             activeStates.getActiveStates().size()), getBackgroundColor(i,
                             activeStates.getActiveStates().size())));
                 }
-                // if (isFC()) {
-                // schedule(new CompartmentCollapseExpandEffect(activeStates.getDiagramEditor(),
-                // e, SyncchartsPackage.eINSTANCE.getState_Regions(), 0, false));
-                // }
             }
         }
         
-// FIXME: cmot, see Ticket #1775
-// Focus & Context currently not working properly, coloring inactive (gray) or active (red) states accidentially with its original color (black)!        
-//        if (isFC()) {
-//            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
-//            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
-//            this.schedule(focusEffect);
-//            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-//                    false, animate));
-//        }
-    }
-
-    /**
-     * Create collapse effects for all macro states (not for simple ones).
-     * 
-     * @throws KielerModelException
-     */
-    private void collapseAll(final DiagramEditor editor) {
-        Collection<EObject> states = GmfModelingUtil.getAllByType(
-                SyncchartsPackage.eINSTANCE.getState(), editor.getDiagramEditPart());
-        for (EObject state : states) {
-            // remove the root State because it represents the whole SM and will not be active
-            if (state.eContainer() == null || state.eContainer().eContainer() == null) {
-                continue;
-                // remove simple states
-            } else if (state instanceof State && ((State) state).getRegions().size() == 0) {
-                continue;
-            } else {
-                schedule(new CompartmentCollapseExpandEffect(editor, state,
-                        SyncchartsPackage.eINSTANCE.getState_Regions(), 1, true));
-            }
-        }
     }
 
     /**
@@ -294,33 +259,6 @@ public class SyncChartsCombination extends AbstractCombination {
                     history[2] - (history[2] - inactive[2]) * factor };
             return new Color(null, new RGB(current[0], current[1], current[2]));
         }
-    }
-
-    /**
-     * Is this a black & white simulation?
-     * 
-     * @return true if black & white
-     */
-    private boolean isBW() {
-        return getPreferenceStore().getBoolean(BW_MODE);
-    }
-
-    /**
-     * Is Focus & Context activated?
-     * 
-     * @return true if Focus & Context
-     */
-    private boolean isFC() {
-        return getPreferenceStore().getBoolean(FC_MODE);
-    }
-    
-    /**
-     * Return the preference store for the KIML UI plugin.
-     * 
-     * @return the preference store
-     */
-    private static IPreferenceStore getKIMLPreferenceStore() {
-        return KimlUiPlugin.getDefault().getPreferenceStore();
     }
     
 }
