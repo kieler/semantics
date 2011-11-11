@@ -17,9 +17,9 @@ Require-Bundle: org.eclipse.emf.ecore,
  org.eclipse.core.resources;bundle-version="3.5.2",
  org.eclipse.emf.mwe2.launch;bundle-version="1.0.0",
  de.cau.cs.kieler.core;bundle-version="0.5.0",
- de.cau.cs.kieler.core.annotations;bundle-version="0.1.0";visibility:=reexport,
- de.cau.cs.kieler.core.kexpressions;bundle-version="0.1.0";visibility:=reexport,
- de.cau.cs.kieler.core.kexpressions.ui;bundle-version="0.1.0";visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions.ui;visibility:=reexport,
  org.junit4;bundle-version="4.8.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.log4j

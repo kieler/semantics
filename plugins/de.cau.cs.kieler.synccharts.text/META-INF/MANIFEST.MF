@@ -16,13 +16,14 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.util,
  org.eclipse.emf.ecore,
  org.eclipse.emf.common,
- org.antlr.runtime,
- de.cau.cs.kieler.synccharts;bundle-version="0.1.0";visibility:=reexport,
- de.cau.cs.kieler.core.kexpressions;bundle-version="0.1.0";visibility:=reexport,
- de.cau.cs.kieler.core.annotations;bundle-version="0.1.0";visibility:=reexport,
  org.eclipse.emf.edit,
  org.eclipse.emf.transaction,
- de.cau.cs.kieler.core.model;bundle-version="0.3.0";visibility:=reexport
+ org.antlr.runtime,
+ de.cau.cs.kieler.synccharts;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.model;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.text
 Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.text.actions,
