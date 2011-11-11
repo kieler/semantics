@@ -5,7 +5,6 @@
 «IMPORT kexpressions»
 «IMPORT synccharts»
 
-«EXTENSION templates::Helper»
 «EXTENSION Helper»
 «EXTENSION org::eclipse::xtend::util::stdlib::io»
 
