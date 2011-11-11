@@ -224,56 +224,63 @@ litigation.
          id="de.cau.cs.kieler.core.annotations"
          download-size="0"
          install-size="0"
-         version="0.2.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.annotations.edit"
          download-size="0"
          install-size="0"
-         version="0.2.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.annotations.ui"
          download-size="0"
          install-size="0"
-         version="0.2.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core"
          download-size="0"
          install-size="0"
-         version="0.6.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.model"
          download-size="0"
          install-size="0"
-         version="0.5.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.ui"
          download-size="0"
          install-size="0"
-         version="0.5.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.kgraph"
          download-size="0"
          install-size="0"
-         version="0.3.0.qualifier"
+         version="0.0.0"
          unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.core.kivi"
          download-size="0"
          install-size="0"
-         version="0.2.0.qualifier"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.annotations.text"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
          unpack="false"/>
 
 </feature>
