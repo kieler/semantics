@@ -6,16 +6,16 @@
       <content
             class="de.cau.cs.kieler.esterel.cec.sim.DataComponent"
             id="de.cau.cs.kieler.esterel.cec.sim"
-            name="CEC Esterel simulation">
+            name="Esterel CEC Simulator">
       </content>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/cec.execution">
+            file="execution/esterel_cec.execution">
          <editor
-               id="de.cau.cs.kieler.esterel.Esterel"
-               name="Esterel Editor"
+               id="de.cau.cs.kieler.kies.Esterel"
+               name="KIELER Esterel Editor"
                priority="8">
          </editor>
       </executionFile>
