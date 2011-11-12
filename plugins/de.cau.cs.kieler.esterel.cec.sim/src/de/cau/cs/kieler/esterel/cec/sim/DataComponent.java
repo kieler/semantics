@@ -55,12 +55,13 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
- * @author ctr
+ * @author ctr, cmot
  * 
  */
-public class DataComponent extends JSONObjectDataComponent {
+public class DataComponent extends JSONObjectSimulationDataComponent {
 
     private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
 
@@ -86,7 +87,7 @@ public class DataComponent extends JSONObjectDataComponent {
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         if (process == null) {
             throw new KiemExecutionException("No esterel simulation is running", true, null);
         }
@@ -134,7 +135,7 @@ public class DataComponent extends JSONObjectDataComponent {
     }
 
     @Override
-    public KiemProperty[] provideProperties() {
+    public KiemProperty[] doProvideProperties() {
         final int nProperties = 1;
         KiemProperty[] properties = new KiemProperty[nProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
@@ -171,7 +172,7 @@ public class DataComponent extends JSONObjectDataComponent {
     }
 
     @Override
-    public JSONObject provideInitialVariables() throws KiemInitializationException {
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         try {
             // get active editor
             IWorkbench workbench = PlatformUI.getWorkbench();
