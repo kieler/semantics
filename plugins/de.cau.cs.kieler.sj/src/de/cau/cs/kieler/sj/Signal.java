@@ -199,14 +199,31 @@ public class Signal {
             throw new CausalityException(
                     "You are not allowed to emit a signal that already has been read in this tick");
         } else {
-            if (program.isThreadRunning() && program.getLogger() != null) {
+            
+        	// ####################################################################################
+            // --------------------------------- changed by ybe -----------------------------------
+            //
+        	// Signal must be set to PRESENT prior status logging!
+        	//
+            // if (program.isThreadRunning() && program.getLogger() != null) {
+                // program.getLogger().log(
+                        // INSTRUCTION,
+                        // "\"emit\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
+                                // + "\",\"prio\":" + program.getCurThread().getPriority()
+                                // + ",\"param\":[" + toJSONString() + "]}");
+            // }
+            // this.present = PRESENT;
+        	// ------------------------------------------------------------------------------------
+        	this.present = PRESENT;
+        	if (program.isThreadRunning() && program.getLogger() != null) {
                 program.getLogger().log(
                         INSTRUCTION,
                         "\"emit\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
                                 + "\",\"prio\":" + program.getCurThread().getPriority()
                                 + ",\"param\":[" + toJSONString() + "]}");
             }
-            this.present = PRESENT;
+            // ####################################################################################
+            
         }
     }
 
