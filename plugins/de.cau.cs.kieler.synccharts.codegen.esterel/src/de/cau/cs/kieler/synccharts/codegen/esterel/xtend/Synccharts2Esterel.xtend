@@ -2,7 +2,7 @@ package de.cau.cs.kieler.synccharts.codegen.esterel.xtend
 
 import de.cau.cs.kieler.synccharts.*
 import de.cau.cs.kieler.kies.esterel.EsterelFactory
-import de.cau.cs.kieler.kies.esterel.Modle
+import de.cau.cs.kieler.kies.esterel.Module
 import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject
