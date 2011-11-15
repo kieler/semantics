@@ -15,13 +15,12 @@ package de.cau.cs.kieler.core.model.gmf.effects;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.RectangleFigure;
+import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderedNodeFigure;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
@@ -36,12 +35,10 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
- * A simple transient highlighting effect. Can change line colors, line styles,
- * and line widths for Shapes and NodeFigures.
- * 
+ * A simple transient highlighting effect. Can change line colors, line styles, and line widths for
+ * Shapes and NodeFigures.
  * 
  * @author mmu
- * 
  */
 public class HighlightEffect extends AbstractEffect {
 
@@ -81,13 +78,12 @@ public class HighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor) {
-        EditPart editPart =
-                GraphicalFrameworkService.getInstance().getBridge(editor)
-                        .getEditPart(editor, eObject);
+        EditPart editPart = GraphicalFrameworkService.getInstance().getBridge(editor)
+                .getEditPart(editor, eObject);
         if (editPart instanceof GraphicalEditPart) {
             targetEditPart = (GraphicalEditPart) editPart;
             targetFigure = targetEditPart.getFigure();
-            if (targetFigure.getChildren().size() == 1) {
+            if (targetFigure instanceof NodeFigure && targetFigure.getChildren().size() >= 1) {
                 targetFigure = (IFigure) targetFigure.getChildren().get(0);
             }
         }
@@ -103,8 +99,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
      */
-    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
-            final int lineStyle) {
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor, final int lineStyle) {
         this(eObject, editor);
         style = lineStyle;
         color = null;
@@ -143,8 +138,7 @@ public class HighlightEffect extends AbstractEffect {
      *            the line style to use for borders (black/white mode)
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
-            final Color highlightColor, final Color background,
-            final int lineStyle) {
+            final Color highlightColor, final Color background, final int lineStyle) {
         this(eObject, editor, highlightColor, lineStyle);
         backgroundColor = background;
     }
@@ -193,8 +187,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param highlightColor
      *            the color to highlight the state with
      * @param children
-     *            true if labels should be highlighted in the given color as
-     *            well
+     *            true if labels should be highlighted in the given color as well
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final boolean children) {
@@ -214,12 +207,10 @@ public class HighlightEffect extends AbstractEffect {
      * @param background
      *            the color to use for painting the background
      * @param children
-     *            true if labels should be highlighted in the given color as
-     *            well
+     *            true if labels should be highlighted in the given color as well
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
-            final Color highlightColor, final Color background,
-            final boolean children) {
+            final Color highlightColor, final Color background, final boolean children) {
         this(eObject, editor, highlightColor, children);
         backgroundColor = background;
     }
@@ -240,8 +231,7 @@ public class HighlightEffect extends AbstractEffect {
                     // line width
                     if (changeWidth && originalWidth == -1) {
                         originalWidth = shape.getLineWidth();
-                        shape.setLineWidth(Math.min(originalWidth
-                                + widthIncrease, widthMax));
+                        shape.setLineWidth(Math.min(originalWidth + widthIncrease, widthMax));
                     } else if (!changeWidth && originalWidth != -1) {
                         shape.setLineWidth(originalWidth);
                         originalWidth = -1;
@@ -261,11 +251,11 @@ public class HighlightEffect extends AbstractEffect {
                 if (targetFigure instanceof BorderedNodeFigure) {
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
                     if (bnf.getChildren().size() > 0) {
-                        targetFigure = (IFigure)bnf.getChildren().get(0);
+                        targetFigure = (IFigure) bnf.getChildren().get(0);
                         if (targetFigure instanceof DefaultSizeNodeFigure) {
-                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure; 
+                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure;
                             if (dsnf.getChildren().size() > 0) {
-                                targetFigure = (IFigure)dsnf.getChildren().get(0);
+                                targetFigure = (IFigure) dsnf.getChildren().get(0);
                             }
                         }
                     }
@@ -294,17 +284,14 @@ public class HighlightEffect extends AbstractEffect {
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                // potential issue: original color of children
-                                // may be different?
-                                ((GraphicalEditPart) o).getFigure()
-                                        .setForegroundColor(color);
+                                // FIXME potential issue: original color of children may be different?
+                                ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
                             }
                         }
                     } else {
                         for (Object child : targetFigure.getChildren()) {
                             if (child instanceof WrappingLabel) {
-                                ((WrappingLabel) child)
-                                        .setForegroundColor(originalColor);
+                                ((WrappingLabel) child).setForegroundColor(originalColor);
                             }
                         }
                     }
@@ -321,12 +308,7 @@ public class HighlightEffect extends AbstractEffect {
                     targetFigure.setBackgroundColor(originalBackgroundColor);
                 }
             }
-        }, true); // TODO investigate whether false works - would be massively
-                  // faster
-                  // TODO false does *not* work, leads to a huge queue of
-                  // highlights in the UI
-                  // thread
-        // targetFigure.repaint();
+        }, true);
     }
 
     @Override
@@ -341,11 +323,11 @@ public class HighlightEffect extends AbstractEffect {
                     System.out.print("PAPYRUS FIGURE ... ");
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
                     if (bnf.getChildren().size() > 0) {
-                        targetFigure = (IFigure)bnf.getChildren().get(0);
+                        targetFigure = (IFigure) bnf.getChildren().get(0);
                         if (targetFigure instanceof DefaultSizeNodeFigure) {
-                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure; 
+                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure;
                             if (dsnf.getChildren().size() > 0) {
-                                targetFigure = (IFigure)dsnf.getChildren().get(0);
+                                targetFigure = (IFigure) dsnf.getChildren().get(0);
                                 System.out.println("FOUND");
                             }
                         }
@@ -357,8 +339,8 @@ public class HighlightEffect extends AbstractEffect {
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                ((GraphicalEditPart) o).getFigure()
-                                        .setForegroundColor(originalColor);
+                                ((GraphicalEditPart) o).getFigure().setForegroundColor(
+                                        originalColor);
                             }
                         }
                     }
@@ -378,16 +360,12 @@ public class HighlightEffect extends AbstractEffect {
 
                 if (targetFigure.getBorder() instanceof RoundedRectangleBorder) {
                     if (originalWidth != -1) {
-                        ((RoundedRectangleBorder) targetFigure.getBorder())
-                                .setWidth(originalWidth);
+                        ((RoundedRectangleBorder) targetFigure.getBorder()).setWidth(originalWidth);
                     }
                     if (originalStyle != -1) {
-                        ((RoundedRectangleBorder) targetFigure.getBorder())
-                                .setStyle(originalStyle);
+                        ((RoundedRectangleBorder) targetFigure.getBorder()).setStyle(originalStyle);
                     }
                 }
-
-                // targetFigure.repaint();
 
                 originalColor = null;
                 originalBackgroundColor = null;
@@ -462,16 +440,14 @@ public class HighlightEffect extends AbstractEffect {
                 if (otherEffect.targetFigure == targetFigure) {
                     // TODO: FIXME bad hack
                     if (otherEffect.targetFigure instanceof BorderedNodeFigure) {
-                        BorderedNodeFigure bnf =
-                                (BorderedNodeFigure) otherEffect.targetFigure;
+                        BorderedNodeFigure bnf = (BorderedNodeFigure) otherEffect.targetFigure;
                         IFigure border = bnf.getBorderItemContainer();
                         while (border.getChildren().size() > 0) {
                             border.getChildren().remove(0);
                         }
                     }
                     originalColor = otherEffect.originalColor;
-                    originalBackgroundColor =
-                            otherEffect.originalBackgroundColor;
+                    originalBackgroundColor = otherEffect.originalBackgroundColor;
                     originalWidth = otherEffect.originalWidth;
                     originalStyle = otherEffect.originalStyle;
                     return this;

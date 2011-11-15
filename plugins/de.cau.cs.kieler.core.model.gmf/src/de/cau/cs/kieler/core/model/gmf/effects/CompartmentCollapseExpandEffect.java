@@ -211,7 +211,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                     new EObjectAdapter(style), Properties.ID_COLLAPSED,
                     DiagramUIMessages.PropertyDescriptorFactory_CollapseCompartment, collapse);
             command.add(new ICommandProxy(spc));
-            //return new ICommandProxy(spc);
         }
         return command;
     }
@@ -244,14 +243,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     @Override
     public IEffect merge(final IEffect otherEffect) {
         init();
-// FIXME: this merging does not work. You cannot merge hierarchical expand effects for example
-//        if (otherEffect instanceof CompartmentCollapseExpandEffect) {
-//            CompartmentCollapseExpandEffect other = (CompartmentCollapseExpandEffect) otherEffect;
-//            if (other.targetEditor == targetEditor && other.targetEditParts.equals(targetEditParts)) {
-//                originalCollapseState = other.originalCollapseState;
-//                return this;
-//            }
-//        } else 
         if (otherEffect instanceof UndoEffect) {
             IEffect undo = ((UndoEffect) otherEffect).getEffect();
             if (undo instanceof CompartmentCollapseExpandEffect) {
@@ -297,6 +288,10 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         return targetNode;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public String toString() {
         StringBuffer b = new StringBuffer();
         b.append(super.toString());
@@ -308,4 +303,5 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         b.append(targetNode);
         return b.toString();
     }
+    
 }
