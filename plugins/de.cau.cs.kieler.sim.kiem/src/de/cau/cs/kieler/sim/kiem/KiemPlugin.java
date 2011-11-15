@@ -391,8 +391,12 @@ public class KiemPlugin extends AbstractUIPlugin {
             public void run() {
                 // probe if execution is running
                 if (execution != null) {
-                    // stop any running execution
-                    KiemPlugin.getDefault().execution.stopExecutionSync();
+                    (new Thread(new Runnable() {
+                        public void run() {
+                            // stop any running execution
+                            KiemPlugin.getDefault().execution.abortExecutionAsync();
+                        }
+                    })).start();
                     showError(Messages.mErrorOpenDuringExecution, PLUGIN_ID, null, true);
                     // return;
                 }
