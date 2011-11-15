@@ -166,6 +166,12 @@ public class KiemEvent {
     /** This constant is triggered when the UI is released after a lock. */
     public static final int ENABLE_UI = 104;
 
+    /** This constant is triggered when the UI is released after a lock. */
+    public static final int EXECUTION_START = 105;
+
+    /** This constant is triggered when the UI is released after a lock. */
+    public static final int EXECUTION_STOP = 106;
+
     
     // -------------------------------------------------------------------------
 

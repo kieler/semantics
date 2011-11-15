@@ -225,6 +225,7 @@ public class Execution extends Job {
         this.timeout.start();
         observerExecutionArray = new ObserverExecution[this.dataComponentWrapperList.size()];
         producerExecutionArray = new ProducerExecution[this.dataComponentWrapperList.size()];
+
         // for each pure observer ... create ObserverExecution Thread
         // for each pure producer ... create ProducerExecution Thread
         for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
@@ -248,6 +249,8 @@ public class Execution extends Job {
         }
         // update the depending views
         eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
+        // execution starts
+        eventManager.notify(new KiemEvent(KiemEvent.EXECUTION_START));
     }
 
     // -------------------------------------------------------------------------
@@ -734,6 +737,8 @@ public class Execution extends Job {
         KiemPlugin.getDefault().setExecution(null);
         // update the GUI
         eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
+        // execution stops
+        eventManager.notify(new KiemEvent(KiemEvent.EXECUTION_STOP));
     }
 
     // -------------------------------------------------------------------------
@@ -757,6 +762,8 @@ public class Execution extends Job {
         KiemPlugin.getDefault().setExecution(null);
         // update the GUI
         eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
+        // execution stops
+        eventManager.notify(new KiemEvent(KiemEvent.EXECUTION_STOP));
     }
 
     // -------------------------------------------------------------------------
