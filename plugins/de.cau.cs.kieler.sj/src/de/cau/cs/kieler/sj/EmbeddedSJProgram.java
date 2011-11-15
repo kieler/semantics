@@ -604,7 +604,18 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                 // This is the initial execution for this await statement. We
                 // need this to know for logging
                 initialExecution = true;
-            } else if (signal.isPresent()) { // initial pause is done and given
+                
+                // ################################################################################
+                // --------------------------------- changed by ybe -------------------------------
+                //
+                // Signal.isPresent() logs the check, so method Signal.isPresentNoLog() should be
+                // used instead in order to suppress the unneeded signal state check.
+                //
+                // } else if (signal.isPresent()) { // initial pause is done and given
+                // --------------------------------------------------------------------------------
+            } else if (signal.isPresentNoLog()) { // initial pause is done and given
+            	// ################################################################################
+            	
                 // signal present
 
                 // initial pause has to executed again if await is reached the
