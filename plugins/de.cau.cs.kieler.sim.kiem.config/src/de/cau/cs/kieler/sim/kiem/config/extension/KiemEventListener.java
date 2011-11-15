@@ -40,7 +40,7 @@ public final class KiemEventListener implements IKiemEventListener {
 
     /** The list of supported KiemEvent constants for this listener. */
     private static final int[] EVENTS = { KiemEvent.LOAD, KiemEvent.SAVE,
-            KiemEvent.VIEW_DONE };
+            KiemEvent.VIEW_DONE, KiemEvent.EXECUTION_START, KiemEvent.EXECUTION_STOP };
 
     /**
      * The last created instance of the event listener.
@@ -89,6 +89,13 @@ public final class KiemEventListener implements IKiemEventListener {
      * {@inheritDoc}
      */
     public void notifyEvent(final KiemEvent event) {
+    	if (event.isEvent(KiemEvent.EXECUTION_START)) {
+    		ScheduleManager.getInstance().setEnabled(false);
+    	}
+    	if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
+    		ScheduleManager.getInstance().setEnabled(true);
+    	}
+    	
         if (event.isEvent(KiemEvent.LOAD)) {
             handleLoad(event.getInfo());
         }

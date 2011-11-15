@@ -25,6 +25,7 @@ import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -78,7 +79,10 @@ public class ScheduleSelector extends ControlContribution implements
 
     /** True if the combo is in the process of refreshing. */
     private boolean refreshing = false;
-
+    
+    /** The enabled flag. */
+    private boolean enabled;
+    
     // --------------------------------------------------------------------------
 
     /**
@@ -137,6 +141,30 @@ public class ScheduleSelector extends ControlContribution implements
 
     // --------------------------------------------------------------------------
 
+    public void setEnabled(boolean enabled) {
+    	this.enabled = enabled;
+    	if (enabled) {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                	combo.setEnabled(true);
+                }
+            });
+    	} else {
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                	combo.setEnabled(false);
+                }
+            });
+    	}
+    }
+
+    // --------------------------------------------------------------------------
+    
+    public boolean isEnabled() {
+    	return this.enabled;
+    }
+
+    // --------------------------------------------------------------------------
     /**
      * Sets up the combobox according to the currently selected editor and the
      * list of matching schedules.
@@ -298,9 +326,14 @@ public class ScheduleSelector extends ControlContribution implements
      * {@inheritDoc}
      */
     public void widgetSelected(final SelectionEvent e) {
-        if (e.widget == combo) {
-            loadSelected();
-        }
+    	// do not do this while simulation is running
+    	if (KiemPlugin.getDefault().getExecution() == null) {
+            if (e.widget == combo) {
+                loadSelected();
+            }
+    	} else {
+           combo.select(0);
+    	}
     }
 
     /**

@@ -77,7 +77,10 @@ public final class ScheduleManager extends AbstractManager implements
 
     /** The list of all saved schedules. */
     private List<ScheduleData> scheduleData = null;
-
+    
+    /** The enabled flag. Should be false during simulation. */
+    private boolean enabled;
+    
     // --------------------------------------------------------------------------
 
     /** Singleton pattern. */
@@ -101,6 +104,20 @@ public final class ScheduleManager extends AbstractManager implements
     }
 
     // --------------------------------------------------------------------------
+    // --------------------------------------------------------------------------
+
+    public void setEnabled(boolean enabled) {
+    	this.enabled = enabled;
+    	ContributionManager.getInstance().getMatchingCombo().setEnabled(enabled);
+    	ContributionManager.getInstance().getRecentCombo().setEnabled(enabled);
+    }
+
+    // --------------------------------------------------------------------------
+    
+    public boolean isEnabled() {
+    	return this.enabled;
+    }
+    
     // --------------------------------------------------------------------------
 
     /**
