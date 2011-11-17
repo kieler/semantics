@@ -107,6 +107,10 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
                         }
                     }
                     trigger(new DiagramSelectionState(list, p));
+                    // chsch: I'm not sure whether this is a good
+                    //  idea but I want Combinations sensitive to
+                    //  SelectionState be invoked in this case, too!
+                    trigger(new SelectionState<EObject>(list));
                 } else {
                     trigger(new SelectionState<Object>(newSelection));
                 }
@@ -148,7 +152,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * 
          * @return the EObjects
          */
-        public List<T> getSelectedEObjects() {
+        public List<T> getSelectedObjects() {
             if (objects != null) {
                 return objects;
             } else {
