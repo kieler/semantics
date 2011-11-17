@@ -200,9 +200,10 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      * {@inheritDoc}
      */
     public void partDeactivated(final IWorkbenchPart part) {
-        // if (part.equals(this.currentEditor)) {
-        // this.detachFromCurrentXtextEditor();
-        // }
+        if (part.equals(this.currentEditor)) {
+            this.currentEditor = null;
+            // this.detachFromCurrentXtextEditor();
+        }
     }
 
     /**
@@ -210,6 +211,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      */
     public void partClosed(final IWorkbenchPart part) {
         if (part.equals(this.currentEditor)) {
+            this.currentEditor = null;
             this.detachFromCurrentXtextEditor();
         }
         if (part instanceof XtextEditor) {
