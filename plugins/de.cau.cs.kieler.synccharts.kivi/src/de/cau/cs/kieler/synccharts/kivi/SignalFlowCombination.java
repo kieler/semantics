@@ -117,7 +117,7 @@ public class SignalFlowCombination extends AbstractCombination {
                         Signal signal = (Signal) reference.getValuedObject();
                         Transition transition = getTransition(current);
                         if (transition != null
-                                && isRelevant(selection.getSelectedEObjects(), signal)) {
+                                && isRelevant(selection.getSelectedObjects(), signal)) {
                             triggers.add(new Pair<Signal, Transition>(signal, transition));
                         }
                     }
@@ -125,7 +125,7 @@ public class SignalFlowCombination extends AbstractCombination {
                     Emission emission = (Emission) current;
                     Transition transition = getTransition(current);
                     if (transition != null
-                            && isRelevant(selection.getSelectedEObjects(), emission.getSignal())) {
+                            && isRelevant(selection.getSelectedObjects(), emission.getSignal())) {
                         effects.add(new Pair<Signal, Transition>(emission.getSignal(), transition));
                     }
                 }
@@ -136,8 +136,8 @@ public class SignalFlowCombination extends AbstractCombination {
                 for (Pair<Signal, Transition> trigger : triggers) {
                     if (effect.getFirst() == trigger.getFirst()) {
                         // sort out irrelevant transitions if a transition was selected
-                        if (isRelevant(selection.getSelectedEObjects(), effect.getSecond())
-                                || isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
+                        if (isRelevant(selection.getSelectedObjects(), effect.getSecond())
+                                || isRelevant(selection.getSelectedObjects(), trigger.getSecond())) {
                             schedule(new ArrowEffect(effect.getSecond(), trigger.getSecond(),
                                     getColor(), false));
                         }
@@ -148,14 +148,14 @@ public class SignalFlowCombination extends AbstractCombination {
             // haf: handle global inputs and outputs
             for (Pair<Signal, Transition> trigger : triggers) {
                 if (trigger.getFirst().isIsInput()
-                        && isRelevant(selection.getSelectedEObjects(), trigger.getSecond())) {
+                        && isRelevant(selection.getSelectedObjects(), trigger.getSecond())) {
                     schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH,
                             true, PointerEffect.Direction.NORTH, false));
                 }
             }
             for (Pair<Signal, Transition> effect : effects) {
                 if (effect.getFirst().isIsOutput()
-                        && isRelevant(selection.getSelectedEObjects(), effect.getSecond())) {
+                        && isRelevant(selection.getSelectedObjects(), effect.getSecond())) {
                     schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH,
                             false, PointerEffect.Direction.SOUTH, false));
                 }
@@ -201,8 +201,8 @@ public class SignalFlowCombination extends AbstractCombination {
         if (button.getSequenceNumber() > selection.getSequenceNumber()) { // button was just pushed
             return true;
         }
-        if (selection.getSelectedEObjects().size() == 1) {
-            EObject selected = selection.getSelectedEObjects().get(0);
+        if (selection.getSelectedObjects().size() == 1) {
+            EObject selected = selection.getSelectedObjects().get(0);
             if (selected.eContainer() == null) { // don't re-draw if the root region was selected
                 return false;
             }

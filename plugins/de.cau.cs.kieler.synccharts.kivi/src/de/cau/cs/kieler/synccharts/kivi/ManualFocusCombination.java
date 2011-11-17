@@ -122,7 +122,7 @@ public class ManualFocusCombination extends AbstractCombination {
         // if enabled, do something
         if (this.enabled) {
             int level = zoomLevel;
-            List<EObject> focus = selection.getSelectedEObjects();
+            List<EObject> focus = selection.getSelectedObjects();
             // if we want to see everything, select root element and do a full child focus
             if (showAll) {
                 focus.add(diagram.getSemanticModel());

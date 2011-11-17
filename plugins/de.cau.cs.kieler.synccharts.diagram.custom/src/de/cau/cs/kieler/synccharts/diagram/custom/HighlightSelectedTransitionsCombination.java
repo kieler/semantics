@@ -44,7 +44,7 @@ public class HighlightSelectedTransitionsCombination extends AbstractCombination
     public void execute(final DiagramSelectionState selection) {
         undoRecordedEffects();
         if (selection.getDiagramEditor() instanceof SyncchartsDiagramEditor) {
-            for (EObject selected : selection.getSelectedEObjects()) {
+            for (EObject selected : selection.getSelectedObjects()) {
                 if (selected instanceof Transition) {
                     HighlightEffect e = new HighlightEffect(selected, selection.getDiagramEditor(),
                             ColorConstants.blue, true);
