@@ -35,7 +35,7 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
-import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.DiagramSelectionState;
 import de.cau.cs.kieler.synccharts.Emission;
 import de.cau.cs.kieler.synccharts.Transition;
 
@@ -85,7 +85,7 @@ public class SignalFlowCombination extends AbstractCombination {
      * @param selection
      *            the selection state
      */
-    public void execute(final ButtonState button, final SelectionState selection) {
+    public void execute(final ButtonState button, final DiagramSelectionState selection) {
         if (button.getButtonId().equals(BUTTON_ID)) {
 
             if (!button.isPushedIn()) {
@@ -197,7 +197,7 @@ public class SignalFlowCombination extends AbstractCombination {
         return true;
     }
 
-    private boolean shouldExecute(final ButtonState button, final SelectionState selection) {
+    private boolean shouldExecute(final ButtonState button, final DiagramSelectionState selection) {
         if (button.getSequenceNumber() > selection.getSequenceNumber()) { // button was just pushed
             return true;
         }

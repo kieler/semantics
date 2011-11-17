@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.EObject;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
-import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.DiagramSelectionState;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
@@ -41,7 +41,7 @@ public class HighlightSelectedTransitionsCombination extends AbstractCombination
      * @param selection
      *            the current selection
      */
-    public void execute(final SelectionState selection) {
+    public void execute(final DiagramSelectionState selection) {
         undoRecordedEffects();
         if (selection.getDiagramEditor() instanceof SyncchartsDiagramEditor) {
             for (EObject selected : selection.getSelectedEObjects()) {

@@ -29,7 +29,7 @@ import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
-import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
+import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.DiagramSelectionState;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 
 /**
@@ -102,7 +102,7 @@ public class ManualFocusCombination extends AbstractCombination {
      * @param diagram
      *            listens to a DiagramTrigger
      */
-    public void execute(final ButtonState button, final SelectionState selection,
+    public void execute(final ButtonState button, final DiagramSelectionState selection,
             final DiagramState diagram) {
         // first check buttons
         boolean showAll = false;
