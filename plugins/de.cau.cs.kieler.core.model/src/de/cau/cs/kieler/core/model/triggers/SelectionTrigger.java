@@ -19,6 +19,7 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
@@ -36,7 +37,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 /**
  * Listens for selection and deselection of graphical elements.
  * 
- * @author mmu
+ * @author mmu, haf
  * 
  */
 public class SelectionTrigger extends AbstractTrigger implements ISelectionListener {
@@ -84,26 +85,37 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      * {@inheritDoc}
      */
     public void selectionChanged(final IWorkbenchPart p, final ISelection s) {
-        if (s instanceof IStructuredSelection) {
-            try {
-                IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(p);
-                List<EObject> list = new ArrayList<EObject>();
-                IStructuredSelection selection = (IStructuredSelection) s;
-                for (Object o : selection.toList()) {
-                    EObject element = bridge.getElement(o);
-                    if (element != null) {
-                        list.add(element);
-                    }
-                }
-                // make sure to trigger only if selection has changed
-                if (!list.equals(oldSelection)) {
-                    oldSelection = list;
-                    trigger(new SelectionState(list, (IEditorPart) p));
-                }
-            } catch (UnsupportedPartException exception) {
-                // ignore exception
-            }
-        }
+    	List<EObject> list = new ArrayList<EObject>();
+    	// first try selection of a standard EMF tree editor (haf)
+        try {
+	    	if(s instanceof TreeSelection){
+	        	TreeSelection ts = (TreeSelection)s;
+	        	for(Object o: ts.toList()){
+	        		if(o instanceof EObject){
+	        			list.add((EObject)o);
+	        		}
+	        	}
+	        }else{
+	        	// else try a graphical editor 
+		    	if (s instanceof IStructuredSelection) {
+		                IGraphicalFrameworkBridge bridge = GraphicalFrameworkService.getInstance().getBridge(p);
+		                IStructuredSelection selection = (IStructuredSelection) s;
+		                for (Object o : selection.toList()) {
+		                    EObject element = bridge.getElement(o);
+		                    if (element != null) {
+		                        list.add(element);
+		                    }
+		                }
+		    	}
+	        }
+	        // make sure to trigger only if selection has changed
+	        if (!list.equals(oldSelection)) {
+	            oldSelection = list;
+	            trigger(new SelectionState(list, (IEditorPart) p));
+	        }
+	    } catch (UnsupportedPartException exception) {
+        // ignore exception
+	    }
     }
 
     /**
