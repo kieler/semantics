@@ -58,12 +58,11 @@ public class ShowHierarchyCombination extends AbstractCombination {
      * 
      * @param button
      *            kivi button trigger
+     * @param diagram
+     *            kivi diagram trigger
      */
-    public void execute(final ButtonState button, final DiagramState diagram/*
-                                                 * , final SelectionState selection
-                                                 * enables editing in color, causes some overhead
-                                                 */) {
-        if (this.getTriggerState() instanceof ButtonState && ID.equals(button.getButtonId())) {
+    public void execute(final ButtonState button, final DiagramState diagram) {
+        if (button == latestState() && ID.equals(button.getButtonId())) {
             undoRecordedEffects();
             if (button.isPushedIn()) {
                 EObject root = diagram.getSemanticModel();

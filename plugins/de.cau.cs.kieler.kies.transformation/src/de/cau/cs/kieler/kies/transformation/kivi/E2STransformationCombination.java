@@ -159,25 +159,18 @@ public class E2STransformationCombination extends AbstractCombination {
     public void execute(final ButtonState buttonState, final ActiveEditorState editorState,
             final EffectTriggerState<TransformationEffect> transformationState) {
 
-        //dontUndo();
-
-        // editor state, remember the currently active editor
-        if (getTriggerState() instanceof ActiveEditorState) {
+        switch (latestStateIndex()) {
+        case SECOND: // editor state, remember the currently active editor
             editorStateChanged(editorState);
             return;
-        }
 
-        // transformation state
-        if ((getTriggerState() instanceof EffectTriggerState)
-                && transformationState.getEffect() instanceof TransformationEffect) {
+        case THIRD: // transformation state
             TransformationUtil.logger.info("\t #### Transformation finished with result: "
                     + transformationState.getEffect().getResult());
             postTransformation(transformationState.getEffect());
             return;
-        }
-
-        // button state
-        if (getTriggerState() instanceof ButtonState) {
+            
+        case FIRST: // button state
             if (!buttonEnabling.keySet().contains(buttonState.getButtonId())) {
                 // not interested in that button
                 return;
@@ -208,8 +201,6 @@ public class E2STransformationCombination extends AbstractCombination {
 
             setButtonEnabling(true);
         }
-
-        return;
     }
 
     /*

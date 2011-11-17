@@ -30,7 +30,6 @@ import de.cau.cs.kieler.core.kivi.menu.MenuItemEnableStateEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger.SelectionState;
-import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 
 /**
@@ -41,7 +40,6 @@ import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
  * contents of the focus should be shown.
  * 
  * @author haf
- * 
  */
 public class ManualFocusCombination extends AbstractCombination {
 
@@ -108,7 +106,7 @@ public class ManualFocusCombination extends AbstractCombination {
             final DiagramState diagram) {
         // first check buttons
         boolean showAll = false;
-        if (this.getTriggerState() instanceof ButtonState) {
+        if (button == latestState()) {
             if (button.getButtonId().equals(PLUS_BUTTON_ID)) {
                 zoomLevel++;
             } else if (button.getButtonId().equals(MINUS_BUTTON_ID)) {
