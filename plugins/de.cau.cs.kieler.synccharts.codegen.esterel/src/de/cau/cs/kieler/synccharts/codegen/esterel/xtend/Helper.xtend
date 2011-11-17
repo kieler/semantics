@@ -1,10 +1,7 @@
 package de.cau.cs.kieler.synccharts.codegen.esterel.xtend
 
-import de.cau.cs.kieler.synccharts.*
-import de.cau.cs.kieler.s.s.SFactory
-import de.cau.cs.kieler.core.kexpressions.*
-import java.util.*
-import com.google.inject.Inject
+import de.cau.cs.kieler.synccharts.Region
+import de.cau.cs.kieler.synccharts.State
 
 class Helper {
 
