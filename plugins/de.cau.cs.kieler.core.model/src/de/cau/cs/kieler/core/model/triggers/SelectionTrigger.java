@@ -111,7 +111,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
 	        // make sure to trigger only if selection has changed
 	        if (!list.equals(oldSelection)) {
 	            oldSelection = list;
-	            trigger(new SelectionState(list, (IEditorPart) p));
+	            trigger(new SelectionState(list, p));
 	        }
 	    } catch (UnsupportedPartException exception) {
         // ignore exception
@@ -128,7 +128,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
 
         private List<EObject> objects;
 
-        private IEditorPart editor;
+        private IWorkbenchPart editor;
 
         /**
          * Default constructor.
@@ -145,7 +145,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * @param e
          *            the diagram editor
          */
-        private SelectionState(final List<EObject> list, final IEditorPart e) {
+        private SelectionState(final List<EObject> list, final IWorkbenchPart e) {
             objects = list;
             editor = e;
         }
@@ -174,13 +174,27 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * Get the editor that contains the selection.
          * 
          * @return the DiagramEditor
+         * @deprecated use getWorkbenchPart instead
          */
         public IEditorPart getDiagramEditor() {
             if (editor == null) {
                 editor = EditorUtils.getLastActiveEditor();
             }
+            return (IEditorPart)editor;
+        }
+        
+        /**
+         * Get the editor that contains the selection.
+         * 
+         * @return the DiagramEditor
+         */
+        public IWorkbenchPart getWorkbenchPart() {
+            if (editor == null) {
+                editor = EditorUtils.getLastActiveEditor();
+            }
             return editor;
         }
+        
     }
 
 }
