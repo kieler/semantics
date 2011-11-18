@@ -27,10 +27,7 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.parser.IParseResult;
@@ -63,7 +60,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  */
 public class DataComponent extends JSONObjectSimulationDataComponent {
 
-    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
+    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
 
     private Program myModel = null;
     private Process process = null;
@@ -175,19 +172,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         try {
             // get active editor
-            IWorkbench workbench = PlatformUI.getWorkbench();
-            IWorkbenchPage page = null;
-            if (workbench != null) {
-                IWorkbenchWindow window = workbench.getActiveWorkbenchWindow();
-                if (window != null) {
-                    page = window.getActivePage();
-                }
-            }
-            if (page == null) {
+        	IWorkbenchPage workbenchPage;
+        	workbenchPage = getActivePage();
+            if (workbenchPage == null) {
                 throw new KiemInitializationException("Cannot get active page", true, null);
             }
 
-            IEditorPart editor = page.getActiveEditor();
+            IEditorPart editor = workbenchPage.getActiveEditor();
             if (editor == null) {
                 throw new KiemInitializationException("No active editor selected!", true, null);
             }

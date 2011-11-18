@@ -44,7 +44,7 @@ import de.cau.cs.kieler.esterel.cec.CEC;
  */
 public class CGenerator extends AbstractHandler {
 
-    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
+    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
 
     /** {@inheritDoc}*/
     public Object execute(final ExecutionEvent event) throws ExecutionException {
