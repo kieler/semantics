@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.triggers;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -110,42 +111,25 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
                     // chsch: I'm not sure whether this is a good
                     //  idea but I want combinations sensitive to
                     //  SelectionStates be invoked in this case, too!
-                    trigger(new SelectionState<EObject>(list));
+                    @SuppressWarnings("unchecked")
+                    List<Object> l = (List<Object>) (List<?>) list;
+                    trigger(new SelectionState(l));
                 } else {
-                    trigger(new SelectionState<Object>(newSelection));
+                    trigger(new SelectionState(newSelection));
                 }
             }
         }
     }
     
     /**
-     * A general selection trigger state.
+     * Just another experiment...
      *  
      * @author chsch
      */
-    public static class SelectionState<T> extends AbstractTriggerState {
+    private static class AbstractSelectionState<T> extends AbstractTriggerState {
 
         /** The list of selected objects. */
         protected List<T> objects; // SUPPRESS CHECKSTYLE VisibilityModifier
-
-        /**
-         * Default constructor.
-         */
-        public SelectionState() {
-
-        }
-
-        /**
-         * Create a new selection state.
-         * 
-         * @param list
-         *            the selected objects
-         * @param e
-         *            the diagram editor
-         */
-        private SelectionState(final List<T> list) {
-            objects = list;
-        }
 
         /**
          * Get the selected EObjects.
@@ -167,6 +151,34 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
             return SelectionTrigger.class;
         }
     }
+    
+    
+    /**
+     * A general selection trigger state.
+     * 
+     * @author chsch
+     */
+    public static class SelectionState extends AbstractSelectionState<Object> {
+        
+        /**
+         * Default constructor.
+         */
+        public SelectionState() {
+            objects = new LinkedList<Object>();
+        }
+
+        /**
+         * Create a new selection state.
+         * 
+         * @param list
+         *            the selected objects
+         * @param e
+         *            the diagram editor
+         */
+        private SelectionState(final List<Object> list) {
+            objects = list;
+        }
+    }
 
 
     /**
@@ -176,7 +188,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      * @author mmu, chsch (renamed to DiagramSelectionState)
      * 
      */
-    public static class DiagramSelectionState extends SelectionState<EObject> {
+    public static class DiagramSelectionState extends AbstractSelectionState<EObject> {
         
         private IWorkbenchPart editor;
 
@@ -184,7 +196,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * Default constructor.
          */
         public DiagramSelectionState() {
-
+            objects = new LinkedList<EObject>();
         }
 
         /**
@@ -198,13 +210,6 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
         private DiagramSelectionState(final List<EObject> list, final IWorkbenchPart e) {
             objects = list;
             editor = e;
-        }
-
-        /**
-         * {@inheritDoc}
-         */
-        public Class<? extends ITrigger> getTriggerClass() {
-            return SelectionTrigger.class;
         }
 
         /**
