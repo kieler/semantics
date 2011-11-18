@@ -40,6 +40,9 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateInterfaceDeclarationE
 /**
  * Handles edit requests for model elements.
  * 
+ * @deprecated Left this class for the case it will be reactivated. The related command/menu entry
+ *        extension have been removed with the 0.6.0 release of KIELER. (chsch, 2011-11-18)
+ * 
  * @author uru
  * @author car
  */

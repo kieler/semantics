@@ -96,18 +96,6 @@
          id="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
          name="Add State">
 	  </command>
-   <command
-         categoryId="org.eclipse.gmf.category.synccharts"
-         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.EditInStateHandler"
-         description="Edits the Interface Declaration"
-         id="de.cau.cs.kieler.synccharts.custom.contextMenu.editInterfaceDecl"
-         name="Edit InterfaceDeclaration">
-      <commandParameter
-            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
-            name="Type"
-            optional="false">
-      </commandParameter>
-   </command>
          <command
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler"
@@ -294,22 +282,6 @@
             </command>
 
          </menu>
-         <command
-               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.editInterfaceDecl"
-               icon="icons/obj16/EditInterfaceDecl.gif"
-               label="Edit Interface Declaration"
-               style="push">
-            <parameter
-                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
-                  value="InterfaceDeclaration">
-            </parameter>
-            <visibleWhen
-                  checkEnabled="false">
-               <reference
-                     definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
-               </reference>
-            </visibleWhen>
-         </command>
         
       </menuContribution>
             <menuContribution
