@@ -526,10 +526,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     protected EObject getInputModelEObject(IEditorPart editorPart) {
         EObject model = null;
         if (editorPart instanceof DiagramEditor) {
-    		GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
+    		model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
     	}
-    	else {
-    		XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart);
+    	else if (editorPart instanceof XtextEditor){
+    		model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart);
     	}
         return model;
     }
