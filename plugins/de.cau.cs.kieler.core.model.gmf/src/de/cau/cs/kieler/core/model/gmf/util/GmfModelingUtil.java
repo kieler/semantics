@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.util.Maybe;
 /**
  * Utility class with static methods to handle EMF models and GEF EditParts.
  * 
- * @author haf
+ * @author haf, cmot
  * 
  * XXX for most functions use {@link de.cau.cs.kieler.core.model.GraphicalFrameworkService} instead
  */
@@ -52,6 +52,29 @@ public final class GmfModelingUtil {
     private GmfModelingUtil() {
     }
 
+    
+    /**
+     * Get the model from a given GMF editor.
+     *
+     * @param diagramEditor the diagram editor
+     * @return the model
+     */
+    public static EObject getModelFromGmfEditor(final DiagramEditor diagramEditor) {
+        EObject model = null;
+        
+        View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
+                .getModel());
+        
+        if (notationElement == null) {
+            return null;
+        }
+        
+        model = (EObject) notationElement.getElement();
+
+        return model;
+    } 
+    
+    
     /**
      * Find an GEF EditPart that corresponds to an semantic model EObject. EObjects are used to
      * address objects that are exchanged between the plugins of the View Management as well as
