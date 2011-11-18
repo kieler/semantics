@@ -46,9 +46,12 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.util.BundleUtility;
+import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
+import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -454,23 +457,6 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         }
         return diagramEditor;
     }
-
-    // -------------------------------------------------------------------------
-
-//    protected String getInputModel() {
-//        IEditorPart diagramEditor = this.getInputEditor();
-//        // now extract the file
-//        View notationElement = getNotationElement(diagramEditor);
-//        if (notationElement == null) {
-//            return null;
-//        }
-//        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-//        // .getModel());
-//        EObject myModel = (EObject) notationElement.getElement();
-//        URI uri = myModel.eResource().getURI();
-//        return uri.toPlatformString(false);
-//    }
-
     
     // -------------------------------------------------------------------------
 
@@ -486,16 +472,12 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     // -------------------------------------------------------------------------
     
     protected String getInputWorkspaceModel() {
-        IEditorPart diagramEditor = this.getInputEditor();
-
-      // now extract the file
-      View notationElement = getNotationElement(diagramEditor);
-      if (notationElement == null) {
-          return null;
-      }
-        
-        EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
+        IEditorPart editorPart = this.getInputEditor();
+        EObject model = this.getInputModelEObject(editorPart);
+        if (model == null) {
+        	return null;
+        }
+        URI uri = model.eResource().getURI();
 
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         
@@ -508,16 +490,9 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     // -------------------------------------------------------------------------
 
     protected String getInputModel() {
-        IEditorPart diagramEditor = this.getInputEditor();
-
-      // now extract the file
-      View notationElement = getNotationElement(diagramEditor);
-      if (notationElement == null) {
-          return null;
-      }
-        
-        EObject myModel = (EObject) notationElement.getElement();
-        URI uri = myModel.eResource().getURI();
+        IEditorPart editorPart = this.getInputEditor();
+        EObject model = this.getInputModelEObject(editorPart);
+        URI uri = model.eResource().getURI();
 
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
@@ -548,15 +523,15 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     
     // -------------------------------------------------------------------------
 
-    protected EObject getInputModelEObject(IEditorPart diagramEditor) {
-        // now extract the file
-        EObject myModel = null;
-        View notationElement = getNotationElement(diagramEditor);
-        if (notationElement == null) {
-            return null;
-        }
-        myModel = (EObject) notationElement.getElement();
-        return myModel;
+    protected EObject getInputModelEObject(IEditorPart editorPart) {
+        EObject model = null;
+        if (editorPart instanceof DiagramEditor) {
+    		GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
+    	}
+    	else {
+    		XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart);
+    	}
+        return model;
     }
 
     // -------------------------------------------------------------------------
@@ -573,16 +548,8 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     // -------------------------------------------------------------------------
 
     protected ResourceSet getInputResourceSet() {
-        IEditorPart diagramEditor = this.getInputEditor();
-        // now extract the file
-        View notationElement = getNotationElement(diagramEditor);
-        if (notationElement == null) {
-            return null;
-        }
-        // View notationElement = ((View) ((DiagramEditor) diagramEditor).getDiagramEditPart()
-        // .getModel());
-        EObject myModel = (EObject) notationElement.getElement();
-
+        IEditorPart editorPart = this.getInputEditor();
+        EObject myModel = this.getInputModelEObject(editorPart);
         return myModel.eResource().getResourceSet();
     }
 
