@@ -185,29 +185,6 @@ public class Signal {
         }
     }
     
-    
-    // ############################################################################################
-    // --------------------------------------- added by ybe ---------------------------------------
-    /**
-     * Checks if a <em>Signal</em> is {@link #PRESENT}.
-     * Does NOT log the check! Used internally by EmbeddedSJProgram.awaitDoneCB() to check the state
-     * of a signal without logging the check itself!
-     * 
-     * @return A Boolean that tells you if the signal is present( <code>true</code>) or not
-     *         <code>false</code>.
-     */
-    protected boolean isPresentNoLog() {
-        if (!isDeclared) {
-            throw new SignalNotDeclaredException(
-                    "The signal has not declared in the SJProgram that belongs to the signal");
-        } else {
-            hasStateChecked = true;
-            return present;
-        }
-    }
-    // ############################################################################################
-
-    
     /**
      * Emits a signal. Changes the status of the signal for the current tick to to {@link #PRESENT}.
      * It will <b>not</b> be checked if a signal is emitted twice in a tick or has more than one

@@ -589,6 +589,22 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
             // the return value
             boolean ret, initialExecution;
+            
+            // ####################################################################################
+            // ----------------------------------- changed by ybe ---------------------------------
+            //
+            // Due to internal use of Signal.isPresent(), the logging for this internally used
+            // method has to be disabled. In order to do so, the logger of the Signal class is
+            // temporary saved in a local variable, and the logger variable in the Signal class
+            // is set to null.
+            // This prevents the logging in Signal.isPresent(), or in any other methods of the
+            // Signal class, since logging is only done, iff the logger variable in the Signal
+            // class has been set.
+            // After the internally used method Signal.isPresent() returns, the logger variable
+            // in the Signal class is to be set back, using the logger saved in the local variable.
+            SJLogger curLogger = signal.program.getLogger();
+            signal.program.setLogger(null);
+            // ####################################################################################
 
             if (!curThread.isInitialPauseDone()) {
                 // If no initial pause is done then do the initial pause for
@@ -605,17 +621,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                 // need this to know for logging
                 initialExecution = true;
                 
-                // ################################################################################
-                // --------------------------------- changed by ybe -------------------------------
-                //
-                // Signal.isPresent() logs the check, so method Signal.isPresentNoLog() should be
-                // used instead in order to suppress the unneeded signal state check.
-                //
-                // } else if (signal.isPresent()) { // initial pause is done and given
-                // --------------------------------------------------------------------------------
-            } else if (signal.isPresentNoLog()) { // initial pause is done and given
-            	// ################################################################################
-            	
+            } else if (signal.isPresent()) { // initial pause is done and given
                 // signal present
 
                 // initial pause has to executed again if await is reached the
@@ -640,6 +646,15 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                 // need this to know for logging
                 initialExecution = false;
             }
+            
+            // ####################################################################################
+            // ----------------------------------- changed by ybe ---------------------------------
+            //
+            // Setting the logger of the Signal class to the way it was prior the internal use of
+            // Signal.isPresent(). For details v.s.
+            signal.program.setLogger(curLogger);
+            // ####################################################################################
+            
             // creating JSON string
             if (logger != null) {
                 logger.log(INSTRUCTION, "\"awaitDone\":" + "{\"label\":\""
