@@ -50,20 +50,14 @@ public class WorkflowGenerator {
 
     private Program myModel = null;
     private String uriString = null;
-    private IEditorPart editor = null;
     private URI uri = null;
 
     /**
      * The constructor sets the location in the KIELER workspace to save the sc files if you just
      * generate sc code without simulation. It also sets the variables for the EMF reader.
      */
-    public WorkflowGenerator() {
-        // location for the sc file in the KIELER workspace
+    public WorkflowGenerator(IEditorPart editor) {
         IParseResult result = null;
-        IWorkbenchPage activePage = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
-                .getActivePage();
-        editor = activePage.getActiveEditor();
-        // outPath = part2Location(editor);
         uriString = null;
         if (editor instanceof XtextEditor) {
             XtextEditor xtextEditor = (XtextEditor) editor;

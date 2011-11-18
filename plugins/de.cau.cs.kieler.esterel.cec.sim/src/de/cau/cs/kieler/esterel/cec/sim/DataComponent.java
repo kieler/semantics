@@ -291,8 +291,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         File data;
         try {
             data = File.createTempFile("data", ".c");
-
-            WorkflowGenerator wg = new WorkflowGenerator();
+            WorkflowGenerator wg = new WorkflowGenerator(this.getInputEditor());
             wg.invokeWorkflow(data.getPath());
             return data.toURI().toURL();
         } catch (IOException e) {
