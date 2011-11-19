@@ -23,6 +23,7 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.LinkedList;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
@@ -291,12 +292,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         File data;
         try {
             data = File.createTempFile("data", ".c");
-            WorkflowGenerator wg = new WorkflowGenerator(this.getInputEditor());
-            wg.invokeWorkflow(data.getPath());
+            CSimulationInterfaceGenerator cSimulationInterfaceGenerator = new CSimulationInterfaceGenerator(this.getInputEditor());
+            cSimulationInterfaceGenerator.execute(data.getPath());
             return data.toURI().toURL();
         } catch (IOException e) {
             throw new KiemInitializationException("Error creating data file", true, e);
-
-        }
+        } catch (ExecutionException e) {
+            throw new KiemInitializationException("Error creating data file", true, e);
+		}
     }
 }
