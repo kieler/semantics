@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.ui.util;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
@@ -35,6 +36,9 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.statushandlers.StatusManager;
+
+import de.cau.cs.kieler.core.ui.CoreUIPlugin;
 
 /**
  * This listener keeps track of all windows, pages, parts... etc that are
@@ -43,6 +47,8 @@ import org.eclipse.ui.PlatformUI;
  * are kept track of as well as removing listeners from closed objects. It also
  * contains methods to be notified of all currently opened objects as if they
  * had just opened.
+ * 
+ * FIXME this class makes heavy use of static hash sets without thinking about synchronization!
  * 
  * @author soh
  */
@@ -269,9 +275,8 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
      * {@inheritDoc}
      */
     public void earlyStartup() {
-        theWorkbench = PlatformUI.getWorkbench();
-
-        if (theWorkbench != null) {
+        try {
+            theWorkbench = PlatformUI.getWorkbench();
             theWorkbench.addWindowListener(this);
             theWorkbench.addWorkbenchListener(this);
 
@@ -294,6 +299,10 @@ public class CombinedWorkbenchListener implements IStartup, IWindowListener,
                     // getWorkbenchWindows() to throw a NPE
                 }
             }
+        } catch (IllegalStateException exception) {
+            // the workbench is not present yet
+            StatusManager.getManager().handle(new Status(Status.ERROR, CoreUIPlugin.PLUGIN_ID,
+                    "Unable to register the combined workbench listener.", exception));
         }
     }
 

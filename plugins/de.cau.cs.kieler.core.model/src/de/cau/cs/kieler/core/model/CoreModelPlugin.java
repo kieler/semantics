@@ -21,6 +21,7 @@ import org.eclipse.ui.internal.statushandlers.StatusHandlerDescriptor;
 import org.eclipse.ui.internal.statushandlers.StatusHandlerRegistry;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.AbstractStatusHandler;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.core.model.util.ModelErrorHandler;
@@ -139,8 +140,12 @@ public class CoreModelPlugin extends AbstractUIPlugin {
                     return (GenericErrorHandler) handler;
                 }
             }
-        } catch (CoreException e0) {
-            e0.printStackTrace();
+        } catch (CoreException exception) {
+            StatusManager.getManager().handle(exception, PLUGIN_ID);
+        } catch (IllegalStateException exception) {
+            // the workbench has not been initialized yet
+            StatusManager.getManager().handle(new Status(Status.ERROR, PLUGIN_ID,
+                    "Unable to retrieve the generic error handler.", exception));
         }
         return null;
     }

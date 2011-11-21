@@ -154,6 +154,12 @@
             name="KIELER">
       </category>
    </extension>
+   <extension
+         point="org.eclipse.ui.startup">
+      <startup
+            class="de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener">
+      </startup>
+   </extension>
 
  <!--  <extension
          point="org.eclipse.ui.intro.config">
