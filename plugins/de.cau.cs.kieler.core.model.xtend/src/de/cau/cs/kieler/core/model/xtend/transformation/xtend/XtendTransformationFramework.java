@@ -149,6 +149,11 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 EObject buffer = null;
                 for (EObject next : slist) {
                     try {
+                    	// FIXME: this simply compares the class name with the parameter type name this fails
+                    	// for many cases, e.g. subclasses or implemented classes like:
+                    	// type: Node, parameter: NodeImpl
+                    	// type: Node, parameter: MyNode extends Node
+                    	// this is really bad! (haf)
                         if (next.eClass().getName().equals(param)) {
                             buffer = next;
                             params.add(next);
