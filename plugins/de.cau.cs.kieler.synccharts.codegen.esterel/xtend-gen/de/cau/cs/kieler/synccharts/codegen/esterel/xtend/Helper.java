@@ -9,6 +9,7 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Helper {
+  
   public Boolean isRootState(final State state) {
     Region _parentRegion = state.getParentRegion();
     State _parentState = _parentRegion.getParentState();

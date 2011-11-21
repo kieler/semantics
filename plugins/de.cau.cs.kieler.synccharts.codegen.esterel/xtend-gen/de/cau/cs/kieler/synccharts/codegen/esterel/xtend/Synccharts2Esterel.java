@@ -16,8 +16,11 @@ import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 
 @SuppressWarnings("all")
 public class Synccharts2Esterel {
+  
   @Inject
   private Helper helper;
+  
+  private final HashMap<ArrayList<?>,Program> _createCache_transform = new HashMap<ArrayList<?>,Program>();
   
   public Program transform(final Region root) {
     final ArrayList<?>_cacheKey = CollectionLiterals.newArrayList(root);
@@ -33,10 +36,8 @@ public class Synccharts2Esterel {
     _init_transform(_result, root);
     return _result;
   }
-  
-  private final HashMap<ArrayList<?>,Program> _createCache_transform = CollectionLiterals.newHashMap();
-  
   private void _init_transform(final Program target, final Region root) {
+    {
       Module _createModule = EsterelFactory.eINSTANCE.createModule();
       Module module = _createModule;
       ModuleBody _createModuleBody = EsterelFactory.eINSTANCE.createModuleBody();
@@ -48,5 +49,6 @@ public class Synccharts2Esterel {
       module.setBody(body);
       EList<Module> _modules = target.getModules();
       _modules.add(module);
+    }
   }
 }

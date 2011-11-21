@@ -13,8 +13,10 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.esterel;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -26,6 +28,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -35,11 +38,16 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 
-import com.google.inject.Guice;
-
-import de.cau.cs.kieler.kies.esterel.Program;
+import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
+import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.SyncchartsPackage;
+import de.cau.cs.kieler.kies.esterel.Program;
 import de.cau.cs.kieler.synccharts.codegen.esterel.xtend.Synccharts2Esterel;
+
+// Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
+import com.google.inject.AbstractModule;
+import com.google.inject.Guice;
 
 /**
  * @author cmot
