@@ -26,7 +26,7 @@ import org.osgi.framework.Bundle;
 /**
  * Wrapper class to execute CEC executables.
  * 
- * @author ctr
+ * @author ctr, cmot
  * 
  */
 public final class CEC {
@@ -97,7 +97,7 @@ public final class CEC {
     }
 
     private static final int INIT_TIME = 500;
-    private static final int TIMEOUT = 500;
+    private static final int TIMEOUT = 5000;
     private static final int STEP_TIME = 500;
 
     /**
