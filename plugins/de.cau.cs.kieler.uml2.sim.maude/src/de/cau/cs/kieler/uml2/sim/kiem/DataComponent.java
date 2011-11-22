@@ -138,6 +138,21 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
+    protected EObject getInputModelEObject(IEditorPart editorPart) {
+        EObject model = null;
+        if (editorPart instanceof PapyrusMultiDiagramEditor) {
+            PapyrusMultiDiagramEditor papyrusMultiDiagramEditor = (PapyrusMultiDiagramEditor) editorPart;
+            View notationElement = (View) papyrusMultiDiagramEditor.getDiagramEditPart().getModel();
+            if (notationElement == null) {
+                return null;
+            }
+            model = (EObject) notationElement.getElement();
+    	}
+        return model;
+    }
+
+    // -------------------------------------------------------------------------
+    
     /*
      * (non-Javadoc)
      * 
