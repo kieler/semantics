@@ -82,6 +82,9 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     /** The editor of the model being simulated. */
     protected IEditorPart modelEditor;
+    
+    /** The initialization exception that can be possibly thrown. */
+    protected Exception exception;
 
 //    /** The global initial variables as JSONObjects. */
 //    private JSONObject globalInitialVariables;
@@ -234,7 +237,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             doModel2ModelTransform(monitor);
         } catch (Exception e) {
             monitor.done();
-            e.printStackTrace();
+            exception = e;
             transformationCompleted = true;
             transformationError = true;
             return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
@@ -569,6 +572,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     private final boolean performModelTransformation() throws KiemInitializationException {
         transformationCompleted = false;
         transformationError = false;
+        exception = null;
 
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
@@ -583,16 +587,16 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                                                 monitor)));
                                     } catch (KiemInitializationException e) {
                                         transformationError = true;
-                                        e.printStackTrace();
+                                        exception = e;
                                     }
                                 }
                             });
                 } catch (InvocationTargetException e) {
                     transformationError = true;
-                    e.printStackTrace();
+                    exception = e;
                 } catch (InterruptedException e) {
                     transformationError = true;
-                    e.printStackTrace();
+                    exception = e;
                 }
             }
         });
@@ -605,7 +609,13 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             }
         }// end while
 
-        if (!transformationError) {
+        if (transformationError) {
+        	if (exception instanceof KiemInitializationException) {
+        		throw (KiemInitializationException)exception;
+        	}
+        	else {
+        		exception.printStackTrace();
+        	}
             return false;
         }// end if
         return true;
