@@ -19,25 +19,22 @@ class Esterel2CSimulationInterface {
     
     // Generale method to create the c simulation interface
 	def createCSimulationInterface (Module module) {
-		var gen = '''''';
-		
-	    // Generate the C header
-		gen.append(esterelHeader());
-	    
-	    // Generate output functions for each Esterel signal 
-		for (interfaceSignalDecl : module.interface.intSignalDecls)  {
-			 gen.append(interfaceSignalDecl.outputFunctions(module.name));
-		}
-		
-		// Generate input functions that are then called my the main function's
-		// tick function of the module
-		gen.append(esterelSetInputsFunction(module));
-		
-		// Generate the generic C main function
-		gen.append(mainFunction(module));
+       '''
+	   «/* Generate the C header */»
+       «esterelHeader()»
 
-		gen;
-	} 	
+	   «/* Generate output functions for each Esterel signal */» 
+       «module.interface.intSignalDecls.map(e|e.outputFunctions(module.name)).toConcatenation()»
+
+	   «/* Generate input functions that are then called my the main function's
+		   tick function of the module */»
+       «esterelSetInputsFunction(module)»
+
+	   «/* Generate the generic C main function */»
+	   «mainFunction(module)»
+
+       '''
+   } 	
 
    // -------------------------------------------------------------------------   
    
@@ -53,18 +50,25 @@ class Esterel2CSimulationInterface {
 
 cJSON* output = 0;
 cJSON* value = 0;
-
-cJSON* output = 0;
-cJSON* value = 0;
 	''' 
    }
    
    // -------------------------------------------------------------------------   
    
+   def toConcatenation(List<StringConcatenation> list) {
+   	   var concatenation = '''''';
+   	   for (element : list) {
+   	    	concatenation.append(element)
+   	   }
+   	   concatenation;
+   }
+
+   // -------------------------------------------------------------------------   
+   
    // Generate input functions that are then called my the main function's
    // tick function of the module
    def esterelSetInputsFunction(Module module) {
-var gen = '''
+'''
 void setInputs(){
   char buffer[2048];
   int i=0;
@@ -80,21 +84,18 @@ void setInputs(){
 	cJSON* present = 0;
 	cJSON* value = 0;
 
-	object = cJSON_Parse(buffer);'''
+	object = cJSON_Parse(buffer);
 	
-		for (interfaceSignalDecl : module.interface.intSignalDecls)  {
-			 gen.append(interfaceSignalDecl.callInputs(module.name));
-		}
-		
-gen.append('''}''');   	
-	gen;
-   }
+	«module.interface.intSignalDecls.map(e|e.callInputs(module.name)).toConcatenation()»
+   }'''
+}
    
    // -------------------------------------------------------------------------   
    
    // Generate the generic C main function
    def mainFunction(Module it) {
-   	'''int main(){«name»_reset();
+   	'''
+int main(){«name»_reset();
   output = cJSON_CreateObject();
   while(1){
     setInputs();
@@ -105,41 +106,65 @@ gen.append('''}''');
 	fflush(stdout);
 	output = cJSON_CreateObject();
   }  	
-}'''
+}
+'''
    }
    
    // -------------------------------------------------------------------------   
 
    // Define output functions to return JSON for each Esterel signal 
-   def outputFunctions(Output it, String moduleName) {
+   def dispatch outputFunctions(Output it, String moduleName) {
    	  var gen = '''''';
+   	  gen.newLine();
    	  for (signal : signals)  {
    	  	gen.append('''«moduleName»_O_«signal.name»(''');
    	  	if (signal.type == "int") {
    	  		gen.append('''int i''');
    	  	}
-   	  	gen.append('''){  	value = cJSON_CreateObject();
-				cJSON_AddTrueToObject(value, "present");''')
+   	  	gen.append('''){  	
+   	  		value = cJSON_CreateObject();
+			cJSON_AddTrueToObject(value, "present");''')
    	  	if (signal.type == "int") {
+			gen.newLine();
    	  		gen.append('''cJSON_AddNumberToObject(value, "value", i);''')
    	  	} 
-   	  	gen.append('''cJSON_AddItemToObject(output, "«signal.name»", value);}''')
+   	  	gen.append('''cJSON_AddItemToObject(output, "«signal.name»", value);
+   	  	}''')
+		gen.newLine();
    	  }// next signal
    	  gen;
    }
    
+//   // Define output functions to return JSON for each Esterel signal 
+//   def dispatch outputFunctionsWithImplicitStringConcatenation(Output it, String moduleName) {
+//   	  for (signal : signals)  {
+//   	  	'''«moduleName»_O_«signal.name»(''';
+//   	  	if (signal.type == "int") {
+//   	  		'''int i''';
+//   	  	}
+//   	  	'''){  	
+//   	  		value = cJSON_CreateObject();
+//			cJSON_AddTrueToObject(value, "present");'''
+//   	  	if (signal.type == "int") {
+//   	  		'''cJSON_AddNumberToObject(value, "value", i);'''
+//   	  	} 
+//   	  	'''cJSON_AddItemToObject(output, "«signal.name»", value);}'''
+//   	  }// next signal
+//   } 
+     
    // -------------------------------------------------------------------------   
 
-   def outputFunctions(InterfaceSignalDecl it, String moduleName) {
+   def dispatch outputFunctions(InterfaceSignalDecl it, String moduleName) {
    }   
    
    // -------------------------------------------------------------------------   
    
    // Call Esterel input functions for each JSON signal that is present
-   def callInputs(Input it, String moduleName) {
-   	var gen = '''''';
+   def dispatch callInputs(Input it, String moduleName) {
+    var gen = '''''';
    	for (signal : signals)  {
-   	   	gen.append('''child = cJSON_GetObjectItem(object, «signal.name»");
+   	   	gen.append('''
+   	child = cJSON_GetObjectItem(object, "«signal.name»");
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
 		value = cJSON_GetObjectItem(child, "value");
@@ -148,12 +173,12 @@ gen.append('''}''');
 		}
 	}''');
    	} // next signal
-   	gen;
+ 	   	gen;
    }
    
    // -------------------------------------------------------------------------   
 
-   def callInputs(InterfaceSignalDecl it, String moduleName) {
+   def dispatch callInputs(InterfaceSignalDecl it, String moduleName) {
    }
    
 
