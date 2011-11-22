@@ -145,7 +145,8 @@ public class CoreModelPlugin extends AbstractUIPlugin {
         } catch (IllegalStateException exception) {
             // the workbench has not been initialized yet
             StatusManager.getManager().handle(new Status(Status.ERROR, PLUGIN_ID,
-                    "Unable to retrieve the generic error handler.", exception));
+                    "Unable to retrieve the generic error handler."
+                    + " Probably the plug-in has been started too early."));
         }
         return null;
     }
