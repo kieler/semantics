@@ -13,6 +13,9 @@
  */
 package de.cau.cs.kieler.core.model.gmf.effects;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.PolygonDecoration;
@@ -22,7 +25,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderedNodeFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
 import org.eclipse.swt.graphics.Color;
@@ -57,11 +59,11 @@ public class HighlightEffect extends AbstractEffect {
 
     private int style = -1;
 
-    private Color originalColor;
+    private Map<IFigure, Color> originalColor = new HashMap<IFigure, Color>();
 
     private Color color = ColorConstants.red;
 
-    private Color originalBackgroundColor;
+    private Map<IFigure, Color> originalBackgroundColor = new HashMap<IFigure, Color>();
 
     private Color backgroundColor;
 
@@ -275,37 +277,31 @@ public class HighlightEffect extends AbstractEffect {
                     bnf.repaint();
                 }
 
-                // color
-                if (originalColor == null) {
-                    originalColor = targetFigure.getForegroundColor();
-                }
+                // foreground color
                 if (color != null) {
-                    targetFigure.setForegroundColor(color);
+                    setColor(targetFigure, color, true);
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                // FIXME potential issue: original color of children may be different?
-                                ((GraphicalEditPart) o).getFigure().setForegroundColor(color);
-                            }
-                        }
-                    } else {
-                        for (Object child : targetFigure.getChildren()) {
-                            if (child instanceof WrappingLabel) {
-                                ((WrappingLabel) child).setForegroundColor(originalColor);
+                                setColor(((GraphicalEditPart) o).getFigure(), color, true);
                             }
                         }
                     }
                 } else {
-                    targetFigure.setForegroundColor(originalColor);
+                    resetColor(targetFigure, true);
                 }
-                // background
-                if (originalBackgroundColor == null) {
-                    originalBackgroundColor = targetFigure.getBackgroundColor();
-                }
+                // background color
                 if (backgroundColor != null) {
-                    targetFigure.setBackgroundColor(backgroundColor);
+                    setColor(targetFigure, backgroundColor, false);
+                    if (highlightChildren) {
+                        for (Object o : targetEditPart.getChildren()) {
+                            if (o instanceof GraphicalEditPart) {
+                                setColor(((GraphicalEditPart) o).getFigure(), backgroundColor, false);
+                            }
+                        }
+                    }
                 } else {
-                    targetFigure.setBackgroundColor(originalBackgroundColor);
+                    resetColor(targetFigure, false);
                 }
             }
         }, true);
@@ -320,7 +316,6 @@ public class HighlightEffect extends AbstractEffect {
                 }
                 // Papyrus case
                 if (targetFigure instanceof BorderedNodeFigure) {
-                    System.out.print("PAPYRUS FIGURE ... ");
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
                     if (bnf.getChildren().size() > 0) {
                         targetFigure = (IFigure) bnf.getChildren().get(0);
@@ -328,27 +323,24 @@ public class HighlightEffect extends AbstractEffect {
                             DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure;
                             if (dsnf.getChildren().size() > 0) {
                                 targetFigure = (IFigure) dsnf.getChildren().get(0);
-                                System.out.println("FOUND");
                             }
                         }
                     }
                 }
 
-                if (originalColor != null) {
-                    targetFigure.setForegroundColor(originalColor);
-                    if (highlightChildren) {
-                        for (Object o : targetEditPart.getChildren()) {
-                            if (o instanceof GraphicalEditPart) {
-                                ((GraphicalEditPart) o).getFigure().setForegroundColor(
-                                        originalColor);
-                            }
+                // reset foreground and background color
+                resetColor(targetFigure, true);
+                resetColor(targetFigure, false);
+                if (highlightChildren) {
+                    for (Object o : targetEditPart.getChildren()) {
+                        if (o instanceof GraphicalEditPart) {
+                            resetColor(((GraphicalEditPart) o).getFigure(), true);
+                            resetColor(((GraphicalEditPart) o).getFigure(), false);
                         }
                     }
                 }
-                if (originalBackgroundColor != null) {
-                    targetFigure.setBackgroundColor(originalBackgroundColor);
-                }
 
+                // reset width and line style
                 if (targetFigure instanceof Shape) {
                     if (originalWidth != -1) {
                         ((Shape) targetFigure).setLineWidth(originalWidth);
@@ -374,7 +366,47 @@ public class HighlightEffect extends AbstractEffect {
 
             }
         }, false);
-
+    }
+    
+    /**
+     * Set the color of the given figure.
+     * 
+     * @param figure a figure
+     * @param c the new color
+     * @param foreground true for foreground, false for background
+     */
+    private void setColor(final IFigure figure, final Color c, final boolean foreground) {
+        if (foreground) {
+            if (!originalColor.containsKey(figure)) {
+                originalColor.put(figure, figure.getForegroundColor());
+            }
+            figure.setForegroundColor(c);
+        } else {
+            if (!originalBackgroundColor.containsKey(figure)) {
+                originalBackgroundColor.put(figure, figure.getBackgroundColor());
+            }
+            figure.setBackgroundColor(c);
+        }
+    }
+    
+    /**
+     * Reset the given figure to its original color.
+     * 
+     * @param figure a figure
+     * @param foreground true for foreground, false for background
+     */
+    private void resetColor(final IFigure figure, final boolean foreground) {
+        if (foreground) {
+            Color c = originalColor.get(figure);
+            if (c != null) {
+                figure.setForegroundColor(c);
+            }
+        } else {
+            Color c = originalBackgroundColor.get(figure);
+            if (c != null) {
+                figure.setBackgroundColor(c);
+            }
+        }
     }
 
     /**

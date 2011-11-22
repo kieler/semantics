@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.core.model.gmf.figures;
 
 import java.util.Hashtable;
-import java.util.List;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
@@ -35,11 +34,11 @@ import org.eclipse.swt.graphics.Path;
 import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
 
 /**
- * Temporary class implementing the spline extension to polylines until the changes are merged into
- * GMF.
+ * A connection figure that is able to draw polylines as well as real splines or approximated splines.
+ * In these cases the bend points are interpreted as spline control points.
  * 
- * @author mmu, ckru
- * 
+ * @author mmu
+ * @author ckru
  */
 public class SplineConnection extends PolylineConnectionEx {
     /**
@@ -195,7 +194,7 @@ public class SplineConnection extends PolylineConnectionEx {
             MapModeUtil.getMapMode(this).DPtoLP(absTol);
         }
 
-        return absTol.width + lineWidth / 2;
+        return absTol.width + getLineWidth() / 2;
     }
 
     /**
@@ -572,13 +571,12 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Check if we have to draw those JoinPoints and calculate their location.
+     * Check if we have to draw join points and calculate their location.
      */
     private void drawJoinPointDecoration() {
         IFigure parent = this.getParent();
-        List<IFigure> children = parent.getChildren();
         // compare yourself with all the other connections
-        for (IFigure child : children) {
+        for (Object child : parent.getChildren()) {
             if ((child instanceof SplineConnection) && (this != child)) {
                 SplineConnection connection = (SplineConnection) child;
                 Point joinPoint = null;
@@ -630,22 +628,16 @@ public class SplineConnection extends PolylineConnectionEx {
         }
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setTargetDecoration(final RotatableDecoration dec) {
         super.setTargetDecoration(dec, new ArrowLocatorEx(this, ConnectionLocator.TARGET));
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
-     * .draw2d.RotatableDecoration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setSourceDecoration(final RotatableDecoration dec) {
@@ -656,7 +648,6 @@ public class SplineConnection extends PolylineConnectionEx {
      * An extension of the ArrowLocator that is capable of using spline points as references.
      * 
      * @author mmu
-     * 
      */
     public static class ArrowLocatorEx extends ArrowLocator {
 
