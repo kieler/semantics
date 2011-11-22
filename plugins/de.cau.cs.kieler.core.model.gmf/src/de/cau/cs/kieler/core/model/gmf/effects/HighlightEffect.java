@@ -250,6 +250,8 @@ public class HighlightEffect extends AbstractEffect {
                 }
 
                 // Papyrus
+                if (targetFigure instanceof DefaultSizeNodeFigure) {
+                	targetFigure = (IFigure)((DefaultSizeNodeFigure) targetFigure).getChildren().get(0);
                 if (targetFigure instanceof BorderedNodeFigure) {
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
                     if (bnf.getChildren().size() > 0) {
@@ -275,6 +277,7 @@ public class HighlightEffect extends AbstractEffect {
                         bnf.setLineStyle(style);
                     }
                     bnf.repaint();
+                }
                 }
 
                 // foreground color
