@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.workspace.util.WorkspaceSynchronizer;
 import org.eclipse.gef.EditPart;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -45,12 +46,11 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  * exceptions and styles (BLOCK, LOG) are handled like the default Status
  * handler.
  * 
- * enabling and disabling of markers and refactoring into a listener by soh
- * 
  * @author haf
+ * @author soh
  * @kieler.rating 2010-06-11 proposed yellow soh
  */
-public class ModelErrorHandler implements StatusListener {
+public class ModelErrorHandler implements StatusListener, IStartup {
 
     /** The map of markers. */
     private static Map<EObject, List<IMarker>> markers = new HashMap<EObject, List<IMarker>>();
@@ -101,12 +101,6 @@ public class ModelErrorHandler implements StatusListener {
                 return StatusManager.LOG;
             }
         }
-        /*
-         * Handle the error the classic way by using a popup of the Status Manager.
-         */
-        // super.handle(statusAdapter, style);
-        // System.out.println(e.getMessage());
-        // e.printStackTrace();
         return StatusListener.DONT_CARE;
     }
 
@@ -147,6 +141,9 @@ public class ModelErrorHandler implements StatusListener {
         }
     }
 
+    /**
+     * A job for adding error markers.
+     */
     private static class AddMarkerJob extends Job {
 
         private String msg;
@@ -228,7 +225,13 @@ public class ModelErrorHandler implements StatusListener {
             }
             return new Status(IStatus.OK, "de.cau.cs.kieler.core.model", "");
         }
+    }
 
+    /**
+     * {@inheritDoc}
+     */
+    public void earlyStartup() {
+        CoreModelPlugin.getDefault().addErrorListener();
     }
 
 }
