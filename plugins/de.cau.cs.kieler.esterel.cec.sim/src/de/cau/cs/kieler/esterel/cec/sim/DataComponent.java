@@ -443,11 +443,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	
     // -------------------------------------------------------------------------
 	
-	
 	@Override
 	public JSONObject doProvideInitialVariables()
 			throws KiemInitializationException {
-		
+
+		if ((simFile == null) || (!simFile.exists())) {
+			throw new KiemInitializationException(
+					"Error running Esterel file. Compiled simulation does not exist.\n", true, null);
+		}
 		
 		try {
 			// run
@@ -460,7 +463,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					process.getInputStream()));
 			error = new BufferedReader(new InputStreamReader(
 					process.getErrorStream()));
-
 		} catch (IOException e) {
 			throw new KiemInitializationException(
 					"Error running Esterel file:\n\n" + e.getMessage(), true, e);
