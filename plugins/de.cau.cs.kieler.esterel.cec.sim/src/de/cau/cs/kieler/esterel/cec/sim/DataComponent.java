@@ -229,10 +229,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	@Override
 	public KiemProperty[] doProvideProperties() {
-		final int nProperties = 1;
+		final int nProperties = 2;
 		KiemProperty[] properties = new KiemProperty[nProperties];
 		KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
 		properties[0] = new KiemProperty("C-Compiler", compilerFile, "gcc");
+		properties[1] = new KiemProperty("Full Debug Mode", true);
 
 		return properties;
 	}
@@ -243,28 +244,28 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * {@inheritDoc}
 	 */
 	public void wrapup() throws KiemInitializationException {
-		if (process != null) {
-			process.destroy();
-		}
-		boolean ok = true;
-
-		if (strlFile != null && strlFile.exists()) {
-			ok &= strlFile.delete();
-		}
-		if (dataFile != null && dataFile.exists()) {
-			ok &= dataFile.delete();
-		}
-		if (simFile != null && simFile.exists()) {
-			ok &= simFile.delete();
-		}
-		strlFile = null;
-		dataFile = null;
-		simFile = null;
-
-		if (!ok) {
-			throw new KiemInitializationException(
-					"Could not delete temp files", false, null);
-		}
+//		if (process != null) {
+//			process.destroy();
+//		}
+//		boolean ok = true;
+//
+//		if (strlFile != null && strlFile.exists()) {
+//			ok &= strlFile.delete();
+//		}
+//		if (dataFile != null && dataFile.exists()) {
+//			ok &= dataFile.delete();
+//		}
+//		if (simFile != null && simFile.exists()) {
+//			ok &= simFile.delete();
+//		}
+//		strlFile = null;
+//		dataFile = null;
+//		simFile = null;
+//
+//		if (!ok) {
+//			throw new KiemInitializationException(
+//					"Could not delete temp files", false, null);
+//		}
 	}
 
     // -------------------------------------------------------------------------
