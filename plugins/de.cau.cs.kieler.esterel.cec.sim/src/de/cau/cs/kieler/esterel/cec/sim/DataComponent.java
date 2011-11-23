@@ -393,9 +393,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						null);
 			}
 
-//			FileEditorInput input = (FileEditorInput) editorPart
-//					.getEditorInput();
-
 			// Make a copy of the Esterel program in case it was from
 			// an active Editor
 
