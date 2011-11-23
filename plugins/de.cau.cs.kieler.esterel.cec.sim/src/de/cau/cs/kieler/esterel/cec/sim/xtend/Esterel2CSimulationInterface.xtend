@@ -82,7 +82,7 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-	«module.interface.intSignalDecls.map(e|e.callInputs(module.name)).toConcatenation()»
+	«module.interface.intSignalDecls.map(e|e.callInputs(module.name)).toStringConcatenation()»
    }'''
 }
    
