@@ -92,6 +92,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
             // make sure to trigger only if selection has changed
             if (!newSelection.equals(oldSelection)) {
                 oldSelection = newSelection;
+                // case 1: Selection was in a Diagram that is supported by the GraphicalFramework
                 IGraphicalFrameworkBridge bridge = null;
                 try {
                     bridge = GraphicalFrameworkService.getInstance().getBridge(p);
@@ -112,10 +113,23 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
                     //  idea but I want combinations sensitive to
                     //  SelectionStates be invoked in this case, too!
                     @SuppressWarnings("unchecked")
-                    List<Object> l = (List<Object>) (List<?>) list;
-                    trigger(new SelectionState(l));
+                    List<Object> l = (List<Object>) (List<?>) list; // FIXME: casting of lists to more generic lists is evil!
+                    trigger(new SelectionState(l,p));
+                    trigger(new EObjectSelectionState(list,p));
                 } else {
-                    trigger(new SelectionState(newSelection));
+                	// case 2: Selection still consists of EObjects, e.g. in EMF Tree Editor
+                	// Question: is this also true for Xtext?
+                	List<EObject> eObjectList = new ArrayList<EObject>(newSelection.size());
+                	try{    
+                		for(Object o:newSelection){
+                			eObjectList.add((EObject)o);
+                		}
+                		trigger(new EObjectSelectionState(eObjectList,p));
+                		trigger(new SelectionState((List<Object>) (List<?>)eObjectList,p)); // FIXME: casting of lists to more generic lists is evil!
+                	}catch(ClassCastException e){
+                		// case 3: Selection consists of plain Java objects
+                		trigger(new SelectionState(newSelection,p));
+                	}
                 }
             }
         }
@@ -128,6 +142,9 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      */
     private static class AbstractSelectionState<T> extends AbstractTriggerState {
 
+    	/** The editor or view in which a selection has been done */
+    	protected IWorkbenchPart workbenchPart; // SUPPRESS CHECKSTYLE VisibilityModifier
+    	
         /** The list of selected objects. */
         protected List<T> objects; // SUPPRESS CHECKSTYLE VisibilityModifier
 
@@ -149,6 +166,31 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          */
         public Class<? extends ITrigger> getTriggerClass() {            
             return SelectionTrigger.class;
+        }
+        
+        /**
+         * Get the editor that contains the selection.
+         * 
+         * @return the DiagramEditor
+         * @deprecated use getWorkbenchPart instead (haf)
+         */
+        public IEditorPart getDiagramEditor() {
+            if (workbenchPart == null) {
+            	workbenchPart = EditorUtils.getLastActiveEditor();
+            }
+            return (IEditorPart) workbenchPart;
+        }
+        
+        /**
+         * Get the editor that contains the selection.
+         * 
+         * @return the DiagramEditor
+         */
+        public IWorkbenchPart getWorkbenchPart() {
+            if (workbenchPart == null) {
+            	workbenchPart = EditorUtils.getLastActiveEditor();
+            }
+            return workbenchPart;
         }
     }
     
@@ -175,11 +217,44 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          * @param e
          *            the diagram editor
          */
-        private SelectionState(final List<Object> list) {
+        private SelectionState(final List<Object> list, final IWorkbenchPart e) {
             objects = list;
+            workbenchPart = e;
         }
     }
 
+    /**
+     * Contains the currently selected EObjects.
+     * 
+     * 
+     * @author haf
+     * 
+     */
+    public static class EObjectSelectionState extends AbstractSelectionState<EObject> {
+        
+        /**
+         * Default constructor.
+         */
+        public EObjectSelectionState() {
+            objects = new LinkedList<EObject>();
+        }
+
+        /**
+         * Create a new selection state.
+         * 
+         * @param list
+         *            the selected objects
+         * @param e
+         *            the editor or view
+         */
+        private EObjectSelectionState(final List<EObject> list, final IWorkbenchPart e) {
+            objects = list;
+            workbenchPart = e;
+        }
+
+        
+        
+    }
 
     /**
      * Contains the currently selected EObjects.
@@ -188,10 +263,8 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      * @author mmu, chsch (renamed to DiagramSelectionState)
      * 
      */
-    public static class DiagramSelectionState extends AbstractSelectionState<EObject> {
+    public static class DiagramSelectionState extends EObjectSelectionState {
         
-        private IWorkbenchPart editor;
-
         /**
          * Default constructor.
          */
@@ -209,33 +282,10 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          */
         private DiagramSelectionState(final List<EObject> list, final IWorkbenchPart e) {
             objects = list;
-            editor = e;
+            workbenchPart = e;
         }
 
-        /**
-         * Get the editor that contains the selection.
-         * 
-         * @return the DiagramEditor
-         * @deprecated use getWorkbenchPart instead (haf)
-         */
-        public IEditorPart getDiagramEditor() {
-            if (editor == null) {
-                editor = EditorUtils.getLastActiveEditor();
-            }
-            return (IEditorPart) editor;
-        }
         
-        /**
-         * Get the editor that contains the selection.
-         * 
-         * @return the DiagramEditor
-         */
-        public IWorkbenchPart getWorkbenchPart() {
-            if (editor == null) {
-                editor = EditorUtils.getLastActiveEditor();
-            }
-            return editor;
-        }
         
     }
 
