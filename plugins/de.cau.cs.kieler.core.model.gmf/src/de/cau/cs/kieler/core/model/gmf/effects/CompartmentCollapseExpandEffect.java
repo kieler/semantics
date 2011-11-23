@@ -41,7 +41,6 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
  * collapses.
  * 
- * XXX in some parts this effect is still specific to GMF only, see FIXMEs
  * @author haf, mmu
  */
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
@@ -158,13 +157,13 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        if (!this.persistent) {
-            justExecuted = apply(doCollapse);
-        } else {
+        if (persistent) {
             init();
             if (!targetEditParts.isEmpty() && doCollapse != isCollapsed()) {
                 getCollapseCommand(doCollapse).execute();
             }
+        } else {
+            justExecuted = applyCollapseState(doCollapse);
         }
     }
 
@@ -172,16 +171,22 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * Undo the effect, i.e. expand a collapsed compartment.
      */
     public void undo() {
-        if (!this.persistent) {
-            justExecuted = apply(originalCollapseState);
-        } else {
+        if (persistent) {
             if (!targetEditParts.isEmpty() && originalCollapseState != isCollapsed()) {
                 getCollapseCommand(originalCollapseState).execute();
             }
+        } else {
+            justExecuted = applyCollapseState(originalCollapseState);
         }
     }
 
-    private boolean apply(final boolean collapse) {
+    /**
+     * Apply the collapse state transiently.
+     * 
+     * @param collapse the new collapse state
+     * @return true if the state was changed
+     */
+    private boolean applyCollapseState(final boolean collapse) {
         init();
         boolean changed = false;
         for (IResizableCompartmentEditPart targetEditPart : targetEditParts) {
@@ -203,6 +208,12 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         return changed;
     }
     
+    /**
+     * Create a command to set the new collapse status.
+     * 
+     * @param collapse the new collapse status
+     * @return a command that can modify the status
+     */
     private Command getCollapseCommand(final boolean collapse) {
         CompoundCommand command = new CompoundCommand();
         for (IResizableCompartmentEditPart targetEditPart : this.targetEditParts) {
@@ -235,11 +246,17 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         doCollapse = collapsed;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMergeable() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IEffect merge(final IEffect otherEffect) {
         init();
@@ -257,6 +274,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         return null;
     }
 
+    /**
+     * Determine whether the target compartment is currently collapsed.
+     * 
+     * @return true if the compartment is collapsed
+     */
     private boolean isCollapsed() {
         boolean allCollapsed = true;
         for (IResizableCompartmentEditPart targetEditPart : targetEditParts) {

@@ -16,17 +16,23 @@ package de.cau.cs.kieler.core.model.gmf.effects;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
-import org.eclipse.draw2d.PolygonDecoration;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.RecordingCommand;
+import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.GraphicalEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderedNodeFigure;
 import org.eclipse.gmf.runtime.draw2d.ui.figures.RoundedRectangleBorder;
 import org.eclipse.gmf.runtime.gef.ui.figures.DefaultSizeNodeFigure;
 import org.eclipse.gmf.runtime.gef.ui.figures.NodeFigure;
+import org.eclipse.gmf.runtime.notation.FillStyle;
+import org.eclipse.gmf.runtime.notation.LineStyle;
+import org.eclipse.gmf.runtime.notation.NotationFactory;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IWorkbenchPart;
 
@@ -57,11 +63,11 @@ public class HighlightEffect extends AbstractEffect {
 
     private int originalStyle = -1;
 
-    private int style = -1;
+    private int lineStyle = -1;
 
     private Map<IFigure, Color> originalColor = new HashMap<IFigure, Color>();
 
-    private Color color = ColorConstants.red;
+    private Color foregroundColor;
 
     private Map<IFigure, Color> originalBackgroundColor = new HashMap<IFigure, Color>();
 
@@ -70,6 +76,10 @@ public class HighlightEffect extends AbstractEffect {
     private boolean highlightChildren = false;
 
     private boolean changeWidth = true;
+
+    private boolean persistent = false;
+    
+    private HighlightCommand highlightCommand;
 
     /**
      * Create a new instance for the given edit part using the given color.
@@ -83,7 +93,7 @@ public class HighlightEffect extends AbstractEffect {
         EditPart editPart = GraphicalFrameworkService.getInstance().getBridge(editor)
                 .getEditPart(editor, eObject);
         if (editPart instanceof GraphicalEditPart) {
-            targetEditPart = (GraphicalEditPart) editPart;
+            this.targetEditPart = (GraphicalEditPart) editPart;
             targetFigure = targetEditPart.getFigure();
             if (targetFigure instanceof NodeFigure && targetFigure.getChildren().size() >= 1) {
                 targetFigure = (IFigure) targetFigure.getChildren().get(0);
@@ -103,8 +113,8 @@ public class HighlightEffect extends AbstractEffect {
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor, final int lineStyle) {
         this(eObject, editor);
-        style = lineStyle;
-        color = null;
+        this.lineStyle = lineStyle;
+        this.foregroundColor = null;
     }
 
     /**
@@ -122,7 +132,7 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final int lineStyle) {
         this(eObject, editor, highlightColor);
-        style = lineStyle;
+        this.lineStyle = lineStyle;
     }
 
     /**
@@ -142,7 +152,7 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background, final int lineStyle) {
         this(eObject, editor, highlightColor, lineStyle);
-        backgroundColor = background;
+        this.backgroundColor = background;
     }
 
     /**
@@ -158,7 +168,7 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor) {
         this(eObject, editor);
-        color = highlightColor;
+        this.foregroundColor = highlightColor;
     }
 
     /**
@@ -176,7 +186,7 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background) {
         this(eObject, editor, highlightColor);
-        backgroundColor = background;
+        this.backgroundColor = background;
     }
 
     /**
@@ -194,7 +204,7 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final boolean children) {
         this(eObject, editor, highlightColor);
-        highlightChildren = children;
+        this.highlightChildren = children;
     }
 
     /**
@@ -214,15 +224,51 @@ public class HighlightEffect extends AbstractEffect {
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor, final Color background, final boolean children) {
         this(eObject, editor, highlightColor, children);
-        backgroundColor = background;
+        this.backgroundColor = background;
+    }
+
+    /**
+     * Create a new instance for the given edit part using the given color.
+     * 
+     * @param eObject
+     *            the EObject to highlight
+     * @param editor
+     *            the editor to highlight in
+     * @param highlightColor
+     *            the color to highlight the state with
+     * @param background
+     *            the color to use for painting the background
+     * @param children
+     *            true if labels should be highlighted in the given color as well
+     * @param persistent
+     *            true if highlighting should be persistent
+     */
+    public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
+            final Color highlightColor, final Color background, final boolean children,
+            final boolean persistent) {
+        this(eObject, editor, highlightColor, background, children);
+        this.persistent = persistent;
     }
 
     /**
      * {@inheritDoc}
      */
     public void execute() {
+        if (persistent && targetEditPart instanceof IGraphicalEditPart) {
+            IGraphicalEditPart gmfEditPart = (IGraphicalEditPart) targetEditPart;
+            TransactionalEditingDomain editingDomain = gmfEditPart.getEditingDomain();
+            highlightCommand = new HighlightCommand(editingDomain, gmfEditPart.getNotationView());
+            editingDomain.getCommandStack().execute(highlightCommand);
+        } else {
+            applyHighlight();
+        }
+    }
+    
+    /**
+     * Apply the highlight state by directly manipulating the target figure.
+     */
+    private void applyHighlight() {
         MonitoredOperation.runInUI(new Runnable() {
-
             public void run() {
                 if (targetFigure == null) {
                     return;
@@ -239,11 +285,11 @@ public class HighlightEffect extends AbstractEffect {
                         originalWidth = -1;
                     }
                     // line style, black & white mode
-                    if (style != -1) {
+                    if (lineStyle != -1) {
                         if (originalStyle == -1) {
                             originalStyle = shape.getLineStyle();
                         }
-                        shape.setLineStyle(style);
+                        shape.setLineStyle(lineStyle);
                     } else if (originalStyle != -1) {
                         shape.setLineStyle(originalStyle);
                     }
@@ -251,42 +297,43 @@ public class HighlightEffect extends AbstractEffect {
 
                 // Papyrus
                 if (targetFigure instanceof DefaultSizeNodeFigure) {
-                	targetFigure = (IFigure)((DefaultSizeNodeFigure) targetFigure).getChildren().get(0);
-                if (targetFigure instanceof BorderedNodeFigure) {
-                    BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
-                    if (bnf.getChildren().size() > 0) {
-                        targetFigure = (IFigure) bnf.getChildren().get(0);
-                        if (targetFigure instanceof DefaultSizeNodeFigure) {
-                            DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure;
-                            if (dsnf.getChildren().size() > 0) {
-                                targetFigure = (IFigure) dsnf.getChildren().get(0);
+                    targetFigure = (IFigure) ((DefaultSizeNodeFigure) targetFigure)
+                            .getChildren().get(0);
+                    if (targetFigure instanceof BorderedNodeFigure) {
+                        BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
+                        if (bnf.getChildren().size() > 0) {
+                            targetFigure = (IFigure) bnf.getChildren().get(0);
+                            if (targetFigure instanceof DefaultSizeNodeFigure) {
+                                DefaultSizeNodeFigure dsnf = (DefaultSizeNodeFigure) targetFigure;
+                                if (dsnf.getChildren().size() > 0) {
+                                    targetFigure = (IFigure) dsnf.getChildren().get(0);
+                                }
                             }
                         }
-                    }
 
-                    if (changeWidth && originalWidth == -1) {
-                        originalWidth = bnf.getLineWidth();
+                        if (changeWidth && originalWidth == -1) {
+                            originalWidth = bnf.getLineWidth();
 
-                        // bnf.setLineWidth(Math.min(
-                        // originalWidth + widthIncrease, widthMax));
-                    }
-                    if (style != -1) {
-                        if (originalStyle == -1) {
-                            originalStyle = bnf.getLineStyle();
+                            // bnf.setLineWidth(Math.min(
+                            // originalWidth + widthIncrease, widthMax));
                         }
-                        bnf.setLineStyle(style);
+                        if (lineStyle != -1) {
+                            if (originalStyle == -1) {
+                                originalStyle = bnf.getLineStyle();
+                            }
+                            bnf.setLineStyle(lineStyle);
+                        }
+                        bnf.repaint();
                     }
-                    bnf.repaint();
-                }
                 }
 
                 // foreground color
-                if (color != null) {
-                    setColor(targetFigure, color, true);
+                if (foregroundColor != null) {
+                    setColor(targetFigure, foregroundColor, true);
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                setColor(((GraphicalEditPart) o).getFigure(), color, true);
+                                setColor(((GraphicalEditPart) o).getFigure(), foregroundColor, true);
                             }
                         }
                     }
@@ -299,7 +346,8 @@ public class HighlightEffect extends AbstractEffect {
                     if (highlightChildren) {
                         for (Object o : targetEditPart.getChildren()) {
                             if (o instanceof GraphicalEditPart) {
-                                setColor(((GraphicalEditPart) o).getFigure(), backgroundColor, false);
+                                setColor(((GraphicalEditPart) o).getFigure(), backgroundColor,
+                                        false);
                             }
                         }
                     }
@@ -312,11 +360,26 @@ public class HighlightEffect extends AbstractEffect {
 
     @Override
     public void undo() {
+        if (persistent && highlightCommand != null) {
+            IGraphicalEditPart gmfEditPart = (IGraphicalEditPart) targetEditPart;
+            TransactionalEditingDomain editingDomain = gmfEditPart.getEditingDomain();
+            highlightCommand.undo = true;
+            editingDomain.getCommandStack().execute(highlightCommand);
+        } else {
+            undoHighlight();
+        }
+    }
+    
+    /**
+     * Reset the highlight state by directly manipulating the target figure.
+     */
+    private void undoHighlight() {
         MonitoredOperation.runInUI(new Runnable() {
             public void run() {
                 if (targetFigure == null) {
                     return;
                 }
+                
                 // Papyrus case
                 if (targetFigure instanceof BorderedNodeFigure) {
                     BorderedNodeFigure bnf = (BorderedNodeFigure) targetFigure;
@@ -370,13 +433,16 @@ public class HighlightEffect extends AbstractEffect {
             }
         }, false);
     }
-    
+
     /**
      * Set the color of the given figure.
      * 
-     * @param figure a figure
-     * @param c the new color
-     * @param foreground true for foreground, false for background
+     * @param figure
+     *            a figure
+     * @param c
+     *            the new color
+     * @param foreground
+     *            true for foreground, false for background
      */
     private void setColor(final IFigure figure, final Color c, final boolean foreground) {
         if (foreground) {
@@ -391,12 +457,14 @@ public class HighlightEffect extends AbstractEffect {
             figure.setBackgroundColor(c);
         }
     }
-    
+
     /**
      * Reset the given figure to its original color.
      * 
-     * @param figure a figure
-     * @param foreground true for foreground, false for background
+     * @param figure
+     *            a figure
+     * @param foreground
+     *            true for foreground, false for background
      */
     private void resetColor(final IFigure figure, final boolean foreground) {
         if (foreground) {
@@ -419,7 +487,7 @@ public class HighlightEffect extends AbstractEffect {
      *            the color
      */
     public void setColor(final Color c) {
-        color = c;
+        foregroundColor = c;
     }
 
     /**
@@ -490,6 +558,85 @@ public class HighlightEffect extends AbstractEffect {
             }
         }
         return null;
+    }
+    
+    /**
+     * A command for persistently changing an object style.
+     */
+    private class HighlightCommand extends RecordingCommand {
+        
+        private View view;
+        private boolean undo = false;
+        private Integer oldForegroundColor;
+        private Integer oldBackgroundColor;
+        
+        public HighlightCommand(final TransactionalEditingDomain domain, final View view) {
+            super(domain, "Highlight Effect");
+            this.view = view;
+        }
+
+        /**
+         * {@inheritDoc}
+         */
+        @SuppressWarnings("unchecked")
+        @Override
+        protected void doExecute() {
+            if (undo) {
+                LineStyle nlineStyle = (LineStyle) view.getStyle(
+                        NotationPackage.eINSTANCE.getLineStyle());
+                if (nlineStyle != null) {
+                    if (oldForegroundColor == null) {
+                        view.getStyles().remove(nlineStyle);
+                    } else {
+                        nlineStyle.setLineColor(oldForegroundColor);
+                    }
+                }
+                FillStyle nfillStyle = (FillStyle) view.getStyle(
+                        NotationPackage.eINSTANCE.getFillStyle());
+                if (nfillStyle != null) {
+                    if (oldBackgroundColor == null) {
+                        view.getStyles().remove(nfillStyle);
+                    } else {
+                        nfillStyle.setFillColor(oldBackgroundColor);
+                    }
+                }
+            } else {
+                if (foregroundColor != null) {
+                    LineStyle nlineStyle = (LineStyle) view.getStyle(
+                            NotationPackage.eINSTANCE.getLineStyle());
+                    if (nlineStyle == null) {
+                        nlineStyle = NotationFactory.eINSTANCE.createLineStyle();
+                        view.getStyles().add(nlineStyle);
+                    } else {
+                        oldForegroundColor = nlineStyle.getLineColor();
+                    }
+                    nlineStyle.setLineColor(translate(foregroundColor));
+                }
+                if (backgroundColor != null) {
+                    FillStyle nfillStyle = (FillStyle) view.getStyle(
+                            NotationPackage.eINSTANCE.getFillStyle());
+                    if (nfillStyle == null) {
+                        nfillStyle = NotationFactory.eINSTANCE.createFillStyle();
+                        view.getStyles().add(nfillStyle);
+                    } else {
+                        oldBackgroundColor = nfillStyle.getFillColor();
+                    }
+                    nfillStyle.setFillColor(translate(backgroundColor));
+                }
+            }
+        }
+        
+    }
+    
+    /**
+     * Translate an SWT color to GMF format.
+     * 
+     * @param color a color
+     * @return the color code
+     */
+    private static int translate(final Color color) {
+        // SUPPRESS CHECKSTYLE NEXT MagicNumber
+        return color.getRed() << 16 | color.getGreen() << 8 | color.getBlue();
     }
 
 }
