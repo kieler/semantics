@@ -24,7 +24,7 @@ class Esterel2CSimulationInterface {
        «esterelHeader()»
 
 	   «/* Generate output functions for each Esterel signal */» 
-       «module.interface.intSignalDecls.map(e|e.outputFunctions(module.name)).toConcatenation()»
+       «module.interface.intSignalDecls.map(e|e.outputFunctions(module.name)).toStringConcatenation()»
 
 	   «/* Generate input functions that are then called my the main function's
 		   tick function of the module */»
@@ -55,12 +55,8 @@ cJSON* value = 0;
    
    // -------------------------------------------------------------------------   
    
-   def toConcatenation(List<StringConcatenation> list) {
-   	   var concatenation = '''''';
-   	   for (element : list) {
-   	    	concatenation.append(element)
-   	   }
-   	   concatenation;
+   def toStringConcatenation(List<StringConcatenation> list) {
+   	   '''«FOR element : list»«element»«ENDFOR»'''
    }
 
    // -------------------------------------------------------------------------   
