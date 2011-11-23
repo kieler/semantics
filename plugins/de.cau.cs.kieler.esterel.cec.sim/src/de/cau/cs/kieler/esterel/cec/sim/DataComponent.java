@@ -21,9 +21,11 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.URI;
+//import java.net.URI;
 import java.net.URL;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.runtime.FileLocator;
@@ -31,6 +33,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
@@ -44,12 +51,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.kexpressions.Input;
 import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.esterel.cec.CEC;
+import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.kies.esterel.Module;
 import de.cau.cs.kieler.kies.esterel.Program;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
@@ -59,80 +69,81 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.DataComponentPlugin;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import org.eclipse.emf.common.util.URI;
+import org.eclipse.jface.viewers.TreeSelection;
 
 /**
  * @author ctr, cmot
  * 
  */
 public class DataComponent extends JSONObjectSimulationDataComponent {
-	
-    // -----------------------------------------------------------------------------
-    // -----------------------------------------------------------------------------
-	
-    class EsterelSimulationProgressMonitor implements ProgressMonitor {
 
-        private KielerProgressMonitor kielerProgressMonitor;
-        private int numberOfComponents = 1;
-        private int numberOfComponentsDone = 0;
+	// -----------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------
 
-        public EsterelSimulationProgressMonitor(
-                final KielerProgressMonitor kielerProgressMonitorParam,
-                final int numberOfComponentsParam) {
-            kielerProgressMonitor = kielerProgressMonitorParam;
-            numberOfComponents = numberOfComponentsParam;
-            numberOfComponentsDone = 0;
-        }
+	class EsterelSimulationProgressMonitor implements ProgressMonitor {
 
-        public void beginTask(final String name, final int totalWork) {
-            kielerProgressMonitor.begin(name, numberOfComponents);
-        }
+		private KielerProgressMonitor kielerProgressMonitor;
+		private int numberOfComponents = 1;
+		private int numberOfComponentsDone = 0;
 
-        public void done() {
-            // is called by the workflow wrapper
-        }
+		public EsterelSimulationProgressMonitor(
+				final KielerProgressMonitor kielerProgressMonitorParam,
+				final int numberOfComponentsParam) {
+			kielerProgressMonitor = kielerProgressMonitorParam;
+			numberOfComponents = numberOfComponentsParam;
+			numberOfComponentsDone = 0;
+		}
 
-        public void finished(final Object element, final Object context) {
-        }
+		public void beginTask(final String name, final int totalWork) {
+			kielerProgressMonitor.begin(name, numberOfComponents);
+		}
 
-        public void internalWorked(final double work) {
-        }
+		public void done() {
+			// is called by the workflow wrapper
+		}
 
-        public boolean isCanceled() {
-            return (kielerProgressMonitor.isCanceled());
-        }
+		public void finished(final Object element, final Object context) {
+		}
 
-        public void postTask(final Object element, final Object context) {
-            kielerProgressMonitor.worked(numberOfComponentsDone);
-            numberOfComponentsDone++;
-        }
+		public void internalWorked(final double work) {
+		}
 
-        public void preTask(final Object element, final Object context) {
-            // kielerProgressMonitor.begin(element.toString(), 1);
-            kielerProgressMonitor.worked(numberOfComponentsDone);
-        }
+		public boolean isCanceled() {
+			return (kielerProgressMonitor.isCanceled());
+		}
 
-        public void setCanceled(final boolean value) {
-        }
+		public void postTask(final Object element, final Object context) {
+			kielerProgressMonitor.worked(numberOfComponentsDone);
+			numberOfComponentsDone++;
+		}
 
-        public void setTaskName(final String name) {
-        }
+		public void preTask(final Object element, final Object context) {
+			// kielerProgressMonitor.begin(element.toString(), 1);
+			kielerProgressMonitor.worked(numberOfComponentsDone);
+		}
 
-        public void started(final Object element, final Object context) {
-        }
+		public void setCanceled(final boolean value) {
+		}
 
-        public void subTask(final String name) {
-            kielerProgressMonitor.subTask(UNKNOWN);
-        }
+		public void setTaskName(final String name) {
+		}
 
-        public void worked(final int work) {
-            kielerProgressMonitor.worked(work);
-        }
+		public void started(final Object element, final Object context) {
+		}
 
-    }
+		public void subTask(final String name) {
+			kielerProgressMonitor.subTask(UNKNOWN);
+		}
 
-    // -----------------------------------------------------------------------------
-    // -----------------------------------------------------------------------------
-	
+		public void worked(final int work) {
+			kielerProgressMonitor.worked(work);
+		}
+
+	}
+
+	// -----------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------
 
 	private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
 
@@ -148,8 +159,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	private LinkedList<String> outputs = null;
 
-    // -------------------------------------------------------------------------
-	
+	// -------------------------------------------------------------------------
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -157,8 +168,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	}
 
-    // -------------------------------------------------------------------------
-	
+	// -------------------------------------------------------------------------
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -178,7 +189,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			}
 
 			String receivedMessage = fromEsterel.readLine();
-			
+
 			if (receivedMessage != null) {
 
 				// print and delete debug information
@@ -188,14 +199,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						out.accumulate(o, JSONSignalValues.newValue(false));
 					}
 				}
-			}
-			else {
+			} else {
 				throw new KiemExecutionException(
 						"No esterel simulation is running", true, null);
-				
+
 			}
-			
-			
+
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			process.destroy();
@@ -206,8 +215,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		return out;
 	}
-	
-    // -------------------------------------------------------------------------
+
+	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
@@ -216,7 +225,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		return true;
 	}
 
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
@@ -225,7 +234,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		return true;
 	}
 
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
 
 	@Override
 	public KiemProperty[] doProvideProperties() {
@@ -244,127 +253,131 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * {@inheritDoc}
 	 */
 	public void wrapup() throws KiemInitializationException {
-//		if (process != null) {
-//			process.destroy();
-//		}
-//		boolean ok = true;
-//
-//		if (strlFile != null && strlFile.exists()) {
-//			ok &= strlFile.delete();
-//		}
-//		if (dataFile != null && dataFile.exists()) {
-//			ok &= dataFile.delete();
-//		}
-//		if (simFile != null && simFile.exists()) {
-//			ok &= simFile.delete();
-//		}
-//		strlFile = null;
-//		dataFile = null;
-//		simFile = null;
-//
-//		if (!ok) {
-//			throw new KiemInitializationException(
-//					"Could not delete temp files", false, null);
-//		}
+		// if (process != null) {
+		// process.destroy();
+		// }
+		// boolean ok = true;
+		//
+		// if (strlFile != null && strlFile.exists()) {
+		// ok &= strlFile.delete();
+		// }
+		// if (dataFile != null && dataFile.exists()) {
+		// ok &= dataFile.delete();
+		// }
+		// if (simFile != null && simFile.exists()) {
+		// ok &= simFile.delete();
+		// }
+		// strlFile = null;
+		// dataFile = null;
+		// simFile = null;
+		//
+		// if (!ok) {
+		// throw new KiemInitializationException(
+		// "Could not delete temp files", false, null);
+		// }
 	}
 
-    // -------------------------------------------------------------------------
-	
-	private URI compileEsterelToC(final URI strlFile, final File outFile, EsterelSimulationProgressMonitor monitor) throws IOException {
+	// -------------------------------------------------------------------------
+
+	private java.net.URI compileEsterelToC(final URI strlFile,
+			final File outFile, EsterelSimulationProgressMonitor monitor)
+			throws IOException {
 		monitor.subTask("Reading Esterel file");
-        InputStream strl = CEC.runSTRL(strlFile);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		
+		InputStream strl = CEC.runSTRL(java.net.URI.create(strlFile.path()));
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("Parsing Esterel file");
-        InputStream strlxml = CEC.runSTRLXML(strl);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream strlxml = CEC.runSTRLXML(strl);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("Expanding Esterel file");
-        InputStream expandmodule = CEC.runEXPANDMODULE(strlxml);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream expandmodule = CEC.runEXPANDMODULE(strlxml);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("Dismantle Esterel file");
-        InputStream dismantle = CEC.runDISMANTLE(expandmodule);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream dismantle = CEC.runDISMANTLE(expandmodule);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("ASTGRC");
-        InputStream astgrc = CEC.runASTGRC(dismantle);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream astgrc = CEC.runASTGRC(dismantle);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("GRCOPT");
-        InputStream grcopt = CEC.runGRCOPT(astgrc);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream grcopt = CEC.runGRCOPT(astgrc);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("GRCPDG");
-        InputStream grcpdg = CEC.runGRCPDG(grcopt);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream grcpdg = CEC.runGRCPDG(grcopt);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("PDGCCFG");
-        InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream pdgccfg = CEC.runPDGCCFG(grcpdg);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("EEC");
-        InputStream eec = CEC.runEEC(pdgccfg);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream eec = CEC.runEEC(pdgccfg);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("SCFGC");
-        InputStream scfgc = CEC.runSCFGC(eec);
-        monitor.worked(1);
-        if (monitor.isCanceled()) { 
-        	return null;
-        }
+		InputStream scfgc = CEC.runSCFGC(eec);
+		monitor.worked(1);
+		if (monitor.isCanceled()) {
+			return null;
+		}
 		monitor.subTask("Generating C code");
-        URI uri = CEC.runCODEGEN(scfgc, outFile);
-        monitor.worked(1);
+		java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
+		monitor.worked(1);
 		return uri;
 	}
-	
-    // -------------------------------------------------------------------------
-//    private IStatus model2ModelTransform(KielerProgressMonitor monitor)
-//            throws KiemInitializationException {
-//        try {
-//            doModel2ModelTransform(monitor);
-//        } catch (Exception e) {
-//            monitor.done();
-//            e.printStackTrace();
-//            transformationCompleted = true;
-//            transformationError = true;
-//            return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
-//                    "Model transformation failed.", e);
-//        }
-//        monitor.done();
-//        transformationCompleted = true;
-//        transformationError = false;
-//        return new Status(IStatus.OK, DataComponentPlugin.PLUGIN_ID, IStatus.OK, null, null);
-//    }
-    
-    
-    public void doModel2ModelTransform(final KielerProgressMonitor monitor)
-            throws KiemInitializationException {
-        monitor.begin("Esterel Simulation", 10);
-    	
-    	EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = new EsterelSimulationProgressMonitor(monitor, 10);
-    	
+
+	// -------------------------------------------------------------------------
+	// private IStatus model2ModelTransform(KielerProgressMonitor monitor)
+	// throws KiemInitializationException {
+	// try {
+	// doModel2ModelTransform(monitor);
+	// } catch (Exception e) {
+	// monitor.done();
+	// e.printStackTrace();
+	// transformationCompleted = true;
+	// transformationError = true;
+	// return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
+	// "Model transformation failed.", e);
+	// }
+	// monitor.done();
+	// transformationCompleted = true;
+	// transformationError = false;
+	// return new Status(IStatus.OK, DataComponentPlugin.PLUGIN_ID, IStatus.OK,
+	// null, null);
+	// }
+
+	public void doModel2ModelTransform(final KielerProgressMonitor monitor)
+			throws KiemInitializationException {
+		monitor.begin("Esterel Simulation", 10);
+
+		EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = new EsterelSimulationProgressMonitor(
+				monitor, 10);
+
 		File executable = null;
-		try {
+//		try {
 			// get active editor
 			IEditorPart editorPart = this.getInputEditor();
 			if (editorPart == null) {
@@ -380,79 +393,128 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						null);
 			}
 
-			FileEditorInput input = (FileEditorInput) editorPart.getEditorInput();
+//			FileEditorInput input = (FileEditorInput) editorPart
+//					.getEditorInput();
 
-			// compile Esterel to C
-			URL output = this.compileEsterelToC(input.getURI(), CEC.getDefaultOutFile(), esterelSimulationProgressMonitor).toURL();
-			strlFile = new File(output.getPath());
-			// generate data.c
-			URL data = generateData();
-			dataFile = new File(data.getPath());
+			// Make a copy of the Esterel program in case it was from
+			// an active Editor
 
-			// compile C code
-			Bundle bundle = Platform
-					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
+			URI esterelOutput = URI.createURI("");
+			// By default there is no additional transformation necessary
+			Program transformedProgram = myModel;
 
-			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-					new Path("simulation"), null));
-
-			executable = File.createTempFile("sim", "");
-			String compiler = (getProperties()[1]).getValue();
-			String compile = compiler + " " + output.getPath() + " "
-					+ data.getPath() + " " + bundleLocation.getPath()
-					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
-					+ "-lm -o " + executable;
-
-			if (isWindows()) {
-				executable = File.createTempFile("sim", ".exe");
-				compile = compiler + " " + output.getPath().substring(1) + " "
-						+ data.getPath().substring(1) + " "
-						+ bundleLocation.getPath().substring(1) + "cJSON.c "
-						+ "-I " + bundleLocation.getPath().substring(1) + " "
-						+ "-lm -o " + executable;
+			// If 'Full Debug Mode' is turned on then the user wants to have
+			// also states visualized.
+			// Hence some pre-processing is needed and done by the
+			// Esterl2Simulation Xtend2 model transformation
+			if (this.getProperties()[2].getValueAsBoolean()) {
+				// Try to load synccharts model
+				// 'Full Debug Mode' is turned ON
+				Esterel2Simulation transform = Guice.createInjector()
+						.getInstance(Esterel2Simulation.class);
+				transformedProgram = transform.transform2Simulation(myModel);
 			}
 
-			simFile = executable;
+			// Calculate output path
+			FileEditorInput editorInput = (FileEditorInput) editorPart
+					.getEditorInput();
+			URI input = URI.createPlatformResourceURI(
+					editorInput.getFile().getFullPath().toString(), true);
+			
+			esterelOutput = URI.createURI(input.toString());
+			esterelOutput = esterelOutput.trimFragment();
+			esterelOutput = esterelOutput.trimFileExtension()
+					.appendFileExtension("simulation.strl");
 
-			process = Runtime.getRuntime().exec(compile);
-			InputStream stderr = process.getErrorStream();
-			InputStreamReader isr = new InputStreamReader(stderr);
-			BufferedReader br = new BufferedReader(isr);
-			String line = null;
-			StringBuilder errorString = new StringBuilder();
-			while ((line = br.readLine()) != null) {
-				errorString.append("\n" + line);
-
+			try {
+				// Write out copy/transformation of Esterel program
+				Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+				Map<String, Object> m = reg.getExtensionToFactoryMap();
+				m.put("daform", new XMIResourceFactoryImpl());
+				ResourceSet resSet = new ResourceSetImpl();
+				Resource resource = resSet.createResource(esterelOutput);
+				resource.getContents().add(transformedProgram);
+				resource.save(Collections.EMPTY_MAP);
+			} catch (IOException e) {
+				throw new KiemInitializationException(
+						"Cannot write output Esterel file.", true, null);
 			}
 
-			int exitValue = process.waitFor();
+//			// compile Esterel to C
+//			URL output = this.compileEsterelToC(esterelOutput,
+//					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
+//					.toURL();
+//			strlFile = new File(output.getPath());
+//			// generate data.c
+//			URL data = generateData();
+//			dataFile = new File(data.getPath());
+//
+//			// compile C code
+//			Bundle bundle = Platform
+//					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
+//
+//			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
+//					new Path("simulation"), null));
+//
+//			executable = File.createTempFile("sim", "");
+//			String compiler = (getProperties()[1]).getValue();
+//			String compile = compiler + " " + output.getPath() + " "
+//					+ data.getPath() + " " + bundleLocation.getPath()
+//					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
+//					+ "-lm -o " + executable;
+//
+//			if (isWindows()) {
+//				executable = File.createTempFile("sim", ".exe");
+//				compile = compiler + " " + output.getPath().substring(1) + " "
+//						+ data.getPath().substring(1) + " "
+//						+ bundleLocation.getPath().substring(1) + "cJSON.c "
+//						+ "-I " + bundleLocation.getPath().substring(1) + " "
+//						+ "-lm -o " + executable;
+//			}
+//
+//			simFile = executable;
+//
+//			process = Runtime.getRuntime().exec(compile);
+//			InputStream stderr = process.getErrorStream();
+//			InputStreamReader isr = new InputStreamReader(stderr);
+//			BufferedReader br = new BufferedReader(isr);
+//			String line = null;
+//			StringBuilder errorString = new StringBuilder();
+//			while ((line = br.readLine()) != null) {
+//				errorString.append("\n" + line);
+//
+//			}
+//
+//			int exitValue = process.waitFor();
+//
+//			if (exitValue != 0) {
+//				throw new KiemInitializationException("could not compile",
+//						true, new Exception(errorString.toString()));
+//			}
+//
+//		} catch (IOException e) {
+//			throw new KiemInitializationException(
+//					"Error compiling Esterel file:\n\n" + e.getMessage(), true,
+//					e);
+//		} catch (InterruptedException e) {
+//			throw new KiemInitializationException(
+//					"Error compiling Esterel file:\n\n " + e.getMessage(),
+//					true, e);
+//		}
+	}
 
-			if (exitValue != 0) {
-				throw new KiemInitializationException("could not compile",
-						true, new Exception(errorString.toString()));
-			}
+	// -------------------------------------------------------------------------
 
-		} catch (IOException e) {
-			throw new KiemInitializationException(
-					"Error compiling Esterel file:\n\n" + e.getMessage(), true, e);
-		} catch (InterruptedException e) {
-			throw new KiemInitializationException(
-					"Error compiling Esterel file:\n\n " + e.getMessage(),
-					true, e);
-		}
-    }
-	
-    // -------------------------------------------------------------------------
-	
 	@Override
 	public JSONObject doProvideInitialVariables()
 			throws KiemInitializationException {
 
 		if ((simFile == null) || (!simFile.exists())) {
 			throw new KiemInitializationException(
-					"Error running Esterel file. Compiled simulation does not exist.\n", true, null);
+					"Error running Esterel file. Compiled simulation does not exist.\n",
+					true, null);
 		}
-		
+
 		try {
 			// run
 			String executablePath = simFile.getPath();
@@ -498,8 +560,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		return res;
 	}
 
-    // -------------------------------------------------------------------------
-	
+	// -------------------------------------------------------------------------
+
 	/**
 	 * Checks whether the system is based on windows.
 	 * 
@@ -510,7 +572,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		return (os.indexOf("win") >= 0);
 	}
 
-    // -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
 
 	/**
 	 * @return
@@ -532,7 +594,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					true, e);
 		}
 	}
-	
-    // -------------------------------------------------------------------------
-	
+
+	// -------------------------------------------------------------------------
+
 }

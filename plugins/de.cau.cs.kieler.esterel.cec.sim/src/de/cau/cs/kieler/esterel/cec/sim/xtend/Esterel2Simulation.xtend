@@ -11,6 +11,7 @@ import org.eclipse.xtend.util.stdlib.cloning
 import org.eclipse.xtend.util.stdlib.tracing
 
 import org.eclipse.xtext.xtend2.lib.StringConcatenation
+import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 // Transformation of Esterel code into Esterelcode that is
 // enriched with additional signals for each statement.
@@ -33,13 +34,11 @@ class Esterel2Simulation {
 
 		// Clone the complete Esterel program
 		for (module : program.modules) {
-			var clonedModule = (module) module.clone();
-			target.modules.add(clonedModule);	
+			target.modules.add(CloningExtensions::clone(module) as Module);	
 		}
-
-		
 		
 	}	
+	
 
 }
 
