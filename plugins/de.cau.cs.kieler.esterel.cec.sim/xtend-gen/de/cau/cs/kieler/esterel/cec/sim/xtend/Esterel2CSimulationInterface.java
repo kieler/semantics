@@ -38,8 +38,8 @@ public class Esterel2CSimulationInterface {
         }
       };
     List<StringConcatenation> _map = ListExtensions.<InterfaceSignalDecl, StringConcatenation>map(_intSignalDecls, _function);
-    StringConcatenation _concatenation = this.toConcatenation(_map);
-    _builder.append(_concatenation, "       ");
+    StringConcatenation _stringConcatenation = this.toStringConcatenation(_map);
+    _builder.append(_stringConcatenation, "       ");
     _builder.newLineIfNotEmpty();
     _builder.newLine();
     _builder.newLine();
@@ -78,17 +78,14 @@ public class Esterel2CSimulationInterface {
     return _builder;
   }
   
-  public StringConcatenation toConcatenation(final List<StringConcatenation> list) {
-    StringConcatenation _xblockexpression = null;
+  public StringConcatenation toStringConcatenation(final List<StringConcatenation> list) {
+    StringConcatenation _builder = new StringConcatenation();
     {
-      StringConcatenation _builder = new StringConcatenation();
-      StringConcatenation concatenation = _builder;
-      for (final StringConcatenation element : list) {
-        concatenation.append(element);
+      for(final StringConcatenation element : list) {
+        _builder.append(element, "");
       }
-      _xblockexpression = (concatenation);
     }
-    return _xblockexpression;
+    return _builder;
   }
   
   public StringConcatenation esterelSetInputsFunction(final Module module) {
@@ -150,8 +147,8 @@ public class Esterel2CSimulationInterface {
         }
       };
     List<StringConcatenation> _map = ListExtensions.<InterfaceSignalDecl, StringConcatenation>map(_intSignalDecls, _function);
-    StringConcatenation _concatenation = this.toConcatenation(_map);
-    _builder.append(_concatenation, "	");
+    StringConcatenation _stringConcatenation = this.toStringConcatenation(_map);
+    _builder.append(_stringConcatenation, "	");
     _builder.newLineIfNotEmpty();
     _builder.append("   ");
     _builder.append("}");
