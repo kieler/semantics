@@ -16,6 +16,7 @@ package de.cau.cs.kieler.core.model.gmf.effects;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.IFigure;
 import org.eclipse.draw2d.Shape;
 import org.eclipse.emf.ecore.EObject;
@@ -50,35 +51,36 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  */
 public class HighlightEffect extends AbstractEffect {
 
+    /** the figure that receives highlighting. */
     private IFigure targetFigure;
-
+    /** the edit part that receives highlighting. */
     private GraphicalEditPart targetEditPart;
-
+    /** the original line width of the target figure. */
     private int originalWidth = -1;
-
+    /** how much to increase the line width of the target figure. */
     private int widthIncrease = 1;
-
-    // SUPPRESS CHECKSTYLE NEXT MagicNumber
+    /** the maximal value for line width. 
+     * SUPPRESS CHECKSTYLE NEXT MagicNumber */
     private int widthMax = 5;
-
+    /** the original line style of the target figure. */
     private int originalStyle = -1;
-
+    /** the new line style. */
     private int lineStyle = -1;
-
+    /** the original foreground colors of the affected figures. */
     private Map<IFigure, Color> originalColor = new HashMap<IFigure, Color>();
-
+    /** the new foreground highlight color. */
     private Color foregroundColor;
-
+    /** the original background colors of the affected figures. */
     private Map<IFigure, Color> originalBackgroundColor = new HashMap<IFigure, Color>();
-
+    /** the new background highlight color. */
     private Color backgroundColor;
-
+    /** true if direct children such as labels should be highlighted in the given color as well. */
     private boolean highlightChildren = false;
-
+    /** whether the line width should be changed. */
     private boolean changeWidth = true;
-
+    /** true if highlighting should be persistent. */
     private boolean persistent = false;
-    
+    /** the command used for persistent highlighting. */
     private HighlightCommand highlightCommand;
 
     /**
@@ -94,11 +96,12 @@ public class HighlightEffect extends AbstractEffect {
                 .getEditPart(editor, eObject);
         if (editPart instanceof GraphicalEditPart) {
             this.targetEditPart = (GraphicalEditPart) editPart;
-            targetFigure = targetEditPart.getFigure();
+            this.targetFigure = targetEditPart.getFigure();
             if (targetFigure instanceof NodeFigure && targetFigure.getChildren().size() >= 1) {
                 targetFigure = (IFigure) targetFigure.getChildren().get(0);
             }
         }
+        this.foregroundColor = ColorConstants.red;
     }
 
     /**
@@ -163,7 +166,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
-     *            the color to highlight the state with
+     *            the color to use for highlighting
      */
     public HighlightEffect(final EObject eObject, final IWorkbenchPart editor,
             final Color highlightColor) {
@@ -179,7 +182,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
-     *            the color to highlight the state with
+     *            the color to use for highlighting
      * @param background
      *            the color to use for painting the background
      */
@@ -197,7 +200,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
-     *            the color to highlight the state with
+     *            the color to use for highlighting
      * @param children
      *            true if labels should be highlighted in the given color as well
      */
@@ -215,7 +218,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
-     *            the color to highlight the state with
+     *            the color to use for highlighting
      * @param background
      *            the color to use for painting the background
      * @param children
@@ -235,7 +238,7 @@ public class HighlightEffect extends AbstractEffect {
      * @param editor
      *            the editor to highlight in
      * @param highlightColor
-     *            the color to highlight the state with
+     *            the color to use for highlighting
      * @param background
      *            the color to use for painting the background
      * @param children
@@ -520,20 +523,32 @@ public class HighlightEffect extends AbstractEffect {
         widthMax = newMaximum;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isMergeable() {
         return true;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public IEffect merge(final IEffect other) {
         if (other instanceof HighlightEffect) {
             HighlightEffect otherEffect = (HighlightEffect) other;
-            if (otherEffect.targetFigure == targetFigure) {
-                originalColor = otherEffect.originalColor;
-                originalBackgroundColor = otherEffect.originalBackgroundColor;
-                originalWidth = otherEffect.originalWidth;
-                originalStyle = otherEffect.originalStyle;
+            if (otherEffect.targetFigure == this.targetFigure) {
+                this.originalColor = otherEffect.originalColor;
+                this.originalBackgroundColor = otherEffect.originalBackgroundColor;
+                this.originalWidth = otherEffect.originalWidth;
+                this.originalStyle = otherEffect.originalStyle;
+                if (this.highlightCommand != null && otherEffect.highlightCommand != null) {
+                    this.highlightCommand.oldForegroundColor = otherEffect.highlightCommand
+                            .oldForegroundColor;
+                    this.highlightCommand.oldBackgroundColor = otherEffect.highlightCommand
+                            .oldBackgroundColor;
+                }
                 return this;
             }
         } else if (other instanceof UndoEffect) {
@@ -549,10 +564,10 @@ public class HighlightEffect extends AbstractEffect {
                             border.getChildren().remove(0);
                         }
                     }
-                    originalColor = otherEffect.originalColor;
-                    originalBackgroundColor = otherEffect.originalBackgroundColor;
-                    originalWidth = otherEffect.originalWidth;
-                    originalStyle = otherEffect.originalStyle;
+                    this.originalColor = otherEffect.originalColor;
+                    this.originalBackgroundColor = otherEffect.originalBackgroundColor;
+                    this.originalWidth = otherEffect.originalWidth;
+                    this.originalStyle = otherEffect.originalStyle;
                     return this;
                 }
             }

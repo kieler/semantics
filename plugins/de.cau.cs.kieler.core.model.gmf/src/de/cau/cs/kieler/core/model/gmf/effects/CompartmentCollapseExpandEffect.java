@@ -45,19 +45,29 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
  */
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
-    private int compartmentLevel = 0; // TODO implement compartment levels
+    /** hierarchy level. 0 means only exactly the given EditPart.
+     *  TODO implement compartment levels
+     */
+    private int compartmentLevel = 0;
+    /** edit parts that can be collapsed or expanded. */
     private List<IResizableCompartmentEditPart> targetEditParts;
+    /** the feature of the EObject to doCollapse/expand. */
     private final EStructuralFeature featureToCollapse;
+    /** the EObject to doCollapse / expand. */
     private EObject targetNode;
+    /** true if collapsing, false if expanding. */
     private boolean doCollapse;
+    /** the previous state of the compartment. */
     private boolean originalCollapseState;
-
+    /** whether the effect has been initialized. */
     private boolean initialized = false;
-
+    /** the DiagramEditor containing the EObject. */
     private IWorkbenchPart targetEditor;
+    /** whether the effect has been executed. */
     private boolean justExecuted;
-    private IGraphicalFrameworkBridge bridge;
-    
+    /** the graphical framework bridge. */
+    private IGraphicalFrameworkBridge bridge;              
+    /** true if the collapsing should be persistent. */
     private boolean persistent = false;
 
     /**
