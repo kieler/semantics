@@ -377,7 +377,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				monitor, 10);
 
 		File executable = null;
-//		try {
+		try {
 			// get active editor
 			IEditorPart editorPart = this.getInputEditor();
 			if (editorPart == null) {
@@ -489,15 +489,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 //						true, new Exception(errorString.toString()));
 //			}
 //
-//		} catch (IOException e) {
-//			throw new KiemInitializationException(
-//					"Error compiling Esterel file:\n\n" + e.getMessage(), true,
-//					e);
-//		} catch (InterruptedException e) {
-//			throw new KiemInitializationException(
-//					"Error compiling Esterel file:\n\n " + e.getMessage(),
-//					true, e);
-//		}
+		} catch (Exception e) {
+			throw new KiemInitializationException(
+					"Error compiling Esterel file:\n\n " + e.getMessage(),
+					true, e);
+		}
 	}
 
 	// -------------------------------------------------------------------------
