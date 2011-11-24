@@ -28,7 +28,6 @@ Import-Package: org.apache.log4j
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.text.actions,
  de.cau.cs.kieler.synccharts.text.actions.formatting,
- de.cau.cs.kieler.synccharts.text.actions.parseTreeConstruction,
  de.cau.cs.kieler.synccharts.text.actions.parser.antlr,
  de.cau.cs.kieler.synccharts.text.actions.parser.antlr.internal,
  de.cau.cs.kieler.synccharts.text.actions.scoping,
@@ -47,5 +46,6 @@ Export-Package: de.cau.cs.kieler.synccharts.text.actions,
  de.cau.cs.kieler.synccharts.text.kitsState.parseTreeConstruction,
  de.cau.cs.kieler.synccharts.text.kitsState.parser.antlr,
  de.cau.cs.kieler.synccharts.text.kitsState.parser.antlr.internal,
- de.cau.cs.kieler.synccharts.text.kitsState.validation
+ de.cau.cs.kieler.synccharts.text.kitsState.validation,
+ de.cau.cs.kieler.synccharts.text.actions.serializer
 

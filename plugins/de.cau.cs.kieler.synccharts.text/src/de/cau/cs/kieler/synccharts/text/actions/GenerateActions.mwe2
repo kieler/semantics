@@ -15,6 +15,9 @@ Workflow {
 		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
 	}
 
 	component = DirectoryCleaner {
