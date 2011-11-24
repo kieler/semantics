@@ -25570,8 +25570,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             "\1\1\54\uffff\1\2",
             "",
             "\1\3",
-            "\2\10\1\uffff\1\5\1\12\1\11\1\7\37\uffff\2\7\13\uffff\1\7"+
-            "\1\6\1\uffff\1\4",
+            "\2\10\1\uffff\1\5\1\12\1\11\1\7\37\uffff\2\7\13\uffff\1\7\1"+
+            "\6\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -25579,8 +25579,8 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             "",
             "",
             "",
-            "\2\10\1\uffff\1\5\1\12\1\11\1\7\37\uffff\2\7\13\uffff\1\7"+
-            "\1\6\1\uffff\1\4"
+            "\2\10\1\uffff\1\5\1\12\1\11\1\7\37\uffff\2\7\13\uffff\1\7\1"+
+            "\6\1\uffff\1\4"
     };
 
     static final short[] DFA15_eot = DFA.unpackEncodedString(DFA15_eotS);
