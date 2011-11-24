@@ -140,7 +140,12 @@ Task:
 	name=ID "(" (idList1+=TypeIdentifier ("," idList1+=TypeIdentifier)*)? ")" "(" (idList2+=TypeIdentifier (","
 	idList2+=TypeIdentifier)*)? ")";
 
-	// ==============================================
+
+StatementContainer:
+	Abort | Block 	
+;
+
+// ==============================================
 // ===            B.4 Statements              ===
 // ==============================================
 // !-(parallel)
