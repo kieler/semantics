@@ -20,7 +20,8 @@ Require-Bundle: org.eclipse.emf.ecore,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions.ui;visibility:=reexport,
- org.junit4;bundle-version="4.8.1"
+ org.junit4;bundle-version="4.8.1",
+ de.cau.cs.kieler.core.annotations.text.ui;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.log4j
 Export-Package: de.cau.cs.kieler.kies,
@@ -31,4 +32,7 @@ Export-Package: de.cau.cs.kieler.kies,
  de.cau.cs.kieler.kies.parseTreeConstruction,
  de.cau.cs.kieler.kies.parser.antlr,
  de.cau.cs.kieler.kies.parser.antlr.internal,
- de.cau.cs.kieler.kies.validation
+ de.cau.cs.kieler.kies.validation,
+ de.cau.cs.kieler.kies.scoping,
+ de.cau.cs.kieler.kies.formatting,
+ de.cau.cs.kieler.kies.serializer

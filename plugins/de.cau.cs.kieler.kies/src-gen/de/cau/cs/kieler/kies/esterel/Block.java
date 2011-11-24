@@ -22,7 +22,7 @@ package de.cau.cs.kieler.kies.esterel;
  * @model
  * @generated
  */
-public interface Block extends Statement
+public interface Block extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Statement</b></em>' containment reference.

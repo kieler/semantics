@@ -24,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface Abort extends Statement
+public interface Abort extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Statement</b></em>' containment reference.

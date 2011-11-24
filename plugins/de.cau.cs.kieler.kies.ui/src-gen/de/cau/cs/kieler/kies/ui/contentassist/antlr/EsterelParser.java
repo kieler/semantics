@@ -49,6 +49,7 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getRelationTypeAccess().getAlternatives(), "rule__RelationType__Alternatives");
 					put(grammarAccess.getConstantAtomAccess().getAlternatives(), "rule__ConstantAtom__Alternatives");
 					put(grammarAccess.getConstantLiteralAccess().getAlternatives(), "rule__ConstantLiteral__Alternatives");
+					put(grammarAccess.getStatementContainerAccess().getAlternatives(), "rule__StatementContainer__Alternatives");
 					put(grammarAccess.getAtomicStatementAccess().getAlternatives(), "rule__AtomicStatement__Alternatives");
 					put(grammarAccess.getAbortBodyAccess().getAlternatives(), "rule__AbortBody__Alternatives");
 					put(grammarAccess.getWeakAbortBodyAccess().getAlternatives(), "rule__WeakAbortBody__Alternatives");

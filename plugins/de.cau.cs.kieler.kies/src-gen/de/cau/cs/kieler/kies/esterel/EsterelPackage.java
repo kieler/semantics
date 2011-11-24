@@ -354,7 +354,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getStatement()
    * @generated
    */
-  int STATEMENT = 25;
+  int STATEMENT = 26;
 
   /**
    * The number of structural features of the '<em>Statement</em>' class.
@@ -1006,6 +1006,25 @@ public interface EsterelPackage extends EPackage
   int TASK_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.StatementContainerImpl <em>Statement Container</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.kies.esterel.impl.StatementContainerImpl
+   * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getStatementContainer()
+   * @generated
+   */
+  int STATEMENT_CONTAINER = 25;
+
+  /**
+   * The number of structural features of the '<em>Statement Container</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STATEMENT_CONTAINER_FEATURE_COUNT = 0;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.BlockImpl <em>Block</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1013,7 +1032,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getBlock()
    * @generated
    */
-  int BLOCK = 26;
+  int BLOCK = 27;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1022,7 +1041,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK__STATEMENT = STATEMENT_FEATURE_COUNT + 0;
+  int BLOCK__STATEMENT = STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Block</em>' class.
@@ -1031,7 +1050,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BLOCK_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 1;
+  int BLOCK_FEATURE_COUNT = STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.AssignmentImpl <em>Assignment</em>}' class.
@@ -1041,7 +1060,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAssignment()
    * @generated
    */
-  int ASSIGNMENT = 27;
+  int ASSIGNMENT = 28;
 
   /**
    * The feature id for the '<em><b>Var</b></em>' reference.
@@ -1078,7 +1097,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 28;
+  int ABORT = 29;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1087,7 +1106,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__STATEMENT = STATEMENT_FEATURE_COUNT + 0;
+  int ABORT__STATEMENT = STATEMENT_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -1096,7 +1115,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT__BODY = STATEMENT_FEATURE_COUNT + 1;
+  int ABORT__BODY = STATEMENT_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Abort</em>' class.
@@ -1105,7 +1124,7 @@ public interface EsterelPackage extends EPackage
    * @generated
    * @ordered
    */
-  int ABORT_FEATURE_COUNT = STATEMENT_FEATURE_COUNT + 2;
+  int ABORT_FEATURE_COUNT = STATEMENT_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.kies.esterel.impl.AbortBodyImpl <em>Abort Body</em>}' class.
@@ -1115,7 +1134,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAbortBody()
    * @generated
    */
-  int ABORT_BODY = 29;
+  int ABORT_BODY = 30;
 
   /**
    * The number of structural features of the '<em>Abort Body</em>' class.
@@ -1134,7 +1153,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAbortInstance()
    * @generated
    */
-  int ABORT_INSTANCE = 30;
+  int ABORT_INSTANCE = 31;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1180,7 +1199,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAbortCase()
    * @generated
    */
-  int ABORT_CASE = 31;
+  int ABORT_CASE = 32;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -1217,7 +1236,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAbortCaseSingle()
    * @generated
    */
-  int ABORT_CASE_SINGLE = 32;
+  int ABORT_CASE_SINGLE = 33;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1254,7 +1273,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbortBody()
    * @generated
    */
-  int WEAK_ABORT_BODY = 33;
+  int WEAK_ABORT_BODY = 34;
 
   /**
    * The number of structural features of the '<em>Weak Abort Body</em>' class.
@@ -1273,7 +1292,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbortEnd()
    * @generated
    */
-  int WEAK_ABORT_END = 34;
+  int WEAK_ABORT_END = 35;
 
   /**
    * The feature id for the '<em><b>Opt End</b></em>' containment reference.
@@ -1301,7 +1320,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbortEndAlt()
    * @generated
    */
-  int WEAK_ABORT_END_ALT = 35;
+  int WEAK_ABORT_END_ALT = 36;
 
   /**
    * The feature id for the '<em><b>End</b></em>' attribute.
@@ -1338,7 +1357,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 36;
+  int AWAIT = 37;
 
   /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -1366,7 +1385,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAwaitBody()
    * @generated
    */
-  int AWAIT_BODY = 37;
+  int AWAIT_BODY = 38;
 
   /**
    * The feature id for the '<em><b>End</b></em>' attribute.
@@ -1394,7 +1413,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAwaitInstance()
    * @generated
    */
-  int AWAIT_INSTANCE = 38;
+  int AWAIT_INSTANCE = 39;
 
   /**
    * The feature id for the '<em><b>End</b></em>' attribute.
@@ -1440,7 +1459,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getAwaitCase()
    * @generated
    */
-  int AWAIT_CASE = 39;
+  int AWAIT_CASE = 40;
 
   /**
    * The feature id for the '<em><b>End</b></em>' attribute.
@@ -1477,7 +1496,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getProcCall()
    * @generated
    */
-  int PROC_CALL = 40;
+  int PROC_CALL = 41;
 
   /**
    * The feature id for the '<em><b>Proc</b></em>' reference.
@@ -1523,7 +1542,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDo()
    * @generated
    */
-  int DO = 41;
+  int DO = 42;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1560,7 +1579,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDoUpto()
    * @generated
    */
-  int DO_UPTO = 42;
+  int DO_UPTO = 43;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -1588,7 +1607,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDoWatching()
    * @generated
    */
-  int DO_WATCHING = 43;
+  int DO_WATCHING = 44;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1625,7 +1644,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDoWatchingEnd()
    * @generated
    */
-  int DO_WATCHING_END = 44;
+  int DO_WATCHING_END = 45;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1662,7 +1681,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 45;
+  int EMIT = 46;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -1708,7 +1727,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getEveryDo()
    * @generated
    */
-  int EVERY_DO = 46;
+  int EVERY_DO = 47;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -1754,7 +1773,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getExit()
    * @generated
    */
-  int EXIT = 47;
+  int EXIT = 48;
 
   /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
@@ -1791,7 +1810,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getHalt()
    * @generated
    */
-  int HALT = 48;
+  int HALT = 49;
 
   /**
    * The number of structural features of the '<em>Halt</em>' class.
@@ -1810,7 +1829,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getIfTest()
    * @generated
    */
-  int IF_TEST = 49;
+  int IF_TEST = 50;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -1874,7 +1893,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getElsIf()
    * @generated
    */
-  int ELS_IF = 50;
+  int ELS_IF = 51;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -1911,7 +1930,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getThenPart()
    * @generated
    */
-  int THEN_PART = 51;
+  int THEN_PART = 52;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1939,7 +1958,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getElsePart()
    * @generated
    */
-  int ELSE_PART = 52;
+  int ELSE_PART = 53;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -1967,7 +1986,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLoop()
    * @generated
    */
-  int LOOP = 53;
+  int LOOP = 54;
 
   /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -2013,7 +2032,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getEndLoop()
    * @generated
    */
-  int END_LOOP = 54;
+  int END_LOOP = 55;
 
   /**
    * The feature id for the '<em><b>End Opt</b></em>' attribute.
@@ -2041,7 +2060,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLoopEach()
    * @generated
    */
-  int LOOP_EACH = 55;
+  int LOOP_EACH = 56;
 
   /**
    * The number of structural features of the '<em>Loop Each</em>' class.
@@ -2060,7 +2079,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLoopDelay()
    * @generated
    */
-  int LOOP_DELAY = 56;
+  int LOOP_DELAY = 57;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -2088,7 +2107,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLoopBody()
    * @generated
    */
-  int LOOP_BODY = 57;
+  int LOOP_BODY = 58;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -2116,7 +2135,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getNothing()
    * @generated
    */
-  int NOTHING = 58;
+  int NOTHING = 59;
 
   /**
    * The number of structural features of the '<em>Nothing</em>' class.
@@ -2135,7 +2154,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 59;
+  int PAUSE = 60;
 
   /**
    * The number of structural features of the '<em>Pause</em>' class.
@@ -2154,7 +2173,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresent()
    * @generated
    */
-  int PRESENT = 60;
+  int PRESENT = 61;
 
   /**
    * The feature id for the '<em><b>Body</b></em>' containment reference.
@@ -2200,7 +2219,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresentBody()
    * @generated
    */
-  int PRESENT_BODY = 61;
+  int PRESENT_BODY = 62;
 
   /**
    * The number of structural features of the '<em>Present Body</em>' class.
@@ -2219,7 +2238,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresentEventBody()
    * @generated
    */
-  int PRESENT_EVENT_BODY = 62;
+  int PRESENT_EVENT_BODY = 63;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -2256,7 +2275,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresentCaseList()
    * @generated
    */
-  int PRESENT_CASE_LIST = 63;
+  int PRESENT_CASE_LIST = 64;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -2284,7 +2303,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresentCase()
    * @generated
    */
-  int PRESENT_CASE = 64;
+  int PRESENT_CASE = 65;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -2321,7 +2340,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getPresentEvent()
    * @generated
    */
-  int PRESENT_EVENT = 65;
+  int PRESENT_EVENT = 66;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2376,7 +2395,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getRepeat()
    * @generated
    */
-  int REPEAT = 66;
+  int REPEAT = 67;
 
   /**
    * The feature id for the '<em><b>Positive</b></em>' attribute.
@@ -2431,7 +2450,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getRun()
    * @generated
    */
-  int RUN = 67;
+  int RUN = 68;
 
   /**
    * The feature id for the '<em><b>Module</b></em>' containment reference.
@@ -2468,7 +2487,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getModuleRenaming()
    * @generated
    */
-  int MODULE_RENAMING = 68;
+  int MODULE_RENAMING = 69;
 
   /**
    * The feature id for the '<em><b>Module</b></em>' reference.
@@ -2505,7 +2524,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getRenamingList()
    * @generated
    */
-  int RENAMING_LIST = 69;
+  int RENAMING_LIST = 70;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -2533,7 +2552,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getRenaming()
    * @generated
    */
-  int RENAMING = 70;
+  int RENAMING = 71;
 
   /**
    * The feature id for the '<em><b>Renamings</b></em>' containment reference list.
@@ -2561,7 +2580,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTypeRenaming()
    * @generated
    */
-  int TYPE_RENAMING = 71;
+  int TYPE_RENAMING = 72;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2607,7 +2626,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getConstantRenaming()
    * @generated
    */
-  int CONSTANT_RENAMING = 72;
+  int CONSTANT_RENAMING = 73;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2653,7 +2672,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getFunctionRenaming()
    * @generated
    */
-  int FUNCTION_RENAMING = 73;
+  int FUNCTION_RENAMING = 74;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2699,7 +2718,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getProcedureRenaming()
    * @generated
    */
-  int PROCEDURE_RENAMING = 74;
+  int PROCEDURE_RENAMING = 75;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2736,7 +2755,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTaskRenaming()
    * @generated
    */
-  int TASK_RENAMING = 75;
+  int TASK_RENAMING = 76;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2773,7 +2792,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getSignalRenaming()
    * @generated
    */
-  int SIGNAL_RENAMING = 76;
+  int SIGNAL_RENAMING = 77;
 
   /**
    * The feature id for the '<em><b>New Name</b></em>' reference.
@@ -2810,7 +2829,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getSuspend()
    * @generated
    */
-  int SUSPEND = 77;
+  int SUSPEND = 78;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -2847,7 +2866,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getSustain()
    * @generated
    */
-  int SUSTAIN = 78;
+  int SUSTAIN = 79;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' reference.
@@ -2893,7 +2912,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrap()
    * @generated
    */
-  int TRAP = 79;
+  int TRAP = 80;
 
   /**
    * The feature id for the '<em><b>Trap Decl List</b></em>' containment reference.
@@ -2948,7 +2967,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrapDeclList()
    * @generated
    */
-  int TRAP_DECL_LIST = 80;
+  int TRAP_DECL_LIST = 81;
 
   /**
    * The feature id for the '<em><b>Trap Decls</b></em>' containment reference list.
@@ -2976,7 +2995,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrapHandler()
    * @generated
    */
-  int TRAP_HANDLER = 81;
+  int TRAP_HANDLER = 82;
 
   /**
    * The feature id for the '<em><b>Trap Expr</b></em>' containment reference.
@@ -3013,7 +3032,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLocalVariable()
    * @generated
    */
-  int LOCAL_VARIABLE = 82;
+  int LOCAL_VARIABLE = 83;
 
   /**
    * The feature id for the '<em><b>Var</b></em>' containment reference.
@@ -3059,7 +3078,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDelayExpr()
    * @generated
    */
-  int DELAY_EXPR = 83;
+  int DELAY_EXPR = 84;
 
   /**
    * The feature id for the '<em><b>Expr</b></em>' containment reference.
@@ -3105,7 +3124,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getDelayEvent()
    * @generated
    */
-  int DELAY_EVENT = 84;
+  int DELAY_EVENT = 85;
 
   /**
    * The feature id for the '<em><b>Tick</b></em>' attribute.
@@ -3160,7 +3179,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getExec()
    * @generated
    */
-  int EXEC = 85;
+  int EXEC = 86;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' reference.
@@ -3233,7 +3252,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getExecBody()
    * @generated
    */
-  int EXEC_BODY = 86;
+  int EXEC_BODY = 87;
 
   /**
    * The feature id for the '<em><b>Vars</b></em>' reference list.
@@ -3270,7 +3289,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getExecCase()
    * @generated
    */
-  int EXEC_CASE = 87;
+  int EXEC_CASE = 88;
 
   /**
    * The feature id for the '<em><b>Task</b></em>' reference.
@@ -3325,7 +3344,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getEsterelTypeIdentifier()
    * @generated
    */
-  int ESTEREL_TYPE_IDENTIFIER = 88;
+  int ESTEREL_TYPE_IDENTIFIER = 89;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -3380,7 +3399,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getEsterelType()
    * @generated
    */
-  int ESTEREL_TYPE = 89;
+  int ESTEREL_TYPE = 90;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' attribute.
@@ -3435,7 +3454,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getLocalSignal()
    * @generated
    */
-  int LOCAL_SIGNAL = 90;
+  int LOCAL_SIGNAL = 91;
 
   /**
    * The feature id for the '<em><b>Signal</b></em>' containment reference list.
@@ -3463,7 +3482,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getRelation()
    * @generated
    */
-  int RELATION = 91;
+  int RELATION = 92;
 
   /**
    * The feature id for the '<em><b>Relations</b></em>' containment reference list.
@@ -3491,7 +3510,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getConstant()
    * @generated
    */
-  int CONSTANT = 92;
+  int CONSTANT = 93;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3555,7 +3574,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getParallel()
    * @generated
    */
-  int PARALLEL = 93;
+  int PARALLEL = 94;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -3583,7 +3602,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getSequence()
    * @generated
    */
-  int SEQUENCE = 94;
+  int SEQUENCE = 95;
 
   /**
    * The feature id for the '<em><b>List</b></em>' containment reference list.
@@ -3611,7 +3630,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbort()
    * @generated
    */
-  int WEAK_ABORT = 95;
+  int WEAK_ABORT = 96;
 
   /**
    * The feature id for the '<em><b>Statement</b></em>' containment reference.
@@ -3648,7 +3667,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbortInstance()
    * @generated
    */
-  int WEAK_ABORT_INSTANCE = 96;
+  int WEAK_ABORT_INSTANCE = 97;
 
   /**
    * The feature id for the '<em><b>Delay</b></em>' containment reference.
@@ -3703,7 +3722,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getWeakAbortCase()
    * @generated
    */
-  int WEAK_ABORT_CASE = 97;
+  int WEAK_ABORT_CASE = 98;
 
   /**
    * The feature id for the '<em><b>Cases</b></em>' containment reference list.
@@ -3749,7 +3768,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrapDecl()
    * @generated
    */
-  int TRAP_DECL = 98;
+  int TRAP_DECL = 99;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -3858,7 +3877,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrapExpression()
    * @generated
    */
-  int TRAP_EXPRESSION = 99;
+  int TRAP_EXPRESSION = 100;
 
   /**
    * The feature id for the '<em><b>Trap</b></em>' reference.
@@ -3886,7 +3905,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getFunctionExpression()
    * @generated
    */
-  int FUNCTION_EXPRESSION = 100;
+  int FUNCTION_EXPRESSION = 101;
 
   /**
    * The feature id for the '<em><b>Function</b></em>' reference.
@@ -3923,7 +3942,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getConstantExpression()
    * @generated
    */
-  int CONSTANT_EXPRESSION = 101;
+  int CONSTANT_EXPRESSION = 102;
 
   /**
    * The feature id for the '<em><b>Constant</b></em>' reference.
@@ -3960,7 +3979,7 @@ public interface EsterelPackage extends EPackage
    * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getTrapReferenceExpr()
    * @generated
    */
-  int TRAP_REFERENCE_EXPR = 102;
+  int TRAP_REFERENCE_EXPR = 103;
 
   /**
    * The feature id for the '<em><b>Sub Expressions</b></em>' containment reference list.
@@ -4712,6 +4731,16 @@ public interface EsterelPackage extends EPackage
    * @generated
    */
   EReference getTask_IdList2();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.kies.esterel.StatementContainer <em>Statement Container</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Statement Container</em>'.
+   * @see de.cau.cs.kieler.kies.esterel.StatementContainer
+   * @generated
+   */
+  EClass getStatementContainer();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.kies.esterel.Statement <em>Statement</em>}'.
@@ -7616,6 +7645,16 @@ public interface EsterelPackage extends EPackage
      * @generated
      */
     EReference TASK__ID_LIST2 = eINSTANCE.getTask_IdList2();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.kies.esterel.impl.StatementContainerImpl <em>Statement Container</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.kies.esterel.impl.StatementContainerImpl
+     * @see de.cau.cs.kieler.kies.esterel.impl.EsterelPackageImpl#getStatementContainer()
+     * @generated
+     */
+    EClass STATEMENT_CONTAINER = eINSTANCE.getStatementContainer();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.kies.esterel.impl.StatementImpl <em>Statement</em>}' class.

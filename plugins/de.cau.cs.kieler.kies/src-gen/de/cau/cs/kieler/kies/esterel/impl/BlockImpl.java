@@ -30,7 +30,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class BlockImpl extends StatementImpl implements Block
+public class BlockImpl extends StatementContainerImpl implements Block
 {
   /**
    * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.

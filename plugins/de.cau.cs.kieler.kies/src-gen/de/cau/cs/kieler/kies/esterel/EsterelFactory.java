@@ -251,6 +251,15 @@ public interface EsterelFactory extends EFactory
   Task createTask();
 
   /**
+   * Returns a new object of class '<em>Statement Container</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Statement Container</em>'.
+   * @generated
+   */
+  StatementContainer createStatementContainer();
+
+  /**
    * Returns a new object of class '<em>Statement</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

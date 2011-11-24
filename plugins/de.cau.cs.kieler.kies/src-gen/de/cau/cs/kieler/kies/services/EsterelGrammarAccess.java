@@ -1537,6 +1537,26 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		public Keyword getRightParenthesisKeyword_6() { return cRightParenthesisKeyword_6; }
 	}
 
+	public class StatementContainerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "StatementContainer");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cAbortParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cBlockParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//StatementContainer:
+		//	Abort | Block;
+		public ParserRule getRule() { return rule; }
+
+		//Abort | Block
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//Abort
+		public RuleCall getAbortParserRuleCall_0() { return cAbortParserRuleCall_0; }
+
+		//Block
+		public RuleCall getBlockParserRuleCall_1() { return cBlockParserRuleCall_1; }
+	}
+
 	public class StatementElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "Statement");
 		private final Group cGroup = (Group)rule.eContents().get(1);
@@ -5344,6 +5364,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private ProcedureElements pProcedure;
 	private TaskDeclElements pTaskDecl;
 	private TaskElements pTask;
+	private StatementContainerElements pStatementContainer;
 	private StatementElements pStatement;
 	private AtomicStatementElements pAtomicStatement;
 	private SequenceElements pSequence;
@@ -5793,6 +5814,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getTaskRule() {
 		return getTaskAccess().getRule();
+	}
+
+	//StatementContainer:
+	//	Abort | Block;
+	public StatementContainerElements getStatementContainerAccess() {
+		return (pStatementContainer != null) ? pStatementContainer : (pStatementContainer = new StatementContainerElements());
+	}
+	
+	public ParserRule getStatementContainerRule() {
+		return getStatementContainerAccess().getRule();
 	}
 
 	//// ==============================================

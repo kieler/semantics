@@ -32,7 +32,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  *
  * @generated
  */
-public class AbortImpl extends StatementImpl implements Abort
+public class AbortImpl extends StatementContainerImpl implements Abort
 {
   /**
    * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.

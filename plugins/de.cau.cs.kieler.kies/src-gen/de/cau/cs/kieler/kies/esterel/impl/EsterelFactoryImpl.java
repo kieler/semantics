@@ -92,6 +92,7 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
       case EsterelPackage.PROCEDURE: return createProcedure();
       case EsterelPackage.TASK_DECL: return createTaskDecl();
       case EsterelPackage.TASK: return createTask();
+      case EsterelPackage.STATEMENT_CONTAINER: return createStatementContainer();
       case EsterelPackage.STATEMENT: return createStatement();
       case EsterelPackage.BLOCK: return createBlock();
       case EsterelPackage.ASSIGNMENT: return createAssignment();
@@ -448,6 +449,17 @@ public class EsterelFactoryImpl extends EFactoryImpl implements EsterelFactory
   {
     TaskImpl task = new TaskImpl();
     return task;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StatementContainer createStatementContainer()
+  {
+    StatementContainerImpl statementContainer = new StatementContainerImpl();
+    return statementContainer;
   }
 
   /**

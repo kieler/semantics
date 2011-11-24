@@ -90,6 +90,7 @@ import de.cau.cs.kieler.kies.esterel.SensorWithType;
 import de.cau.cs.kieler.kies.esterel.Sequence;
 import de.cau.cs.kieler.kies.esterel.SignalRenaming;
 import de.cau.cs.kieler.kies.esterel.Statement;
+import de.cau.cs.kieler.kies.esterel.StatementContainer;
 import de.cau.cs.kieler.kies.esterel.Suspend;
 import de.cau.cs.kieler.kies.esterel.Sustain;
 import de.cau.cs.kieler.kies.esterel.Task;
@@ -302,6 +303,13 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * @generated
    */
   private EClass taskEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementContainerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1593,6 +1601,16 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getTask_IdList2()
   {
     return (EReference)taskEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStatementContainer()
+  {
+    return statementContainerEClass;
   }
 
   /**
@@ -3868,6 +3886,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(taskEClass, TASK__ID_LIST1);
     createEReference(taskEClass, TASK__ID_LIST2);
 
+    statementContainerEClass = createEClass(STATEMENT_CONTAINER);
+
     statementEClass = createEClass(STATEMENT);
 
     blockEClass = createEClass(BLOCK);
@@ -4199,8 +4219,10 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     localSignalDeclEClass.getESuperTypes().add(this.getStatement());
     relationImplicationEClass.getESuperTypes().add(this.getRelationType());
     relationIncompatibilityEClass.getESuperTypes().add(this.getRelationType());
+    blockEClass.getESuperTypes().add(this.getStatementContainer());
     blockEClass.getESuperTypes().add(this.getStatement());
     assignmentEClass.getESuperTypes().add(this.getStatement());
+    abortEClass.getESuperTypes().add(this.getStatementContainer());
     abortEClass.getESuperTypes().add(this.getStatement());
     abortInstanceEClass.getESuperTypes().add(this.getAbortBody());
     abortInstanceEClass.getESuperTypes().add(this.getWeakAbortBody());
@@ -4339,6 +4361,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEAttribute(getTask_Name(), ecorePackage.getEString(), "name", null, 0, 1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTask_IdList1(), this.getTypeIdentifier(), null, "idList1", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTask_IdList2(), this.getTypeIdentifier(), null, "idList2", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(statementContainerEClass, StatementContainer.class, "StatementContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
