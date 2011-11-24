@@ -1178,9 +1178,9 @@ public class InternalAnnotationsLexer extends Lexer {
     static final String DFA23_eofS =
         "\51\uffff";
     static final String DFA23_minS =
-        "\1\0\6\uffff\1\52\1\60\1\56\1\162\1\141\1\0\1\101\11\uffff\1\0"+
-        "\1\uffff\1\56\2\uffff\1\165\1\uffff\1\154\4\uffff\1\145\1\163\1"+
-        "\60\1\145\1\uffff\1\60";
+        "\1\0\6\uffff\1\52\1\60\1\56\1\162\1\141\1\0\1\101\11\uffff\1\0\1"+
+        "\uffff\1\56\2\uffff\1\165\1\uffff\1\154\4\uffff\1\145\1\163\1\60"+
+        "\1\145\1\uffff\1\60";
     static final String DFA23_maxS =
         "\1\uffff\6\uffff\1\57\1\71\1\146\1\162\1\141\1\uffff\1\172\11\uffff"+
         "\1\uffff\1\uffff\1\146\2\uffff\1\165\1\uffff\1\154\4\uffff\1\145"+

@@ -110,18 +110,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *         EXCLUDE_IF_UNSET name
-	 *         EXCLUDE_IF_UNSET value
-	 *         EXCLUDE_IF_SET value
-	 *    name[0, 1]
-	 *         EXCLUDE_IF_UNSET value
-	 *         MANDATORY_IF_SET value
-	 *         MANDATORY_IF_SET annotations
-	 *         EXCLUDE_IF_SET value
-	 *    value[0, 2]
 	 */
 	protected void sequence_Annotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -131,9 +119,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     value=COMMENT_ANNOTATION
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_CommentAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -143,9 +128,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     importURI=STRING
-	 *
-	 * Features:
-	 *    importURI[1, 1]
 	 */
 	protected void sequence_ImportAnnotation(EObject context, ImportAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -155,11 +137,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Boolean annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyBooleanValueAnnotation(EObject context, BooleanAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -169,11 +146,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Float annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyFloatValueAnnotation(EObject context, FloatAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -183,11 +155,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=INT annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyIntValueAnnotation(EObject context, IntAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -197,11 +164,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -211,10 +173,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
 	 */
 	protected void sequence_TagAnnotation(EObject context, Annotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -224,12 +182,6 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
-	 *    type[1, 1]
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
