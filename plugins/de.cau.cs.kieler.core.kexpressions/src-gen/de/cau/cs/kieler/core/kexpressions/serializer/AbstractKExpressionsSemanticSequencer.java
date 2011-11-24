@@ -395,18 +395,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *         EXCLUDE_IF_UNSET name
-	 *         EXCLUDE_IF_UNSET value
-	 *         EXCLUDE_IF_SET value
-	 *    name[0, 1]
-	 *         EXCLUDE_IF_UNSET value
-	 *         MANDATORY_IF_SET value
-	 *         MANDATORY_IF_SET annotations
-	 *         EXCLUDE_IF_SET value
-	 *    value[0, 2]
 	 */
 	protected void sequence_Annotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -423,10 +411,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 9]
-	 *    operator[0, 6]
 	 */
 	protected void sequence_AtomicExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -449,10 +433,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_AtomicValuedExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -462,9 +442,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     value=Boolean
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_BooleanValue(EObject context, BooleanValue semanticObject) {
 		if(errorAcceptor != null) {
@@ -481,14 +458,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (type=TypeIdentifier | type=TypeIdentifier | (expression=Expression type=TypeIdentifier))
-	 *
-	 * Features:
-	 *    type[0, 3]
-	 *    expression[0, 1]
-	 *         EXCLUDE_IF_UNSET type
-	 *         MANDATORY_IF_SET type
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET type
 	 */
 	protected void sequence_ChannelDescription(EObject context, ChannelDescription semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -498,9 +467,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     value=COMMENT_ANNOTATION
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_CommentAnnotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -523,10 +489,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_Expression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -536,9 +498,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     value=Float
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_FloatValue(EObject context, FloatValue semanticObject) {
 		if(errorAcceptor != null) {
@@ -555,10 +514,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ID channelDescr=ChannelDescription?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    channelDescr[0, 1]
 	 */
 	protected void sequence_ISignal(EObject context, ISignal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -568,10 +523,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ID expression=Expression?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    expression[0, 1]
 	 */
 	protected void sequence_IVariable(EObject context, IVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -581,9 +532,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     importURI=STRING
-	 *
-	 * Features:
-	 *    importURI[1, 1]
 	 */
 	protected void sequence_ImportAnnotation(EObject context, ImportAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -593,9 +541,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     value=INT
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_IntValue(EObject context, IntValue semanticObject) {
 		if(errorAcceptor != null) {
@@ -612,9 +557,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Input semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -624,9 +566,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, InputOutput semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -636,9 +575,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Output semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -648,9 +584,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Return semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -660,9 +593,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (varDecls+=VariableDecl varDecls+=VariableDecl*)
-	 *
-	 * Features:
-	 *    varDecls[1, *]
 	 */
 	protected void sequence_InterfaceVariableDecl(EObject context, InterfaceVariableDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -672,11 +602,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Boolean annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyBooleanValueAnnotation(EObject context, BooleanAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -686,11 +611,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Float annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyFloatValueAnnotation(EObject context, FloatAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -700,11 +620,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=INT annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyIntValueAnnotation(EObject context, IntAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -714,11 +629,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -741,10 +651,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_NegExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -761,10 +667,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 9]
-	 *    operator[0, 6]
 	 */
 	protected void sequence_NotExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -774,10 +676,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
 	 */
 	protected void sequence_TagAnnotation(EObject context, Annotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -787,10 +685,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (code=HOSTCODE type=ID?)
-	 *
-	 * Features:
-	 *    code[1, 1]
-	 *    type[0, 1]
 	 */
 	protected void sequence_TextExpression(EObject context, TextExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -800,19 +694,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (type=ValueType | typeID=ID | ((type=ValueType | typeID=ID) operator=CombineOperator))
-	 *
-	 * Features:
-	 *    type[0, 2]
-	 *         EXCLUDE_IF_SET typeID
-	 *         EXCLUDE_IF_SET typeID
-	 *    typeID[0, 2]
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET type
-	 *    operator[0, 1]
-	 *         MANDATORY_IF_SET type
-	 *         MANDATORY_IF_SET typeID
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET typeID
 	 */
 	protected void sequence_TypeIdentifier(EObject context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -822,12 +703,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
-	 *    type[1, 1]
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -837,9 +712,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     valuedObject=[ValuedObject|ID]
-	 *
-	 * Features:
-	 *    valuedObject[1, 1]
 	 */
 	protected void sequence_ValuedObjectReference(EObject context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -849,10 +721,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     ((operator=PreOperator subExpressions+=ValuedObjectTestExpression) | (operator=ValueTestOperator subExpressions+=ValuedObjectReference))
-	 *
-	 * Features:
-	 *    subExpressions[0, 2]
-	 *    operator[0, 2]
 	 */
 	protected void sequence_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -862,10 +730,6 @@ public class AbstractKExpressionsSemanticSequencer extends AbstractSemanticSeque
 	/**
 	 * Constraint:
 	 *     (variables+=IVariable variables+=IVariable* type=TypeIdentifier)
-	 *
-	 * Features:
-	 *    variables[1, *]
-	 *    type[1, 1]
 	 */
 	protected void sequence_VariableDecl(EObject context, VariableDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
