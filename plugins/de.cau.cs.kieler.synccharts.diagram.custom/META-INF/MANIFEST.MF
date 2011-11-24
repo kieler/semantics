@@ -16,7 +16,7 @@ Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.1.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.ksbase.ui,
  de.cau.cs.kieler.core.kivi,
- de.cau.cs.kieler.core.annotations.ui,
+ de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.core,
  de.cau.cs.kieler.core.model.gmf,
  de.cau.cs.kieler.core.kgraph
