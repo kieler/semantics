@@ -5,7 +5,7 @@
          id="prop-contrib"
          point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
       <propertyContributor
-            contributorId="de.cau.cs.kieler.core.annotations.ui">
+            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
          <propertyCategory
                category="annotations"></propertyCategory>
       </propertyContributor>
