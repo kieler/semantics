@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
@@ -20,7 +21,6 @@ import org.eclipse.emf.common.util.EList;
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getRetSignal <em>Ret Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getExecCaseList <em>Exec Case List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Exec#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -30,7 +30,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Exec extends Statement
+public interface Exec extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Task</b></em>' reference.
@@ -109,32 +109,6 @@ public interface Exec extends Statement
    * @generated
    */
   void setRetSignal(ISignal value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getExec_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Exec#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
 
   /**
    * Returns the value of the '<em><b>Exec Case List</b></em>' containment reference list.

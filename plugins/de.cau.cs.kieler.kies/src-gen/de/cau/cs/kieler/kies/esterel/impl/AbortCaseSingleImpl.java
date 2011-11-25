@@ -2,13 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.kies.esterel.AbortCaseSingle;
 import de.cau.cs.kieler.kies.esterel.DelayExpr;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -17,7 +17,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,13 +26,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AbortCaseSingleImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AbortCaseSingleImpl#getStatement <em>Statement</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements AbortCaseSingle
+public class AbortCaseSingleImpl extends StatementContainerImpl implements AbortCaseSingle
 {
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
@@ -44,16 +42,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
    * @ordered
    */
   protected DelayExpr delay;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,54 +117,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT_CASE_SINGLE__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ABORT_CASE_SINGLE__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ABORT_CASE_SINGLE__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT_CASE_SINGLE__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -184,8 +124,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
     {
       case EsterelPackage.ABORT_CASE_SINGLE__DELAY:
         return basicSetDelay(null, msgs);
-      case EsterelPackage.ABORT_CASE_SINGLE__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -202,8 +140,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
     {
       case EsterelPackage.ABORT_CASE_SINGLE__DELAY:
         return getDelay();
-      case EsterelPackage.ABORT_CASE_SINGLE__STATEMENT:
-        return getStatement();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -220,9 +156,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
     {
       case EsterelPackage.ABORT_CASE_SINGLE__DELAY:
         setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.ABORT_CASE_SINGLE__STATEMENT:
-        setStatement((Statement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -241,9 +174,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
       case EsterelPackage.ABORT_CASE_SINGLE__DELAY:
         setDelay((DelayExpr)null);
         return;
-      case EsterelPackage.ABORT_CASE_SINGLE__STATEMENT:
-        setStatement((Statement)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -260,8 +190,6 @@ public class AbortCaseSingleImpl extends MinimalEObjectImpl.Container implements
     {
       case EsterelPackage.ABORT_CASE_SINGLE__DELAY:
         return delay != null;
-      case EsterelPackage.ABORT_CASE_SINGLE__STATEMENT:
-        return statement != null;
     }
     return super.eIsSet(featureID);
   }

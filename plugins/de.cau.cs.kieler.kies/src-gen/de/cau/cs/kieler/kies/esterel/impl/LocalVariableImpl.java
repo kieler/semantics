@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
@@ -9,7 +10,6 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
 
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.LocalVariable;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -27,14 +27,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalVariableImpl#getVar <em>Var</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalVariableImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalVariableImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class LocalVariableImpl extends StatementImpl implements LocalVariable
+public class LocalVariableImpl extends StatementContainerImpl implements LocalVariable
 {
   /**
    * The cached value of the '{@link #getVar() <em>Var</em>}' containment reference.
@@ -45,16 +44,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
    * @ordered
    */
   protected InterfaceVariableDecl var;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
@@ -150,54 +139,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_VARIABLE__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_VARIABLE__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_VARIABLE__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_VARIABLE__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getOptEnd()
   {
     return optEnd;
@@ -228,8 +169,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
     {
       case EsterelPackage.LOCAL_VARIABLE__VAR:
         return basicSetVar(null, msgs);
-      case EsterelPackage.LOCAL_VARIABLE__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -246,8 +185,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
     {
       case EsterelPackage.LOCAL_VARIABLE__VAR:
         return getVar();
-      case EsterelPackage.LOCAL_VARIABLE__STATEMENT:
-        return getStatement();
       case EsterelPackage.LOCAL_VARIABLE__OPT_END:
         return getOptEnd();
     }
@@ -266,9 +203,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
     {
       case EsterelPackage.LOCAL_VARIABLE__VAR:
         setVar((InterfaceVariableDecl)newValue);
-        return;
-      case EsterelPackage.LOCAL_VARIABLE__STATEMENT:
-        setStatement((Statement)newValue);
         return;
       case EsterelPackage.LOCAL_VARIABLE__OPT_END:
         setOptEnd((String)newValue);
@@ -290,9 +224,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
       case EsterelPackage.LOCAL_VARIABLE__VAR:
         setVar((InterfaceVariableDecl)null);
         return;
-      case EsterelPackage.LOCAL_VARIABLE__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.LOCAL_VARIABLE__OPT_END:
         setOptEnd(OPT_END_EDEFAULT);
         return;
@@ -312,8 +243,6 @@ public class LocalVariableImpl extends StatementImpl implements LocalVariable
     {
       case EsterelPackage.LOCAL_VARIABLE__VAR:
         return var != null;
-      case EsterelPackage.LOCAL_VARIABLE__STATEMENT:
-        return statement != null;
       case EsterelPackage.LOCAL_VARIABLE__OPT_END:
         return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }

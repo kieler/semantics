@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.util;
 
@@ -132,6 +133,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         LocalSignalDecl localSignalDecl = (LocalSignalDecl)theEObject;
         T result = caseLocalSignalDecl(localSignalDecl);
+        if (result == null) result = caseStatementContainer(localSignalDecl);
         if (result == null) result = caseStatement(localSignalDecl);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -315,6 +317,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         AbortInstance abortInstance = (AbortInstance)theEObject;
         T result = caseAbortInstance(abortInstance);
+        if (result == null) result = caseStatementContainer(abortInstance);
         if (result == null) result = caseAbortBody(abortInstance);
         if (result == null) result = caseWeakAbortBody(abortInstance);
         if (result == null) result = defaultCase(theEObject);
@@ -333,6 +336,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         AbortCaseSingle abortCaseSingle = (AbortCaseSingle)theEObject;
         T result = caseAbortCaseSingle(abortCaseSingle);
+        if (result == null) result = caseStatementContainer(abortCaseSingle);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -376,6 +380,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         AwaitInstance awaitInstance = (AwaitInstance)theEObject;
         T result = caseAwaitInstance(awaitInstance);
+        if (result == null) result = caseStatementContainer(awaitInstance);
         if (result == null) result = caseAwaitBody(awaitInstance);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -400,6 +405,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Do do_ = (Do)theEObject;
         T result = caseDo(do_);
+        if (result == null) result = caseStatementContainer(do_);
         if (result == null) result = caseStatement(do_);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -422,6 +428,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         DoWatchingEnd doWatchingEnd = (DoWatchingEnd)theEObject;
         T result = caseDoWatchingEnd(doWatchingEnd);
+        if (result == null) result = caseStatementContainer(doWatchingEnd);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -437,6 +444,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         EveryDo everyDo = (EveryDo)theEObject;
         T result = caseEveryDo(everyDo);
+        if (result == null) result = caseStatementContainer(everyDo);
         if (result == null) result = caseStatement(everyDo);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -476,6 +484,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         ThenPart thenPart = (ThenPart)theEObject;
         T result = caseThenPart(thenPart);
+        if (result == null) result = caseStatementContainer(thenPart);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -483,6 +492,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         ElsePart elsePart = (ElsePart)theEObject;
         T result = caseElsePart(elsePart);
+        if (result == null) result = caseStatementContainer(elsePart);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -520,6 +530,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         LoopBody loopBody = (LoopBody)theEObject;
         T result = caseLoopBody(loopBody);
+        if (result == null) result = caseStatementContainer(loopBody);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -574,6 +585,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         PresentCase presentCase = (PresentCase)theEObject;
         T result = casePresentCase(presentCase);
+        if (result == null) result = caseStatementContainer(presentCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -588,6 +600,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Repeat repeat = (Repeat)theEObject;
         T result = caseRepeat(repeat);
+        if (result == null) result = caseStatementContainer(repeat);
         if (result == null) result = caseStatement(repeat);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -667,6 +680,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Suspend suspend = (Suspend)theEObject;
         T result = caseSuspend(suspend);
+        if (result == null) result = caseStatementContainer(suspend);
         if (result == null) result = caseStatement(suspend);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -683,6 +697,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Trap trap = (Trap)theEObject;
         T result = caseTrap(trap);
+        if (result == null) result = caseStatementContainer(trap);
         if (result == null) result = caseStatement(trap);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -698,6 +713,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         TrapHandler trapHandler = (TrapHandler)theEObject;
         T result = caseTrapHandler(trapHandler);
+        if (result == null) result = caseStatementContainer(trapHandler);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -705,6 +721,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         LocalVariable localVariable = (LocalVariable)theEObject;
         T result = caseLocalVariable(localVariable);
+        if (result == null) result = caseStatementContainer(localVariable);
         if (result == null) result = caseStatement(localVariable);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -727,6 +744,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         Exec exec = (Exec)theEObject;
         T result = caseExec(exec);
+        if (result == null) result = caseStatementContainer(exec);
         if (result == null) result = caseStatement(exec);
         if (result == null) result = defaultCase(theEObject);
         return result;
@@ -742,6 +760,7 @@ public class EsterelSwitch<T> extends Switch<T>
       {
         ExecCase execCase = (ExecCase)theEObject;
         T result = caseExecCase(execCase);
+        if (result == null) result = caseStatementContainer(execCase);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -818,6 +837,7 @@ public class EsterelSwitch<T> extends Switch<T>
         WeakAbortInstance weakAbortInstance = (WeakAbortInstance)theEObject;
         T result = caseWeakAbortInstance(weakAbortInstance);
         if (result == null) result = caseAbortInstance(weakAbortInstance);
+        if (result == null) result = caseStatementContainer(weakAbortInstance);
         if (result == null) result = caseAbortBody(weakAbortInstance);
         if (result == null) result = caseWeakAbortBody(weakAbortInstance);
         if (result == null) result = defaultCase(theEObject);

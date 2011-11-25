@@ -2,12 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
-
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -18,7 +17,6 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.TrapHandler#getTrapExpr <em>Trap Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.TrapHandler#getStatement <em>Statement</em>}</li>
  * </ul>
  * </p>
  *
@@ -26,7 +24,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface TrapHandler extends EObject
+public interface TrapHandler extends StatementContainer
 {
   /**
    * Returns the value of the '<em><b>Trap Expr</b></em>' containment reference.
@@ -53,31 +51,5 @@ public interface TrapHandler extends EObject
    * @generated
    */
   void setTrapExpr(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getTrapHandler_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.TrapHandler#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
 
 } // TrapHandler

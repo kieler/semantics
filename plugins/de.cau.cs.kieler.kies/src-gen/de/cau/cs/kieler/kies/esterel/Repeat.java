@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
@@ -17,7 +18,6 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#isPositive <em>Positive</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getExpression <em>Expression</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Repeat#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
@@ -26,7 +26,7 @@ import de.cau.cs.kieler.core.kexpressions.Expression;
  * @model
  * @generated
  */
-public interface Repeat extends Statement
+public interface Repeat extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Positive</b></em>' attribute.
@@ -79,32 +79,6 @@ public interface Repeat extends Statement
    * @generated
    */
   void setExpression(Expression value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getRepeat_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Repeat#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
 
   /**
    * Returns the value of the '<em><b>Opt End</b></em>' attribute.

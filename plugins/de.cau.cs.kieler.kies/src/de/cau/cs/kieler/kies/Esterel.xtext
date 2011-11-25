@@ -142,7 +142,11 @@ Task:
 
 
 StatementContainer:
-	Abort | Block 	
+	statement=Statement
+;
+
+StatementContainerInterface returns StatementContainer:
+	LocalSignalDecl | Block | Abort | AbortInstance | AbortCaseSingle | WeakAbort | WeakAbortInstance | AwaitInstance | Do | DoWatchingEnd | EveryDo | ThenPart | ElsePart | LoopBody | PresentCase | Repeat | Suspend | Trap | TrapHandler | LocalVariable | Exec | ExecCase
 ;
 
 // ==============================================

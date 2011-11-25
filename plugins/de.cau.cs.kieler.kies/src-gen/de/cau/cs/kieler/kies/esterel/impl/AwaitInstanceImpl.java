@@ -2,13 +2,14 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
+import de.cau.cs.kieler.kies.esterel.AwaitBody;
 import de.cau.cs.kieler.kies.esterel.AwaitInstance;
 import de.cau.cs.kieler.kies.esterel.DelayExpr;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,15 +26,35 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
+ *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AwaitInstanceImpl#getEnd <em>End</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AwaitInstanceImpl#getDelay <em>Delay</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AwaitInstanceImpl#getStatement <em>Statement</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
+public class AwaitInstanceImpl extends StatementContainerImpl implements AwaitInstance
 {
+  /**
+   * The default value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected static final String END_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getEnd() <em>End</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getEnd()
+   * @generated
+   * @ordered
+   */
+  protected String end = END_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getDelay() <em>Delay</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -43,16 +64,6 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
    * @ordered
    */
   protected DelayExpr delay;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,6 +84,29 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.AWAIT_INSTANCE;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getEnd()
+  {
+    return end;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setEnd(String newEnd)
+  {
+    String oldEnd = end;
+    end = newEnd;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT_INSTANCE__END, oldEnd, end));
   }
 
   /**
@@ -128,54 +162,6 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT_INSTANCE__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT_INSTANCE__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.AWAIT_INSTANCE__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.AWAIT_INSTANCE__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -183,8 +169,6 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
     {
       case EsterelPackage.AWAIT_INSTANCE__DELAY:
         return basicSetDelay(null, msgs);
-      case EsterelPackage.AWAIT_INSTANCE__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -199,10 +183,10 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
   {
     switch (featureID)
     {
+      case EsterelPackage.AWAIT_INSTANCE__END:
+        return getEnd();
       case EsterelPackage.AWAIT_INSTANCE__DELAY:
         return getDelay();
-      case EsterelPackage.AWAIT_INSTANCE__STATEMENT:
-        return getStatement();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -217,11 +201,11 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
   {
     switch (featureID)
     {
+      case EsterelPackage.AWAIT_INSTANCE__END:
+        setEnd((String)newValue);
+        return;
       case EsterelPackage.AWAIT_INSTANCE__DELAY:
         setDelay((DelayExpr)newValue);
-        return;
-      case EsterelPackage.AWAIT_INSTANCE__STATEMENT:
-        setStatement((Statement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -237,11 +221,11 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
   {
     switch (featureID)
     {
+      case EsterelPackage.AWAIT_INSTANCE__END:
+        setEnd(END_EDEFAULT);
+        return;
       case EsterelPackage.AWAIT_INSTANCE__DELAY:
         setDelay((DelayExpr)null);
-        return;
-      case EsterelPackage.AWAIT_INSTANCE__STATEMENT:
-        setStatement((Statement)null);
         return;
     }
     super.eUnset(featureID);
@@ -257,12 +241,67 @@ public class AwaitInstanceImpl extends AwaitBodyImpl implements AwaitInstance
   {
     switch (featureID)
     {
+      case EsterelPackage.AWAIT_INSTANCE__END:
+        return END_EDEFAULT == null ? end != null : !END_EDEFAULT.equals(end);
       case EsterelPackage.AWAIT_INSTANCE__DELAY:
         return delay != null;
-      case EsterelPackage.AWAIT_INSTANCE__STATEMENT:
-        return statement != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == AwaitBody.class)
+    {
+      switch (derivedFeatureID)
+      {
+        case EsterelPackage.AWAIT_INSTANCE__END: return EsterelPackage.AWAIT_BODY__END;
+        default: return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == AwaitBody.class)
+    {
+      switch (baseFeatureID)
+      {
+        case EsterelPackage.AWAIT_BODY__END: return EsterelPackage.AWAIT_INSTANCE__END;
+        default: return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (end: ");
+    result.append(end);
+    result.append(')');
+    return result.toString();
   }
 
 } //AwaitInstanceImpl

@@ -2,11 +2,11 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 import de.cau.cs.kieler.kies.esterel.Trap;
 import de.cau.cs.kieler.kies.esterel.TrapDeclList;
 import de.cau.cs.kieler.kies.esterel.TrapHandler;
@@ -34,7 +34,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapImpl#getTrapDeclList <em>Trap Decl List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapImpl#getTrapHandler <em>Trap Handler</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -42,7 +41,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class TrapImpl extends StatementImpl implements Trap
+public class TrapImpl extends StatementContainerImpl implements Trap
 {
   /**
    * The cached value of the '{@link #getTrapDeclList() <em>Trap Decl List</em>}' containment reference.
@@ -53,16 +52,6 @@ public class TrapImpl extends StatementImpl implements Trap
    * @ordered
    */
   protected TrapDeclList trapDeclList;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * The cached value of the '{@link #getTrapHandler() <em>Trap Handler</em>}' containment reference list.
@@ -168,54 +157,6 @@ public class TrapImpl extends StatementImpl implements Trap
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<TrapHandler> getTrapHandler()
   {
     if (trapHandler == null)
@@ -260,8 +201,6 @@ public class TrapImpl extends StatementImpl implements Trap
     {
       case EsterelPackage.TRAP__TRAP_DECL_LIST:
         return basicSetTrapDeclList(null, msgs);
-      case EsterelPackage.TRAP__STATEMENT:
-        return basicSetStatement(null, msgs);
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return ((InternalEList<?>)getTrapHandler()).basicRemove(otherEnd, msgs);
     }
@@ -280,8 +219,6 @@ public class TrapImpl extends StatementImpl implements Trap
     {
       case EsterelPackage.TRAP__TRAP_DECL_LIST:
         return getTrapDeclList();
-      case EsterelPackage.TRAP__STATEMENT:
-        return getStatement();
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return getTrapHandler();
       case EsterelPackage.TRAP__OPT_END:
@@ -303,9 +240,6 @@ public class TrapImpl extends StatementImpl implements Trap
     {
       case EsterelPackage.TRAP__TRAP_DECL_LIST:
         setTrapDeclList((TrapDeclList)newValue);
-        return;
-      case EsterelPackage.TRAP__STATEMENT:
-        setStatement((Statement)newValue);
         return;
       case EsterelPackage.TRAP__TRAP_HANDLER:
         getTrapHandler().clear();
@@ -331,9 +265,6 @@ public class TrapImpl extends StatementImpl implements Trap
       case EsterelPackage.TRAP__TRAP_DECL_LIST:
         setTrapDeclList((TrapDeclList)null);
         return;
-      case EsterelPackage.TRAP__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.TRAP__TRAP_HANDLER:
         getTrapHandler().clear();
         return;
@@ -356,8 +287,6 @@ public class TrapImpl extends StatementImpl implements Trap
     {
       case EsterelPackage.TRAP__TRAP_DECL_LIST:
         return trapDeclList != null;
-      case EsterelPackage.TRAP__STATEMENT:
-        return statement != null;
       case EsterelPackage.TRAP__TRAP_HANDLER:
         return trapHandler != null && !trapHandler.isEmpty();
       case EsterelPackage.TRAP__OPT_END:

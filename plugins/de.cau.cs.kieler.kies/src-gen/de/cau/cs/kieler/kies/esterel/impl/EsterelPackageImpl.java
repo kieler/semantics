@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
@@ -1148,19 +1149,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLocalSignalDecl_Statement()
-  {
-    return (EReference)localSignalDeclEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getLocalSignalDecl_OptEnd()
   {
-    return (EAttribute)localSignalDeclEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)localSignalDeclEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1618,6 +1609,16 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EReference getStatementContainer_Statement()
+  {
+    return (EReference)statementContainerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getStatement()
   {
     return statementEClass;
@@ -1631,16 +1632,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EClass getBlock()
   {
     return blockEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getBlock_Statement()
-  {
-    return (EReference)blockEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1688,19 +1679,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAbort_Statement()
-  {
-    return (EReference)abortEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getAbort_Body()
   {
-    return (EReference)abortEClass.getEStructuralFeatures().get(1);
+    return (EReference)abortEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1738,19 +1719,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAbortInstance_Statement()
-  {
-    return (EReference)abortInstanceEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getAbortInstance_OptEnd()
   {
-    return (EAttribute)abortInstanceEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)abortInstanceEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1801,16 +1772,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getAbortCaseSingle_Delay()
   {
     return (EReference)abortCaseSingleEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getAbortCaseSingle_Statement()
-  {
-    return (EReference)abortCaseSingleEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1938,16 +1899,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getAwaitInstance_Statement()
-  {
-    return (EReference)awaitInstanceEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getAwaitCase()
   {
     return awaitCaseEClass;
@@ -2018,19 +1969,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDo_Statement()
-  {
-    return (EReference)doEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getDo_End()
   {
-    return (EReference)doEClass.getEStructuralFeatures().get(1);
+    return (EReference)doEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2098,19 +2039,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getDoWatchingEnd_Statement()
-  {
-    return (EReference)doWatchingEndEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getDoWatchingEnd_OptEnd()
   {
-    return (EAttribute)doWatchingEndEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)doWatchingEndEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2178,19 +2109,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getEveryDo_Statement()
-  {
-    return (EReference)everyDoEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getEveryDo_OptEnd()
   {
-    return (EAttribute)everyDoEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)everyDoEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2338,29 +2259,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getThenPart_Statement()
-  {
-    return (EReference)thenPartEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getElsePart()
   {
     return elsePartEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getElsePart_Statement()
-  {
-    return (EReference)elsePartEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2461,16 +2362,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EClass getLoopBody()
   {
     return loopBodyEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getLoopBody_Statement()
-  {
-    return (EReference)loopBodyEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -2618,16 +2509,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getPresentCase_Statement()
-  {
-    return (EReference)presentCaseEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getPresentEvent()
   {
     return presentEventEClass;
@@ -2708,19 +2589,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getRepeat_Statement()
-  {
-    return (EReference)repeatEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getRepeat_OptEnd()
   {
-    return (EAttribute)repeatEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)repeatEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3048,19 +2919,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSuspend_Statement()
-  {
-    return (EReference)suspendEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getSuspend_Delay()
   {
-    return (EReference)suspendEClass.getEStructuralFeatures().get(1);
+    return (EReference)suspendEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3128,7 +2989,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTrap_Statement()
+  public EReference getTrap_TrapHandler()
   {
     return (EReference)trapEClass.getEStructuralFeatures().get(1);
   }
@@ -3138,19 +2999,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTrap_TrapHandler()
-  {
-    return (EReference)trapEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getTrap_OptEnd()
   {
-    return (EAttribute)trapEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)trapEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3198,16 +3049,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTrapHandler_Statement()
-  {
-    return (EReference)trapHandlerEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getLocalVariable()
   {
     return localVariableEClass;
@@ -3228,19 +3069,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getLocalVariable_Statement()
-  {
-    return (EReference)localVariableEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getLocalVariable_OptEnd()
   {
-    return (EAttribute)localVariableEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)localVariableEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -3378,7 +3209,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExec_Statement()
+  public EReference getExec_ExecCaseList()
   {
     return (EReference)execEClass.getEStructuralFeatures().get(3);
   }
@@ -3388,19 +3219,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExec_ExecCaseList()
-  {
-    return (EReference)execEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getExec_OptEnd()
   {
-    return (EAttribute)execEClass.getEStructuralFeatures().get(5);
+    return (EAttribute)execEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -3471,16 +3292,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
   public EReference getExecCase_RetSignal()
   {
     return (EReference)execCaseEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getExecCase_Statement()
-  {
-    return (EReference)execCaseEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -3821,7 +3632,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     localSignalDeclEClass = createEClass(LOCAL_SIGNAL_DECL);
     createEReference(localSignalDeclEClass, LOCAL_SIGNAL_DECL__SIGNAL_LIST);
-    createEReference(localSignalDeclEClass, LOCAL_SIGNAL_DECL__STATEMENT);
     createEAttribute(localSignalDeclEClass, LOCAL_SIGNAL_DECL__OPT_END);
 
     localSignalListEClass = createEClass(LOCAL_SIGNAL_LIST);
@@ -3887,25 +3697,23 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(taskEClass, TASK__ID_LIST2);
 
     statementContainerEClass = createEClass(STATEMENT_CONTAINER);
+    createEReference(statementContainerEClass, STATEMENT_CONTAINER__STATEMENT);
 
     statementEClass = createEClass(STATEMENT);
 
     blockEClass = createEClass(BLOCK);
-    createEReference(blockEClass, BLOCK__STATEMENT);
 
     assignmentEClass = createEClass(ASSIGNMENT);
     createEReference(assignmentEClass, ASSIGNMENT__VAR);
     createEReference(assignmentEClass, ASSIGNMENT__EXPR);
 
     abortEClass = createEClass(ABORT);
-    createEReference(abortEClass, ABORT__STATEMENT);
     createEReference(abortEClass, ABORT__BODY);
 
     abortBodyEClass = createEClass(ABORT_BODY);
 
     abortInstanceEClass = createEClass(ABORT_INSTANCE);
     createEReference(abortInstanceEClass, ABORT_INSTANCE__DELAY);
-    createEReference(abortInstanceEClass, ABORT_INSTANCE__STATEMENT);
     createEAttribute(abortInstanceEClass, ABORT_INSTANCE__OPT_END);
 
     abortCaseEClass = createEClass(ABORT_CASE);
@@ -3914,7 +3722,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     abortCaseSingleEClass = createEClass(ABORT_CASE_SINGLE);
     createEReference(abortCaseSingleEClass, ABORT_CASE_SINGLE__DELAY);
-    createEReference(abortCaseSingleEClass, ABORT_CASE_SINGLE__STATEMENT);
 
     weakAbortBodyEClass = createEClass(WEAK_ABORT_BODY);
 
@@ -3933,7 +3740,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     awaitInstanceEClass = createEClass(AWAIT_INSTANCE);
     createEReference(awaitInstanceEClass, AWAIT_INSTANCE__DELAY);
-    createEReference(awaitInstanceEClass, AWAIT_INSTANCE__STATEMENT);
 
     awaitCaseEClass = createEClass(AWAIT_CASE);
     createEReference(awaitCaseEClass, AWAIT_CASE__CASES);
@@ -3944,7 +3750,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(procCallEClass, PROC_CALL__KEXPRESSIONS);
 
     doEClass = createEClass(DO);
-    createEReference(doEClass, DO__STATEMENT);
     createEReference(doEClass, DO__END);
 
     doUptoEClass = createEClass(DO_UPTO);
@@ -3955,7 +3760,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(doWatchingEClass, DO_WATCHING__END);
 
     doWatchingEndEClass = createEClass(DO_WATCHING_END);
-    createEReference(doWatchingEndEClass, DO_WATCHING_END__STATEMENT);
     createEAttribute(doWatchingEndEClass, DO_WATCHING_END__OPT_END);
 
     emitEClass = createEClass(EMIT);
@@ -3965,7 +3769,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     everyDoEClass = createEClass(EVERY_DO);
     createEReference(everyDoEClass, EVERY_DO__DELAY);
-    createEReference(everyDoEClass, EVERY_DO__STATEMENT);
     createEAttribute(everyDoEClass, EVERY_DO__OPT_END);
 
     exitEClass = createEClass(EXIT);
@@ -3986,10 +3789,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(elsIfEClass, ELS_IF__THEN_PART);
 
     thenPartEClass = createEClass(THEN_PART);
-    createEReference(thenPartEClass, THEN_PART__STATEMENT);
 
     elsePartEClass = createEClass(ELSE_PART);
-    createEReference(elsePartEClass, ELSE_PART__STATEMENT);
 
     loopEClass = createEClass(LOOP);
     createEReference(loopEClass, LOOP__BODY);
@@ -4005,7 +3806,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(loopDelayEClass, LOOP_DELAY__DELAY);
 
     loopBodyEClass = createEClass(LOOP_BODY);
-    createEReference(loopBodyEClass, LOOP_BODY__STATEMENT);
 
     nothingEClass = createEClass(NOTHING);
 
@@ -4027,7 +3827,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     presentCaseEClass = createEClass(PRESENT_CASE);
     createEReference(presentCaseEClass, PRESENT_CASE__EVENT);
-    createEReference(presentCaseEClass, PRESENT_CASE__STATEMENT);
 
     presentEventEClass = createEClass(PRESENT_EVENT);
     createEReference(presentEventEClass, PRESENT_EVENT__EXPRESSION);
@@ -4038,7 +3837,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     repeatEClass = createEClass(REPEAT);
     createEAttribute(repeatEClass, REPEAT__POSITIVE);
     createEReference(repeatEClass, REPEAT__EXPRESSION);
-    createEReference(repeatEClass, REPEAT__STATEMENT);
     createEAttribute(repeatEClass, REPEAT__OPT_END);
 
     runEClass = createEClass(RUN);
@@ -4083,7 +3881,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(signalRenamingEClass, SIGNAL_RENAMING__OLD_NAME);
 
     suspendEClass = createEClass(SUSPEND);
-    createEReference(suspendEClass, SUSPEND__STATEMENT);
     createEReference(suspendEClass, SUSPEND__DELAY);
 
     sustainEClass = createEClass(SUSTAIN);
@@ -4093,7 +3890,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     trapEClass = createEClass(TRAP);
     createEReference(trapEClass, TRAP__TRAP_DECL_LIST);
-    createEReference(trapEClass, TRAP__STATEMENT);
     createEReference(trapEClass, TRAP__TRAP_HANDLER);
     createEAttribute(trapEClass, TRAP__OPT_END);
 
@@ -4102,11 +3898,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     trapHandlerEClass = createEClass(TRAP_HANDLER);
     createEReference(trapHandlerEClass, TRAP_HANDLER__TRAP_EXPR);
-    createEReference(trapHandlerEClass, TRAP_HANDLER__STATEMENT);
 
     localVariableEClass = createEClass(LOCAL_VARIABLE);
     createEReference(localVariableEClass, LOCAL_VARIABLE__VAR);
-    createEReference(localVariableEClass, LOCAL_VARIABLE__STATEMENT);
     createEAttribute(localVariableEClass, LOCAL_VARIABLE__OPT_END);
 
     delayExprEClass = createEClass(DELAY_EXPR);
@@ -4124,7 +3918,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(execEClass, EXEC__TASK);
     createEReference(execEClass, EXEC__BODY);
     createEReference(execEClass, EXEC__RET_SIGNAL);
-    createEReference(execEClass, EXEC__STATEMENT);
     createEReference(execEClass, EXEC__EXEC_CASE_LIST);
     createEAttribute(execEClass, EXEC__OPT_END);
 
@@ -4136,7 +3929,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     createEReference(execCaseEClass, EXEC_CASE__TASK);
     createEReference(execCaseEClass, EXEC_CASE__BODY);
     createEReference(execCaseEClass, EXEC_CASE__RET_SIGNAL);
-    createEReference(execCaseEClass, EXEC_CASE__STATEMENT);
 
     esterelTypeIdentifierEClass = createEClass(ESTEREL_TYPE_IDENTIFIER);
     createEReference(esterelTypeIdentifierEClass, ESTEREL_TYPE_IDENTIFIER__FUNC);
@@ -4216,6 +4008,7 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     // Add supertypes to classes
     channelDescriptionEClass.getESuperTypes().add(theKExpressionsPackage.getChannelDescription());
     typeIdentifierEClass.getESuperTypes().add(theKExpressionsPackage.getTypeIdentifier());
+    localSignalDeclEClass.getESuperTypes().add(this.getStatementContainer());
     localSignalDeclEClass.getESuperTypes().add(this.getStatement());
     relationImplicationEClass.getESuperTypes().add(this.getRelationType());
     relationIncompatibilityEClass.getESuperTypes().add(this.getRelationType());
@@ -4224,34 +4017,51 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     assignmentEClass.getESuperTypes().add(this.getStatement());
     abortEClass.getESuperTypes().add(this.getStatementContainer());
     abortEClass.getESuperTypes().add(this.getStatement());
+    abortInstanceEClass.getESuperTypes().add(this.getStatementContainer());
     abortInstanceEClass.getESuperTypes().add(this.getAbortBody());
     abortInstanceEClass.getESuperTypes().add(this.getWeakAbortBody());
     abortCaseEClass.getESuperTypes().add(this.getAbortBody());
     abortCaseEClass.getESuperTypes().add(this.getWeakAbortBody());
+    abortCaseSingleEClass.getESuperTypes().add(this.getStatementContainer());
     awaitEClass.getESuperTypes().add(this.getStatement());
+    awaitInstanceEClass.getESuperTypes().add(this.getStatementContainer());
     awaitInstanceEClass.getESuperTypes().add(this.getAwaitBody());
     awaitCaseEClass.getESuperTypes().add(this.getAwaitBody());
     procCallEClass.getESuperTypes().add(this.getStatement());
+    doEClass.getESuperTypes().add(this.getStatementContainer());
     doEClass.getESuperTypes().add(this.getStatement());
+    doWatchingEndEClass.getESuperTypes().add(this.getStatementContainer());
     emitEClass.getESuperTypes().add(this.getStatement());
+    everyDoEClass.getESuperTypes().add(this.getStatementContainer());
     everyDoEClass.getESuperTypes().add(this.getStatement());
     exitEClass.getESuperTypes().add(this.getStatement());
     haltEClass.getESuperTypes().add(this.getStatement());
     ifTestEClass.getESuperTypes().add(this.getStatement());
+    thenPartEClass.getESuperTypes().add(this.getStatementContainer());
+    elsePartEClass.getESuperTypes().add(this.getStatementContainer());
     loopEClass.getESuperTypes().add(this.getStatement());
     loopDelayEClass.getESuperTypes().add(this.getLoopEach());
+    loopBodyEClass.getESuperTypes().add(this.getStatementContainer());
     nothingEClass.getESuperTypes().add(this.getStatement());
     pauseEClass.getESuperTypes().add(this.getStatement());
     presentEClass.getESuperTypes().add(this.getStatement());
     presentEventBodyEClass.getESuperTypes().add(this.getPresentBody());
     presentCaseListEClass.getESuperTypes().add(this.getPresentBody());
+    presentCaseEClass.getESuperTypes().add(this.getStatementContainer());
+    repeatEClass.getESuperTypes().add(this.getStatementContainer());
     repeatEClass.getESuperTypes().add(this.getStatement());
     runEClass.getESuperTypes().add(this.getStatement());
+    suspendEClass.getESuperTypes().add(this.getStatementContainer());
     suspendEClass.getESuperTypes().add(this.getStatement());
     sustainEClass.getESuperTypes().add(this.getStatement());
+    trapEClass.getESuperTypes().add(this.getStatementContainer());
     trapEClass.getESuperTypes().add(this.getStatement());
+    trapHandlerEClass.getESuperTypes().add(this.getStatementContainer());
+    localVariableEClass.getESuperTypes().add(this.getStatementContainer());
     localVariableEClass.getESuperTypes().add(this.getStatement());
+    execEClass.getESuperTypes().add(this.getStatementContainer());
     execEClass.getESuperTypes().add(this.getStatement());
+    execCaseEClass.getESuperTypes().add(this.getStatementContainer());
     esterelTypeIdentifierEClass.getESuperTypes().add(theKExpressionsPackage.getTypeIdentifier());
     esterelTypeEClass.getESuperTypes().add(this.getTypeIdentifier());
     localSignalEClass.getESuperTypes().add(this.getLocalSignalList());
@@ -4297,7 +4107,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(localSignalDeclEClass, LocalSignalDecl.class, "LocalSignalDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocalSignalDecl_SignalList(), this.getLocalSignalList(), null, "signalList", null, 0, 1, LocalSignalDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocalSignalDecl_Statement(), this.getStatement(), null, "statement", null, 0, 1, LocalSignalDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLocalSignalDecl_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, LocalSignalDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localSignalListEClass, LocalSignalList.class, "LocalSignalList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4363,25 +4172,23 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getTask_IdList2(), this.getTypeIdentifier(), null, "idList2", null, 0, -1, Task.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementContainerEClass, StatementContainer.class, "StatementContainer", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatementContainer_Statement(), this.getStatement(), null, "statement", null, 0, 1, StatementContainer.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getBlock_Statement(), this.getStatement(), null, "statement", null, 0, 1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assignmentEClass, Assignment.class, "Assignment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAssignment_Var(), theKExpressionsPackage.getIVariable(), null, "var", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAssignment_Expr(), theKExpressionsPackage.getExpression(), null, "expr", null, 0, 1, Assignment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(abortEClass, Abort.class, "Abort", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAbort_Statement(), this.getStatement(), null, "statement", null, 0, 1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAbort_Body(), ecorePackage.getEObject(), null, "body", null, 0, 1, Abort.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(abortBodyEClass, AbortBody.class, "AbortBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(abortInstanceEClass, AbortInstance.class, "AbortInstance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAbortInstance_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, AbortInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAbortInstance_Statement(), this.getStatement(), null, "statement", null, 0, 1, AbortInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAbortInstance_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, AbortInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(abortCaseEClass, AbortCase.class, "AbortCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4390,7 +4197,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(abortCaseSingleEClass, AbortCaseSingle.class, "AbortCaseSingle", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAbortCaseSingle_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, AbortCaseSingle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAbortCaseSingle_Statement(), this.getStatement(), null, "statement", null, 0, 1, AbortCaseSingle.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(weakAbortBodyEClass, WeakAbortBody.class, "WeakAbortBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4409,7 +4215,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(awaitInstanceEClass, AwaitInstance.class, "AwaitInstance", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAwaitInstance_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, AwaitInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAwaitInstance_Statement(), this.getStatement(), null, "statement", null, 0, 1, AwaitInstance.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(awaitCaseEClass, AwaitCase.class, "AwaitCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAwaitCase_Cases(), this.getAbortCaseSingle(), null, "cases", null, 0, -1, AwaitCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4420,7 +4225,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getProcCall_Kexpressions(), theKExpressionsPackage.getExpression(), null, "kexpressions", null, 0, -1, ProcCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(doEClass, Do.class, "Do", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDo_Statement(), this.getStatement(), null, "statement", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getDo_End(), ecorePackage.getEObject(), null, "end", null, 0, 1, Do.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(doUptoEClass, DoUpto.class, "DoUpto", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4431,7 +4235,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getDoWatching_End(), this.getDoWatchingEnd(), null, "end", null, 0, 1, DoWatching.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(doWatchingEndEClass, DoWatchingEnd.class, "DoWatchingEnd", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDoWatchingEnd_Statement(), this.getStatement(), null, "statement", null, 0, 1, DoWatchingEnd.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDoWatchingEnd_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, DoWatchingEnd.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emitEClass, Emit.class, "Emit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4441,7 +4244,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(everyDoEClass, EveryDo.class, "EveryDo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEveryDo_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, EveryDo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getEveryDo_Statement(), this.getStatement(), null, "statement", null, 0, 1, EveryDo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getEveryDo_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, EveryDo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exitEClass, Exit.class, "Exit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4462,10 +4264,8 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getElsIf_ThenPart(), this.getThenPart(), null, "thenPart", null, 0, 1, ElsIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(thenPartEClass, ThenPart.class, "ThenPart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getThenPart_Statement(), this.getStatement(), null, "statement", null, 0, 1, ThenPart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(elsePartEClass, ElsePart.class, "ElsePart", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getElsePart_Statement(), this.getStatement(), null, "statement", null, 0, 1, ElsePart.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(loopEClass, Loop.class, "Loop", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLoop_Body(), this.getLoopBody(), null, "body", null, 0, 1, Loop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4481,7 +4281,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getLoopDelay_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, LoopDelay.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(loopBodyEClass, LoopBody.class, "LoopBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLoopBody_Statement(), this.getStatement(), null, "statement", null, 0, 1, LoopBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(nothingEClass, Nothing.class, "Nothing", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -4503,7 +4302,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(presentCaseEClass, PresentCase.class, "PresentCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPresentCase_Event(), this.getPresentEvent(), null, "event", null, 0, 1, PresentCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPresentCase_Statement(), this.getStatement(), null, "statement", null, 0, 1, PresentCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(presentEventEClass, PresentEvent.class, "PresentEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getPresentEvent_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, PresentEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -4514,7 +4312,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEClass(repeatEClass, Repeat.class, "Repeat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getRepeat_Positive(), ecorePackage.getEBoolean(), "positive", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getRepeat_Expression(), theKExpressionsPackage.getExpression(), null, "expression", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRepeat_Statement(), this.getStatement(), null, "statement", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getRepeat_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, Repeat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(runEClass, Run.class, "Run", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4559,7 +4356,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getSignalRenaming_OldName(), theKExpressionsPackage.getISignal(), null, "oldName", null, 0, 1, SignalRenaming.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(suspendEClass, Suspend.class, "Suspend", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSuspend_Statement(), this.getStatement(), null, "statement", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getSuspend_Delay(), this.getDelayExpr(), null, "delay", null, 0, 1, Suspend.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(sustainEClass, Sustain.class, "Sustain", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4569,7 +4365,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(trapEClass, Trap.class, "Trap", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTrap_TrapDeclList(), this.getTrapDeclList(), null, "trapDeclList", null, 0, 1, Trap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTrap_Statement(), this.getStatement(), null, "statement", null, 0, 1, Trap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTrap_TrapHandler(), this.getTrapHandler(), null, "trapHandler", null, 0, -1, Trap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTrap_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, Trap.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4578,11 +4373,9 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
 
     initEClass(trapHandlerEClass, TrapHandler.class, "TrapHandler", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTrapHandler_TrapExpr(), theKExpressionsPackage.getExpression(), null, "trapExpr", null, 0, 1, TrapHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getTrapHandler_Statement(), this.getStatement(), null, "statement", null, 0, 1, TrapHandler.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(localVariableEClass, LocalVariable.class, "LocalVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLocalVariable_Var(), theKExpressionsPackage.getInterfaceVariableDecl(), null, "var", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLocalVariable_Statement(), this.getStatement(), null, "statement", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLocalVariable_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, LocalVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(delayExprEClass, DelayExpr.class, "DelayExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -4600,7 +4393,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getExec_Task(), this.getTask(), null, "task", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExec_Body(), this.getExecBody(), null, "body", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExec_RetSignal(), theKExpressionsPackage.getISignal(), null, "retSignal", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExec_Statement(), this.getStatement(), null, "statement", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExec_ExecCaseList(), this.getExecCase(), null, "execCaseList", null, 0, -1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getExec_OptEnd(), ecorePackage.getEString(), "optEnd", null, 0, 1, Exec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -4612,7 +4404,6 @@ public class EsterelPackageImpl extends EPackageImpl implements EsterelPackage
     initEReference(getExecCase_Task(), this.getTask(), null, "task", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExecCase_Body(), this.getExecBody(), null, "body", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExecCase_RetSignal(), theKExpressionsPackage.getISignal(), null, "retSignal", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExecCase_Statement(), this.getStatement(), null, "statement", null, 0, 1, ExecCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(esterelTypeIdentifierEClass, EsterelTypeIdentifier.class, "EsterelTypeIdentifier", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEsterelTypeIdentifier_Func(), this.getFunction(), null, "func", null, 0, 1, EsterelTypeIdentifier.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

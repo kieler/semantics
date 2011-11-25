@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
@@ -16,7 +17,6 @@ import org.eclipse.emf.common.util.EList;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Trap#getTrapDeclList <em>Trap Decl List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.Trap#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Trap#getTrapHandler <em>Trap Handler</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.Trap#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -26,7 +26,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface Trap extends Statement
+public interface Trap extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Trap Decl List</b></em>' containment reference.
@@ -53,32 +53,6 @@ public interface Trap extends Statement
    * @generated
    */
   void setTrapDeclList(TrapDeclList value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getTrap_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.Trap#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
 
   /**
    * Returns the value of the '<em><b>Trap Handler</b></em>' containment reference list.

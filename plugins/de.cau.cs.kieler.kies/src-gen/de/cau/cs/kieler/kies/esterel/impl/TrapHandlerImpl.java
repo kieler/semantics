@@ -2,13 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 import de.cau.cs.kieler.kies.esterel.TrapHandler;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -18,7 +18,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -28,13 +27,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapHandlerImpl#getTrapExpr <em>Trap Expr</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.TrapHandlerImpl#getStatement <em>Statement</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements TrapHandler
+public class TrapHandlerImpl extends StatementContainerImpl implements TrapHandler
 {
   /**
    * The cached value of the '{@link #getTrapExpr() <em>Trap Expr</em>}' containment reference.
@@ -45,16 +43,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * @ordered
    */
   protected Expression trapExpr;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * <!-- begin-user-doc -->
@@ -130,54 +118,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.TRAP_HANDLER__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.TRAP_HANDLER__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -185,8 +125,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return basicSetTrapExpr(null, msgs);
-      case EsterelPackage.TRAP_HANDLER__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -203,8 +141,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return getTrapExpr();
-      case EsterelPackage.TRAP_HANDLER__STATEMENT:
-        return getStatement();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -221,9 +157,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         setTrapExpr((Expression)newValue);
-        return;
-      case EsterelPackage.TRAP_HANDLER__STATEMENT:
-        setStatement((Statement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -242,9 +175,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         setTrapExpr((Expression)null);
         return;
-      case EsterelPackage.TRAP_HANDLER__STATEMENT:
-        setStatement((Statement)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -261,8 +191,6 @@ public class TrapHandlerImpl extends MinimalEObjectImpl.Container implements Tra
     {
       case EsterelPackage.TRAP_HANDLER__TRAP_EXPR:
         return trapExpr != null;
-      case EsterelPackage.TRAP_HANDLER__STATEMENT:
-        return statement != null;
     }
     return super.eIsSet(featureID);
   }

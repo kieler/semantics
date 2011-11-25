@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
@@ -11,7 +12,6 @@ import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.Exec;
 import de.cau.cs.kieler.kies.esterel.ExecBody;
 import de.cau.cs.kieler.kies.esterel.ExecCase;
-import de.cau.cs.kieler.kies.esterel.Statement;
 import de.cau.cs.kieler.kies.esterel.Task;
 
 import java.util.Collection;
@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getRetSignal <em>Ret Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getExecCaseList <em>Exec Case List</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
@@ -47,7 +46,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  *
  * @generated
  */
-public class ExecImpl extends StatementImpl implements Exec
+public class ExecImpl extends StatementContainerImpl implements Exec
 {
   /**
    * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
@@ -78,16 +77,6 @@ public class ExecImpl extends StatementImpl implements Exec
    * @ordered
    */
   protected ISignal retSignal;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * The cached value of the '{@link #getExecCaseList() <em>Exec Case List</em>}' containment reference list.
@@ -279,54 +268,6 @@ public class ExecImpl extends StatementImpl implements Exec
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EList<ExecCase> getExecCaseList()
   {
     if (execCaseList == null)
@@ -371,8 +312,6 @@ public class ExecImpl extends StatementImpl implements Exec
     {
       case EsterelPackage.EXEC__BODY:
         return basicSetBody(null, msgs);
-      case EsterelPackage.EXEC__STATEMENT:
-        return basicSetStatement(null, msgs);
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return ((InternalEList<?>)getExecCaseList()).basicRemove(otherEnd, msgs);
     }
@@ -397,8 +336,6 @@ public class ExecImpl extends StatementImpl implements Exec
       case EsterelPackage.EXEC__RET_SIGNAL:
         if (resolve) return getRetSignal();
         return basicGetRetSignal();
-      case EsterelPackage.EXEC__STATEMENT:
-        return getStatement();
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return getExecCaseList();
       case EsterelPackage.EXEC__OPT_END:
@@ -426,9 +363,6 @@ public class ExecImpl extends StatementImpl implements Exec
         return;
       case EsterelPackage.EXEC__RET_SIGNAL:
         setRetSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.EXEC__STATEMENT:
-        setStatement((Statement)newValue);
         return;
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         getExecCaseList().clear();
@@ -460,9 +394,6 @@ public class ExecImpl extends StatementImpl implements Exec
       case EsterelPackage.EXEC__RET_SIGNAL:
         setRetSignal((ISignal)null);
         return;
-      case EsterelPackage.EXEC__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         getExecCaseList().clear();
         return;
@@ -489,8 +420,6 @@ public class ExecImpl extends StatementImpl implements Exec
         return body != null;
       case EsterelPackage.EXEC__RET_SIGNAL:
         return retSignal != null;
-      case EsterelPackage.EXEC__STATEMENT:
-        return statement != null;
       case EsterelPackage.EXEC__EXEC_CASE_LIST:
         return execCaseList != null && !execCaseList.isEmpty();
       case EsterelPackage.EXEC__OPT_END:

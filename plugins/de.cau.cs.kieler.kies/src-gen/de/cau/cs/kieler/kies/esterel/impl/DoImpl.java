@@ -2,12 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.kies.esterel.Do;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,25 +25,14 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DoImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.DoImpl#getEnd <em>End</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class DoImpl extends StatementImpl implements Do
+public class DoImpl extends StatementContainerImpl implements Do
 {
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
-
   /**
    * The cached value of the '{@link #getEnd() <em>End</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -73,54 +62,6 @@ public class DoImpl extends StatementImpl implements Do
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.DO;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.DO__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.DO__STATEMENT, newStatement, newStatement));
   }
 
   /**
@@ -181,8 +122,6 @@ public class DoImpl extends StatementImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__STATEMENT:
-        return basicSetStatement(null, msgs);
       case EsterelPackage.DO__END:
         return basicSetEnd(null, msgs);
     }
@@ -199,8 +138,6 @@ public class DoImpl extends StatementImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__STATEMENT:
-        return getStatement();
       case EsterelPackage.DO__END:
         return getEnd();
     }
@@ -217,9 +154,6 @@ public class DoImpl extends StatementImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__STATEMENT:
-        setStatement((Statement)newValue);
-        return;
       case EsterelPackage.DO__END:
         setEnd((EObject)newValue);
         return;
@@ -237,9 +171,6 @@ public class DoImpl extends StatementImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.DO__END:
         setEnd((EObject)null);
         return;
@@ -257,8 +188,6 @@ public class DoImpl extends StatementImpl implements Do
   {
     switch (featureID)
     {
-      case EsterelPackage.DO__STATEMENT:
-        return statement != null;
       case EsterelPackage.DO__END:
         return end != null;
     }

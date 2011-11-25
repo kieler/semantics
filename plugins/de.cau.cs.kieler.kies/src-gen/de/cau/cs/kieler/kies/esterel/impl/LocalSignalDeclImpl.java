@@ -2,13 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.LocalSignalDecl;
 import de.cau.cs.kieler.kies.esterel.LocalSignalList;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -26,14 +26,13 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalSignalDeclImpl#getSignalList <em>Signal List</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalSignalDeclImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.LocalSignalDeclImpl#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDecl
+public class LocalSignalDeclImpl extends StatementContainerImpl implements LocalSignalDecl
 {
   /**
    * The cached value of the '{@link #getSignalList() <em>Signal List</em>}' containment reference.
@@ -44,16 +43,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
    * @ordered
    */
   protected LocalSignalList signalList;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * The default value of the '{@link #getOptEnd() <em>Opt End</em>}' attribute.
@@ -149,54 +138,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public String getOptEnd()
   {
     return optEnd;
@@ -227,8 +168,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
     {
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNAL_LIST:
         return basicSetSignalList(null, msgs);
-      case EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -245,8 +184,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
     {
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNAL_LIST:
         return getSignalList();
-      case EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT:
-        return getStatement();
       case EsterelPackage.LOCAL_SIGNAL_DECL__OPT_END:
         return getOptEnd();
     }
@@ -265,9 +202,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
     {
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNAL_LIST:
         setSignalList((LocalSignalList)newValue);
-        return;
-      case EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT:
-        setStatement((Statement)newValue);
         return;
       case EsterelPackage.LOCAL_SIGNAL_DECL__OPT_END:
         setOptEnd((String)newValue);
@@ -289,9 +223,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNAL_LIST:
         setSignalList((LocalSignalList)null);
         return;
-      case EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.LOCAL_SIGNAL_DECL__OPT_END:
         setOptEnd(OPT_END_EDEFAULT);
         return;
@@ -311,8 +242,6 @@ public class LocalSignalDeclImpl extends StatementImpl implements LocalSignalDec
     {
       case EsterelPackage.LOCAL_SIGNAL_DECL__SIGNAL_LIST:
         return signalList != null;
-      case EsterelPackage.LOCAL_SIGNAL_DECL__STATEMENT:
-        return statement != null;
       case EsterelPackage.LOCAL_SIGNAL_DECL__OPT_END:
         return OPT_END_EDEFAULT == null ? optEnd != null : !OPT_END_EDEFAULT.equals(optEnd);
     }

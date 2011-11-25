@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel;
 
@@ -16,7 +17,6 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
  * The following features are supported:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.LocalVariable#getVar <em>Var</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.LocalVariable#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.LocalVariable#getOptEnd <em>Opt End</em>}</li>
  * </ul>
  * </p>
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceVariableDecl;
  * @model
  * @generated
  */
-public interface LocalVariable extends Statement
+public interface LocalVariable extends StatementContainer, Statement
 {
   /**
    * Returns the value of the '<em><b>Var</b></em>' containment reference.
@@ -52,32 +52,6 @@ public interface LocalVariable extends Statement
    * @generated
    */
   void setVar(InterfaceVariableDecl value);
-
-  /**
-   * Returns the value of the '<em><b>Statement</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Statement</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Statement</em>' containment reference.
-   * @see #setStatement(Statement)
-   * @see de.cau.cs.kieler.kies.esterel.EsterelPackage#getLocalVariable_Statement()
-   * @model containment="true"
-   * @generated
-   */
-  Statement getStatement();
-
-  /**
-   * Sets the value of the '{@link de.cau.cs.kieler.kies.esterel.LocalVariable#getStatement <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Statement</em>' containment reference.
-   * @see #getStatement()
-   * @generated
-   */
-  void setStatement(Statement value);
 
   /**
    * Returns the value of the '<em><b>Opt End</b></em>' attribute.

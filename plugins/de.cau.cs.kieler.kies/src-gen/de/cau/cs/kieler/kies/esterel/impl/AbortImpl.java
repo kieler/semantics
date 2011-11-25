@@ -2,12 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
 import de.cau.cs.kieler.kies.esterel.Abort;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.esterel.Statement;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -25,7 +25,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AbortImpl#getStatement <em>Statement</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.AbortImpl#getBody <em>Body</em>}</li>
  * </ul>
  * </p>
@@ -34,16 +33,6 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  */
 public class AbortImpl extends StatementContainerImpl implements Abort
 {
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
-
   /**
    * The cached value of the '{@link #getBody() <em>Body</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -73,54 +62,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   protected EClass eStaticClass()
   {
     return EsterelPackage.Literals.ABORT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ABORT__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.ABORT__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.ABORT__STATEMENT, newStatement, newStatement));
   }
 
   /**
@@ -181,8 +122,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__STATEMENT:
-        return basicSetStatement(null, msgs);
       case EsterelPackage.ABORT__BODY:
         return basicSetBody(null, msgs);
     }
@@ -199,8 +138,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__STATEMENT:
-        return getStatement();
       case EsterelPackage.ABORT__BODY:
         return getBody();
     }
@@ -217,9 +154,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__STATEMENT:
-        setStatement((Statement)newValue);
-        return;
       case EsterelPackage.ABORT__BODY:
         setBody((EObject)newValue);
         return;
@@ -237,9 +171,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__STATEMENT:
-        setStatement((Statement)null);
-        return;
       case EsterelPackage.ABORT__BODY:
         setBody((EObject)null);
         return;
@@ -257,8 +188,6 @@ public class AbortImpl extends StatementContainerImpl implements Abort
   {
     switch (featureID)
     {
-      case EsterelPackage.ABORT__STATEMENT:
-        return statement != null;
       case EsterelPackage.ABORT__BODY:
         return body != null;
     }

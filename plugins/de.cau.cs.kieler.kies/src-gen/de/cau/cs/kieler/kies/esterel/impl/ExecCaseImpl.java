@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.kies.esterel.impl;
 
@@ -10,7 +11,6 @@ import de.cau.cs.kieler.core.kexpressions.ISignal;
 import de.cau.cs.kieler.kies.esterel.EsterelPackage;
 import de.cau.cs.kieler.kies.esterel.ExecBody;
 import de.cau.cs.kieler.kies.esterel.ExecCase;
-import de.cau.cs.kieler.kies.esterel.Statement;
 import de.cau.cs.kieler.kies.esterel.Task;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -20,7 +20,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,13 +31,12 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecCaseImpl#getTask <em>Task</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecCaseImpl#getBody <em>Body</em>}</li>
  *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecCaseImpl#getRetSignal <em>Ret Signal</em>}</li>
- *   <li>{@link de.cau.cs.kieler.kies.esterel.impl.ExecCaseImpl#getStatement <em>Statement</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCase
+public class ExecCaseImpl extends StatementContainerImpl implements ExecCase
 {
   /**
    * The cached value of the '{@link #getTask() <em>Task</em>}' reference.
@@ -69,16 +67,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
    * @ordered
    */
   protected ISignal retSignal;
-
-  /**
-   * The cached value of the '{@link #getStatement() <em>Statement</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStatement()
-   * @generated
-   * @ordered
-   */
-  protected Statement statement;
 
   /**
    * <!-- begin-user-doc -->
@@ -240,54 +228,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
    * <!-- end-user-doc -->
    * @generated
    */
-  public Statement getStatement()
-  {
-    return statement;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetStatement(Statement newStatement, NotificationChain msgs)
-  {
-    Statement oldStatement = statement;
-    statement = newStatement;
-    if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC_CASE__STATEMENT, oldStatement, newStatement);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setStatement(Statement newStatement)
-  {
-    if (newStatement != statement)
-    {
-      NotificationChain msgs = null;
-      if (statement != null)
-        msgs = ((InternalEObject)statement).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC_CASE__STATEMENT, null, msgs);
-      if (newStatement != null)
-        msgs = ((InternalEObject)newStatement).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsterelPackage.EXEC_CASE__STATEMENT, null, msgs);
-      msgs = basicSetStatement(newStatement, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsterelPackage.EXEC_CASE__STATEMENT, newStatement, newStatement));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -295,8 +235,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
     {
       case EsterelPackage.EXEC_CASE__BODY:
         return basicSetBody(null, msgs);
-      case EsterelPackage.EXEC_CASE__STATEMENT:
-        return basicSetStatement(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -319,8 +257,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         if (resolve) return getRetSignal();
         return basicGetRetSignal();
-      case EsterelPackage.EXEC_CASE__STATEMENT:
-        return getStatement();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -343,9 +279,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
         return;
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         setRetSignal((ISignal)newValue);
-        return;
-      case EsterelPackage.EXEC_CASE__STATEMENT:
-        setStatement((Statement)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -370,9 +303,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         setRetSignal((ISignal)null);
         return;
-      case EsterelPackage.EXEC_CASE__STATEMENT:
-        setStatement((Statement)null);
-        return;
     }
     super.eUnset(featureID);
   }
@@ -393,8 +323,6 @@ public class ExecCaseImpl extends MinimalEObjectImpl.Container implements ExecCa
         return body != null;
       case EsterelPackage.EXEC_CASE__RET_SIGNAL:
         return retSignal != null;
-      case EsterelPackage.EXEC_CASE__STATEMENT:
-        return statement != null;
     }
     return super.eIsSet(featureID);
   }
