@@ -43,24 +43,27 @@ public class CSimulationInterfaceGenerator {
     private URI esterelProgramUri = null;
 
 	
-	public CSimulationInterfaceGenerator(IEditorPart editor) {
-        IParseResult result = null;
-        if (editor instanceof XtextEditor) {
-            XtextEditor xtextEditor = (XtextEditor) editor;
-
-            if (xtextEditor.getDocument() instanceof XtextDocument) {
-                IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
-
-                    public IParseResult exec(final XtextResource state) throws Exception {
-                        return state.getParseResult();
-                    }
-                };
-                result = xtextEditor.getDocument().readOnly(work);
-
-                esterelProgram = (Program) result.getRootASTElement();
-                esterelProgramUri = esterelProgram.eResource().getURI();
-            }
-        }
+	public CSimulationInterfaceGenerator(Program esterelProgram, URI esterelProgramUri) {
+		this.esterelProgram = esterelProgram;
+		this.esterelProgramUri = esterelProgramUri;
+		
+//        IParseResult result = null;
+//        if (editor instanceof XtextEditor) {
+//            XtextEditor xtextEditor = (XtextEditor) editor;
+//
+//            if (xtextEditor.getDocument() instanceof XtextDocument) {
+//                IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
+//
+//                    public IParseResult exec(final XtextResource state) throws Exception {
+//                        return state.getParseResult();
+//                    }
+//                };
+//                result = xtextEditor.getDocument().readOnly(work);
+//
+//                esterelProgram = (Program) result.getRootASTElement();
+//                esterelProgramUri = esterelProgram.eResource().getURI();
+//            }
+//        }
 	}
 	
 
