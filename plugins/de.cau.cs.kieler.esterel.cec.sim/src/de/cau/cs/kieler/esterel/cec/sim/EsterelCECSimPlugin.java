@@ -19,21 +19,29 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author ctr
+ * @author ctr, cmot
  */
-public class Activator extends Plugin {
+public class EsterelCECSimPlugin extends Plugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec.sim";
+    
+    /** The Constant AUXILIARY_VARIABLE_TAG.
+     *  This TAG is also defined in Esterel2Simulation.xtend. Both TAGs must match */
+    public static final String AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
-    // The shared instance
-    private static Activator plugin;
+    /** The The shared instance of this plugin. */
+    private static EsterelCECSimPlugin plugin;
+
+	// -----------------------------------------------------------------------------
 
     /**
      * The constructor.
      */
-    public Activator() {
+    public EsterelCECSimPlugin() {
     }
+
+	// -----------------------------------------------------------------------------
 
     @Override
     public void start(final BundleContext context) throws Exception {
@@ -41,19 +49,24 @@ public class Activator extends Plugin {
         plugin = this;
     }
 
+	// -----------------------------------------------------------------------------
+
     @Override
     public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
 
+	// -----------------------------------------------------------------------------
+
     /**
      * Returns the shared instance.
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static EsterelCECSimPlugin getDefault() {
         return plugin;
     }
 
+	// -----------------------------------------------------------------------------
 }

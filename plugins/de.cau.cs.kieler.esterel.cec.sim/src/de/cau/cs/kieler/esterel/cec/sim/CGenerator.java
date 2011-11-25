@@ -90,7 +90,7 @@ public class CGenerator extends AbstractHandler {
                 try {
                     CEC.run(strlFile, cFile);
                 } catch (IOException e) {
-                    Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID, "IO Error", e);
+                    Status myStatus = new Status(IStatus.ERROR, EsterelCECSimPlugin.PLUGIN_ID, "IO Error", e);
                     StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
                     return Status.OK_STATUS;
                 }

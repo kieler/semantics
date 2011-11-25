@@ -199,9 +199,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 				// print and delete debug information
 				out = new JSONObject(receivedMessage);
-				for (String o : outputs) {
-					if (!out.has(o)) {
-						out.accumulate(o, JSONSignalValues.newValue(false));
+				for (String output : outputs) {
+					if (!out.has(output)) {
+						
+						// Test if the output variable is an auxiliary signal that
+						// is only there to mark the current Esterel statement in
+						// full_simulation mode of the simulator.
+						// These auxiliary signals must be capsulated in a state 
+						// variable.
+						if (output.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+							
+						}
+						
+						out.accumulate(output, JSONSignalValues.newValue(false));
 					}
 				}
 			} else {

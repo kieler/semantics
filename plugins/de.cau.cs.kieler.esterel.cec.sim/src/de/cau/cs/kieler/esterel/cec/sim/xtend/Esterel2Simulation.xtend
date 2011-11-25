@@ -5,6 +5,7 @@ import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject
 
+
 import org.eclipse.emf.ecore.EObject
 
 import de.cau.cs.kieler.core.kexpressions.*
@@ -37,6 +38,8 @@ class Esterel2Simulation {
     
     // Generale method to create the enriched Esterel simulation code
    	def create target : EsterelFactory::eINSTANCE.createProgram transform2Simulation (Program program) {
+   		var AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
+   		
 		// Clone the complete Esterel program
 		for (module : program.modules) {
 			target.modules.add(CloningExtensions::clone(module) as Module);	
@@ -57,7 +60,7 @@ class Esterel2Simulation {
 			// First find the according statement in the orginal statements list
 			val predicate = [ Statement statement | statementCopy == statement ]
 			//var statement = statements.filter(predicate).toList.get(0) as Statement;
-			var statementUID = "ESTERELAUXILIARY" + originalStatement.eResource.getURIFragment(originalStatement).replace("/","x").replace("@","").replace(".","") ;//.hashCode.toString();
+			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).replace("/","x").replace("@","").replace(".","") ;//.hashCode.toString();
 			// This statement we want to modify
 			statementCopy.transformStatement(mainmodule, statementUID);
 		}

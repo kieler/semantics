@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel Simulator
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim;singleton:=true
 Bundle-Version: 0.1.1.qualifier
-Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.Activator
+Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
  de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
