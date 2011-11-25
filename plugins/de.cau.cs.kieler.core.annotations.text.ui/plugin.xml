@@ -14,11 +14,11 @@
          id="propsections"
          point="org.eclipse.ui.views.properties.tabbed.propertySections">
       <propertySections
-            contributorId="de.cau.cs.kieler.core.annotations.ui">
+            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
          <propertySection
                class="de.cau.cs.kieler.core.annotations.ui.properties.AnnotationsPropertySection"
-               id="de.cau.cs.kieler.core.annotations.ui.annotationsPropertySection"
-               tab="de.cau.cs.kieler.core.annotations.ui.annotationsPropertyTab">
+               id="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertySection"
+               tab="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertyTab">
             <input
                   type="de.cau.cs.kieler.core.annotations.Annotatable">
             </input>
@@ -38,10 +38,10 @@
          id="proptabs"
          point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
       <propertyTabs
-            contributorId="de.cau.cs.kieler.core.annotations.ui">
+            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
          <propertyTab
                category="annotations"
-               id="de.cau.cs.kieler.core.annotations.ui.annotationsPropertyTab"
+               id="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertyTab"
                label="Annotations">
          </propertyTab>
       </propertyTabs>

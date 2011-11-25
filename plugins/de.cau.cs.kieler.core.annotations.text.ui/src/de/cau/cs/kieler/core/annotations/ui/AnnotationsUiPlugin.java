@@ -30,7 +30,7 @@ import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 public class AnnotationsUiPlugin extends AnnotationsActivator {
 
     /** the plug-in ID. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.annotations.ui";
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.annotations.text.ui";
 
     /** nested class used to store images that are loaded at runtime. */
     public static class Images {
