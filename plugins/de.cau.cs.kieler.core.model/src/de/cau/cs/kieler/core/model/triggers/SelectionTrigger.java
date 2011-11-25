@@ -112,24 +112,30 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
                     // chsch: I'm not sure whether this is a good
                     //  idea but I want combinations sensitive to
                     //  SelectionStates be invoked in this case, too!
+                    
+                    // FIXME: casting of lists to more generic lists is evil!
                     @SuppressWarnings("unchecked")
-                    List<Object> l = (List<Object>) (List<?>) list; // FIXME: casting of lists to more generic lists is evil!
-                    trigger(new SelectionState(l,p));
-                    trigger(new EObjectSelectionState(list,p));
+                    List<Object> l = (List<Object>) (List<?>) list;
+                    trigger(new SelectionState(l, p));
+                    trigger(new EObjectSelectionState(list, p));
                 } else {
-                	// case 2: Selection still consists of EObjects, e.g. in EMF Tree Editor
-                	// Question: is this also true for Xtext?
-                	List<EObject> eObjectList = new ArrayList<EObject>(newSelection.size());
-                	try{    
-                		for(Object o:newSelection){
-                			eObjectList.add((EObject)o);
-                		}
-                		trigger(new EObjectSelectionState(eObjectList,p));
-                		trigger(new SelectionState((List<Object>) (List<?>)eObjectList,p)); // FIXME: casting of lists to more generic lists is evil!
-                	}catch(ClassCastException e){
-                		// case 3: Selection consists of plain Java objects
-                		trigger(new SelectionState(newSelection,p));
-                	}
+                    // case 2: Selection still consists of EObjects, e.g. in EMF Tree Editor
+                    // Question: is this also true for Xtext?
+                    List<EObject> eObjectList = new ArrayList<EObject>(newSelection.size());
+                    try {
+                        for (Object o : newSelection) {
+                            eObjectList.add((EObject) o);
+                        }
+                        trigger(new EObjectSelectionState(eObjectList, p));
+                        
+                        // FIXME: casting of lists to more generic lists is evil!
+                        @SuppressWarnings("unchecked")
+                        List<Object> l = (List<Object>) (List<?>) eObjectList;
+                        trigger(new SelectionState(l, p));
+                    } catch (ClassCastException e) {
+                        // case 3: Selection consists of plain Java objects
+                        trigger(new SelectionState(newSelection, p));
+                    }
                 }
             }
         }
@@ -142,9 +148,9 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      */
     private static class AbstractSelectionState<T> extends AbstractTriggerState {
 
-    	/** The editor or view in which a selection has been done */
-    	protected IWorkbenchPart workbenchPart; // SUPPRESS CHECKSTYLE VisibilityModifier
-    	
+        /** The editor or view in which a selection has been done. */
+        protected IWorkbenchPart workbenchPart; // SUPPRESS CHECKSTYLE VisibilityModifier
+
         /** The list of selected objects. */
         protected List<T> objects; // SUPPRESS CHECKSTYLE VisibilityModifier
 
@@ -164,10 +170,10 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
         /**
          * {@inheritDoc}
          */
-        public Class<? extends ITrigger> getTriggerClass() {            
+        public Class<? extends ITrigger> getTriggerClass() {
             return SelectionTrigger.class;
         }
-        
+
         /**
          * Get the editor that contains the selection.
          * 
@@ -176,11 +182,11 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          */
         public IEditorPart getDiagramEditor() {
             if (workbenchPart == null) {
-            	workbenchPart = EditorUtils.getLastActiveEditor();
+                workbenchPart = EditorUtils.getLastActiveEditor();
             }
             return (IEditorPart) workbenchPart;
         }
-        
+
         /**
          * Get the editor that contains the selection.
          * 
@@ -188,20 +194,19 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
          */
         public IWorkbenchPart getWorkbenchPart() {
             if (workbenchPart == null) {
-            	workbenchPart = EditorUtils.getLastActiveEditor();
+                workbenchPart = EditorUtils.getLastActiveEditor();
             }
             return workbenchPart;
         }
     }
-    
-    
+
     /**
      * A general selection trigger state.
      * 
      * @author chsch
      */
     public static class SelectionState extends AbstractSelectionState<Object> {
-        
+
         /**
          * Default constructor.
          */
@@ -231,7 +236,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      * 
      */
     public static class EObjectSelectionState extends AbstractSelectionState<EObject> {
-        
+
         /**
          * Default constructor.
          */
@@ -252,8 +257,6 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
             workbenchPart = e;
         }
 
-        
-        
     }
 
     /**
@@ -264,7 +267,7 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      * 
      */
     public static class DiagramSelectionState extends EObjectSelectionState {
-        
+
         /**
          * Default constructor.
          */
@@ -285,8 +288,6 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
             workbenchPart = e;
         }
 
-        
-        
     }
 
 }
