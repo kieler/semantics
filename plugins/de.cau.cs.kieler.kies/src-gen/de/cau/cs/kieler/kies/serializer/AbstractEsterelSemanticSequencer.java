@@ -1326,10 +1326,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr statement=Statement?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *    delay[1, 1]
 	 */
 	protected void sequence_AbortCaseSingle(EObject context, AbortCaseSingle semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1339,10 +1335,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (cases+=AbortCaseSingle cases+=AbortCaseSingle* optEnd='abort'?)
-	 *
-	 * Features:
-	 *    cases[1, *]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_AbortCase(EObject context, AbortCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1352,13 +1344,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr (statement=Statement optEnd='abort'?)?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *         MANDATORY_IF_SET optEnd
-	 *    delay[1, 1]
-	 *    optEnd[0, 1]
-	 *         EXCLUDE_IF_UNSET statement
 	 */
 	protected void sequence_AbortInstance(EObject context, AbortInstance semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1368,10 +1353,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (statement=Statement body=AbortBody)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    body[1, 1]
 	 */
 	protected void sequence_Abort(EObject context, Abort semanticObject) {
 		if(errorAcceptor != null) {
@@ -1391,18 +1372,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *         EXCLUDE_IF_UNSET name
-	 *         EXCLUDE_IF_UNSET value
-	 *         EXCLUDE_IF_SET value
-	 *    name[0, 1]
-	 *         EXCLUDE_IF_UNSET value
-	 *         MANDATORY_IF_SET value
-	 *         MANDATORY_IF_SET annotations
-	 *         EXCLUDE_IF_SET value
-	 *    value[0, 2]
 	 */
 	protected void sequence_Annotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -1412,10 +1381,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (var=[IVariable|ID] expr=Expression)
-	 *
-	 * Features:
-	 *    var[1, 1]
-	 *    expr[1, 1]
 	 */
 	protected void sequence_Assignment(EObject context, Assignment semanticObject) {
 		if(errorAcceptor != null) {
@@ -1442,10 +1407,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 9]
-	 *    operator[0, 6]
 	 */
 	protected void sequence_AtomicExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1468,10 +1429,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_AtomicValuedExpression(EObject context, OperatorExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -1481,10 +1438,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (cases+=AbortCaseSingle cases+=AbortCaseSingle* end=AwaitEnd)
-	 *
-	 * Features:
-	 *    end[1, 1]
-	 *    cases[1, *]
 	 */
 	protected void sequence_AwaitCase(EObject context, AwaitCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1494,15 +1447,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr (statement=Statement end=AwaitEnd)?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *         EXCLUDE_IF_UNSET end
-	 *         MANDATORY_IF_SET end
-	 *    end[0, 1]
-	 *         EXCLUDE_IF_UNSET statement
-	 *         MANDATORY_IF_SET statement
-	 *    delay[1, 1]
 	 */
 	protected void sequence_AwaitInstance(EObject context, AwaitInstance semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1512,9 +1456,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     body=AwaitBody
-	 *
-	 * Features:
-	 *    body[1, 1]
 	 */
 	protected void sequence_Await(EObject context, Await semanticObject) {
 		if(errorAcceptor != null) {
@@ -1531,9 +1472,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statement=Statement
-	 *
-	 * Features:
-	 *    statement[1, 1]
 	 */
 	protected void sequence_Block(EObject context, Block semanticObject) {
 		if(errorAcceptor != null) {
@@ -1550,9 +1488,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     value=Boolean
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_BooleanValue(EObject context, BooleanValue semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -1562,14 +1497,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (type=EsterelTypeIdentifier | type=EsterelTypeIdentifier | (expression=Expression type=EsterelTypeIdentifier))
-	 *
-	 * Features:
-	 *    type[0, 3]
-	 *    expression[0, 1]
-	 *         EXCLUDE_IF_UNSET type
-	 *         MANDATORY_IF_SET type
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET type
 	 */
 	protected void sequence_ChannelDescription(EObject context, ChannelDescription semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1579,9 +1506,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     value=COMMENT_ANNOTATION
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_CommentAnnotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -1591,9 +1515,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (constants+=OneTypeConstantDecls constants+=OneTypeConstantDecls*)
-	 *
-	 * Features:
-	 *    constants[1, *]
 	 */
 	protected void sequence_ConstantDecls(EObject context, ConstantDecls semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1603,12 +1524,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (constant=[Constant|ID] | value=ConstantAtom)
-	 *
-	 * Features:
-	 *    constant[0, 1]
-	 *         EXCLUDE_IF_SET value
-	 *    value[0, 1]
-	 *         EXCLUDE_IF_SET constant
 	 */
 	protected void sequence_ConstantExpression(EObject context, ConstantExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1618,13 +1533,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((newName=[ValuedObject|ID] | newValue=ConstantAtom) oldName=[ValuedObject|ID])
-	 *
-	 * Features:
-	 *    newName[0, 1]
-	 *         EXCLUDE_IF_SET newValue
-	 *    newValue[0, 1]
-	 *         EXCLUDE_IF_SET newName
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_ConstantRenaming(EObject context, ConstantRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1634,10 +1542,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (constant=Constant value=ConstantAtom?)
-	 *
-	 * Features:
-	 *    constant[1, 1]
-	 *    value[0, 1]
 	 */
 	protected void sequence_ConstantWithValue(EObject context, ConstantWithValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1647,9 +1551,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     name=ID
-	 *
-	 * Features:
-	 *    name[1, 1]
 	 */
 	protected void sequence_Constant(EObject context, Constant semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1659,29 +1560,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (tick=Tick | expr=SignalReferenceExpr | (fB='[' expr=SignalExpression eB=']'))
-	 *
-	 * Features:
-	 *    tick[0, 1]
-	 *         EXCLUDE_IF_SET expr
-	 *         EXCLUDE_IF_SET fB
-	 *         EXCLUDE_IF_SET expr
-	 *         EXCLUDE_IF_SET eB
-	 *    expr[0, 2]
-	 *         EXCLUDE_IF_SET tick
-	 *    fB[0, 1]
-	 *         EXCLUDE_IF_UNSET expr
-	 *         MANDATORY_IF_SET expr
-	 *         EXCLUDE_IF_UNSET eB
-	 *         MANDATORY_IF_SET eB
-	 *         EXCLUDE_IF_SET tick
-	 *         EXCLUDE_IF_SET expr
-	 *    eB[0, 1]
-	 *         EXCLUDE_IF_UNSET fB
-	 *         MANDATORY_IF_SET fB
-	 *         EXCLUDE_IF_UNSET expr
-	 *         MANDATORY_IF_SET expr
-	 *         EXCLUDE_IF_SET tick
-	 *         EXCLUDE_IF_SET expr
 	 */
 	protected void sequence_DelayEvent(EObject context, DelayEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1691,21 +1569,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((expr=Expression event=DelayEvent) | event=DelayEvent | (isImmediate?='immediate' event=DelayEvent))
-	 *
-	 * Features:
-	 *    expr[0, 1]
-	 *         EXCLUDE_IF_UNSET event
-	 *         MANDATORY_IF_SET event
-	 *         EXCLUDE_IF_SET event
-	 *         EXCLUDE_IF_SET isImmediate
-	 *         EXCLUDE_IF_SET event
-	 *    event[0, 3]
-	 *    isImmediate[0, 1]
-	 *         EXCLUDE_IF_UNSET event
-	 *         MANDATORY_IF_SET event
-	 *         EXCLUDE_IF_SET expr
-	 *         EXCLUDE_IF_SET event
-	 *         EXCLUDE_IF_SET event
 	 */
 	protected void sequence_DelayExpr(EObject context, DelayExpr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1715,9 +1578,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     expr=DelayExpr
-	 *
-	 * Features:
-	 *    expr[1, 1]
 	 */
 	protected void sequence_DoUpto(EObject context, DoUpto semanticObject) {
 		if(errorAcceptor != null) {
@@ -1734,10 +1594,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (statement=Statement optEnd='timeout'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_DoWatchingEnd(EObject context, DoWatchingEnd semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1747,10 +1603,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr end=DoWatchingEnd?)
-	 *
-	 * Features:
-	 *    delay[1, 1]
-	 *    end[0, 1]
 	 */
 	protected void sequence_DoWatching(EObject context, DoWatching semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1760,10 +1612,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (statement=Statement (end=DoUpto | end=DoWatching))
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    end[0, 2]
 	 */
 	protected void sequence_Do(EObject context, Do semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1773,10 +1621,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (expr=Expression thenPart=ThenPart?)
-	 *
-	 * Features:
-	 *    expr[1, 1]
-	 *    thenPart[0, 1]
 	 */
 	protected void sequence_ElsIf(EObject context, ElsIf semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1786,9 +1630,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statement=Statement
-	 *
-	 * Features:
-	 *    statement[1, 1]
 	 */
 	protected void sequence_ElsePart(EObject context, ElsePart semanticObject) {
 		if(errorAcceptor != null) {
@@ -1805,13 +1646,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((signal=[ISignal|ID] | tick=Tick) expr=Expression?)
-	 *
-	 * Features:
-	 *    signal[0, 1]
-	 *         EXCLUDE_IF_SET tick
-	 *    tick[0, 1]
-	 *         EXCLUDE_IF_SET signal
-	 *    expr[0, 1]
 	 */
 	protected void sequence_Emit(EObject context, Emit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1821,9 +1655,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (endOpt='loop'?)
-	 *
-	 * Features:
-	 *    endOpt[0, 1]
 	 */
 	protected void sequence_EndLoop(EObject context, EndLoop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1833,16 +1664,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((type=ValueType | typeID=ID) (func=[Function|ID] | operator=CombineOperator))
-	 *
-	 * Features:
-	 *    type[0, 1]
-	 *         EXCLUDE_IF_SET typeID
-	 *    typeID[0, 1]
-	 *         EXCLUDE_IF_SET type
-	 *    operator[0, 1]
-	 *         EXCLUDE_IF_SET func
-	 *    func[0, 1]
-	 *         EXCLUDE_IF_SET operator
 	 */
 	protected void sequence_EsterelTypeIdentifier(EObject context, EsterelTypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1852,12 +1673,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (type=ValueType | typeID=ID)
-	 *
-	 * Features:
-	 *    type[0, 1]
-	 *         EXCLUDE_IF_SET typeID
-	 *    typeID[0, 1]
-	 *         EXCLUDE_IF_SET type
 	 */
 	protected void sequence_EsterelTypeIdentifier(EObject context, de.cau.cs.kieler.core.kexpressions.TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1867,11 +1682,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr statement=Statement optEnd='every'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    delay[1, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_EveryDo(EObject context, EveryDo semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1881,10 +1691,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((vars+=[IVariable|ID] vars+=[IVariable|ID]*)? (kexpressions+=Expression kexpressions+=Expression*)?)
-	 *
-	 * Features:
-	 *    vars[0, *]
-	 *    kexpressions[0, *]
 	 */
 	protected void sequence_ExecBody(EObject context, ExecBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1894,12 +1700,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (task=[Task|ID] body=ExecBody retSignal=[ISignal|ID] statement=Statement?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *    task[1, 1]
-	 *    body[1, 1]
-	 *    retSignal[1, 1]
 	 */
 	protected void sequence_ExecCase(EObject context, ExecCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1912,44 +1712,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         ((task=[Task|ID] body=ExecBody retSignal=[ISignal|ID] statement=Statement?) | (execCaseList+=ExecCase execCaseList+=ExecCase*)) 
 	 *         optEnd='exec'?
 	 *     )
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *         EXCLUDE_IF_UNSET task
-	 *         EXCLUDE_IF_UNSET body
-	 *         EXCLUDE_IF_UNSET retSignal
-	 *         EXCLUDE_IF_SET execCaseList
-	 *         EXCLUDE_IF_SET execCaseList
-	 *    task[0, 1]
-	 *         EXCLUDE_IF_UNSET body
-	 *         MANDATORY_IF_SET body
-	 *         EXCLUDE_IF_UNSET retSignal
-	 *         MANDATORY_IF_SET retSignal
-	 *         MANDATORY_IF_SET statement
-	 *         EXCLUDE_IF_SET execCaseList
-	 *         EXCLUDE_IF_SET execCaseList
-	 *    body[0, 1]
-	 *         EXCLUDE_IF_UNSET task
-	 *         MANDATORY_IF_SET task
-	 *         EXCLUDE_IF_UNSET retSignal
-	 *         MANDATORY_IF_SET retSignal
-	 *         MANDATORY_IF_SET statement
-	 *         EXCLUDE_IF_SET execCaseList
-	 *         EXCLUDE_IF_SET execCaseList
-	 *    retSignal[0, 1]
-	 *         EXCLUDE_IF_UNSET task
-	 *         MANDATORY_IF_SET task
-	 *         EXCLUDE_IF_UNSET body
-	 *         MANDATORY_IF_SET body
-	 *         MANDATORY_IF_SET statement
-	 *         EXCLUDE_IF_SET execCaseList
-	 *         EXCLUDE_IF_SET execCaseList
-	 *    execCaseList[0, *]
-	 *         EXCLUDE_IF_SET task
-	 *         EXCLUDE_IF_SET body
-	 *         EXCLUDE_IF_SET retSignal
-	 *         EXCLUDE_IF_SET statement
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_Exec(EObject context, Exec semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1959,10 +1721,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (trap=[TrapDecl|ID] expression=Expression?)
-	 *
-	 * Features:
-	 *    trap[1, 1]
-	 *    expression[0, 1]
 	 */
 	protected void sequence_Exit(EObject context, Exit semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1985,10 +1743,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_Expression(EObject context, OperatorExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -1998,9 +1752,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     value=Float
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_FloatValue(EObject context, FloatValue semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2010,9 +1761,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (functions+=Function functions+=Function*)
-	 *
-	 * Features:
-	 *    functions[1, *]
 	 */
 	protected void sequence_FunctionDecl(EObject context, FunctionDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2022,10 +1770,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (function=[Function|ID] (kexpressions+=Expression kexpressions+=Expression*)?)
-	 *
-	 * Features:
-	 *    function[1, 1]
-	 *    kexpressions[0, *]
 	 */
 	protected void sequence_FunctionExpression(EObject context, FunctionExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2035,13 +1779,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((newName=[Function|ID] | newFunc=BuildInFunction) oldName=[Function|ID])
-	 *
-	 * Features:
-	 *    newName[0, 1]
-	 *         EXCLUDE_IF_SET newFunc
-	 *    newFunc[0, 1]
-	 *         EXCLUDE_IF_SET newName
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_FunctionRenaming(EObject context, FunctionRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2051,11 +1788,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID (idList+=TypeIdentifier idList+=TypeIdentifier*)? type=TypeIdentifier)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    idList[0, *]
-	 *    type[1, 1]
 	 */
 	protected void sequence_Function(EObject context, Function semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2065,10 +1797,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID channelDescr=ChannelDescription?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    channelDescr[0, 1]
 	 */
 	protected void sequence_ISignal(EObject context, ISignal semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2078,10 +1806,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID expression=Expression?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    expression[0, 1]
 	 */
 	protected void sequence_IVariable(EObject context, IVariable semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2091,13 +1815,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (expr=Expression thenPart=ThenPart? elsif+=ElsIf* elsePart=ElsePart? optEnd='if'?)
-	 *
-	 * Features:
-	 *    expr[1, 1]
-	 *    thenPart[0, 1]
-	 *    elsif[0, *]
-	 *    elsePart[0, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_IfTest(EObject context, IfTest semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2107,9 +1824,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     importURI=STRING
-	 *
-	 * Features:
-	 *    importURI[1, 1]
 	 */
 	protected void sequence_ImportAnnotation(EObject context, ImportAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2119,9 +1833,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     value=INT
-	 *
-	 * Features:
-	 *    value[1, 1]
 	 */
 	protected void sequence_IntValue(EObject context, IntValue semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2131,9 +1842,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Input semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2143,9 +1851,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, InputOutput semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2155,9 +1860,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Output semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2167,9 +1869,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signals+=ISignal signals+=ISignal*)
-	 *
-	 * Features:
-	 *    signals[1, *]
 	 */
 	protected void sequence_InterfaceSignalDecl(EObject context, Return semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2179,9 +1878,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (varDecls+=VariableDecl varDecls+=VariableDecl*)
-	 *
-	 * Features:
-	 *    varDecls[1, *]
 	 */
 	protected void sequence_InterfaceVariableDecl(EObject context, InterfaceVariableDecl semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2191,11 +1887,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Boolean annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyBooleanValueAnnotation(EObject context, BooleanAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2205,11 +1896,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=Float annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyFloatValueAnnotation(EObject context, FloatAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2219,11 +1905,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=INT annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyIntValueAnnotation(EObject context, IntAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2233,11 +1914,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
 	 */
 	protected void sequence_KeyStringValueAnnotation(EObject context, StringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2247,11 +1923,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signalList=LocalSignalList statement=Statement optEnd='signal'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    signalList[1, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_LocalSignalDecl(EObject context, LocalSignalDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2261,9 +1932,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (signal+=ISignal signal+=ISignal*)
-	 *
-	 * Features:
-	 *    signal[1, *]
 	 */
 	protected void sequence_LocalSignalList(EObject context, LocalSignal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2273,11 +1941,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (var=InterfaceVariableDecl statement=Statement optEnd='var'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    var[1, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_LocalVariable(EObject context, LocalVariable semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2287,9 +1950,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statement=Statement
-	 *
-	 * Features:
-	 *    statement[1, 1]
 	 */
 	protected void sequence_LoopBody(EObject context, LoopBody semanticObject) {
 		if(errorAcceptor != null) {
@@ -2306,9 +1966,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     delay=DelayExpr
-	 *
-	 * Features:
-	 *    delay[1, 1]
 	 */
 	protected void sequence_LoopDelay(EObject context, LoopDelay semanticObject) {
 		if(errorAcceptor != null) {
@@ -2325,13 +1982,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (body=LoopBody (end1=EndLoop | end=LoopEach))
-	 *
-	 * Features:
-	 *    body[1, 1]
-	 *    end1[0, 1]
-	 *         EXCLUDE_IF_SET end
-	 *    end[0, 1]
-	 *         EXCLUDE_IF_SET end1
 	 */
 	protected void sequence_Loop(EObject context, Loop semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2341,9 +1991,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statements+=Statement
-	 *
-	 * Features:
-	 *    statements[1, 1]
 	 */
 	protected void sequence_ModuleBody(EObject context, ModuleBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2362,16 +2009,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         intFunctionDecls+=FunctionDecl | 
 	 *         intProcedureDecls+=ProcedureDecl
 	 *     )+
-	 *
-	 * Features:
-	 *    intSignalDecls[0, *]
-	 *    intTypeDecls[0, *]
-	 *    intSensorDecls[0, *]
-	 *    intConstantDecls[0, *]
-	 *    intRelationDecls[0, *]
-	 *    intTaskDecls[0, *]
-	 *    intFunctionDecls[0, *]
-	 *    intProcedureDecls[0, *]
 	 */
 	protected void sequence_ModuleInterface(EObject context, ModuleInterface semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2381,13 +2018,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (module=[Module|ID] | (newName=ID module=[Module|ID]))
-	 *
-	 * Features:
-	 *    module[0, 2]
-	 *    newName[0, 1]
-	 *         EXCLUDE_IF_UNSET module
-	 *         MANDATORY_IF_SET module
-	 *         EXCLUDE_IF_SET module
 	 */
 	protected void sequence_ModuleRenaming(EObject context, ModuleRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2397,12 +2027,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID interface=ModuleInterface? body=ModuleBody end=EndModule)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    interface[0, 1]
-	 *    body[1, 1]
-	 *    end[1, 1]
 	 */
 	protected void sequence_Module(EObject context, Module semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2425,10 +2049,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=SubExpression_OperatorExpression_1_0 operator=SubOperator subExpressions+=MultExpression) | 
 	 *         (subExpressions+=AddExpression_OperatorExpression_1_0 operator=AddOperator subExpressions+=SubExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 20]
-	 *    operator[0, 12]
 	 */
 	protected void sequence_NegExpression(EObject context, OperatorExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2445,10 +2065,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=AndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=CompareOperation) | 
 	 *         (subExpressions+=OrExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=AndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 9]
-	 *    operator[0, 6]
 	 */
 	protected void sequence_NotExpression(EObject context, OperatorExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2458,10 +2074,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (constants+=ConstantWithValue constants+=ConstantWithValue* type=TypeIdentifier)
-	 *
-	 * Features:
-	 *    constants[1, *]
-	 *    type[1, 1]
 	 */
 	protected void sequence_OneTypeConstantDecls(EObject context, OneTypeConstantDecls semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2471,9 +2083,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (cases+=PresentCase cases+=PresentCase*)
-	 *
-	 * Features:
-	 *    cases[1, *]
 	 */
 	protected void sequence_PresentCaseList(EObject context, PresentCaseList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2483,10 +2092,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (event=PresentEvent statement=Statement?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *    event[1, 1]
 	 */
 	protected void sequence_PresentCase(EObject context, PresentCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2496,10 +2101,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (event=PresentEvent thenPart=ThenPart?)
-	 *
-	 * Features:
-	 *    event[1, 1]
-	 *    thenPart[0, 1]
 	 */
 	protected void sequence_PresentEventBody(EObject context, PresentEventBody semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2509,29 +2110,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (expression=SignalExpression | (fB='[' expression=SignalExpression eB=']') | tick=Tick)
-	 *
-	 * Features:
-	 *    expression[0, 2]
-	 *         EXCLUDE_IF_SET tick
-	 *    fB[0, 1]
-	 *         EXCLUDE_IF_UNSET expression
-	 *         MANDATORY_IF_SET expression
-	 *         EXCLUDE_IF_UNSET eB
-	 *         MANDATORY_IF_SET eB
-	 *         EXCLUDE_IF_SET expression
-	 *         EXCLUDE_IF_SET tick
-	 *    eB[0, 1]
-	 *         EXCLUDE_IF_UNSET fB
-	 *         MANDATORY_IF_SET fB
-	 *         EXCLUDE_IF_UNSET expression
-	 *         MANDATORY_IF_SET expression
-	 *         EXCLUDE_IF_SET expression
-	 *         EXCLUDE_IF_SET tick
-	 *    tick[0, 1]
-	 *         EXCLUDE_IF_SET expression
-	 *         EXCLUDE_IF_SET fB
-	 *         EXCLUDE_IF_SET expression
-	 *         EXCLUDE_IF_SET eB
 	 */
 	protected void sequence_PresentEvent(EObject context, PresentEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2541,11 +2119,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (body=PresentBody elsePart=ElsePart? optEnd='present'?)
-	 *
-	 * Features:
-	 *    body[1, 1]
-	 *    elsePart[0, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_Present(EObject context, Present semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2555,11 +2128,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (proc=[Procedure|ID] (varList+=[IVariable|ID] varList+=[IVariable|ID]*)? (kexpressions+=Expression kexpressions+=Expression*)?)
-	 *
-	 * Features:
-	 *    proc[1, 1]
-	 *    varList[0, *]
-	 *    kexpressions[0, *]
 	 */
 	protected void sequence_ProcCall(EObject context, ProcCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2569,9 +2137,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (procedures+=Procedure procedures+=Procedure*)
-	 *
-	 * Features:
-	 *    procedures[1, *]
 	 */
 	protected void sequence_ProcedureDecl(EObject context, ProcedureDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2581,10 +2146,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (newName=[Procedure|ID] oldName=[Procedure|ID])
-	 *
-	 * Features:
-	 *    newName[1, 1]
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_ProcedureRenaming(EObject context, ProcedureRenaming semanticObject) {
 		if(errorAcceptor != null) {
@@ -2604,11 +2165,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID (idList1+=TypeIdentifier idList1+=TypeIdentifier*)? (idList2+=TypeIdentifier idList2+=TypeIdentifier*)?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    idList1[0, *]
-	 *    idList2[0, *]
 	 */
 	protected void sequence_Procedure(EObject context, Procedure semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2618,9 +2174,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     modules+=Module*
-	 *
-	 * Features:
-	 *    modules[0, *]
 	 */
 	protected void sequence_Program(EObject context, Program semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2630,9 +2183,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (relations+=RelationType relations+=RelationType*)
-	 *
-	 * Features:
-	 *    relations[1, *]
 	 */
 	protected void sequence_RelationDecl(EObject context, Relation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2642,11 +2192,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (first=[ISignal|ID] type='=>' second=[ISignal|ID])
-	 *
-	 * Features:
-	 *    type[1, 1]
-	 *    first[1, 1]
-	 *    second[1, 1]
 	 */
 	protected void sequence_RelationImplication(EObject context, RelationImplication semanticObject) {
 		if(errorAcceptor != null) {
@@ -2669,10 +2214,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (incomp+=[ISignal|ID] type='#' incomp+=[ISignal|ID] incomp+=[ISignal|ID]*)
-	 *
-	 * Features:
-	 *    type[1, 1]
-	 *    incomp[2, *]
 	 */
 	protected void sequence_RelationIncompatibility(EObject context, RelationIncompatibility semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2682,9 +2223,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (list+=Renaming list+=Renaming*)
-	 *
-	 * Features:
-	 *    list[1, *]
 	 */
 	protected void sequence_RenamingList(EObject context, RenamingList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2701,9 +2239,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (renamings+=TaskRenaming renamings+=TaskRenaming*) | 
 	 *         (renamings+=SignalRenaming renamings+=SignalRenaming*)
 	 *     )
-	 *
-	 * Features:
-	 *    renamings[0, *]
 	 */
 	protected void sequence_Renaming(EObject context, Renaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2713,12 +2248,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (positive?='positive'? expression=Expression statement=Statement optEnd='repeat'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    positive[0, 1]
-	 *    expression[1, 1]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_Repeat(EObject context, Repeat semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2728,10 +2257,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((module=ModuleRenaming list=RenamingList?) | (module=ModuleRenaming list=RenamingList?))
-	 *
-	 * Features:
-	 *    module[0, 2]
-	 *    list[0, 2]
 	 */
 	protected void sequence_Run(EObject context, Run semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2741,9 +2266,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (sensors+=SensorWithType sensors+=SensorWithType*)
-	 *
-	 * Features:
-	 *    sensors[1, *]
 	 */
 	protected void sequence_SensorDecl(EObject context, SensorDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2753,10 +2275,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((sensor=Sensor type=TypeIdentifier) | (sensor=Sensor type=TypeIdentifier))
-	 *
-	 * Features:
-	 *    sensor[0, 2]
-	 *    type[0, 2]
 	 */
 	protected void sequence_SensorWithType(EObject context, SensorWithType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2766,9 +2284,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     name=ID
-	 *
-	 * Features:
-	 *    name[1, 1]
 	 */
 	protected void sequence_Sensor(EObject context, ISignal semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2778,9 +2293,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (list+=Sequence_Sequence_1_0 list+=AtomicStatement)
-	 *
-	 * Features:
-	 *    list[2, 2]
 	 */
 	protected void sequence_Sequence(EObject context, Sequence semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2795,10 +2307,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=SignalAndExpression) | 
 	 *         (operator=PreOperator subExpressions+=SignalReferenceExpr)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 6]
-	 *    operator[0, 4]
 	 */
 	protected void sequence_SignalAtomicExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2813,10 +2321,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	 *         (subExpressions+=SignalAndExpression_OperatorExpression_1_0 operator=AndOperator subExpressions+=SignalNotExpression) | 
 	 *         (subExpressions+=SignalExpression_OperatorExpression_1_0 operator=OrOperator subExpressions+=SignalAndExpression)
 	 *     )
-	 *
-	 * Features:
-	 *    subExpressions[0, 6]
-	 *    operator[0, 4]
 	 */
 	protected void sequence_SignalNotExpression(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2826,10 +2330,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (operator=PreOperator subExpressions+=SignalReferenceExpr)
-	 *
-	 * Features:
-	 *    subExpressions[1, 1]
-	 *    operator[1, 1]
 	 */
 	protected void sequence_SignalPreExpr(EObject context, OperatorExpression semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2839,9 +2339,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     valuedObject=[ISignal|ID]
-	 *
-	 * Features:
-	 *    valuedObject[1, 1]
 	 */
 	protected void sequence_SignalReferenceExpr(EObject context, ValuedObjectReference semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2851,10 +2348,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (newName=[ISignal|ID]? oldName=[ISignal|ID])
-	 *
-	 * Features:
-	 *    newName[0, 1]
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_SignalRenaming(EObject context, SignalRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2864,9 +2357,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statement=Statement
-	 *
-	 * Features:
-	 *    statement[1, 1]
 	 */
 	protected void sequence_StatementContainer(EObject context, StatementContainer semanticObject) {
 		if(errorAcceptor != null) {
@@ -2883,8 +2373,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     {Halt}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Statement(EObject context, Halt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2894,8 +2382,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     {Nothing}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Statement(EObject context, Nothing semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2905,9 +2391,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (list+=Statement_Parallel_1_0 list+=Sequence)
-	 *
-	 * Features:
-	 *    list[2, 2]
 	 */
 	protected void sequence_Statement(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2917,8 +2400,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     {Pause}
-	 *
-	 * Features:
 	 */
 	protected void sequence_Statement(EObject context, Pause semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2928,10 +2409,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (statement=Statement delay=DelayExpr)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    delay[1, 1]
 	 */
 	protected void sequence_Suspend(EObject context, Suspend semanticObject) {
 		if(errorAcceptor != null) {
@@ -2951,13 +2428,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((signal=[ISignal|ID] | tick=Tick) expression=Expression?)
-	 *
-	 * Features:
-	 *    signal[0, 1]
-	 *         EXCLUDE_IF_SET tick
-	 *    tick[0, 1]
-	 *         EXCLUDE_IF_SET signal
-	 *    expression[0, 1]
 	 */
 	protected void sequence_Sustain(EObject context, Sustain semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2967,10 +2437,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
 	 */
 	protected void sequence_TagAnnotation(EObject context, Annotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -2980,9 +2446,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (tasks+=Task tasks+=Task*)
-	 *
-	 * Features:
-	 *    tasks[1, *]
 	 */
 	protected void sequence_TaskDecl(EObject context, TaskDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2992,10 +2455,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (newName=[Task|ID] oldName=[Task|ID])
-	 *
-	 * Features:
-	 *    newName[1, 1]
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_TaskRenaming(EObject context, TaskRenaming semanticObject) {
 		if(errorAcceptor != null) {
@@ -3015,11 +2474,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID (idList1+=TypeIdentifier idList1+=TypeIdentifier*)? (idList2+=TypeIdentifier idList2+=TypeIdentifier*)?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    idList1[0, *]
-	 *    idList2[0, *]
 	 */
 	protected void sequence_Task(EObject context, Task semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3029,10 +2483,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (code=HOSTCODE type=ID?)
-	 *
-	 * Features:
-	 *    code[1, 1]
-	 *    type[0, 1]
 	 */
 	protected void sequence_TextExpression(EObject context, TextExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -3042,9 +2492,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     statement=Statement
-	 *
-	 * Features:
-	 *    statement[1, 1]
 	 */
 	protected void sequence_ThenPart(EObject context, ThenPart semanticObject) {
 		if(errorAcceptor != null) {
@@ -3061,9 +2508,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (trapDecls+=TrapDecl trapDecls+=TrapDecl*)
-	 *
-	 * Features:
-	 *    trapDecls[1, *]
 	 */
 	protected void sequence_TrapDeclList(EObject context, TrapDeclList semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3073,10 +2517,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ID channelDescr=ChannelDescription?)
-	 *
-	 * Features:
-	 *    name[1, 1]
-	 *    channelDescr[0, 1]
 	 */
 	protected void sequence_TrapDecl(EObject context, TrapDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3086,9 +2526,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     trap=[ISignal|ID]
-	 *
-	 * Features:
-	 *    trap[1, 1]
 	 */
 	protected void sequence_TrapExpression(EObject context, TrapExpression semanticObject) {
 		if(errorAcceptor != null) {
@@ -3105,10 +2542,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (trapExpr=TrapExpr statement=Statement)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    trapExpr[1, 1]
 	 */
 	protected void sequence_TrapHandler(EObject context, TrapHandler semanticObject) {
 		if(errorAcceptor != null) {
@@ -3128,9 +2561,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     valuedObject=[TrapDecl|ID]
-	 *
-	 * Features:
-	 *    valuedObject[1, 1]
 	 */
 	protected void sequence_TrapReferenceExpr(EObject context, TrapReferenceExpr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3140,12 +2570,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (trapDeclList=TrapDeclList statement=Statement trapHandler+=TrapHandler* optEnd='trap'?)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    trapDeclList[1, 1]
-	 *    trapHandler[0, *]
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_Trap(EObject context, Trap semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3155,9 +2579,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (types+=Type types+=Type*)
-	 *
-	 * Features:
-	 *    types[1, *]
 	 */
 	protected void sequence_TypeDecl(EObject context, TypeDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3167,9 +2588,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     estType=[Type|ID]
-	 *
-	 * Features:
-	 *    estType[1, 1]
 	 */
 	protected void sequence_TypeIdentifier(EObject context, EsterelType semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3179,19 +2597,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (type=ValueType | typeID=ID | ((type=ValueType | typeID=ID) operator=CombineOperator))
-	 *
-	 * Features:
-	 *    type[0, 2]
-	 *         EXCLUDE_IF_SET typeID
-	 *         EXCLUDE_IF_SET typeID
-	 *    typeID[0, 2]
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET type
-	 *    operator[0, 1]
-	 *         MANDATORY_IF_SET type
-	 *         MANDATORY_IF_SET typeID
-	 *         EXCLUDE_IF_SET type
-	 *         EXCLUDE_IF_SET typeID
 	 */
 	protected void sequence_TypeIdentifier(EObject context, TypeIdentifier semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3201,13 +2606,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((newName=[Type|ID] | newType=ValueType) oldName=[Type|ID])
-	 *
-	 * Features:
-	 *    newName[0, 1]
-	 *         EXCLUDE_IF_SET newType
-	 *    newType[0, 1]
-	 *         EXCLUDE_IF_SET newName
-	 *    oldName[1, 1]
 	 */
 	protected void sequence_TypeRenaming(EObject context, TypeRenaming semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3217,9 +2615,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     name=ID
-	 *
-	 * Features:
-	 *    name[1, 1]
 	 */
 	protected void sequence_Type(EObject context, Type semanticObject) {
 		if(errorAcceptor != null) {
@@ -3236,12 +2631,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (name=ExtendedID type=ExtendedID value=EString annotations+=Annotation*)
-	 *
-	 * Features:
-	 *    annotations[0, *]
-	 *    name[1, 1]
-	 *    value[1, 1]
-	 *    type[1, 1]
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -3251,9 +2640,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     valuedObject=[ValuedObject|ID]
-	 *
-	 * Features:
-	 *    valuedObject[1, 1]
 	 */
 	protected void sequence_ValuedObjectReference(EObject context, ValuedObjectReference semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -3263,10 +2649,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     ((operator=PreOperator subExpressions+=ValuedObjectTestExpression) | (operator=ValueTestOperator subExpressions+=ValuedObjectReference))
-	 *
-	 * Features:
-	 *    subExpressions[0, 2]
-	 *    operator[0, 2]
 	 */
 	protected void sequence_ValuedObjectTestExpression(EObject context, OperatorExpression semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -3276,10 +2658,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (variables+=IVariable variables+=IVariable* type=TypeIdentifier)
-	 *
-	 * Features:
-	 *    variables[1, *]
-	 *    type[1, 1]
 	 */
 	protected void sequence_VariableDecl(EObject context, VariableDecl semanticObject) {
 		superSequencer.createSequence(context, semanticObject);
@@ -3289,10 +2667,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (cases+=AbortCaseSingle cases+=AbortCaseSingle* end=WeakAbortEnd)
-	 *
-	 * Features:
-	 *    cases[1, *]
-	 *    end[1, 1]
 	 */
 	protected void sequence_WeakAbortCase(EObject context, WeakAbortCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3302,10 +2676,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (end='weak'? endA='abort')
-	 *
-	 * Features:
-	 *    end[0, 1]
-	 *    endA[1, 1]
 	 */
 	protected void sequence_WeakAbortEndAlt(EObject context, WeakAbortEndAlt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3315,9 +2685,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (optEnd=WeakAbortEndAlt?)
-	 *
-	 * Features:
-	 *    optEnd[0, 1]
 	 */
 	protected void sequence_WeakAbortEnd(EObject context, WeakAbortEnd semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3327,15 +2694,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (delay=DelayExpr (statement=Statement end=WeakAbortEnd)?)
-	 *
-	 * Features:
-	 *    statement[0, 1]
-	 *         EXCLUDE_IF_UNSET end
-	 *         MANDATORY_IF_SET end
-	 *    delay[1, 1]
-	 *    end[0, 1]
-	 *         EXCLUDE_IF_UNSET statement
-	 *         MANDATORY_IF_SET statement
 	 */
 	protected void sequence_WeakAbortInstance(EObject context, WeakAbortInstance semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -3345,10 +2703,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	/**
 	 * Constraint:
 	 *     (statement=Statement body=WeakAbortBody)
-	 *
-	 * Features:
-	 *    statement[1, 1]
-	 *    body[1, 1]
 	 */
 	protected void sequence_WeakAbort(EObject context, WeakAbort semanticObject) {
 		if(errorAcceptor != null) {
