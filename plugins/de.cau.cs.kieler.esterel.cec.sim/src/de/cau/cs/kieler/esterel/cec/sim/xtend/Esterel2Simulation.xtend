@@ -4,8 +4,6 @@ import de.cau.cs.kieler.synccharts.*
 import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject
-import org.eclipse.xtend.util.stdlib.cloning
-import org.eclipse.xtend.util.stdlib.tracing
 
 import org.eclipse.emf.ecore.EObject
 
@@ -15,6 +13,7 @@ import de.cau.cs.kieler.kies.esterel.impl.*
 
 import org.eclipse.xtext.xtend2.lib.StringConcatenation
 import org.eclipse.xtend.util.stdlib.CloningExtensions
+import org.eclipse.xtend.util.stdlib.TraceComponent
 
 import static extension org.eclipse.xtext.xtend2.lib.ResourceExtensions.*
 import static extension org.eclipse.xtext.xtend2.lib.ResourceSetExtensions.*
@@ -150,7 +149,6 @@ class Esterel2Simulation {
 		
 	}
 	
-	
 	// Replace an removeStatement with an addStatement
 	// Multiple statements
 	def dispatch void addStatement(ModuleBody parent, Statement addStatement) {
@@ -163,71 +161,16 @@ class Esterel2Simulation {
 	def dispatch void addStatement(Sequence parent, Statement addStatement) {
 		parent.list.add(addStatement);
 	}
+	
+	
 	// Single statement
-	def dispatch void addStatement(LocalSignalDecl parent, Statement addStatement) {
+	def void addStatement(StatementContainer parent, Statement addStatement) {
 		parent.setStatement(addStatement);
 	}
-	def dispatch void addStatement(Block parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Abort parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(AbortInstance parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(AbortCaseSingle parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(AwaitInstance parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Do parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(DoWatchingEnd parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(EveryDo parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(ThenPart parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(ElsePart parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(LoopBody parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(PresentCase parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Repeat parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Suspend parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Trap parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(TrapHandler parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(LocalVariable parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(Exec parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	def dispatch void addStatement(ExecCase parent, Statement addStatement) {
-		parent.setStatement(addStatement);
-	}
-	// Default case
-	def dispatch void addStatement(Statement parent, Statement addStatement) {
-		// Do nothing in the default case
-	}
+//	// Default case
+//	def dispatch void addStatement(Statement parent, Statement addStatement) {
+//		// Do nothing in the default case
+//	}
 
 }
 
