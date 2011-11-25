@@ -42,17 +42,24 @@ class Esterel2Simulation {
 			target.modules.add(CloningExtensions::clone(module) as Module);	
 		}
 		
+		var originalStatements = program.allContentsIterable.filter(typeof(Statement));
 		var statements = target.allContentsIterable.filter(typeof(Statement));
+		var mainmodule = target.allContentsIterable.filter(typeof(Module)).toList.get(0);
+		
 		var statementsCopy = statements;
 		
 		// For every statement in the Esterel program do the transformation
-		// Iterate over a copy of the list		
+		// Iterate over a copy of the list	
+		var i = 0;	
 		for(statementCopy : statementsCopy) {
+			var originalStatement = originalStatements.toList.get(i);
+			i = i + 1;
 			// First find the according statement in the orginal statements list
 			val predicate = [ Statement statement | statementCopy == statement ]
 			var statement = statements.filter(predicate).toList.get(0) as Statement;
+			var statementUID = originalStatement.eResource.getURIFragment(originalStatement).replace("/","_").replace("@","AT").replace(".","_") ;//.hashCode.toString();
 			// This statement we want to modify
-			statement.transformStatement();
+			statement.transformStatement(mainmodule, statementUID);
 		}
 		
 	}	
@@ -71,7 +78,7 @@ class Esterel2Simulation {
 //	}
 	
 	// Statement transformation in the fashion like described at the top
-	def void transformStatement(Statement statement) {
+	def void transformStatement(Statement statement, Module mainmodule, String UID) {
 		var container = statement.eContainer;
 
 		var parallelStatement = EsterelFactory::eINSTANCE.createParallel()
@@ -80,14 +87,30 @@ class Esterel2Simulation {
 		var sequenceStatement2 = EsterelFactory::eINSTANCE.createSequence()
 		var blockStatement = EsterelFactory::eINSTANCE.createBlock()
 		var blockStatement2 = EsterelFactory::eINSTANCE.createBlock()
+
+		// abort signal
 		var abortSignalDecl = EsterelFactory::eINSTANCE.createLocalSignalDecl()
 		var abortSignalLink = EsterelFactory::eINSTANCE.createLocalSignal()
-		
-		var emitAbortStatement = EsterelFactory::eINSTANCE.createEmit();
+		var abortISignal = KExpressionsFactory::eINSTANCE.createISignal();
+		var abortEmitStatement = EsterelFactory::eINSTANCE.createEmit();
+
+		// auxiliary signal
+				// Must be linked in Output
+		var auxiliarySignalISignal = KExpressionsFactory::eINSTANCE.createISignal();
+				// Must be linked in ModuleBody->interface
+		var auxiliarySignalOutput = KExpressionsFactory::eINSTANCE.createOutput();
+		var auxiliaryEmitStatement = EsterelFactory::eINSTANCE.createEmit();
+		var auxiliarySustainStatement = EsterelFactory::eINSTANCE.createSustain();
+
+
+		var abortStatement = EsterelFactory::eINSTANCE.createAbort();
+		var abortInstanceStatement =  EsterelFactory::eINSTANCE.createAbortInstance();
+		var abortDelay =  EsterelFactory::eINSTANCE.createDelayExpr();
+		var abortDelayEvent = EsterelFactory::eINSTANCE.createDelayEvent();
+		var abortValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference();
 		//var emitH = EsterelFactory::eINSTANCE.createEmit();
 		
 		//var abortISignal = KExpressionsFactory::eINSTANCE.createISignal();
-		var abortISignal = KExpressionsFactory::eINSTANCE.createISignal();
 //		var List<Signal> abortSignalArrayList = new ArrayList();
 		//var abortSignalList = EsterelFactory::eINSTANCE.createLocalSignalList();
 //		var pauseStatement = createPause(statement)
@@ -121,30 +144,61 @@ class Esterel2Simulation {
 //		   ||(statement instanceof LocalVariable)
 //		   ||(statement instanceof Exec)
 		)) {
-//				abortISignal.setName("AP");
-//				abortISignal.setIsInput(false);
-//				abortISignal.setIsOutput(false);
-//				abortISignal.setType(ValueType::PURE);
-//				abortSignalLink.signal.add(abortISignal);
-//				abortSignalDecl.setSignalList(abortSignalLink as LocalSignalList);
-//				abortSignalDecl.addStatement(blockStatement)
-//				
-//				sequenceStatement1.list.add(statement);
-//				sequenceStatement1.list.add(emitAbortStatement);
-//				
-//			    // After this statement will have a new EContainer (wrapperStatement)
-//				parallelStatement.list.add(sequenceStatement1)
-//				parallelStatement.list.add(pauseStatement)
-//				blockStatement.addStatement(parallelStatement)
-//
-//				// Encapsulate inner [ || ] in local abort signal declaration
-//				// Add outer [] to this
-//				blockStatement2.addStatement(abortSignalDecl)
-//				// Add it to initial container
-//				container.addStatement(blockStatement2);
+			    // Setup the abortSignal
+				abortISignal.setName("AP");
+				abortISignal.setIsInput(false);
+				abortISignal.setIsOutput(false);
+				abortISignal.setType(ValueType::PURE);
+				abortSignalLink.signal.add(abortISignal);
+				abortSignalDecl.setSignalList(abortSignalLink as LocalSignalList);
+				// Set the abortSignal for emission (to abort parallel sustain)
+				abortEmitStatement.setSignal(abortISignal);
 
-				blockStatement.addStatement(statement)
-				container.addStatement(blockStatement);
+				// Setup the auxiliarySignal as an OUTPUT to the module
+				auxiliarySignalISignal.setName(UID);
+				auxiliarySignalISignal.setIsInput(false);
+				auxiliarySignalISignal.setIsOutput(false);
+				auxiliarySignalISignal.setType(ValueType::PURE);
+				// Add auxiliarySignal to module
+				auxiliarySignalOutput.signals.add(auxiliarySignalISignal);
+				mainmodule.interface.intSignalDecls.add(auxiliarySignalOutput);
+				// Set the auxliiarySignal for emission and for sustain
+				auxiliaryEmitStatement.setSignal(auxiliarySignalISignal);
+				auxiliarySustainStatement.setSignal(auxiliarySignalISignal);
+				
+		 		// Build immediate abort
+		 		abortStatement.setStatement(auxiliarySustainStatement);
+		 		        abortValuedObjectReference.setValuedObject(abortISignal);
+  		 		      abortDelayEvent.setExpr(abortValuedObjectReference);
+  		 		    abortDelay.setEvent(abortDelayEvent);
+		 		  abortInstanceStatement.setDelay(abortDelay)
+		 		abortStatement.setBody(abortInstanceStatement);
+		 		
+				
+				// Sequence of sustain statement
+				sequenceStatement2.list.add(auxiliaryEmitStatement)
+				sequenceStatement2.list.add(abortStatement)
+				
+				// Sequence of original statement followed by the emit of the strong abort signal
+				sequenceStatement1.list.add(statement);
+				sequenceStatement1.list.add(abortEmitStatement);
+				
+			    // After this statement will have a new EContainer (wrapperStatement)
+				parallelStatement.list.add(sequenceStatement1)
+				parallelStatement.list.add(sequenceStatement2)
+				blockStatement.addStatement(parallelStatement)
+
+				abortSignalDecl.addStatement(blockStatement)
+
+				// Encapsulate inner [ || ] in local abort signal declaration
+				// Add outer [] to this
+				blockStatement2.addStatement(abortSignalDecl)
+				// Add it to initial container
+				container.addStatement(blockStatement2);
+
+// SIMPLE TEST
+//				blockStatement.addStatement(statement)
+//				container.addStatement(blockStatement);
 		}
 		
 	}
@@ -164,7 +218,7 @@ class Esterel2Simulation {
 	
 	
 	// Single statement
-	def void addStatement(StatementContainer parent, Statement addStatement) {
+	def dispatch void addStatement(StatementContainer parent, Statement addStatement) {
 		parent.setStatement(addStatement);
 	}
 //	// Default case
