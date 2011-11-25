@@ -295,7 +295,8 @@ public final class KvidUtil {
                 } else if (portOption != "") {
                     portName = portOption;
                 }
-                if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
+                if (!port.getLabels().isEmpty() && port.getLabels().get(0).getText().equals(portName)
+                        || portName.isEmpty()) {
                     result.addAll(getPathsByPort(port));
                 }
             }

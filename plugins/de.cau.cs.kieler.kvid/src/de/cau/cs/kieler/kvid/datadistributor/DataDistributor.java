@@ -238,9 +238,10 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         KNode currentNode = currentDiagramLayout.getLayoutGraph();
         while (!currentFoundUri.equals(uri.getElementUri()) && !currentNode.getChildren().isEmpty()) {
             for (KNode node : currentNode.getChildren()) {
-                if (node.getLabel().getText().equals(uriParts[currentUriPart])) {
+                if (!node.getLabels().isEmpty()
+                        && node.getLabels().get(0).getText().equals(uriParts[currentUriPart])) {
                     currentNode = node;
-                    currentFoundUri += node.getLabel().getText();
+                    currentFoundUri += node.getLabels().get(0).getText();
                     currentUriPart++;
                     if (currentUriPart < uriParts.length) {
                         currentFoundUri += ".";
@@ -281,7 +282,8 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
                         .currentValueOfProperty(
                                 "Default output port");
             }
-            if (port.getLabel().getText().equals(portName) || portName.isEmpty()) {
+            if (!port.getLabels().isEmpty() && port.getLabels().get(0).getText().equals(portName)
+                    || portName.isEmpty()) {
                 for (KEdge edge : port.getEdges()) {
                     if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                         List<Point> path = new LinkedList<Point>();
