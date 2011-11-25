@@ -465,60 +465,60 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			}
 			
 
-//			// compile Esterel to C
-//			URL output = this.compileEsterelToC(esterelOutput,
-//					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
-//					.toURL();
-//			strlFile = new File(output.getPath());
-//			
-//			// generate data.c
-//			URL data = generateData(transformedProgram, esterelOutput);
-//			dataFile = new File(data.getPath());
-//
-//			// compile C code
-//			Bundle bundle = Platform
-//					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
-//
-//			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-//					new Path("simulation"), null));
-//
-//			executable = File.createTempFile("sim", "");
-//			String compiler = (getProperties()[1]).getValue();
-//			String compile = compiler + " " + output.getPath() + " "
-//					+ data.getPath() + " " + bundleLocation.getPath()
-//					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
-//					+ "-lm -o " + executable;
-//
-//			if (isWindows()) {
-//				executable = File.createTempFile("sim", ".exe");
-//				compile = compiler + " " + output.getPath().substring(1) + " "
-//						+ data.getPath().substring(1) + " "
-//						+ bundleLocation.getPath().substring(1) + "cJSON.c "
-//						+ "-I " + bundleLocation.getPath().substring(1) + " "
-//						+ "-lm -o " + executable;
-//			}
-//
-//			simFile = executable;
-//			
-//			System.out.println(compile);
-//
-//			process = Runtime.getRuntime().exec(compile);
-//			InputStream stderr = process.getErrorStream();
-//			InputStreamReader isr = new InputStreamReader(stderr);
-//			BufferedReader br = new BufferedReader(isr);
-//			String line = null;
-//			StringBuilder errorString = new StringBuilder();
-//			while ((line = br.readLine()) != null) {
-//				errorString.append("\n" + line);
-//
-//			}
-//
-//			int exitValue = process.waitFor();
-//
-//			if (exitValue != 0) {
-//				throw new KiemInitializationException("could not compile",
-//						true, new Exception(errorString.toString()));
-//			}
+			// compile Esterel to C
+			URL output = this.compileEsterelToC(esterelOutput,
+					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
+					.toURL();
+			strlFile = new File(output.getPath());
+			
+			// generate data.c
+			URL data = generateData(transformedProgram, esterelOutput);
+			dataFile = new File(data.getPath());
+
+			// compile C code
+			Bundle bundle = Platform
+					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
+
+			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
+					new Path("simulation"), null));
+
+			executable = File.createTempFile("sim", "");
+			String compiler = (getProperties()[1]).getValue();
+			String compile = compiler + " " + output.getPath() + " "
+					+ data.getPath() + " " + bundleLocation.getPath()
+					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
+					+ "-lm -o " + executable;
+
+			if (isWindows()) {
+				executable = File.createTempFile("sim", ".exe");
+				compile = compiler + " " + output.getPath().substring(1) + " "
+						+ data.getPath().substring(1) + " "
+						+ bundleLocation.getPath().substring(1) + "cJSON.c "
+						+ "-I " + bundleLocation.getPath().substring(1) + " "
+						+ "-lm -o " + executable;
+			}
+
+			simFile = executable;
+			
+			System.out.println(compile);
+
+			process = Runtime.getRuntime().exec(compile);
+			InputStream stderr = process.getErrorStream();
+			InputStreamReader isr = new InputStreamReader(stderr);
+			BufferedReader br = new BufferedReader(isr);
+			String line = null;
+			StringBuilder errorString = new StringBuilder();
+			while ((line = br.readLine()) != null) {
+				errorString.append("\n" + line);
+
+			}
+
+			int exitValue = process.waitFor();
+
+			if (exitValue != 0) {
+				throw new KiemInitializationException("could not compile",
+						true, new Exception(errorString.toString()));
+			}
 
 		} catch (Exception e) {
 			throw new KiemInitializationException(

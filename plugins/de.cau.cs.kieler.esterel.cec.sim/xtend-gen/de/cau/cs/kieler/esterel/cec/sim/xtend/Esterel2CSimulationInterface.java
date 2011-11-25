@@ -16,7 +16,6 @@ import org.eclipse.xtext.xtend2.lib.StringConcatenation;
 
 @SuppressWarnings("all")
 public class Esterel2CSimulationInterface {
-  
   public StringConcatenation createCSimulationInterface(final Module module) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.newLine();
@@ -311,18 +310,18 @@ public class Esterel2CSimulationInterface {
   }
   
   public StringConcatenation outputFunctions(final InterfaceSignalDecl it, final String moduleName) {
-    if ((it instanceof Output)) {
-      return _outputFunctions((Output)it, (String)moduleName);
+    if (it instanceof Output) {
+      return _outputFunctions((Output)it, moduleName);
     } else {
-      return _outputFunctions((InterfaceSignalDecl)it, (String)moduleName);
+      return _outputFunctions(it, moduleName);
     }
   }
   
   public StringConcatenation callInputs(final InterfaceSignalDecl it, final String moduleName) {
-    if ((it instanceof Input)) {
-      return _callInputs((Input)it, (String)moduleName);
+    if (it instanceof Input) {
+      return _callInputs((Input)it, moduleName);
     } else {
-      return _callInputs((InterfaceSignalDecl)it, (String)moduleName);
+      return _callInputs(it, moduleName);
     }
   }
 }
