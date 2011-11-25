@@ -57,7 +57,7 @@ class Esterel2Simulation {
 			// First find the according statement in the orginal statements list
 			val predicate = [ Statement statement | statementCopy == statement ]
 			var statement = statements.filter(predicate).toList.get(0) as Statement;
-			var statementUID = originalStatement.eResource.getURIFragment(originalStatement).replace("/","_").replace("@","AT").replace(".","_") ;//.hashCode.toString();
+			var statementUID = originalStatement.eResource.getURIFragment(originalStatement).replace("/","I").replace("@","Z").replace(".","o") ;//.hashCode.toString();
 			// This statement we want to modify
 			statement.transformStatement(mainmodule, statementUID);
 		}
