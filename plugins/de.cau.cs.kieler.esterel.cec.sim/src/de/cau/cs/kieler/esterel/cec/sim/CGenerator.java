@@ -44,8 +44,6 @@ import de.cau.cs.kieler.esterel.cec.CEC;
  */
 public class CGenerator extends AbstractHandler {
 
-    private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
-
     /** {@inheritDoc}*/
     public Object execute(final ExecutionEvent event) throws ExecutionException {
 
@@ -72,7 +70,7 @@ public class CGenerator extends AbstractHandler {
             XtextEditor xtextEditor = (XtextEditor) editor;
 
             if (xtextEditor.getDocument() instanceof XtextDocument
-                    && xtextEditor.getLanguageName().equals(ESTEREL_LANGUAGE)) {
+                    && xtextEditor.getLanguageName().equals(EsterelCECSimPlugin.ESTEREL_LANGUAGE)) {
                 input = (FileEditorInput) editor.getEditorInput();
             }
         }

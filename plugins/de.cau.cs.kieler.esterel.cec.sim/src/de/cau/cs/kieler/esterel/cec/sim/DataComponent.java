@@ -15,13 +15,11 @@ package de.cau.cs.kieler.esterel.cec.sim;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-//import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
@@ -34,24 +32,16 @@ import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtext.parser.IParseResult;
-import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.XtextDocument;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
@@ -72,13 +62,10 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.ui.datacomponent.DataComponentPlugin;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.jface.viewers.TreeSelection;
 
 /**
- * @author ctr, cmot
+ * @author cmot, ctr
  * 
  */
 public class DataComponent extends JSONObjectSimulationDataComponent {
@@ -150,16 +137,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -----------------------------------------------------------------------------
 	// -----------------------------------------------------------------------------
 
-	private static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
-
 	private Program myModel = null;
 	private Process process = null;
 	private PrintWriter toEsterel = null;
 	private BufferedReader fromEsterel = null;
 	private BufferedReader error = null;
 
-	private File strlFile = null;
-	private File dataFile = null;
 	private File simFile = null;
 
 	private LinkedList<String> outputs = null;
@@ -180,6 +163,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 */
 	public JSONObject doStep(final JSONObject jSONObject)
 			throws KiemExecutionException {
+		// The return object to construct
+		JSONObject returnObj = new JSONObject();
+		
+		// Collect active statements
+		String activeStatements = "";
+
 		if (process == null) {
 			throw new KiemExecutionException(
 					"No esterel simulation is running", true, null);
@@ -201,17 +190,37 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				out = new JSONObject(receivedMessage);
 				for (String output : outputs) {
 					if (!out.has(output)) {
-						
-						// Test if the output variable is an auxiliary signal that
-						// is only there to mark the current Esterel statement in
+
+						// Test if the output variable is an auxiliary signal
+						// that
+						// is only there to mark the current Esterel statement
+						// in
 						// full_simulation mode of the simulator.
-						// These auxiliary signals must be capsulated in a state 
+						// These auxiliary signals must be capsulated in a state
 						// variable.
-						if (output.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-							
+						if (output
+								.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+							try {
+								String statementWithoutAuxiliaryVariableTag = output
+										.substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
+												.length());
+								
+								// Insert a "," if not the first statement
+								if (activeStatements.length() != 0) {
+									activeStatements += ",";
+								}
+								
+								// Add active statement to string.
+								activeStatements += statementWithoutAuxiliaryVariableTag;
+
+							} catch (Exception e) {
+							}
+
+						} else {
+							// Normal Esterel (interface) signal, append it
+							returnObj.accumulate(output,
+									JSONSignalValues.newValue(false));
 						}
-						
-						out.accumulate(output, JSONSignalValues.newValue(false));
 					}
 				}
 			} else {
@@ -220,6 +229,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 			}
 
+			// Finally accumulate all active Statements (activeStatements)
+			// under the statementName
+			String statementName = this.getProperties()[1].getValue();
+			returnObj.accumulate(statementName,
+					activeStatements);
+
+
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
 			process.destroy();
@@ -227,8 +243,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			e.printStackTrace();
 			process.destroy();
 		}
+		
 
-		return out;
+		return returnObj;
 	}
 
 	// -------------------------------------------------------------------------
@@ -253,11 +270,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	@Override
 	public KiemProperty[] doProvideProperties() {
-		final int nProperties = 2;
+		final int nProperties = 3;
 		KiemProperty[] properties = new KiemProperty[nProperties];
 		KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
-		properties[0] = new KiemProperty("C-Compiler", compilerFile, "gcc");
-		properties[1] = new KiemProperty("Full Debug Mode", true);
+		properties[0] = new KiemProperty("Statement Name", "statement");
+
+		properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
+		properties[2] = new KiemProperty("Full Debug Mode", true);
 
 		return properties;
 	}
@@ -293,24 +312,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	}
 
 	// -------------------------------------------------------------------------
-	
-	private java.net.URI convertURI(URI uri) throws URISyntaxException {
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
 
-        IPath path = new Path(uri.toPlatformString(false));
-        IFile file = myWorkspaceRoot.getFile(path);
-        
-        IPath fullPath = file.getLocation();
-        
-        return new java.net.URI(fullPath.toString());
-//        
-//		
-//		
-//		Bundle bundle = Platform
-//				.getBundle("de.cau.cs.kieler.esterel.cec.sim");
-//
-//		URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-//				new Path("simulation"), null));
+	private java.net.URI convertURI(URI uri) throws URISyntaxException {
+		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
+				.getRoot();
+
+		IPath path = new Path(uri.toPlatformString(false));
+		IFile file = myWorkspaceRoot.getFile(path);
+
+		IPath fullPath = file.getLocation();
+
+		return new java.net.URI(fullPath.toString());
+		//
+		//
+		//
+		// Bundle bundle = Platform
+		// .getBundle("de.cau.cs.kieler.esterel.cec.sim");
+		//
+		// URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
+		// new Path("simulation"), null));
 	}
 
 	// -------------------------------------------------------------------------
@@ -320,7 +340,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			throws IOException, URISyntaxException {
 		monitor.subTask("Reading Esterel file");
 		java.net.URI inputURI = convertURI(strlFile);
-		
+
 		InputStream strl = CEC.runSTRL(inputURI);
 		monitor.worked(1);
 		if (monitor.isCanceled()) {
@@ -387,24 +407,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	}
 
 	// -------------------------------------------------------------------------
-	// private IStatus model2ModelTransform(KielerProgressMonitor monitor)
-	// throws KiemInitializationException {
-	// try {
-	// doModel2ModelTransform(monitor);
-	// } catch (Exception e) {
-	// monitor.done();
-	// e.printStackTrace();
-	// transformationCompleted = true;
-	// transformationError = true;
-	// return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
-	// "Model transformation failed.", e);
-	// }
-	// monitor.done();
-	// transformationCompleted = true;
-	// transformationError = false;
-	// return new Status(IStatus.OK, DataComponentPlugin.PLUGIN_ID, IStatus.OK,
-	// null, null);
-	// }
 
 	public void doModel2ModelTransform(final KielerProgressMonitor monitor)
 			throws KiemInitializationException {
@@ -441,7 +443,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			// also states visualized.
 			// Hence some pre-processing is needed and done by the
 			// Esterl2Simulation Xtend2 model transformation
-			if (this.getProperties()[2].getValueAsBoolean()) {
+			if (this.getProperties()[3].getValueAsBoolean()) {
 				// Try to load synccharts model
 				// 'Full Debug Mode' is turned ON
 				Esterel2Simulation transform = Guice.createInjector()
@@ -452,9 +454,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			// Calculate output path
 			FileEditorInput editorInput = (FileEditorInput) editorPart
 					.getEditorInput();
-			URI input = URI.createPlatformResourceURI(
-					editorInput.getFile().getFullPath().toString(), true);
-			
+			URI input = URI.createPlatformResourceURI(editorInput.getFile()
+					.getFullPath().toString(), true);
+
 			esterelOutput = URI.createURI(input.toString());
 			esterelOutput = esterelOutput.trimFragment();
 			esterelOutput = esterelOutput.trimFileExtension()
@@ -473,19 +475,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				throw new KiemInitializationException(
 						"Cannot write output Esterel file.", true, null);
 			}
-			
 
-			// compile Esterel to C
+			// Compile Esterel to C
 			URL output = this.compileEsterelToC(esterelOutput,
 					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
 					.toURL();
-			strlFile = new File(output.getPath());
-			
-			// generate data.c
-			URL data = generateData(transformedProgram, esterelOutput);
-			dataFile = new File(data.getPath());
 
-			// compile C code
+			// Generate data.c
+			URL data = generateData(transformedProgram, esterelOutput);
+
+			// Compile C code
 			Bundle bundle = Platform
 					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
 
@@ -493,7 +492,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					new Path("simulation"), null));
 
 			executable = File.createTempFile("sim", "");
-			String compiler = (getProperties()[1]).getValue();
+			String compiler = (getProperties()[2]).getValue();
 			String compile = compiler + " " + output.getPath() + " "
 					+ data.getPath() + " " + bundleLocation.getPath()
 					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
@@ -509,7 +508,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			}
 
 			simFile = executable;
-			
+
 			System.out.println(compile);
 
 			process = Runtime.getRuntime().exec(compile);
@@ -612,7 +611,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * @return
 	 * @throws KiemInitializationException
 	 */
-	private URL generateData(Program esterelProgram, URI esterelProgramURI) throws KiemInitializationException {
+	private URL generateData(Program esterelProgram, URI esterelProgramURI)
+			throws KiemInitializationException {
 		File data;
 		try {
 			data = File.createTempFile("data", ".c");

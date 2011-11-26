@@ -30,6 +30,9 @@ public class EsterelCECSimPlugin extends Plugin {
      *  This TAG is also defined in Esterel2Simulation.xtend. Both TAGs must match */
     public static final String AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
+	/** The Constant ESTEREL_LANGUAGE points to the KIES Xtext Editor. */
+	public static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.kies.Esterel";
+    
     /** The The shared instance of this plugin. */
     private static EsterelCECSimPlugin plugin;
 
