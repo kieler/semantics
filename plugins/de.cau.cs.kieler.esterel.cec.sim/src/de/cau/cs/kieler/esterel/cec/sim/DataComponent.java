@@ -42,6 +42,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.osgi.framework.Bundle;
@@ -145,7 +146,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	private File simFile = null;
 
-	private LinkedList<String> outputs = null;
+	private LinkedList<String> outputSignalList = null;
 
 	// -------------------------------------------------------------------------
 
@@ -165,7 +166,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			throws KiemExecutionException {
 		// The return object to construct
 		JSONObject returnObj = new JSONObject();
-		
+
 		// Collect active statements
 		String activeStatements = "";
 
@@ -173,7 +174,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			throw new KiemExecutionException(
 					"No esterel simulation is running", true, null);
 		}
-		JSONObject out = null;
 		try {
 
 			toEsterel.write(jSONObject.toString() + "\n");
@@ -185,42 +185,45 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			String receivedMessage = fromEsterel.readLine();
 
 			if (receivedMessage != null) {
+				JSONObject esterelOutput = new JSONObject(receivedMessage);
+				JSONArray esterelOutputArray = esterelOutput.names();
 
-				// print and delete debug information
-				out = new JSONObject(receivedMessage);
-				for (String output : outputs) {
-					if (!out.has(output)) {
+				// First add auxiliary signals
+				for (int i = 0; i < esterelOutputArray.length(); i++) {
+					String esterelOutputName = esterelOutputArray.getString(i);
 
-						// Test if the output variable is an auxiliary signal
-						// that
-						// is only there to mark the current Esterel statement
-						// in
-						// full_simulation mode of the simulator.
-						// These auxiliary signals must be capsulated in a state
-						// variable.
-						if (output
-								.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-							try {
-								String statementWithoutAuxiliaryVariableTag = output
-										.substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
-												.length());
-								
-								// Insert a "," if not the first statement
-								if (activeStatements.length() != 0) {
-									activeStatements += ",";
-								}
-								
-								// Add active statement to string.
-								activeStatements += statementWithoutAuxiliaryVariableTag;
+					// Test if the output variable is an auxiliary signal
+					// that is only there to mark the current Esterel statement
+					// in full_simulation mode of the simulator.
+					// These auxiliary signals must be encapsulated in a state
+					// variable.
+					if (esterelOutputName
+							.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+						try {
+							String statementWithoutAuxiliaryVariableTag = esterelOutputName
+									.substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
+											.length());
 
-							} catch (Exception e) {
+							// Insert a "," if not the first statement
+							if (activeStatements.length() != 0) {
+								activeStatements += ",";
 							}
 
-						} else {
-							// Normal Esterel (interface) signal, append it
-							returnObj.accumulate(output,
-									JSONSignalValues.newValue(false));
+							// Add active statement to string.
+							activeStatements += statementWithoutAuxiliaryVariableTag;
+
+						} catch (Exception e) {
 						}
+
+					} 
+					
+				}
+
+				// Then add normal output signals
+				for (String outputSignal : outputSignalList) {
+					if (!esterelOutput.has(outputSignal)) {
+							returnObj.accumulate(outputSignal,
+									JSONSignalValues.newValue(false));
 					}
 				}
 			} else {
@@ -232,9 +235,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			// Finally accumulate all active Statements (activeStatements)
 			// under the statementName
 			String statementName = this.getProperties()[1].getValue();
-			returnObj.accumulate(statementName,
-					activeStatements);
-
+			returnObj.accumulate(statementName, activeStatements);
 
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
@@ -243,7 +244,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			e.printStackTrace();
 			process.destroy();
 		}
-		
 
 		return returnObj;
 	}
@@ -313,6 +313,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Convert an EMF URI to a Java.net.URI.
+	 * 
+	 * @param uri
+	 *            the uri
+	 * @return the java.net. uri
+	 * @throws URISyntaxException
+	 *             the uRI syntax exception
+	 */
 	private java.net.URI convertURI(URI uri) throws URISyntaxException {
 		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
 				.getRoot();
@@ -323,18 +332,26 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		IPath fullPath = file.getLocation();
 
 		return new java.net.URI(fullPath.toString());
-		//
-		//
-		//
-		// Bundle bundle = Platform
-		// .getBundle("de.cau.cs.kieler.esterel.cec.sim");
-		//
-		// URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-		// new Path("simulation"), null));
 	}
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Compile Esterel to C using the CEC and its protocol. Do this stepwise for
+	 * a more detailed progress bar.
+	 * 
+	 * @param strlFile
+	 *            the strl file
+	 * @param outFile
+	 *            the out file
+	 * @param monitor
+	 *            the monitor
+	 * @return the java.net. uri
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws URISyntaxException
+	 *             the uRI syntax exception
+	 */
 	private java.net.URI compileEsterelToC(final URI strlFile,
 			final File outFile, EsterelSimulationProgressMonitor monitor)
 			throws IOException, URISyntaxException {
@@ -482,7 +499,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					.toURL();
 
 			// Generate data.c
-			URL data = generateData(transformedProgram, esterelOutput);
+			URL data = generateCSimulationInterface(transformedProgram, esterelOutput);
 
 			// Compile C code
 			Bundle bundle = Platform
@@ -549,7 +566,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		}
 
 		try {
-			// run
+			// Execute the compiled C program (asynchronously)
 			String executablePath = simFile.getPath();
 			process = Runtime.getRuntime().exec(executablePath);
 
@@ -564,7 +581,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					"Error running Esterel file:\n\n" + e.getMessage(), true, e);
 		}
 
-		outputs = new LinkedList<String>();
+		// Build the list of interface output signals
+		outputSignalList = new LinkedList<String>();
 		JSONObject res = new JSONObject();
 		try {
 			if (myModel != null) {
@@ -581,7 +599,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 							for (Signal s : sig.getSignals()) {
 								res.accumulate(s.getName(),
 										JSONSignalValues.newValue(false));
-								outputs.add(s.getName());
+								outputSignalList.add(s.getName());
 							}
 						}
 					}
@@ -608,10 +626,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * @return
-	 * @throws KiemInitializationException
+	 * Generate the CSimulationInterface.
+	 *
+	 * @param esterelProgram the esterel program
+	 * @param esterelProgramURI the esterel program uri
+	 * @return the uRL
+	 * @throws KiemInitializationException the kiem initialization exception
 	 */
-	private URL generateData(Program esterelProgram, URI esterelProgramURI)
+	private URL generateCSimulationInterface(Program esterelProgram, URI esterelProgramURI)
 			throws KiemInitializationException {
 		File data;
 		try {
