@@ -37,14 +37,16 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import de.cau.cs.kieler.esterel.cec.CEC;
 
 /**
- * @author ctr
+ * @author ctr, cmot
  * 
  *         Generate C from Esterel using the CEC.
  * 
  */
 public class CGenerator extends AbstractHandler {
 
-    /** {@inheritDoc}*/
+	// -----------------------------------------------------------------------------
+
+	/** {@inheritDoc}*/
     public Object execute(final ExecutionEvent event) throws ExecutionException {
 
         IWorkbench workbench = PlatformUI.getWorkbench();
@@ -82,7 +84,7 @@ public class CGenerator extends AbstractHandler {
         final URI strlFile = input.getURI();
         final File cFile = new File(input.getURI().getPath().replace(".strl", ".c"));
 
-        // compile Esterel to C
+        // Compile Esterel to C
         Job genC = new Job("generate C code") {
             public IStatus run(final IProgressMonitor monitor) {
                 try {
@@ -99,4 +101,7 @@ public class CGenerator extends AbstractHandler {
 
         return null;
     }
+    
+	// -----------------------------------------------------------------------------
+    
 }
