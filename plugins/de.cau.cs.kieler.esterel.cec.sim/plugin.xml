@@ -12,45 +12,13 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/esterel_cec.execution">
+            file="execution/esterel_cec_no_visualization.execution">
          <editor
                id="de.cau.cs.kieler.kies.Esterel"
                name="KIELER Esterel Editor"
-               priority="8">
+               priority="7">
          </editor>
       </executionFile>
-   </extension>
-   <extension
-         point="org.eclipse.ui.commands">
-      <command
-            category="de.cau.cs.kieler"
-            categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.esterel.cec.sim.CGenerator"
-            description="generate C code"
-            id="de.cau.cs.kieler.esterel.cec.sim.genC"
-            name="genC">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="popup:de.cau.cs.kieler">
-         <command
-               commandId="de.cau.cs.kieler.esterel.cec.sim.genC"
-               label="generate C code"
-               mnemonic="generate C code"
-               style="push">
-            <visibleWhen
-                  checkEnabled="true">
-               <with
-                     variable="activeEditorId">
-                  <equals
-                        value="de.cau.cs.kieler.esterel.Esterel">
-                  </equals>
-               </with>
-            </visibleWhen>
-         </command>
-      </menuContribution>
    </extension>
 
 </plugin>

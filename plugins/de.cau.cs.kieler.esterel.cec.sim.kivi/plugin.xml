@@ -6,8 +6,19 @@
       <content
             class="de.cau.cs.kieler.esterel.cec.sim.kivi.DataComponent"
             id="de.cau.cs.kieler.esterel.cec.sim.kivi"
-            name="de.cau.cs.kieler.esterel.cec.sim.kivi">
+            name="Esterel CEC Visualization">
       </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterel_cec.execution">
+         <editor
+               id="de.cau.cs.kieler.kies.Esterel"
+               name="KIELER Esterel Editor"
+               priority="8">
+         </editor>
+      </executionFile>
    </extension>
 
 </plugin>

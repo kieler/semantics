@@ -12,6 +12,8 @@ import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
 import de.cau.cs.kieler.kies.esterel.Program;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 public class DataComponent extends JSONObjectSimulationDataComponent {
@@ -136,6 +138,21 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -----------------------------------------------------------------------------
 
+	@Override
+	public KiemProperty[] doProvideProperties() {
+		final int nProperties = 1;
+		KiemProperty[] properties = new KiemProperty[nProperties];
+//		KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+		properties[0] = new KiemProperty("Statement Name", "statement");
+
+//		properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
+//		properties[2] = new KiemProperty("Full Debug Mode", true);
+
+		return properties;
+	}
+	
+	// -------------------------------------------------------------------------
+	
 	/**
 	 * Gets the Esterel program.
 	 * 
