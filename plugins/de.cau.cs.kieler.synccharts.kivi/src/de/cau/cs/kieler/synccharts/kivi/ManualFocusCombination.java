@@ -136,7 +136,7 @@ public class ManualFocusCombination extends AbstractCombination {
             FocusContextEffect focusEffect = new FocusContextEffect(diagram.getDiagramPart());
             focusEffect.addFocus(focus, level);
             this.schedule(focusEffect);
-            this.schedule(new LayoutEffect(diagram.getDiagramPart(), null, true, false, true));
+            this.schedule(new LayoutEffect(selection.getWorkbenchPart(), null, true, false, true));
         } 
     }
 
