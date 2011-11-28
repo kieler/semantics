@@ -64,7 +64,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * 
 	 * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
 	 */
-	@Override
 	public void wrapup() throws KiemInitializationException {
 		// TODO Auto-generated method stub
 
