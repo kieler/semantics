@@ -244,7 +244,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			e.printStackTrace();
 			process.destroy();
 		}
-
+		
+		
 		return returnObj;
 	}
 

@@ -1,11 +1,19 @@
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
+import java.util.HashMap;
+import java.util.LinkedList;
+
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.viewers.ISelectionProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
@@ -94,6 +102,96 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -----------------------------------------------------------------------------
 
+	/**
+	 * Gets the encoded emf id to compare objects to the ones produced by the
+	 * Esterel simulation in Esterel2Simulation.xtend.
+	 * 
+	 * @param eObject
+	 *            the e object
+	 * @return the encoded emf id
+	 */
+	String getEncodedEMFId(EObject eObject) {
+		if (eObject.eResource() != null) {
+			String uri = eObject.eResource().getURIFragment(eObject);
+			uri = uri.replaceAll("/", "x");			
+			uri = uri.replaceAll("@", "");
+			//FIXME: Why does replaceAll not work for "."?!
+			while (uri.indexOf(".") > 0) {
+				String test = uri.substring(0,uri.indexOf("."));
+				String test2 = uri.substring(uri.indexOf(".")+1, uri.length()); 
+				uri = test + test2;
+			}
+			return uri;
+		}
+		return null;
+
+	}
+
+	// -----------------------------------------------------------------------------
+
+	private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
+
+	/**
+	 * Gets the eObject to an eObjectID cached by the hashmap. With a first call
+	 * of this function the hashmap is lazily filled.
+	 * 
+	 * @param eObjectID
+	 *            the e object id
+	 * @return the e object
+	 */
+	EObject getEObject(String eObjectID) {
+		if (eObjectMap.containsKey(eObjectID)) {
+			return eObjectMap.get(eObjectID);
+		} else {
+			// Refresh the map and try again
+			refreshEObjectMap();
+			if (eObjectMap.containsKey(eObjectID)) {
+				return eObjectMap.get(eObjectID);
+			}
+		}
+
+		return null;
+	}
+
+	// -----------------------------------------------------------------------------
+
+	/**
+	 * Refreshes and totally rebuilds the eObject hashmap.
+	 */
+	void refreshEObjectMap() {
+		eObjectMap.clear();
+		refreshEObjectMap(this.esterelProgram);
+	}
+
+	// -----------------------------------------------------------------------------
+
+	/**
+	 * Recursivly calls itsfelf on eObjects that contain children to rebuild the
+	 * eObject hashmap.
+	 * 
+	 * @param baseObj
+	 *            the base obj
+	 */
+	void refreshEObjectMap(EObject baseObj) {
+		// Add this item
+		String baseObjID = this.getEncodedEMFId(baseObj);
+		if (!eObjectMap.containsKey(baseObjID)) {
+			eObjectMap.put(baseObjID, baseObj);
+		}
+
+		// Add all children
+		TreeIterator<EObject> treeIterator = baseObj.eAllContents();
+		while (treeIterator.hasNext()) {
+			EObject treeIteratorObject = treeIterator.next();
+			refreshEObjectMap(treeIteratorObject);
+			// for (EObject treeIteratorObjectChild :
+			// treeIteratorObject.eContents()) {
+			// }
+		}
+	}
+
+	// -----------------------------------------------------------------------------
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -104,7 +202,52 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	@Override
 	public JSONObject doStep(JSONObject jSONObject)
 			throws KiemExecutionException {
-		// TODO Auto-generated method stub
+
+		String statementName = this.getProperties()[1].getValue();
+		LinkedList<EObject> activeStatements = new LinkedList<EObject>();
+
+		if (jSONObject.has(statementName)) {
+			// Now extract the statements separated by a colon
+			try {
+				String activeStatementsString = jSONObject
+						.getString(statementName);
+				
+				String[] activeStatementsArray = activeStatementsString.split(",");
+				
+				for (String activeStatementID : activeStatementsArray) {
+					EObject activeStatement = this.getEObject(activeStatementID);
+					if (activeStatement != null) {
+						activeStatements.add(activeStatement);
+					}
+				}
+				
+			} catch (JSONException e) {
+				throw new KiemExecutionException(
+						"Cannot parse statement data variable of active Esterel statements for visualization.",
+						false, false, true, e);
+			}
+
+		}
+
+
+		// Highlight the active statements
+		for (EObject statement : activeStatements) {
+           XtextEditor editor;
+		try {
+			editor = this.getEsterelEditor();
+            ISelectionProvider selectionProvider = editor.getSelectionProvider();
+            
+            //editor.get
+            
+		} catch (KiemInitializationException e) {
+			throw new KiemExecutionException(
+					"No active Esterel editor for statement visualization.",
+					false, false, true, e);
+		}
+		}
+		
+		
+		// This is just an observer component
 		return null;
 	}
 
@@ -142,17 +285,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	public KiemProperty[] doProvideProperties() {
 		final int nProperties = 1;
 		KiemProperty[] properties = new KiemProperty[nProperties];
-//		KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
+		// KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
 		properties[0] = new KiemProperty("Statement Name", "statement");
 
-//		properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
-//		properties[2] = new KiemProperty("Full Debug Mode", true);
+		// properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
+		// properties[2] = new KiemProperty("Full Debug Mode", true);
 
 		return properties;
 	}
-	
+
 	// -------------------------------------------------------------------------
-	
+
 	/**
 	 * Gets the Esterel program.
 	 * 
