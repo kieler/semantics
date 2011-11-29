@@ -20,11 +20,11 @@ import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
 
 /**
  * An action for creation of new annotations.
@@ -42,11 +42,11 @@ public class AddAnnotationAction extends Action {
     }
     
     /** image for adding an annotation to the selected element. */
-    private static final ImageDescriptor ADD_IMAGE = AnnotationsUiPlugin.getImageDescriptor(
-            "icons/menu16/add_annot.gif");
+    private static final ImageDescriptor ADD_IMAGE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            AnnotationsPropertySection.PLUGIN_ID, "icons/menu16/add_annot.gif");
     /** image for adding an annotation to the selected element. */
-    private static final ImageDescriptor ADD_SUB_IMAGE = AnnotationsUiPlugin.getImageDescriptor(
-            "icons/menu16/add_sub_annot.gif");
+    private static final ImageDescriptor ADD_SUB_IMAGE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            AnnotationsPropertySection.PLUGIN_ID, "icons/menu16/add_sub_annot.gif");
     
     /** how to add the new annotation. */
     private AddHow how;
@@ -114,7 +114,7 @@ public class AddAnnotationAction extends Action {
                     }
                 }
             } else {
-                IStatus status = new Status(IStatus.ERROR, AnnotationsUiPlugin.PLUGIN_ID,
+                IStatus status = new Status(IStatus.ERROR, AnnotationsPropertySection.PLUGIN_ID,
                         "No transactional editing domain is availabe for the current selection.");
                 StatusManager.getManager().handle(status, StatusManager.SHOW);
             }

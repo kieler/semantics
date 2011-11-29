@@ -18,10 +18,10 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
 
 /**
  * An action for removal of annotations.
@@ -31,8 +31,8 @@ import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
 public class RemoveAnnotationAction extends Action {
 
     /** image for removing an annotation. */
-    private static final ImageDescriptor REMOVE_IMAGE = AnnotationsUiPlugin.getImageDescriptor(
-            "icons/menu16/remove_annot.gif");
+    private static final ImageDescriptor REMOVE_IMAGE = AbstractUIPlugin.imageDescriptorFromPlugin(
+            AnnotationsPropertySection.PLUGIN_ID, "icons/menu16/remove_annot.gif");
     
     /** the property section for annotations. */
     private AnnotationsPropertySection propertySection;

@@ -1,51 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
-   <extension
-         id="prop-contrib"
-         point="org.eclipse.ui.views.properties.tabbed.propertyContributor">
-      <propertyContributor
-            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
-         <propertyCategory
-               category="annotations"></propertyCategory>
-      </propertyContributor>
-   </extension>
-   <extension
-         id="propsections"
-         point="org.eclipse.ui.views.properties.tabbed.propertySections">
-      <propertySections
-            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
-         <propertySection
-               class="de.cau.cs.kieler.core.annotations.ui.properties.AnnotationsPropertySection"
-               id="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertySection"
-               tab="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertyTab">
-            <input
-                  type="de.cau.cs.kieler.core.annotations.Annotatable">
-            </input>
-            <input
-                  type="org.eclipse.gmf.runtime.notation.View">
-            </input>
-            <input
-                  type="org.eclipse.gef.EditPart">
-            </input>
-            <input
-                  type="org.eclipse.core.runtime.PlatformObject">
-            </input>
-         </propertySection>
-      </propertySections>
-   </extension>
-   <extension
-         id="proptabs"
-         point="org.eclipse.ui.views.properties.tabbed.propertyTabs">
-      <propertyTabs
-            contributorId="de.cau.cs.kieler.core.annotations.text.ui">
-         <propertyTab
-               category="annotations"
-               id="de.cau.cs.kieler.core.annotations.text.ui.annotationsPropertyTab"
-               label="Annotations">
-         </propertyTab>
-      </propertyTabs>
-   </extension>
  <extension
        point="de.cau.cs.kieler.kiml.layoutInfo">
     <semanticOption

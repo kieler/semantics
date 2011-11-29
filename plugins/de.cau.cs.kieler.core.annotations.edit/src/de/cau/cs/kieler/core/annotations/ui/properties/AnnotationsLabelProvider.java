@@ -13,12 +13,17 @@
  */
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.viewers.BaseLabelProvider;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationType;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.ContainmentAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
@@ -26,10 +31,6 @@ import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.ReferenceAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationType;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin.Images;
-import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 
 /**
  * Label provider for annotations.
@@ -38,26 +39,47 @@ import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
  */
 public class AnnotationsLabelProvider extends BaseLabelProvider implements ITableLabelProvider {
 
+    /** map of already loaded images. */
+    private Map<String, Image> imageMap = new HashMap<String, Image>();
+    
+    /**
+     * Retrieve the image for the given key. The key is the image file name without extension.
+     * 
+     * @param key image file name
+     * @return the corresponding image, or {@code null} if there is no such image
+     */
+    public Image getImage(final String key) {
+        Image image = imageMap.get(key);
+        if (image == null) {
+            image = AbstractUIPlugin.imageDescriptorFromPlugin(
+                    AnnotationsPropertySection.PLUGIN_ID,
+                    "icons/obj16/" + key + ".gif").createImage();
+            if (image != null) {
+                imageMap.put(key, image);
+            }
+        }
+        return image;
+    }
+    
     /**
      * {@inheritDoc}
      */
     public Image getColumnImage(Object element, int columnIndex) {
         if (columnIndex == AnnotationsPropertySection.COL_VALUE) {
-            Images images = ((AnnotationsUiPlugin) AnnotationsActivator.getInstance()).getImages();
             switch (AnnotationType.of((Annotation) element)) {
             case STRING:
             case TYPED_STRING:
-                return images.get("prop_text");
+                return getImage("prop_text");
             case INT:
-                return images.get("prop_int");
+                return getImage("prop_int");
             case BOOLEAN:
                 if (((BooleanAnnotation) element).isValue()) {
-                    return images.get("prop_true");
+                    return getImage("prop_true");
                 } else {
-                    return images.get("prop_false");
+                    return getImage("prop_false");
                 }
             case FLOAT:
-                return images.get("prop_float");
+                return getImage("prop_float");
             }
         }
         return null;
@@ -101,6 +123,18 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
             }
         }
         return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void dispose() {
+        super.dispose();
+        for (Image image : imageMap.values()) {
+            image.dispose();
+        }
+        imageMap.clear();
     }
 
 }

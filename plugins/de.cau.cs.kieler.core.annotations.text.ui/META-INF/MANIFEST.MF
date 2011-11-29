@@ -1,12 +1,11 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: KIELER Model Annotations UI Infrastructure
+Bundle-Name: KIELER Model Annotations Text UI
 Bundle-SymbolicName: de.cau.cs.kieler.core.annotations.text.ui;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.ui.views.properties.tabbed;bundle-version="3.5.0",
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.edit,
  de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
@@ -26,11 +25,9 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
-Bundle-Activator: de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin
 Export-Package: de.cau.cs.kieler.core.annotations.ui,
  de.cau.cs.kieler.core.annotations.ui.contentassist,
  de.cau.cs.kieler.core.annotations.ui.contentassist.antlr,
  de.cau.cs.kieler.core.annotations.ui.labeling,
  de.cau.cs.kieler.core.annotations.ui.outline,
- de.cau.cs.kieler.core.annotations.ui.properties,
  de.cau.cs.kieler.core.annotations.ui.quickfix

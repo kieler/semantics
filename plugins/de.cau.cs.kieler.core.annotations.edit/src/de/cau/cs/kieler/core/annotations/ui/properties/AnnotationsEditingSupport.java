@@ -28,12 +28,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
+import de.cau.cs.kieler.core.annotations.AnnotationType;
 import de.cau.cs.kieler.core.annotations.BooleanAnnotation;
 import de.cau.cs.kieler.core.annotations.FloatAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationType;
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsUiPlugin;
 
 /**
  * Editing support for annotation values.
@@ -151,7 +150,7 @@ public class AnnotationsEditingSupport extends EditingSupport {
             });
             getViewer().refresh(element);
         } else {
-            IStatus status = new Status(IStatus.ERROR, AnnotationsUiPlugin.PLUGIN_ID,
+            IStatus status = new Status(IStatus.ERROR, AnnotationsPropertySection.PLUGIN_ID,
                     "No transactional editing domain is availabe for the current selection.");
             StatusManager.getManager().handle(status, StatusManager.SHOW);
         }

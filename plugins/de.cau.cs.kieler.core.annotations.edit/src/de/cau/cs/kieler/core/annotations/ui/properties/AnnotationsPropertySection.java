@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.core.annotations.ui.properties;
 
+import org.eclipse.core.runtime.preferences.InstanceScope;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.MenuManager;
@@ -31,12 +32,12 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.TreeColumn;
 import org.eclipse.swt.widgets.TreeItem;
+import org.eclipse.ui.preferences.ScopedPreferenceStore;
 import org.eclipse.ui.views.properties.tabbed.AbstractPropertySection;
 import org.eclipse.ui.views.properties.tabbed.TabbedPropertySheetPage;
 
 import de.cau.cs.kieler.core.annotations.Annotatable;
 import de.cau.cs.kieler.core.annotations.Annotation;
-import de.cau.cs.kieler.core.annotations.ui.internal.AnnotationsActivator;
 import de.cau.cs.kieler.core.annotations.ui.properties.AddAnnotationAction.AddHow;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
@@ -48,6 +49,9 @@ import de.cau.cs.kieler.core.ui.UnsupportedPartException;
  * @author msp
  */
 public class AnnotationsPropertySection extends AbstractPropertySection {
+    
+    /** the plugin identifier that contains the annotations property section. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.annotations.edit";
 
     /** column index for annotation name. */
     public static final int COL_ANNOTATION = 0;
@@ -67,6 +71,20 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     private EditingDomain editingDomain;
     /** the widths of the columns of the tree viewer. */
     private int[] columnWidth;
+    /** atorage for preferences. */
+    private ScopedPreferenceStore preferenceStore;
+    
+    /**
+     * Create and return the preference store.
+     * 
+     * @return the preference store
+     */
+    private IPreferenceStore getPreferenceStore() {
+        if (preferenceStore == null) {
+            preferenceStore = new ScopedPreferenceStore(InstanceScope.INSTANCE, PLUGIN_ID);
+        }
+        return preferenceStore;
+    }
 
     /**
      * {@inheritDoc}
@@ -116,7 +134,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
      * Create the columns for the tree viewer.
      */
     private void createColumns() {
-        IPreferenceStore preferenceStore = AnnotationsActivator.getInstance().getPreferenceStore();
+        IPreferenceStore preferenceStore = getPreferenceStore();
         columnWidth = new int[2];
 
         // create column for annotation name
@@ -173,8 +191,7 @@ public class AnnotationsPropertySection extends AbstractPropertySection {
     @Override
     public void dispose() {
         if (columnWidth != null) {
-            IPreferenceStore preferenceStore = AnnotationsActivator.getInstance()
-                    .getPreferenceStore();
+            IPreferenceStore preferenceStore = getPreferenceStore();
             for (int i = 0; i < columnWidth.length; i++) {
                 preferenceStore.setValue(PREF_COL_WIDTH + i, columnWidth[i]);
             }
