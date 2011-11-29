@@ -77,25 +77,6 @@
             optional="false">
       </commandParameter>
 	  </command>
-	  <command
-         categoryId="org.eclipse.gmf.category.synccharts"
-         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddToStateHandler"
-         description="Adds a new Region"
-         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
-         name="Add Region">
-      <commandParameter
-            id="de.cau.cs.kieler.synccharts.custom.parameters.type"
-            name="Type"
-            optional="false">
-      </commandParameter>
-	  </command>
-	  <command
-         categoryId="org.eclipse.gmf.category.synccharts"
-         defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.handlers.AddStateHandler"
-         description="Adds a new State"
-         id="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
-         name="Add State">
-	  </command>
          <command
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.diagram.custom.commands.InitSyncchartsDiagramHandler"
@@ -126,48 +107,6 @@
          point="org.eclipse.ui.menus">
       <menuContribution
             locationURI="popup:org.eclipse.gmf.runtime.diagram.ui.DiagramEditorContextMenu?after=addGroup">
-         <command
-               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addRegion"
-               icon="icons/obj16/Region.gif"
-               label="Add Region"
-               mnemonic="R"
-               style="push"
-               tooltip="Add a region to the state, which is executed in parallel to other regions">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.statePart">
-                  </reference>
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.diagram.isKsbaseInactive">
-                  </reference>
-               </and>
-            </visibleWhen>
-            <parameter
-                  name="de.cau.cs.kieler.synccharts.custom.parameters.type"
-                  value="Region">
-            </parameter>
-         </command>
-         <command
-               commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addState"
-               icon="icons/obj16/State.gif"
-               label="Add State"
-               mnemonic="S"
-               style="push"
-               tooltip="Add a state to the selected region">
-            <visibleWhen
-                  checkEnabled="false">
-               <and>
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.custom.expressions.region">
-                  </reference>
-                  <reference
-                        definitionId="de.cau.cs.kieler.synccharts.diagram.isKsbaseInactive">
-                  </reference>
-               </and>
-            </visibleWhen>
-         </command>
          <command
                commandId="de.cau.cs.kieler.synccharts.custom.contextMenu.addSignal"
                icon="icons/obj16/Signal.gif"
