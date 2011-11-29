@@ -524,6 +524,14 @@
             class="de.cau.cs.kieler.synccharts.Action"
             config="de.cau.cs.kieler.synccharts.diagram.custom.ActionLayoutConfig">
       </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Scope"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
+      </semanticOption>
+      <semanticOption
+            class="de.cau.cs.kieler.synccharts.Action"
+            config="de.cau.cs.kieler.synccharts.diagram.custom.AnnotationsLayoutConfig">
+      </semanticOption>
    </extension>
       <extension
          point="org.eclipse.gmf.runtime.diagram.ui.editpolicyProviders">
