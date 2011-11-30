@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.core.annotations"
       label="KIELER Annotations"
-      version="0.2.0.qualifier"
+      version="0.3.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <copyright>

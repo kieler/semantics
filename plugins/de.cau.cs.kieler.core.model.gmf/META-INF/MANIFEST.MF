@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER GMF Modeling Utility
 Bundle-SymbolicName: de.cau.cs.kieler.core.model.gmf;singleton:=true
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.core.model.gmf.ModelGmfPlugin
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.4.0",

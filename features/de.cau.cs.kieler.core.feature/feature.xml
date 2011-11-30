@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.core"
       label="KIELER Core"
-      version="0.5.0.qualifier"
+      version="0.6.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://informatik.uni-kiel.de/rtsys/kieler">
