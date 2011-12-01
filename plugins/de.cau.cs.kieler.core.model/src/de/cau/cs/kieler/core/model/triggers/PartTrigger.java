@@ -35,15 +35,15 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 
 /**
  * A part trigger that fires trigger states if the active part has been
- * switched. It will be attached to the platform via an IStartup extension. 
+ * switched.
  * 
  * @author chsch
  */
 public class PartTrigger extends AbstractTrigger implements IPartListener /*, IPartListener2*/ {
 
-    // The editor input can be used of further use, the editor input path is more convenient.
-    //  However it can be used for determining whether a current selection refers to some
-    //  editors content (which is not explicitly given in ISelection).
+    // The editor input can be accessed for further use, however, the editor input path is more
+    // convenient. It can be used for determining whether a current selection refers to some
+    // editors content (which is not explicitly given in ISelection).
     /** Name of the editorInputPath property. */
     public static final String EDITOR_INPUT_ID =
             "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInput";
@@ -52,7 +52,6 @@ public class PartTrigger extends AbstractTrigger implements IPartListener /*, IP
     public static final IProperty<IEditorInput> EDITOR_INPUT = new Property<IEditorInput>(
             EDITOR_INPUT_ID);    
 
-    // The input path is more convenient for further use.
     /** Name of the editorInputPath property. */
     public static final String EDITOR_INPUT_PATH_ID =
             "de.cau.cs.kieler.core.model.triggers.PartTrigger.editorInputPath";
@@ -62,6 +61,9 @@ public class PartTrigger extends AbstractTrigger implements IPartListener /*, IP
     
 
     private static PartTrigger instance = null;
+    
+    private IEditorPart currentActiveEditor = null;
+    private IWorkbenchPart currentActivePart = null;
     
 //    private IWorkbenchPart lastActive = null;
     
@@ -238,10 +240,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener /*, IP
      * the IPartListener2 stuff  *
      *                           *
      *****************************/
-
-    /** a. */
-    private IEditorPart currentActiveEditor = null;
-    private IWorkbenchPart currentActivePart = null;
+    // is not used right now. 
     
     /**
      * {@inheritDoc}
