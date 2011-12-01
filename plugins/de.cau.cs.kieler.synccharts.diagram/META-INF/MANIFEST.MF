@@ -49,7 +49,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.ocl.ecore;visibility:=reexport,
  org.eclipse.emf.validation;visibility:=reexport,
  org.eclipse.gef;visibility:=reexport,
- de.cau.cs.kieler.core.model;bundle-version="0.4.0",
- de.cau.cs.kieler.core.model.gmf;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.core.model.gmf
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5

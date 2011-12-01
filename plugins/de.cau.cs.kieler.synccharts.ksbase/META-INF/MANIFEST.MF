@@ -6,17 +6,17 @@ Bundle-Version: 0.6.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.ksbase.SyncchartsKsbasePlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.synccharts.diagram,
  org.eclipse.ui.ide;bundle-version="3.5.0",
  org.eclipse.gmf;bundle-version="1.2.0",
  org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.2.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.2.0",
- de.cau.cs.kieler.ksbase,
- de.cau.cs.kieler.core.model;bundle-version="0.1.0",
- de.cau.cs.kieler.ksbase.ui;bundle-version="0.1.0",
  org.eclipse.xtend.util.stdlib;bundle-version="1.0.0",
- de.cau.cs.kieler.synccharts.diagram.custom;bundle-version="0.1.0",
- de.cau.cs.kieler.core.kivi;bundle-version="0.2.0"
+ de.cau.cs.kieler.synccharts.diagram,
+ de.cau.cs.kieler.ksbase,
+ de.cau.cs.kieler.core.model,
+ de.cau.cs.kieler.ksbase.ui,
+ de.cau.cs.kieler.synccharts.diagram.custom,
+ de.cau.cs.kieler.core.kivi
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.ksbase

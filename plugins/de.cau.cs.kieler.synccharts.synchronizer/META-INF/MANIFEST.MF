@@ -5,27 +5,27 @@ Bundle-SymbolicName: de.cau.cs.kieler.synccharts.synchronizer;singleton:=true
 Bundle-Version: 0.3.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.synchronizer.SyncchartsSynchronizerPlugin
 Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.synccharts;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.edit;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.editor;bundle-version="0.1.0",
- org.eclipse.emf.compare;bundle-version="1.0.1",
- org.eclipse.emf.compare.match;bundle-version="1.0.1",
- org.eclipse.emf.compare.diff;bundle-version="1.0.1",
- org.eclipse.emf.compare.diff.edit;bundle-version="1.0.1",
+ org.eclipse.emf.compare;bundle-version="1.0.0",
+ org.eclipse.emf.compare.match;bundle-version="1.0.0",
+ org.eclipse.emf.compare.diff;bundle-version="1.0.0",
+ org.eclipse.emf.compare.diff.edit;bundle-version="1.0.0",
  org.eclipse.emf.transaction;bundle-version="1.3.0",
  org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.3.0",
  org.eclipse.gmf.runtime.diagram.ui.resources.editor;bundle-version="1.3.0",
  org.eclipse.xtext.ui;bundle-version="1.0.0",
- de.cau.cs.kieler.synccharts.diagram.custom;bundle-version="0.1.0",
- org.eclipse.ui.views.log;bundle-version="1.0.100",
- de.cau.cs.kieler.synccharts.ksbase;bundle-version="0.1.0",
+ org.eclipse.ui.views.log;bundle-version="1.0.0",
+ org.eclipse.core.expressions,
+ de.cau.cs.kieler.synccharts,
+ de.cau.cs.kieler.synccharts.edit,
+ de.cau.cs.kieler.synccharts.editor,
+ de.cau.cs.kieler.synccharts.diagram.custom,
+ de.cau.cs.kieler.synccharts.ksbase,
  de.cau.cs.kieler.synccharts.diagram,
- de.cau.cs.kieler.kiml.ui;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.text;bundle-version="0.1.0",
- de.cau.cs.kieler.synccharts.text.ui;bundle-version="0.1.0",
- de.cau.cs.kieler.kiml.gmf;bundle-version="0.1.0",
- de.cau.cs.kieler.core;bundle-version="0.4.0",
- org.eclipse.core.expressions
+ de.cau.cs.kieler.kiml.ui,
+ de.cau.cs.kieler.synccharts.text,
+ de.cau.cs.kieler.synccharts.text.ui,
+ de.cau.cs.kieler.kiml.gmf,
+ de.cau.cs.kieler.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-ActivationPolicy: lazy

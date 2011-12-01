@@ -7,13 +7,13 @@ Bundle-Activator: de.cau.cs.kieler.sim.kiem.automated.KiemAutomatedPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem;bundle-version="0.1.0",
- de.cau.cs.kieler.sim.kiem.config;bundle-version="0.1.0",
- org.eclipse.core.resources;bundle-version="3.5.1",
- org.eclipse.core.expressions;bundle-version="3.4.100",
- org.json;bundle-version="0.1.0",
- de.cau.cs.kieler.core.ui;bundle-version="0.1.0",
- de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.1.0"
+ org.eclipse.core.resources;bundle-version="3.5.0",
+ org.eclipse.core.expressions;bundle-version="3.4.0",
+ org.json,
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.config,
+ de.cau.cs.kieler.core.ui,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.kiem.automated,

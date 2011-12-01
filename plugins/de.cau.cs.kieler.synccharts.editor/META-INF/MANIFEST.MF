@@ -11,11 +11,11 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.presentation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.core.resources;visibility:=reexport,
- de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
  org.eclipse.emf.ecore.xmi;visibility:=reexport,
  org.eclipse.emf.edit.ui;visibility:=reexport,
  org.eclipse.ui.ide;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
  org.eclipse.emf.ecore.edit;visibility:=reexport,
+ de.cau.cs.kieler.synccharts.edit;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions.edit;visibility:=reexport
 Bundle-ActivationPolicy: lazy

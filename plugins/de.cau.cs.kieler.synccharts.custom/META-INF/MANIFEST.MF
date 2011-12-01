@@ -26,7 +26,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.4.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.synccharts.text.bridge,
  de.cau.cs.kieler.karma,
- de.cau.cs.kieler.core.model.gmf;bundle-version="0.1.0"
+ de.cau.cs.kieler.core.model.gmf
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.draw2d,
  org.eclipse.emf.common,

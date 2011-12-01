@@ -6,17 +6,14 @@ Bundle-Version: 0.3.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.core.annotations;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.edit,
- de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
- org.eclipse.gmf.runtime.notation;bundle-version="1.2.0",
- org.eclipse.gef;bundle-version="3.5.0",
- org.eclipse.xtext.ui,
+ org.eclipse.xtext.ui;bundle-version="2.1.0",
  org.eclipse.xtext.ui.shared,
+ org.eclipse.xtext.builder,
  org.eclipse.ui.editors,
  org.antlr.runtime,
- org.eclipse.xtext.builder,
- org.eclipse.emf.transaction;bundle-version="1.4.0"
+ de.cau.cs.kieler.core.annotations;visibility:=reexport,
+ de.cau.cs.kieler.core.annotations.edit,
+ de.cau.cs.kieler.core.annotations.text;visibility:=reexport
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j

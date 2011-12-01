@@ -8,11 +8,11 @@ Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.core.model,
- org.eclipse.xtext;bundle-version="1.0.0",
- org.eclipse.xtext.ui;bundle-version="1.0.0",
+ org.eclipse.xtext;bundle-version="2.1.0",
+ org.eclipse.xtext.ui;bundle-version="2.1.0",
+ org.eclipse.ui.ide,
  de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.core.ui,
- org.eclipse.ui.ide,
  de.cau.cs.kieler.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

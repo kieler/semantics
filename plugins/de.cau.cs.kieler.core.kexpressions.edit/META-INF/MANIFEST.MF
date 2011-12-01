@@ -10,7 +10,7 @@ Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.kexpressions.provider
 Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
  org.eclipse.emf.edit;visibility:=reexport,
+ de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.edit
 Bundle-ActivationPolicy: lazy
