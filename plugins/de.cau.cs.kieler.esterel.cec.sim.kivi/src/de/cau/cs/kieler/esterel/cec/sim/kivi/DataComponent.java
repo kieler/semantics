@@ -2,6 +2,7 @@ package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -10,14 +11,18 @@ import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.ui.editor.XtextEditor;
+import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
 import de.cau.cs.kieler.kies.esterel.Program;
+import de.cau.cs.kieler.kies.ui.EsterelSemanticHighlightingCalculator;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -28,6 +33,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	/** The Esterel editor. */
 	private XtextEditor esterelEditor;
+	
+	/** The Xtext document. */
+	private IXtextDocument document;
 
 	/** The Esterel program. */
 	private Program esterelProgram;
@@ -54,8 +62,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	public void initialize() throws KiemInitializationException {
 		this.esterelEditor = this.getEsterelEditor();
 		this.esterelProgram = this.getEsterelProgram(this.esterelEditor);
-
+		this.document = esterelEditor.getDocument();
 	}
+
 
 	// -----------------------------------------------------------------------------
 
@@ -191,6 +200,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -----------------------------------------------------------------------------
 
+//	private List<StructuralFeature> structuralFeatures(EObject eObject) {
+//			    return org.eclipse.xtext.EcoreUtil2.typeSelect(eObject. .getFeatures(), StructuralFeature.class);
+//			}	
+
+	// -----------------------------------------------------------------------------
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -236,7 +251,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			editor = this.getEsterelEditor();
             ISelectionProvider selectionProvider = editor.getSelectionProvider();
             
-            //editor.get
+            EsterelSemanticHighlightingCalculator.highlightObjects = activeStatements;
+            editor.resetHighlightRange();
             
 		} catch (KiemInitializationException e) {
 			throw new KiemExecutionException(
