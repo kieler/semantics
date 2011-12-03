@@ -221,9 +221,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 				// Then add normal output signals
 				for (String outputSignal : outputSignalList) {
-					if (!esterelOutput.has(outputSignal)) {
+					if (esterelOutput.has(outputSignal)) {
 							returnObj.accumulate(outputSignal,
-									JSONSignalValues.newValue(false));
+									JSONSignalValues.newValue(true));
+					} else {
+						returnObj.accumulate(outputSignal,
+								JSONSignalValues.newValue(false));
 					}
 				}
 			} else {
@@ -597,10 +600,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 							}
 						}
 						if (sig instanceof Output) {
-							for (Signal s : sig.getSignals()) {
-								res.accumulate(s.getName(),
-										JSONSignalValues.newValue(false));
-								outputSignalList.add(s.getName());
+							for (Signal signal : sig.getSignals()) {
+								String signalName = signal.getName();
+								if (!signalName.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+									res.accumulate(signalName,
+											JSONSignalValues.newValue(false));
+									outputSignalList.add(signalName);
+								}
 							}
 						}
 					}

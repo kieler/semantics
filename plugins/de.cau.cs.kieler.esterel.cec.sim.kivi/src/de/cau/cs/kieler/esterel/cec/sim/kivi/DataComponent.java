@@ -1,47 +1,59 @@
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
+import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.List;
+import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.jface.viewers.ISelectionProvider;
-import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.swt.custom.StyleRange;
+import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.RGB;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.xtext.nodemodel.ICompositeNode;
+import org.eclipse.xtext.nodemodel.util.NodeModelUtils;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
-import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.ui.editor.XtextEditor;
-import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
 import de.cau.cs.kieler.kies.esterel.Program;
-import de.cau.cs.kieler.kies.ui.EsterelSemanticHighlightingCalculator;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	/** The Esterel editor. */
 	private XtextEditor esterelEditor;
-	
-	/** The Xtext document. */
-	private IXtextDocument document;
+
+	/** The Esterel semantic resource editor. */
+	Resource semanticResource;
 
 	/** The Esterel program. */
 	private Program esterelProgram;
+	
+	/** The active (and selected) statements, needed to undo. */
+	private LinkedList<EObject> activeStatements = new LinkedList<EObject>();
+	
+	
+	private Hashtable<Integer, StyleRange>  recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
+	
+	RGB highlightBackgroundColor =  new RGB(255,100, 100); // "FF8888";
+	
+    boolean highlight = false;
 
 	// -----------------------------------------------------------------------------
-
+	
 	/**
 	 * Instantiates a new data component.
 	 */
@@ -62,9 +74,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	public void initialize() throws KiemInitializationException {
 		this.esterelEditor = this.getEsterelEditor();
 		this.esterelProgram = this.getEsterelProgram(this.esterelEditor);
-		this.document = esterelEditor.getDocument();
+		refreshEObjectMap();
+		this.semanticResource = this.getEsterelSemanticResource(esterelProgram);
+		semanticResource.getResourceSet();
 	}
-
 
 	// -----------------------------------------------------------------------------
 
@@ -74,8 +87,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
 	 */
 	public void wrapup() throws KiemInitializationException {
-		// TODO Auto-generated method stub
-
+		// Undo Highlighting
+		// Highlight the active statements
+		for (EObject statement : activeStatements) {
+			try {
+				setXtextSelection(statement, false);
+			} catch (KiemInitializationException e) {
+				// Hide any errors
+			}
+		}
 	}
 
 	// -----------------------------------------------------------------------------
@@ -121,12 +141,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	String getEncodedEMFId(EObject eObject) {
 		if (eObject.eResource() != null) {
 			String uri = eObject.eResource().getURIFragment(eObject);
-			uri = uri.replaceAll("/", "x");			
+			uri = uri.replaceAll("/", "x");
 			uri = uri.replaceAll("@", "");
-			//FIXME: Why does replaceAll not work for "."?!
+			// FIXME: Why does replaceAll not work for "."?!
 			while (uri.indexOf(".") > 0) {
-				String test = uri.substring(0,uri.indexOf("."));
-				String test2 = uri.substring(uri.indexOf(".")+1, uri.length()); 
+				String test = uri.substring(0, uri.indexOf("."));
+				String test2 = uri
+						.substring(uri.indexOf(".") + 1, uri.length());
 				uri = test + test2;
 			}
 			return uri;
@@ -200,12 +221,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -----------------------------------------------------------------------------
 
-//	private List<StructuralFeature> structuralFeatures(EObject eObject) {
-//			    return org.eclipse.xtext.EcoreUtil2.typeSelect(eObject. .getFeatures(), StructuralFeature.class);
-//			}	
-
-	// -----------------------------------------------------------------------------
-	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -218,23 +233,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			throws KiemExecutionException {
 
 		String statementName = this.getProperties()[1].getValue();
-		LinkedList<EObject> activeStatements = new LinkedList<EObject>();
+		LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
 
 		if (jSONObject.has(statementName)) {
 			// Now extract the statements separated by a colon
 			try {
 				String activeStatementsString = jSONObject
 						.getString(statementName);
-				
-				String[] activeStatementsArray = activeStatementsString.split(",");
-				
+
+				String[] activeStatementsArray = activeStatementsString
+						.split(",");
+
 				for (String activeStatementID : activeStatementsArray) {
-					EObject activeStatement = this.getEObject(activeStatementID);
+					EObject activeStatement = this
+							.getEObject(activeStatementID);
 					if (activeStatement != null) {
-						activeStatements.add(activeStatement);
+						newActiveStatements.add(activeStatement);
 					}
 				}
-				
+
 			} catch (JSONException e) {
 				throw new KiemExecutionException(
 						"Cannot parse statement data variable of active Esterel statements for visualization.",
@@ -243,30 +260,175 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		}
 
-
+		// Undo Highlighting
 		// Highlight the active statements
 		for (EObject statement : activeStatements) {
-           XtextEditor editor;
-		try {
-			editor = this.getEsterelEditor();
-            ISelectionProvider selectionProvider = editor.getSelectionProvider();
-            
-            EsterelSemanticHighlightingCalculator.highlightObjects = activeStatements;
-            editor.resetHighlightRange();
-            
-		} catch (KiemInitializationException e) {
-			throw new KiemExecutionException(
-					"No active Esterel editor for statement visualization.",
-					false, false, true, e);
-		}
+			try {
+				setXtextSelection(statement, false);
+			} catch (KiemInitializationException e) {
+				throw new KiemExecutionException(
+						"No active Esterel editor for statement visualization.",
+						false, false, true, e);
+			}
 		}
 		
+		// New active statements
+		activeStatements = newActiveStatements;
 		
+		// Highlight the active statements
+		for (EObject statement : activeStatements) {
+			try {
+				setXtextSelection(statement, true);
+			} catch (KiemInitializationException e) {
+				throw new KiemExecutionException(
+						"No active Esterel editor for statement visualization.",
+						false, false, true, e);
+			}
+		}
+
 		// This is just an observer component
 		return null;
 	}
 
+	private Resource getEsterelSemanticResource(EObject semanticElement) {
+		return semanticElement.eResource();
+	}
+
+	ICompositeNode xtextNode;
+	boolean selectionDone;
+	
 	// -----------------------------------------------------------------------------
+	
+	/**
+	 * Compute the length of the Esterel statement up to the first space or line break.
+	 *
+	 * @param statement the statement
+	 * @return the statement end
+	 */
+	int getStatementEnd(String statement) {
+		String tmpStatement = statement;
+		while (tmpStatement.length() > 0 && ( tmpStatement.startsWith("\n") || tmpStatement.startsWith("\r") || tmpStatement.startsWith(" "))) {
+			tmpStatement = tmpStatement.substring(1);
+		}
+		
+		int len1 = tmpStatement.indexOf("\r");
+		int len2 = tmpStatement.indexOf("\n");
+		int len3 = tmpStatement.indexOf(" ");
+		
+		if (len1 == -1) {
+			len1 = tmpStatement.length();
+		}
+		if (len2 == -1) {
+			len2 = tmpStatement.length();
+		}
+		if (len3 == -1) {
+			len3 = tmpStatement.length();
+		}
+		
+		int len = Math.min(Math.min(len1, len2) , len3);
+		if (len == -1) {
+			return statement.length();
+		}
+		return len;
+	}
+	
+	// -----------------------------------------------------------------------------
+	
+	/**
+	 * Sets the xtext selection to have a specific background color.
+	 *
+	 * @param semanticElement the semantic element
+	 * @param highlight the highlight
+	 * @throws KiemInitializationException the kiem initialization exception
+	 */
+	private void setXtextSelection(EObject semanticElement, boolean highlight) throws KiemInitializationException {
+			this.highlight = highlight;
+			setXtextSelection(semanticElement);
+	}
+
+	// -----------------------------------------------------------------------------
+	
+	/**
+	 * Sets the xtext selection to have the last used background color.
+	 *
+	 * @param semanticElement the new xtext selection
+	 * @throws KiemInitializationException the kiem initialization exception
+	 */
+	private void setXtextSelection(EObject semanticElement)
+			throws KiemInitializationException {
+		Resource semanticResource = this.semanticResource;
+		if (semanticResource == null) {
+			return;
+		}
+		String semanticElementFragment = semanticResource
+				.getURIFragment(semanticElement);
+		XtextResource xtextResource = (XtextResource) semanticResource;
+		EObject semanticElementInDocument = xtextResource
+				.getEObject(semanticElementFragment);
+		xtextNode = NodeModelUtils.findActualNodeFor(semanticElementInDocument);
+		
+		if (xtextNode != null) {
+			selectionDone = false;
+			Display.getDefault().asyncExec(new Runnable() {
+				public void run() {
+					XtextEditor xtextEditor;
+					xtextEditor = esterelEditor;
+
+					// getOffset() and getLength() are trimming whitespaces
+					int offset = xtextNode.getOffset();
+					String xtextNodeText = xtextNode.getText();
+					int length  = getStatementEnd(xtextNodeText);
+
+					xtextEditor.getInternalSourceViewer().setRangeIndication(
+							offset, length, true);
+					xtextEditor.getInternalSourceViewer().revealRange(
+							offset, length);
+
+					
+					StyleRange styleRange;
+					if (highlight) {
+						// Save the current style before
+						StyleRange backupStyleRange = xtextEditor.getInternalSourceViewer().getTextWidget().getStyleRangeAtOffset(offset);
+						recoverStyleRangeMap.put(offset, backupStyleRange);
+						Color highlightColor = new Color(Display.getCurrent(), highlightBackgroundColor);
+						styleRange = new StyleRange(offset, length, backupStyleRange.foreground, highlightColor);
+					} else {
+						// Recover the old style
+						StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
+						styleRange = new StyleRange(offset, length, recoverStyleRange.foreground, recoverStyleRange.background);
+						recoverStyleRangeMap.remove(offset);
+					}
+					
+					xtextEditor.getInternalSourceViewer().getTextWidget().setStyleRange(styleRange);
+					
+					selectionDone = true;
+				}
+			});
+			while (!selectionDone) {
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					// No error behavior
+				}
+			}
+		}
+		
+
+	}
+
+	
+	// -------------------------------------------------------------------------
+	
+	/* (non-Javadoc)
+	 * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isHistoryObserver()
+	 */
+	@Override
+	public boolean isHistoryObserver() {
+		return true;
+	}
+		
+	// -----------------------------------------------------------------------------
+
 
 	/**
 	 * Gets the Esterel editor.
