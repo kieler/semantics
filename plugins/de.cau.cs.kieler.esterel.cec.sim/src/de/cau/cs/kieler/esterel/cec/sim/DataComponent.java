@@ -41,6 +41,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.console.ConsolePlugin;
+import org.eclipse.ui.console.IConsole;
+import org.eclipse.ui.console.IConsoleManager;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -188,42 +193,47 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				JSONObject esterelOutput = new JSONObject(receivedMessage);
 				JSONArray esterelOutputArray = esterelOutput.names();
 
-				// First add auxiliary signals
-				for (int i = 0; i < esterelOutputArray.length(); i++) {
-					String esterelOutputName = esterelOutputArray.getString(i);
+				if (esterelOutputArray != null) {
+					// First add auxiliary signals
+					for (int i = 0; i < esterelOutputArray.length(); i++) {
+						String esterelOutputName = esterelOutputArray
+								.getString(i);
 
-					// Test if the output variable is an auxiliary signal
-					// that is only there to mark the current Esterel statement
-					// in full_simulation mode of the simulator.
-					// These auxiliary signals must be encapsulated in a state
-					// variable.
-					if (esterelOutputName
-							.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-						try {
-							String statementWithoutAuxiliaryVariableTag = esterelOutputName
-									.substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
-											.length());
+						// Test if the output variable is an auxiliary signal
+						// that is only there to mark the current Esterel
+						// statement
+						// in full_simulation mode of the simulator.
+						// These auxiliary signals must be encapsulated in a
+						// state
+						// variable.
+						if (esterelOutputName
+								.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+							try {
+								String statementWithoutAuxiliaryVariableTag = esterelOutputName
+										.substring(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG
+												.length());
 
-							// Insert a "," if not the first statement
-							if (activeStatements.length() != 0) {
-								activeStatements += ",";
+								// Insert a "," if not the first statement
+								if (activeStatements.length() != 0) {
+									activeStatements += ",";
+								}
+
+								// Add active statement to string.
+								activeStatements += statementWithoutAuxiliaryVariableTag;
+
+							} catch (Exception e) {
 							}
 
-							// Add active statement to string.
-							activeStatements += statementWithoutAuxiliaryVariableTag;
-
-						} catch (Exception e) {
 						}
 
-					} 
-					
+					}
 				}
 
 				// Then add normal output signals
 				for (String outputSignal : outputSignalList) {
 					if (esterelOutput.has(outputSignal)) {
-							returnObj.accumulate(outputSignal,
-									JSONSignalValues.newValue(true));
+						returnObj.accumulate(outputSignal,
+								JSONSignalValues.newValue(true));
 					} else {
 						returnObj.accumulate(outputSignal,
 								JSONSignalValues.newValue(false));
@@ -247,8 +257,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			e.printStackTrace();
 			process.destroy();
 		}
-		
-		
+
 		return returnObj;
 	}
 
@@ -360,6 +369,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			final File outFile, EsterelSimulationProgressMonitor monitor)
 			throws IOException, URISyntaxException {
 		monitor.subTask("Reading Esterel file");
+		monitor.setTaskName("Sara");
 		java.net.URI inputURI = convertURI(strlFile);
 
 		InputStream strl = CEC.runSTRL(inputURI);
@@ -503,7 +513,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					.toURL();
 
 			// Generate data.c
-			URL data = generateCSimulationInterface(transformedProgram, esterelOutput);
+			URL data = generateCSimulationInterface(transformedProgram,
+					esterelOutput);
 
 			// Compile C code
 			Bundle bundle = Platform
@@ -602,7 +613,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						if (sig instanceof Output) {
 							for (Signal signal : sig.getSignals()) {
 								String signalName = signal.getName();
-								if (!signalName.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+								if (!signalName
+										.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
 									res.accumulate(signalName,
 											JSONSignalValues.newValue(false));
 									outputSignalList.add(signalName);
@@ -634,14 +646,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	/**
 	 * Generate the CSimulationInterface.
-	 *
-	 * @param esterelProgram the esterel program
-	 * @param esterelProgramURI the esterel program uri
+	 * 
+	 * @param esterelProgram
+	 *            the esterel program
+	 * @param esterelProgramURI
+	 *            the esterel program uri
 	 * @return the uRL
-	 * @throws KiemInitializationException the kiem initialization exception
+	 * @throws KiemInitializationException
+	 *             the kiem initialization exception
 	 */
-	private URL generateCSimulationInterface(Program esterelProgram, URI esterelProgramURI)
-			throws KiemInitializationException {
+	private URL generateCSimulationInterface(Program esterelProgram,
+			URI esterelProgramURI) throws KiemInitializationException {
 		File data;
 		try {
 			data = File.createTempFile("data", ".c");

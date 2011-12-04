@@ -1,10 +1,8 @@
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.Set;
 
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
@@ -45,11 +43,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	/** The active (and selected) statements, needed to undo. */
 	private LinkedList<EObject> activeStatements = new LinkedList<EObject>();
 	
-	
+	/** The recover style range map to recover original style. */
 	private Hashtable<Integer, StyleRange>  recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
 	
-	RGB highlightBackgroundColor =  new RGB(255,100, 100); // "FF8888";
+	/** The highlight background color. */
+	RGB highlightBackgroundColor =  new RGB(255,180, 180); // light red
 	
+    /** The highlight flag is used internally. */
     boolean highlight = false;
 
 	// -----------------------------------------------------------------------------
@@ -234,6 +234,20 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		String statementName = this.getProperties()[1].getValue();
 		LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
+		
+		// Undo Highlighting
+		// Highlight the active statements
+		for (EObject statement : activeStatements) {
+			try {
+				setXtextSelection(statement, false);
+			} catch (KiemInitializationException e) {
+				throw new KiemExecutionException(
+						"No active Esterel editor for statement visualization.",
+						false, false, true, e);
+			}
+		}
+		
+		
 
 		if (jSONObject.has(statementName)) {
 			// Now extract the statements separated by a colon
@@ -260,18 +274,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		}
 
-		// Undo Highlighting
-		// Highlight the active statements
-		for (EObject statement : activeStatements) {
-			try {
-				setXtextSelection(statement, false);
-			} catch (KiemInitializationException e) {
-				throw new KiemExecutionException(
-						"No active Esterel editor for statement visualization.",
-						false, false, true, e);
-			}
-		}
-		
 		// New active statements
 		activeStatements = newActiveStatements;
 		
@@ -396,7 +398,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						// Recover the old style
 						StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
 						if (recoverStyleRange != null) {
-							styleRange = new StyleRange(offset, length, recoverStyleRange.foreground, recoverStyleRange.background);
+							styleRange = new StyleRange(offset, length, recoverStyleRange.foreground, recoverStyleRange.background, recoverStyleRange.fontStyle);
 							recoverStyleRangeMap.remove(offset);
 						}
 					}
@@ -416,8 +418,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				}
 			}
 		}
-		
-
 	}
 
 	
@@ -427,9 +427,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isHistoryObserver()
 	 */
 	@Override
-	public boolean isHistoryObserver() {
-		return true;
-	}
+    public boolean isHistoryObserver() {
+        return true;
+    }
 		
 	// -----------------------------------------------------------------------------
 
@@ -466,11 +466,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	public KiemProperty[] doProvideProperties() {
 		final int nProperties = 1;
 		KiemProperty[] properties = new KiemProperty[nProperties];
-		// KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
 		properties[0] = new KiemProperty("Statement Name", "statement");
-
-		// properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
-		// properties[2] = new KiemProperty("Full Debug Mode", true);
 
 		return properties;
 	}
