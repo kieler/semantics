@@ -136,13 +136,13 @@ public final class CEC {
     // -------------------------------------------------------------------------
 
     /** The Constant INIT_TIME. */
-    private static final int INIT_TIME = 500;
+    private static final int INIT_TIME = 1000;
     
     /** The Constant TIMEOUT. */
-    private static final int TIMEOUT = 5000;
+    private static final int TIMEOUT = 500;
     
     /** The Constant STEP_TIME. */
-    private static final int STEP_TIME = 500;
+    private static final int STEP_TIME = 100;
 
     // -------------------------------------------------------------------------
     
@@ -159,7 +159,7 @@ public final class CEC {
      */
     public static InputStream exec(final MODULE module, final InputStream input)
             throws IOException {
-        Bundle[] fragments = Platform.getFragments(Activator.getDefault().getBundle());
+        Bundle[] fragments = Platform.getFragments(CECPlugin.getDefault().getBundle());
 
         if (fragments.length != 1) {
             throw new UnsupportedOperationException("cec native fragment not found, "

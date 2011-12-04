@@ -21,18 +21,18 @@ import org.osgi.framework.BundleContext;
  * 
  * @author ctr
  */
-public class Activator extends Plugin {
+public class CECPlugin extends Plugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec";
 
     // The shared instance
-    private static Activator plugin;
+    private static CECPlugin plugin;
 
     /**
      * The constructor.
      */
-    public Activator() {
+    public CECPlugin() {
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Activator extends Plugin {
      * 
      * @return the shared instance
      */
-    public static Activator getDefault() {
+    public static CECPlugin getDefault() {
         return plugin;
     }
 

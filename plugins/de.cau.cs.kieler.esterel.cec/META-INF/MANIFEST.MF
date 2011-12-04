@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER CEC Interface
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec
 Bundle-Version: 0.1.1.qualifier
-Bundle-Activator: de.cau.cs.kieler.esterel.cec.Activator
+Bundle-Activator: de.cau.cs.kieler.esterel.cec.CECPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.core;bundle-version="0.2.0"
