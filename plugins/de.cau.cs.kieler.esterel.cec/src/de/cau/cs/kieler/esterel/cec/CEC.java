@@ -136,13 +136,13 @@ public final class CEC {
     // -------------------------------------------------------------------------
 
     /** The Constant INIT_TIME. */
-    private static final int INIT_TIME = 1000;
+    private static final int INIT_TIME = 500;
     
     /** The Constant TIMEOUT. */
-    private static final int TIMEOUT = 500;
+    private static final int TIMEOUT = 100;
     
     /** The Constant STEP_TIME. */
-    private static final int STEP_TIME = 100;
+    private static final int STEP_TIME = 50;
 
     // -------------------------------------------------------------------------
     
