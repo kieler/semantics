@@ -385,7 +385,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 							offset, length);
 
 					
-					StyleRange styleRange;
+					StyleRange styleRange = null;
 					if (highlight) {
 						// Save the current style before
 						StyleRange backupStyleRange = xtextEditor.getInternalSourceViewer().getTextWidget().getStyleRangeAtOffset(offset);
@@ -395,11 +395,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					} else {
 						// Recover the old style
 						StyleRange recoverStyleRange = recoverStyleRangeMap.get(offset);
-						styleRange = new StyleRange(offset, length, recoverStyleRange.foreground, recoverStyleRange.background);
-						recoverStyleRangeMap.remove(offset);
+						if (recoverStyleRange != null) {
+							styleRange = new StyleRange(offset, length, recoverStyleRange.foreground, recoverStyleRange.background);
+							recoverStyleRangeMap.remove(offset);
+						}
 					}
 					
-					xtextEditor.getInternalSourceViewer().getTextWidget().setStyleRange(styleRange);
+					if (styleRange != null) {
+						xtextEditor.getInternalSourceViewer().getTextWidget().setStyleRange(styleRange);
+					}
 					
 					selectionDone = true;
 				}
