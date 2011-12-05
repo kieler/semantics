@@ -169,6 +169,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * @return the e object
 	 */
 	EObject getEObject(String eObjectID) {
+		if ((eObjectID == null) || eObjectID.equals("")) {
+			return null;
+		}
 		if (eObjectMap.containsKey(eObjectID)) {
 			return eObjectMap.get(eObjectID);
 		} else {
@@ -206,17 +209,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		String baseObjID = this.getEncodedEMFId(baseObj);
 		if (!eObjectMap.containsKey(baseObjID)) {
 			eObjectMap.put(baseObjID, baseObj);
+
+			// Add all children
+			TreeIterator<EObject> treeIterator = baseObj.eAllContents();
+			while (treeIterator.hasNext()) {
+				EObject treeIteratorObject = treeIterator.next();
+				refreshEObjectMap(treeIteratorObject);
+				// for (EObject treeIteratorObjectChild :
+				// treeIteratorObject.eContents()) {
+				// }
+			}
 		}
 
-		// Add all children
-		TreeIterator<EObject> treeIterator = baseObj.eAllContents();
-		while (treeIterator.hasNext()) {
-			EObject treeIteratorObject = treeIterator.next();
-			refreshEObjectMap(treeIteratorObject);
-			// for (EObject treeIteratorObjectChild :
-			// treeIteratorObject.eContents()) {
-			// }
-		}
 	}
 
 	// -----------------------------------------------------------------------------
@@ -234,20 +238,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		String statementName = this.getProperties()[1].getValue();
 		LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
-		
-		// Undo Highlighting
-		// Highlight the active statements
-		for (EObject statement : activeStatements) {
-			try {
-				setXtextSelection(statement, false);
-			} catch (KiemInitializationException e) {
-				throw new KiemExecutionException(
-						"No active Esterel editor for statement visualization.",
-						false, false, true, e);
-			}
-		}
-		
-		
 
 		if (jSONObject.has(statementName)) {
 			// Now extract the statements separated by a colon
@@ -258,6 +248,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				String[] activeStatementsArray = activeStatementsString
 						.split(",");
 
+				// Select statements for highlighting
 				for (String activeStatementID : activeStatementsArray) {
 					EObject activeStatement = this
 							.getEObject(activeStatementID);
@@ -271,20 +262,38 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						"Cannot parse statement data variable of active Esterel statements for visualization.",
 						false, false, true, e);
 			}
-
 		}
 
+		// Undo Highlighting
+		// Highlight the active statements
+		for (EObject statement : activeStatements) {
+			// remove highlighting only if not again to highlight 
+			if (!newActiveStatements.contains(statement)) {
+				try {
+					setXtextSelection(statement, false);
+				} catch (KiemInitializationException e) {
+					throw new KiemExecutionException(
+							"No active Esterel editor for statement visualization.",
+							false, false, true, e);
+				}
+			}
+		}
+		
+		LinkedList<EObject> oldActiveStatements = activeStatements;
 		// New active statements
 		activeStatements = newActiveStatements;
 		
 		// Highlight the active statements
 		for (EObject statement : activeStatements) {
-			try {
-				setXtextSelection(statement, true);
-			} catch (KiemInitializationException e) {
-				throw new KiemExecutionException(
-						"No active Esterel editor for statement visualization.",
-						false, false, true, e);
+			// highlight only if not highlighted before
+			if (!oldActiveStatements.contains(statement)) {
+				try {
+					setXtextSelection(statement, true);
+				} catch (KiemInitializationException e) {
+					throw new KiemExecutionException(
+							"No active Esterel editor for statement visualization.",
+							false, false, true, e);
+				}
 			}
 		}
 

@@ -369,7 +369,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			final File outFile, EsterelSimulationProgressMonitor monitor)
 			throws IOException, URISyntaxException {
 		monitor.subTask("Reading Esterel file");
-		monitor.setTaskName("Sara");
 		java.net.URI inputURI = convertURI(strlFile);
 
 		InputStream strl = CEC.runSTRL(inputURI);
