@@ -588,19 +588,19 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             String path = super.outPath;
             
             try {
-            	    StringBuilder text = new StringBuilder();
-            	    String NL = System.getProperty("line.separator");
-            	    Scanner scanner = new Scanner(new FileInputStream(path + "/" +  RESULT_FILE_NAME));
-            	    try {
-            	      while (scanner.hasNextLine()){
-            	        result += (scanner.nextLine() + NL);
-            	      }
-            	    }
-            	    finally{
-            	      scanner.close();
-            	    }
-
-            		  //result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+//            	    StringBuilder text = new StringBuilder();
+//            	    String NL = System.getProperty("line.separator");
+//            	    Scanner scanner = new Scanner(new FileInputStream(path + "/" +  RESULT_FILE_NAME));
+//            	    try {
+//            	      while (scanner.hasNextLine()){
+//            	        result += (scanner.nextLine() + NL);
+//            	      }
+//            	    }
+//            	    finally{
+//            	      scanner.close();
+//            	    }
+//
+            		  result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
             } catch (Exception e) {
                 throw new KiemExecutionException("A Maude model checking error occurred.", false, e);
             }

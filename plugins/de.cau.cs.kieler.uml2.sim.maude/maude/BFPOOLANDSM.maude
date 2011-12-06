@@ -95,12 +95,12 @@ mod MCBFPOOLANDSM is
     ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 tup8 tup9 tup10 tup11 : -> Acctup .
  
    ops tups : -> AcctupSet .
+ eq tups = emptyAcctupSet .
+ ***(
     eq tup1 = acc:(E) tick (F) stutter0 (L)1(U)0 .
     eq tup2 = acc:(E) tick (F) stutter1 (L)1(U)0 .
  
-  eq tups = (tup1, tup2) .
- ***(
- 
+  
  
     eq tup2 = acc:(E) 1getsHungry (F) 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)6(U)0 .
  
@@ -145,11 +145,13 @@ mod MCBFPOOLANDSM is
   eq tup11 = acc:(E) 1takeLeftFork (F) 0takeLeftFork (L)1(U)0 .
   
     eq tups = (tup1, tup2, tup3, tup4, tup5, tup6, tup7, tup8, tup9, tup10, tup11 ) .
-  )***
-    
+eq allEvs = stutter0, stutter1, tick .
     op allEvs : -> EventSet .
  ***   eq allEvs = 1takeLeftFork, 1getsHungry, 1begin, 1done, 1takeRightFork, 0takeRightFork, 0begin, 0takeLeftFork, 0getsHungry, 0done .
-eq allEvs = stutter0, stutter1, tick .
+  )***
+    
+
+
 	subsort BFPSMStatus < State .
     vars accsst accsst' : AccsStatus .
   var epstatus : EpStatus .
@@ -163,7 +165,6 @@ eq allEvs = stutter0, stutter1, tick .
   vars queuest queuest' : QueueStatus .
 	vars msst mastate : BFPSMStatus .
 	vars V V2 : Verts .
-	var E : EventSet .
 	vars HC : HistoryConfs .
 	
 	var P : Prop .
@@ -181,3 +182,5 @@ eq allEvs = stutter0, stutter1, tick .
 	eq msst |= P = false [owise] .
 	
 endm
+
+red tups .
