@@ -121,22 +121,27 @@ public class ManualFocusCombination extends AbstractCombination {
 
         // if enabled, do something
         if (this.enabled) {
-            int level = zoomLevel;
-            List<EObject> focus = selection.getSelectedObjects();
-            // if we want to see everything, select root element and do a full child focus
-            if (showAll) {
-                focus.add(diagram.getSemanticModel());
-                level = Integer.MAX_VALUE;
-            } else {
-                // if nothing is selected, use the model root as the focus
-                if (focus.isEmpty()) {
+            //if bridge is null the DiagramState is uninitialized so don't do anything as it will fail anyway
+            //if the workbenchparts are different we are likely in the transition between diagrams don't do anything then
+            if ((diagram.getGraphicalFrameworkBridge() != null) 
+                    && (diagram.getDiagramPart() == selection.getWorkbenchPart())) {
+                int level = zoomLevel;
+                List<EObject> focus = selection.getSelectedObjects();
+                // if we want to see everything, select root element and do a full child focus
+                if (showAll) {
                     focus.add(diagram.getSemanticModel());
+                    level = Integer.MAX_VALUE;
+                } else {
+                    // if nothing is selected, use the model root as the focus
+                    if (focus.isEmpty()) {
+                        focus.add(diagram.getSemanticModel());
+                    }
                 }
+                FocusContextEffect focusEffect = new FocusContextEffect(diagram.getDiagramPart());
+                focusEffect.addFocus(focus, level);
+                this.schedule(focusEffect);
+                this.schedule(new LayoutEffect(selection.getWorkbenchPart(), null, true, false, true));
             }
-            FocusContextEffect focusEffect = new FocusContextEffect(diagram.getDiagramPart());
-            focusEffect.addFocus(focus, level);
-            this.schedule(focusEffect);
-            this.schedule(new LayoutEffect(selection.getWorkbenchPart(), null, true, false, true));
         } 
     }
 
