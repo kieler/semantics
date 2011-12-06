@@ -98,7 +98,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
 //    protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C"; (OLD SYNTAX)
-    protected static final String MAUDEPARSESTATESTARTER = "--> maState doneC (";
+//    protected static final String MAUDEPARSESTATESTARTER = "--> maState doneC (";
+//    TODO: is this used as relative position? 
+	// TODO: still needed? seems to be defined in DCSim and DCMC
+    protected static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>";
 
     /** The Constant MAUDENOEVENT no event (will not be displayed). */
     protected static final String MAUDENOEVENT = "(ev: \"noevent\")";
@@ -236,6 +239,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 				}
 
 				// part result
+				// start of what? i assume the state configuration 
 				String maudePartResult = maudeResult
 						.substring(firstSolutionStartIndex
 								+ MAUDEPARSESTATESTARTER.length());

@@ -19,6 +19,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 
 // TODO: Auto-generated Javadoc
@@ -30,8 +31,9 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
+//  TODO: is this used as relative position? 
     // FIXME: the has to be adapted to the new syntax -> check
-    private static final String MAUDEPARSESTATESTARTER = "--> maState doneC<STATEC>("; // FALSCH!
+    private static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>"; // FALSCH!
                                                                                 // "--> maState  doneC (r";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
@@ -64,9 +66,15 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
     public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[3];
         KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
+        KiemPropertyTypeBool macroStep = new KiemPropertyTypeBool();
+
         properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
         properties[1] = new KiemProperty("State Variable", "state");
         properties[2] = new KiemProperty("Region Variable", "region");
+       // properties[3] = new KiemProperty("Steps mirco", macroStep);
+       // properties[4] = new KiemProperty("parse output", (new KiemPropertyTypeBool()));
+        
+        
         return properties;
     }
 
@@ -124,6 +132,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         if (triggerEventsQuery.equals("")) {
             triggerEventsQuery = "ev: \"noevent\"";
         }
+        String triggerEventsQueue = triggerEventsQuery.replace(",", " "); 
 
         // second build the current states
         String currentStatesRegionsQuery = "";
@@ -140,13 +149,39 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
             currentStatesRegionsQuery += currentRegion;
         }
 
-        // FIXME: this has to be adapted to the new synatx
-        // search (maState (stableC (prettyVerts (R-990928836 ,
-        // susp441237549)) empty) (res,
-        // ee1)) =>* mastate such that isDone mastate .
-        String queryRequest = "search (maState (stableC<STATEC>(" + currentStatesRegionsQuery
-                + ")<HISTC>empty<ENDCONF>) (" + triggerEventsQuery
-                + ")) =>* mastate such that isDone mastate . \n";
+        // event queue
+        String queryEQ = "<ready emptyQueue > ";
+        // acceptance tuples 
+        String queryAT = "(" + "acc:(E) " + triggerEventsQuery + " (F) empty (L)1(U)0 " + ") "; 
+//        String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
+        String queryAS = "<ready (" + triggerEventsQuery + ") " +  queryAT + " > ";
+        // event pool 
+        String queryEP = "ready " + queryEQ + queryAS + " ";
+        // configuration
+        String queryCf = "stableC<STATEC> " + currentStatesRegionsQuery +  " <HISTC> empty <ENDCONF> ";
+        // machine configuration
+        String queryMC = "maState (" + queryCf + ") (" + triggerEventsQuery + ") ";
+        // system configuration
+        String querySC = "readyBFPSM (" + queryEP + ") (" + queryMC + ") "; 
+        
+        
+        // The event pool
+        //readyBFPSM(ready <ready emptyQueue > <ready
+     
+        String queryRequest = 
+//        		"red 2 . \n";
+//        		"red " + queryEQ + ". \n"+
+//           		"red " + queryAT + ". \n"+
+//       		"red " + queryAS + ". \n"+
+
+//        		"red " + queryEP + ". \n"+
+//           		"red " + queryCf + ". \n"+
+//           		"red " + queryMC + ". \n"+
+//           		"red " + querySC + ". \n"+
+//				"red $allowed " + triggerEventsQuery + " " + queryAT + " . \n" + 
+        		"search " + querySC +" =>* mastate such that isDone mastate . \n";
+//        		"rew [200] " + querySC +" . \n";
+           		
 
         // Debug output query request
         printConsole(queryRequest);

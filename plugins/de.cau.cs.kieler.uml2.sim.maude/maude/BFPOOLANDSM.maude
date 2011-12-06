@@ -82,6 +82,27 @@ var mastate : MState .
     readyBFPSM(ready <ready equeue > <ready eventset accs >) 
 		  (maState (stableC<STATEC> V <HISTC>  HC  <ENDCONF>) ES) [label 'finishedRTCESINT] .
 
+		  
+  var eps : EpStatus .
+  var mst : MState .
+  var bfps : BFPSMStatus .
+  var conf : Verts .
+  var hconf : HistoryConfs .
+  var mstate : MState .
+
+  
+  
+  ***readyBFPSM__ : EpStatus MState -> BFPSMStatus 
+  ***maState__ : Configuration EventSet -> MState
+   
+  op isDone_ : BFPSMStatus -> Bool .
+  eq isDone (readyBFPSM eps (maState (doneC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
+  eq isDone bfps = false [owise] .
+
+  op isStable_ : BFPSMStatus -> Bool .
+  eq isStable (readyBFPSM eps (maState (stableC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
+  eq isStable bfps = false [owise] .
+
 endm
 
 mod MCBFPOOLANDSM is

@@ -55,7 +55,7 @@ mod ACCS is
     *** i.e. the currunt state of scheduling defined by a set
     *** of extended acceptance tuples
     *** during computation the allowed events are gathered in the
-    *** second argument     
+    *** third argument     
     op allowed___ : EventSet AcctupSet EventSet -> EventSet .
     ceq allowed (ev1, evs1) accs evs2 = 
         allowed evs1 accs (ev1, evs2) if tr ev1 accs .
@@ -63,6 +63,9 @@ mod ACCS is
         allowed evs1 accs evs2 if not tr ev1 accs .
     ceq allowed ev1 accs evs2 = (ev1, evs2) if tr ev1 accs .
     ceq allowed ev1 accs evs2 = evs2 if not tr ev1 accs .
+    
+    op $allowed__ : EventSet AcctupSet -> EventSet .
+    eq $allowed evs1 accs = allowed evs1 accs empty .
 
     *** upd updates the usage counters according to the provided event
     op upd__ : Event AcctupSet -> AcctupSet [ctor] .
