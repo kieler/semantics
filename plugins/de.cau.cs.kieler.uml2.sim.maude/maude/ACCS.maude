@@ -12,7 +12,7 @@ fmod ACCTUP is
     *** E is required, the tuples are extended by a counter U for the number of times
     *** they have been used
 
-  op acc:(E)_(F)_(L)_(U)_ : EventSet EventSet Nat Nat -> Acctup [ctor] .
+  op acc:(E)_(F)_(L)_(U)_ : EventSet EventSet Nat Nat -> Acctup .
 endfm
 
 view Acctup from TRIV to ACCTUP is
@@ -51,12 +51,11 @@ mod ACCS is
   
     *** blocked 
     op blocked_ : AcctupSet -> Bool .
-    eq blocked empty = true .
-    eq blocked ((acc:(E)evs1(F)evs2(L)limit(U)), accs) = ($blocked (acc:(E)evs1(F)evs2(L)limit(U))) /\ (blocked accs) .
-  
-    op $blocked_ : Acctup -> Bool .
-    ceq $blocked (acc:(E)evs1(F)evs2(L)limit(U)used) = true if limit == used .
-    eq $blocked (acc:(E)evs1(F)evs2(L)limit(U)used) = false [owise] .
+    eq blocked empty = false .
+    ceq blocked ((acc:(E)evs1(F)evs2(L)limit(U)used), accs) = true if limit == used .
+    eq blocked ((acc:(E)evs1(F)evs2(L)limit(U)used), accs) = blocked accs [owise] .
+    
+    
      
     
     *** allowed computes the events in the first argument that can 
@@ -120,8 +119,8 @@ mod ACCSSEMANTICS is
     op <initAccs_ > : AcctupSet -> AccsStatus .
 
 	op isDoneAccs_ : AccsStatus -> Bool .
-	ceq isDoneAccs <ready evs1 accs> = true if (blocked accs) .
-	eq isDoneAccs AccsStatus = false [owise] . 
+	ceq isDoneAccs <ready evs1 accs > = true if (blocked accs) .
+	eq isDoneAccs acst = false [owise] . 
 
     crl <ready (eve, evs1) accs > => <schedule (eve, evs1) accs eve > if tr eve accs .
     rl <schedule evs1 accs eve > => <ready evs1 (upd eve accs) > .

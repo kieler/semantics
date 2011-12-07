@@ -16,7 +16,6 @@ mod BFPOOLANDSM is
   vars accs accs2 : AcctupSet .
   var eventset : EventSet .
   var event : Event .
-var mastate : MState .	
 	var mstate : MState .
 
     vars src tgt src2 tgt2 : Verts . 
@@ -104,8 +103,8 @@ var mastate : MState .
   
   *** readyBFPSM ready <ready QUEUE empty ENDQUEUE > <ready a
 
-***  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((readyMachine mstate) and (isDoneAccs acst)) .
-  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((readyMachine mstate)) .
+  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((isDoneAccs acst) and (readyMachine mstate)) .
+***  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((readyMachine mstate) ) .
   eq isDone bfps = false [owise] .
 
 

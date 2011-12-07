@@ -152,7 +152,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // event queue
         String queryEQ = "<ready emptyQueue > ";
         // acceptance tuples 
-        String queryAT = "(" + "acc:(E) empty (F) " + triggerEventsQuery + " (L)1(U)0 " + ") "; 
+        String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)1(U)0 " + ") "; 
 //        String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
         String queryAS = "<ready (" + triggerEventsQuery + ") " +  queryAT + " > ";
         // event pool 
@@ -169,6 +169,8 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         //readyBFPSM(ready <ready emptyQueue > <ready
      
         String queryRequest = 
+//        		"red (acc:(E)emptyEventSet(F)b(L)1(U)1) . \n"+
+//        		"red (blocked (acc:(E)emptyEventSet(F)b(L)1(U)1)) . \n"+
 //        		"red 2 . \n";
 //        		"red " + queryEQ + ". \n"+
 //           		"red " + queryAT + ". \n"+
