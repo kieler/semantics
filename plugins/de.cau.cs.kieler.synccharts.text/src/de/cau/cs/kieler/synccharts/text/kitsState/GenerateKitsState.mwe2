@@ -21,6 +21,9 @@ Workflow {
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage"		
 		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"		
 		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.SyncchartsPackage"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel"
 	}
 	
 	component = DirectoryCleaner {
@@ -48,7 +51,10 @@ Workflow {
 			// fragment = ecore.EcoreGeneratorFragment { referencedGenModels = "platform:/resource/de.cau.cs.kieler.synccharts/model/synccharts.genmodel" }
 			
 			// the serialization component
-			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			// Old serializer			
+			// fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			// New Serializer 2.0
+			fragment = serializer.SerializerFragment {}
 			
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
