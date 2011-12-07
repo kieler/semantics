@@ -863,16 +863,4 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
-     */
-    public void wrapup() throws KiemInitializationException {
-        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
-
-    }
-
-    // -------------------------------------------------------------------------
-
 }

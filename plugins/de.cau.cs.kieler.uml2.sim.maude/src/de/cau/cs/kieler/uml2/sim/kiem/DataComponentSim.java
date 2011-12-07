@@ -390,17 +390,5 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
-     */
-    @Override
-    public void wrapup() throws KiemInitializationException {
-        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
-
-    }
-
-    // -------------------------------------------------------------------------
 
 }

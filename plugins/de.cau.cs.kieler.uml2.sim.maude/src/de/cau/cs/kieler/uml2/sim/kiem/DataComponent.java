@@ -659,10 +659,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
      */
     public void wrapup() throws KiemInitializationException {
-        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
         // clear caches
-        allEvents = null;
-        allActions = null;
+        resetAllEventsAndActions() ;
+        // close Maude session
+        MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
     }
 
     // -------------------------------------------------------------------------
@@ -946,6 +946,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         boolean ok = (serenity == Diagnostic.OK);
 
         return ok;
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Reset all events and actions.
+     */
+    protected void resetAllEventsAndActions() {
+    	allEvents = null;
+    	allActions = null;
     }
 
     // -------------------------------------------------------------------------
