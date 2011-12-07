@@ -314,7 +314,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 					if (character.equals("\"")) {
 						consuming = !consuming;
 						if (!consuming) {
-							stringList.add(consumedPart);
+							// Add state or region only if not already contained
+							boolean foundInList = false;
+							for (String stringListItem: stringList) {
+								if (stringListItem.equals(consumedPart)) {
+									foundInList = true;
+									break;
+								}
+							}
+							if (!foundInList) {
+								stringList.add(consumedPart);
+							}
 							consumedPart = "";
 						}
 						// do not consume "-character
