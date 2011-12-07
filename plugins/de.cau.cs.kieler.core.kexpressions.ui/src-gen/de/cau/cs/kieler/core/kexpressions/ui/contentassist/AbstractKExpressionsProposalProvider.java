@@ -5,7 +5,7 @@ package de.cau.cs.kieler.core.kexpressions.ui.contentassist;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.*;
-import de.cau.cs.kieler.core.annotations.ui.contentassist.AnnotationsProposalProvider;
+import de.cau.cs.kieler.core.annotations.text.ui.contentassist.AnnotationsProposalProvider;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 
