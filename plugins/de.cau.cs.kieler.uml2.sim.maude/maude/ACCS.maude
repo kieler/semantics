@@ -49,6 +49,15 @@ mod ACCS is
         not((ev1 in evs2) and (used >= limit)) .
   
   
+    *** blocked 
+    op blocked_ : AcctupSet -> Bool .
+    eq blocked empty = true .
+    eq blocked ((acc:(E)evs1(F)evs2(L)limit(U)), accs) = ($blocked (acc:(E)evs1(F)evs2(L)limit(U))) /\ (blocked accs) .
+  
+    op $blocked_ : Acctup -> Bool .
+    ceq $blocked (acc:(E)evs1(F)evs2(L)limit(U)used) = true if limit == used .
+    eq $blocked (acc:(E)evs1(F)evs2(L)limit(U)used) = false [owise] .
+     
     
     *** allowed computes the events in the first argument that can 
     *** be scheduled bounded fair according the third argument 
@@ -110,10 +119,9 @@ mod ACCSSEMANTICS is
     op <schedule___ > : EventSet AcctupSet Event -> AccsStatus .
     op <initAccs_ > : AcctupSet -> AccsStatus .
 
-	op isReadyAccs_ : AccsStatus -> Bool .
-	eq isReadyAccs <ready evs1 accs> = true .
-	eq isReadyAccs AccsStatus = false [owise] . 
-
+	op isDoneAccs_ : AccsStatus -> Bool .
+	ceq isDoneAccs <ready evs1 accs> = true if (blocked accs) .
+	eq isDoneAccs AccsStatus = false [owise] . 
 
     crl <ready (eve, evs1) accs > => <schedule (eve, evs1) accs eve > if tr eve accs .
     rl <schedule evs1 accs eve > => <ready evs1 (upd eve accs) > .

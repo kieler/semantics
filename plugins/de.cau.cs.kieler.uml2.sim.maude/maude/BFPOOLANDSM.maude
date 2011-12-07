@@ -3,6 +3,7 @@
 mod BFPOOLANDSM is
 	including BFAIRPOOL .
 	including SEMANTICS .
+	including ACCSSEMANTICS .
 	sort BFPSMStatus . 
 	
  op readyBFPSM__ : EpStatus MState -> BFPSMStatus .
@@ -101,10 +102,11 @@ var mastate : MState .
   op isDone_ : BFPSMStatus -> Bool .
   ***eq isDone (readyBFPSM eps (maState (doneC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
   
-  *** readyBFPSM ready <ready QUEUE empty ENDQUEUE > <schedule a
+  *** readyBFPSM ready <ready QUEUE empty ENDQUEUE > <ready a
 
-  eq isDone readyBFPSM ((ready qust acst) mstate) = false .
-  eq isDone bfps = true [owise] .
+***  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((readyMachine mstate) and (isDoneAccs acst)) .
+  ceq isDone (readyBFPSM (ready qust acst) mstate) = true if ((readyMachine mstate)) .
+  eq isDone bfps = false [owise] .
 
 
   op isStable_ : BFPSMStatus -> Bool .

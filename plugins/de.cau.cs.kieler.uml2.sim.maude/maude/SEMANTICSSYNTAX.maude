@@ -37,5 +37,12 @@ fmod SEMANTICSSYNTAX is
 *** These are for the execution of single compoundtransitions
 
    
+   var verts : Verts .
+   var hc : HistoryConfs .
+   var mstate : MState .
+   var evs : EventSet .
    
+   op readyMachine_ : MState -> Bool .
+   eq readyMachine (maState (doneC<STATEC> verts <HISTC> hc <ENDCONF>) evs) = true .
+   eq readyMachine mstate = false [owise] .
 endfm

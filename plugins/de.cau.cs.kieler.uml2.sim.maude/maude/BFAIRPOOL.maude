@@ -8,7 +8,8 @@ mod BFAIRPOOL is
  op ready__ : QueueStatus AccsStatus -> EpStatus .
  op schedule___ : QueueStatus AccsStatus Event -> EpStatus .
  op initBFairPool : -> EpStatus .
-  vars queuest queuest' : QueueStatus .
+
+ vars queuest queuest' : QueueStatus .
   vars accsst accsst' : AccsStatus .
   var epstatus : EpStatus .
    var equeue : EventQueue .
