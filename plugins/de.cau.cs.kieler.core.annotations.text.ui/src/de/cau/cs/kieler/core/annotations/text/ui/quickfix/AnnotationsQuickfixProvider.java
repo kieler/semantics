@@ -1,5 +1,5 @@
 
-package de.cau.cs.kieler.core.annotations.ui.quickfix;
+package de.cau.cs.kieler.core.annotations.text.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 

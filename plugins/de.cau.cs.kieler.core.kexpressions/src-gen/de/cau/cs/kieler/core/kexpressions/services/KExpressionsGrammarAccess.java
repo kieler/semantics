@@ -11,7 +11,7 @@ import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
 
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 @Singleton
 public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {

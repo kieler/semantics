@@ -15,7 +15,8 @@ package de.cau.cs.kieler.synccharts.text.kits.ui;
 
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightingConfiguration;
 
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsHighlightingConfiguration;
+import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsHighlightingConfiguration;
+import de.cau.cs.kieler.synccharts.text.actions.ui.ActionsHighlightingConfiguration;
 
 /**
  * Custom {@link IHighlightingConfiguration} contributing to the Kits editor. The required method
@@ -25,8 +26,7 @@ import de.cau.cs.kieler.core.annotations.ui.AnnotationsHighlightingConfiguration
  * 
  * @author chsch
  */
-public class KitsHighlightingConfiguration extends
-		AnnotationsHighlightingConfiguration {
+public class KitsHighlightingConfiguration extends ActionsHighlightingConfiguration {
 
 //	public void configure(IHighlightingConfigurationAcceptor acceptor) {
 //		super.configure(acceptor);

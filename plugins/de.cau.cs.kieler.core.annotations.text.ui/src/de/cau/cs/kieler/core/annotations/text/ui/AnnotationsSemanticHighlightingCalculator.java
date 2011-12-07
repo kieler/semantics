@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.annotations.ui;
+package de.cau.cs.kieler.core.annotations.text.ui;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.nodemodel.INode;
@@ -21,7 +21,7 @@ import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculato
 
 import com.google.inject.Inject;
 
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 /**
  * Custom {@link ISemanticHighlightingCalculator} contributing to the Kits editor.

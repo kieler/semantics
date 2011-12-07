@@ -15,7 +15,7 @@ import com.google.inject.Injector;
 public class KExpressionsStandaloneSetupGenerated implements ISetup {
 
 	public Injector createInjectorAndDoEMFRegistration() {
-		de.cau.cs.kieler.core.annotations.AnnotationsStandaloneSetup.doSetup();
+		de.cau.cs.kieler.core.annotations.text.AnnotationsStandaloneSetup.doSetup();
 
 		Injector injector = createInjector();
 		register(injector);

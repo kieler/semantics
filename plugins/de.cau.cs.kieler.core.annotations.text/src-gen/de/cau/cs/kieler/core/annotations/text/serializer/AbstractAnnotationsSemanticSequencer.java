@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.core.annotations.serializer;
+package de.cau.cs.kieler.core.annotations.text.serializer;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
@@ -10,7 +10,7 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.serializer.acceptor.ISemanticSequenceAcceptor;
 import org.eclipse.xtext.serializer.diagnostic.ISemanticSequencerDiagnosticProvider;

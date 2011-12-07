@@ -1,5 +1,5 @@
 
-package de.cau.cs.kieler.core.annotations;
+package de.cau.cs.kieler.core.annotations.text;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.ISetup;
@@ -23,7 +23,7 @@ public class AnnotationsStandaloneSetupGenerated implements ISetup {
 	}
 	
 	public Injector createInjector() {
-		return Guice.createInjector(new de.cau.cs.kieler.core.annotations.AnnotationsRuntimeModule());
+		return Guice.createInjector(new de.cau.cs.kieler.core.annotations.text.AnnotationsRuntimeModule());
 	}
 	
 	public void register(Injector injector) {

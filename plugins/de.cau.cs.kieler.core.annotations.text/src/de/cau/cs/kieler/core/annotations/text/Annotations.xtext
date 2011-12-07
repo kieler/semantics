@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.core.annotations.Annotations with org.eclipse.xtext.common.Terminals
+grammar de.cau.cs.kieler.core.annotations.text.Annotations with org.eclipse.xtext.common.Terminals
 
 import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" 
 

@@ -10,7 +10,7 @@ import de.cau.cs.kieler.core.annotations.ImportAnnotation;
 import de.cau.cs.kieler.core.annotations.IntAnnotation;
 import de.cau.cs.kieler.core.annotations.StringAnnotation;
 import de.cau.cs.kieler.core.annotations.TypedStringAnnotation;
-import de.cau.cs.kieler.core.annotations.serializer.AnnotationsSemanticSequencer;
+import de.cau.cs.kieler.core.annotations.text.serializer.AnnotationsSemanticSequencer;
 import de.cau.cs.kieler.core.kexpressions.BooleanValue;
 import de.cau.cs.kieler.core.kexpressions.ChannelDescription;
 import de.cau.cs.kieler.core.kexpressions.FloatValue;

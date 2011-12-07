@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EPackage;
-import de.cau.cs.kieler.core.annotations.validation.AnnotationsJavaValidator;
+import de.cau.cs.kieler.core.annotations.text.validation.AnnotationsJavaValidator;
 
 public class AbstractKExpressionsJavaValidator extends AnnotationsJavaValidator {
 

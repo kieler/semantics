@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.annotations.ui;
+package de.cau.cs.kieler.core.annotations.text.ui;
 
 /**
  * Custom {@link com.google.inject.Module} contributing to the Kits editor.
@@ -19,7 +19,7 @@ package de.cau.cs.kieler.core.annotations.ui;
  * @author chsch
  */
 public class AnnotationsUiModule extends
-        de.cau.cs.kieler.core.annotations.ui.AbstractAnnotationsUiModule {
+        de.cau.cs.kieler.core.annotations.text.ui.AbstractAnnotationsUiModule {
 
     public AnnotationsUiModule(org.eclipse.ui.plugin.AbstractUIPlugin plugin) {
         super(plugin);

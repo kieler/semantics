@@ -1,5 +1,5 @@
 
-package de.cau.cs.kieler.core.annotations;
+package de.cau.cs.kieler.core.annotations.text;
 
 /**
  * Initialization support for running Xtext languages 

@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.core.annotations.formatting;
+package de.cau.cs.kieler.core.annotations.text.formatting;
 
 import org.eclipse.xtext.EcoreUtil2;
 import org.eclipse.xtext.Grammar;
@@ -20,7 +20,7 @@ import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 /**
  * This class contains custom formatting description.

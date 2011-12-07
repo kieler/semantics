@@ -47,5 +47,7 @@ Export-Package: de.cau.cs.kieler.synccharts.text.actions,
  de.cau.cs.kieler.synccharts.text.kitsState.parser.antlr,
  de.cau.cs.kieler.synccharts.text.kitsState.parser.antlr.internal,
  de.cau.cs.kieler.synccharts.text.kitsState.validation,
- de.cau.cs.kieler.synccharts.text.actions.serializer
+ de.cau.cs.kieler.synccharts.text.actions.serializer,
+ de.cau.cs.kieler.synccharts.text.kitsState.scoping,
+ de.cau.cs.kieler.synccharts.text.kitsState.formatting
 

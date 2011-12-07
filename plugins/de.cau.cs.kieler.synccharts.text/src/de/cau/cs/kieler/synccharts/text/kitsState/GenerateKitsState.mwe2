@@ -1,4 +1,4 @@
-module de.cau.cs.kieler.synccharts.text.kitsState.Kits
+module de.cau.cs.kieler.synccharts.text.kitsState.KitsState
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*

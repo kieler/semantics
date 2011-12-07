@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.core.annotations.validation;
+package de.cau.cs.kieler.core.annotations.text.validation;
  
 import java.util.ArrayList;
 import java.util.List;

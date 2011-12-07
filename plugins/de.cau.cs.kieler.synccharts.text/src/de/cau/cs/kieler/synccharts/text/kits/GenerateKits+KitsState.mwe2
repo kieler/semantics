@@ -4,6 +4,6 @@ Workflow {
 	
 	component =  @de.cau.cs.kieler.synccharts.text.kits.Kits {}
 
-	component =  @de.cau.cs.kieler.synccharts.text.kitsState.Kits {}
+	component =  @de.cau.cs.kieler.synccharts.text.kitsState.KitsState {}
 	
 }

@@ -7,7 +7,7 @@ import org.eclipse.xtext.formatting.IFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 import org.eclipse.xtext.util.Pair;
 
-import de.cau.cs.kieler.core.annotations.formatting.AnnotationsFormatter;
+import de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsFormatter;
 import de.cau.cs.kieler.synccharts.text.actions.formatting.ActionsFormatter;
 import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 

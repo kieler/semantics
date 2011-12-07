@@ -15,4 +15,4 @@
 /**
  * Base package of the textual editor code for the Annotations model.
  */
-package de.cau.cs.kieler.core.annotations.ui;
+package de.cau.cs.kieler.core.annotations.text.ui;

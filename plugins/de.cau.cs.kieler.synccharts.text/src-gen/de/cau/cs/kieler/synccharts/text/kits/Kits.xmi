@@ -1572,7 +1572,7 @@
       </alternatives>
     </rules>
   </xtext:Grammar>
-  <xtext:Grammar name="de.cau.cs.kieler.core.annotations.Annotations" usedGrammars="/4">
+  <xtext:Grammar name="de.cau.cs.kieler.core.annotations.text.Annotations" usedGrammars="/4">
     <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel">
       <ePackage href="http://kieler.cs.cau.de/annotations#/"/>
     </metamodelDeclarations>

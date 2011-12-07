@@ -4,7 +4,7 @@ import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/core/annotations/Annotations.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/core/annotations/text/Annotations.xtext"
 var file.extensions = "anno"
 var projectName = "de.cau.cs.kieler.core.annotations.text"
 var runtimeProject = "../${projectName}"

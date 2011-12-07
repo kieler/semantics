@@ -17,7 +17,8 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.IHighlightedPositionAcceptor;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator;
 
-import de.cau.cs.kieler.core.annotations.ui.AnnotationsSemanticHighlightingCalculator;
+import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsSemanticHighlightingCalculator;
+import de.cau.cs.kieler.synccharts.text.actions.ui.ActionsSemanticHighlightingCalculator;
 
 /**
  * Custom {@link ISemanticHighlightingCalculator} contributing to the Kits editor.
@@ -28,7 +29,7 @@ import de.cau.cs.kieler.core.annotations.ui.AnnotationsSemanticHighlightingCalcu
  * 
  * @author chsch
  */
-public class KitsSemanticHighlightingCalculator extends AnnotationsSemanticHighlightingCalculator {
+public class KitsSemanticHighlightingCalculator extends ActionsSemanticHighlightingCalculator {
 
 //    @Inject
 //    private KitsGrammarAccess g;

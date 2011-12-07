@@ -14,7 +14,7 @@ import org.eclipse.xtext.service.AbstractElementFinder.*;
 import de.cau.cs.kieler.synccharts.text.kits.services.KitsGrammarAccess;
 import de.cau.cs.kieler.synccharts.text.actions.services.ActionsGrammarAccess;
 import de.cau.cs.kieler.core.kexpressions.services.KExpressionsGrammarAccess;
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 @Singleton
 public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {

@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.core.annotations.validation;
+package de.cau.cs.kieler.core.annotations.text.validation;
  
 
 public class AnnotationsJavaValidator extends AbstractAnnotationsJavaValidator {

@@ -1,4 +1,4 @@
-grammar de.cau.cs.kieler.core.kexpressions.KExpressions with  de.cau.cs.kieler.core.annotations.Annotations
+grammar de.cau.cs.kieler.core.kexpressions.KExpressions with  de.cau.cs.kieler.core.annotations.text.Annotations
 
 import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore" 
 import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations

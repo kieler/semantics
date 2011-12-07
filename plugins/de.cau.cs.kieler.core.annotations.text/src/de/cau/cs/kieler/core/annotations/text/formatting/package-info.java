@@ -14,4 +14,4 @@
 /**
  * Package containing serializing instructions (formatting, value conversion) for Annotations.
  */
-package de.cau.cs.kieler.core.annotations.formatting;
+package de.cau.cs.kieler.core.annotations.text.formatting;

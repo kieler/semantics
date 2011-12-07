@@ -1,7 +1,7 @@
-package de.cau.cs.kieler.core.annotations.serializer;
+package de.cau.cs.kieler.core.annotations.text.serializer;
 
 import com.google.inject.Inject;
-import de.cau.cs.kieler.core.annotations.services.AnnotationsGrammarAccess;
+import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.xtext.IGrammarAccess;
