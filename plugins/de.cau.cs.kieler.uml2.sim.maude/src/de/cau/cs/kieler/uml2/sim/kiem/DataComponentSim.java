@@ -71,7 +71,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
         properties[1] = new KiemProperty("State Variable", "state");
         properties[2] = new KiemProperty("Region Variable", "region");
-        properties[3] = new KiemProperty("Number of Steps", "1");
+        properties[3] = new KiemProperty("Number of Steps", 1);
        // properties[4] = new KiemProperty("parse output", (new KiemPropertyTypeBool()));
         
         
@@ -150,8 +150,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         }
 
         // event queue
-        String numSteps = this.getProperties()[3].
-        printConsole(numSteps);
+        String numSteps = this.getProperties()[4].getValue();
         String queryEQ = "<ready emptyQueue > ";
         // acceptance tuples 
         String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)" + numSteps + "(U)0 " + ") "; 
