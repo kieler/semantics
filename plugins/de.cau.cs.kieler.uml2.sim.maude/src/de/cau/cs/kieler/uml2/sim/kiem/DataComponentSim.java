@@ -152,7 +152,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // event queue
         String queryEQ = "<ready emptyQueue > ";
         // acceptance tuples 
-        String queryAT = "(" + "acc:(E) " + triggerEventsQuery + " (F) empty (L)1(U)0 " + ") "; 
+        String queryAT = "(" + "acc:(E) empty (F) " + triggerEventsQuery + " (L)1(U)0 " + ") "; 
 //        String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
         String queryAS = "<ready (" + triggerEventsQuery + ") " +  queryAT + " > ";
         // event pool 
@@ -202,7 +202,12 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
 
         if (currentStatesRegionsChoices.size() == 1) {
             currentStatesRegions = Arrays.asList(currentStatesRegionsChoices.get(0));
+        } 
+        else {
+
+        	printConsole(currentStatesRegionsChoices.toString()); 
         }
+        
         if (currentStatesRegionsChoices.size() > 1) {
             currentStatesRegions = Arrays.asList(selectCurrentState(currentStatesRegionsChoices));
             if (KiemPlugin.getDefault().getExecution() != null && 

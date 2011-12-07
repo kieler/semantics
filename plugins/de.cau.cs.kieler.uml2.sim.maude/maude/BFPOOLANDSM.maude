@@ -89,19 +89,26 @@ var mastate : MState .
   var conf : Verts .
   var hconf : HistoryConfs .
   var mstate : MState .
-
+  var qust : QueueStatus .
+  var acst : AccsStatus .
+  var acts : AcctupSet . 
   
   
   ***readyBFPSM__ : EpStatus MState -> BFPSMStatus 
   ***maState__ : Configuration EventSet -> MState
-   
+  ***ready__ : QueueStatus AccsStatus -> EpStatus 
+  ***<ready__ > : EventSet AcctupSet -> AccsStatus 
   op isDone_ : BFPSMStatus -> Bool .
-  eq isDone (readyBFPSM eps (maState (doneC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
-  eq isDone bfps = false [owise] .
+  ***eq isDone (readyBFPSM eps (maState (doneC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
+  
+  *** readyBFPSM ready <ready QUEUE empty ENDQUEUE > <schedule a
+
+  eq isDone readyBFPSM ((ready qust acst) mstate) = false .
+  eq isDone bfps = true [owise] .
+
 
   op isStable_ : BFPSMStatus -> Bool .
-  eq isStable (readyBFPSM eps (maState (stableC<STATEC> conf <HISTC> hconf <ENDCONF>) ES )) = true .
-  eq isStable bfps = false [owise] .
+
 
 endm
 
@@ -113,63 +120,10 @@ mod MCBFPOOLANDSM is
 	including LTL-SIMPLIFIER .
     including ACCS .
     including QUEUESEMANTICS .
-    ops tup1 tup2 tup3 tup4 tup5 tup6 tup7 tup8 tup9 tup10 tup11 : -> Acctup .
  
    ops tups : -> AcctupSet .
  eq tups = emptyAcctupSet .
- ***(
-    eq tup1 = acc:(E) tick (F) stutter0 (L)1(U)0 .
-    eq tup2 = acc:(E) tick (F) stutter1 (L)1(U)0 .
- 
-  
- 
-    eq tup2 = acc:(E) 1getsHungry (F) 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)6(U)0 .
- 
-     eq tup3 = acc:(E) 1begin (F)  0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)6(U)0 .
- 
-      eq tup4 = acc:(E) 1done (F)  0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)6(U)0 .
-    
-        eq tup5 = acc:(E) 1takeRightFork (F) 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)6(U)0 .
-        eq tup6 = acc:(E) 0begin (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork (L)6(U)0 .
 
-            eq tup7 = acc:(E) 0takeRightFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork(L)6(U)0 .
-
-    
-            eq tup8 = acc:(E) 0takeLeftFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork (L)6(U)0 .
-            eq tup9 = acc:(E) 0getsHungry (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork (L)6(U)0 .
-           eq tup10 = acc:(E) 0done (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork (L)6(U)0 .
-            
-  
-    eq tups = (tup1, tup2, tup3, tup4, tup5, tup6, tup7, tup8, tup9, tup10) .
- 
- 
- 
- 
-    eq tup1 = acc:(E) 1takeLeftFork (F) 1getsHungry, 1begin, 1done, 1takeRightFork, 0takeRightFork, 0begin, 0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
-
-    eq tup2 = acc:(E) 1getsHungry (F) 1takeLeftFork, 1begin,  1done, 1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
- 
-     eq tup3 = acc:(E) 1begin (F) 1takeLeftFork, 1getsHungry, 1done, 1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
- 
-      eq tup4 = acc:(E) 1done (F) 1takeLeftFork, 1getsHungry, 1begin,  1takeRightFork, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
-    
-        eq tup5 = acc:(E) 1takeRightFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 0takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
-        eq tup6 = acc:(E) 0begin (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0takeRightFork, 0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
-
-            eq tup7 = acc:(E) 0takeRightFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0getsHungry, 0done (L)1(U)0 .
-
-    
-            eq tup8 = acc:(E) 0takeLeftFork (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeRightFork, 0getsHungry, 0done (L)1(U)0 .
-            eq tup9 = acc:(E) 0getsHungry (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0takeRightFork, 0done (L)1(U)0 .
-           eq tup10 = acc:(E) 0done (F) 1takeLeftFork, 1getsHungry, 1begin,  1done, 1takeRightFork, 0begin,  0takeLeftFork, 0takeRightFork, 0getsHungry  (L)1(U)0 .
-            
-  eq tup11 = acc:(E) 1takeLeftFork (F) 0takeLeftFork (L)1(U)0 .
-  
-    eq tups = (tup1, tup2, tup3, tup4, tup5, tup6, tup7, tup8, tup9, tup10, tup11 ) .
-eq allEvs = stutter0, stutter1, tick .
-    op allEvs : -> EventSet .
- ***   eq allEvs = 1takeLeftFork, 1getsHungry, 1begin, 1done, 1takeRightFork, 0takeRightFork, 0begin, 0takeLeftFork, 0getsHungry, 0done .
-  )***
     
 
 

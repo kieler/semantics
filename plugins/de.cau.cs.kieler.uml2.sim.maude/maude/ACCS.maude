@@ -104,10 +104,16 @@ mod ACCSSEMANTICS is
     vars evs1 evs2 evs3 : EventSet .
     vars eve : Event .
     vars accs accs2 : AcctupSet .
+    var acst : AccsStatus .
     *** explain 
     op <ready__ > : EventSet AcctupSet -> AccsStatus .
     op <schedule___ > : EventSet AcctupSet Event -> AccsStatus .
     op <initAccs_ > : AcctupSet -> AccsStatus .
+
+	op isReadyAccs_ : AccsStatus -> Bool .
+	eq isReadyAccs <ready evs1 accs> = true .
+	eq isReadyAccs AccsStatus = false [owise] . 
+
 
     crl <ready (eve, evs1) accs > => <schedule (eve, evs1) accs eve > if tr eve accs .
     rl <schedule evs1 accs eve > => <ready evs1 (upd eve accs) > .
