@@ -64,14 +64,14 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[3];
+        KiemProperty[] properties = new KiemProperty[4];
         KiemPropertyTypeFile maudeFile = new KiemPropertyTypeFile(true);
         KiemPropertyTypeBool macroStep = new KiemPropertyTypeBool();
 
         properties[0] = new KiemProperty("Maude Executable", maudeFile, "maude");
         properties[1] = new KiemProperty("State Variable", "state");
         properties[2] = new KiemProperty("Region Variable", "region");
-       // properties[3] = new KiemProperty("Steps mirco", macroStep);
+        properties[3] = new KiemProperty("Number of Steps", "1");
        // properties[4] = new KiemProperty("parse output", (new KiemPropertyTypeBool()));
         
         
@@ -150,9 +150,11 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         }
 
         // event queue
+        String numSteps = this.getProperties()[3].
+        printConsole(numSteps);
         String queryEQ = "<ready emptyQueue > ";
         // acceptance tuples 
-        String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)1(U)0 " + ") "; 
+        String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)" + numSteps + "(U)0 " + ") "; 
 //        String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
         String queryAS = "<ready (" + triggerEventsQuery + ") " +  queryAT + " > ";
         // event pool 
