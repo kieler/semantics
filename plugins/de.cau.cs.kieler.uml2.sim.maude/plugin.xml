@@ -20,7 +20,15 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/uml_maude.execution">
+            file="execution/uml_maude_simulation.execution">
+         <editor
+               id="org.eclipse.papyrus.core.papyrusEditor"
+               name="Papyrus Editor"
+               priority="8">
+         </editor>
+      </executionFile>
+      <executionFile
+            file="execution/uml_maude_modelchecking.execution">
          <editor
                id="org.eclipse.papyrus.core.papyrusEditor"
                name="Papyrus Editor"
