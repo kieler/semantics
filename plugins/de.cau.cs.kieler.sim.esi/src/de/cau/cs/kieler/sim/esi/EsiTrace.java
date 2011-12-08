@@ -19,7 +19,6 @@ import java.util.Set;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
-import de.cau.cs.kieler.sim.trace.ITrace;
 
 /**
  * @author ctr

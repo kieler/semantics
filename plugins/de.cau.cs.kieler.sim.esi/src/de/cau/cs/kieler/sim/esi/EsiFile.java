@@ -36,8 +36,6 @@ import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 import de.cau.cs.kieler.sim.esi.esi.trace;
 import de.cau.cs.kieler.sim.esi.esi.tracelist;
-import de.cau.cs.kieler.sim.trace.ITrace;
-import de.cau.cs.kieler.sim.trace.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**

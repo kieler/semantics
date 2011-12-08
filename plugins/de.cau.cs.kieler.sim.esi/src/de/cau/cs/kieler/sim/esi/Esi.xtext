@@ -18,9 +18,12 @@ trace:
    ;
   
 tick:
-   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? n=';' 
+   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? (extraInfos+=kvpair)* n=';' 
    ; 
 
+kvpair:
+    '%%' k=AlphaNumSpecial ':' val=AlphaNumSpecial
+;
 signal:     
      name=ID (valued?='('  val=NUM ')')? 
    ;
@@ -32,6 +35,10 @@ signal:
 terminal Digit : ('0' .. '9') ;
 
 terminal Letter : 'a'..'z'|'A'..'Z';
+
+terminal Special : '!' | '@' | '#' | '$' | '%' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-';
+
+terminal AlphaNumSpecial : (Letter | Digit | Special) (Letter | Digit | Special)*;
 
 terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
 

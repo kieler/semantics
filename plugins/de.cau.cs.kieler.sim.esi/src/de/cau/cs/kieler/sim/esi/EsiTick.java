@@ -13,16 +13,19 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
+import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
-import de.cau.cs.kieler.sim.trace.ITick;
-import de.cau.cs.kieler.sim.trace.Signal;
 
 /**
  * @author ctr
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2011-12-07 red
  * 
  */
 public class EsiTick implements ITick {
@@ -30,7 +33,7 @@ public class EsiTick implements ITick {
     private tick tick;
 
     /**
-     * @param current
+     * @param t
      */
     public EsiTick(final tick t) {
         this.tick = t;
@@ -39,10 +42,10 @@ public class EsiTick implements ITick {
     /**
      * {@inheritDoc}
      */
-    public List<Signal> getInputs() {
-        LinkedList<Signal> res = new LinkedList<Signal>();
+    public List<ISignal> getInputs() {
+        LinkedList<ISignal> res = new LinkedList<ISignal>();
         for (signal s : tick.getInput()) {
-            res.add(new Signal(s.getName()));
+            res.add(new EsiSignal(s.getName()));
         }
         return res;
     }
@@ -50,12 +53,24 @@ public class EsiTick implements ITick {
     /**
      * {@inheritDoc}
      */
-    public List<Signal> getOutputs() {
-        LinkedList<Signal> res = new LinkedList<Signal>();
+    public List<ISignal> getOutputs() {
+        LinkedList<ISignal> res = new LinkedList<ISignal>();
         for (signal s : tick.getOutput()) {
-            res.add(new Signal(s.getName()));
+            res.add(new EsiSignal(s.getName()));
         }
         return res;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Map<String, String> getExtraInfos() {
+        HashMap<String, String> retval = new HashMap<String, String>();
+        for (kvpair kv : tick.getExtraInfos()) {
+            retval.put(kv.getK(), kv.getVal());
+        }
+        
+        return retval;
     }
 
 }
