@@ -23,7 +23,7 @@ public class DiagramPreferenceInitializer extends AbstractPreferenceInitializer 
         IPreferenceStore store = getPreferenceStore();
 
         store.setDefault(IPreferenceConstants.PREF_SHOW_CONNECTION_HANDLES, true);
-        store.setDefault(IPreferenceConstants.PREF_SHOW_POPUP_BARS, false);
+        store.setDefault(IPreferenceConstants.PREF_SHOW_POPUP_BARS, true);
         store.setDefault(IPreferenceConstants.PREF_ENABLE_ANIMATED_LAYOUT, true);
         store.setDefault(IPreferenceConstants.PREF_ENABLE_ANIMATED_ZOOM, true);
         store.setDefault(IPreferenceConstants.PREF_ENABLE_ANTIALIAS, true);

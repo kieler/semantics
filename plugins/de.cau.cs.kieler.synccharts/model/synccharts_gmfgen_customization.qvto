@@ -49,7 +49,7 @@ main() {
 	
 	// set some default preferences
 	model.diagram.preferences := object GenDiagramPreferences{
-		showPopupBars := false;
+		showPopupBars := true;
 		rulerUnits := RulerUnits::CENTIMETERS;
 		gridSpacing := 0.5;
 		snapToGrid := false;
