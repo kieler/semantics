@@ -174,13 +174,6 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return EObject model corresponding to the diagram
          */
         public EObject getSemanticModel() {
-            // Check if there actually is a bridge to get the edit part from
-            if (bridge == null) {
-                throw new UnsupportedPartException("getSemanticModel",
-                        "There is no bridge for the active worbench part's semantic model to cross.",
-                        diagramPart);
-            }
-            
             EditPart rootEditPart = bridge.getEditPart(diagramPart);
             EObject model = bridge.getElement(rootEditPart);
             if (model == null) {
