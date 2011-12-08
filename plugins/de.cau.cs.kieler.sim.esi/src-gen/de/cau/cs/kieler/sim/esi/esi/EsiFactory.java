@@ -53,6 +53,15 @@ public interface EsiFactory extends EFactory
   tick createtick();
 
   /**
+   * Returns a new object of class '<em>kvpair</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>kvpair</em>'.
+   * @generated
+   */
+  kvpair createkvpair();
+
+  /**
    * Returns a new object of class '<em>signal</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

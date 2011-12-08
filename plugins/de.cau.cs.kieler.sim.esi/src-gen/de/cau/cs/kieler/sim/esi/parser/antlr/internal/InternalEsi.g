@@ -241,16 +241,99 @@ ruletick returns [EObject current=null]
 )
 )*)?(
 (
-		lv_n_5_0=	';' 
+		{ 
+	        newCompositeNode(grammarAccess.getTickAccess().getExtraInfosKvpairParserRuleCall_2_0()); 
+	    }
+		lv_extraInfos_5_0=rulekvpair		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getTickRule());
+	        }
+       		add(
+       			$current, 
+       			"extraInfos",
+        		lv_extraInfos_5_0, 
+        		"kvpair");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)*(
+(
+		lv_n_6_0=	';' 
     {
-        newLeafNode(lv_n_5_0, grammarAccess.getTickAccess().getNSemicolonKeyword_2_0());
+        newLeafNode(lv_n_6_0, grammarAccess.getTickAccess().getNSemicolonKeyword_3_0());
     }
  
 	    {
 	        if ($current==null) {
 	            $current = createModelElement(grammarAccess.getTickRule());
 	        }
-       		setWithLastConsumed($current, "n", lv_n_5_0, ";");
+       		setWithLastConsumed($current, "n", lv_n_6_0, ";");
+	    }
+
+)
+))
+;
+
+
+
+
+
+// Entry rule entryRulekvpair
+entryRulekvpair returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getKvpairRule()); }
+	 iv_rulekvpair=rulekvpair 
+	 { $current=$iv_rulekvpair.current; } 
+	 EOF 
+;
+
+// Rule kvpair
+rulekvpair returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(	otherlv_0='%%' 
+    {
+    	newLeafNode(otherlv_0, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0());
+    }
+(
+(
+		lv_k_1_0=RULE_ALPHANUMSPECIAL
+		{
+			newLeafNode(lv_k_1_0, grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getKvpairRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"k",
+        		lv_k_1_0, 
+        		"AlphaNumSpecial");
+	    }
+
+)
+)	otherlv_2=':' 
+    {
+    	newLeafNode(otherlv_2, grammarAccess.getKvpairAccess().getColonKeyword_2());
+    }
+(
+(
+		lv_val_3_0=RULE_ALPHANUMSPECIAL
+		{
+			newLeafNode(lv_val_3_0, grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getKvpairRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"val",
+        		lv_val_3_0, 
+        		"AlphaNumSpecial");
 	    }
 
 )
@@ -340,6 +423,10 @@ rulesignal returns [EObject current=null]
 RULE_DIGIT : '0'..'9';
 
 RULE_LETTER : ('a'..'z'|'A'..'Z');
+
+RULE_SPECIAL : ('!'|'@'|'#'|'$'|'%'|'^'|'&'|'*'|'('|')'|'_'|'='|'+'|'-');
+
+RULE_ALPHANUMSPECIAL : (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL) (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL)*;
 
 RULE_ID : (RULE_LETTER|'_') (RULE_LETTER|RULE_DIGIT|'_')*;
 

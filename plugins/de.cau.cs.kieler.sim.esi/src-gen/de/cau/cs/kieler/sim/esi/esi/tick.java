@@ -19,6 +19,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.tick#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.tick#getOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.tick#getExtraInfos <em>Extra Infos</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.tick#getN <em>N</em>}</li>
  * </ul>
  * </p>
@@ -60,6 +61,22 @@ public interface tick extends EObject
    * @generated
    */
   EList<signal> getOutput();
+
+  /**
+   * Returns the value of the '<em><b>Extra Infos</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.sim.esi.esi.kvpair}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Extra Infos</em>' containment reference list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Extra Infos</em>' containment reference list.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#gettick_ExtraInfos()
+   * @model containment="true"
+   * @generated
+   */
+  EList<kvpair> getExtraInfos();
 
   /**
    * Returns the value of the '<em><b>N</b></em>' attribute.

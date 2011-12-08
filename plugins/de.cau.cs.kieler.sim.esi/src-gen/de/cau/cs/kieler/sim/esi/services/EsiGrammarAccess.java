@@ -95,14 +95,16 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cColonKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		private final Assignment cOutputAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
 		private final RuleCall cOutputSignalParserRuleCall_1_3_0 = (RuleCall)cOutputAssignment_1_3.eContents().get(0);
-		private final Assignment cNAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Keyword cNSemicolonKeyword_2_0 = (Keyword)cNAssignment_2.eContents().get(0);
+		private final Assignment cExtraInfosAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cExtraInfosKvpairParserRuleCall_2_0 = (RuleCall)cExtraInfosAssignment_2.eContents().get(0);
+		private final Assignment cNAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Keyword cNSemicolonKeyword_3_0 = (Keyword)cNAssignment_3.eContents().get(0);
 		
 		//tick:
-		//	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+		//	input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";";
 		public ParserRule getRule() { return rule; }
 
-		//input+=signal* ("%" "Output" ":" output+=signal*)? n=";"
+		//input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";"
 		public Group getGroup() { return cGroup; }
 
 		//input+=signal*
@@ -129,11 +131,53 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		//signal
 		public RuleCall getOutputSignalParserRuleCall_1_3_0() { return cOutputSignalParserRuleCall_1_3_0; }
 
+		//extraInfos+=kvpair*
+		public Assignment getExtraInfosAssignment_2() { return cExtraInfosAssignment_2; }
+
+		//kvpair
+		public RuleCall getExtraInfosKvpairParserRuleCall_2_0() { return cExtraInfosKvpairParserRuleCall_2_0; }
+
 		//n=";"
-		public Assignment getNAssignment_2() { return cNAssignment_2; }
+		public Assignment getNAssignment_3() { return cNAssignment_3; }
 
 		//";"
-		public Keyword getNSemicolonKeyword_2_0() { return cNSemicolonKeyword_2_0; }
+		public Keyword getNSemicolonKeyword_3_0() { return cNSemicolonKeyword_3_0; }
+	}
+
+	public class KvpairElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "kvpair");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPercentSignPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cKAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cKAlphaNumSpecialTerminalRuleCall_1_0 = (RuleCall)cKAssignment_1.eContents().get(0);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cValAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cValAlphaNumSpecialTerminalRuleCall_3_0 = (RuleCall)cValAssignment_3.eContents().get(0);
+		
+		//kvpair:
+		//	"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial;
+		public ParserRule getRule() { return rule; }
+
+		//"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial
+		public Group getGroup() { return cGroup; }
+
+		//"%%"
+		public Keyword getPercentSignPercentSignKeyword_0() { return cPercentSignPercentSignKeyword_0; }
+
+		//k=AlphaNumSpecial
+		public Assignment getKAssignment_1() { return cKAssignment_1; }
+
+		//AlphaNumSpecial
+		public RuleCall getKAlphaNumSpecialTerminalRuleCall_1_0() { return cKAlphaNumSpecialTerminalRuleCall_1_0; }
+
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//val=AlphaNumSpecial
+		public Assignment getValAssignment_3() { return cValAssignment_3; }
+
+		//AlphaNumSpecial
+		public RuleCall getValAlphaNumSpecialTerminalRuleCall_3_0() { return cValAlphaNumSpecialTerminalRuleCall_3_0; }
 	}
 
 	public class SignalElements extends AbstractParserRuleElementFinder {
@@ -184,9 +228,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	private TracelistElements pTracelist;
 	private TraceElements pTrace;
 	private TickElements pTick;
+	private KvpairElements pKvpair;
 	private SignalElements pSignal;
 	private TerminalRule tDigit;
 	private TerminalRule tLetter;
+	private TerminalRule tSpecial;
+	private TerminalRule tAlphaNumSpecial;
 	private TerminalRule tID;
 	private TerminalRule tNUM;
 	private TerminalRule tWS;
@@ -226,13 +273,23 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//tick:
-	//	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+	//	input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";";
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
 	}
 	
 	public ParserRule getTickRule() {
 		return getTickAccess().getRule();
+	}
+
+	//kvpair:
+	//	"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial;
+	public KvpairElements getKvpairAccess() {
+		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
+	}
+	
+	public ParserRule getKvpairRule() {
+		return getKvpairAccess().getRule();
 	}
 
 	//signal:
@@ -257,6 +314,18 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	//	"a".."z" | "A".."Z";
 	public TerminalRule getLetterRule() {
 		return (tLetter != null) ? tLetter : (tLetter = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Letter"));
+	} 
+
+	//terminal Special:
+	//	"!" | "@" | "#" | "$" | "%" | "^" | "&" | "*" | "(" | ")" | "_" | "=" | "+" | "-";
+	public TerminalRule getSpecialRule() {
+		return (tSpecial != null) ? tSpecial : (tSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Special"));
+	} 
+
+	//terminal AlphaNumSpecial:
+	//	(Letter | Digit | Special) (Letter | Digit | Special)*;
+	public TerminalRule getAlphaNumSpecialRule() {
+		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 
 
 	//terminal ID:

@@ -34,7 +34,8 @@ protected class ThisRootNode extends RootToken {
 			case 0: return new Tracelist_Group(this, this, 0, inst);
 			case 1: return new Trace_Group(this, this, 1, inst);
 			case 2: return new Tick_Group(this, this, 2, inst);
-			case 3: return new Signal_Group(this, this, 3, inst);
+			case 3: return new Kvpair_Group(this, this, 3, inst);
+			case 4: return new Signal_Group(this, this, 4, inst);
 			default: return null;
 		}	
 	}	
@@ -378,11 +379,11 @@ protected class Trace_TicksAssignment_1 extends AssignmentToken  {
 /************ begin Rule tick ****************
  *
  * tick:
- * 	input+=signal* ("%" "Output" ":" output+=signal*)? n=";";
+ * 	input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";";
  *
  **/
 
-// input+=signal* ("%" "Output" ":" output+=signal*)? n=";"
+// input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";"
 protected class Tick_Group extends GroupToken {
 	
 	public Tick_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -397,7 +398,7 @@ protected class Tick_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Tick_NAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Tick_NAssignment_3(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -594,24 +595,73 @@ protected class Tick_OutputAssignment_1_3 extends AssignmentToken  {
 }
 
 
-// n=";"
-protected class Tick_NAssignment_2 extends AssignmentToken  {
+// extraInfos+=kvpair*
+protected class Tick_ExtraInfosAssignment_2 extends AssignmentToken  {
 	
-	public Tick_NAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Tick_ExtraInfosAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getTickAccess().getNAssignment_2();
+		return grammarAccess.getTickAccess().getExtraInfosAssignment_2();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Tick_Group_1(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Tick_InputAssignment_0(lastRuleCallOrigin, this, 1, inst);
-			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index - 2, inst);
+			case 0: return new Kvpair_Group(this, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("extraInfos",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("extraInfos");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getKvpairRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getTickAccess().getExtraInfosKvpairParserRuleCall_2_0(); 
+				consumed = obj;
+				return param;
+			}
+		}
+		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Tick_ExtraInfosAssignment_2(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new Tick_Group_1(lastRuleCallOrigin, next, actIndex, consumed);
+			case 2: return new Tick_InputAssignment_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(next, actIndex , index - 3, consumed);
+		}	
+	}	
+}
+
+// n=";"
+protected class Tick_NAssignment_3 extends AssignmentToken  {
+	
+	public Tick_NAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getTickAccess().getNAssignment_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Tick_ExtraInfosAssignment_2(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Tick_Group_1(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Tick_InputAssignment_0(lastRuleCallOrigin, this, 2, inst);
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index - 3, inst);
 		}	
 	}
 
@@ -619,9 +669,9 @@ protected class Tick_NAssignment_2 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("n",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("n");
-		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getTickAccess().getNSemicolonKeyword_2_0(), value, null)) {
+		if(keywordSerializer.isValid(obj.getEObject(), grammarAccess.getTickAccess().getNSemicolonKeyword_3_0(), value, null)) {
 			type = AssignmentType.KEYWORD;
-			element = grammarAccess.getTickAccess().getNSemicolonKeyword_2_0();
+			element = grammarAccess.getTickAccess().getNSemicolonKeyword_3_0();
 			return obj;
 		}
 		return null;
@@ -631,6 +681,157 @@ protected class Tick_NAssignment_2 extends AssignmentToken  {
 
 
 /************ end Rule tick ****************/
+
+
+/************ begin Rule kvpair ****************
+ *
+ * kvpair:
+ * 	"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial;
+ *
+ **/
+
+// "%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial
+protected class Kvpair_Group extends GroupToken {
+	
+	public Kvpair_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getKvpairAccess().getGroup();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Kvpair_ValAssignment_3(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override
+	public IEObjectConsumer tryConsume() {
+		if(getEObject().eClass() != grammarAccess.getKvpairRule().getType().getClassifier())
+			return null;
+		return eObjectConsumer;
+	}
+
+}
+
+// "%%"
+protected class Kvpair_PercentSignPercentSignKeyword_0 extends KeywordToken  {
+	
+	public Kvpair_PercentSignPercentSignKeyword_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			default: return lastRuleCallOrigin.createFollowerAfterReturn(this, index, index, inst);
+		}	
+	}
+
+}
+
+// k=AlphaNumSpecial
+protected class Kvpair_KAssignment_1 extends AssignmentToken  {
+	
+	public Kvpair_KAssignment_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKvpairAccess().getKAssignment_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Kvpair_PercentSignPercentSignKeyword_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("k",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("k");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+// ":"
+protected class Kvpair_ColonKeyword_2 extends KeywordToken  {
+	
+	public Kvpair_ColonKeyword_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getKvpairAccess().getColonKeyword_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Kvpair_KAssignment_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// val=AlphaNumSpecial
+protected class Kvpair_ValAssignment_3 extends AssignmentToken  {
+	
+	public Kvpair_ValAssignment_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getKvpairAccess().getValAssignment_3();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Kvpair_ColonKeyword_2(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("val",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("val");
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0(), value, null)) {
+			type = AssignmentType.TERMINAL_RULE_CALL;
+			element = grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0();
+			return obj;
+		}
+		return null;
+	}
+
+}
+
+
+/************ end Rule kvpair ****************/
 
 
 /************ begin Rule signal ****************

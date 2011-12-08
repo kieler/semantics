@@ -6,6 +6,7 @@
 package de.cau.cs.kieler.sim.esi.esi.impl;
 
 import de.cau.cs.kieler.sim.esi.esi.EsiPackage;
+import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 
@@ -34,6 +35,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.tickImpl#getInput <em>Input</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.tickImpl#getOutput <em>Output</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.tickImpl#getExtraInfos <em>Extra Infos</em>}</li>
  *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.tickImpl#getN <em>N</em>}</li>
  * </ul>
  * </p>
@@ -61,6 +63,16 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * @ordered
    */
   protected EList<signal> output;
+
+  /**
+   * The cached value of the '{@link #getExtraInfos() <em>Extra Infos</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getExtraInfos()
+   * @generated
+   * @ordered
+   */
+  protected EList<kvpair> extraInfos;
 
   /**
    * The default value of the '{@link #getN() <em>N</em>}' attribute.
@@ -136,6 +148,20 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
    * <!-- end-user-doc -->
    * @generated
    */
+  public EList<kvpair> getExtraInfos()
+  {
+    if (extraInfos == null)
+    {
+      extraInfos = new EObjectContainmentEList<kvpair>(kvpair.class, this, EsiPackage.TICK__EXTRA_INFOS);
+    }
+    return extraInfos;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public String getN()
   {
     return n;
@@ -168,6 +194,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return ((InternalEList<?>)getInput()).basicRemove(otherEnd, msgs);
       case EsiPackage.TICK__OUTPUT:
         return ((InternalEList<?>)getOutput()).basicRemove(otherEnd, msgs);
+      case EsiPackage.TICK__EXTRA_INFOS:
+        return ((InternalEList<?>)getExtraInfos()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -186,6 +214,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return getInput();
       case EsiPackage.TICK__OUTPUT:
         return getOutput();
+      case EsiPackage.TICK__EXTRA_INFOS:
+        return getExtraInfos();
       case EsiPackage.TICK__N:
         return getN();
     }
@@ -211,6 +241,10 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         getOutput().clear();
         getOutput().addAll((Collection<? extends signal>)newValue);
         return;
+      case EsiPackage.TICK__EXTRA_INFOS:
+        getExtraInfos().clear();
+        getExtraInfos().addAll((Collection<? extends kvpair>)newValue);
+        return;
       case EsiPackage.TICK__N:
         setN((String)newValue);
         return;
@@ -234,6 +268,9 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
       case EsiPackage.TICK__OUTPUT:
         getOutput().clear();
         return;
+      case EsiPackage.TICK__EXTRA_INFOS:
+        getExtraInfos().clear();
+        return;
       case EsiPackage.TICK__N:
         setN(N_EDEFAULT);
         return;
@@ -255,6 +292,8 @@ public class tickImpl extends MinimalEObjectImpl.Container implements tick
         return input != null && !input.isEmpty();
       case EsiPackage.TICK__OUTPUT:
         return output != null && !output.isEmpty();
+      case EsiPackage.TICK__EXTRA_INFOS:
+        return extraInfos != null && !extraInfos.isEmpty();
       case EsiPackage.TICK__N:
         return N_EDEFAULT == null ? n != null : !N_EDEFAULT.equals(n);
     }

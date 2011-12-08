@@ -5,22 +5,24 @@
     nsURI="http://www.cau.de/cs/kieler/sim/esi/Esi" nsPrefix="esi">
   <eClassifiers xsi:type="ecore:EClass" name="tracelist">
     <eStructuralFeatures xsi:type="ecore:EReference" name="traces" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//trace"
-        containment="true"/>
+        eType="#//trace" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="trace">
     <eStructuralFeatures xsi:type="ecore:EReference" name="ticks" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//tick"
-        containment="true"/>
+        eType="#//tick" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="tick">
     <eStructuralFeatures xsi:type="ecore:EReference" name="input" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//signal"
-        containment="true"/>
+        eType="#//signal" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="output" upperBound="-1"
-        eType="ecore:EClass platform:/resource/de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/Esi.ecore#//signal"
-        containment="true"/>
+        eType="#//signal" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extraInfos" upperBound="-1"
+        eType="#//kvpair" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="n" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="kvpair">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="k" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="val" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="signal">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

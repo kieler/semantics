@@ -70,6 +70,7 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
       case EsiPackage.TRACELIST: return createtracelist();
       case EsiPackage.TRACE: return createtrace();
       case EsiPackage.TICK: return createtick();
+      case EsiPackage.KVPAIR: return createkvpair();
       case EsiPackage.SIGNAL: return createsignal();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
@@ -107,6 +108,17 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
   {
     tickImpl tick = new tickImpl();
     return tick;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public kvpair createkvpair()
+  {
+    kvpairImpl kvpair = new kvpairImpl();
+    return kvpair;
   }
 
   /**
