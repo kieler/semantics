@@ -16,7 +16,12 @@ package de.cau.cs.kieler.core.model.triggers;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IStartup;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
@@ -98,7 +103,6 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
      */
     public void partOpened(final IWorkbenchPart part) {
         // TODO Auto-generated method stub
-
     }
 
     private void tryTrigger(final IWorkbenchPart part) {
@@ -146,6 +150,23 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
             bridge = GraphicalFrameworkService.getInstance().getBridge(diagram);
         }
 
+        private void initializeWithCurrentEditor() {
+            try {
+            IWorkbench wb = PlatformUI.getWorkbench();
+            for (IWorkbenchWindow wbw : wb.getWorkbenchWindows()) {
+                for (IWorkbenchPage wp : wbw.getPages()) {
+                    IWorkbenchPart currentPart = wp.getActiveEditor();
+                    if (currentPart != null) {
+                        this.diagramPart = currentPart;
+                        bridge = GraphicalFrameworkService.getInstance().getBridge(currentPart);
+                    }
+                }
+            }
+            } catch (NullPointerException npe) {
+                //workbench not initialized yet, will try again later so do nothing.
+            }
+        }
+        
         /**
          * Get the WorkBenchPart (Editor/View) that contains a diagram. It was already checked that
          * a GraphicalFrameworkBridge is available for this part, so this is guaranteed here.
@@ -153,6 +174,9 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return an Eclipse WorkBenchPart containing a diagram.
          */
         public IWorkbenchPart getDiagramPart() {
+            if (bridge == null) {
+                initializeWithCurrentEditor();
+            }
             return diagramPart;
         }
 
@@ -163,6 +187,9 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return the registered IGraphicalFrameworkBridge for this diagram
          */
         public IGraphicalFrameworkBridge getGraphicalFrameworkBridge() {
+            if (bridge == null) {
+                initializeWithCurrentEditor();
+            }
             return bridge;
         }
 
@@ -174,6 +201,9 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return EObject model corresponding to the diagram
          */
         public EObject getSemanticModel() {
+            if (bridge == null) {
+                initializeWithCurrentEditor();
+            }
             EditPart rootEditPart = bridge.getEditPart(diagramPart);
             EObject model = bridge.getElement(rootEditPart);
             if (model == null) {
@@ -191,6 +221,9 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
          * @return String ID of the diagram type
          */
         public String getDiagramType() {
+            if (bridge == null) {
+                initializeWithCurrentEditor();
+            }
             try {
                 return diagramPart.getSite().getId();
             } catch (NullPointerException e) {
