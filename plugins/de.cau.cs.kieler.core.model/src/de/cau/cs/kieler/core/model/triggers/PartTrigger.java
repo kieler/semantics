@@ -202,7 +202,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener /*, IP
         }                
         
         if (part instanceof IEditorPart) {
-            if (this.currentActiveEditor.equals(part)) {
+            if (this.currentActiveEditor != null && this.currentActiveEditor.equals(part)) {
                 this.currentActiveEditor = null;
             }
             type = EventType.ACTIVE_EDITOR_CLOSED;
