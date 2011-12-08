@@ -37,6 +37,10 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.sim.esi.ITick;
+import de.cau.cs.kieler.sim.esi.ITrace;
+import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -98,7 +102,7 @@ public class TraceReader extends AbstractAutomatedProducer  {
             }
             ITick tick = current.current();
             try {
-                for (Signal s : tick.getInputs()) {
+                for (ISignal s : tick.getInputs()) {
                     if (s.isValued()) {
                         res.accumulate(s.getName(), JSONSignalValues.newValue(s.getValue(), true));
                     } else {

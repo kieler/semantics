@@ -71,6 +71,19 @@
         </page>
     </extension>
     <extension
+            point="org.eclipse.ui.propertyPages">
+        <page
+            class="de.cau.cs.kieler.sim.esi.ui.EsiExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.sim.esi.Esi"
+            name="Esi">
+            <keywordReference id="de.cau.cs.kieler.sim.esi.ui.keyword_Esi"/>
+            <enabledWhen>
+	            <adapt type="org.eclipse.core.resources.IProject"/>
+			</enabledWhen>
+	        <filter name="projectNature" value="org.eclipse.xtext.ui.shared.xtextNature"/>
+        </page>
+    </extension>
+    <extension
         point="org.eclipse.ui.keywords">
         <keyword
             id="de.cau.cs.kieler.sim.esi.ui.keyword_Esi"

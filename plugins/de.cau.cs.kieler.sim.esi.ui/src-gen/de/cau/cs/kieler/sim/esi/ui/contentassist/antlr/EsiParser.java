@@ -42,6 +42,7 @@ public class EsiParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_1(), "rule__Tick__Group_1__0");
+					put(grammarAccess.getKvpairAccess().getGroup(), "rule__Kvpair__Group__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
 					put(grammarAccess.getSignalAccess().getGroup_1(), "rule__Signal__Group_1__0");
 					put(grammarAccess.getTracelistAccess().getTracesAssignment_0(), "rule__Tracelist__TracesAssignment_0");
@@ -49,7 +50,10 @@ public class EsiParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTraceAccess().getTicksAssignment_1(), "rule__Trace__TicksAssignment_1");
 					put(grammarAccess.getTickAccess().getInputAssignment_0(), "rule__Tick__InputAssignment_0");
 					put(grammarAccess.getTickAccess().getOutputAssignment_1_3(), "rule__Tick__OutputAssignment_1_3");
-					put(grammarAccess.getTickAccess().getNAssignment_2(), "rule__Tick__NAssignment_2");
+					put(grammarAccess.getTickAccess().getExtraInfosAssignment_2(), "rule__Tick__ExtraInfosAssignment_2");
+					put(grammarAccess.getTickAccess().getNAssignment_3(), "rule__Tick__NAssignment_3");
+					put(grammarAccess.getKvpairAccess().getKAssignment_1(), "rule__Kvpair__KAssignment_1");
+					put(grammarAccess.getKvpairAccess().getValAssignment_3(), "rule__Kvpair__ValAssignment_3");
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
 					put(grammarAccess.getSignalAccess().getValuedAssignment_1_0(), "rule__Signal__ValuedAssignment_1_0");
 					put(grammarAccess.getSignalAccess().getValAssignment_1_1(), "rule__Signal__ValAssignment_1_1");

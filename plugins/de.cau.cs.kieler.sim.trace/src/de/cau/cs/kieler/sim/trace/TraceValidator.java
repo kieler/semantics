@@ -18,6 +18,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.sim.esi.ITick;
 import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -56,7 +58,7 @@ public class TraceValidator extends AbstractAutomatedProducer   {
                 boolean valid = true;
                 try {
                     // Everything in the trace is emitted
-                    for (Signal sig : tick.getOutputs()) {
+                    for (ISignal sig : tick.getOutputs()) {
                         if (input.has(sig.getName())) {
                             Object obj = input.get(sig.getName());
                             if (!JSONSignalValues.isPresent(obj)) {
@@ -84,7 +86,7 @@ public class TraceValidator extends AbstractAutomatedProducer   {
                     for (String emit : traceReader.current.getOutputs()) {
                         if (input.has(emit) && JSONSignalValues.isPresent(input.get(emit))) {
                             boolean found = false;
-                            for (Signal t : tick.getOutputs()) {
+                            for (ISignal t : tick.getOutputs()) {
                                 if (t.getName().equals(emit)) {
                                     found = true;
                                     break;
