@@ -735,10 +735,10 @@ public class Execution extends Job {
         // remotely by other
         // plug-in)
         KiemPlugin.getDefault().setExecution(null);
-        // update the GUI
-        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         // execution stops
         eventManager.notify(new KiemEvent(KiemEvent.EXECUTION_STOP));
+        // update the GUI
+        eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
     }
 
     // -------------------------------------------------------------------------
@@ -851,6 +851,8 @@ public class Execution extends Job {
         this.stop = true;
         // release the object
         KiemPlugin.getDefault().setExecution(null);
+        // execution stops
+        eventManager.notify(new KiemEvent(KiemEvent.EXECUTION_STOP));
         // update the view
         eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
         // wrapup components
