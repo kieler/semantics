@@ -1202,13 +1202,13 @@ RULE_DIGIT : '0'..'9';
 
 RULE_LETTER : ('a'..'z'|'A'..'Z');
 
-RULE_SPECIAL : ('!'|'@'|'#'|'$'|'%'|'^'|'&'|'*'|'('|')'|'_'|'='|'+'|'-');
+RULE_NUM : ('+'|'-')? RULE_DIGIT+;
 
-RULE_ALPHANUMSPECIAL : (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL) (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL)*;
+RULE_SPECIAL : ('!'|'@'|'#'|'$'|'%'|'^'|'&'|'*'|'('|')'|'_'|'='|'+'|'-');
 
 RULE_ID : (RULE_LETTER|'_') (RULE_LETTER|RULE_DIGIT|'_')*;
 
-RULE_NUM : ('+'|'-')? RULE_DIGIT+;
+RULE_ALPHANUMSPECIAL : (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL) (RULE_LETTER|RULE_DIGIT|RULE_SPECIAL)*;
 
 RULE_WS : ('\t'|' '|'\r'|'\n');
 
