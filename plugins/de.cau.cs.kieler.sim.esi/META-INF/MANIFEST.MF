@@ -33,8 +33,9 @@ Export-Package: de.cau.cs.kieler.sim.esi,
  de.cau.cs.kieler.sim.esi.parser.antlr,
  de.cau.cs.kieler.sim.esi.parser.antlr.internal,
  de.cau.cs.kieler.sim.esi.services,
- de.cau.cs.kieler.sim.esi.validation,
  de.cau.cs.kieler.sim.esi.scoping,
- de.cau.cs.kieler.sim.esi.formatting
+ de.cau.cs.kieler.sim.esi.formatting,
+ de.cau.cs.kieler.sim.esi.parseTreeConstruction,
+ de.cau.cs.kieler.sim.esi.validation
 Import-Package: org.apache.log4j,
  org.eclipse.ui.part
