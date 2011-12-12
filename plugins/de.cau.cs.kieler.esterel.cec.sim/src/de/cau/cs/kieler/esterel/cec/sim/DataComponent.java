@@ -300,9 +300,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * {@inheritDoc}
 	 */
 	public void wrapup() throws KiemInitializationException {
-		// if (process != null) {
-		// process.destroy();
-		// }
+		if (process != null) {
+		 process.destroy();
+		}
 		// boolean ok = true;
 		//
 		// if (strlFile != null && strlFile.exists()) {
