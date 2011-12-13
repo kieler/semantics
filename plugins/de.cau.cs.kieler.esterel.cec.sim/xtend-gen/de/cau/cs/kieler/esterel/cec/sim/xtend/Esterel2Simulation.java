@@ -48,10 +48,8 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend.util.stdlib.CloningExtensions;
 import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
-import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.IntegerExtensions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
-import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.eclipse.xtext.xtend2.lib.EObjectExtensions;
 
@@ -87,36 +85,31 @@ public class Esterel2Simulation {
       Iterable<Statement> originalStatements = _filter;
       Iterable<EObject> _allContentsIterable_1 = EObjectExtensions.allContentsIterable(target);
       Iterable<Statement> _filter_1 = IterableExtensions.<Statement>filter(_allContentsIterable_1, de.cau.cs.kieler.kies.esterel.Statement.class);
-      Iterable<Statement> statements = _filter_1;
+      Iterable<Statement> targetStatements = _filter_1;
+      List<Statement> _list = IterableExtensions.<Statement>toList(targetStatements);
+      List<Statement> targetStatementsCopy = _list;
       Iterable<EObject> _allContentsIterable_2 = EObjectExtensions.allContentsIterable(target);
       Iterable<Module> _filter_2 = IterableExtensions.<Module>filter(_allContentsIterable_2, de.cau.cs.kieler.kies.esterel.Module.class);
-      List<Module> _list = IterableExtensions.<Module>toList(_filter_2);
-      Module _get = _list.get(0);
-      Module mainmodule = _get;
-      Iterable<Statement> statementsCopy = statements;
+      List<Module> _list_1 = IterableExtensions.<Module>toList(_filter_2);
+      Module _get = _list_1.get(0);
+      Module targetMainmodule = _get;
       int i = 0;
-      for (final Statement statementCopy : statementsCopy) {
+      List<Statement> _list_2 = IterableExtensions.<Statement>toList(originalStatements);
+      List<Statement> originalStatementsList = _list_2;
+      for (final Statement targetStatement : targetStatementsCopy) {
         {
-          List<Statement> _list_1 = IterableExtensions.<Statement>toList(originalStatements);
-          Statement _get_1 = _list_1.get(i);
+          Statement _get_1 = originalStatementsList.get(i);
           Statement originalStatement = _get_1;
           int _operator_plus = IntegerExtensions.operator_plus(((Integer)i), ((Integer)1));
           i = _operator_plus;
-          final Function1<Statement,Boolean> _function = new Function1<Statement,Boolean>() {
-              public Boolean apply(final Statement statement) {
-                boolean _operator_equals = ObjectExtensions.operator_equals(statementCopy, statement);
-                return _operator_equals;
-              }
-            };
-          final Function1<Statement,Boolean> predicate = _function;
           Resource _eResource = originalStatement.eResource();
           String _uRIFragment = _eResource.getURIFragment(originalStatement);
-          String _replace = _uRIFragment.replace("/", "x");
-          String _replace_1 = _replace.replace("@", "");
-          String _replace_2 = _replace_1.replace(".", "");
-          String _operator_plus_1 = StringExtensions.operator_plus(AUXILIARY_VARIABLE_TAG, _replace_2);
+          int _hashCode = _uRIFragment.hashCode();
+          String _string = ((Integer)_hashCode).toString();
+          String _replace = _string.replace("-", "M");
+          String _operator_plus_1 = StringExtensions.operator_plus(AUXILIARY_VARIABLE_TAG, _replace);
           String statementUID = _operator_plus_1;
-          this.transformStatement(statementCopy, mainmodule, statementUID);
+          this.transformStatement(targetStatement, targetMainmodule, statementUID);
         }
       }
   }
@@ -179,6 +172,109 @@ public class Esterel2Simulation {
   private final HashMap<ArrayList<?>,Sequence> _createCache_createSequence = CollectionLiterals.newHashMap();
   
   private void _init_createSequence(final Sequence sequence, final Object object) {
+  }
+  
+  public void transformStatementSimple(final Statement statement, final Module mainmodule, final String UID) {
+    boolean _operator_or = false;
+    boolean _operator_or_1 = false;
+    boolean _operator_or_2 = false;
+    boolean _operator_or_3 = false;
+    boolean _operator_or_4 = false;
+    boolean _operator_or_5 = false;
+    boolean _operator_or_6 = false;
+    boolean _operator_or_7 = false;
+    boolean _operator_or_8 = false;
+    boolean _operator_or_9 = false;
+    boolean _operator_or_10 = false;
+    boolean _operator_or_11 = false;
+    boolean _operator_or_12 = false;
+    boolean _operator_or_13 = false;
+    boolean _operator_or_14 = false;
+    if ((statement instanceof Abort)) {
+      _operator_or_14 = true;
+    } else {
+      _operator_or_14 = BooleanExtensions.operator_or((statement instanceof Abort), (statement instanceof Await));
+    }
+    if (_operator_or_14) {
+      _operator_or_13 = true;
+    } else {
+      _operator_or_13 = BooleanExtensions.operator_or(_operator_or_14, (statement instanceof Do));
+    }
+    if (_operator_or_13) {
+      _operator_or_12 = true;
+    } else {
+      _operator_or_12 = BooleanExtensions.operator_or(_operator_or_13, (statement instanceof Emit));
+    }
+    if (_operator_or_12) {
+      _operator_or_11 = true;
+    } else {
+      _operator_or_11 = BooleanExtensions.operator_or(_operator_or_12, (statement instanceof EveryDo));
+    }
+    if (_operator_or_11) {
+      _operator_or_10 = true;
+    } else {
+      _operator_or_10 = BooleanExtensions.operator_or(_operator_or_11, (statement instanceof Exit));
+    }
+    if (_operator_or_10) {
+      _operator_or_9 = true;
+    } else {
+      _operator_or_9 = BooleanExtensions.operator_or(_operator_or_10, (statement instanceof Halt));
+    }
+    if (_operator_or_9) {
+      _operator_or_8 = true;
+    } else {
+      _operator_or_8 = BooleanExtensions.operator_or(_operator_or_9, (statement instanceof IfTest));
+    }
+    if (_operator_or_8) {
+      _operator_or_7 = true;
+    } else {
+      _operator_or_7 = BooleanExtensions.operator_or(_operator_or_8, (statement instanceof Loop));
+    }
+    if (_operator_or_7) {
+      _operator_or_6 = true;
+    } else {
+      _operator_or_6 = BooleanExtensions.operator_or(_operator_or_7, (statement instanceof Nothing));
+    }
+    if (_operator_or_6) {
+      _operator_or_5 = true;
+    } else {
+      _operator_or_5 = BooleanExtensions.operator_or(_operator_or_6, (statement instanceof Pause));
+    }
+    if (_operator_or_5) {
+      _operator_or_4 = true;
+    } else {
+      _operator_or_4 = BooleanExtensions.operator_or(_operator_or_5, (statement instanceof Present));
+    }
+    if (_operator_or_4) {
+      _operator_or_3 = true;
+    } else {
+      _operator_or_3 = BooleanExtensions.operator_or(_operator_or_4, (statement instanceof Repeat));
+    }
+    if (_operator_or_3) {
+      _operator_or_2 = true;
+    } else {
+      _operator_or_2 = BooleanExtensions.operator_or(_operator_or_3, (statement instanceof Run));
+    }
+    if (_operator_or_2) {
+      _operator_or_1 = true;
+    } else {
+      _operator_or_1 = BooleanExtensions.operator_or(_operator_or_2, (statement instanceof Suspend));
+    }
+    if (_operator_or_1) {
+      _operator_or = true;
+    } else {
+      _operator_or = BooleanExtensions.operator_or(_operator_or_1, (statement instanceof Sustain));
+    }
+    if (_operator_or) {
+      {
+        EObject _eContainer = statement.eContainer();
+        EObject container = _eContainer;
+        Block _createBlock = EsterelFactory.eINSTANCE.createBlock();
+        Block blockStatement = _createBlock;
+        this.addStatement(blockStatement, statement);
+        this.addStatement(container, blockStatement);
+      }
+    }
   }
   
   public void transformStatement(final Statement statement, final Module mainmodule, final String UID) {
