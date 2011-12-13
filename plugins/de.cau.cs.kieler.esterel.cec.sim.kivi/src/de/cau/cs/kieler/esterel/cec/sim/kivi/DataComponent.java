@@ -312,41 +312,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -----------------------------------------------------------------------------
 	
 	/**
-	 * Compute the length of the Esterel statement up to the first space or line break.
-	 *
-	 * @param statement the statement
-	 * @return the statement end
-	 */
-	int getStatementLength(String statement) {
-		String tmpStatement = statement;
-		while (tmpStatement.length() > 0 && ( tmpStatement.startsWith("\n") || tmpStatement.startsWith("\r") || tmpStatement.startsWith(" "))) {
-			tmpStatement = tmpStatement.substring(1);
-		}
-		
-		int len1 = tmpStatement.indexOf("\r");
-		int len2 = tmpStatement.indexOf("\n");
-		int len3 = tmpStatement.indexOf(" ");
-		
-		if (len1 == -1) {
-			len1 = tmpStatement.length();
-		}
-		if (len2 == -1) {
-			len2 = tmpStatement.length();
-		}
-		if (len3 == -1) {
-			len3 = tmpStatement.length();
-		}
-		
-		int len = Math.min(Math.min(len1, len2) , len3);
-		if (len == -1) {
-			return statement.length();
-		}
-		return len;
-	}
-	
-	// -----------------------------------------------------------------------------
-	
-	/**
 	 * Sets the xtext selection to have a specific background color.
 	 *
 	 * @param semanticElement the semantic element
@@ -388,9 +353,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 					// getOffset() and getLength() are trimming whitespaces
 					int offset = xtextNode.getOffset();
-					String xtextNodeText = xtextNode.getText();
-					int length  = getStatementLength(xtextNodeText);
 
+
+					// Find the next leaf node element (the actual Esterel Statement)
+					// and get its legth
+					int length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
+					
 					xtextEditor.getInternalSourceViewer().setRangeIndication(
 							offset, length, true);
 					xtextEditor.getInternalSourceViewer().revealRange(
