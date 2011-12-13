@@ -46,23 +46,25 @@ class Esterel2Simulation {
 		}
 		
 		var originalStatements = program.allContentsIterable.filter(typeof(Statement));
-		var statements = target.allContentsIterable.filter(typeof(Statement));
-		var mainmodule = target.allContentsIterable.filter(typeof(Module)).toList.get(0);
+		var targetStatements = target.allContentsIterable.filter(typeof(Statement));
+		var targetStatementsCopy = targetStatements.toList;
 		
-		var statementsCopy = statements;
+		var targetMainmodule = target.allContentsIterable.filter(typeof(Module)).toList.get(0);
 		
 		// For every statement in the Esterel program do the transformation
 		// Iterate over a copy of the list	
 		var i = 0;	
-		for(statementCopy : statementsCopy) {
-			var originalStatement = originalStatements.toList.get(i);
+		var originalStatementsList = originalStatements.toList;
+		for(targetStatement : targetStatementsCopy) {
+			var originalStatement = originalStatementsList.get(i);
 			i = i + 1;
 			// First find the according statement in the orginal statements list
-			val predicate = [ Statement statement | statementCopy == statement ]
-			//var statement = statements.filter(predicate).toList.get(0) as Statement;
-			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).replace("/","x").replace("@","").replace(".","") ;//.hashCode.toString();
+			//val predicate = [ Statement statement | originalStatement == statement ]
+			//var targetStatement = targetStatements.filter(predicate).toList.get(0) as Statement;
+//			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).replace("/","x").replace("@","").replace(".","") ;//.hashCode.toString();
+			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			statementCopy.transformStatement(mainmodule, statementUID);
+			targetStatement.transformStatement(targetMainmodule, statementUID);
 		}
 		
 	}	
@@ -79,6 +81,36 @@ class Esterel2Simulation {
 //	def create reslut: new PauseImpl() createPause() {
 //	 resu
 //	}
+
+	// Statement transformation in the fashion like described at the top
+	def void transformStatementSimple(Statement statement, Module mainmodule, String UID) {
+		//SIMPLE TEST
+		if ((
+		   (statement instanceof Abort)
+		   ||(statement instanceof Await)
+		   ||(statement instanceof Do)
+		   ||(statement instanceof Emit)
+		   ||(statement instanceof EveryDo)
+		   ||(statement instanceof Exit)
+		   ||(statement instanceof Halt)
+		   ||(statement instanceof IfTest)
+		   ||(statement instanceof Loop)
+		   ||(statement instanceof Nothing)
+		   ||(statement instanceof Pause)
+		   ||(statement instanceof Present)
+		   ||(statement instanceof Repeat)
+		   ||(statement instanceof Run)
+		   ||(statement instanceof Suspend)
+		   ||(statement instanceof Sustain)
+		)) {
+			var container = statement.eContainer;
+			var blockStatement = EsterelFactory::eINSTANCE.createBlock()
+			blockStatement.addStatement(statement);
+			container.addStatement(blockStatement);
+		}
+		
+	}
+
 	
 	// Statement transformation in the fashion like described at the top
 	def void transformStatement(Statement statement, Module mainmodule, String UID) {
