@@ -316,7 +316,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 * @param statement the statement
 	 * @return the statement end
 	 */
-	int getStatementEnd(String statement) {
+	int getStatementLength(String statement) {
 		String tmpStatement = statement;
 		while (tmpStatement.length() > 0 && ( tmpStatement.startsWith("\n") || tmpStatement.startsWith("\r") || tmpStatement.startsWith(" "))) {
 			tmpStatement = tmpStatement.substring(1);
@@ -388,7 +388,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					// getOffset() and getLength() are trimming whitespaces
 					int offset = xtextNode.getOffset();
 					String xtextNodeText = xtextNode.getText();
-					int length  = getStatementEnd(xtextNodeText);
+					int length  = getStatementLength(xtextNodeText);
 
 					xtextEditor.getInternalSourceViewer().setRangeIndication(
 							offset, length, true);
