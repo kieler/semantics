@@ -220,7 +220,7 @@ litigation.
 
    <requires>
       <import feature="org.eclipse.uml2" version="3.0.0" match="greaterOrEqual"/>
-      <import feature="org.eclipse.papyrus" version="0.7.2.qualifier" match="greaterOrEqual"/>
+      <import feature="org.eclipse.papyrus" version="0.8.1.qualifier" match="greaterOrEqual"/>
    </requires>
 
    <plugin
