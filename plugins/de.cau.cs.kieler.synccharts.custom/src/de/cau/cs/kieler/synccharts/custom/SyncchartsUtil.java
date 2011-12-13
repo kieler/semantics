@@ -120,7 +120,8 @@ public final class SyncchartsUtil {
                 ActionLabelProcessorWrapper.processActionLabels(diagram.getElement(),
                         ActionLabelProcessorWrapper.SERIALIZE);
             } catch (Exception e) {
-                throw new WrappedException(e, MSG_LABEL_SERIAL_FAILED);
+                // throw new WrappedException(e, MSG_LABEL_SERIAL_FAILED);
+            	//FIXME: Log error 
             }
         }
     }
