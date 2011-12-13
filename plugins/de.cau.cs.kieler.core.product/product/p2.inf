@@ -1,6 +1,8 @@
 instructions.configure=\
-  addRepository(type:0,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
-  addRepository(type:1,name:KIELER nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
+  addRepository(type:0,name:KIELER Releases,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite);\
+  addRepository(type:1,name:KIELER Releases,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite);\
+  addRepository(type:0,name:KIELER Nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
+  addRepository(type:1,name:KIELER Nightly,location:http${#58}//rtsys.informatik.uni-kiel.de/~kieler/updatesite/nightly);\
   addRepository(type:0,name:The Eclipse Project Updates, location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
   addRepository(type:1,name:The Eclipse Project Updates, location:http${#58}//download.eclipse.org/eclipse/updates/3.7);\
   addRepository(type:0,name:Indigo, location:http${#58}//download.eclipse.org/releases/indigo);\
