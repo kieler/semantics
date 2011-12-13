@@ -154,7 +154,8 @@ StatementContainerInterface returns StatementContainer:
 // ==============================================
 // !-(parallel)
 Statement:
-	Sequence ({Parallel.list+=current} "||" list+=Sequence)*;
+	//was Sequence ({Parallel.list+=current} "||" list+=Sequence)*; (uru)
+	Sequence ({Parallel.list+=current} ("||" list+=Sequence)+)?;
 
 	// -!
 AtomicStatement returns Statement:
@@ -164,7 +165,8 @@ AtomicStatement returns Statement:
 	// --> B.4.1 Control Flow Operators <--	
 // !-(sequence)
 Sequence returns Statement:
-	AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?;
+	// was AtomicStatement ({Sequence.list+=current} ";" list+=AtomicStatement)* ";"?; (uru)
+	AtomicStatement ({Sequence.list+=current} (";" list+=AtomicStatement)+)? ";"?;
 	// -!
 Block:
 	"[" statement=Statement "]";

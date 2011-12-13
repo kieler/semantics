@@ -671,8 +671,7 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 				}
 				else break;
 			case EsterelPackage.PARALLEL:
-				if(context == grammarAccess.getStatementRule() ||
-				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0()) {
+				if(context == grammarAccess.getStatementRule()) {
 					sequence_Statement(context, (Parallel) semanticObject); 
 					return; 
 				}
@@ -830,7 +829,6 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 				else break;
 			case EsterelPackage.SEQUENCE:
 				if(context == grammarAccess.getSequenceRule() ||
-				   context == grammarAccess.getSequenceAccess().getSequenceListAction_1_0() ||
 				   context == grammarAccess.getStatementRule() ||
 				   context == grammarAccess.getStatementAccess().getParallelListAction_1_0()) {
 					sequence_Sequence(context, (Sequence) semanticObject); 
@@ -2292,7 +2290,7 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     (list+=Sequence_Sequence_1_0 list+=AtomicStatement)
+	 *     (list+=Sequence_Sequence_1_0 list+=AtomicStatement+)
 	 */
 	protected void sequence_Sequence(EObject context, Sequence semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2390,7 +2388,7 @@ public class AbstractEsterelSemanticSequencer extends AbstractSemanticSequencer 
 	
 	/**
 	 * Constraint:
-	 *     (list+=Statement_Parallel_1_0 list+=Sequence)
+	 *     (list+=Statement_Parallel_1_0 list+=Sequence+)
 	 */
 	protected void sequence_Statement(EObject context, Parallel semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

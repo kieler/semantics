@@ -28,7 +28,7 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
         // testing
        c.setSpace(" ").after(g.getPauseAccess().getPauseKeyword_0());
 
-        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_1_1());
+        c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_1_1_0());
         c.setLinewrap().after(g.getSequenceAccess().getSemicolonKeyword_2());
         c.setLinewrap().after(g.getSequenceRule());
 

@@ -143,8 +143,10 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTaskAccess().getGroup_5_1(), "rule__Task__Group_5_1__0");
 					put(grammarAccess.getStatementAccess().getGroup(), "rule__Statement__Group__0");
 					put(grammarAccess.getStatementAccess().getGroup_1(), "rule__Statement__Group_1__0");
+					put(grammarAccess.getStatementAccess().getGroup_1_1(), "rule__Statement__Group_1_1__0");
 					put(grammarAccess.getSequenceAccess().getGroup(), "rule__Sequence__Group__0");
 					put(grammarAccess.getSequenceAccess().getGroup_1(), "rule__Sequence__Group_1__0");
+					put(grammarAccess.getSequenceAccess().getGroup_1_1(), "rule__Sequence__Group_1_1__0");
 					put(grammarAccess.getBlockAccess().getGroup(), "rule__Block__Group__0");
 					put(grammarAccess.getAssignmentAccess().getGroup(), "rule__Assignment__Group__0");
 					put(grammarAccess.getAbortAccess().getGroup(), "rule__Abort__Group__0");
@@ -393,8 +395,8 @@ public class EsterelParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTaskAccess().getIdList2Assignment_5_0(), "rule__Task__IdList2Assignment_5_0");
 					put(grammarAccess.getTaskAccess().getIdList2Assignment_5_1_1(), "rule__Task__IdList2Assignment_5_1_1");
 					put(grammarAccess.getStatementContainerAccess().getStatementAssignment(), "rule__StatementContainer__StatementAssignment");
-					put(grammarAccess.getStatementAccess().getListAssignment_1_2(), "rule__Statement__ListAssignment_1_2");
-					put(grammarAccess.getSequenceAccess().getListAssignment_1_2(), "rule__Sequence__ListAssignment_1_2");
+					put(grammarAccess.getStatementAccess().getListAssignment_1_1_1(), "rule__Statement__ListAssignment_1_1_1");
+					put(grammarAccess.getSequenceAccess().getListAssignment_1_1_1(), "rule__Sequence__ListAssignment_1_1_1");
 					put(grammarAccess.getBlockAccess().getStatementAssignment_1(), "rule__Block__StatementAssignment_1");
 					put(grammarAccess.getAssignmentAccess().getVarAssignment_0(), "rule__Assignment__VarAssignment_0");
 					put(grammarAccess.getAssignmentAccess().getExprAssignment_2(), "rule__Assignment__ExprAssignment_2");

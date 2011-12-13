@@ -2616,14 +2616,14 @@ ruleStatement returns [EObject current=null]
             grammarAccess.getStatementAccess().getParallelListAction_1_0(),
             $current);
     }
-)	otherlv_2='||' 
+)(	otherlv_2='||' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getStatementAccess().getVerticalLineVerticalLineKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getStatementAccess().getVerticalLineVerticalLineKeyword_1_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getStatementAccess().getListSequenceParserRuleCall_1_2_0()); 
+	        newCompositeNode(grammarAccess.getStatementAccess().getListSequenceParserRuleCall_1_1_1_0()); 
 	    }
 		lv_list_3_0=ruleSequence		{
 	        if ($current==null) {
@@ -2638,7 +2638,7 @@ ruleStatement returns [EObject current=null]
 	    }
 
 )
-))*)
+))+)?)
 ;
 
 
@@ -3012,14 +3012,14 @@ ruleSequence returns [EObject current=null]
             grammarAccess.getSequenceAccess().getSequenceListAction_1_0(),
             $current);
     }
-)	otherlv_2=';' 
+)(	otherlv_2=';' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getSequenceAccess().getSemicolonKeyword_1_1());
+    	newLeafNode(otherlv_2, grammarAccess.getSequenceAccess().getSemicolonKeyword_1_1_0());
     }
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getSequenceAccess().getListAtomicStatementParserRuleCall_1_2_0()); 
+	        newCompositeNode(grammarAccess.getSequenceAccess().getListAtomicStatementParserRuleCall_1_1_1_0()); 
 	    }
 		lv_list_3_0=ruleAtomicStatement		{
 	        if ($current==null) {
@@ -3034,7 +3034,7 @@ ruleSequence returns [EObject current=null]
 	    }
 
 )
-))*(	otherlv_4=';' 
+))+)?(	otherlv_4=';' 
     {
     	newLeafNode(otherlv_4, grammarAccess.getSequenceAccess().getSemicolonKeyword_2());
     }
