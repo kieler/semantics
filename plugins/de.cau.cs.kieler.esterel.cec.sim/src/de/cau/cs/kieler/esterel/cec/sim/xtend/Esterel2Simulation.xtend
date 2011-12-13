@@ -51,6 +51,12 @@ class Esterel2Simulation {
 		
 		var targetMainmodule = target.allContentsIterable.filter(typeof(Module)).toList.get(0);
 		
+		// Ensure an interface declaration
+		if (targetMainmodule.interface == null) {
+			var moduleInterface = EsterelFactory::eINSTANCE.createModuleInterface(); 
+			targetMainmodule.setInterface(moduleInterface);
+		} 
+		
 		// For every statement in the Esterel program do the transformation
 		// Iterate over a copy of the list	
 		var i = 0;	
@@ -75,6 +81,8 @@ class Esterel2Simulation {
 	def create parallel : EsterelFactory::eINSTANCE.createParallel createParallel(Object object) {
 	}
 	def create sequence : EsterelFactory::eINSTANCE.createSequence createSequence(Object object) {
+	}
+	def create sequence : EsterelFactory::eINSTANCE.createModuleInterface createModuleInterface(Object object) {
 	}
 	
 	
