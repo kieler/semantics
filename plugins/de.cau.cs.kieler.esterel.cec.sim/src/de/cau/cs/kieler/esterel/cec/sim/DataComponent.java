@@ -301,7 +301,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	 */
 	public void wrapup() throws KiemInitializationException {
 		if (process != null) {
-		 process.destroy();
+			process.destroy();
 		}
 		// boolean ok = true;
 		//
@@ -601,24 +601,28 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		try {
 			if (myModel != null) {
 				for (Module mod : myModel.getModules()) {
-					for (InterfaceSignalDecl sig : mod.getInterface()
-							.getIntSignalDecls()) {
-						if (sig instanceof Input) {
-							for (Signal s : sig.getSignals()) {
-								res.accumulate(s.getName(),
-										JSONSignalValues.newValue(false));
-							}
-						}
-						if (sig instanceof Output) {
-							for (Signal signal : sig.getSignals()) {
-								String signalName = signal.getName();
-								if (!signalName
-										.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
-									res.accumulate(signalName,
+					if (mod.getInterface() != null && mod.getInterface().getIntSignalDecls() != null) {
+						for (InterfaceSignalDecl sig : mod.getInterface()
+								.getIntSignalDecls()) {
+							if (sig instanceof Input) {
+								for (Signal s : sig.getSignals()) {
+									res.accumulate(s.getName(),
 											JSONSignalValues.newValue(false));
-									outputSignalList.add(signalName);
 								}
 							}
+							if (sig instanceof Output) {
+								for (Signal signal : sig.getSignals()) {
+									String signalName = signal.getName();
+									if (!signalName
+											.startsWith(EsterelCECSimPlugin.AUXILIARY_VARIABLE_TAG)) {
+										res.accumulate(signalName,
+												JSONSignalValues
+														.newValue(false));
+										outputSignalList.add(signalName);
+									}
+								}
+							}
+
 						}
 					}
 				}
