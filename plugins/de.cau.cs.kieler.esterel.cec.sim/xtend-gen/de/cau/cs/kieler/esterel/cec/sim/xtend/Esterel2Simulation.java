@@ -50,6 +50,7 @@ import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.IntegerExtensions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
 import org.eclipse.xtext.xtend2.lib.EObjectExtensions;
 
@@ -93,6 +94,15 @@ public class Esterel2Simulation {
       List<Module> _list_1 = IterableExtensions.<Module>toList(_filter_2);
       Module _get = _list_1.get(0);
       Module targetMainmodule = _get;
+      ModuleInterface _interface = targetMainmodule.getInterface();
+      boolean _operator_equals = ObjectExtensions.operator_equals(_interface, null);
+      if (_operator_equals) {
+        {
+          ModuleInterface _createModuleInterface = EsterelFactory.eINSTANCE.createModuleInterface();
+          ModuleInterface moduleInterface = _createModuleInterface;
+          targetMainmodule.setInterface(moduleInterface);
+        }
+      }
       int i = 0;
       List<Statement> _list_2 = IterableExtensions.<Statement>toList(originalStatements);
       List<Statement> originalStatementsList = _list_2;
@@ -172,6 +182,26 @@ public class Esterel2Simulation {
   private final HashMap<ArrayList<?>,Sequence> _createCache_createSequence = CollectionLiterals.newHashMap();
   
   private void _init_createSequence(final Sequence sequence, final Object object) {
+  }
+  
+  public ModuleInterface createModuleInterface(final Object object) {
+    final ArrayList<?>_cacheKey = CollectionLiterals.newArrayList(object);
+    final ModuleInterface _result;
+    synchronized (_createCache_createModuleInterface) {
+      if (_createCache_createModuleInterface.containsKey(_cacheKey)) {
+        return _createCache_createModuleInterface.get(_cacheKey);
+      }
+      ModuleInterface _createModuleInterface = EsterelFactory.eINSTANCE.createModuleInterface();
+      _result = _createModuleInterface;
+      _createCache_createModuleInterface.put(_cacheKey, _result);
+    }
+    _init_createModuleInterface(_result, object);
+    return _result;
+  }
+  
+  private final HashMap<ArrayList<?>,ModuleInterface> _createCache_createModuleInterface = CollectionLiterals.newHashMap();
+  
+  private void _init_createModuleInterface(final ModuleInterface sequence, final Object object) {
   }
   
   public void transformStatementSimple(final Statement statement, final Module mainmodule, final String UID) {
