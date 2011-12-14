@@ -236,6 +236,10 @@
          id="org.eclipse.xtext.xbase"
          version="0.0.0"/>
 
+   <includes
+         id="org.eclipse.xtext.xtend2.sdk"
+         version="0.0.0"/>
+
    <plugin
          id="org.eclipse.ui.views.log"
          download-size="0"
