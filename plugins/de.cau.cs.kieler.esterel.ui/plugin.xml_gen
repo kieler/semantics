@@ -6,42 +6,42 @@
     <extension
             point="org.eclipse.ui.editors">
         <editor
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
             contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
             default="true"
             extensions="strl"
-            id="de.cau.cs.kieler.kies.Esterel"
+            id="de.cau.cs.kieler.esterel.Esterel"
             name="Esterel Editor">
         </editor>
     </extension>
     <extension
         point="org.eclipse.ui.handlers">
         <handler
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
             commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
         <handler
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-            commandId="de.cau.cs.kieler.kies.Esterel.validate">
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+            commandId="de.cau.cs.kieler.esterel.Esterel.validate">
          <activeWhen>
             <reference
-                    definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
             </reference>
          </activeWhen>
       </handler>
     </extension>
     <extension point="org.eclipse.core.expressions.definitions">
-        <definition id="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+        <definition id="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
             <and>
                 <reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
                 <with variable="activeEditor">
                     <test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName" 
-                        value="de.cau.cs.kieler.kies.Esterel" 
+                        value="de.cau.cs.kieler.esterel.Esterel" 
                         forcePluginActivation="true"/>
                 </with>        
             </and>
@@ -50,33 +50,33 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.kies.Esterel"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.esterel.Esterel"
             name="Esterel">
-            <keywordReference id="de.cau.cs.kieler.kies.ui.keyword_Esterel"/>
+            <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
         <page
-            category="de.cau.cs.kieler.kies.Esterel"
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-            id="de.cau.cs.kieler.kies.Esterel.coloring"
+            category="de.cau.cs.kieler.esterel.Esterel"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+            id="de.cau.cs.kieler.esterel.Esterel.coloring"
             name="Syntax Coloring">
-            <keywordReference id="de.cau.cs.kieler.kies.ui.keyword_Esterel"/>
+            <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
         <page
-            category="de.cau.cs.kieler.kies.Esterel"
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-            id="de.cau.cs.kieler.kies.Esterel.templates"
+            category="de.cau.cs.kieler.esterel.Esterel"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+            id="de.cau.cs.kieler.esterel.Esterel.templates"
             name="Templates">
-            <keywordReference id="de.cau.cs.kieler.kies.ui.keyword_Esterel"/>
+            <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
         </page>
     </extension>
     <extension
             point="org.eclipse.ui.propertyPages">
         <page
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.kies.Esterel"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+            id="de.cau.cs.kieler.esterel.Esterel"
             name="Esterel">
-            <keywordReference id="de.cau.cs.kieler.kies.ui.keyword_Esterel"/>
+            <keywordReference id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"/>
             <enabledWhen>
 	            <adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -86,14 +86,14 @@
     <extension
         point="org.eclipse.ui.keywords">
         <keyword
-            id="de.cau.cs.kieler.kies.ui.keyword_Esterel"
+            id="de.cau.cs.kieler.esterel.ui.keyword_Esterel"
             label="Esterel"/>
     </extension>
     <extension
          point="org.eclipse.ui.commands">
       <command
             description="Trigger expensive validation"
-            id="de.cau.cs.kieler.kies.Esterel.validate"
+            id="de.cau.cs.kieler.esterel.Esterel.validate"
             name="Validate">
       </command>
     </extension>
@@ -101,12 +101,12 @@
         <menuContribution
             locationURI="popup:#TextEditorContext?after=group.edit">
              <command
-                 commandId="de.cau.cs.kieler.kies.Esterel.validate"
+                 commandId="de.cau.cs.kieler.esterel.Esterel.validate"
                  style="push"
                  tooltip="Trigger expensive validation">
             <visibleWhen checkEnabled="false">
                 <reference
-                    definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
                 </reference>
             </visibleWhen>
          </command>  
@@ -116,7 +116,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-                	<reference definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+                	<reference definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
                 	</reference>
             	</visibleWhen>
 			</command>
@@ -124,11 +124,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 	    <handler
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
             commandId="org.eclipse.xtext.ui.editor.FindReferences">
             <activeWhen>
                 <reference
-                    definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+                    definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
                 </reference>
             </activeWhen>
         </handler>
@@ -139,13 +139,13 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="strl">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
         <resourceServiceProvider
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
             uriExtension="strl">
         </resourceServiceProvider>
     </extension>
@@ -156,11 +156,11 @@
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler 
-			class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+			class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened">
+					definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -180,7 +180,7 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="de.cau.cs.kieler.kies.Esterel.Editor.opened"/>
+					<reference definitionId="de.cau.cs.kieler.esterel.Esterel.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -189,7 +189,7 @@
    <extension
          point="org.eclipse.ui.ide.markerResolution">
       <markerResolutionGenerator
-            class="de.cau.cs.kieler.kies.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
+            class="de.cau.cs.kieler.esterel.ui.EsterelExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator">
       </markerResolutionGenerator>
    </extension>
 

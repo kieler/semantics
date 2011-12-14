@@ -1,5 +1,5 @@
 
-package de.cau.cs.kieler.kies.ui.quickfix;
+package de.cau.cs.kieler.esterel.ui.quickfix;
 
 import org.eclipse.xtext.ui.editor.quickfix.DefaultQuickfixProvider;
 
