@@ -40,7 +40,7 @@ import org.junit.Test;
 import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
 
 /**
  * JUnit test for the esterel grammar. Test all available files in the test/ folder. Mark tests that

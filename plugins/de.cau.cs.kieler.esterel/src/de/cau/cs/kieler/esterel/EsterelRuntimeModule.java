@@ -5,12 +5,12 @@ package de.cau.cs.kieler.esterel;
 
 import org.eclipse.xtext.conversion.IValueConverterService;
 
-import de.cau.cs.kieler.kies.formatting.EsterelValueConverter;
+import de.cau.cs.kieler.esterel.formatting.EsterelValueConverter;
 
 /**
  * Use this class to register components to be used within the IDE.
  */
-public class EsterelRuntimeModule extends de.cau.cs.kieler.kies.AbstractEsterelRuntimeModule {
+public class EsterelRuntimeModule extends de.cau.cs.kieler.esterel.AbstractEsterelRuntimeModule {
 
     /**
      * {@inheritDoc}

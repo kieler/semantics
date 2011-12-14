@@ -6,7 +6,7 @@ package de.cau.cs.kieler.esterel.formatting;
 import org.eclipse.xtext.formatting.impl.AbstractDeclarativeFormatter;
 import org.eclipse.xtext.formatting.impl.FormattingConfig;
 
-import de.cau.cs.kieler.kies.services.EsterelGrammarAccess;
+import de.cau.cs.kieler.esterel.services.EsterelGrammarAccess;
 
 /**
  * This class contains custom formatting description.

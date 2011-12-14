@@ -13,7 +13,7 @@
  */
 package de.cau.cs.kieler.esterel.scoping;
 
-import static de.cau.cs.kieler.kies.scoping.EsterelScopeProviderUtil.*;
+import static de.cau.cs.kieler.esterel.scoping.EsterelScopeProviderUtil.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,21 +26,21 @@ import org.eclipse.xtext.scoping.impl.AbstractDeclarativeScopeProvider;
 import org.eclipse.xtext.scoping.impl.SimpleScope;
 
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
-import de.cau.cs.kieler.kies.esterel.ConstantExpression;
-import de.cau.cs.kieler.kies.esterel.ConstantRenaming;
-import de.cau.cs.kieler.kies.esterel.Emit;
-import de.cau.cs.kieler.kies.esterel.Exit;
-import de.cau.cs.kieler.kies.esterel.FunctionExpression;
-import de.cau.cs.kieler.kies.esterel.FunctionRenaming;
-import de.cau.cs.kieler.kies.esterel.ModuleRenaming;
-import de.cau.cs.kieler.kies.esterel.ProcedureRenaming;
-import de.cau.cs.kieler.kies.esterel.RelationImplication;
-import de.cau.cs.kieler.kies.esterel.RelationIncompatibility;
-import de.cau.cs.kieler.kies.esterel.SignalRenaming;
-import de.cau.cs.kieler.kies.esterel.Sustain;
-import de.cau.cs.kieler.kies.esterel.TaskRenaming;
-import de.cau.cs.kieler.kies.esterel.TrapReferenceExpr;
-import de.cau.cs.kieler.kies.esterel.TypeRenaming;
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
+import de.cau.cs.kieler.esterel.esterel.ConstantRenaming;
+import de.cau.cs.kieler.esterel.esterel.Emit;
+import de.cau.cs.kieler.esterel.esterel.Exit;
+import de.cau.cs.kieler.esterel.esterel.FunctionExpression;
+import de.cau.cs.kieler.esterel.esterel.FunctionRenaming;
+import de.cau.cs.kieler.esterel.esterel.ModuleRenaming;
+import de.cau.cs.kieler.esterel.esterel.ProcedureRenaming;
+import de.cau.cs.kieler.esterel.esterel.RelationImplication;
+import de.cau.cs.kieler.esterel.esterel.RelationIncompatibility;
+import de.cau.cs.kieler.esterel.esterel.SignalRenaming;
+import de.cau.cs.kieler.esterel.esterel.Sustain;
+import de.cau.cs.kieler.esterel.esterel.TaskRenaming;
+import de.cau.cs.kieler.esterel.esterel.TrapReferenceExpr;
+import de.cau.cs.kieler.esterel.esterel.TypeRenaming;
 
 /**
  * This class contains custom scoping description.
