@@ -4,16 +4,16 @@
    <extension
          point="de.cau.cs.kieler.kex">
       <category
-            id="de.cau.cs.kieler.kies"
+            id="de.cau.cs.kieler.esterel"
             title="Esterel">
       </category>
       <example
             author="KIELER Workgroup"
-            category="de.cau.cs.kieler.kies"
+            category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
             description="ABRO The hello world of synchronous languages"
-            generation_date="de.cau.cs.kieler.kies.example.example2"
-            id="de.cau.cs.kieler.kies.abro"
+            generation_date="de.cau.cs.kieler.esterel.example.example2"
+            id="de.cau.cs.kieler.esterel.abro"
             root_directory="examples/"
             title="ABRO">
          <resource
@@ -24,11 +24,11 @@
       </example>
       <example
             author="(KIELER Workgroup)"
-            category="de.cau.cs.kieler.kies"
+            category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
             description="The wristwatch example"
-            generation_date="de.cau.cs.kieler.kies.example.example4"
-            id="de.cau.cs.kieler.kies.ww"
+            generation_date="de.cau.cs.kieler.esterel.example.example4"
+            id="de.cau.cs.kieler.esterel.ww"
             root_directory="examples/"
             title="Wristwatch">
          <resource
@@ -39,11 +39,11 @@
       </example>
       <example
             author="(KIELER Workgroup)"
-            category="de.cau.cs.kieler.kies"
+            category="de.cau.cs.kieler.esterel"
             contact="kieler@informatik.uni-kiel.de"
             description="The wristwatch example in expanded form."
-            generation_date="de.cau.cs.kieler.kies.example.example3"
-            id="de.cau.cs.kieler.kies.ww_expanded"
+            generation_date="de.cau.cs.kieler.esterel.example.example3"
+            id="de.cau.cs.kieler.esterel.ww_expanded"
             root_directory="examples/"
             title="Wristwatch Expanded">
          <resource
