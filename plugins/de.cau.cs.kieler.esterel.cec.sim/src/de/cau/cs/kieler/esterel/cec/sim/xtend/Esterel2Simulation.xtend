@@ -9,8 +9,8 @@ import com.google.inject.Inject
 import org.eclipse.emf.ecore.EObject
 
 import de.cau.cs.kieler.core.kexpressions.*
-import de.cau.cs.kieler.kies.esterel.*
-import de.cau.cs.kieler.kies.esterel.impl.*
+import de.cau.cs.kieler.esterel.esterel.*
+import de.cau.cs.kieler.esterel.esterel.impl.*
 
 import org.eclipse.xtext.xtend2.lib.StringConcatenation
 import org.eclipse.xtend.util.stdlib.CloningExtensions

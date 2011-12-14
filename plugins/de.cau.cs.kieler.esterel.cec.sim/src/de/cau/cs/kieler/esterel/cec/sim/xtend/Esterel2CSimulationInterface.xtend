@@ -1,8 +1,8 @@
 package de.cau.cs.kieler.esterel.cec.sim.xtend
 
 import de.cau.cs.kieler.synccharts.*
-import de.cau.cs.kieler.kies.esterel.EsterelFactory
-import de.cau.cs.kieler.kies.esterel.Module
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.esterel.Module
 import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject

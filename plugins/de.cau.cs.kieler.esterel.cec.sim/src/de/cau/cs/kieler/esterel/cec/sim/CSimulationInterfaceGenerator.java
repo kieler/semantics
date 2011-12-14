@@ -29,7 +29,7 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
-import de.cau.cs.kieler.kies.esterel.Program;
+import de.cau.cs.kieler.esterel.esterel.Program;
 
 /**
  * @author cmot
