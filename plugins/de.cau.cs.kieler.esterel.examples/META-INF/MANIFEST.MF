@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Esterel Examples
-Bundle-SymbolicName: de.cau.cs.kieler.esterel.example;singleton:=true
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.examples;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.kies.example.EsterelExamplesPlugin
 Require-Bundle: org.eclipse.ui,
