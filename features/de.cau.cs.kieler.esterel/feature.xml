@@ -3,7 +3,7 @@
       id="de.cau.cs.kieler.esterel"
       label="KIELER Esterel"
       version="0.1.0.qualifier"
-      provider-name="Christian-Albrechts-University of Kiel">
+      provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER Esterel feature contains an Xtext based full featured textual Esterel editor including syntaxt highlighting and code completion and a bundled version of the Columbia Esterel Compiler (CEC) for simulation. During simulation there is also debug mode available that is able to highlight active Esterel statements.
