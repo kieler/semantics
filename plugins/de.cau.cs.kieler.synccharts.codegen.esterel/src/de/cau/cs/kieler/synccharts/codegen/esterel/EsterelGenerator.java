@@ -94,10 +94,10 @@ public class EsterelGenerator implements IHandler {
 			// Calculate output path
 			output = URI.createURI(input.toString());
 			output = output.trimFragment();
-			output = output.trimFileExtension().appendFileExtension("s");
+			output = output.trimFileExtension().appendFileExtension("strl");
 
 			try {
-				// Write out S program
+				// Write out Esterel program
 				Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 				Map<String, Object> m = reg.getExtensionToFactoryMap();
 				m.put("daform", new XMIResourceFactoryImpl());
