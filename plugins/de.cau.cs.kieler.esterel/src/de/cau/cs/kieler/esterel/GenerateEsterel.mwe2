@@ -1,12 +1,12 @@
-module de.cau.cs.kieler.kies.Esterel
+module de.cau.cs.kieler.esterel.Esterel
 
 import org.eclipse.emf.mwe.utils.*
 import org.eclipse.xtext.generator.*
 import org.eclipse.xtext.ui.generator.*
 
-var grammarURI = "classpath:/de/cau/cs/kieler/kies/Esterel.xtext"
+var grammarURI = "classpath:/de/cau/cs/kieler/esterel/Esterel.xtext"
 var file.extensions = "strl"
-var projectName = "de.cau.cs.kieler.kies"
+var projectName = "de.cau.cs.kieler.esterel"
 var runtimeProject = "../${projectName}"
 
 Workflow {

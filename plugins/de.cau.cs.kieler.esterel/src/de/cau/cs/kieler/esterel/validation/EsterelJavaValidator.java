@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kies.validation;
+package de.cau.cs.kieler.esterel.validation;
  
 
 public class EsterelJavaValidator extends AbstractEsterelJavaValidator {

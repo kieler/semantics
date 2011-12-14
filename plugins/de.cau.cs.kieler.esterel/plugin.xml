@@ -5,9 +5,9 @@
 
   <extension point="org.eclipse.emf.ecore.generated_package">
     <package 
-       uri = "http://www.cau.de/cs/kieler/kies/Esterel" 
-       class = "de.cau.cs.kieler.kies.esterel.EsterelPackage"
-       genModel = "de/cau/cs/kieler/kies/Esterel.genmodel" /> 
+       uri = "http://www.cau.de/cs/kieler/esterel/Esterel" 
+       class = "de.cau.cs.kieler.esterel.esterel.EsterelPackage"
+       genModel = "de/cau/cs/kieler/esterel/Esterel.genmodel" /> 
 	
   </extension>
   <!--extension

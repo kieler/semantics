@@ -16,5 +16,5 @@
 /**
  * Contains code responsible for scoping within esterel grammar.
  */
-package de.cau.cs.kieler.kies.scoping;
+package de.cau.cs.kieler.esterel.scoping;
 

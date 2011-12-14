@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kies.serializer;
+package de.cau.cs.kieler.esterel.serializer;
 
 public class EsterelSyntacticSequencer extends AbstractEsterelSyntacticSequencer {
 }

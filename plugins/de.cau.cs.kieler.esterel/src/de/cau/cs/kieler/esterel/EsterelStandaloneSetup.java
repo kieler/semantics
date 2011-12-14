@@ -1,5 +1,5 @@
 
-package de.cau.cs.kieler.kies;
+package de.cau.cs.kieler.esterel;
 
 /**
  * Initialization support for running Xtext languages 
