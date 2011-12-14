@@ -14,7 +14,7 @@
       <executionFile
             file="execution/esterel_cec.execution">
          <editor
-               id="de.cau.cs.kieler.kies.Esterel"
+               id="de.cau.cs.kieler.esterel.Esterel"
                name="KIELER Esterel Editor"
                priority="8">
          </editor>
