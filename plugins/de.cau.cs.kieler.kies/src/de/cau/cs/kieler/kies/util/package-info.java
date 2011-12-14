@@ -16,5 +16,5 @@
 /**
  * Contains code responsible for executing a esterel to synccharts transformation.
  */
-package de.cau.cs.kieler.kies.transformation.util;
+package de.cau.cs.kieler.kies.util;
 

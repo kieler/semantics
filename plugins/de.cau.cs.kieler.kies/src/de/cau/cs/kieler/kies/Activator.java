@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kies.transformation;
+package de.cau.cs.kieler.kies;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;

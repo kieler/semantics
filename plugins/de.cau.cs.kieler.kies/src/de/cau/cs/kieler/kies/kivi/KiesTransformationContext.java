@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.kivi;
+package de.cau.cs.kieler.kies.kivi;
 
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
@@ -22,7 +22,7 @@ import org.eclipse.xtend.XtendFacade;
 
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
-import de.cau.cs.kieler.kies.transformation.Activator;
+import de.cau.cs.kieler.kies.Activator;
 
 /**
  * A wrapper for the {@link XtendTransformationContext} in order to provide additional information

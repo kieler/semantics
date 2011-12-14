@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.test;
+package de.cau.cs.kieler.kies.test;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -40,8 +40,8 @@ import org.junit.Test;
 
 import com.google.common.collect.Maps;
 
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
+import de.cau.cs.kieler.kies.util.TransformationUtil;
+import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;
 
 /**
  * This JUnit tests serves as a kind of regression test for Esterel to SyncChart transformations. It

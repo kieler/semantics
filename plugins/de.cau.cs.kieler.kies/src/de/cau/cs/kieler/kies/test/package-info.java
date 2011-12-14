@@ -16,5 +16,5 @@
 /**
  * Contains code responsible for testing esterel to synccharts transformation.
  */
-package de.cau.cs.kieler.kies.transformation.test;
+package de.cau.cs.kieler.kies.test;
 

@@ -26,11 +26,11 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.kiml.ui,
  de.cau.cs.kieler.synccharts,
- de.cau.cs.kieler.kies,
  de.cau.cs.kieler.core.kivi,
  de.cau.cs.kieler.synccharts.diagram,
  de.cau.cs.kieler.synccharts.ksbase,
  de.cau.cs.kieler.core.model.xtend,
- de.cau.cs.kieler.core.model.gmf
+ de.cau.cs.kieler.core.model.gmf,
+ de.cau.cs.kieler.esterel;bundle-version="0.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy

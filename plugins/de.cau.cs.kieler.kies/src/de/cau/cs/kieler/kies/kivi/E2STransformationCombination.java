@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.kivi;
+package de.cau.cs.kieler.kies.kivi;
 
 import java.util.List;
 import java.util.Map;
@@ -49,11 +49,11 @@ import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
+import de.cau.cs.kieler.kies.Activator;
+import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent;
+import de.cau.cs.kieler.kies.util.TransformationUtil;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;

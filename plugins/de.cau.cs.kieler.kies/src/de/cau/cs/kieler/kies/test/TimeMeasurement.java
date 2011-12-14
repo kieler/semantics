@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.test;
+package de.cau.cs.kieler.kies.test;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -48,11 +48,11 @@ import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
+import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
+import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent;
+import de.cau.cs.kieler.kies.util.TransformationUtil;
+import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.listener.SyncchartsContentUtil;

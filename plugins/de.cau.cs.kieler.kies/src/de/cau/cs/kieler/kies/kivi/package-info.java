@@ -16,5 +16,5 @@
 /**
  * Contains classes for executing an Esterel to SyncCharts transformation (by using KiVi).
  */
-package de.cau.cs.kieler.kies.transformation.kivi;
+package de.cau.cs.kieler.kies.kivi;
 

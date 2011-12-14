@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.action;
+package de.cau.cs.kieler.kies.action;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -29,9 +29,9 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
-import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil.TransformationType;
+import de.cau.cs.kieler.kies.Activator;
+import de.cau.cs.kieler.kies.util.TransformationUtil;
+import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 
 /**

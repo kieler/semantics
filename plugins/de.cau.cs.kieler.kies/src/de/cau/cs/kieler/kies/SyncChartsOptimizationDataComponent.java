@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation;
+package de.cau.cs.kieler.kies;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -31,7 +31,7 @@ import com.google.common.collect.Lists;
 
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
-import de.cau.cs.kieler.kies.transformation.util.TransformationUtil;
+import de.cau.cs.kieler.kies.util.TransformationUtil;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;

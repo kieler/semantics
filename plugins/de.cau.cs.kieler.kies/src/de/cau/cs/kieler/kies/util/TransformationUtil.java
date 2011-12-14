@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.kies.transformation.util;
+package de.cau.cs.kieler.kies.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -83,13 +83,13 @@ import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.kies.EsterelStandaloneSetup;
-import de.cau.cs.kieler.kies.esterel.ConstantExpression;
-import de.cau.cs.kieler.kies.esterel.EsterelPackage;
-import de.cau.cs.kieler.kies.transformation.AbstractTransformationDataComponent;
-import de.cau.cs.kieler.kies.transformation.Activator;
-import de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent;
-import de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent;
+import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
+import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
+import de.cau.cs.kieler.esterel.esterel.EsterelPackage;
+import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
+import de.cau.cs.kieler.kies.Activator;
+import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;
+import de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.synccharts.Action;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
