@@ -23,7 +23,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
-import de.cau.cs.kieler.kies.esterel.Program;
+import de.cau.cs.kieler.esterel.esterel.Program;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
