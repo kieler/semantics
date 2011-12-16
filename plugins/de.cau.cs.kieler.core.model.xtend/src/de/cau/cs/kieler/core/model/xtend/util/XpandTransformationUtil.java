@@ -38,7 +38,7 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.model.m2m.TransformException;
-import de.cau.cs.kieler.core.model.ui.M2MProgressMonitor;
+import de.cau.cs.kieler.core.model.xtend.m2m.M2MProgressMonitor;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
