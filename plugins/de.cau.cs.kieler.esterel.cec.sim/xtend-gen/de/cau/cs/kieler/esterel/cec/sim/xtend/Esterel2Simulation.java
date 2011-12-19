@@ -440,7 +440,11 @@ public class Esterel2Simulation {
       }
       if (_operator_or) {
         {
-          abortISignal.setName("AP");
+          int _hashCode = statement.hashCode();
+          String _string = ((Integer)_hashCode).toString();
+          String _replace = _string.replace("-", "M");
+          String _operator_plus = StringExtensions.operator_plus("AP", _replace);
+          abortISignal.setName(_operator_plus);
           abortISignal.setIsInput(false);
           abortISignal.setIsOutput(false);
           abortISignal.setType(ValueType.PURE);

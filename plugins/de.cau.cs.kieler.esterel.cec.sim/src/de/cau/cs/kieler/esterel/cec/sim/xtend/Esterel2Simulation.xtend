@@ -179,8 +179,8 @@ class Esterel2Simulation {
 //		   ||(statement instanceof LocalVariable)
 //		   ||(statement instanceof Exec)
 		)) {
-			    // Setup the abortSignal
-				abortISignal.setName("AP");
+			    // Setup the abortSignal using an unique name
+				abortISignal.setName("AP" + statement.hashCode.toString().replace("-","M"));
 				abortISignal.setIsInput(false);
 				abortISignal.setIsOutput(false);
 				abortISignal.setType(ValueType::PURE);
