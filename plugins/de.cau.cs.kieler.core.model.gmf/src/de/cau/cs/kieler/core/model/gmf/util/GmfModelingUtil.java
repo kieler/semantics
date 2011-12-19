@@ -439,13 +439,15 @@ public final class GmfModelingUtil {
      * 
      * @param editorPart a workbench part
      * @param node a node object
-     * @return the label edit part, or {@code null} if none is found
+     * @return the first label edit part, or {@code null} if none is found
      */
     public static EditPart getLabel(final IWorkbenchPart editorPart, final EObject node) {
         EditPart nodeEditPart = new GmfFrameworkBridge().getEditPart(editorPart, node);
-        for (Object child : nodeEditPart.getChildren()) {
-            if (child instanceof LabelEditPart) {
-                return (LabelEditPart) child;
+        if (nodeEditPart != null) {
+            for (Object child : nodeEditPart.getChildren()) {
+                if (child instanceof LabelEditPart) {
+                    return (LabelEditPart) child;
+                }
             }
         }
         return null;
