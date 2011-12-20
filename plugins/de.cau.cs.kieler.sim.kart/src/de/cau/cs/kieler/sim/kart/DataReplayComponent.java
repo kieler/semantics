@@ -27,14 +27,13 @@ import de.cau.cs.kieler.sim.esi.ITick;
 import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -53,11 +52,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /** The single trace out of a ESI/ESO file that shall be replayed */
     private ITrace trace = null;
     
-    /** Contains all input signals to the simulation recorded by this component */
-    private List<HashMap<String, Object>> recInputs;
-
     /** Are we in training mode, i. e. recording, or not */
     private boolean trainingMode;
+    
+    /** The validation component input signals will be sent to when in training mode */
+    private DataValidationComponent valComponent = null;
 
     /**
      * Initialize the data component. Reads the whole ESI/ESO file and saves it internally for
@@ -68,7 +67,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public void initialize() throws KiemInitializationException {
-        recInputs = new LinkedList<HashMap<String, Object>>();
         KiemProperty[] properties = this.getProperties();
 
         // Check whether an ESI/ESO file was provided
@@ -120,23 +118,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *             never thrown
      */
     @Override
-    public synchronized void wrapup() throws KiemInitializationException {
-        // push inputs to validation component
-        List<AbstractDataComponent> comps = KiemPlugin.getDefault().getRegisteredDataComponentList();
-        DataValidationComponent inputSource = null;
-        for(AbstractDataComponent comp : comps) {
-            if(comp.getDataComponentId().equals("de.cau.cs.kieler.sim.kart.DataValidationComponent")) {
-                System.out.println("Found Validation component");
-                inputSource = (DataValidationComponent) comp;
-            }
-        }
+    public void wrapup() throws KiemInitializationException {
         
-        if(inputSource != null) {
-            System.out.println("Transferring input signals...");
-            inputSource.putInputs(recInputs);
-        } else {
-            System.out.println("Not sending input signals, as recInputs is null");
-        }
     }
 
     /**
@@ -165,7 +148,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *          when the JSON object with signals from ESI/ESO file could not be built.
      */
     @Override
-    public JSONObject step(JSONObject obj) throws KiemExecutionException {
+    public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = null;
         
         if(trainingMode) {
@@ -182,10 +165,19 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @param obj
      */
     private void addInputs(JSONObject obj) {
-        HashMap<String, Object> signals = new HashMap<String, Object>();
+        if(valComponent == null) {
+            List<AbstractDataComponent> comps = KiemPlugin.getDefault().getRegisteredDataComponentList();
+            valComponent = null;
+            for(AbstractDataComponent comp : comps) {
+                if(comp.getDataComponentId().equals("de.cau.cs.kieler.sim.kart.DataValidationComponent")) {
+                    valComponent = (DataValidationComponent) comp;
+                }
+            }
+        }
+        
+        final HashMap<String, Object> signals = new HashMap<String, Object>();
         
         if(obj != null) {
-            System.out.println("JSON object is not null");
             @SuppressWarnings("unchecked") // necessary because the JSON library does not return a parameterized Iterator
             Iterator<String> keys = obj.keys();
     
@@ -202,9 +194,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 }
             }
         }
-            
-        System.out.println("Adding signals to list");
-        recInputs.add(signals);
+        valComponent.putInputs(signals);
     }
 
     public JSONObject genInputs() throws KiemExecutionException {
@@ -240,12 +230,12 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * 
      */
     @Override
-    public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[4];
-        properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[1] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
-        properties[2] = new KiemProperty("Trace to replay", new KiemPropertyTypeInt(), 0);
-        properties[3] = new KiemProperty("Training mode", false);
+    public KiemProperty[] doProvideProperties() {
+        KiemProperty[] properties = new KiemProperty[3];
+        //properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
+        properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
+        properties[1] = new KiemProperty("Trace to replay", new KiemPropertyTypeInt(), 0);
+        properties[2] = new KiemProperty("Training mode", false);
 
         return properties;
     }

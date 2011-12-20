@@ -36,8 +36,6 @@ import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
@@ -106,6 +104,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         
         recOutputs = new LinkedList<HashMap<String, Object>>();
         recSpecialSignals = new LinkedList<HashMap<String, Object>>();
+        recInputs = new LinkedList<HashMap<String, Object>>();
 
         editor = (DiagramEditor) getActivePage().getActiveEditor();
 
@@ -121,10 +120,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         int tracenum = 0;
         specialSignals = new HashSet<String>();
         for (KiemProperty prop : properties) {
-            System.out.println(prop.getKey());
             if (prop.getKey().equals("ESI/ESO trace file")) {
-                System.out.println("Got filename: " + prop.getValue());
-                System.out.println("And as filepath: " + prop.getFilePath());
                 filename = prop.getValue();
             } else if (prop.getKey().equals("Trace to replay")) {
                 tracenum = prop.getValueAsInt();
@@ -135,14 +131,10 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             } else if (prop.getKey().equals("Training mode")) {
                 trainingMode = prop.getValueAsBoolean();
             } else if (prop.getKey().equals("Extra information signals")) {
-                System.out.println("Generating set of special signals");
-                System.out.println("Value: " + prop.getValue());
                 specialSignals = makeSet(prop.getValue().split(","));
             }
         }
         
-        System.out.println("Special signals: " + specialSignals);
-
         // Read the file
 
         if(!trainingMode) {
@@ -195,23 +187,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public void wrapup() throws KiemInitializationException {
         if(trainingMode) {
-            /*String filename = "";
-            
-            KiemProperty[] properties = getProperties();
-            for(KiemProperty prop : properties) {
-                if(prop.getKey().equals("Output file")) {
-                    filename = prop.getFilePath();
-                }
-            }*/
-            
-            // Get input signals from ReplayComponent
-
-            
-            System.out.println("Going to write to file: " + filename);
-                        
-            if(recInputs == null) {
-                System.out.println("Validation component: inp is null");
-            }
             TraceWriter writer = new TraceWriter(recInputs, recOutputs, recSpecialSignals, filename);
             writer.doWrite();
 
@@ -255,7 +230,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * @return the list of properties this component offers
      */
     @Override
-    public KiemProperty[] provideProperties() {
+    public KiemProperty[] doProvideProperties() {
         KiemProperty[] properties = new KiemProperty[7];
         properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
         properties[1] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
@@ -278,7 +253,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      *             when the JSON object with signals from ESI/ESO file could not be built.
      */
     @Override
-    public JSONObject step(JSONObject obj) throws KiemExecutionException {
+    public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         if(trainingMode) {
             addSignalsToRecording(obj);
         } else {
@@ -318,7 +293,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         
         while(keys.hasNext()) {
             String key = keys.next();
-            System.out.println("Key: " + key + ", isSpecialSignal: " + isSpecialSignal(key));
             try {
                 if(!isSpecialSignal(key) && obj.getJSONObject(key).getBoolean("present")) {
                     Object val = obj.getJSONObject(key).opt("value");
@@ -470,17 +444,19 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     }
 
     /**
-     * Receive the inputs signals for each step from the replay component.
-     * These signals will be pushed here during the wrapup of that component.
+     * Receive the inputs signals for a step from the replay component.
+     * These signals will be pushed here during a step of that component.
+     * They are aggregated internally and used for writing an ESI/ESO file during wrapup,
+     * when in training mode.
      * 
-     * @param recInputs the recorded input signals
+     * @param signals the recorded input signals
      */
-    public void putInputs(List<HashMap<String, Object>> recInputs) {
+    public void putInputs(final HashMap<String, Object> signals) {
         if(recInputs == null) {
-            System.out.println("Got null from replay component!");
+            recInputs = new LinkedList<HashMap<String,Object>>();
         }
-        System.out.println("Receiving inputs from replay component");
-        this.recInputs = recInputs;
+        
+        this.recInputs.add(signals);
     }
     
     /**
