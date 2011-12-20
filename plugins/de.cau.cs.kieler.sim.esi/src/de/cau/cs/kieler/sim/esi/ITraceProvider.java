@@ -33,7 +33,7 @@ public interface ITraceProvider {
      * @throws KiemInitializationException
      *             thrown for any parse error
      */
-    List<? extends ITrace> loadTrace(String fileName) throws KiemInitializationException;
+    List<ITrace> loadTrace(String fileName) throws KiemInitializationException;
 
     /**
      * 

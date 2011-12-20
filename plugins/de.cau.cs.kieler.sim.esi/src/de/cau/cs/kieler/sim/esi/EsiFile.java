@@ -165,7 +165,7 @@ public class EsiFile implements ITraceProvider {
      * 
      * @throws KiemInitializationException
      */
-    public List<EsiTrace> loadTrace(final String fileName) throws KiemInitializationException {
+    public List<ITrace> loadTrace(final String fileName) throws KiemInitializationException {
         ISetup setup = new EsiStandaloneSetup();
         Injector injector = setup.createInjectorAndDoEMFRegistration();
         XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
@@ -201,7 +201,7 @@ public class EsiFile implements ITraceProvider {
             // throw new KiemInitializationException("Unknown error", false, e);
         }
 
-        LinkedList<EsiTrace> res = new LinkedList<EsiTrace>();
+        LinkedList<ITrace> res = new LinkedList<ITrace>();
         for (trace trace : traceList.getTraces()) {
             res.add(new EsiTrace(trace));
         }
