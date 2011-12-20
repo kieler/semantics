@@ -15,7 +15,7 @@
 package de.cau.cs.kieler.sim.table;
 
 import de.cau.cs.kieler.sim.kiem.IJSONStringDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.JSONStringDataComponent;
 import de.cau.cs.kieler.sim.table.views.DataTableView;
 import de.cau.cs.kieler.sim.table.views.TableData;
