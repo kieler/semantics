@@ -8,7 +8,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.json,
  de.cau.cs.kieler.sim.kiem,
- de.cau.cs.kieler.sim.signals;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.signals
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

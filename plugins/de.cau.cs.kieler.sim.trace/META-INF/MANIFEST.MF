@@ -14,8 +14,8 @@ Require-Bundle: org.eclipse.core.runtime,
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.kiem.automated,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
- de.cau.cs.kieler.sim.esi;bundle-version="0.2.0",
- de.cau.cs.kieler.sim.signals;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.esi,
+ de.cau.cs.kieler.sim.signals
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.sim.trace

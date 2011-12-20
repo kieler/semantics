@@ -6,7 +6,7 @@ Bundle-Version: 0.1.1.qualifier
 Bundle-Activator: de.cau.cs.kieler.esterel.cec.CECPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
- de.cau.cs.kieler.core;bundle-version="0.2.0"
+ de.cau.cs.kieler.core
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.esterel.cec
