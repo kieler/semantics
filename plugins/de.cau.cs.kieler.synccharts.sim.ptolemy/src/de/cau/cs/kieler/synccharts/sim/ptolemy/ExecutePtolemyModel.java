@@ -49,7 +49,7 @@ import ptolemy.kernel.util.StringAttribute;
 import ptolemy.moml.MoMLParser; //org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
 //import org.ptolemy.MoMLParser; //import ptolemy.actor.kiel.*;
 import ptolemy.data.expr.Parameter;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 //import de.cau.cs.kieler.sim.ptolemy.DynamicClasspath;
 

@@ -19,7 +19,8 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.kexpressions,
  de.cau.cs.kieler.core.annotations,
  de.cau.cs.kieler.core.model,
- de.cau.cs.kieler.sim.kiem.ui.datacomponent
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ de.cau.cs.kieler.sim.signals
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: de.cau.cs.kieler.synccharts,

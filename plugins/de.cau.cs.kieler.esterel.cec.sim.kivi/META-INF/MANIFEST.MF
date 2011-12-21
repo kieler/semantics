@@ -7,13 +7,13 @@ Bundle-Activator: de.cau.cs.kieler.esterel.cec.sim.kivi.EsterelCECSimKiviPlugin
 Bundle-Vendor: Christian-Albrechs-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem;bundle-version="0.5.0",
- de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.2.0",
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent,
  org.eclipse.xtext.ui;bundle-version="2.1.1",
- de.cau.cs.kieler.esterel.cec.sim;bundle-version="0.1.1",
- de.cau.cs.kieler.core.kivi;bundle-version="0.2.0",
+ de.cau.cs.kieler.esterel.cec.sim,
+ de.cau.cs.kieler.core.kivi,
  org.eclipse.ui.ide;bundle-version="3.7.0",
- de.cau.cs.kieler.esterel;bundle-version="0.2.0",
- de.cau.cs.kieler.esterel.ui;bundle-version="0.2.0"
+ de.cau.cs.kieler.esterel,
+ de.cau.cs.kieler.esterel.ui
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

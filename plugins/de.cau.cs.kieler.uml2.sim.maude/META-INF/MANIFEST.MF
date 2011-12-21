@@ -30,6 +30,7 @@ Require-Bundle: org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
  de.cau.cs.kieler.core.model,
  de.cau.cs.kieler.sim.kiem.config,
  de.cau.cs.kieler.sim.kiem.ui.datacomponent,
- de.cau.cs.kieler.maude
+ de.cau.cs.kieler.maude,
+ de.cau.cs.kieler.sim.signals
 Bundle-ActivationPolicy: lazy
 

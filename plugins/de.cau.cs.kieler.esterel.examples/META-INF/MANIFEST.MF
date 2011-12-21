@@ -7,7 +7,7 @@ Bundle-Activator: de.cau.cs.kieler.kies.example.EsterelExamplesPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.kex,
- de.cau.cs.kieler.esterel.ui;bundle-version="0.2.0"
+ de.cau.cs.kieler.esterel.ui
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

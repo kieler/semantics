@@ -41,7 +41,7 @@ import de.cau.cs.kieler.sim.esi.ISignal;
 import de.cau.cs.kieler.sim.esi.ITick;
 import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
-import de.cau.cs.kieler.sim.kiem.JSONSignalValues;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;

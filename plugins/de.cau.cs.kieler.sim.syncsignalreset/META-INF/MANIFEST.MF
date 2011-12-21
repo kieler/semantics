@@ -7,7 +7,8 @@ Bundle-Activator: de.cau.cs.kieler.sim.syncsignalreset.SyncSignalResetPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.core.runtime,
  org.json,
- de.cau.cs.kieler.sim.kiem
+ de.cau.cs.kieler.sim.kiem,
+ de.cau.cs.kieler.sim.signals
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: de.cau.cs.kieler.sim.kiem
