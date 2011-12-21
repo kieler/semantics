@@ -192,7 +192,7 @@ public class EsiFile implements ITraceProvider {
             IParseResult parseResult = parser.parse(new InputStreamReader(in));
             if (parseResult.getSyntaxErrors().iterator().hasNext()) {
                 throw new KiemInitializationException("Parse error: "
-                        + parseResult.getSyntaxErrors().iterator().next().toString(), true, null);
+                        + parseResult.getSyntaxErrors().iterator().next().getText(), true, null);
             }
             traceList = (tracelist) parseResult.getRootASTElement();
         } catch (FileNotFoundException e) {
