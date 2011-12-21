@@ -74,15 +74,8 @@ public class TraceWriter {
         try {
             PrintWriter outWriter = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)));
             
-            if(inputs == null) {
-                System.out.println("Inputs is null");
-            }
-            if(outputs == null) {
-                System.out.println("Outputs is null");
-            }
-            
             if(inputs.size() != outputs.size()) {
-                throw new KiemInitializationException("The number of steps for input and output signals and state information does not match", true, null);
+                throw new KiemInitializationException("The number of steps for input (" + inputs.size() + ") and output (" + outputs.size() + ") signals and state information does not match", true, null);
             }
             
             outWriter.println("! reset;");
@@ -92,6 +85,8 @@ public class TraceWriter {
                 outWriter.println(getSpecialString(specialSignals.get(i)));
                 outWriter.println(";");
             }
+            
+            outWriter.close();
         } catch (IOException e) {
             throw new KiemInitializationException("An error occurred when writing ESO trace file", true, e);
         }

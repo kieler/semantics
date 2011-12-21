@@ -32,6 +32,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -166,11 +167,12 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private void addInputs(JSONObject obj) {
         if(valComponent == null) {
-            List<AbstractDataComponent> comps = KiemPlugin.getDefault().getRegisteredDataComponentList();
+            // TODO: Retrieve the actual instance of the active DataValidationComponent, not some fucked up new one.
+            List<DataComponentWrapper> comps = KiemPlugin.getDefault().getDataComponentWrapperList();
             valComponent = null;
-            for(AbstractDataComponent comp : comps) {
-                if(comp.getDataComponentId().equals("de.cau.cs.kieler.sim.kart.DataValidationComponent")) {
-                    valComponent = (DataValidationComponent) comp;
+            for(DataComponentWrapper comp : comps) {
+                if(comp.getDataComponent().getDataComponentId().equals("de.cau.cs.kieler.sim.kart.DataValidationComponent")) {
+                    valComponent = (DataValidationComponent) comp.getDataComponent();
                 }
             }
         }
