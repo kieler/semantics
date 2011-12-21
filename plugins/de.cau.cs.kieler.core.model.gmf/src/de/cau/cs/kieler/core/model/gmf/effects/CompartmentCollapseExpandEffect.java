@@ -16,14 +16,18 @@ package de.cau.cs.kieler.core.model.gmf.effects;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.gef.EditPart;
 import org.eclipse.gef.commands.Command;
 import org.eclipse.gef.commands.CompoundCommand;
 import org.eclipse.gmf.runtime.diagram.core.commands.SetPropertyCommand;
 import org.eclipse.gmf.runtime.diagram.ui.commands.ICommandProxy;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IResizableCompartmentEditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.ShapeNodeEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.ResizableCompartmentFigure;
 import org.eclipse.gmf.runtime.diagram.ui.internal.properties.Properties;
 import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
@@ -36,6 +40,7 @@ import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
+import de.cau.cs.kieler.core.model.gmf.IAdvancedRenderingEditPart;
 
 /**
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
@@ -45,8 +50,8 @@ import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
  */
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
-    /** hierarchy level. 0 means only exactly the given EditPart.
-     *  TODO implement compartment levels
+    /**
+     * hierarchy level. 0 means only exactly the given EditPart. TODO implement compartment levels
      */
     private int compartmentLevel = 0;
     /** edit parts that can be collapsed or expanded. */
@@ -66,7 +71,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     /** whether the effect has been executed. */
     private boolean justExecuted;
     /** the graphical framework bridge. */
-    private IGraphicalFrameworkBridge bridge;              
+    private IGraphicalFrameworkBridge bridge;
     /** true if the collapsing should be persistent. */
     private boolean persistent = false;
 
@@ -96,7 +101,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
     }
 
-    
     /**
      * The compartment level gives the hierarchy to which to search for compartments to doCollapse.
      * 
@@ -110,7 +114,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      *            hierarchy level. 0 means only exactly the given EditPart. Not implemented.
      * @param collapse
      *            true if collapsing, false if expanding
-     * @param persistent            
+     * @param persistent
      *            true if the collapsing should be persistent
      */
     public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
@@ -125,8 +129,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         this.bridge = GraphicalFrameworkService.getInstance().getBridge(targetEditor);
         this.persistent = persistent;
     }
-    
-    
+
     /**
      * Extracted the initialization into extra method that is NOT called in the constructor, because
      * it accesses the EditParts (bridge.getEditPart), which runs in the UI thread. This could cause
@@ -193,7 +196,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     /**
      * Apply the collapse state transiently.
      * 
-     * @param collapse the new collapse state
+     * @param collapse
+     *            the new collapse state
      * @return true if the state was changed
      */
     private boolean applyCollapseState(final boolean collapse) {
@@ -206,22 +210,32 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                         .getFigure();
                 // only do something if necessary
                 if (f.isExpanded() == collapse) {
+                    ENotificationImpl n = null;
                     if (collapse) {
                         f.setCollapsed();
+                        n = new ENotificationImpl((InternalEObject) targetNode, Notification.SET,
+                                -1, Boolean.FALSE, Boolean.TRUE);
                     } else {
                         f.setExpanded();
+                        n = new ENotificationImpl((InternalEObject) targetNode, Notification.SET,
+                                -1, Boolean.TRUE, Boolean.FALSE);
                     }
                     changed = true;
+                    EditPart part = targetEditPart.getParent();
+                    if (n != null && part instanceof IAdvancedRenderingEditPart) {
+                        ((IAdvancedRenderingEditPart) part).handleNotificationEvent(n);
+                    }
                 }
             }
         }
         return changed;
     }
-    
+
     /**
      * Create a command to set the new collapse status.
      * 
-     * @param collapse the new collapse status
+     * @param collapse
+     *            the new collapse status
      * @return a command that can modify the status
      */
     private Command getCollapseCommand(final boolean collapse) {
@@ -235,7 +249,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         }
         return command;
     }
-    
 
     /**
      * Determines whether the last call to execute() or undo() actually performed any changes.
@@ -335,5 +348,5 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         b.append(targetNode);
         return b.toString();
     }
-    
+
 }
