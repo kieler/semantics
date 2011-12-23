@@ -12,24 +12,22 @@ import java.util.ArrayList;
 
 @SuppressWarnings("all")
 public class InternalEsiLexer extends Lexer {
-    public static final int RULE_ID=5;
-    public static final int T__20=20;
-    public static final int RULE_COMMENT=11;
-    public static final int EOF=-1;
-    public static final int RULE_LETTER=8;
-    public static final int RULE_NUM=6;
-    public static final int T__19=19;
     public static final int T__16=16;
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
     public static final int T__12=12;
+    public static final int RULE_ALPHANUM=5;
+    public static final int T__11=11;
     public static final int T__14=14;
     public static final int T__13=13;
-    public static final int RULE_SPECIAL=9;
-    public static final int RULE_ALPHANUMSPECIAL=4;
-    public static final int RULE_WS=10;
-    public static final int RULE_DIGIT=7;
+    public static final int RULE_SPECIAL=8;
+    public static final int RULE_ALPHANUMSPECIAL=6;
+    public static final int T__10=10;
+    public static final int RULE_ALPHA=4;
+    public static final int RULE_WS=9;
+    public static final int EOF=-1;
+    public static final int RULE_NUM=7;
 
     // delegates
     // delegators
@@ -44,15 +42,56 @@ public class InternalEsiLexer extends Lexer {
     }
     public String getGrammarFileName() { return "../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g"; }
 
-    // $ANTLR start "T__12"
-    public final void mT__12() throws RecognitionException {
+    // $ANTLR start "T__10"
+    public final void mT__10() throws RecognitionException {
         try {
-            int _type = T__12;
+            int _type = T__10;
             int _channel = DEFAULT_TOKEN_CHANNEL;
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:11:7: ( '!' )
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:11:9: '!'
             {
             match('!'); 
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__10"
+
+    // $ANTLR start "T__11"
+    public final void mT__11() throws RecognitionException {
+        try {
+            int _type = T__11;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:12:7: ( 'reset' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:12:9: 'reset'
+            {
+            match("reset"); 
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "T__11"
+
+    // $ANTLR start "T__12"
+    public final void mT__12() throws RecognitionException {
+        try {
+            int _type = T__12;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:13:7: ( ';' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:13:9: ';'
+            {
+            match(';'); 
 
             }
 
@@ -69,11 +108,10 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__13;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:12:7: ( 'reset' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:12:9: 'reset'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:14:7: ( '%' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:14:9: '%'
             {
-            match("reset"); 
-
+            match('%'); 
 
             }
 
@@ -90,10 +128,11 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__14;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:13:7: ( ';' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:13:9: ';'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:15:7: ( 'Output' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:15:9: 'Output'
             {
-            match(';'); 
+            match("Output"); 
+
 
             }
 
@@ -110,10 +149,10 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__15;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:14:7: ( '%' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:14:9: '%'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:16:7: ( ':' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:16:9: ':'
             {
-            match('%'); 
+            match(':'); 
 
             }
 
@@ -130,11 +169,10 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__16;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:15:7: ( 'Output' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:15:9: 'Output'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:17:7: ( '(' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:17:9: '('
             {
-            match("Output"); 
-
+            match('('); 
 
             }
 
@@ -151,10 +189,10 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__17;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:16:7: ( ':' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:16:9: ':'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:18:7: ( ')' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:18:9: ')'
             {
-            match(':'); 
+            match(')'); 
 
             }
 
@@ -171,8 +209,8 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = T__18;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:17:7: ( '%%' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:17:9: '%%'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:19:7: ( '%%' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:19:9: '%%'
             {
             match("%%"); 
 
@@ -187,15 +225,52 @@ public class InternalEsiLexer extends Lexer {
     }
     // $ANTLR end "T__18"
 
-    // $ANTLR start "T__19"
-    public final void mT__19() throws RecognitionException {
+    // $ANTLR start "RULE_ALPHA"
+    public final void mRULE_ALPHA() throws RecognitionException {
         try {
-            int _type = T__19;
+            int _type = RULE_ALPHA;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:18:7: ( '(' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:18:9: '('
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:493:12: ( ( 'a' .. 'z' | 'A' .. 'Z' )+ )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:493:14: ( 'a' .. 'z' | 'A' .. 'Z' )+
             {
-            match('('); 
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:493:14: ( 'a' .. 'z' | 'A' .. 'Z' )+
+            int cnt1=0;
+            loop1:
+            do {
+                int alt1=2;
+                int LA1_0 = input.LA(1);
+
+                if ( ((LA1_0>='A' && LA1_0<='Z')||(LA1_0>='a' && LA1_0<='z')) ) {
+                    alt1=1;
+                }
+
+
+                switch (alt1) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:
+            	    {
+            	    if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	        input.consume();
+
+            	    }
+            	    else {
+            	        MismatchedSetException mse = new MismatchedSetException(null,input);
+            	        recover(mse);
+            	        throw mse;}
+
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt1 >= 1 ) break loop1;
+                        EarlyExitException eee =
+                            new EarlyExitException(1, input);
+                        throw eee;
+                }
+                cnt1++;
+            } while (true);
+
 
             }
 
@@ -205,57 +280,17 @@ public class InternalEsiLexer extends Lexer {
         finally {
         }
     }
-    // $ANTLR end "T__19"
+    // $ANTLR end "RULE_ALPHA"
 
-    // $ANTLR start "T__20"
-    public final void mT__20() throws RecognitionException {
+    // $ANTLR start "RULE_NUM"
+    public final void mRULE_NUM() throws RecognitionException {
         try {
-            int _type = T__20;
+            int _type = RULE_NUM;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:19:7: ( ')' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:19:9: ')'
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:495:10: ( ( '+' | '-' ) ( '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:495:12: ( '+' | '-' ) ( '0' .. '9' )+
             {
-            match(')'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "T__20"
-
-    // $ANTLR start "RULE_DIGIT"
-    public final void mRULE_DIGIT() throws RecognitionException {
-        try {
-            int _type = RULE_DIGIT;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:423:12: ( '0' .. '9' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:423:14: '0' .. '9'
-            {
-            matchRange('0','9'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "RULE_DIGIT"
-
-    // $ANTLR start "RULE_LETTER"
-    public final void mRULE_LETTER() throws RecognitionException {
-        try {
-            int _type = RULE_LETTER;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:425:13: ( ( 'a' .. 'z' | 'A' .. 'Z' ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:425:15: ( 'a' .. 'z' | 'A' .. 'Z' )
-            {
-            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
                 input.consume();
 
             }
@@ -264,52 +299,7 @@ public class InternalEsiLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "RULE_LETTER"
-
-    // $ANTLR start "RULE_NUM"
-    public final void mRULE_NUM() throws RecognitionException {
-        try {
-            int _type = RULE_NUM;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:427:10: ( ( '+' | '-' )? ( RULE_DIGIT )+ )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:427:12: ( '+' | '-' )? ( RULE_DIGIT )+
-            {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:427:12: ( '+' | '-' )?
-            int alt1=2;
-            int LA1_0 = input.LA(1);
-
-            if ( (LA1_0=='+'||LA1_0=='-') ) {
-                alt1=1;
-            }
-            switch (alt1) {
-                case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:
-                    {
-                    if ( input.LA(1)=='+'||input.LA(1)=='-' ) {
-                        input.consume();
-
-                    }
-                    else {
-                        MismatchedSetException mse = new MismatchedSetException(null,input);
-                        recover(mse);
-                        throw mse;}
-
-
-                    }
-                    break;
-
-            }
-
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:427:23: ( RULE_DIGIT )+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:495:22: ( '0' .. '9' )+
             int cnt2=0;
             loop2:
             do {
@@ -323,9 +313,9 @@ public class InternalEsiLexer extends Lexer {
 
                 switch (alt2) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:427:23: RULE_DIGIT
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:495:23: '0' .. '9'
             	    {
-            	    mRULE_DIGIT(); 
+            	    matchRange('0','9'); 
 
             	    }
             	    break;
@@ -350,15 +340,74 @@ public class InternalEsiLexer extends Lexer {
     }
     // $ANTLR end "RULE_NUM"
 
+    // $ANTLR start "RULE_ALPHANUM"
+    public final void mRULE_ALPHANUM() throws RecognitionException {
+        try {
+            int _type = RULE_ALPHANUM;
+            int _channel = DEFAULT_TOKEN_CHANNEL;
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:497:15: ( ( RULE_ALPHA | '0' .. '9' )+ )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:497:17: ( RULE_ALPHA | '0' .. '9' )+
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:497:17: ( RULE_ALPHA | '0' .. '9' )+
+            int cnt3=0;
+            loop3:
+            do {
+                int alt3=3;
+                int LA3_0 = input.LA(1);
+
+                if ( ((LA3_0>='A' && LA3_0<='Z')||(LA3_0>='a' && LA3_0<='z')) ) {
+                    alt3=1;
+                }
+                else if ( ((LA3_0>='0' && LA3_0<='9')) ) {
+                    alt3=2;
+                }
+
+
+                switch (alt3) {
+            	case 1 :
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:497:18: RULE_ALPHA
+            	    {
+            	    mRULE_ALPHA(); 
+
+            	    }
+            	    break;
+            	case 2 :
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:497:29: '0' .. '9'
+            	    {
+            	    matchRange('0','9'); 
+
+            	    }
+            	    break;
+
+            	default :
+            	    if ( cnt3 >= 1 ) break loop3;
+                        EarlyExitException eee =
+                            new EarlyExitException(3, input);
+                        throw eee;
+                }
+                cnt3++;
+            } while (true);
+
+
+            }
+
+            state.type = _type;
+            state.channel = _channel;
+        }
+        finally {
+        }
+    }
+    // $ANTLR end "RULE_ALPHANUM"
+
     // $ANTLR start "RULE_SPECIAL"
     public final void mRULE_SPECIAL() throws RecognitionException {
         try {
             int _type = RULE_SPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:429:14: ( ( '!' | '@' | '#' | '$' | '%' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-' ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:429:16: ( '!' | '@' | '#' | '$' | '%' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:499:14: ( ( ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-' ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:499:16: ( ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-' )
             {
-            if ( input.LA(1)=='!'||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='+')||input.LA(1)=='-'||input.LA(1)=='='||input.LA(1)=='@'||(input.LA(1)>='^' && input.LA(1)<='_') ) {
+            if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||input.LA(1)=='@'||(input.LA(1)>='^' && input.LA(1)<='_') ) {
                 input.consume();
 
             }
@@ -378,115 +427,140 @@ public class InternalEsiLexer extends Lexer {
     }
     // $ANTLR end "RULE_SPECIAL"
 
-    // $ANTLR start "RULE_ID"
-    public final void mRULE_ID() throws RecognitionException {
-        try {
-            int _type = RULE_ID;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:431:9: ( ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )* )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:431:11: ( RULE_LETTER | '_' ) ( RULE_LETTER | RULE_DIGIT | '_' )*
-            {
-            if ( (input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:431:29: ( RULE_LETTER | RULE_DIGIT | '_' )*
-            loop3:
-            do {
-                int alt3=2;
-                int LA3_0 = input.LA(1);
-
-                if ( ((LA3_0>='0' && LA3_0<='9')||(LA3_0>='A' && LA3_0<='Z')||LA3_0=='_'||(LA3_0>='a' && LA3_0<='z')) ) {
-                    alt3=1;
-                }
-
-
-                switch (alt3) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:
-            	    {
-            	    if ( (input.LA(1)>='0' && input.LA(1)<='9')||(input.LA(1)>='A' && input.LA(1)<='Z')||input.LA(1)=='_'||(input.LA(1)>='a' && input.LA(1)<='z') ) {
-            	        input.consume();
-
-            	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;}
-
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop3;
-                }
-            } while (true);
-
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "RULE_ID"
-
     // $ANTLR start "RULE_ALPHANUMSPECIAL"
     public final void mRULE_ALPHANUMSPECIAL() throws RecognitionException {
         try {
             int _type = RULE_ALPHANUMSPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:433:22: ( ( RULE_LETTER | RULE_DIGIT | RULE_SPECIAL ) ( RULE_LETTER | RULE_DIGIT | RULE_SPECIAL )* )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:433:24: ( RULE_LETTER | RULE_DIGIT | RULE_SPECIAL ) ( RULE_LETTER | RULE_DIGIT | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:22: ( ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+ )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:24: ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+
             {
-            if ( input.LA(1)=='!'||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='+')||input.LA(1)=='-'||(input.LA(1)>='0' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='^' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:433:62: ( RULE_LETTER | RULE_DIGIT | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:24: ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+
+            int cnt4=0;
             loop4:
             do {
-                int alt4=2;
-                int LA4_0 = input.LA(1);
-
-                if ( (LA4_0=='!'||(LA4_0>='#' && LA4_0<='&')||(LA4_0>='(' && LA4_0<='+')||LA4_0=='-'||(LA4_0>='0' && LA4_0<='9')||LA4_0=='='||(LA4_0>='@' && LA4_0<='Z')||(LA4_0>='^' && LA4_0<='_')||(LA4_0>='a' && LA4_0<='z')) ) {
+                int alt4=4;
+                switch ( input.LA(1) ) {
+                case 'A':
+                case 'B':
+                case 'C':
+                case 'D':
+                case 'E':
+                case 'F':
+                case 'G':
+                case 'H':
+                case 'I':
+                case 'J':
+                case 'K':
+                case 'L':
+                case 'M':
+                case 'N':
+                case 'O':
+                case 'P':
+                case 'Q':
+                case 'R':
+                case 'S':
+                case 'T':
+                case 'U':
+                case 'V':
+                case 'W':
+                case 'X':
+                case 'Y':
+                case 'Z':
+                case 'a':
+                case 'b':
+                case 'c':
+                case 'd':
+                case 'e':
+                case 'f':
+                case 'g':
+                case 'h':
+                case 'i':
+                case 'j':
+                case 'k':
+                case 'l':
+                case 'm':
+                case 'n':
+                case 'o':
+                case 'p':
+                case 'q':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u':
+                case 'v':
+                case 'w':
+                case 'x':
+                case 'y':
+                case 'z':
+                    {
                     alt4=1;
-                }
+                    }
+                    break;
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    {
+                    alt4=2;
+                    }
+                    break;
+                case '#':
+                case '$':
+                case '&':
+                case '*':
+                case '+':
+                case ',':
+                case '-':
+                case '.':
+                case '/':
+                case '=':
+                case '@':
+                case '^':
+                case '_':
+                    {
+                    alt4=3;
+                    }
+                    break;
 
+                }
 
                 switch (alt4) {
             	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:25: RULE_ALPHA
             	    {
-            	    if ( input.LA(1)=='!'||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='+')||input.LA(1)=='-'||(input.LA(1)>='0' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='^' && input.LA(1)<='_')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
-            	        input.consume();
+            	    mRULE_ALPHA(); 
 
             	    }
-            	    else {
-            	        MismatchedSetException mse = new MismatchedSetException(null,input);
-            	        recover(mse);
-            	        throw mse;}
+            	    break;
+            	case 2 :
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:36: '0' .. '9'
+            	    {
+            	    matchRange('0','9'); 
 
+            	    }
+            	    break;
+            	case 3 :
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:501:45: RULE_SPECIAL
+            	    {
+            	    mRULE_SPECIAL(); 
 
             	    }
             	    break;
 
             	default :
-            	    break loop4;
+            	    if ( cnt4 >= 1 ) break loop4;
+                        EarlyExitException eee =
+                            new EarlyExitException(4, input);
+                        throw eee;
                 }
+                cnt4++;
             } while (true);
 
 
@@ -505,8 +579,8 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = RULE_WS;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:435:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:435:11: ( '\\t' | ' ' | '\\r' | '\\n' )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:9: ( ( '\\t' | ' ' | '\\r' | '\\n' ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:11: ( '\\t' | ' ' | '\\r' | '\\n' )
             {
             if ( (input.LA(1)>='\t' && input.LA(1)<='\n')||input.LA(1)=='\r'||input.LA(1)==' ' ) {
                 input.consume();
@@ -528,370 +602,229 @@ public class InternalEsiLexer extends Lexer {
     }
     // $ANTLR end "RULE_WS"
 
-    // $ANTLR start "RULE_COMMENT"
-    public final void mRULE_COMMENT() throws RecognitionException {
-        try {
-            int _type = RULE_COMMENT;
-            int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:14: ( '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n' )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:16: '%' ( 'A' .. 'N' | 'P' .. 'Z' ) ( options {greedy=false; } : . )* '\\n'
-            {
-            match('%'); 
-            if ( (input.LA(1)>='A' && input.LA(1)<='N')||(input.LA(1)>='P' && input.LA(1)<='Z') ) {
-                input.consume();
-
-            }
-            else {
-                MismatchedSetException mse = new MismatchedSetException(null,input);
-                recover(mse);
-                throw mse;}
-
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:40: ( options {greedy=false; } : . )*
-            loop5:
-            do {
-                int alt5=2;
-                int LA5_0 = input.LA(1);
-
-                if ( (LA5_0=='\n') ) {
-                    alt5=2;
-                }
-                else if ( ((LA5_0>='\u0000' && LA5_0<='\t')||(LA5_0>='\u000B' && LA5_0<='\uFFFF')) ) {
-                    alt5=1;
-                }
-
-
-                switch (alt5) {
-            	case 1 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:68: .
-            	    {
-            	    matchAny(); 
-
-            	    }
-            	    break;
-
-            	default :
-            	    break loop5;
-                }
-            } while (true);
-
-            match('\n'); 
-
-            }
-
-            state.type = _type;
-            state.channel = _channel;
-        }
-        finally {
-        }
-    }
-    // $ANTLR end "RULE_COMMENT"
-
     public void mTokens() throws RecognitionException {
-        // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:8: ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | RULE_DIGIT | RULE_LETTER | RULE_NUM | RULE_SPECIAL | RULE_ID | RULE_ALPHANUMSPECIAL | RULE_WS | RULE_COMMENT )
-        int alt6=17;
-        alt6 = dfa6.predict(input);
-        switch (alt6) {
+        // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:8: ( T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | RULE_ALPHA | RULE_NUM | RULE_ALPHANUM | RULE_SPECIAL | RULE_ALPHANUMSPECIAL | RULE_WS )
+        int alt5=15;
+        alt5 = dfa5.predict(input);
+        switch (alt5) {
             case 1 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:10: T__12
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:10: T__10
+                {
+                mT__10(); 
+
+                }
+                break;
+            case 2 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:16: T__11
+                {
+                mT__11(); 
+
+                }
+                break;
+            case 3 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:22: T__12
                 {
                 mT__12(); 
 
                 }
                 break;
-            case 2 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:16: T__13
+            case 4 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:28: T__13
                 {
                 mT__13(); 
 
                 }
                 break;
-            case 3 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:22: T__14
+            case 5 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:34: T__14
                 {
                 mT__14(); 
 
                 }
                 break;
-            case 4 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:28: T__15
+            case 6 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:40: T__15
                 {
                 mT__15(); 
 
                 }
                 break;
-            case 5 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:34: T__16
+            case 7 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:46: T__16
                 {
                 mT__16(); 
 
                 }
                 break;
-            case 6 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:40: T__17
+            case 8 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:52: T__17
                 {
                 mT__17(); 
 
                 }
                 break;
-            case 7 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:46: T__18
+            case 9 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:58: T__18
                 {
                 mT__18(); 
 
                 }
                 break;
-            case 8 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:52: T__19
-                {
-                mT__19(); 
-
-                }
-                break;
-            case 9 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:58: T__20
-                {
-                mT__20(); 
-
-                }
-                break;
             case 10 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:64: RULE_DIGIT
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:64: RULE_ALPHA
                 {
-                mRULE_DIGIT(); 
+                mRULE_ALPHA(); 
 
                 }
                 break;
             case 11 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:75: RULE_LETTER
-                {
-                mRULE_LETTER(); 
-
-                }
-                break;
-            case 12 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:87: RULE_NUM
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:75: RULE_NUM
                 {
                 mRULE_NUM(); 
 
                 }
                 break;
+            case 12 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:84: RULE_ALPHANUM
+                {
+                mRULE_ALPHANUM(); 
+
+                }
+                break;
             case 13 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:96: RULE_SPECIAL
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:98: RULE_SPECIAL
                 {
                 mRULE_SPECIAL(); 
 
                 }
                 break;
             case 14 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:109: RULE_ID
-                {
-                mRULE_ID(); 
-
-                }
-                break;
-            case 15 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:117: RULE_ALPHANUMSPECIAL
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:111: RULE_ALPHANUMSPECIAL
                 {
                 mRULE_ALPHANUMSPECIAL(); 
 
                 }
                 break;
-            case 16 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:138: RULE_WS
+            case 15 :
+                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:132: RULE_WS
                 {
                 mRULE_WS(); 
 
                 }
                 break;
-            case 17 :
-                // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:1:146: RULE_COMMENT
-                {
-                mRULE_COMMENT(); 
-
-                }
-                break;
 
         }
 
     }
 
 
-    protected DFA6 dfa6 = new DFA6(this);
-    static final String DFA6_eotS =
-        "\1\uffff\1\20\1\23\1\uffff\1\26\1\23\1\uffff\1\30\1\31\1\33\1\23"+
-        "\3\34\3\uffff\2\36\1\uffff\1\37\1\17\1\uffff\1\36\2\uffff\1\43\2"+
-        "\uffff\1\36\2\uffff\1\17\1\uffff\1\36\1\uffff\2\36\1\50\1\36\1\uffff"+
-        "\1\52\1\uffff";
-    static final String DFA6_eofS =
-        "\53\uffff";
-    static final String DFA6_minS =
-        "\1\11\2\41\1\uffff\2\41\1\uffff\7\41\3\uffff\2\41\1\uffff\1\41"+
-        "\1\0\1\uffff\1\41\2\uffff\1\41\2\uffff\1\41\2\uffff\1\0\1\uffff"+
-        "\1\41\1\uffff\4\41\1\uffff\1\41\1\uffff";
-    static final String DFA6_maxS =
-        "\3\172\1\uffff\2\172\1\uffff\7\172\3\uffff\2\172\1\uffff\1\172"+
-        "\1\uffff\1\uffff\1\172\2\uffff\1\172\2\uffff\1\172\2\uffff\1\uffff"+
-        "\1\uffff\1\172\1\uffff\4\172\1\uffff\1\172\1\uffff";
-    static final String DFA6_acceptS =
-        "\3\uffff\1\3\2\uffff\1\6\7\uffff\1\20\1\17\1\1\2\uffff\1\13\2\uffff"+
-        "\1\4\1\uffff\1\10\1\11\1\uffff\1\12\1\15\1\uffff\1\16\1\7\1\uffff"+
-        "\1\21\1\uffff\1\14\4\uffff\1\2\1\uffff\1\5";
-    static final String DFA6_specialS =
-        "\25\uffff\1\1\12\uffff\1\0\12\uffff}>";
-    static final String[] DFA6_transitionS = {
-            "\2\16\2\uffff\1\16\22\uffff\1\16\1\1\1\uffff\2\15\1\4\1\15"+
-            "\1\uffff\1\7\1\10\1\15\1\13\1\uffff\1\13\2\uffff\12\11\1\6\1"+
-            "\3\1\uffff\1\15\2\uffff\1\15\16\12\1\5\13\12\3\uffff\1\15\1"+
-            "\14\1\uffff\21\12\1\2\10\12",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\17"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\4"+
-            "\22\1\21\25\22",
+    protected DFA5 dfa5 = new DFA5(this);
+    static final String DFA5_eotS =
+        "\2\uffff\1\17\1\uffff\1\22\1\17\3\uffff\1\17\1\25\1\26\1\25\1\uffff"+
+        "\1\17\4\uffff\1\17\1\32\2\uffff\1\26\2\17\1\uffff\2\17\1\37\1\17"+
+        "\1\uffff\1\41\1\uffff";
+    static final String DFA5_eofS =
+        "\42\uffff";
+    static final String DFA5_minS =
+        "\1\11\1\uffff\1\43\1\uffff\1\45\1\43\3\uffff\4\43\1\uffff\1\43\4"+
+        "\uffff\2\43\2\uffff\3\43\1\uffff\4\43\1\uffff\1\43\1\uffff";
+    static final String DFA5_maxS =
+        "\1\172\1\uffff\1\172\1\uffff\1\45\1\172\3\uffff\4\172\1\uffff\1"+
+        "\172\4\uffff\2\172\2\uffff\3\172\1\uffff\4\172\1\uffff\1\172\1\uffff";
+    static final String DFA5_acceptS =
+        "\1\uffff\1\1\1\uffff\1\3\2\uffff\1\6\1\7\1\10\4\uffff\1\17\1\uffff"+
+        "\1\12\1\16\1\11\1\4\2\uffff\1\15\1\14\3\uffff\1\13\4\uffff\1\2\1"+
+        "\uffff\1\5";
+    static final String DFA5_specialS =
+        "\42\uffff}>";
+    static final String[] DFA5_transitionS = {
+            "\2\15\2\uffff\1\15\22\uffff\1\15\1\1\1\uffff\2\14\1\4\1\14\1"+
+            "\uffff\1\7\1\10\1\14\1\12\1\14\1\12\2\14\12\13\1\6\1\3\1\uffff"+
+            "\1\14\2\uffff\1\14\16\11\1\5\13\11\3\uffff\2\14\1\uffff\21\11"+
+            "\1\2\10\11",
             "",
-            "\1\17\1\uffff\2\17\1\24\1\17\1\uffff\4\17\1\uffff\1\17\2\uffff"+
-            "\12\17\3\uffff\1\17\2\uffff\1\17\16\25\1\17\13\25\3\uffff\2"+
-            "\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\24"+
-            "\22\1\27\5\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\4\11\1\16\25\11",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\17"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\17"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\32"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\32"+
-            "\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\32"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\32"+
-            "\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\17"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
+            "\1\21",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\24\11\1\23\5\11",
             "",
             "",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\22"+
-            "\22\1\35\7\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\32"+
-            "\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\32\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\24\3\uffff\1\20\2\uffff"+
+            "\33\20\3\uffff\2\20\1\uffff\32\20",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\27\3\uffff\2\20\1\uffff\32\27",
+            "\2\20\1\uffff\1\20\3\uffff\20\20\3\uffff\1\20\2\uffff\33\20"+
+            "\3\uffff\2\20\1\uffff\32\20",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\17"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
-            "\41\41\1\40\1\41\4\40\1\41\4\40\1\41\1\40\2\41\12\40\3\41"+
-            "\1\40\2\41\33\40\3\41\2\40\1\41\32\40\uff85\41",
-            "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\23"+
-            "\22\1\42\6\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\22\11\1\30\7\11",
             "",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\32"+
-            "\3\uffff\1\17\2\uffff\33\17\3\uffff\2\17\1\uffff\32\17",
             "",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\4"+
-            "\22\1\44\25\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\23\11\1\31\6\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\24\3\uffff\1\20\2\uffff"+
+            "\33\20\3\uffff\2\20\1\uffff\32\20",
             "",
             "",
-            "\41\41\1\40\1\41\4\40\1\41\4\40\1\41\1\40\2\41\12\40\3\41"+
-            "\1\40\2\41\33\40\3\41\2\40\1\41\32\40\uff85\41",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\27\3\uffff\2\20\1\uffff\32\27",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\4\11\1\33\25\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\17\11\1\34\12\11",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\17"+
-            "\22\1\45\12\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\23\11\1\35\6\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\24\11\1\36\5\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\32\11",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\23\11\1\40\6\11",
             "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\23"+
-            "\22\1\46\6\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\24"+
-            "\22\1\47\5\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\32"+
-            "\22",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\23"+
-            "\22\1\51\6\22",
-            "",
-            "\1\17\1\uffff\4\17\1\uffff\4\17\1\uffff\1\17\2\uffff\12\22"+
-            "\3\uffff\1\17\2\uffff\1\17\32\22\3\uffff\1\17\1\22\1\uffff\32"+
-            "\22",
+            "\2\20\1\uffff\1\20\3\uffff\6\20\12\13\3\uffff\1\20\2\uffff"+
+            "\1\20\32\11\3\uffff\2\20\1\uffff\32\11",
             ""
     };
 
-    static final short[] DFA6_eot = DFA.unpackEncodedString(DFA6_eotS);
-    static final short[] DFA6_eof = DFA.unpackEncodedString(DFA6_eofS);
-    static final char[] DFA6_min = DFA.unpackEncodedStringToUnsignedChars(DFA6_minS);
-    static final char[] DFA6_max = DFA.unpackEncodedStringToUnsignedChars(DFA6_maxS);
-    static final short[] DFA6_accept = DFA.unpackEncodedString(DFA6_acceptS);
-    static final short[] DFA6_special = DFA.unpackEncodedString(DFA6_specialS);
-    static final short[][] DFA6_transition;
+    static final short[] DFA5_eot = DFA.unpackEncodedString(DFA5_eotS);
+    static final short[] DFA5_eof = DFA.unpackEncodedString(DFA5_eofS);
+    static final char[] DFA5_min = DFA.unpackEncodedStringToUnsignedChars(DFA5_minS);
+    static final char[] DFA5_max = DFA.unpackEncodedStringToUnsignedChars(DFA5_maxS);
+    static final short[] DFA5_accept = DFA.unpackEncodedString(DFA5_acceptS);
+    static final short[] DFA5_special = DFA.unpackEncodedString(DFA5_specialS);
+    static final short[][] DFA5_transition;
 
     static {
-        int numStates = DFA6_transitionS.length;
-        DFA6_transition = new short[numStates][];
+        int numStates = DFA5_transitionS.length;
+        DFA5_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA6_transition[i] = DFA.unpackEncodedString(DFA6_transitionS[i]);
+            DFA5_transition[i] = DFA.unpackEncodedString(DFA5_transitionS[i]);
         }
     }
 
-    class DFA6 extends DFA {
+    class DFA5 extends DFA {
 
-        public DFA6(BaseRecognizer recognizer) {
+        public DFA5(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 6;
-            this.eot = DFA6_eot;
-            this.eof = DFA6_eof;
-            this.min = DFA6_min;
-            this.max = DFA6_max;
-            this.accept = DFA6_accept;
-            this.special = DFA6_special;
-            this.transition = DFA6_transition;
+            this.decisionNumber = 5;
+            this.eot = DFA5_eot;
+            this.eof = DFA5_eof;
+            this.min = DFA5_min;
+            this.max = DFA5_max;
+            this.accept = DFA5_accept;
+            this.special = DFA5_special;
+            this.transition = DFA5_transition;
         }
         public String getDescription() {
-            return "1:1: Tokens : ( T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | T__19 | T__20 | RULE_DIGIT | RULE_LETTER | RULE_NUM | RULE_SPECIAL | RULE_ID | RULE_ALPHANUMSPECIAL | RULE_WS | RULE_COMMENT );";
-        }
-        public int specialStateTransition(int s, IntStream _input) throws NoViableAltException {
-            IntStream input = _input;
-        	int _s = s;
-            switch ( s ) {
-                    case 0 : 
-                        int LA6_32 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA6_32=='!'||(LA6_32>='#' && LA6_32<='&')||(LA6_32>='(' && LA6_32<='+')||LA6_32=='-'||(LA6_32>='0' && LA6_32<='9')||LA6_32=='='||(LA6_32>='@' && LA6_32<='Z')||(LA6_32>='^' && LA6_32<='_')||(LA6_32>='a' && LA6_32<='z')) ) {s = 32;}
-
-                        else if ( ((LA6_32>='\u0000' && LA6_32<=' ')||LA6_32=='\"'||LA6_32=='\''||LA6_32==','||(LA6_32>='.' && LA6_32<='/')||(LA6_32>=':' && LA6_32<='<')||(LA6_32>='>' && LA6_32<='?')||(LA6_32>='[' && LA6_32<=']')||LA6_32=='`'||(LA6_32>='{' && LA6_32<='\uFFFF')) ) {s = 33;}
-
-                        else s = 15;
-
-                        if ( s>=0 ) return s;
-                        break;
-                    case 1 : 
-                        int LA6_21 = input.LA(1);
-
-                        s = -1;
-                        if ( (LA6_21=='!'||(LA6_21>='#' && LA6_21<='&')||(LA6_21>='(' && LA6_21<='+')||LA6_21=='-'||(LA6_21>='0' && LA6_21<='9')||LA6_21=='='||(LA6_21>='@' && LA6_21<='Z')||(LA6_21>='^' && LA6_21<='_')||(LA6_21>='a' && LA6_21<='z')) ) {s = 32;}
-
-                        else if ( ((LA6_21>='\u0000' && LA6_21<=' ')||LA6_21=='\"'||LA6_21=='\''||LA6_21==','||(LA6_21>='.' && LA6_21<='/')||(LA6_21>=':' && LA6_21<='<')||(LA6_21>='>' && LA6_21<='?')||(LA6_21>='[' && LA6_21<=']')||LA6_21=='`'||(LA6_21>='{' && LA6_21<='\uFFFF')) ) {s = 33;}
-
-                        else s = 15;
-
-                        if ( s>=0 ) return s;
-                        break;
-            }
-            NoViableAltException nvae =
-                new NoViableAltException(getDescription(), 6, _s, input);
-            error(nvae);
-            throw nvae;
+            return "1:1: Tokens : ( T__10 | T__11 | T__12 | T__13 | T__14 | T__15 | T__16 | T__17 | T__18 | RULE_ALPHA | RULE_NUM | RULE_ALPHANUM | RULE_SPECIAL | RULE_ALPHANUMSPECIAL | RULE_WS );";
         }
     }
  

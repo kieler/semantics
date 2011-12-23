@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.sim.esi.esi.impl;
 
@@ -71,8 +70,8 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
       case EsiPackage.TRACELIST: return createtracelist();
       case EsiPackage.TRACE: return createtrace();
       case EsiPackage.TICK: return createtick();
-      case EsiPackage.KVPAIR: return createkvpair();
       case EsiPackage.SIGNAL: return createsignal();
+      case EsiPackage.KVPAIR: return createkvpair();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -116,10 +115,10 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public kvpair createkvpair()
+  public signal createsignal()
   {
-    kvpairImpl kvpair = new kvpairImpl();
-    return kvpair;
+    signalImpl signal = new signalImpl();
+    return signal;
   }
 
   /**
@@ -127,10 +126,10 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public signal createsignal()
+  public kvpair createkvpair()
   {
-    signalImpl signal = new signalImpl();
-    return signal;
+    kvpairImpl kvpair = new kvpairImpl();
+    return kvpair;
   }
 
   /**

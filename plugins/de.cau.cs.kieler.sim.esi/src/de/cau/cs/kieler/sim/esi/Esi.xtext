@@ -1,12 +1,52 @@
 grammar de.cau.cs.kieler.sim.esi.Esi  
 //  with org.eclipse.xtext.common.Terminals
-hidden (WS, COMMENT) 
+hidden (WS) //, Comment) 
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 generate esi "http://www.cau.de/cs/kieler/sim/esi/Esi"
 
 tracelist:
+    (traces += trace)+
+;
+
+trace:
+    '!' 'reset' ';'
+    (ticks += tick)+
+;
+
+tick:
+    {tick}
+    (input += signal)* 
+    ('%' 'Output' ':' (output += signal)*)?
+    (extraInfos += kvpair)*
+    ';'
+;
+
+signal:
+    name = (Alpha | AlphaNum | AlphaNumSpecial)
+    ( valued ?= '('
+      val = Num
+      ')'
+    )?
+;
+
+kvpair:
+    '%%'
+    k = (Alpha | AlphaNum | AlphaNumSpecial)
+    ':'
+    val = (Alpha | AlphaNum | AlphaNumSpecial)
+;
+
+terminal Alpha : ('a'..'z' | 'A'..'Z')+;
+//terminal Digit : '0'..'9';
+terminal Num returns ecore::EInt : ('+' | '-') ('0'..'9')+;
+terminal AlphaNum : (Alpha | '0'..'9')+;
+terminal Special : ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-';
+terminal AlphaNumSpecial: (Alpha | '0'..'9' | Special)+;
+//terminal Comment : '%' (Alpha | Digit | Special | WS)*;
+
+/*tracelist:
   (
    (traces+=trace)?   
     (('!' 'reset' ';' traces+=trace)+)
@@ -18,13 +58,14 @@ trace:
    ;
   
 tick:
-   (input+=signal)* ('%' 'Output' ':' (output+=signal)*)? (extraInfos+=kvpair)* n=';' 
+   (input+=signal)+ ('%' 'Output' ':' (output+=signal)*)? n=';' //(extraInfos+=kvpair)* n=';' 
    ; 
 
-kvpair:
+/*kvpair:
     '%%' k=AlphaNumSpecial ':' val=AlphaNumSpecial
-;
-signal:     
+;*/
+
+/*signal:     
      name=ID (valued?='('  val=NUM ')')? 
    ;
                
@@ -32,18 +73,19 @@ signal:
 * LEXER RULES
 *------------------------------------------------------------------*/
 
-terminal Digit : ('0' .. '9') ;
+/*terminal Digit : ('0' .. '9') ;
 
 terminal Letter : 'a'..'z'|'A'..'Z';
 
 terminal NUM returns ecore::EInt : ('+'|'-')?(Digit)+ ;
-
-terminal Special : '!' | '@' | '#' | '$' | '%' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-';
+terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
+//terminal Special : '!' | '@' | '#' | '$' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-'; // %
 
 terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
 
-terminal AlphaNumSpecial : (Letter | Digit | Special) (Letter | Digit | Special)*;
+//terminal AlphaNumSpecial : (Letter | Digit | Special) (Letter | Digit | Special)*;
+*/
 
 terminal WS :  '\t' | ' ' | '\r' | '\n';
 
-terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
+

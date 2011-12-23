@@ -18,194 +18,150 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public class TracelistElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "tracelist");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cTracesAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cTracesTraceParserRuleCall_0_0 = (RuleCall)cTracesAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cExclamationMarkKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cResetKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cSemicolonKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cTracesAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cTracesTraceParserRuleCall_1_3_0 = (RuleCall)cTracesAssignment_1_3.eContents().get(0);
+		private final Assignment cTracesAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cTracesTraceParserRuleCall_0 = (RuleCall)cTracesAssignment.eContents().get(0);
 		
 		//tracelist:
-		//	traces+=trace? ("!" "reset" ";" traces+=trace)+;
+		//	traces+=trace+;
 		public ParserRule getRule() { return rule; }
 
-		//traces+=trace? ("!" "reset" ";" traces+=trace)+
-		public Group getGroup() { return cGroup; }
-
-		//traces+=trace?
-		public Assignment getTracesAssignment_0() { return cTracesAssignment_0; }
+		//traces+=trace+
+		public Assignment getTracesAssignment() { return cTracesAssignment; }
 
 		//trace
-		public RuleCall getTracesTraceParserRuleCall_0_0() { return cTracesTraceParserRuleCall_0_0; }
-
-		//("!" "reset" ";" traces+=trace)+
-		public Group getGroup_1() { return cGroup_1; }
-
-		//"!"
-		public Keyword getExclamationMarkKeyword_1_0() { return cExclamationMarkKeyword_1_0; }
-
-		//"reset"
-		public Keyword getResetKeyword_1_1() { return cResetKeyword_1_1; }
-
-		//";"
-		public Keyword getSemicolonKeyword_1_2() { return cSemicolonKeyword_1_2; }
-
-		//traces+=trace
-		public Assignment getTracesAssignment_1_3() { return cTracesAssignment_1_3; }
-
-		//trace
-		public RuleCall getTracesTraceParserRuleCall_1_3_0() { return cTracesTraceParserRuleCall_1_3_0; }
+		public RuleCall getTracesTraceParserRuleCall_0() { return cTracesTraceParserRuleCall_0; }
 	}
 
 	public class TraceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "trace");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Action cTraceAction_0 = (Action)cGroup.eContents().get(0);
-		private final Assignment cTicksAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cTicksTickParserRuleCall_1_0 = (RuleCall)cTicksAssignment_1.eContents().get(0);
+		private final Keyword cExclamationMarkKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Keyword cResetKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cSemicolonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cTicksAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cTicksTickParserRuleCall_3_0 = (RuleCall)cTicksAssignment_3.eContents().get(0);
 		
 		//trace:
-		//	{trace} ticks+=tick+;
+		//	"!" "reset" ";" ticks+=tick+;
 		public ParserRule getRule() { return rule; }
 
-		//{trace} ticks+=tick+
+		//"!" "reset" ";" ticks+=tick+
 		public Group getGroup() { return cGroup; }
 
-		//{trace}
-		public Action getTraceAction_0() { return cTraceAction_0; }
+		//"!"
+		public Keyword getExclamationMarkKeyword_0() { return cExclamationMarkKeyword_0; }
+
+		//"reset"
+		public Keyword getResetKeyword_1() { return cResetKeyword_1; }
+
+		//";"
+		public Keyword getSemicolonKeyword_2() { return cSemicolonKeyword_2; }
 
 		//ticks+=tick+
-		public Assignment getTicksAssignment_1() { return cTicksAssignment_1; }
+		public Assignment getTicksAssignment_3() { return cTicksAssignment_3; }
 
 		//tick
-		public RuleCall getTicksTickParserRuleCall_1_0() { return cTicksTickParserRuleCall_1_0; }
+		public RuleCall getTicksTickParserRuleCall_3_0() { return cTicksTickParserRuleCall_3_0; }
 	}
 
 	public class TickElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "tick");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cInputAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cInputSignalParserRuleCall_0_0 = (RuleCall)cInputAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cPercentSignKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Keyword cOutputKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Keyword cColonKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cOutputAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cOutputSignalParserRuleCall_1_3_0 = (RuleCall)cOutputAssignment_1_3.eContents().get(0);
-		private final Assignment cExtraInfosAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExtraInfosKvpairParserRuleCall_2_0 = (RuleCall)cExtraInfosAssignment_2.eContents().get(0);
-		private final Assignment cNAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Keyword cNSemicolonKeyword_3_0 = (Keyword)cNAssignment_3.eContents().get(0);
+		private final Action cTickAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cInputAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cInputSignalParserRuleCall_1_0 = (RuleCall)cInputAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cPercentSignKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Keyword cOutputKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
+		private final Keyword cColonKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Assignment cOutputAssignment_2_3 = (Assignment)cGroup_2.eContents().get(3);
+		private final RuleCall cOutputSignalParserRuleCall_2_3_0 = (RuleCall)cOutputAssignment_2_3.eContents().get(0);
+		private final Assignment cExtraInfosAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final RuleCall cExtraInfosKvpairParserRuleCall_3_0 = (RuleCall)cExtraInfosAssignment_3.eContents().get(0);
+		private final Keyword cSemicolonKeyword_4 = (Keyword)cGroup.eContents().get(4);
 		
 		//tick:
-		//	input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";";
+		//	{tick} input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* ";";
 		public ParserRule getRule() { return rule; }
 
-		//input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";"
+		//{tick} input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* ";"
 		public Group getGroup() { return cGroup; }
+
+		//{tick}
+		public Action getTickAction_0() { return cTickAction_0; }
 
 		//input+=signal*
-		public Assignment getInputAssignment_0() { return cInputAssignment_0; }
+		public Assignment getInputAssignment_1() { return cInputAssignment_1; }
 
 		//signal
-		public RuleCall getInputSignalParserRuleCall_0_0() { return cInputSignalParserRuleCall_0_0; }
+		public RuleCall getInputSignalParserRuleCall_1_0() { return cInputSignalParserRuleCall_1_0; }
 
 		//("%" "Output" ":" output+=signal*)?
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup_2() { return cGroup_2; }
 
 		//"%"
-		public Keyword getPercentSignKeyword_1_0() { return cPercentSignKeyword_1_0; }
+		public Keyword getPercentSignKeyword_2_0() { return cPercentSignKeyword_2_0; }
 
 		//"Output"
-		public Keyword getOutputKeyword_1_1() { return cOutputKeyword_1_1; }
+		public Keyword getOutputKeyword_2_1() { return cOutputKeyword_2_1; }
 
 		//":"
-		public Keyword getColonKeyword_1_2() { return cColonKeyword_1_2; }
+		public Keyword getColonKeyword_2_2() { return cColonKeyword_2_2; }
 
 		//output+=signal*
-		public Assignment getOutputAssignment_1_3() { return cOutputAssignment_1_3; }
+		public Assignment getOutputAssignment_2_3() { return cOutputAssignment_2_3; }
 
 		//signal
-		public RuleCall getOutputSignalParserRuleCall_1_3_0() { return cOutputSignalParserRuleCall_1_3_0; }
+		public RuleCall getOutputSignalParserRuleCall_2_3_0() { return cOutputSignalParserRuleCall_2_3_0; }
 
 		//extraInfos+=kvpair*
-		public Assignment getExtraInfosAssignment_2() { return cExtraInfosAssignment_2; }
+		public Assignment getExtraInfosAssignment_3() { return cExtraInfosAssignment_3; }
 
 		//kvpair
-		public RuleCall getExtraInfosKvpairParserRuleCall_2_0() { return cExtraInfosKvpairParserRuleCall_2_0; }
-
-		//n=";"
-		public Assignment getNAssignment_3() { return cNAssignment_3; }
+		public RuleCall getExtraInfosKvpairParserRuleCall_3_0() { return cExtraInfosKvpairParserRuleCall_3_0; }
 
 		//";"
-		public Keyword getNSemicolonKeyword_3_0() { return cNSemicolonKeyword_3_0; }
-	}
-
-	public class KvpairElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "kvpair");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cPercentSignPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cKAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cKAlphaNumSpecialTerminalRuleCall_1_0 = (RuleCall)cKAssignment_1.eContents().get(0);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final RuleCall cValAlphaNumSpecialTerminalRuleCall_3_0 = (RuleCall)cValAssignment_3.eContents().get(0);
-		
-		//kvpair:
-		//	"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial;
-		public ParserRule getRule() { return rule; }
-
-		//"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial
-		public Group getGroup() { return cGroup; }
-
-		//"%%"
-		public Keyword getPercentSignPercentSignKeyword_0() { return cPercentSignPercentSignKeyword_0; }
-
-		//k=AlphaNumSpecial
-		public Assignment getKAssignment_1() { return cKAssignment_1; }
-
-		//AlphaNumSpecial
-		public RuleCall getKAlphaNumSpecialTerminalRuleCall_1_0() { return cKAlphaNumSpecialTerminalRuleCall_1_0; }
-
-		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
-
-		//val=AlphaNumSpecial
-		public Assignment getValAssignment_3() { return cValAssignment_3; }
-
-		//AlphaNumSpecial
-		public RuleCall getValAlphaNumSpecialTerminalRuleCall_3_0() { return cValAlphaNumSpecialTerminalRuleCall_3_0; }
+		public Keyword getSemicolonKeyword_4() { return cSemicolonKeyword_4; }
 	}
 
 	public class SignalElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "signal");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cNameIDTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
+		private final Alternatives cNameAlternatives_0_0 = (Alternatives)cNameAssignment_0.eContents().get(0);
+		private final RuleCall cNameAlphaTerminalRuleCall_0_0_0 = (RuleCall)cNameAlternatives_0_0.eContents().get(0);
+		private final RuleCall cNameAlphaNumTerminalRuleCall_0_0_1 = (RuleCall)cNameAlternatives_0_0.eContents().get(1);
+		private final RuleCall cNameAlphaNumSpecialTerminalRuleCall_0_0_2 = (RuleCall)cNameAlternatives_0_0.eContents().get(2);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Assignment cValuedAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
 		private final Keyword cValuedLeftParenthesisKeyword_1_0_0 = (Keyword)cValuedAssignment_1_0.eContents().get(0);
 		private final Assignment cValAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cValNUMTerminalRuleCall_1_1_0 = (RuleCall)cValAssignment_1_1.eContents().get(0);
+		private final RuleCall cValNumTerminalRuleCall_1_1_0 = (RuleCall)cValAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
 		//signal:
-		//	name=ID (valued?="(" val=NUM ")")?;
+		//	name=(Alpha | AlphaNum | AlphaNumSpecial) (valued?="(" val=Num ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//name=ID (valued?="(" val=NUM ")")?
+		//name=(Alpha | AlphaNum | AlphaNumSpecial) (valued?="(" val=Num ")")?
 		public Group getGroup() { return cGroup; }
 
-		//name=ID
+		//name=(Alpha | AlphaNum | AlphaNumSpecial)
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
-		//ID
-		public RuleCall getNameIDTerminalRuleCall_0_0() { return cNameIDTerminalRuleCall_0_0; }
+		//Alpha | AlphaNum | AlphaNumSpecial
+		public Alternatives getNameAlternatives_0_0() { return cNameAlternatives_0_0; }
 
-		//(valued?="(" val=NUM ")")?
+		//Alpha
+		public RuleCall getNameAlphaTerminalRuleCall_0_0_0() { return cNameAlphaTerminalRuleCall_0_0_0; }
+
+		//AlphaNum
+		public RuleCall getNameAlphaNumTerminalRuleCall_0_0_1() { return cNameAlphaNumTerminalRuleCall_0_0_1; }
+
+		//AlphaNumSpecial
+		public RuleCall getNameAlphaNumSpecialTerminalRuleCall_0_0_2() { return cNameAlphaNumSpecialTerminalRuleCall_0_0_2; }
+
+		//(valued?="(" val=Num ")")?
 		public Group getGroup_1() { return cGroup_1; }
 
 		//valued?="("
@@ -214,30 +170,88 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		//"("
 		public Keyword getValuedLeftParenthesisKeyword_1_0_0() { return cValuedLeftParenthesisKeyword_1_0_0; }
 
-		//val=NUM
+		//val=Num
 		public Assignment getValAssignment_1_1() { return cValAssignment_1_1; }
 
-		//NUM
-		public RuleCall getValNUMTerminalRuleCall_1_1_0() { return cValNUMTerminalRuleCall_1_1_0; }
+		//Num
+		public RuleCall getValNumTerminalRuleCall_1_1_0() { return cValNumTerminalRuleCall_1_1_0; }
 
 		//")"
 		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
+	}
+
+	public class KvpairElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "kvpair");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cPercentSignPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cKAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cKAlternatives_1_0 = (Alternatives)cKAssignment_1.eContents().get(0);
+		private final RuleCall cKAlphaTerminalRuleCall_1_0_0 = (RuleCall)cKAlternatives_1_0.eContents().get(0);
+		private final RuleCall cKAlphaNumTerminalRuleCall_1_0_1 = (RuleCall)cKAlternatives_1_0.eContents().get(1);
+		private final RuleCall cKAlphaNumSpecialTerminalRuleCall_1_0_2 = (RuleCall)cKAlternatives_1_0.eContents().get(2);
+		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Assignment cValAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cValAlternatives_3_0 = (Alternatives)cValAssignment_3.eContents().get(0);
+		private final RuleCall cValAlphaTerminalRuleCall_3_0_0 = (RuleCall)cValAlternatives_3_0.eContents().get(0);
+		private final RuleCall cValAlphaNumTerminalRuleCall_3_0_1 = (RuleCall)cValAlternatives_3_0.eContents().get(1);
+		private final RuleCall cValAlphaNumSpecialTerminalRuleCall_3_0_2 = (RuleCall)cValAlternatives_3_0.eContents().get(2);
+		
+		//kvpair:
+		//	"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial);
+		public ParserRule getRule() { return rule; }
+
+		//"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial)
+		public Group getGroup() { return cGroup; }
+
+		//"%%"
+		public Keyword getPercentSignPercentSignKeyword_0() { return cPercentSignPercentSignKeyword_0; }
+
+		//k=(Alpha | AlphaNum | AlphaNumSpecial)
+		public Assignment getKAssignment_1() { return cKAssignment_1; }
+
+		//Alpha | AlphaNum | AlphaNumSpecial
+		public Alternatives getKAlternatives_1_0() { return cKAlternatives_1_0; }
+
+		//Alpha
+		public RuleCall getKAlphaTerminalRuleCall_1_0_0() { return cKAlphaTerminalRuleCall_1_0_0; }
+
+		//AlphaNum
+		public RuleCall getKAlphaNumTerminalRuleCall_1_0_1() { return cKAlphaNumTerminalRuleCall_1_0_1; }
+
+		//AlphaNumSpecial
+		public RuleCall getKAlphaNumSpecialTerminalRuleCall_1_0_2() { return cKAlphaNumSpecialTerminalRuleCall_1_0_2; }
+
+		//":"
+		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+
+		//val=(Alpha | AlphaNum | AlphaNumSpecial)
+		public Assignment getValAssignment_3() { return cValAssignment_3; }
+
+		//Alpha | AlphaNum | AlphaNumSpecial
+		public Alternatives getValAlternatives_3_0() { return cValAlternatives_3_0; }
+
+		//Alpha
+		public RuleCall getValAlphaTerminalRuleCall_3_0_0() { return cValAlphaTerminalRuleCall_3_0_0; }
+
+		//AlphaNum
+		public RuleCall getValAlphaNumTerminalRuleCall_3_0_1() { return cValAlphaNumTerminalRuleCall_3_0_1; }
+
+		//AlphaNumSpecial
+		public RuleCall getValAlphaNumSpecialTerminalRuleCall_3_0_2() { return cValAlphaNumSpecialTerminalRuleCall_3_0_2; }
 	}
 	
 	
 	private TracelistElements pTracelist;
 	private TraceElements pTrace;
 	private TickElements pTick;
-	private KvpairElements pKvpair;
 	private SignalElements pSignal;
-	private TerminalRule tDigit;
-	private TerminalRule tLetter;
-	private TerminalRule tNUM;
+	private KvpairElements pKvpair;
+	private TerminalRule tAlpha;
+	private TerminalRule tNum;
+	private TerminalRule tAlphaNum;
 	private TerminalRule tSpecial;
-	private TerminalRule tID;
 	private TerminalRule tAlphaNumSpecial;
 	private TerminalRule tWS;
-	private TerminalRule tCOMMENT;
 	
 	private final GrammarProvider grammarProvider;
 
@@ -253,7 +267,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//tracelist:
-	//	traces+=trace? ("!" "reset" ";" traces+=trace)+;
+	//	traces+=trace+;
 	public TracelistElements getTracelistAccess() {
 		return (pTracelist != null) ? pTracelist : (pTracelist = new TracelistElements());
 	}
@@ -263,7 +277,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//trace:
-	//	{trace} ticks+=tick+;
+	//	"!" "reset" ";" ticks+=tick+;
 	public TraceElements getTraceAccess() {
 		return (pTrace != null) ? pTrace : (pTrace = new TraceElements());
 	}
@@ -273,7 +287,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//tick:
-	//	input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* n=";";
+	//	{tick} input+=signal* ("%" "Output" ":" output+=signal*)? extraInfos+=kvpair* ";";
 	public TickElements getTickAccess() {
 		return (pTick != null) ? pTick : (pTick = new TickElements());
 	}
@@ -282,18 +296,8 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getTickAccess().getRule();
 	}
 
-	//kvpair:
-	//	"%%" k=AlphaNumSpecial ":" val=AlphaNumSpecial;
-	public KvpairElements getKvpairAccess() {
-		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
-	}
-	
-	public ParserRule getKvpairRule() {
-		return getKvpairAccess().getRule();
-	}
-
 	//signal:
-	//	name=ID (valued?="(" val=NUM ")")?;
+	//	name=(Alpha | AlphaNum | AlphaNumSpecial) (valued?="(" val=Num ")")?;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -302,53 +306,85 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
-	/// *------------------------------------------------------------------
-	// * LEXER RULES
-	// *------------------------------------------------------------------* / terminal Digit:
-	//	"0".."9";
-	public TerminalRule getDigitRule() {
-		return (tDigit != null) ? tDigit : (tDigit = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Digit"));
+	//kvpair:
+	//	"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial);
+	public KvpairElements getKvpairAccess() {
+		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
+	}
+	
+	public ParserRule getKvpairRule() {
+		return getKvpairAccess().getRule();
+	}
+
+	//terminal Alpha:
+	//	("a".."z" | "A".."Z")+;
+	public TerminalRule getAlphaRule() {
+		return (tAlpha != null) ? tAlpha : (tAlpha = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Alpha"));
 	} 
 
-	//terminal Letter:
-	//	"a".."z" | "A".."Z";
-	public TerminalRule getLetterRule() {
-		return (tLetter != null) ? tLetter : (tLetter = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Letter"));
+	////terminal Digit : '0'..'9';
+	//terminal Num returns ecore::EInt:
+	//	("+" | "-") "0".."9"+;
+	public TerminalRule getNumRule() {
+		return (tNum != null) ? tNum : (tNum = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Num"));
 	} 
 
-	//terminal NUM returns ecore::EInt:
-	//	("+" | "-")? Digit+;
-	public TerminalRule getNUMRule() {
-		return (tNUM != null) ? tNUM : (tNUM = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "NUM"));
+	//terminal AlphaNum:
+	//	(Alpha | "0".."9")+;
+	public TerminalRule getAlphaNumRule() {
+		return (tAlphaNum != null) ? tAlphaNum : (tAlphaNum = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNum"));
 	} 
 
 	//terminal Special:
-	//	"!" | "@" | "#" | "$" | "%" | "^" | "&" | "*" | "(" | ")" | "_" | "=" | "+" | "-";
+	//	"," | "." | "/" | "@" | "#" | "$" | "^" | "&" | "*" | "_" | "=" | "+" | "-";
 	public TerminalRule getSpecialRule() {
 		return (tSpecial != null) ? tSpecial : (tSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Special"));
 	} 
 
-	//terminal ID:
-	//	(Letter | "_") (Letter | Digit | "_")*;
-	public TerminalRule getIDRule() {
-		return (tID != null) ? tID : (tID = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ID"));
-	} 
-
 	//terminal AlphaNumSpecial:
-	//	(Letter | Digit | Special) (Letter | Digit | Special)*;
+	//	(Alpha | "0".."9" | Special)+;
 	public TerminalRule getAlphaNumSpecialRule() {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 
 
-	//terminal WS:
+	////terminal Comment : '%' (Alpha | Digit | Special | WS)*;
+	/// *tracelist:
+	//  (
+	//   (traces+=trace)?   
+	//    (('!' 'reset' ';' traces+=trace)+)
+	//   )
+	//   ;
+	//
+	//trace: 
+	//   {trace} ((ticks+=tick )+)
+	//   ;
+	//  
+	//tick:
+	//   (input+=signal)+ ('%' 'Output' ':' (output+=signal)*)? n=';' //(extraInfos+=kvpair)* n=';' 
+	//   ; 
+	//
+	/// *kvpair:
+	//    '%%' k=AlphaNumSpecial ':' val=AlphaNumSpecial
+	//;* / / *signal:     
+	//     name=ID (valued?='('  val=NUM ')')? 
+	//   ;
+	//               
+	/// *------------------------------------------------------------------
+	// * LEXER RULES
+	// *------------------------------------------------------------------* / / *terminal Digit : ('0' .. '9') ;
+	//
+	//terminal Letter : 'a'..'z'|'A'..'Z';
+	//
+	//terminal NUM returns ecore::EInt : ('+'|'-')?(Digit)+ ;
+	//terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
+	////terminal Special : '!' | '@' | '#' | '$' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-'; // %
+	//
+	//terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
+	//
+	////terminal AlphaNumSpecial : (Letter | Digit | Special) (Letter | Digit | Special)*;
+	// * / terminal WS:
 	//	"\t" | " " | "\r" | "\n";
 	public TerminalRule getWSRule() {
 		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
-	} 
-
-	//terminal COMMENT:
-	//	"%" ("A".."N" | "P".."Z")->"\n";
-	public TerminalRule getCOMMENTRule() {
-		return (tCOMMENT != null) ? tCOMMENT : (tCOMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "COMMENT"));
 	} 
 }

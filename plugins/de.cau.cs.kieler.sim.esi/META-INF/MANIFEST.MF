@@ -27,16 +27,16 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="3.5.0",
  de.cau.cs.kieler.sim.kiem,
  de.cau.cs.kieler.sim.signals
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Export-Package: de.cau.cs.kieler.sim.esi,
- de.cau.cs.kieler.sim.esi.esi,
- de.cau.cs.kieler.sim.esi.esi.impl,
- de.cau.cs.kieler.sim.esi.esi.util,
- de.cau.cs.kieler.sim.esi.parser.antlr,
- de.cau.cs.kieler.sim.esi.parser.antlr.internal,
- de.cau.cs.kieler.sim.esi.services,
- de.cau.cs.kieler.sim.esi.scoping,
- de.cau.cs.kieler.sim.esi.formatting,
- de.cau.cs.kieler.sim.esi.parseTreeConstruction,
- de.cau.cs.kieler.sim.esi.validation
+Export-Package: de.cau.cs.kieler.sim.esi;uses:="org.eclipse.xtext,org.eclipse.xtext.service,com.google.inject",
+ de.cau.cs.kieler.sim.esi.esi;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util",
+ de.cau.cs.kieler.sim.esi.esi.impl; uses:="de.cau.cs.kieler.sim.esi.esi,  org.eclipse.emf.ecore,  org.eclipse.emf.common.util,  org.eclipse.emf.ecore.impl,  org.eclipse.emf.common.notify",
+ de.cau.cs.kieler.sim.esi.esi.util; uses:="org.eclipse.emf.ecore.util,  org.eclipse.emf.ecore,  de.cau.cs.kieler.sim.esi.esi,  org.eclipse.emf.common.notify.impl,  org.eclipse.emf.common.notify",
+ de.cau.cs.kieler.sim.esi.formatting;uses:="org.eclipse.xtext.formatting.impl",
+ de.cau.cs.kieler.sim.esi.parser.antlr;uses:="org.eclipse.xtext.parser.antlr,de.cau.cs.kieler.sim.esi.parser.antlr.internal,de.cau.cs.kieler.sim.esi.services",
+ de.cau.cs.kieler.sim.esi.parser.antlr.internal; uses:="org.eclipse.emf.ecore,  org.antlr.runtime,  org.eclipse.xtext.parser.antlr,  de.cau.cs.kieler.sim.esi.services",
+ de.cau.cs.kieler.sim.esi.scoping;uses:="org.eclipse.xtext.scoping.impl",
+ de.cau.cs.kieler.sim.esi.serializer; uses:="org.eclipse.xtext,  de.cau.cs.kieler.sim.esi.esi,  org.eclipse.emf.ecore,  org.eclipse.xtext.serializer.acceptor,  org.eclipse.xtext.serializer.sequencer,  org.eclipse.xtext.serializer.analysis,  org.eclipse.xtext.serializer.diagnostic,  org.eclipse.xtext.nodemodel,  com.google.inject,  de.cau.cs.kieler.sim.esi.services",
+ de.cau.cs.kieler.sim.esi.services;uses:="org.eclipse.xtext,org.eclipse.xtext.service",
+ de.cau.cs.kieler.sim.esi.validation;uses:="org.eclipse.xtext.validation"
 Import-Package: org.apache.log4j,
  org.eclipse.ui.part

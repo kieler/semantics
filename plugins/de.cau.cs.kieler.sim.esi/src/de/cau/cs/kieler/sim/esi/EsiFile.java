@@ -24,6 +24,7 @@ import java.util.Set;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.ISetup;
+import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.parser.IParser;
 import org.eclipse.xtext.resource.IResourceFactory;
@@ -44,52 +45,40 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  */
 public class EsiFile implements ITraceProvider {
 
-    private static final String[] EXTENSIONS = {"esi", "eso"};
-    
+    private static final String[] EXTENSIONS = { "esi", "eso" };
+
     private tracelist traceList = null;
     private EsiTrace current = null;
     private int pos = 0;
 
-   
-    
-    /*EsiFile(final Object classpathURIContext, final String fileName)
-            throws KiemInitializationException {
-
-        ISetup setup = new EsiStandaloneSetup();
-        Injector injector = setup.createInjectorAndDoEMFRegistration();
-        XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
-        rs.setClasspathURIContext(classpathURIContext);
-
-        IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class);
-        // setup.doSetup();
-        URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); // Activator.PLUGIN_ID);
-        XtextResource resource = (XtextResource) resourceFactory.createResource(uri);
-        rs.getResources().add(resource);
-
-        InputStream in;
-        try {
-
-            if (fileName != null && fileName.length() > 0) {
-                in = new FileInputStream(fileName);
-            } else {
-                throw new KiemInitializationException(
-                        "EsiComponent is activated but no trace file is set", false, null);
-            }
-
-            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IAntlrParser parser = inj.getInstance(IAntlrParser.class);
-            IParseResult parseResult = parser.parse(in);
-            if (!parseResult.getParseErrors().isEmpty()) {
-                throw new KiemInitializationException("Parse error: "
-                        + parseResult.getParseErrors().get(0).toString(), true, null);
-            }
-            traceList = (tracelist) parseResult.getRootASTElement();
-        } catch (FileNotFoundException e) {
-            throw new KiemInitializationException("File not found", false, e);
-            // } catch (Exception e) {
-            // throw new KiemInitializationException("Unknown error", false, e);
-        }
-    }*/
+    /*
+     * EsiFile(final Object classpathURIContext, final String fileName) throws
+     * KiemInitializationException {
+     * 
+     * ISetup setup = new EsiStandaloneSetup(); Injector injector =
+     * setup.createInjectorAndDoEMFRegistration(); XtextResourceSet rs =
+     * injector.getInstance(XtextResourceSet.class); rs.setClasspathURIContext(classpathURIContext);
+     * 
+     * IResourceFactory resourceFactory = injector.getInstance(IResourceFactory.class); //
+     * setup.doSetup(); URI uri = URI.createURI("de.cau.cs.kieler.sim.esi"); //
+     * Activator.PLUGIN_ID); XtextResource resource = (XtextResource)
+     * resourceFactory.createResource(uri); rs.getResources().add(resource);
+     * 
+     * InputStream in; try {
+     * 
+     * if (fileName != null && fileName.length() > 0) { in = new FileInputStream(fileName); } else {
+     * throw new KiemInitializationException( "EsiComponent is activated but no trace file is set",
+     * false, null); }
+     * 
+     * Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration(); IAntlrParser
+     * parser = inj.getInstance(IAntlrParser.class); IParseResult parseResult = parser.parse(in); if
+     * (!parseResult.getParseErrors().isEmpty()) { throw new
+     * KiemInitializationException("Parse error: " + parseResult.getParseErrors().get(0).toString(),
+     * true, null); } traceList = (tracelist) parseResult.getRootASTElement(); } catch
+     * (FileNotFoundException e) { throw new KiemInitializationException("File not found", false,
+     * e); // } catch (Exception e) { // throw new KiemInitializationException("Unknown error",
+     * false, e); } }
+     */
 
     /**
      * {@inheritDoc}
@@ -191,8 +180,11 @@ public class EsiFile implements ITraceProvider {
             IParser parser = inj.getInstance(IParser.class);
             IParseResult parseResult = parser.parse(new InputStreamReader(in));
             if (parseResult.getSyntaxErrors().iterator().hasNext()) {
-                throw new KiemInitializationException("Parse error: "
-                        + parseResult.getSyntaxErrors().iterator().next().getText(), true, null);
+                INode errorElem = parseResult.getSyntaxErrors().iterator().next();
+                throw new KiemInitializationException("Parse error on line "
+                        + errorElem.getStartLine() + " at column " + errorElem.getTotalOffset()
+                        + ": " + parseResult.getSyntaxErrors().iterator().next().getText(), true,
+                        null);
             }
             traceList = (tracelist) parseResult.getRootASTElement();
         } catch (FileNotFoundException e) {

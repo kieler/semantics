@@ -19,16 +19,15 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//tick/input"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//tick/output"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//tick/extraInfos"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//tick/n"/>
-    </genClasses>
-    <genClasses ecoreClass="Esi.ecore#//kvpair">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/k"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/val"/>
     </genClasses>
     <genClasses ecoreClass="Esi.ecore#//signal">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/valued"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/val"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//kvpair">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/k"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/val"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

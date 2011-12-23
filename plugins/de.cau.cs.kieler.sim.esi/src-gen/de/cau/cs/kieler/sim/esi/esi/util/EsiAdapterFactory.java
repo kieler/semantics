@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.sim.esi.esi.util;
 
@@ -94,14 +93,14 @@ public class EsiAdapterFactory extends AdapterFactoryImpl
         return createtickAdapter();
       }
       @Override
-      public Adapter casekvpair(kvpair object)
-      {
-        return createkvpairAdapter();
-      }
-      @Override
       public Adapter casesignal(signal object)
       {
         return createsignalAdapter();
+      }
+      @Override
+      public Adapter casekvpair(kvpair object)
+      {
+        return createkvpairAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -171,21 +170,6 @@ public class EsiAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.kvpair <em>kvpair</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair
-   * @generated
-   */
-  public Adapter createkvpairAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.signal <em>signal</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -196,6 +180,21 @@ public class EsiAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createsignalAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.kvpair <em>kvpair</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair
+   * @generated
+   */
+  public Adapter createkvpairAdapter()
   {
     return null;
   }
