@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 //import de.cau.cs.kieler.sim.esi.esi.kvpair;
+import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
 
@@ -64,7 +65,7 @@ public class EsiTick implements ITick {
     /**
      * {@inheritDoc}
      */
-/*    public Map<String, String> getExtraInfos() {
+    public Map<String, String> getExtraInfos() {
         HashMap<String, String> retval = new HashMap<String, String>();
         for (kvpair kv : tick.getExtraInfos()) {
             retval.put(kv.getK(), kv.getVal());
@@ -72,5 +73,4 @@ public class EsiTick implements ITick {
         
         return retval;
     }
-*/
 }

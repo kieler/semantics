@@ -15,7 +15,7 @@ public class EsiParser extends org.eclipse.xtext.parser.antlr.AbstractAntlrParse
 	
 	@Override
 	protected void setInitialHiddenTokens(XtextTokenStream tokenStream) {
-		tokenStream.setInitialHiddenTokens("RULE_WS");
+		tokenStream.setInitialHiddenTokens("RULE_WS", "RULE_COMMENT");
 	}
 	
 	@Override
