@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.sim.esi.esi;
 
@@ -154,59 +153,13 @@ public interface EsiPackage extends EPackage
   int TICK__EXTRA_INFOS = 2;
 
   /**
-   * The feature id for the '<em><b>N</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int TICK__N = 3;
-
-  /**
    * The number of structural features of the '<em>tick</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TICK_FEATURE_COUNT = 4;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl <em>kvpair</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl
-   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getkvpair()
-   * @generated
-   */
-  int KVPAIR = 3;
-
-  /**
-   * The feature id for the '<em><b>K</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KVPAIR__K = 0;
-
-  /**
-   * The feature id for the '<em><b>Val</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KVPAIR__VAL = 1;
-
-  /**
-   * The number of structural features of the '<em>kvpair</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int KVPAIR_FEATURE_COUNT = 2;
+  int TICK_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.signalImpl <em>signal</em>}' class.
@@ -216,7 +169,7 @@ public interface EsiPackage extends EPackage
    * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getsignal()
    * @generated
    */
-  int SIGNAL = 4;
+  int SIGNAL = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -253,6 +206,43 @@ public interface EsiPackage extends EPackage
    * @ordered
    */
   int SIGNAL_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl <em>kvpair</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getkvpair()
+   * @generated
+   */
+  int KVPAIR = 4;
+
+  /**
+   * The feature id for the '<em><b>K</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KVPAIR__K = 0;
+
+  /**
+   * The feature id for the '<em><b>Val</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KVPAIR__VAL = 1;
+
+  /**
+   * The number of structural features of the '<em>kvpair</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int KVPAIR_FEATURE_COUNT = 2;
 
 
   /**
@@ -341,49 +331,6 @@ public interface EsiPackage extends EPackage
   EReference gettick_ExtraInfos();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.tick#getN <em>N</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>N</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.tick#getN()
-   * @see #gettick()
-   * @generated
-   */
-  EAttribute gettick_N();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.kvpair <em>kvpair</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>kvpair</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair
-   * @generated
-   */
-  EClass getkvpair();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getK <em>K</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>K</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getK()
-   * @see #getkvpair()
-   * @generated
-   */
-  EAttribute getkvpair_K();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getVal <em>Val</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Val</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getVal()
-   * @see #getkvpair()
-   * @generated
-   */
-  EAttribute getkvpair_Val();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.signal <em>signal</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -425,6 +372,38 @@ public interface EsiPackage extends EPackage
    * @generated
    */
   EAttribute getsignal_Val();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.kvpair <em>kvpair</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>kvpair</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair
+   * @generated
+   */
+  EClass getkvpair();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getK <em>K</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>K</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getK()
+   * @see #getkvpair()
+   * @generated
+   */
+  EAttribute getkvpair_K();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getVal <em>Val</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Val</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getVal()
+   * @see #getkvpair()
+   * @generated
+   */
+  EAttribute getkvpair_Val();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -520,40 +499,6 @@ public interface EsiPackage extends EPackage
     EReference TICK__EXTRA_INFOS = eINSTANCE.gettick_ExtraInfos();
 
     /**
-     * The meta object literal for the '<em><b>N</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute TICK__N = eINSTANCE.gettick_N();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl <em>kvpair</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl
-     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getkvpair()
-     * @generated
-     */
-    EClass KVPAIR = eINSTANCE.getkvpair();
-
-    /**
-     * The meta object literal for the '<em><b>K</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute KVPAIR__K = eINSTANCE.getkvpair_K();
-
-    /**
-     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute KVPAIR__VAL = eINSTANCE.getkvpair_Val();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.signalImpl <em>signal</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -586,6 +531,32 @@ public interface EsiPackage extends EPackage
      * @generated
      */
     EAttribute SIGNAL__VAL = eINSTANCE.getsignal_Val();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl <em>kvpair</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getkvpair()
+     * @generated
+     */
+    EClass KVPAIR = eINSTANCE.getkvpair();
+
+    /**
+     * The meta object literal for the '<em><b>K</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KVPAIR__K = eINSTANCE.getkvpair_K();
+
+    /**
+     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute KVPAIR__VAL = eINSTANCE.getkvpair_Val();
 
   }
 

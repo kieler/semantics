@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.sim.esi.esi.util;
 
@@ -97,17 +96,17 @@ public class EsiSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case EsiPackage.KVPAIR:
-      {
-        kvpair kvpair = (kvpair)theEObject;
-        T result = casekvpair(kvpair);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case EsiPackage.SIGNAL:
       {
         signal signal = (signal)theEObject;
         T result = casesignal(signal);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsiPackage.KVPAIR:
+      {
+        kvpair kvpair = (kvpair)theEObject;
+        T result = casekvpair(kvpair);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -164,22 +163,6 @@ public class EsiSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>kvpair</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>kvpair</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casekvpair(kvpair object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>signal</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -191,6 +174,22 @@ public class EsiSwitch<T> extends Switch<T>
    * @generated
    */
   public T casesignal(signal object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>kvpair</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>kvpair</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casekvpair(kvpair object)
   {
     return null;
   }

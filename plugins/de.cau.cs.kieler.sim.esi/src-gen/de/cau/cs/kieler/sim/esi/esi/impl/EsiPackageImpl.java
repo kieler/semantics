@@ -2,7 +2,6 @@
  * <copyright>
  * </copyright>
  *
-
  */
 package de.cau.cs.kieler.sim.esi.esi.impl;
 
@@ -55,14 +54,14 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass kvpairEClass = null;
+  private EClass signalEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass signalEClass = null;
+  private EClass kvpairEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -212,46 +211,6 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute gettick_N()
-  {
-    return (EAttribute)tickEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getkvpair()
-  {
-    return kvpairEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getkvpair_K()
-  {
-    return (EAttribute)kvpairEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getkvpair_Val()
-  {
-    return (EAttribute)kvpairEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EClass getsignal()
   {
     return signalEClass;
@@ -285,6 +244,36 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
   public EAttribute getsignal_Val()
   {
     return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getkvpair()
+  {
+    return kvpairEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getkvpair_K()
+  {
+    return (EAttribute)kvpairEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getkvpair_Val()
+  {
+    return (EAttribute)kvpairEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -327,16 +316,15 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     createEReference(tickEClass, TICK__INPUT);
     createEReference(tickEClass, TICK__OUTPUT);
     createEReference(tickEClass, TICK__EXTRA_INFOS);
-    createEAttribute(tickEClass, TICK__N);
-
-    kvpairEClass = createEClass(KVPAIR);
-    createEAttribute(kvpairEClass, KVPAIR__K);
-    createEAttribute(kvpairEClass, KVPAIR__VAL);
 
     signalEClass = createEClass(SIGNAL);
     createEAttribute(signalEClass, SIGNAL__NAME);
     createEAttribute(signalEClass, SIGNAL__VALUED);
     createEAttribute(signalEClass, SIGNAL__VAL);
+
+    kvpairEClass = createEClass(KVPAIR);
+    createEAttribute(kvpairEClass, KVPAIR__K);
+    createEAttribute(kvpairEClass, KVPAIR__VAL);
   }
 
   /**
@@ -380,16 +368,15 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     initEReference(gettick_Input(), this.getsignal(), null, "input", null, 0, -1, tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(gettick_Output(), this.getsignal(), null, "output", null, 0, -1, tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(gettick_ExtraInfos(), this.getkvpair(), null, "extraInfos", null, 0, -1, tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(gettick_N(), ecorePackage.getEString(), "n", null, 0, 1, tick.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(kvpairEClass, kvpair.class, "kvpair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getkvpair_K(), ecorePackage.getEString(), "k", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getkvpair_Val(), ecorePackage.getEString(), "val", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(signalEClass, signal.class, "signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getsignal_Name(), ecorePackage.getEString(), "name", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getsignal_Valued(), ecorePackage.getEBoolean(), "valued", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getsignal_Val(), ecorePackage.getEInt(), "val", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(kvpairEClass, kvpair.class, "kvpair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getkvpair_K(), ecorePackage.getEString(), "k", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getkvpair_Val(), ecorePackage.getEString(), "val", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);
