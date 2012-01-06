@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sim.signals.ui.views;
+package de.cau.cs.kieler.sim.signals;
 
 import java.util.LinkedList;
 
@@ -64,7 +64,9 @@ public class Signal {
 	/**
 	 * Clear the history of present values.
 	 */
-	public void clear() {
+	public void clear(long currentTick) {
+		// ensure that all values are absent if not set yet
+		setPresent(currentTick, false);
 		this.tickOffset += presentList.size() - 1;
 		presentList.clear();
 	}
@@ -95,7 +97,18 @@ public class Signal {
 	 * @return the max tick
 	 */
 	public long getMaxTick() {
-		return presentList.size() + getTickOffset();
+		return presentList.size() - 1 + getTickOffset();
+	}
+	
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the minimal defined tick for this signal.
+	 *
+	 * @return the min tick
+	 */
+	public long getMinTick() {
+		return getTickOffset() + 1;
 	}
 	
 	// -------------------------------------------------------------------------

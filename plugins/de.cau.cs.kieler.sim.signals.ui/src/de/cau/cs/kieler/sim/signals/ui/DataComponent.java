@@ -27,8 +27,8 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
-import de.cau.cs.kieler.sim.signals.ui.views.Signal;
-import de.cau.cs.kieler.sim.signals.ui.views.SignalList;
+import de.cau.cs.kieler.sim.signals.Signal;
+import de.cau.cs.kieler.sim.signals.SignalList;
 import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
 
 /**

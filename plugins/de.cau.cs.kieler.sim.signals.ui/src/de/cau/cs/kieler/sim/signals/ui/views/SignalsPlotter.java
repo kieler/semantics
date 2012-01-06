@@ -36,6 +36,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Layout;
+import de.cau.cs.kieler.sim.signals.SignalList;
+import de.cau.cs.kieler.sim.signals.Signal;
 
 /**
  * The class SignalsPlotter implements the basic plotter for the synchronous
@@ -45,47 +47,100 @@ import org.eclipse.swt.widgets.Layout;
  */
 public class SignalsPlotter {
 
-	final int XSPACE = 25;
-	final int YOFFSET = 40;
-	final int YSPACE = 40;
-	final int XOFFSET = 60;
+	/** The fixed size constants. */
+	private final int XSPACE = 25;
+	private final int YOFFSET = 40;
+	private final int YSPACE = 40;
+	private final int XOFFSET = 60;
+	private final String SIGNALLABELSAFETYMARGINSPACE = "    ";
 
-	int zoomedXSpace = 25;
-	int zoomedYOffset = 40;
-	int zoomedYSpace = 40;
-	int zoomedXOffset = 60;
+	/** The zoomed size variables. */
+	private int zoomedXSpace = 25;
+	private int zoomedYOffset = 40;
+	private int zoomedYSpace = 40;
+	private int zoomedXOffset = 60;
 
+	/** The signal list. */
 	SignalList signalList = null;
+
+	/** The SWT parent. */
 	Composite parent = null;
+
+	/** The signal contents. */
 	Panel signalContents = null;
+
+	/** The outer scrolled composite. */
 	ScrolledComposite outerScrolledComposite = null;
+
+	/** The outer canvas. */
 	FigureCanvas outerCanvas = null;
 
-	RGB backgroundColor = new RGB(0, 0, 0); // black
-	RGB backgroundColor2 = new RGB(10, 10, 50); // black
-	RGB signalColor1 = new RGB(100, 100, 255); // light blue
-	RGB signalColor2 = new RGB(200, 200, 255); // lighter blue
-	RGB signalColor0 = new RGB(0, 0, 50); // dark blue
-	RGB signalColorMarker = new RGB(255, 0, 0); // red
+	/** The color constants. */
+	private RGB backgroundColor = new RGB(0, 0, 0); // black
+	private RGB signalColor1 = new RGB(100, 100, 255); // light blue
+	private RGB signalColor2 = new RGB(200, 200, 255); // lighter blue
+	private RGB signalColor0 = new RGB(0, 0, 50); // dark blue
+	private RGB signalColorMarker = new RGB(255, 0, 0); // red
 
+	/**
+	 * The initial signal name size. This is re-calculated with the maximal
+	 * label size each time plot() is called.
+	 */
 	Dimension signalNameSize = new Dimension(100, 40);
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Instantiates a new signals plotter.
+	 * 
+	 * @param parent
+	 *            the parent
+	 */
 	public SignalsPlotter(Composite parent) {
 		setParent(parent);
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Sets the signal list.
+	 * 
+	 * @param signalList
+	 *            the new signal list
+	 */
 	public void setSignalList(SignalList signalList) {
 		this.signalList = signalList;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Sets the parent.
+	 * 
+	 * @param parent
+	 *            the new parent
+	 */
 	public void setParent(Composite parent) {
 		this.parent = parent;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Sets the focus.
+	 */
 	public void setFocus() {
-		// contents.setFocusTraversable(true);
+		outerScrolledComposite.setFocus();
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate zoomed values relative to a zoomLevel.
+	 * 
+	 * @param zoomLevel
+	 *            the zoom level
+	 */
 	private void zoom(int zoomLevel) {
 		zoomedXSpace = (XSPACE * zoomLevel) / 100;
 		zoomedYOffset = (YOFFSET * zoomLevel) / 100;
@@ -93,87 +148,24 @@ public class SignalsPlotter {
 		zoomedXOffset = (XOFFSET * 1) / 100;
 	}
 
-	// public void plot(){
-	// //if no place to plot, or no data to plot, return.
-	// if(parent == null || signalList == null)
-	// return;
-	//
-	// if (signalContents == null) {
-	//
-	// signalContents = new Panel();
-	// signalContents.setLayoutManager(new XYLayout());
-	// signalContents.setBackgroundColor(new Color(Display.getCurrent(),
-	// backgroundColor));
-	//
-	// presentContents = new Panel();
-	// presentContents.setLayoutManager(new XYLayout());
-	// presentContents.setBackgroundColor(new Color(Display.getCurrent(),
-	// backgroundColor2));
-	//
-	//
-	// outerScrolledComposite = new ScrolledComposite(parent, SWT.BORDER |
-	// SWT.H_SCROLL | SWT.V_SCROLL);
-	// outerScrolledComposite.setLayout(new FillLayout(SWT.HORIZONTAL));
-	// outerScrolledComposite.setMinSize(0, 0);
-	// outerScrolledComposite.setExpandHorizontal(true);
-	// outerScrolledComposite.setExpandVertical(true);
-	//
-	// Composite outerComposite = new Composite(outerScrolledComposite,
-	// SWT.NONE);
-	// // Layout layout = new RowLayout(SWT.HORIZONTAL); //new
-	// FillLayout(SWT.HORIZONTAL);//new GridLayout(2, true);
-	//
-	// Layout layout = new FillLayout(SWT.HORIZONTAL);
-	// outerComposite.setLayout(layout);
-	// outerScrolledComposite.setContent(outerComposite);
-	//
-	// Composite outerComposite1 = new Composite(outerComposite, SWT.NONE);
-	// outerComposite1.setLayout(new FillLayout(SWT.HORIZONTAL));
-	// // outerComposite1.setSize(200, 200);
-	// outerComposite1.setSize(200, outerComposite1.getSize().y);
-	// Composite outerComposite2 = new Composite(outerComposite, SWT.NONE);
-	// outerComposite2.setLayout(new FillLayout(SWT.HORIZONTAL));
-	// // outerComposite2.setSize(200, 200);
-	//
-	// innerScrolledComposite = new ScrolledComposite(outerComposite2, SWT.NONE
-	// | SWT.H_SCROLL );
-	// innerScrolledComposite.setLayout(new FillLayout());
-	// innerScrolledComposite.setMinSize(0, 0);
-	// innerScrolledComposite.setExpandHorizontal(true);
-	// innerScrolledComposite.setExpandVertical(true);
-	//
-	//
-	// Composite innerComposite = new Composite(innerScrolledComposite,
-	// SWT.NONE);
-	// innerComposite.setLayout(new FillLayout());
-	// innerScrolledComposite.setContent(innerComposite);
-	//
-	// //innerComposite.setLocation(40, 250);
-	//
-	//
-	// FigureCanvas innerCanvas = new FigureCanvas(innerComposite);
-	// innerCanvas.setContents(presentContents);
-	//
-	// FigureCanvas outerCanvas = new FigureCanvas(outerComposite1);
-	// outerCanvas.setContents(signalContents);
-	// }
-	//
-	// signalContents.removeAll();
-	// presentContents.removeAll();
-	// drawSignalNames(signalContents);
-	// drawSignals(presentContents);
-	//
-	// }
+	// -------------------------------------------------------------------------
 
+	/**
+	 * Plot with a defined zoomLevel.
+	 * 
+	 * @param zoomLevel
+	 *            the zoom level
+	 */
 	public void plot(int zoomLevel) {
+		// re-calculate zoomed values
 		zoom(zoomLevel);
 
 		// if no place to plot, or no data to plot, return.
 		if (parent == null || signalList == null)
 			return;
 
+		// if no panel exists yet, create a new one
 		if (signalContents == null) {
-
 			signalContents = new Panel();
 			signalContents.setLayoutManager(new XYLayout());
 			signalContents.setBackgroundColor(new Color(Display.getCurrent(),
@@ -205,44 +197,55 @@ public class SignalsPlotter {
 			outerCanvas.setContents(signalContents);
 		}
 
+		// draw signal view content buffered
 		Panel buffer = new Panel();
 		buffer.setLayoutManager(new XYLayout());
 		buffer.setBackgroundColor(new Color(Display.getCurrent(),
 				backgroundColor));
 
-		// signalContents.removeAll();
 		drawSignals(buffer);
 		drawSignalNames(buffer, 0, Label.RIGHT);
-		drawSignalNames(buffer, outerScrolledComposite.getMinWidth()
-				- signalNameSize.width, Label.LEFT);
+		if (signalList.size() > 0 && (signalList.getMaxTick() - signalList.getMinTick() > 0)) {
+			// only draw left signal names if there is already data to be displayed
+			drawSignalNames(buffer, outerScrolledComposite.getMinWidth()
+					- signalNameSize.width, Label.LEFT);
+		}
 		outerCanvas.setContents(buffer);
 
 		// scroll to the center of selected tick
 		long currentTick = signalList.getCurrentTick();
 		long minTick = signalList.getMinTick();
 		int visibleWidth = outerScrolledComposite.getParent().getSize().y;
-		int xScroll = ((int) (currentTick - minTick + 1) * zoomedXSpace
-				- (visibleWidth / 1) + 2 + signalNameSize.width);
+		int xScroll = ((int) (currentTick - minTick) * zoomedXSpace
+				- (visibleWidth / 2) + signalNameSize.width);
 		int yScroll = outerScrolledComposite.getOrigin().y;
 		outerScrolledComposite.setOrigin(xScroll, yScroll);
 
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Draw all signal present data.
+	 * 
+	 * @param contents
+	 *            the contents
+	 */
 	private void drawSignals(IFigure contents) {
 		int y = zoomedYOffset;
 		long maxTick = signalList.getMaxTick();
-		long minTick = signalList.getMinTick();
+		long minTick = Math.max(1, signalList.getMinTick());
 		long currentTick = signalList.getCurrentTick();
 		RGB signalColor = signalColor1;
 
-		outerScrolledComposite.setMinSize((int) (maxTick - minTick)
+		outerScrolledComposite.setMinSize((int) (maxTick + 1 - minTick)
 				* zoomedXSpace + 2 * signalNameSize.width,
 				outerScrolledComposite.getMinHeight());
 
 		for (Signal signal : signalList) {
 			Node lastNode = null;
 
-			for (long tick = minTick; tick < maxTick; tick++) {
+			for (long tick = minTick; tick <= maxTick; tick++) {
 				int presentOffset = 0;
 				int presentOffsetInverse = -(zoomedYOffset / 2);
 				if (signal.isPresent(tick)) {
@@ -280,6 +283,8 @@ public class SignalsPlotter {
 				drawEdge(contents, nodeS, nodeE, signalColor);
 				lastNode = nodeE;
 
+				// if this is the current tick then mark the node in the
+				// signalColorMarker color
 				if (tick != currentTick) {
 					drawNode(contents, node, signalColor, zoomedYOffset / 8,
 							tick, signal.getName());
@@ -307,69 +312,24 @@ public class SignalsPlotter {
 
 	}
 
-	/**
-	 * Gets the maximum text widt.
-	 * 
-	 * @param font
-	 *            the font
-	 * @return the maximum text widt
-	 */
-	private Dimension getMaximumTextWidth(Font font) {
-		int maxWidth = 0;
-		Dimension maxDimension = signalNameSize;
-		for (Signal signal : signalList) {
-			Dimension currentDimension = TextUtilities.INSTANCE.getTextExtents(
-					"    " + signal.getName() + "    ", font);
-			int currentWidth = currentDimension.width;
-			if (currentWidth > maxWidth) {
-				maxWidth = currentWidth;
-				maxDimension = currentDimension;
-			}
-		}
-		return maxDimension;
-	}
+	// -------------------------------------------------------------------------
 
 	/**
-	 * Draw signal names.
+	 * Draw a node include a tooltip text if the signalName is not null.
 	 * 
 	 * @param contents
 	 *            the contents
-	 * @param x
-	 *            the x
+	 * @param node
+	 *            the node
+	 * @param signalColor
+	 *            the signal color
+	 * @param size
+	 *            the size
+	 * @param tick
+	 *            the tick
+	 * @param signalName
+	 *            the signal name
 	 */
-	private void drawSignalNames(IFigure contents, int x, int align) {
-
-		outerScrolledComposite.setMinSize(outerScrolledComposite.getMinWidth(),
-				signalList.size() * zoomedYSpace + (zoomedYOffset / 2));
-		Font font = new Font(Display.getCurrent(), "Arial",
-				(zoomedYOffset / 4), SWT.NORMAL);
-
-		// update signal name width again
-		signalNameSize = getMaximumTextWidth(font);
-
-		int y = zoomedYOffset / 2;
-		RGB signalColor = signalColor1;
-		for (Signal signal : signalList) {
-			Label labelFigure = new Label();
-			labelFigure.setText("    " + signal.getName() + "    ");
-			labelFigure.setVisible(true);
-			labelFigure.setFont(font);
-			labelFigure.setLabelAlignment(align);
-			labelFigure.setSize(signalNameSize.width, signalNameSize.height);
-			labelFigure.setForegroundColor(new Color(Display.getCurrent(),
-					signalColor));
-			labelFigure.setLocation(new Point(x - zoomedXOffset, y));
-			contents.add(labelFigure);
-			y += zoomedYSpace;
-			// toggle color
-			if (signalColor == signalColor1) {
-				signalColor = signalColor2;
-			} else {
-				signalColor = signalColor1;
-			}
-		}
-	}
-
 	private void drawNode(IFigure contents, Node node, RGB signalColor,
 			int size, long tick, String signalName) {
 		RectangleFigure dotFigure = new RectangleFigure();
@@ -394,6 +354,20 @@ public class SignalsPlotter {
 		contents.setConstraint(dotFigure, new Rectangle(xPos, yPos, -1, -1));
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Draw an edge between two nodes.
+	 * 
+	 * @param contents
+	 *            the contents
+	 * @param node1
+	 *            the node1
+	 * @param node2
+	 *            the node2
+	 * @param signalColor
+	 *            the signal color
+	 */
 	private void drawEdge(IFigure contents, Node node1, Node node2,
 			RGB signalColor) {
 		PolylineConnection wireFigure = new PolylineConnection();
@@ -411,5 +385,77 @@ public class SignalsPlotter {
 		wireFigure.setTargetAnchor(targetAnchor);
 		contents.add(wireFigure);
 	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the maximum text width of all signal names including safety margin
+	 * space.
+	 * 
+	 * @param font
+	 *            the font
+	 * @return the maximum text width
+	 */
+	private Dimension getMaximumTextWidth(Font font) {
+		int maxWidth = 0;
+		Dimension maxDimension = signalNameSize;
+		for (Signal signal : signalList) {
+			Dimension currentDimension = TextUtilities.INSTANCE.getTextExtents(
+					SIGNALLABELSAFETYMARGINSPACE + signal.getName()
+							+ SIGNALLABELSAFETYMARGINSPACE, font);
+			int currentWidth = currentDimension.width;
+			if (currentWidth > maxWidth) {
+				maxWidth = currentWidth;
+				maxDimension = currentDimension;
+			}
+		}
+		return maxDimension;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Draw the signal names. Ensure safety margin space left and right.
+	 * 
+	 * @param contents
+	 *            the contents
+	 * @param xPos
+	 *            the xPos
+	 */
+	private void drawSignalNames(IFigure contents, int xPos, int align) {
+
+		outerScrolledComposite.setMinSize(outerScrolledComposite.getMinWidth(),
+				signalList.size() * zoomedYSpace + (zoomedYOffset / 2));
+		Font font = new Font(Display.getCurrent(), "Arial",
+				(zoomedYOffset / 4), SWT.NORMAL);
+
+		// update signal name width again
+		signalNameSize = getMaximumTextWidth(font);
+
+		int y = zoomedYOffset / 2;
+		RGB signalColor = signalColor1;
+		for (Signal signal : signalList) {
+			Label labelFigure = new Label();
+			labelFigure.setText(SIGNALLABELSAFETYMARGINSPACE + signal.getName()
+					+ SIGNALLABELSAFETYMARGINSPACE);
+			labelFigure.setVisible(true);
+			labelFigure.setFont(font);
+			labelFigure.setLabelAlignment(align);
+			labelFigure.setSize(signalNameSize.width, signalNameSize.height);
+			labelFigure.setForegroundColor(new Color(Display.getCurrent(),
+					signalColor));
+			labelFigure.setLocation(new Point(xPos - zoomedXOffset, y));
+			contents.add(labelFigure);
+			y += zoomedYSpace;
+			// toggle color
+			if (signalColor == signalColor1) {
+				signalColor = signalColor2;
+			} else {
+				signalColor = signalColor1;
+			}
+		}
+	}
+
+	// -------------------------------------------------------------------------
 
 }

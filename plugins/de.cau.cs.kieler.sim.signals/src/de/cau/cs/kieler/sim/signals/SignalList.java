@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  */
 
-package de.cau.cs.kieler.sim.signals.ui.views;
+package de.cau.cs.kieler.sim.signals;
 
 import java.util.LinkedList;
 
@@ -176,7 +176,7 @@ public class SignalList extends LinkedList<Signal> {
 	public long getMinTick() {
 		long minTick = Long.MAX_VALUE;
 		for (Signal signal: this) {
-				minTick = Math.min(minTick, signal.getTickOffset());
+				minTick = Math.min(minTick, signal.getMinTick());
 		}
 		return minTick;
 	}

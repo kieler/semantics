@@ -14,21 +14,38 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.net.URL;
+
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
 
+import de.cau.cs.kieler.sim.signals.SignalList;
+import de.cau.cs.kieler.sim.signals.Signal;
+import de.cau.cs.kieler.sim.signals.SignalASCIIPlotter;
+
 /**
- * The SignalView constructs the actual Eclipse View of the synchronous signal UI.
+ * The SignalView constructs the actual Eclipse View of the synchronous signal
+ * UI.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-
 public class SignalsView extends ViewPart {
 
 	/** The action for deleting an entry. */
@@ -43,8 +60,8 @@ public class SignalsView extends ViewPart {
 	/** The zoom level. */
 	private int zoomLevel = 100;
 
-//	/** The action to save as. */
-//	private Action actionSaveAs;
+	/** The action to save as. */
+	private Action actionSaveAs;
 
 	/** The signals plotter. */
 	private SignalsPlotter signalsPlotter;
@@ -57,6 +74,22 @@ public class SignalsView extends ViewPart {
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Instantiates a new signals view.
+	 */
+	public SignalsView() {
+		signalsViewInstance = this;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets
+	 * .Composite)
+	 */
 	@Override
 	public void createPartControl(Composite parent) {
 
@@ -72,32 +105,47 @@ public class SignalsView extends ViewPart {
 
 	// -------------------------------------------------------------------------
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
+	 */
 	@Override
 	public void setFocus() {
-		// signalsPlotter.plot();
+		signalsPlotter.outerScrolledComposite.setFocus();
 	}
 
 	// -------------------------------------------------------------------------
 
-	public SignalsView() {
-		super();
-		signalsViewInstance = this;
-	}
-
-	// -------------------------------------------------------------------------
-
+	/**
+	 * Gets the single instance of SignalsView.
+	 * 
+	 * @return single instance of SignalsView
+	 */
 	public static SignalsView getInstance() {
 		return signalsViewInstance;
 	}
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Sets the signal list.
+	 * 
+	 * @param signalList
+	 *            the new signal list
+	 */
 	public void setSignalList(SignalList signalList) {
 		this.signalList = signalList;
 	}
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Refresh.
+	 * 
+	 * @param currentTick
+	 *            the current tick
+	 */
 	public void refresh(long currentTick) {
 		signalList.setCurrentTick(currentTick);
 		this.signalsPlotter.setSignalList(signalList);
@@ -115,9 +163,9 @@ public class SignalsView extends ViewPart {
 		toolBarManager.add(getActionZoomIn());
 		toolBarManager.add(getActionZoomOut());
 		toolBarManager.add(new Separator());
-		// toolBarManager.add(getActionSaveAs());
-		// toolBarManager.add(new Separator());
 		toolBarManager.add(getActionDelete());
+		toolBarManager.add(new Separator());
+		toolBarManager.add(getActionSaveAs());
 	}
 
 	// -------------------------------------------------------------------------
@@ -133,8 +181,10 @@ public class SignalsView extends ViewPart {
 		}
 		actionDelete = new Action() {
 			public void run() {
+				// reset all signals to the same tick, the current tick.
+				long tickToResetTo = signalList.getMaxTick();
 				for (Signal signal : signalList) {
-					signal.clear();
+					signal.clear(tickToResetTo);
 				}
 				signalsPlotter.plot(zoomLevel);
 			}
@@ -197,28 +247,36 @@ public class SignalsView extends ViewPart {
 	}
 
 	// -------------------------------------------------------------------------
-	//
-	// /**
-	// * Gets the action to save as.
-	// *
-	// * @return the action save as
-	// */
-	// private Action getActionSaveAs() {
-	// if (actionSaveAs != null) {
-	// return actionSaveAs;
-	// }
-	// actionSaveAs = new Action() {
-	// public void run() {
-	// // for (Signal signal: signalList) {
-	// // signal.clear();
-	// // }
-	// // signalsPlotter.plot();
-	// }
-	// };
-	// actionSaveAs.setText("Save As");
-	// actionSaveAs.setToolTipText("Save As");
-	// actionSaveAs.setImageDescriptor(SignalsUIPlugin.getImageDescriptor("icons/saveas.png"));
-	// return actionSaveAs;
-	// }
+
+	/**
+	 * Gets the action to save as.
+	 * 
+	 * @return the action save as
+	 */
+	private Action getActionSaveAs() {
+		if (actionSaveAs != null) {
+			return actionSaveAs;
+		}
+		actionSaveAs = new Action() {
+			public void run() {
+				Shell shell = Display.getDefault().getActiveShell();
+				if (shell != null) {
+					SaveAsDialog dlg = new SaveAsDialog(shell);
+					dlg.setBlockOnOpen(true);
+					dlg.setOriginalName(KiemPlugin.getDefault()
+							.getActiveProjectName() + ".txt");
+					if (dlg.open() == SaveAsDialog.OK) {
+						new SignalASCIIPlotter().plotToTextFile(
+								dlg.getResult(), signalList);
+					}
+				}
+			}
+		};
+		actionSaveAs.setText("Save As");
+		actionSaveAs.setToolTipText("Save As");
+		actionSaveAs.setImageDescriptor(SignalsUIPlugin
+				.getImageDescriptor("icons/saveas.png"));
+		return actionSaveAs;
+	}
 
 }

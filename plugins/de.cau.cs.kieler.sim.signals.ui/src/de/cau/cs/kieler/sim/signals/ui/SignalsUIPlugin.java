@@ -28,43 +28,36 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.signals.ui";
 
-	/** The context. */
-	private static BundleContext context;
 	
     /** The shared instance. */
     private static SignalsUIPlugin plugin;
 
     // -------------------------------------------------------------------------
-
-	/**
-     * Gets the context.
-     *
-     * @return the context
+    
+    /**
+     * The constructor of the table plug-in.
      */
-    static BundleContext getContext() {
-		return context;
-	}
+    public SignalsUIPlugin() {
+    }
 
     // -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		SignalsUIPlugin.context = bundleContext;
+    /**
+     * {@inheritDoc}
+     */
+	public void start(BundleContext context) throws Exception {
+		super.start(context);
 		plugin = this;
 	}
 
     // -------------------------------------------------------------------------
 	
-	/*
-	 * (non-Javadoc)
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext bundleContext) throws Exception {
+    /**
+     * {@inheritDoc}
+     */
+	public void stop(BundleContext context) throws Exception {
 		plugin = null;
-		SignalsUIPlugin.context = null;
+		super.stop(context);
 	}
 	
     // -------------------------------------------------------------------------
