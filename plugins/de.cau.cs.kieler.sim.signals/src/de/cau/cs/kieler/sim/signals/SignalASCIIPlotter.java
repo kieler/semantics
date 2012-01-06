@@ -162,11 +162,11 @@ public class SignalASCIIPlotter {
 
 		// plot signal data
 		int maxSignalNameLength = getMaxSignalNameLength(signalList);
-		String spaceLine = null;
+		String spaceLine = "";
 		for (Signal signal : signalList) {
 			String[] signalData = getASCISignalData(minTick, maxTick, signal,
 					maxSignalNameLength);
-			if (spaceLine == null) {
+			if (spaceLine.equals("")) {
 				spaceLine = getSpaceCharacters(signalData[0].length());
 			}
 			// no space line by default
