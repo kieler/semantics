@@ -49,15 +49,29 @@ public class SignalsPlotter {
 
 	/** The fixed size constants. */
 	private final int XSPACE = 25;
+	
+	/** The YOFFSET. */
 	private final int YOFFSET = 40;
+	
+	/** The YSPACE. */
 	private final int YSPACE = 40;
+	
+	/** The XOFFSET. */
 	private final int XOFFSET = 60;
+	
+	/** The SIGNALLABELSAFETYMARGINSPACE. */
 	private final String SIGNALLABELSAFETYMARGINSPACE = "    ";
 
 	/** The zoomed size variables. */
 	private int zoomedXSpace = 25;
+	
+	/** The zoomed y offset. */
 	private int zoomedYOffset = 40;
+	
+	/** The zoomed y space. */
 	private int zoomedYSpace = 40;
+	
+	/** The zoomed x offset. */
 	private int zoomedXOffset = 60;
 
 	/** The signal list. */
@@ -74,13 +88,6 @@ public class SignalsPlotter {
 
 	/** The outer canvas. */
 	FigureCanvas outerCanvas = null;
-
-	/** The color constants. */
-	private RGB backgroundColor = new RGB(0, 0, 0); // black
-	private RGB signalColor1 = new RGB(100, 100, 255); // light blue
-	private RGB signalColor2 = new RGB(200, 200, 255); // lighter blue
-	private RGB signalColor0 = new RGB(0, 0, 50); // dark blue
-	private RGB signalColorMarker = new RGB(255, 0, 0); // red
 
 	/**
 	 * The initial signal name size. This is re-calculated with the maximal
@@ -156,7 +163,7 @@ public class SignalsPlotter {
 	 * @param zoomLevel
 	 *            the zoom level
 	 */
-	public void plot(int zoomLevel) {
+	public void plot(int zoomLevel, Colors colors) {
 		// re-calculate zoomed values
 		zoom(zoomLevel);
 
@@ -169,7 +176,7 @@ public class SignalsPlotter {
 			signalContents = new Panel();
 			signalContents.setLayoutManager(new XYLayout());
 			signalContents.setBackgroundColor(new Color(Display.getCurrent(),
-					backgroundColor));
+					colors.getBackgroundColor()));
 
 			outerScrolledComposite = new ScrolledComposite(parent, SWT.BORDER
 					| SWT.H_SCROLL | SWT.V_SCROLL);
@@ -201,14 +208,14 @@ public class SignalsPlotter {
 		Panel buffer = new Panel();
 		buffer.setLayoutManager(new XYLayout());
 		buffer.setBackgroundColor(new Color(Display.getCurrent(),
-				backgroundColor));
+				colors.getBackgroundColor()));
 
-		drawSignals(buffer);
-		drawSignalNames(buffer, 0, Label.RIGHT);
+		drawSignals(buffer, colors);
+		drawSignalNames(buffer, 0, Label.RIGHT, colors);
 		if (signalList.size() > 0 && (signalList.getMaxTick() - signalList.getMinTick() > 0)) {
 			// only draw left signal names if there is already data to be displayed
 			drawSignalNames(buffer, outerScrolledComposite.getMinWidth()
-					- signalNameSize.width, Label.LEFT);
+					- signalNameSize.width, Label.LEFT, colors);
 		}
 		outerCanvas.setContents(buffer);
 
@@ -231,12 +238,12 @@ public class SignalsPlotter {
 	 * @param contents
 	 *            the contents
 	 */
-	private void drawSignals(IFigure contents) {
+	private void drawSignals(IFigure contents, Colors colors) {
 		int y = zoomedYOffset;
 		long maxTick = signalList.getMaxTick();
 		long minTick = Math.max(1, signalList.getMinTick());
 		long currentTick = signalList.getCurrentTick();
-		RGB signalColor = signalColor1;
+		RGB signalColor = colors.getSignalColor1();
 
 		outerScrolledComposite.setMinSize((int) (maxTick + 1 - minTick)
 				* zoomedXSpace + 2 * signalNameSize.width,
@@ -244,6 +251,12 @@ public class SignalsPlotter {
 
 		for (Signal signal : signalList) {
 			Node lastNode = null;
+			
+			// set a specific color if a color is set for this signal
+			if (colors.getSignalColor().containsKey(signal.getName())) {
+				signalColor = colors.getSignalColor().get(signal.getName());
+			}
+
 
 			for (long tick = minTick; tick <= maxTick; tick++) {
 				int presentOffset = 0;
@@ -291,20 +304,20 @@ public class SignalsPlotter {
 				} else {
 					node.y = node.y - zoomedYOffset / 14;
 					node.x = node.x - zoomedYOffset / 20;
-					drawNode(contents, node, signalColorMarker,
+					drawNode(contents, node, colors.getSignalColorMarker(),
 							zoomedYOffset / 5, tick, signal.getName());
 				}
 
-				drawNode(contents, nodeInverse, signalColor0,
+				drawNode(contents, nodeInverse, colors.getSignalSpareColor(),
 						zoomedYOffset / 8, tick, signal.getName());
 
 			}
 
 			// toggle color
-			if (signalColor == signalColor1) {
-				signalColor = signalColor2;
+			if (signalColor == colors.getSignalColor1()) {
+				signalColor = colors.getSignalColor2();
 			} else {
-				signalColor = signalColor1;
+				signalColor = colors.getSignalColor1();
 			}
 
 			y += zoomedYSpace;
@@ -416,13 +429,12 @@ public class SignalsPlotter {
 
 	/**
 	 * Draw the signal names. Ensure safety margin space left and right.
-	 * 
-	 * @param contents
-	 *            the contents
-	 * @param xPos
-	 *            the xPos
+	 *
+	 * @param contents the contents
+	 * @param xPos the xPos
+	 * @param align the align
 	 */
-	private void drawSignalNames(IFigure contents, int xPos, int align) {
+	private void drawSignalNames(IFigure contents, int xPos, int align, Colors colors) {
 
 		outerScrolledComposite.setMinSize(outerScrolledComposite.getMinWidth(),
 				signalList.size() * zoomedYSpace + (zoomedYOffset / 2));
@@ -433,8 +445,13 @@ public class SignalsPlotter {
 		signalNameSize = getMaximumTextWidth(font);
 
 		int y = zoomedYOffset / 2;
-		RGB signalColor = signalColor1;
+		RGB signalColor = colors.getSignalColor1();
 		for (Signal signal : signalList) {
+			// set a specific color if a color is set for this signal
+			if (colors.getSignalColor().containsKey(signal.getName())) {
+				signalColor = colors.getSignalColor().get(signal.getName());
+			}
+			
 			Label labelFigure = new Label();
 			labelFigure.setText(SIGNALLABELSAFETYMARGINSPACE + signal.getName()
 					+ SIGNALLABELSAFETYMARGINSPACE);
@@ -447,11 +464,11 @@ public class SignalsPlotter {
 			labelFigure.setLocation(new Point(xPos - zoomedXOffset, y));
 			contents.add(labelFigure);
 			y += zoomedYSpace;
-			// toggle color
-			if (signalColor == signalColor1) {
-				signalColor = signalColor2;
+			// toggle color (iff default colors, otherwise starte with color1)
+			if (signalColor != colors.getSignalColor1()) {
+				signalColor = colors.getSignalColor1();
 			} else {
-				signalColor = signalColor1;
+				signalColor = colors.getSignalColor2();
 			}
 		}
 	}

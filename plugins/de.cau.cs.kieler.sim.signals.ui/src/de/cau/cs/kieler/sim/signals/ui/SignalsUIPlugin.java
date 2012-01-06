@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.sim.signals.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
@@ -30,7 +31,7 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static SignalsUIPlugin plugin;
-
+    
     // -------------------------------------------------------------------------
     
     /**

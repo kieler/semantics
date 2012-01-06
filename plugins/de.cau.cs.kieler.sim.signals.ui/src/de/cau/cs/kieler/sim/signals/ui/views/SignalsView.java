@@ -14,9 +14,13 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
+import java.util.HashMap;
+
 import org.eclipse.jface.action.Action;
+import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
@@ -53,6 +57,9 @@ public class SignalsView extends ViewPart {
 	/** The action to save as. */
 	private Action actionSaveAs;
 
+	/** The action to toggle colors. */
+	private Action actionToggleColors;
+
 	/** The signals plotter. */
 	private SignalsPlotter signalsPlotter;
 
@@ -61,6 +68,21 @@ public class SignalsView extends ViewPart {
 
 	/** The signal list. */
 	private SignalList signalList = new SignalList();
+
+	/** The signal view colors. */
+	private Colors colors = new Colors();
+	
+	/** The nondefault signal view colors. This is the second color scheme */
+	private final RGB NONDEFAULTBACKGROUNDCOLOR = new RGB(255, 255, 255); // white
+	private final RGB NONDEFAULTSIGNALCOLOR2 = new RGB(0, 0, 150); // dark blue
+	private final RGB NONDEFAULTSIGNALCOLOR0 = new RGB(230, 230, 230); // light gray
+	private final RGB NONDEFAULTSIGNALCOLORMARKER = new RGB(200, 0, 0); // dark red	
+
+	/**
+	 * The default color scheme flag. The default color scheme has the black
+	 * background the other has a white background.
+	 */
+	private boolean defaultColorScheme = true;
 
 	// -------------------------------------------------------------------------
 
@@ -82,6 +104,8 @@ public class SignalsView extends ViewPart {
 	 */
 	@Override
 	public void createPartControl(Composite parent) {
+
+//		colors.setSignalColor("S2", new RGB(0, 255, 0));
 
 		// instantiate a plotter, and provide data to it.
 		signalsPlotter = new SignalsPlotter(parent);
@@ -139,7 +163,7 @@ public class SignalsView extends ViewPart {
 	public void refresh(long currentTick) {
 		signalList.setCurrentTick(currentTick);
 		this.signalsPlotter.setSignalList(signalList);
-		this.signalsPlotter.plot(zoomLevel);
+		this.signalsPlotter.plot(zoomLevel, colors);
 	}
 
 	// -------------------------------------------------------------------------
@@ -156,6 +180,7 @@ public class SignalsView extends ViewPart {
 		toolBarManager.add(getActionDelete());
 		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionSaveAs());
+		toolBarManager.add(getActionToggleColors());
 	}
 
 	// -------------------------------------------------------------------------
@@ -176,7 +201,7 @@ public class SignalsView extends ViewPart {
 				for (Signal signal : signalList) {
 					signal.clear(tickToResetTo);
 				}
-				signalsPlotter.plot(zoomLevel);
+				signalsPlotter.plot(zoomLevel, colors);
 			}
 		};
 		actionDelete.setText("Clear History");
@@ -200,7 +225,7 @@ public class SignalsView extends ViewPart {
 		actionZoomIn = new Action() {
 			public void run() {
 				zoomLevel += 10;
-				signalsPlotter.plot(zoomLevel);
+				signalsPlotter.plot(zoomLevel, colors);
 			}
 		};
 		actionZoomIn.setText("Zoom In");
@@ -226,7 +251,7 @@ public class SignalsView extends ViewPart {
 				if (zoomLevel > 10) {
 					zoomLevel -= 10;
 				}
-				signalsPlotter.plot(zoomLevel);
+				signalsPlotter.plot(zoomLevel, colors);
 			}
 		};
 		actionZoomOut.setText("Zoom Out");
@@ -267,6 +292,68 @@ public class SignalsView extends ViewPart {
 		actionSaveAs.setImageDescriptor(SignalsUIPlugin
 				.getImageDescriptor("icons/saveas.png"));
 		return actionSaveAs;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to toggle the color scheme.
+	 * 
+	 * @return the action to toggle the color scheme
+	 */
+	private Action getActionToggleColors() {
+		if (actionToggleColors != null) {
+			return actionToggleColors;
+		}
+		actionToggleColors = new Action("", IAction.AS_CHECK_BOX) {
+			public void run() {
+				defaultColorScheme = !defaultColorScheme;
+				if (defaultColorScheme) {
+					Colors tmpColors = new Colors();
+					colors.setBackgroundColor(tmpColors.getBackgroundColor());
+					colors.setSignalColor2(tmpColors.getSignalColor2());
+					colors.setSignalColorMarker(tmpColors.getSignalColorMarker());
+					colors.setSignalSpareColor(tmpColors.getSignalSpareColor());
+				}
+				else {
+					colors.setBackgroundColor(NONDEFAULTBACKGROUNDCOLOR);
+					colors.setSignalColor2(NONDEFAULTSIGNALCOLOR2);
+					colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
+					colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
+				}
+				signalsPlotter.plot(zoomLevel, colors);
+			}
+		};
+		actionToggleColors.setText("Toggle Colors");
+		actionToggleColors.setToolTipText("Toggle Colors");
+		actionToggleColors.setImageDescriptor(SignalsUIPlugin
+				.getImageDescriptor("icons/togglecolors.png"));
+		return actionToggleColors;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the currently used color settings for this view.
+	 * 
+	 * @return the colors
+	 */
+	public Colors getColors() {
+		return colors;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Sets the used color settings for this view..
+	 * 
+	 * @param colors
+	 *            the new colors
+	 */
+	public void setColors(Colors colors) {
+		this.colors = colors;
+		// refresh with new colors
+		signalsPlotter.plot(zoomLevel, colors);
 	}
 
 	// -------------------------------------------------------------------------
