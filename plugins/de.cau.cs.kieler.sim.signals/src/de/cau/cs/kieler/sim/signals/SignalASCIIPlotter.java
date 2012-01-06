@@ -84,7 +84,8 @@ public class SignalASCIIPlotter {
 	 *            the max signal name length
 	 * @return the aSCI signal data
 	 */
-	private String[] getASCISignalData(Signal signal, int maxSignalNameLength) {
+	private String[] getASCISignalData(long minTick, long maxTick,
+			Signal signal, int maxSignalNameLength) {
 		String[] ascii = new String[2];
 
 		// build label
@@ -99,7 +100,7 @@ public class SignalASCIIPlotter {
 
 		// build data
 		boolean presentBefore = false;
-		for (long tick = signal.getMinTick(); tick <= signal.getMaxTick(); tick++) {
+		for (long tick = minTick; tick <= maxTick; tick++) {
 			// get the current present value
 			boolean present = signal.isPresent(tick);
 			// in the first tick start as if this present value was the one
@@ -155,25 +156,27 @@ public class SignalASCIIPlotter {
 	 */
 	public String[] plot(SignalList signalList) {
 		LinkedList<String> stringList = new LinkedList<String>();
-		
+
+		long minTick = signalList.getMinTick();
+		long maxTick = signalList.getMaxTick();
+
 		// plot signal data
 		int maxSignalNameLength = getMaxSignalNameLength(signalList);
 		String spaceLine = null;
 		for (Signal signal : signalList) {
-			String[] signalData = getASCISignalData(signal,
+			String[] signalData = getASCISignalData(minTick, maxTick, signal,
 					maxSignalNameLength);
 			if (spaceLine == null) {
 				spaceLine = getSpaceCharacters(signalData[0].length());
 			}
-			stringList.add(spaceLine);
+			// no space line by default
+			// stringList.add(spaceLine);
 			stringList.add(signalData[0]);
 			stringList.add(signalData[1]);
 		}
 
 		// build tick labels
 		stringList.add(spaceLine);
-		long minTick = signalList.getMinTick();
-		long maxTick = signalList.getMaxTick();
 		String[] tickLabels = getTickLabels(minTick, maxTick,
 				maxSignalNameLength);
 
@@ -206,7 +209,7 @@ public class SignalASCIIPlotter {
 
 			// ASCII plot
 			String[] ascii = plot(signalList);
-			
+
 			// write to file
 			for (String line : ascii) {
 				out.println(line);
