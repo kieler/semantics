@@ -14,15 +14,6 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.net.URL;
-
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
@@ -34,11 +25,10 @@ import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
-
-import de.cau.cs.kieler.sim.signals.SignalList;
 import de.cau.cs.kieler.sim.signals.Signal;
 import de.cau.cs.kieler.sim.signals.SignalASCIIPlotter;
+import de.cau.cs.kieler.sim.signals.SignalList;
+import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
 
 /**
  * The SignalView constructs the actual Eclipse View of the synchronous signal
@@ -278,5 +268,7 @@ public class SignalsView extends ViewPart {
 				.getImageDescriptor("icons/saveas.png"));
 		return actionSaveAs;
 	}
+
+	// -------------------------------------------------------------------------
 
 }

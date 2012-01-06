@@ -28,7 +28,6 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.signals.ui";
 
-	
     /** The shared instance. */
     private static SignalsUIPlugin plugin;
 
