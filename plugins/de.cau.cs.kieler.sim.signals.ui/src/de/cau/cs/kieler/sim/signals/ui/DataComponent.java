@@ -78,12 +78,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	// -------------------------------------------------------------------------
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see de.cau.cs.kieler.sim.kiem.IDataComponent#initialize()
+	/**
+	 * {@inheritDoc}
 	 */
-	@Override
 	public void initialize() throws KiemInitializationException {
 		// bring view to front
 		bringToFront();
@@ -132,7 +129,6 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	// -------------------------------------------------------------------------
 
-	@Override
 	public void wrapup() throws KiemInitializationException {
 		// SignalsView.getInstance().setSignalDataComponent(null);
 		signalList.clear();
@@ -148,14 +144,18 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	// -------------------------------------------------------------------------
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean isProducer() {
 		return false;
 	}
 
 	// -------------------------------------------------------------------------
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public boolean isObserver() {
 		return true;
 	}
@@ -179,7 +179,9 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	// -------------------------------------------------------------------------
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 */
 	public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
 
 		try {
