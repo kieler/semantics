@@ -184,6 +184,16 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 */
 	public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
 
+		// update tick information
+		long tick = this.getTick();
+		signalList.setCurrentTick(tick);
+		
+		// set all signals to absent (signals that are present explicitly will be
+		// set to present afterwards
+		for (Signal signal : this.signalList) {
+			signal.setPresent(tick, false);
+		}
+		
 		try {
 			String[] fieldNames = JSONObject.getNames(jSONObject);
 			if (fieldNames != null) {
@@ -213,11 +223,7 @@ public class DataComponent extends JSONObjectDataComponent implements
 						}
 						Signal signal = signalList.getSignal(name);
 
-						// if (!this.isHistoryStep()) {
-						long tick = this.getTick();
-						signalList.setCurrentTick(tick);
 						signal.setPresent(tick, isPresent);
-						// }
 					}
 				}
 			}

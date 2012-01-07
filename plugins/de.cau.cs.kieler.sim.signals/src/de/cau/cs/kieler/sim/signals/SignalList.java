@@ -222,6 +222,9 @@ public class SignalList extends LinkedList<Signal> {
 	 */
 	public void setMaximalTicks(long maximalTicks) {
 		this.maximalTicks = maximalTicks;
+		for (Signal signal : this) {
+			signal.setMaximalTicks(maximalTicks);
+		}
 	}
 
 	// -------------------------------------------------------------------------

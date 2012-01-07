@@ -66,8 +66,11 @@ public class SignalsView extends ViewPart {
 	/** The signals view instance. */
 	private static SignalsView signalsViewInstance = null;
 
+	/** The maximal number of ticks. */
+	private final long MAXIMALTICKS = 500;
+	
 	/** The signal list. */
-	private SignalList signalList = new SignalList();
+	private SignalList signalList = new SignalList(MAXIMALTICKS);
 
 	/** The signal view colors. */
 	private Colors colors = new Colors();
@@ -150,6 +153,7 @@ public class SignalsView extends ViewPart {
 	 */
 	public void setSignalList(SignalList signalList) {
 		this.signalList = signalList;
+		this.signalList.setMaximalTicks(MAXIMALTICKS);
 	}
 
 	// -------------------------------------------------------------------------
@@ -162,6 +166,7 @@ public class SignalsView extends ViewPart {
 	 */
 	public void refresh(long currentTick) {
 		signalList.setCurrentTick(currentTick);
+		this.signalList.setMaximalTicks(MAXIMALTICKS);
 		this.signalsPlotter.setSignalList(signalList);
 		this.signalsPlotter.plot(zoomLevel, colors);
 	}
