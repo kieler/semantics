@@ -67,7 +67,7 @@ public class SignalsView extends ViewPart {
 	private static SignalsView signalsViewInstance = null;
 
 	/** The maximal number of ticks. */
-	private final long MAXIMALTICKS = 500;
+	private final long MAXIMALTICKS = 250;
 	
 	/** The signal list. */
 	private SignalList signalList = new SignalList(MAXIMALTICKS);
