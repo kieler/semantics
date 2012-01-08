@@ -66,7 +66,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemInitializationException
      *             thrown when reading the file fails
      */
-    @Override
     public void initialize() throws KiemInitializationException {
         KiemProperty[] properties = this.getProperties();
 
@@ -118,7 +117,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemInitializationException
      *             never thrown
      */
-    @Override
     public void wrapup() throws KiemInitializationException {
         
     }
@@ -127,7 +125,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * Tell KIEM that this component does produce data.
      * 
      */
-    @Override
     public boolean isProducer() {
         return true;
     }
