@@ -446,6 +446,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				monitor, 10);
 
 		File executable = null;
+		String compile = "";
 		try {
 			// get active editor
 			IEditorPart editorPart = this.getInputEditor();
@@ -524,7 +525,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 			executable = File.createTempFile("sim", "");
 			String compiler = (getProperties()[2]).getValue();
-			String compile = compiler + " " + output.getPath() + " "
+			compile = compiler + " " + output.getPath() + " "
 					+ data.getPath() + " " + bundleLocation.getPath()
 					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
 					+ "-lm -o " + executable;
@@ -562,7 +563,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		} catch (Exception e) {
 			throw new KiemInitializationException(
-					"Error compiling Esterel file:\n\n " + e.getMessage(),
+					"Error compiling Esterel file:\n\n " + e.getMessage() + "\n\n" + compile,
 					true, e);
 		}
 	}
