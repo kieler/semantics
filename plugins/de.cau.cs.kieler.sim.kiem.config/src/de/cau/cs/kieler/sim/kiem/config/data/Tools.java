@@ -97,6 +97,8 @@ public final class Tools {
             + "you can select those properties\n where the default value of the property should "
             + "be used\n rather than the one saved in the configuration of each schedule.";
 
+    /** identifier for the summary message combo. */
+    public static final String IS_SUMMARYMESSAGE_NAME = "IS_SUMMARY_MESSAGE_DISABLED";
     /** identifier for the recent combo. */
     public static final String IS_RECENT_VISIBLE_NAME = "IS_RECENT_VISIBLE";
     /** identifier for the matching combo. */

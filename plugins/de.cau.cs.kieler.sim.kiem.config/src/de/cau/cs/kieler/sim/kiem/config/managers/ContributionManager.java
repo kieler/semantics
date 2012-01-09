@@ -183,7 +183,7 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @return the isSummaryMessageDisabled flag
      */
-    public boolean isSummaryMessageDisabled() {
+    public boolean isSummaryMessageDisabled()  {
         load();
         return this.isSummaryMessageDisabled;
     }
@@ -247,6 +247,8 @@ public final class ContributionManager extends AbstractManager {
                         Tools.IS_MATCHING_VISIBLE_NAME, string);
                 String isAdvancedString = Tools.getValue(
                         Tools.IS_ADVANCED_NAME, string);
+                String isSummaryMessageString = Tools.getValue(
+                        Tools.IS_SUMMARYMESSAGE_NAME, string);
 
                 if (isRecentString != null) {
                     isRecentVisible = isRecentString.equals("true");
@@ -256,6 +258,9 @@ public final class ContributionManager extends AbstractManager {
                 }
                 if (isAdvancedString != null) {
                     isInAdvancedMode = isAdvancedString.equals("true");
+                }
+                if (isSummaryMessageString != null) {
+                	isSummaryMessageDisabled = isSummaryMessageString.equals("true");
                 }
             }
 
@@ -268,6 +273,8 @@ public final class ContributionManager extends AbstractManager {
      */
     @Override
     public void save() {
+        String isSummaryMessageString = Tools.putValue(Tools.IS_SUMMARYMESSAGE_NAME,
+        		isSummaryMessageDisabled + "");
         String isRecentString = Tools.putValue(Tools.IS_RECENT_VISIBLE_NAME,
                 isRecentVisible + "");
         String isMatchingString = Tools.putValue(
@@ -275,7 +282,7 @@ public final class ContributionManager extends AbstractManager {
         String isAdvancedString = Tools.putValue(Tools.IS_ADVANCED_NAME,
                 isInAdvancedMode + "");
 
-        String result = isRecentString + isMatchingString + isAdvancedString;
+        String result = isRecentString + isMatchingString + isAdvancedString + isSummaryMessageString;
         super.save(Tools.CONTRIBUTION_CONFIGURATION_KEY, result);
     }
 }
