@@ -525,19 +525,24 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			URL output = this.compileEsterelToC(esterelOutput,
 					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
 					.toURL();
-			blablabla = 13;
+			blablabla = 11;
 
 			// Generate data.c
 			URL data = generateCSimulationInterface(transformedProgram,
 					esterelOutput);
-			blablabla = 14;
+			blablabla = 12;
 
 			// Compile C code
 			Bundle bundle = Platform
 					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
 
-			URL bundleLocation = FileLocator.toFileURL(FileLocator.find(bundle,
-					new Path("simulation"), null));
+			blablabla = 13;
+
+			URL fileUrl = FileLocator.find(bundle,
+					new Path("simulation"), null);
+
+			blablabla = 14;
+			URL bundleLocation = FileLocator.toFileURL(fileUrl);
 
 			blablabla = 15;
 			executable = File.createTempFile("sim", "");
