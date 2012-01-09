@@ -450,53 +450,43 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		int blablabla = 0 ;
 		
 		try {
-			blablabla = 1;
 			// get active editor
 			IEditorPart editorPart = this.getInputEditor();
 			if (editorPart == null) {
 				throw new KiemInitializationException(
 						"No active editor selected!", true, null);
 			}
-			blablabla = 2;
 
 			myModel = (Program) this.getInputModelEObject(editorPart);
 
-			blablabla = 3;
 			if (myModel == null) {
 				throw new KiemInitializationException(
 						"Cannot simulate active editor using the CEC", true,
 						null);
 			}
 
-			blablabla = 4;
 			// Make a copy of the Esterel program in case it was from
 			// an active Editor
 
 			URI esterelOutput = URI.createURI("");
-			blablabla = 5;
 			// By default there is no additional transformation necessary
 			Program transformedProgram = myModel;
-			blablabla = 6;
 
 			// If 'Full Debug Mode' is turned on then the user wants to have
 			// also states visualized.
 			// Hence some pre-processing is needed and done by the
 			// Esterl2Simulation Xtend2 model transformation
 			if (this.getProperties()[3].getValueAsBoolean()) {
-				blablabla = 7;
 				// Try to load synccharts model
 				// 'Full Debug Mode' is turned ON
 				Esterel2Simulation transform = Guice.createInjector()
 						.getInstance(Esterel2Simulation.class);
-				blablabla = 8;
 				transformedProgram = transform.transform2Simulation(myModel);
 			}
-			blablabla = 9;
 
 			// Calculate output path
 			FileEditorInput editorInput = (FileEditorInput) editorPart
 					.getEditorInput();
-			blablabla = 10;
 			URI input = URI.createPlatformResourceURI(editorInput.getFile()
 					.getFullPath().toString(), true);
 
@@ -504,7 +494,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			esterelOutput = esterelOutput.trimFragment();
 			esterelOutput = esterelOutput.trimFileExtension()
 					.appendFileExtension("simulation.strl");
-			blablabla = 11;
 
 			try {
 				// Write out copy/transformation of Esterel program
@@ -520,39 +509,29 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						"Cannot write output Esterel file.", true, null);
 			}
 
-			blablabla = 12;
 			// Compile Esterel to C
 			URL output = this.compileEsterelToC(esterelOutput,
 					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
 					.toURL();
-			blablabla = 11;
 
 			// Generate data.c
 			URL data = generateCSimulationInterface(transformedProgram,
 					esterelOutput);
-			blablabla = 12;
 
 			// Compile C code
 			Bundle bundle = Platform
 					.getBundle("de.cau.cs.kieler.esterel.cec.sim");
 
-			blablabla = 13;
-
 			URL fileUrl = FileLocator.find(bundle,
 					new Path("simulation"), null);
-
-			blablabla = 14;
 			URL bundleLocation = FileLocator.toFileURL(fileUrl);
 
-			blablabla = 15;
 			executable = File.createTempFile("sim", "");
-			blablabla = 16;
 			String compiler = (getProperties()[2]).getValue();
 			compile = compiler + " " + output.getPath() + " "
 					+ data.getPath() + " " + bundleLocation.getPath()
 					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
 					+ "-lm -o " + executable;
-			blablabla = 17;
 
 			if (isWindows()) {
 				executable = File.createTempFile("sim", ".exe");
@@ -562,14 +541,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						+ "-I " + bundleLocation.getPath().substring(1) + " "
 						+ "-lm -o " + executable;
 			}
-			blablabla = 18;
 
 			simFile = executable;
 
 			System.out.println(compile);
 
 			process = Runtime.getRuntime().exec(compile);
-			blablabla = 19;
 			InputStream stderr = process.getErrorStream();
 			InputStreamReader isr = new InputStreamReader(stderr);
 			BufferedReader br = new BufferedReader(isr);
@@ -579,7 +556,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				errorString.append("\n" + line);
 
 			}
-			blablabla = 20;
 
 			int exitValue = process.waitFor();
 
