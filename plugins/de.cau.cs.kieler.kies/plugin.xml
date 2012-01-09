@@ -23,7 +23,7 @@
          point="de.cau.cs.kieler.core.kivi.combinations">
       <combination
             active="true"
-            class="de.cau.cs.kieler.kies.transformation.kivi.E2STransformationCombination"
+            class="de.cau.cs.kieler.kies.kivi.E2STransformationCombination"
             description="Performs an Esterel to SyncCharts Transformation"
             name="Esterel to Synccharts Combination">
       </combination>
