@@ -42,6 +42,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.synccharts.Scope;
 
 /**
  * This component implements a component to validate signal and state information generated in a
@@ -291,8 +292,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         if (!trainingMode && trace.hasNext()) {
             ITick tick = trace.next();
             List<ISignal> signals = tick.getOutputs();
-            
-            
+
             Map<String, String> special = tick.getExtraInfos();
 
             if (useState) {
@@ -330,16 +330,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         HashMap<String, Object> signals = new HashMap<String, Object>();
         HashMap<String, Object> extraInfo = new HashMap<String, Object>();
-        
+
         HashMap<String, Object> inputs = new HashMap<String, Object>();
-        if(recInputs.size() > 0) {
+        if (recInputs.size() > 0) {
             recInputs.get(recInputs.size() - 1);
         }
 
         while (keys.hasNext()) {
             String key = keys.next();
             try {
-                if (!inputs.containsKey(key) && !isSpecialSignal(key) && obj.getJSONObject(key).getBoolean("present")) {
+                if (!inputs.containsKey(key) && !isSpecialSignal(key)
+                        && obj.getJSONObject(key).getBoolean("present")) {
                     Object val = obj.getJSONObject(key).opt("value");
                     signals.put(key, val);
                 }
@@ -371,31 +372,54 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             throws KiemExecutionException {
         String simValue = obj.optString(key);
         if (simValue == null) {
-            throw new KiemExecutionException(
-                    "The simulation step did not generate an extra signal \"" + key + "\". "
-                            + "No validation for this signal will take place in this step!", false,
-                    null);
+            throw new KiemExecutionException("The simulation step did not generate a variable \""
+                    + key + "\". " + "No validation for this signal will take place in this step!",
+                    false, null);
         } else {
             if (!simValue.equals(value)) {
-                List<EObject> isStates = getStates(simValue);
-                List<EObject> shallStates = getStates(value);
+                if (key.equals("state")) {
+                    List<EObject> isStates = getStates(simValue);
+                    List<EObject> shallStates = getStates(value);
 
-                // Get meaningful names for the states
-                String stateName = shallStates.get(shallStates.size() - 1).toString();
-                String simStateName = isStates.get(isStates.size() - 1).toString();
+                    // Get meaningful names for the states
+                    String stateNames = getActiveStateNames(shallStates);
+                    String simStateNames = getActiveStateNames(isStates);
 
-                // Colorize the diagram
-                if (DiffStateTrigger.getInstance() != null) {
-                    DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates, editor);
+                    // Colorize the diagram
+                    if (DiffStateTrigger.getInstance() != null) {
+                        DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates,
+                                editor);
+                    }
+
+                    // Display an error message
+                    throw new KiemExecutionException(
+                            "Validation error: The simulation's active states should be:\n"
+                                    + stateNames + "\nbut the states actually active are:\n"
+                                    + simStateNames, false, null);
+                } else {
+                    throw new KiemExecutionException(
+                            "Validation error: The simulation should provide a variable \"" + key
+                                    + "\" with a value of \"" + value
+                                    + "\", but it actually generated the value \"" + simValue
+                                    + "\".", false, null);
                 }
-
-                // Display an error message
-                throw new KiemExecutionException(
-                        "Validation error: The simulation should provide an extra info representing "
-                                + stateName + " but it actually provided " + simStateName, false,
-                        null);
             }
         }
+    }
+
+    /**
+     * @param shallStates
+     * @return
+     */
+    private String getActiveStateNames(List<EObject> stateList) {
+        String retval = "";
+
+        for (EObject state : stateList) {
+            if (state instanceof Scope) {
+                retval += "- " + ((Scope) state).getLabel() + "\n";
+            }
+        }
+        return retval;
     }
 
     /**
