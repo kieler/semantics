@@ -292,20 +292,20 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             ITick tick = trace.next();
             List<ISignal> signals = tick.getOutputs();
             
-//FIXME: cmot, commented this whole block out to get KIELER compiled            
-//            Map<String, String> special = tick.getExtraInfos();
-//
-//            if (useState) {
-//                Iterator<String> it = special.keySet().iterator();
-//
-//                while (it.hasNext()) {
-//                    String key = it.next();
-//                    String value = special.get(key);
-//
-//                    diffSpecial(key, value, obj);
-//                }
-//
-//            }
+            
+            Map<String, String> special = tick.getExtraInfos();
+
+            if (useState) {
+                Iterator<String> it = special.keySet().iterator();
+
+                while (it.hasNext()) {
+                    String key = it.next();
+                    String value = special.get(key);
+
+                    diffSpecial(key, value, obj);
+                }
+
+            }
 
             diffSignals(signals, outputSignals);
         }
