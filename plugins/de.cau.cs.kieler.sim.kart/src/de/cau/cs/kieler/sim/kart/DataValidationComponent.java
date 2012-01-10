@@ -186,7 +186,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * @throws KiemInitializationException
      *             when {@link #removeInputFromOutput(List, List)} throws it
      */
-    @Override
     public void wrapup() throws KiemInitializationException {
         if (trainingMode) {
             // we rather do this when recording, seems more logical
@@ -292,19 +291,21 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         if (!trainingMode && trace.hasNext()) {
             ITick tick = trace.next();
             List<ISignal> signals = tick.getOutputs();
-            Map<String, String> special = tick.getExtraInfos();
-
-            if (useState) {
-                Iterator<String> it = special.keySet().iterator();
-
-                while (it.hasNext()) {
-                    String key = it.next();
-                    String value = special.get(key);
-
-                    diffSpecial(key, value, obj);
-                }
-
-            }
+            
+//FIXME: cmot, commented this whole block out to get KIELER compiled            
+//            Map<String, String> special = tick.getExtraInfos();
+//
+//            if (useState) {
+//                Iterator<String> it = special.keySet().iterator();
+//
+//                while (it.hasNext()) {
+//                    String key = it.next();
+//                    String value = special.get(key);
+//
+//                    diffSpecial(key, value, obj);
+//                }
+//
+//            }
 
             diffSignals(signals, outputSignals);
         }

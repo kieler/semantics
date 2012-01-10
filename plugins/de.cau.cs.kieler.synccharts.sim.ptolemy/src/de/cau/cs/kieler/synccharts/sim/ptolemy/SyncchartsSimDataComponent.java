@@ -14,7 +14,6 @@
 
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
-import java.io.File;
 import java.net.URL;
 
 import org.eclipse.core.resources.IResource;
@@ -34,15 +33,8 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.ui.IViewPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.xtend.XtendComponent;
-import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent;
-import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVar;
-import org.eclipse.xtend.expression.AbstractExpressionsUsingWorkflowComponent.GlobalVarDef;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -50,11 +42,11 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
-import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava;
@@ -266,13 +258,6 @@ public class SyncchartsSimDataComponent extends
     @Override
     public void doModel2ModelTransform(final KielerProgressMonitor monitor)
             throws Exception {
-        // "generated.moml";
-        int randomNumber = 0;
-        try {
-            randomNumber = super.getInputEditor().getEditorInput().hashCode();
-        } catch (Exception e) {
-            // if no editor input, an exception will be raised anyways
-        }
 
         ResourceSet resourceSet = new ResourceSetImpl();
 //        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
@@ -373,11 +358,18 @@ public class SyncchartsSimDataComponent extends
      * #checkModelValidation (org.eclipse.emf.ecore.EObject)
      */
     @Override
-    public boolean checkModelValidation(final EObject rootEObject) {
+    public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
         // Enable KlePto checks in possibly open GMF SyncCharts editor
         ValidationManager
                 .enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");
         ValidationManager.validateActiveEditor();
+        
+        if (!(rootEObject instanceof Region)) {
+    		throw new KiemInitializationException(
+                    "SyncCharts Ptolemy Simulator can only be used with a SyncCharts editor.\n\n"
+                            ,
+                    true, null);
+        }
 
         // We don't want a dependency to synccharts diagram (custom) for
         // validation

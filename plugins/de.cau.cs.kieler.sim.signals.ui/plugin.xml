@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            category="de.cau.cs.kieler"
+            class="de.cau.cs.kieler.sim.signals.ui.views.SignalsView"
+            icon="icons/signalsViewIcon.png"
+            id="de.cau.cs.kieler.sim.signals.ui.view"
+            name="Synchronous Signals">
+      </view>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+      <content
+            class="de.cau.cs.kieler.sim.signals.ui.DataComponent"
+            id="de.cau.cs.kieler.sim.signals.ui.observer"
+            name="Synchronous Signals View">
+      </content>
+   </extension>
+
+</plugin>

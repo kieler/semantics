@@ -951,7 +951,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        jsonComponents[i].getContributor().getName()), null, e, false);
+                        jsonComponents[i].getContributor().getName()), null, e, true);
             }
         }
         for (int i = 0; i < stringComponents.length; i++) {
@@ -977,7 +977,7 @@ public class KiemPlugin extends AbstractUIPlugin {
                 // throw new RuntimeException
                 // ("Error at loading a KIEM data component plugin");
                 this.showWarning(Messages.mWarningLoadingDataComponent.replace("%COMPONENTNAME",
-                        stringComponents[i].getContributor().getName()), null, e, false);
+                        stringComponents[i].getContributor().getName()), null, e, true);
             }
         }
         return dataComponentList;

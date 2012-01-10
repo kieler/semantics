@@ -1,10 +1,16 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Simulation Signal Visualization
-Bundle-SymbolicName: de.cau.cs.kieler.sim.signals.ui
+Bundle-Name: Simulation Synchronous Signal Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.sim.signals.ui;singleton:=true
 Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Require-Bundle: org.eclipse.core.runtime
-Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.ui,
+ org.eclipse.draw2d,
+ org.json,
+ de.cau.cs.kieler.sim.signals,
+ de.cau.cs.kieler.sim.kiem
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
+Import-Package: org.eclipse.ui.dialogs
