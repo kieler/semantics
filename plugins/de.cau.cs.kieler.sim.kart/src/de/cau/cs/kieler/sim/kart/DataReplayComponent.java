@@ -81,13 +81,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         String filename = "";
         int tracenum = 0;
         for (KiemProperty prop : properties) {
-            if (prop.getType().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals("ESI/ESO trace file")) {
                 filename = prop.getValue();
             }
-            if (prop.getType().equals("Trace to replay")) {
+            if (prop.getKey().equals("Trace to replay")) {
                 tracenum = prop.getValueAsInt();
             }
-            if (prop.getType().equals("Training mode")) {
+            if (prop.getKey().equals("Training mode")) {
                 trainingMode = prop.getValueAsBoolean();
             }
         }

@@ -331,7 +331,10 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         HashMap<String, Object> signals = new HashMap<String, Object>();
         HashMap<String, Object> extraInfo = new HashMap<String, Object>();
         
-        HashMap<String, Object> inputs = recInputs.get(recInputs.size() - 1);
+        HashMap<String, Object> inputs = new HashMap<String, Object>();
+        if(recInputs.size() > 0) {
+            recInputs.get(recInputs.size() - 1);
+        }
 
         while (keys.hasNext()) {
             String key = keys.next();
@@ -379,7 +382,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
                 // Get meaningful names for the states
                 String stateName = shallStates.get(shallStates.size() - 1).toString();
-                String simStateName = isStates.get(shallStates.size() - 1).toString();
+                String simStateName = isStates.get(isStates.size() - 1).toString();
 
                 // Colorize the diagram
                 if (DiffStateTrigger.getInstance() != null) {
