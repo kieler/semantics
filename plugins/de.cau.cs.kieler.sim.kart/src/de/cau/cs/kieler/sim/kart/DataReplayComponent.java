@@ -13,11 +13,17 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.ui.IEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -230,9 +236,34 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public KiemProperty[] doProvideProperties() {
+        String[] exts = { "*.eso", "*.esi" };
+        String[] extNames = { "ESO", "ESI" };
+
+        KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
+        fileProperty.setFilterExts(exts);
+        fileProperty.setFilterNames(extNames);
+        
+        String filename = null;
+        try {
+            DiagramEditor curEditor = (DiagramEditor) getActivePage().getActiveEditor();
+            IEditorInput curEditorInput = curEditor.getEditorInput();
+                    
+            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
+            IResource resourceInRuntimeWorkspace = root.findMember(curEditorInput.getToolTipText());
+            
+            File file = new File(resourceInRuntimeWorkspace.getLocationURI());
+            filename = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(".")) + ".eso";
+        } catch(Exception e) {
+            // do nothing
+        }
+        
         KiemProperty[] properties = new KiemProperty[3];
         //properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
         properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
+        if(filename != null) {
+            fileProperty.setValue(properties[0], filename);
+        }
+
         properties[1] = new KiemProperty("Trace to replay", new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty("Training mode", false);
 
