@@ -554,20 +554,4 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     public String getDataComponentId() {
         return "de.cau.cs.kieler.sim.kart.DataValidationComponent";
     }
-
-    public class MyString {
-        private volatile String bla;
-
-        public MyString(String blubb) {
-            bla = blubb;
-        }
-
-        public void append(String x) {
-            bla = bla.concat(x);
-        }
-
-        public String toString() {
-            return bla.toString();
-        }
-    }
 }

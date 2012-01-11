@@ -96,7 +96,7 @@ public class DiffStateTrigger extends AbstractTrigger {
         }
     }
 
-    public static final class DiffStates extends AbstractTriggerState {
+    public static class DiffStates extends AbstractTriggerState {
         /** List of the actually currently active states */
         private List<EObject> isStates;
 
@@ -106,7 +106,11 @@ public class DiffStateTrigger extends AbstractTrigger {
         /** The editor in which the states shall be colorized */
         private DiagramEditor diagramEditor;
 
-        private DiffStates(List<EObject> is, List<EObject> shall, DiagramEditor editor) {
+        public DiffStates() {
+            super();
+        }
+        
+        public DiffStates(List<EObject> is, List<EObject> shall, DiagramEditor editor) {
             isStates = is;
             shallStates = shall;
             diagramEditor = editor;
