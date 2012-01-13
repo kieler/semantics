@@ -60,6 +60,9 @@ public class SignalsView extends ViewPart {
 	/** The action to toggle colors. */
 	private Action actionToggleColors;
 
+	/** The action to toggle mode. */
+	private Action actionToggleMode;
+
 	/** The signals plotter. */
 	private SignalsPlotter signalsPlotter;
 
@@ -87,6 +90,9 @@ public class SignalsView extends ViewPart {
 	 */
 	private boolean defaultColorScheme = true;
 
+	/** The default mode flag. The default mode has a line for each signal. */
+	private boolean defaultMode = true;
+	
 	// -------------------------------------------------------------------------
 
 	/**
@@ -168,7 +174,7 @@ public class SignalsView extends ViewPart {
 		signalList.setCurrentTick(currentTick);
 		this.signalList.setMaximalTicks(MAXIMALTICKS);
 		this.signalsPlotter.setSignalList(signalList);
-		this.signalsPlotter.plot(zoomLevel, colors);
+		this.signalsPlotter.plot(zoomLevel, colors, defaultMode);
 	}
 
 	// -------------------------------------------------------------------------
@@ -183,8 +189,9 @@ public class SignalsView extends ViewPart {
 		toolBarManager.add(getActionZoomOut());
 		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionDelete());
-		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionSaveAs());
+		toolBarManager.add(new Separator());
+		toolBarManager.add(getActionToggleMode());
 		toolBarManager.add(getActionToggleColors());
 	}
 
@@ -206,7 +213,7 @@ public class SignalsView extends ViewPart {
 				for (Signal signal : signalList) {
 					signal.clear(tickToResetTo);
 				}
-				signalsPlotter.plot(zoomLevel, colors);
+				signalsPlotter.plot(zoomLevel, colors, defaultMode);
 			}
 		};
 		actionDelete.setText("Clear History");
@@ -230,7 +237,7 @@ public class SignalsView extends ViewPart {
 		actionZoomIn = new Action() {
 			public void run() {
 				zoomLevel += 10;
-				signalsPlotter.plot(zoomLevel, colors);
+				signalsPlotter.plot(zoomLevel, colors, defaultMode);
 			}
 		};
 		actionZoomIn.setText("Zoom In");
@@ -256,7 +263,7 @@ public class SignalsView extends ViewPart {
 				if (zoomLevel > 10) {
 					zoomLevel -= 10;
 				}
-				signalsPlotter.plot(zoomLevel, colors);
+				signalsPlotter.plot(zoomLevel, colors, defaultMode);
 			}
 		};
 		actionZoomOut.setText("Zoom Out");
@@ -326,7 +333,7 @@ public class SignalsView extends ViewPart {
 					colors.setSignalColorMarker(NONDEFAULTSIGNALCOLORMARKER);
 					colors.setSignalSpareColor(NONDEFAULTSIGNALCOLOR0);
 				}
-				signalsPlotter.plot(zoomLevel, colors);
+				signalsPlotter.plot(zoomLevel, colors, defaultMode);
 			}
 		};
 		actionToggleColors.setText("Toggle Colors");
@@ -336,6 +343,30 @@ public class SignalsView extends ViewPart {
 		return actionToggleColors;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the action to toggle the color scheme.
+	 * 
+	 * @return the action to toggle the color scheme
+	 */
+	private Action getActionToggleMode() {
+		if (actionToggleMode != null) {
+			return actionToggleMode;
+		}
+		actionToggleMode = new Action("", IAction.AS_CHECK_BOX) {
+			public void run() {
+				defaultMode = !defaultMode;
+				signalsPlotter.plot(zoomLevel, colors, defaultMode);
+			}
+		};
+		actionToggleMode.setText("Toggle Timeline Mode");
+		actionToggleMode.setToolTipText("Toggle Timeline Mode");
+		actionToggleMode.setImageDescriptor(SignalsUIPlugin
+				.getImageDescriptor("icons/togglemode.png"));
+		return actionToggleMode;
+	}
+	
 	// -------------------------------------------------------------------------
 
 	/**
@@ -358,7 +389,7 @@ public class SignalsView extends ViewPart {
 	public void setColors(Colors colors) {
 		this.colors = colors;
 		// refresh with new colors
-		signalsPlotter.plot(zoomLevel, colors);
+		signalsPlotter.plot(zoomLevel, colors, defaultMode);
 	}
 
 	// -------------------------------------------------------------------------
