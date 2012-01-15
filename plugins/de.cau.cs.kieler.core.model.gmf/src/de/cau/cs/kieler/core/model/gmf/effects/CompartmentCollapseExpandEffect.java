@@ -150,14 +150,14 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
 		// error? It is sometimes *NOT* called from the UI thread. The following
 		// should guard against this as a temporary workaround.
 		// Ticket #1891
-		if (Display.getCurrent() != null
-				&& Display.getCurrent().getThread() != null
-				&& Thread.currentThread() != null) {
-			if (!Display.getCurrent().getThread()
-					.equals(Thread.currentThread())) {
-				return;
-			}
-		}
+//		if (Display.getCurrent() != null
+//				&& Display.getCurrent().getThread() != null
+//				&& Thread.currentThread() != null) {
+//			if (!Display.getCurrent().getThread()
+//					.equals(Thread.currentThread())) {
+//				return;
+//			}
+//		}
 		if (!initialized) {
 			this.initialized = true;
 			EditPart parentPart = bridge.getEditPart(this.targetNode);

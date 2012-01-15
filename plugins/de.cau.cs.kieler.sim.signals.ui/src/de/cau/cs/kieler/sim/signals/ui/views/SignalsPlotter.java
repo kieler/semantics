@@ -71,6 +71,9 @@ public class SignalsPlotter {
 	/** The zoomed y space. */
 	private int zoomedYSpace = 40;
 
+	/** The zoomed y space. */
+	private int zoomedXSpaceTimeLine = 25;
+
 	/** The zoomed x offset. */
 	private int zoomedXOffset = 60;
 
@@ -153,6 +156,7 @@ public class SignalsPlotter {
 		zoomedYOffset = (YOFFSET * zoomLevel) / 100;
 		zoomedYSpace = (YSPACE * zoomLevel) / 100;
 		zoomedXOffset = (XOFFSET * zoomLevel) / 100;
+		zoomedXSpaceTimeLine = (signalNameSize.width * zoomLevel) / 100;
 	}
 
 	// -------------------------------------------------------------------------
@@ -233,8 +237,15 @@ public class SignalsPlotter {
 		long currentTick = signalList.getCurrentTick();
 		long minTick = signalList.getMinTick();
 		int visibleWidth = outerScrolledComposite.getParent().getSize().y;
+
 		int xScroll = ((int) (currentTick - minTick) * zoomedXSpace
 				- (visibleWidth / 2) + signalNameSize.width);
+		if (!defaultMode) {
+			// Scrolling in Time Line Mode
+			xScroll = ((int) (currentTick - minTick) * zoomedXSpaceTimeLine
+					- (visibleWidth / 2) + signalNameSize.width);
+
+		}
 		int yScroll = outerScrolledComposite.getOrigin().y;
 		outerScrolledComposite.setOrigin(xScroll, yScroll);
 
@@ -258,7 +269,7 @@ public class SignalsPlotter {
 		int totalHeight = calculateTotalHightForTimeLine(font, space);
 		int index = signalList.indexOf(signal);
 		int length = signalList.size();
-		return ((totalHeight * index) / length) + space/2;
+		return ((totalHeight * index) / length) + space / 2;
 	}
 
 	// -------------------------------------------------------------------------
@@ -341,7 +352,7 @@ public class SignalsPlotter {
 	}
 
 	// -------------------------------------------------------------------------
-	
+
 	/**
 	 * Draw all signal present data.
 	 * 
@@ -358,6 +369,9 @@ public class SignalsPlotter {
 		int y = zoomedYOffset
 				+ calculateTopPositionForTimeLine(fontDefault, zoomedYSpace);
 
+		// update signal name width again
+		signalNameSize = getMaximumTextWidth(fontDefault);
+
 		long maxTick = signalList.getMaxTick();
 		long minTick = Math.max(1, signalList.getMinTick());
 		long currentTick = signalList.getCurrentTick();
@@ -365,60 +379,62 @@ public class SignalsPlotter {
 		RGB tickColor = colors.getSignalColor2();
 
 		outerScrolledComposite.setMinSize((int) (maxTick + 1 - minTick)
-				* zoomedXSpace + 2 * signalNameSize.width,
-				y + zoomedYSpace);
-		
+				* zoomedXSpaceTimeLine + zoomedXOffset, y
+				+ zoomedYSpace);
+
 		Node lastNode = null;
 		Font font = null;
 		RGB color = null;
-		
+
 		for (long tick = minTick; tick <= maxTick; tick++) {
-			
+
 			// if this is the current tick then mark the node in the
 			// signalColorMarker color
 			if (tick == currentTick) {
 				font = fontMarker;
 				color = colors.getSignalColorMarker();
-			}
-			else {
+			} else {
 				font = fontDefault;
 				color = colors.getSignalColor2();
 			}
-			
-			int tickXPos = ((int) (tick - minTick) * zoomedXSpace
-					+ (zoomedXSpace / 2) + signalNameSize.width);
+
+			int tickXPos = ((int) (tick - minTick) * zoomedXSpaceTimeLine + zoomedXOffset/2
+					+ (zoomedXSpaceTimeLine / 2));
 			// Draw all Signals
-			for (Signal signal: signalList) {
+			for (Signal signal : signalList) {
+				RGB signalColor = colors.getSignalSpareColor();
 				if (signal.isPresent(tick)) {
-					int xSignal = calculateLeftPositionForTimeLine(font, signal,
-							tickXPos);
-					int ySignal = calculateTopPositionForTimeLine(font, signal, zoomedYSpace);
-					
-					Label labelFigure = new Label();
-					String labelText = SIGNALLABELSAFETYMARGINSPACE + signal.getName()
-							+ SIGNALLABELSAFETYMARGINSPACE;
-					int labelWidth = calculateLabelWidth(font, labelText);
-					labelFigure.setText(labelText);
-					labelFigure.setVisible(true);
-					labelFigure.setFont(font);
-					labelFigure.setSize(labelWidth, signalNameSize.height);
-					labelFigure.setForegroundColor(new Color(Display.getCurrent(),
-							color));
-					labelFigure.setLocation(new Point(xSignal,
-							ySignal));
-					contents.add(labelFigure);
+					signalColor = color;
 				}
+
+				int xSignal = calculateLeftPositionForTimeLine(font, signal,
+						tickXPos);
+				int ySignal = calculateTopPositionForTimeLine(font, signal,
+						zoomedYSpace);
+
+				Label labelFigure = new Label();
+				String labelText = SIGNALLABELSAFETYMARGINSPACE
+						+ signal.getName() + SIGNALLABELSAFETYMARGINSPACE;
+				int labelWidth = calculateLabelWidth(font, labelText);
+				labelFigure.setText(labelText);
+				labelFigure.setVisible(true);
+				labelFigure.setFont(font);
+				labelFigure.setSize(labelWidth, signalNameSize.height);
+				labelFigure.setForegroundColor(new Color(Display.getCurrent(),
+						signalColor));
+				labelFigure.setLocation(new Point(xSignal, ySignal));
+				contents.add(labelFigure);
 			}
-			
-			
+
 			int presentOffset = 0;
 
 			Node nodeS = new Node();
-			nodeS.x = ((int) (tick - minTick) * zoomedXSpace + 2 + signalNameSize.width);
+			nodeS.x = ((int) (tick - minTick) * zoomedXSpaceTimeLine + 2 + zoomedXOffset/2);
 			nodeS.y = y + presentOffset + zoomedYOffset / 11;
 			nodeS.data = null;
 			Node nodeE = new Node();
-			nodeE.x = ((int) (tick - minTick) * zoomedXSpace + zoomedXSpace + 2 + signalNameSize.width);
+			nodeE.x = ((int) (tick - minTick) * zoomedXSpaceTimeLine
+					+ zoomedXSpaceTimeLine + 2 + zoomedXOffset/2);
 			nodeE.y = y + presentOffset + zoomedYOffset / 11;
 			nodeE.data = null;
 

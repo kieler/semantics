@@ -30,7 +30,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.signals.Signal;
-import de.cau.cs.kieler.sim.signals.SignalASCIIPlotter;
+import de.cau.cs.kieler.sim.signals.SignalASCIIChartPlotter;
+import de.cau.cs.kieler.sim.signals.SignalASCIITimeLinePlotter;
 import de.cau.cs.kieler.sim.signals.SignalList;
 import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
 
@@ -293,8 +294,15 @@ public class SignalsView extends ViewPart {
 					dlg.setOriginalName(KiemPlugin.getDefault()
 							.getActiveProjectName() + ".txt");
 					if (dlg.open() == SaveAsDialog.OK) {
-						new SignalASCIIPlotter().plotToTextFile(
-								dlg.getResult(), signalList);
+						if (defaultMode) {
+							new SignalASCIIChartPlotter().plotToTextFile(
+									dlg.getResult(), signalList);
+						}
+						else {
+							new SignalASCIITimeLinePlotter().plotToTextFile(
+									dlg.getResult(), signalList);
+							
+						}
 					}
 				}
 			}
