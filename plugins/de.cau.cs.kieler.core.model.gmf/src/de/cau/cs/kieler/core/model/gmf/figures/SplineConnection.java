@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.core.model.gmf.figures;
 
 import java.util.Hashtable;
+import java.util.List;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
@@ -34,11 +35,11 @@ import org.eclipse.swt.graphics.Path;
 import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
 
 /**
- * A connection figure that is able to draw polylines as well as real splines or approximated splines.
- * In these cases the bend points are interpreted as spline control points.
+ * Temporary class implementing the spline extension to polylines until the changes are merged into
+ * GMF.
  * 
- * @author mmu
- * @author ckru
+ * @author mmu, ckru
+ * 
  */
 public class SplineConnection extends PolylineConnectionEx {
     /**
@@ -194,7 +195,7 @@ public class SplineConnection extends PolylineConnectionEx {
             MapModeUtil.getMapMode(this).DPtoLP(absTol);
         }
 
-        return absTol.width + getLineWidth() / 2;
+        return absTol.width + lineWidth / 2;
     }
 
     /**
@@ -331,145 +332,86 @@ public class SplineConnection extends PolylineConnectionEx {
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
         } else if (isRoundingBendpoints()) {
-            if (!this.canRoundBendpoints(this.getPoints())) {
+            /*if (!this.canRoundBendpoints(this.getPoints())) {
                 int origBendpointRadius = this.getRoundedBendpointsRadius();
                 this.setRoundedBendpointsRadius(0);
                 super.outlineShape(g);
                 this.setRoundedBendpointsRadius(origBendpointRadius);
-            } else {
-                // /////////////////////////////////////////////////////
-                // ///////////Temporary gmf bugfix//////////////////////
-                // https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886
-                // /////////////////////////////////////////////////////
+            } else {*/
+        		int radius = this.getRoundedBendpointsRadius();
+                // TODO Auto-generated method stub
+                // super.outlineShape(g);
 
-                PointList displayPoints = getSmoothPoints(false);
+                PointList originalPoints = getPoints();
+                PointList newPoints = new PointList();
+                newPoints.addPoint(originalPoints.getFirstPoint());
+                for (int i = 1; i < originalPoints.size() - 1; i++) {
+                  Point refPoint = originalPoints.getPoint(i);
+                  Point prevPoint = originalPoints.getPoint(i - 1);
+                  Point nextPoint = originalPoints.getPoint(i + 1);
 
-                Hashtable<Point, Integer> originalDisplayPoints = null;
-                originalDisplayPoints = new Hashtable<Point, Integer>();
-                for (int i = 0; i < displayPoints.size(); i++) {
-                    originalDisplayPoints.put(displayPoints.getPoint(i), new Integer(i));
-                }
-                // In originalDisplayPoints, each bendpoint will be replaced with two points: start
-                // and end point of the arc.
-                // If jump links is on, then displayPoints will also contain points identifying jump
-                // links, if any.
-                int i = 1;
-                int rDefault = getRoundedBendpointsRadius();
-                while (i < displayPoints.size() - 1) {
-                    // Consider points at indexes i-1, i, i+1.
-                    int x0 = 0, y0 = 0;
-                    boolean firstPointAssigned = false;
-                    if (i < displayPoints.size() - 1) { // if we still didn't reach the end after
-                                                        // drawing jump link polyline
-                        // Draw a segment starting at index i-1 and ending at index i,
-                        // and arc with starting point at index i and ending point at index i+1.
-                        // But first, find points at i-1, i and i+1.
-                        if (!firstPointAssigned) {
-                            x0 = displayPoints.getPoint(i - 1).x;
-                            y0 = displayPoints.getPoint(i - 1).y;
-                        }
-                        int x1;
+                  int lengPrevious = Math.max(Math.abs(refPoint.x - prevPoint.x), Math.abs(refPoint.y - prevPoint.y));
+                  int lengNext = Math.max(Math.abs(refPoint.x - nextPoint.x), Math.abs(refPoint.y - nextPoint.y));
+                  // The bend radius is reduced to 6 from 10
+                  int r = Math.min(Math.min(lengPrevious / 2, lengNext / 2), radius);
 
-                        int y1;
-                        // If points at i-1 and i are equal (could happen if jump link algorithm
-                        // inserts a point that already exists), just skip the point i
-                        while (i < displayPoints.size() - 1 && x0 == displayPoints.getPoint(i).x
-                                && y0 == displayPoints.getPoint(i).y) {
-                            i++;
-                        }
-                        if (i < displayPoints.size() - 1) {
-                            x1 = displayPoints.getPoint(i).x;
-                            y1 = displayPoints.getPoint(i).y;
-                        } else {
-                            break;
-                        }
+                  int dxPrev = r * sign(prevPoint.x - refPoint.x);
+                  int dyPrev = r * sign(prevPoint.y - refPoint.y);
+                  int dxNext = r * sign(nextPoint.x - refPoint.x);
+                  int dyNext = r * sign(nextPoint.y - refPoint.y);
 
-                        // The same goes for point at i and i+1
-                        int x2;
-                        int y2;
-                        while (i + 1 < displayPoints.size() - 1
-                                && x1 == displayPoints.getPoint(i + 1).x
-                                && y1 == displayPoints.getPoint(i + 1).y) {
-                            i++;
-                        }
-                        if (i < displayPoints.size() - 1) {
-                            x2 = displayPoints.getPoint(i + 1).x;
-                            y2 = displayPoints.getPoint(i + 1).y;
-                        } else {
-                            break;
-                        }
+                  Point prevLineEnd = new Point(refPoint.x + dxPrev, refPoint.y + dyPrev);
+                  newPoints.addPoint(prevLineEnd);
+                  Point nextLineStart = new Point(refPoint.x + dxNext, refPoint.y + dyNext);
 
-                        // Draw the segment
-                        g.drawLine(x0, y0, x1, y1);
+                  if (r < 3) { // too small radius
+                    g.drawLine(prevLineEnd, nextLineStart);
+                  }
+                  else {
+                    int arcCenterX = refPoint.x + dxNext + dxPrev;
+                    int arcCenterY = refPoint.y + dyNext + dyPrev;
 
-                        // Find out if arc size is default, or if it had to be decreased because of
-                        // lack
-                        // of space
-                        this.getRoundedCornersPoints(false);
-                        int r = rDefault;
-                        Point p = displayPoints.getPoint(i);
-                        int origIndex = ((Integer) originalDisplayPoints.get(p)).intValue();
-                        Object o = rForBendpointArc.get(new Integer((origIndex + 1) / 2));
-                        if (o != null) {
-                            r = ((Integer) o).intValue();
-                        }
-                        // Find out the location of enclosing rectangle (x, y), as well as staring
-                        // angle
-                        // of the arc.
-                        int x, y;
-                        int startAngle;
-                        if (x0 == x1 && x1 < x2) {
-                            x = x1;
-                            y = y1 - r;
-                            if (y1 > y2) {
-                                startAngle = 90;
-                            } else {
-                                startAngle = 180;
-                            }
-                        } else if (x0 > x1 && x1 > x2) {
-                            x = x2;
-                            y = y2 - r;
-                            if (y1 > y2) {
-                                startAngle = 180;
-                            } else {
-                                startAngle = 90;
-                            }
-                        } else if (x0 == x1 && x1 > x2) {
-                            if (y1 > y2) {
-                                x = x2 - r;
-                                y = y2;
-                                startAngle = 0;
-                            } else {
-                                x = x1 - 2 * r;
-                                y = y1 - r;
-                                startAngle = 270;
-                            }
-                        } else { // x0 < x1 && x1 < x2
-                            if (y1 > y2) {
-                                x = x2 - 2 * r;
-                                y = y2 - r;
-                                startAngle = 270;
-                            } else {
-                                x = x1 - r;
-                                y = y1;
-                                startAngle = 0;
-                            }
-                        }
-                        // Draw the arc.
-                        g.drawArc(x, y, 2 * r, 2 * r, startAngle, 90);
-                        i += 2;
+                    // Step reduced to .05 from .2
+                    double step = Math.min(Math.max(Math.PI / r, 0.08), 0.05);
+                    Point arcPoint = null;
+                    for (double rad = 0.0; rad <= Math.PI / 2; rad += step) {
+                      Point newArcPoint =
+                          new Point(arcCenterX - (int) Math.round(r * Math.cos(rad)) * sign(dxNext + dxPrev), arcCenterY -
+                              (int) Math.round(r * Math.sin(rad)) * sign(dyNext + dyPrev));
+                      if (arcPoint != null) {
+                        g.drawLine(arcPoint, newArcPoint);
+                      }
+                      else {
+                        g.drawLine(newArcPoint, (newArcPoint.getDistance(prevLineEnd) < newArcPoint.getDistance(nextLineStart))
+                            ? prevLineEnd : nextLineStart);
+                      }
+                      arcPoint = newArcPoint;
                     }
+                    g.drawLine(arcPoint, (arcPoint.getDistance(prevLineEnd) < arcPoint.getDistance(nextLineStart)) ? prevLineEnd
+                        : nextLineStart);
+                  }
+                  newPoints.addPoint(nextLineStart);
                 }
-                // Draw the last segment.
-                g.drawLine(displayPoints.getPoint(displayPoints.size() - 2),
-                        displayPoints.getLastPoint());
-                // bugfix end
-            }
+                newPoints.addPoint(originalPoints.getLastPoint());
+                for (int i = 0; i < newPoints.size(); i += 2) {
+                  g.drawLine(newPoints.getPoint(i), newPoints.getPoint(i + 1));
+                }
+              
+            //}
         } else {
             super.outlineShape(g);
         }
     }
 
+    private int sign(final int test) {
+        if (test > 0) {
+          return 1;
+        }
+        if (test < 0) {
+          return -1;
+        }
+        return 0;
+      }
     /**
      * Method to determine whether the connection meets all requirements to do rounded bendpoints or
      * not. Requirements are: - connection is othogonal - connection has no small bends
@@ -571,12 +513,13 @@ public class SplineConnection extends PolylineConnectionEx {
     }
 
     /**
-     * Check if we have to draw join points and calculate their location.
+     * Check if we have to draw those JoinPoints and calculate their location.
      */
     private void drawJoinPointDecoration() {
         IFigure parent = this.getParent();
+        List<IFigure> children = parent.getChildren();
         // compare yourself with all the other connections
-        for (Object child : parent.getChildren()) {
+        for (IFigure child : children) {
             if ((child instanceof SplineConnection) && (this != child)) {
                 SplineConnection connection = (SplineConnection) child;
                 Point joinPoint = null;
@@ -628,16 +571,22 @@ public class SplineConnection extends PolylineConnectionEx {
         }
     }
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.draw2d.PolylineConnection#setTargetDecoration(org.eclipse
+     * .draw2d.RotatableDecoration)
      */
     @Override
     public void setTargetDecoration(final RotatableDecoration dec) {
         super.setTargetDecoration(dec, new ArrowLocatorEx(this, ConnectionLocator.TARGET));
     }
 
-    /**
-     * {@inheritDoc}
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.eclipse.draw2d.PolylineConnection#setSourceDecoration(org.eclipse
+     * .draw2d.RotatableDecoration)
      */
     @Override
     public void setSourceDecoration(final RotatableDecoration dec) {
@@ -648,6 +597,7 @@ public class SplineConnection extends PolylineConnectionEx {
      * An extension of the ArrowLocator that is capable of using spline points as references.
      * 
      * @author mmu
+     * 
      */
     public static class ArrowLocatorEx extends ArrowLocator {
 
