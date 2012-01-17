@@ -60,7 +60,7 @@ public class SignalsPlotter {
 	private final int XOFFSET = 60;
 
 	/** The SIGNALLABELSAFETYMARGINSPACE. */
-	private final String SIGNALLABELSAFETYMARGINSPACE = "    ";
+	private final String SIGNALLABELSAFETYMARGINSPACE = "  ";
 
 	/** The zoomed size variables. */
 	private int zoomedXSpace = 25;
@@ -71,8 +71,8 @@ public class SignalsPlotter {
 	/** The zoomed y space. */
 	private int zoomedYSpace = 40;
 
-	/** The zoomed y space. */
-	private int zoomedXSpaceTimeLine = 25;
+	/** The zoomed x space. */
+	private int zoomedXSpaceTimeLine = 5;
 
 	/** The zoomed x offset. */
 	private int zoomedXOffset = 60;
@@ -227,7 +227,7 @@ public class SignalsPlotter {
 			}
 		} else {
 			// DRAW THE TIMELINE MODE 2776
-			drawTimeLine(buffer, colors);
+			drawTimeLine(buffer, colors, zoomLevel);
 
 		}
 
@@ -359,18 +359,20 @@ public class SignalsPlotter {
 	 * @param contents
 	 *            the contents
 	 */
-	private void drawTimeLine(IFigure contents, Colors colors) {
+	private void drawTimeLine(IFigure contents, Colors colors, int zoomLevel) {
 		Font fontDefault = new Font(Display.getCurrent(), "Arial",
 				(zoomedYOffset / 4), SWT.NORMAL);
 		Font fontMarker = new Font(Display.getCurrent(), "Arial",
 				(zoomedYOffset / 4), SWT.BOLD);
 
+		// update signal name width again
+		signalNameSize = getMaximumTextWidth(fontDefault);
+		// re-calculate zoomed values
+		zoom(zoomLevel);
+		
 		// calculate the top position of the time line
 		int y = zoomedYOffset
 				+ calculateTopPositionForTimeLine(fontDefault, zoomedYSpace);
-
-		// update signal name width again
-		signalNameSize = getMaximumTextWidth(fontDefault);
 
 		long maxTick = signalList.getMaxTick();
 		long minTick = Math.max(1, signalList.getMinTick());
