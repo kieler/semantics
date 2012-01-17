@@ -275,25 +275,26 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
         fileProperty.setFilterExts(exts);
         fileProperty.setFilterNames(extNames);
-        
+
         String filename = null;
         try {
             DiagramEditor curEditor = (DiagramEditor) getActivePage().getActiveEditor();
             IEditorInput curEditorInput = curEditor.getEditorInput();
-                    
+
             IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
             IResource resourceInRuntimeWorkspace = root.findMember(curEditorInput.getToolTipText());
-            
+
             File file = new File(resourceInRuntimeWorkspace.getLocationURI());
-            filename = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf(".")) + ".eso";
-        } catch(Exception e) {
+            filename = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf("."))
+                    + ".eso";
+        } catch (Exception e) {
             // do nothing
         }
-        
+
         KiemProperty[] properties = new KiemProperty[6];
         // properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
         properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
-        if(filename != null) {
+        if (filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
         properties[1] = new KiemProperty("Trace number to replay", new KiemPropertyTypeInt(), 0);
@@ -401,9 +402,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             throws KiemExecutionException {
         String simValue = obj.optString(key);
         if (simValue == null) {
-            throw new KiemExecutionException("The simulation step did not generate a variable \""
-                    + key + "\". " + "No validation for this signal will take place in this step!",
-                    false, null);
+            throw new KiemExecutionException("Validation error", false, new ValidationException(
+                    "The simulation step did not generate a variable \"" + key + "\". "
+                            + "No validation for this signal will take place in this step!"));
         } else {
             if (!simValue.equals(value)) {
                 if (key.equals("state")) {
@@ -421,16 +422,20 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     }
 
                     // Display an error message
-                    throw new KiemExecutionException(
-                            "Validation error: The simulation's active states should be:\n"
-                                    + stateNames + "\nbut the states actually active are:\n"
-                                    + simStateNames, false, null);
+                    String errorMessage = "Validation error: The simulation's active states should be:\n"
+                            + stateNames
+                            + "\nbut the states actually active are:\n"
+                            + simStateNames;
+
+                    throw new KiemExecutionException("Validation error", false,
+                            new ValidationException(errorMessage));
                 } else {
-                    throw new KiemExecutionException(
-                            "Validation error: The simulation should provide a variable \"" + key
-                                    + "\" with a value of \"" + value
-                                    + "\", but it actually generated the value \"" + simValue
-                                    + "\".", false, null);
+                    throw new KiemExecutionException("Validation error", false,
+                            new ValidationException(
+                                    "Validation error: The simulation should provide a variable \""
+                                            + key + "\" with a value of \"" + value
+                                            + "\", but it actually generated the value \""
+                                            + simValue + "\"."));
                 }
             }
         }
@@ -474,22 +479,26 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             ISignal recSignal = it.next();
             // presence
             if (!simSignals.containsKey(recSignal.getName())) {
-                throw new KiemExecutionException("Validation error: Signal \""
-                        + recSignal.getName() + "\" is not present, but it should be.", false, null);
+                throw new KiemExecutionException("Validation error", false,
+                        new ValidationException("Validation error: Signal \"" + recSignal.getName()
+                                + "\" is not present, but it should be."));
             }
 
             // value
             if (recSignal.isValued()
                     && !(recSignal.getValue() == simSignals.get(recSignal.getName()))) {
                 throw new KiemExecutionException(
-                        "Validation error: Signal \""
-                                + recSignal.getName()
-                                + "\" was recorded as a valued signal with value \""
-                                + recSignal.getValue()
-                                + "\" but "
-                                + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
-                                        : ("was simulatated with value \"" + recSignal.getValue() + "\".")),
-                        false, null);
+                        "Validation error",
+                        false,
+                        new ValidationException(
+                                "Validation error: Signal \""
+                                        + recSignal.getName()
+                                        + "\" was recorded as a valued signal with value \""
+                                        + recSignal.getValue()
+                                        + "\" but "
+                                        + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
+                                                : ("was simulatated with value \""
+                                                        + recSignal.getValue() + "\"."))));
             }
 
             it.remove();
@@ -507,8 +516,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 }
             }
 
-            throw new KiemExecutionException("Validation error: The signal(s) " + excessSignals
-                    + " were not recorded, but generated in the simulation", false, null);
+            throw new KiemExecutionException("Validation error", false, new ValidationException(
+                    "Validation error: The signal(s) " + excessSignals
+                            + " were not recorded, but generated in the simulation"));
         }
     }
 
