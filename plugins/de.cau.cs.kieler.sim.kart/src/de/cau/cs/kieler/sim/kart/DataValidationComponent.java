@@ -413,18 +413,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     List<EObject> isStates = getStates(simValue);
                     List<EObject> shallStates = getStates(value);
 
-                    // Get meaningful names for the states
-                    //String stateNames = getActiveStateNames(shallStates));
-                    //String simStateNames = getActiveStateNames(isStates);
-                    String stateNamesTree = buildTree(new Tree(null), shallStates).toString();
-                    String simStateNamesTree = buildTree(new Tree(null), isStates).toString();
-
                     // Colorize the diagram
                     if (DiffStateTrigger.getInstance() != null) {
+                        System.out.println("PAINTING VALIDATION ERROR STATES!");
                         DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates,
                                 editor);
                     }
 
+                    // Get meaningful names for the states
+                    String stateNamesTree = buildTree(new Tree(null), shallStates).toString();
+                    String simStateNamesTree = buildTree(new Tree(null), isStates).toString();
+                    
                     // Display an error message
                     String errorMessage = "Validation error: The simulation's active states should be:\n"
                             + stateNamesTree
