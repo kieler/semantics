@@ -26,6 +26,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorInput;
@@ -278,30 +280,30 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         String filename = null;
         try {
-            DiagramEditor curEditor = (DiagramEditor) getActivePage().getActiveEditor();
-            IEditorInput curEditorInput = curEditor.getEditorInput();
-
-            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IResource resourceInRuntimeWorkspace = root.findMember(curEditorInput.getToolTipText());
-
-            File file = new File(resourceInRuntimeWorkspace.getLocationURI());
-            filename = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf("."))
-                    + ".eso";
+            /*
+             * The try block is necessary to suppress NPEs and other exception when we are either
+             * running in headless mode or there are no editor opened. Below, you will see that a
+             * filename is only proposed if this try block succeeds. We have to use absolute file
+             * paths here, because the KiemPropertyTypeFile dialog only returns absolute paths. I do
+             * not want to change that for fear that something else breaks.
+             */
+            URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
+                    .eResource().getURI().trimFileExtension().appendFileExtension("eso");
+            URI absFile = CommonPlugin.resolve(resource);
+            filename = absFile.toFileString();
         } catch (Exception e) {
             // do nothing
         }
 
         KiemProperty[] properties = new KiemProperty[6];
-        // properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
+        properties[0] = new KiemProperty("ESI/ESO trace file", fileProperty);
         if (filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
         properties[1] = new KiemProperty("Trace number to replay", new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty("Validate extra information", true);
         properties[3] = new KiemProperty("Extra information signals", "state");
-        properties[4] = new KiemProperty("Ignore additionally generated signals",
-                new KiemPropertyTypeBool(), 0);
+        properties[4] = new KiemProperty("Ignore additionally generated signals", false);
         properties[5] = new KiemProperty("Training mode", false);
 
         return properties;
