@@ -437,8 +437,8 @@
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
-            option="de.cau.cs.kieler.fixedSize"
-            value="false">
+            option="de.cau.cs.kieler.sizeConstraint"
+            value="MIN_OPTION">
       </option>
       <option
             class="de.cau.cs.kieler.synccharts.State"
