@@ -15,6 +15,7 @@ package de.cau.cs.kieler.sim.kart.ui;
 
 import java.util.List;
 
+import de.cau.cs.kieler.core.model.gmf.triggers.DiffStateTrigger;
 import de.cau.cs.kieler.sim.kart.IStateVisualization;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -29,7 +30,9 @@ public class StateVisualization implements IStateVisualization {
      * {@inheritDoc}
      */
     public void visualize(List<EObject> isStates, List<EObject> shallStates, DiagramEditor editor) {
-        // TODO Auto-generated method stub
-        
+        if (DiffStateTrigger.getInstance() != null) {
+            DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates,
+                    editor);
+        }
     }
 }

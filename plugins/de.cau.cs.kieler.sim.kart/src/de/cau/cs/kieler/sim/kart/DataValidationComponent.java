@@ -22,14 +22,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.eclipse.swt.graphics.RGB;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.model.gmf.triggers.DiffStateTrigger;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.esi.EsiFile;
 import de.cau.cs.kieler.sim.esi.ISignal;
@@ -203,9 +206,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         }
 
-        if (DiffStateTrigger.getInstance() != null) {
-            DiffStateTrigger.getInstance().synchronizedStep(null, null, editor);
-        }
+        visualizeStates(null, null, editor);
     }
 
     /**
@@ -244,7 +245,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @SuppressWarnings("unchecked")
     @Override 
     public void notifyEvent(KiemEvent event) {
-        System.out.println("Got an event with types: " + event.getEventCodesAsList());
         if(event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
             step = ((Pair<Long, Long>) event.getInfo()).getFirst().intValue();
         }
@@ -351,8 +351,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         Map<String, Object> outputSignals = convertAndRecordSignals(obj);
         
-        System.out.println("Validating step number " + step);
-
         if (!trainingMode && trace.getSize() >= (step - 1)) {
             ITick tick = trace.get(step - 1);
             List<ISignal> signals = tick.getOutputs();
@@ -436,11 +434,8 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             throws KiemExecutionException {
         
         // undo effects from previous step
-        if (DiffStateTrigger.getInstance() != null) {
-            DiffStateTrigger.getInstance().synchronizedStep(null, null,
-                    editor);
-        }
-        
+        visualizeStates(null, null, editor);
+                
         String simValue = obj.optString(key);
         if (simValue == null) {
             throw new KiemExecutionException("Validation error", false, new ValidationException(
@@ -454,10 +449,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     List<EObject> shallStates = getStates(value);
 
                     // Colorize the diagram
-                    if (DiffStateTrigger.getInstance() != null) {
-                        DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates,
-                                editor);
-                    }
+                    visualizeStates(isStates, shallStates, editor);
 
                     // Get meaningful names for the states
                     String stateNamesTree = buildTree(new Tree(null), shallStates).toString();
@@ -704,6 +696,44 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 retval += child.toString(indent + "  ");
             }
             return retval;
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void visualizeStates(List<EObject> isStates, List<EObject> shallStates, DiagramEditor editor) {
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualStates");
+
+        for (IConfigurationElement element : extensions) {
+            try {
+                IStateVisualization vis = (IStateVisualization) (element
+                        .createExecutableExtension("class"));
+                
+                vis.visualize(isStates, shallStates, editor);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void visualizeSignals(String signalName, RGB color, int step) {
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualSignals");
+
+        for (IConfigurationElement element : extensions) {
+            try {
+                ISignalVisualization vis = (ISignalVisualization) (element
+                        .createExecutableExtension("class"));
+                
+                vis.visualize(signalName, color, step);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

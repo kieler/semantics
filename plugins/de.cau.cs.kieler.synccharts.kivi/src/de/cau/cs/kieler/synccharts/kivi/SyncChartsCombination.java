@@ -166,13 +166,8 @@ public class SyncChartsCombination extends AbstractCombination {
                     false, animate));
         }
 
-        // SSC: by not coloring all states as inactive other highlight effects from other plugins
-        // are not forcibly overwritten. To retain visual correctness it is indeed sufficient to undo
-        // previous colorizations. The only downside here is that inactive states are now black and
-        // no longer gray...
-        
         // coloring all states inactive/gray
-        /*EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
+        EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
         for (Iterator<EObject> i = root.eAllContents(); i.hasNext();) {
             EObject current = i.next();
             if (current.eContainer() != root
@@ -183,7 +178,7 @@ public class SyncChartsCombination extends AbstractCombination {
                 effect.setChangeWidth(false);
                 schedule(effect);
             }
-        }*/
+        }
 
         // highlight history states
         // these were most recently active i steps ago
