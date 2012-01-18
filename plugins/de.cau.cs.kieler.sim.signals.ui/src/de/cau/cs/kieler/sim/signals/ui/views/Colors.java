@@ -19,8 +19,19 @@ import java.util.HashMap;
 import org.eclipse.swt.graphics.RGB;
 
 /**
- * The Colors can be used to customize the colors for the SignalsPlotter.
- * 
+ * The Colors can be used to customize the colors for the SignalsPlotter.<BR>
+ * <BR>
+ * RGB myColor = new RGB(0, 255, 0);<BR>
+ * // color tick 4 of signal B<BR>
+ * colors.setSignalColor("B", myColor , 4);<BR>
+ * <BR>
+ * // color tick 2 and 3 of signal A<BR>
+ * colors.setSignalColor("A", myColor , 2);<BR>
+ * colors.setSignalColor("A", myColor , 3);<BR>
+ * <BR>
+ * // color ALL ticks of signal S2<BR>
+ * colors.setSignalColor("S2", myColor );<BR>
+ * <BR>
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 public class Colors {
