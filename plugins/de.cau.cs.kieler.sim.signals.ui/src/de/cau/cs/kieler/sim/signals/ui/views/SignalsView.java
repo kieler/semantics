@@ -115,6 +115,9 @@ public class SignalsView extends ViewPart {
 	@Override
 	public void createPartControl(Composite parent) {
 
+//		colors.setSignalColor("B", new RGB(0, 255, 0), 4);
+//		colors.setSignalColor("A", new RGB(0, 255, 0), 2);
+//		colors.setSignalColor("A", new RGB(0, 255, 0), 3);
 //		colors.setSignalColor("S2", new RGB(0, 255, 0));
 
 		// instantiate a plotter, and provide data to it.

@@ -399,14 +399,16 @@ public class SignalsPlotter {
 				font = fontDefault;
 				color = colors.getSignalColor2();
 			}
-
+			
 			int tickXPos = ((int) (tick - minTick) * zoomedXSpaceTimeLine + zoomedXOffset/2
 					+ (zoomedXSpaceTimeLine / 2));
 			// Draw all Signals
 			for (Signal signal : signalList) {
+
+				
 				RGB signalColor = colors.getSignalSpareColor();
 				if (signal.isPresent(tick)) {
-					signalColor = color;
+					signalColor = colors.getSignalColor(signal.getName(), tick, color);
 				}
 
 				int xSignal = calculateLeftPositionForTimeLine(font, signal,
@@ -548,14 +550,17 @@ public class SignalsPlotter {
 				if (lastNode == null) {
 					lastNode = nodeE;
 				}
-				drawEdge(contents, lastNode, nodeS, signalColor);
-				drawEdge(contents, nodeS, nodeE, signalColor);
+				// get possibly adapted signal color
+				RGB drawColor = colors.getSignalColor(signal.getName(), tick, signalColor);
+
+				drawEdge(contents, lastNode, nodeS, drawColor);
+				drawEdge(contents, nodeS, nodeE, drawColor);
 				lastNode = nodeE;
 
 				// if this is the current tick then mark the node in the
 				// signalColorMarker color
 				if (tick != currentTick) {
-					drawNode(contents, node, signalColor, zoomedYOffset / 8,
+					drawNode(contents, node, drawColor, zoomedYOffset / 8,
 							tick, signal.getName());
 				} else {
 					node.y = node.y - zoomedYOffset / 14;
