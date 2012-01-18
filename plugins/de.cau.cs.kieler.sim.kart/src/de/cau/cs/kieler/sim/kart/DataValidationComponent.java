@@ -26,6 +26,8 @@ import java.util.Set;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.ui.IEditorInput;
@@ -278,30 +280,30 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         String filename = null;
         try {
-            DiagramEditor curEditor = (DiagramEditor) getActivePage().getActiveEditor();
-            IEditorInput curEditorInput = curEditor.getEditorInput();
-
-            IWorkspaceRoot root = ResourcesPlugin.getWorkspace().getRoot();
-            IResource resourceInRuntimeWorkspace = root.findMember(curEditorInput.getToolTipText());
-
-            File file = new File(resourceInRuntimeWorkspace.getLocationURI());
-            filename = file.getAbsolutePath().substring(0, file.getAbsolutePath().lastIndexOf("."))
-                    + ".eso";
+            /*
+             * The try block is necessary to suppress NPEs and other exception when we are either
+             * running in headless mode or there are no editor opened. Below, you will see that a
+             * filename is only proposed if this try block succeeds. We have to use absolute file
+             * paths here, because the KiemPropertyTypeFile dialog only returns absolute paths. I do
+             * not want to change that for fear that something else breaks.
+             */
+            URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
+                    .eResource().getURI().trimFileExtension().appendFileExtension("eso");
+            URI absFile = CommonPlugin.resolve(resource);
+            filename = absFile.toFileString();
         } catch (Exception e) {
             // do nothing
         }
 
         KiemProperty[] properties = new KiemProperty[6];
-        // properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
+        properties[0] = new KiemProperty("ESI/ESO trace file", fileProperty);
         if (filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
         properties[1] = new KiemProperty("Trace number to replay", new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty("Validate extra information", true);
         properties[3] = new KiemProperty("Extra information signals", "state");
-        properties[4] = new KiemProperty("Ignore additionally generated signals",
-                new KiemPropertyTypeBool(), 0);
+        properties[4] = new KiemProperty("Ignore additionally generated signals", false);
         properties[5] = new KiemProperty("Training mode", false);
 
         return properties;
@@ -412,8 +414,10 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     List<EObject> shallStates = getStates(value);
 
                     // Get meaningful names for the states
-                    String stateNames = getActiveStateNames(shallStates);
-                    String simStateNames = getActiveStateNames(isStates);
+                    //String stateNames = getActiveStateNames(shallStates));
+                    //String simStateNames = getActiveStateNames(isStates);
+                    String stateNamesTree = buildTree(new Tree(null), shallStates).toString();
+                    String simStateNamesTree = buildTree(new Tree(null), isStates).toString();
 
                     // Colorize the diagram
                     if (DiffStateTrigger.getInstance() != null) {
@@ -423,9 +427,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
                     // Display an error message
                     String errorMessage = "Validation error: The simulation's active states should be:\n"
-                            + stateNames
+                            + stateNamesTree
                             + "\nbut the states actually active are:\n"
-                            + simStateNames;
+                            + simStateNamesTree;
 
                     throw new KiemExecutionException("Validation error", false,
                             new ValidationException(errorMessage));
@@ -442,8 +446,59 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     }
 
     /**
-     * @param shallStates
+     * Build a tree-like list of states with indentations.
+     * Indirect descent, i. e. one or more nodes between two states in the list
+     * is not displayed. The descendant node will be displayed as a direct child
+     * of its ancestor.
+     * 
+     * @param root MUST ALWAYS be {@code new Tree(null)}
+     *        states list of states that shall be put in the tree structure
      * @return
+     */
+    private Tree buildTree(Tree root, List<EObject> states) {
+        while(!states.isEmpty()) {
+            EObject itemObject = states.get(0);
+            states.remove(0);
+            
+            if(itemObject instanceof Scope) {
+                boolean breakIf = false;
+                Scope item = (Scope) itemObject;
+                Tree itemTree = new Tree(item);
+                
+                while(item.eContainer() != null) {
+                    if(states.contains(item.eContainer())) {
+                        states.remove(item.eContainer());
+                        Tree parentTree = new Tree((Scope) item.eContainer());
+                        parentTree.addChild(itemTree);
+                        itemTree = parentTree;
+                    }
+                    else {
+                        Tree parentTree = root.findValue((Scope) item.eContainer());
+                        if(parentTree != null) {
+                            parentTree.addChild(itemTree);
+                            breakIf = true;
+                            break;
+                        }
+                    }
+                    item = (Scope) item.eContainer();
+                }
+                
+                if(!breakIf) {
+                    root.addChild(itemTree);
+                }
+
+            }
+        }
+                
+        return root;
+    }
+
+    /**
+     * Create a hyphened list of states out of a list.
+     * 
+     * @param stateList A list of states
+     * @deprecated Output is now organized as a tree: {@link buildTree()}
+     * @return The list of the names of the states, one per line, preceded by a hyphen
      */
     private String getActiveStateNames(List<EObject> stateList) {
         String retval = "";
@@ -563,5 +618,56 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public String getDataComponentId() {
         return "de.cau.cs.kieler.sim.kart.DataValidationComponent";
+    }
+    
+    private class Tree {
+        private Scope value;
+        private List<Tree> children;
+        
+        public Tree(Scope value) {
+            this.value = value;
+            children = new LinkedList<Tree>();
+        }
+        
+        public Scope getValue() {
+            return value;
+        }
+        
+        public void setValue(Scope value) {
+            this.value = value;
+        }
+
+        public Tree findValue(Scope find) {
+            Tree retval = null;
+            if(value != null && value.equals(find)) {
+                retval = this;
+            }
+            else {
+                for(Tree child : children) {
+                    retval = child.findValue(find);
+                    break;
+                }
+            }
+            return retval;
+        }
+        
+        public void addChild(Tree child) {
+            this.children.add(child);
+        }
+        
+        public String toString() {
+            return toString("");
+        }
+        
+        public String toString(String indent) {
+            String retval = "";
+            if(value != null) {
+                retval = indent + "- " + getValue().getLabel() + "\n";
+            }
+            for(Tree child : children) {
+                retval += child.toString(indent + "  ");
+            }
+            return retval;
+        }
     }
 }
