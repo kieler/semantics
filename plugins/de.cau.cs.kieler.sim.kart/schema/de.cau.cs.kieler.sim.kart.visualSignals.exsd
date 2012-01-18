@@ -17,6 +17,9 @@
          </appinfo>
       </annotation>
       <complexType>
+         <sequence>
+            <element ref="content"/>
+         </sequence>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
