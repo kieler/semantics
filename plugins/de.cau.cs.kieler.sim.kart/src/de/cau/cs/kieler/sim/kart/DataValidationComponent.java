@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,14 +22,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.ui.IEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -47,7 +42,6 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -679,10 +673,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             return value;
         }
         
-        public void setValue(Scope value) {
-            this.value = value;
-        }
-
         public Tree findValue(Scope find) {
             Tree retval = null;
             if(value != null && value.equals(find)) {
