@@ -14,3 +14,4 @@ Require-Bundle: org.eclipse.core.runtime,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.dialogs
+Export-Package: de.cau.cs.kieler.sim.signals.ui.views
