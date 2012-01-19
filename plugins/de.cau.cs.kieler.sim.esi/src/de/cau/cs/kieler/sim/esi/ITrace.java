@@ -42,6 +42,21 @@ public interface ITrace extends Iterator<ITick>{
      * @return the current tick
      */
     ITick current();
+    
+    /**
+     * Get a specific tick
+     * 
+     * @param index the index of the requested tick
+     * @return the requested tick
+     */
+    public ITick get(int index) throws IndexOutOfBoundsException;
+    
+    /**
+     * Get the number of ticks this trace includes
+     * 
+     * @return the number of ticks this trace includes
+     */
+    public int getSize();
 
     /**
      * 

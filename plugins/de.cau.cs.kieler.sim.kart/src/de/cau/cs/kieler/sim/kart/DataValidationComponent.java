@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,29 +22,29 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.core.resources.IResource;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.ui.IEditorInput;
+import org.eclipse.swt.graphics.RGB;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.model.gmf.triggers.DiffStateTrigger;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.esi.EsiFile;
 import de.cau.cs.kieler.sim.esi.ISignal;
 import de.cau.cs.kieler.sim.esi.ITick;
 import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -64,6 +63,9 @@ import de.cau.cs.kieler.synccharts.Scope;
  */
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
+    /** The number of the current step */
+    private int step = 0;
+    
     /** The single trace out of a ESI/ESO file the simulation shall be validated against */
     private ITrace trace = null;
 
@@ -204,9 +206,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         }
 
-        if (DiffStateTrigger.getInstance() != null) {
-            DiffStateTrigger.getInstance().synchronizedStep(null, null, editor);
-        }
+        visualizeStates(null, null, editor);
     }
 
     /**
@@ -237,6 +237,28 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             }
         }
     }
+    
+    /**
+     * Sets the step number according to the button the user pressed. This is needed to
+     * correctly handle history steps or jumps.
+     */
+    @SuppressWarnings("unchecked")
+    @Override 
+    public void notifyEvent(KiemEvent event) {
+        if(event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
+            step = ((Pair<Long, Long>) event.getInfo()).getFirst().intValue();
+        }
+    }
+    
+    /**
+     * Return the types of events this component listens to
+     */
+    @Override
+    public KiemEvent provideEventOfInterest() {
+        int[] events = {KiemEvent.STEP_INFO};
+        KiemEvent event = new KiemEvent(events);
+        return event;
+    }
 
     /**
      * This component may not be skipped so we tell KIEM that we also produce data, though we
@@ -255,9 +277,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     public boolean isObserver() {
         return true;
     }
+    
+    /**
+     * Tell KIEM that we are also interested in history data
+     */
+    @Override
+    public boolean isHistoryObserver() {
+        return true;
+    }
 
     /**
-     * Tell KIEM that we are not a delta observer
+     * Tell KIEM that we are *not* a delta observer
      */
     @Override
     public boolean isDeltaObserver() {
@@ -320,9 +350,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         Map<String, Object> outputSignals = convertAndRecordSignals(obj);
-
-        if (!trainingMode && trace.hasNext()) {
-            ITick tick = trace.next();
+        
+        if (!trainingMode && trace.getSize() >= (step - 1)) {
+            ITick tick = trace.get(step - 1);
             List<ISignal> signals = tick.getOutputs();
 
             Map<String, String> special = tick.getExtraInfos();
@@ -402,6 +432,10 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     // TODO: JavaDoc documentation
     private void diffSpecial(String key, String value, JSONObject obj)
             throws KiemExecutionException {
+        
+        // undo effects from previous step
+        visualizeStates(null, null, editor);
+                
         String simValue = obj.optString(key);
         if (simValue == null) {
             throw new KiemExecutionException("Validation error", false, new ValidationException(
@@ -410,30 +444,28 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         } else {
             if (!simValue.equals(value)) {
                 if (key.equals("state")) {
+                
                     List<EObject> isStates = getStates(simValue);
                     List<EObject> shallStates = getStates(value);
 
+                    // Colorize the diagram
+                    visualizeStates(isStates, shallStates, editor);
+
                     // Get meaningful names for the states
-                    //String stateNames = getActiveStateNames(shallStates));
-                    //String simStateNames = getActiveStateNames(isStates);
                     String stateNamesTree = buildTree(new Tree(null), shallStates).toString();
                     String simStateNamesTree = buildTree(new Tree(null), isStates).toString();
-
-                    // Colorize the diagram
-                    if (DiffStateTrigger.getInstance() != null) {
-                        DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates,
-                                editor);
+                    
+                    if(!isHistoryStep()) {
+                        // Display an error message
+                        String errorMessage = "Validation error: The simulation's active states should be:\n"
+                                + stateNamesTree
+                                + "\nbut the states actually active are:\n"
+                                + simStateNamesTree;
+                        
+                        throw new KiemExecutionException("Validation error", false,
+                                new ValidationException(errorMessage));
                     }
-
-                    // Display an error message
-                    String errorMessage = "Validation error: The simulation's active states should be:\n"
-                            + stateNamesTree
-                            + "\nbut the states actually active are:\n"
-                            + simStateNamesTree;
-
-                    throw new KiemExecutionException("Validation error", false,
-                            new ValidationException(errorMessage));
-                } else {
+                } else if(!isHistoryStep()) {
                     throw new KiemExecutionException("Validation error", false,
                             new ValidationException(
                                     "Validation error: The simulation should provide a variable \""
@@ -633,10 +665,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             return value;
         }
         
-        public void setValue(Scope value) {
-            this.value = value;
-        }
-
         public Tree findValue(Scope find) {
             Tree retval = null;
             if(value != null && value.equals(find)) {
@@ -668,6 +696,44 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 retval += child.toString(indent + "  ");
             }
             return retval;
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void visualizeStates(List<EObject> isStates, List<EObject> shallStates, DiagramEditor editor) {
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualStates");
+
+        for (IConfigurationElement element : extensions) {
+            try {
+                IStateVisualization vis = (IStateVisualization) (element
+                        .createExecutableExtension("class"));
+                
+                vis.visualize(isStates, shallStates, editor);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    
+    /**
+     * 
+     */
+    private void visualizeSignals(String signalName, RGB color, int step) {
+        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualSignals");
+
+        for (IConfigurationElement element : extensions) {
+            try {
+                ISignalVisualization vis = (ISignalVisualization) (element
+                        .createExecutableExtension("class"));
+                
+                vis.visualize(signalName, color, step);
+            } catch (CoreException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

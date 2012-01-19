@@ -40,8 +40,22 @@ public class EsiTrace implements ITrace {
     /**
      * {@inheritDoc}
      */
-    public EsiTick current() {
+    public ITick current() {
         return new EsiTick(current);
+    }
+    
+    /**
+     * Get a specific tick
+     */
+    public ITick get(int index) throws IndexOutOfBoundsException {
+        return new EsiTick(trace.getTicks().get(index));
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public int getSize() {
+        return trace.getTicks().size();
     }
 
     /**
