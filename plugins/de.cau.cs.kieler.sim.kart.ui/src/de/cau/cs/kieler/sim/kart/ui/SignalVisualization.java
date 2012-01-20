@@ -16,18 +16,22 @@ package de.cau.cs.kieler.sim.kart.ui;
 import org.eclipse.swt.graphics.RGB;
 
 import de.cau.cs.kieler.sim.kart.ISignalVisualization;
+import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
 
 /**
  * @author ssc
  *
  */
 public class SignalVisualization implements ISignalVisualization {
+    public static final RGB color = new RGB(255, 0, 255);
 
     /**
      * {@inheritDoc}
      */
-    public void visualize(String signalName, RGB color, int step) {
-        // TODO Auto-generated method stub
+    public void visualize(String signalName, long step) {
+        if(SignalsView.getInstance() != null) {
+            SignalsView.getInstance().getColors().setSignalColor(signalName, color, step);
+        }
 
     }
 

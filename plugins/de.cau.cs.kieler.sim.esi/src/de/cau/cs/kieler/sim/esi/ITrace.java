@@ -49,7 +49,7 @@ public interface ITrace extends Iterator<ITick>{
      * @param index the index of the requested tick
      * @return the requested tick
      */
-    public ITick get(int index) throws IndexOutOfBoundsException;
+    public ITick get(long index) throws IndexOutOfBoundsException;
     
     /**
      * Get the number of ticks this trace includes

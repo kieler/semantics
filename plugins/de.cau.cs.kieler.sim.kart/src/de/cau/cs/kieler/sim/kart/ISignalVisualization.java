@@ -20,5 +20,5 @@ import org.eclipse.swt.graphics.RGB;
  *
  */
 public interface ISignalVisualization {
-    public void visualize(String signalName, RGB color, int step);
+    public void visualize(String signalName, long step);
 }

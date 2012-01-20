@@ -47,8 +47,8 @@ public class EsiTrace implements ITrace {
     /**
      * Get a specific tick
      */
-    public ITick get(int index) throws IndexOutOfBoundsException {
-        return new EsiTick(trace.getTicks().get(index));
+    public ITick get(long index) throws IndexOutOfBoundsException {
+        return new EsiTick(trace.getTicks().get((int) index));
     }
     
     /**

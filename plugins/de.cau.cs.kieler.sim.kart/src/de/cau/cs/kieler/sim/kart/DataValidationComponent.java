@@ -29,7 +29,6 @@ import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.swt.graphics.RGB;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -64,7 +63,7 @@ import de.cau.cs.kieler.synccharts.Scope;
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
     /** The number of the current step */
-    private int step = 0;
+    private long step = 0;
     
     /** The single trace out of a ESI/ESO file the simulation shall be validated against */
     private ITrace trace = null;
@@ -246,7 +245,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override 
     public void notifyEvent(KiemEvent event) {
         if(event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
-            step = ((Pair<Long, Long>) event.getInfo()).getFirst().intValue();
+            step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
         }
     }
     
@@ -369,6 +368,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
             }
 
+            System.out.println("Now going to diff signals");
             diffSignals(signals, outputSignals);
         }
 
@@ -566,46 +566,57 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             ISignal recSignal = it.next();
             // presence
             if (!simSignals.containsKey(recSignal.getName())) {
-                throw new KiemExecutionException("Validation error", false,
-                        new ValidationException("Validation error: Signal \"" + recSignal.getName()
-                                + "\" is not present, but it should be."));
+                System.out.println("Presence check failed");
+                visualizeSignals(recSignal.getName(), step);
+                if(!isHistoryStep()) {
+                    throw new KiemExecutionException("Validation error", false,
+                            new ValidationException("Validation error: Signal \"" + recSignal.getName()
+                                    + "\" is not present, but it should be."));
+                }
             }
 
             // value
             if (recSignal.isValued()
                     && !(recSignal.getValue() == simSignals.get(recSignal.getName()))) {
-                throw new KiemExecutionException(
-                        "Validation error",
-                        false,
-                        new ValidationException(
-                                "Validation error: Signal \""
-                                        + recSignal.getName()
-                                        + "\" was recorded as a valued signal with value \""
-                                        + recSignal.getValue()
-                                        + "\" but "
-                                        + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
-                                                : ("was simulatated with value \""
-                                                        + recSignal.getValue() + "\"."))));
+                visualizeSignals(recSignal.getName(), step);
+                if(!isHistoryStep()) {
+                    throw new KiemExecutionException(
+                            "Validation error",
+                            false,
+                            new ValidationException(
+                                    "Validation error: Signal \""
+                                            + recSignal.getName()
+                                            + "\" was recorded as a valued signal with value \""
+                                            + recSignal.getValue()
+                                            + "\" but "
+                                            + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
+                                                    : ("was simulatated with value \""
+                                                            + recSignal.getValue() + "\"."))));
+                }
             }
 
-            it.remove();
+            simSignals.remove(recSignal.getName());
         }
 
         // additional signals
-        if (!ignoreAdditionalSignals && !recSignals.isEmpty()) {
+        if (!ignoreAdditionalSignals && !simSignals.isEmpty()) {
             String excessSignals = "";
-            Iterator<ISignal> it2 = recSignals.iterator();
+            Iterator<String> it2 = simSignals.keySet().iterator();
             while (it2.hasNext()) {
-                excessSignals += "\"" + it2.next().getName() + "\"";
+                String signal = it2.next();
+                visualizeSignals(signal, step);
+                excessSignals += "\"" + signal + "\"";
 
                 if (it2.hasNext()) {
                     excessSignals += ", ";
                 }
             }
 
-            throw new KiemExecutionException("Validation error", false, new ValidationException(
-                    "Validation error: The signal(s) " + excessSignals
-                            + " were not recorded, but generated in the simulation"));
+            if(!isHistoryStep()) {
+                throw new KiemExecutionException("Validation error", false, new ValidationException(
+                        "Validation error: The signal(s) " + excessSignals
+                                + " were not recorded, but generated in the simulation"));
+            }
         }
     }
 
@@ -721,7 +732,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     /**
      * 
      */
-    private void visualizeSignals(String signalName, RGB color, int step) {
+    private void visualizeSignals(String signalName, long step) {
         IConfigurationElement[] extensions = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualSignals");
 
@@ -730,7 +741,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 ISignalVisualization vis = (ISignalVisualization) (element
                         .createExecutableExtension("class"));
                 
-                vis.visualize(signalName, color, step);
+                vis.visualize(signalName, step);
             } catch (CoreException e) {
                 e.printStackTrace();
             }
