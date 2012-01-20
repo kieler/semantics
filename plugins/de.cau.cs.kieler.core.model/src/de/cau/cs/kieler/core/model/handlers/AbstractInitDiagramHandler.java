@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -167,7 +168,7 @@ public abstract class AbstractInitDiagramHandler extends AbstractHandler {
         IContainer container = file.getParent();
         List<IFile> partners = findPartners(file, container);
 
-        List<IFile> selection = new LinkedList<IFile>();
+        List<IFile> selection;
         if (partners.isEmpty()) {
             IPath fullPath = file.getFullPath();
             String name = fullPath.removeFileExtension().lastSegment();
@@ -176,13 +177,16 @@ public abstract class AbstractInitDiagramHandler extends AbstractHandler {
             while (container.exists(targetPath)) {
                 targetPath = new Path(name + (++i) + "." + getDiagramExtension());
             }
+            selection = new ArrayList<IFile>(1);
             selection.add(ResourcesPlugin.getWorkspace().getRoot().getFile(
                     container.getFullPath().append(targetPath)));
         } else {
             selection = getUserSelection(partners);
         }
 
-        reinitializeSelectedFiles(file, partners, selection);
+        if (selection != null) {
+            reinitializeSelectedFiles(file, partners, selection);
+        }
     }
 
     /**
