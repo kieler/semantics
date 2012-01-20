@@ -252,6 +252,27 @@
                </iterate>
             </visibleWhen>
          </command>
+         <command
+               commandId="de.cau.cs.kieler.kiml.gmf.layoutDiagramFile"
+               label="Layout the Diagram File"
+               style="push"
+               tooltip="Perform layout directly on the diagram file and store the result">
+            <visibleWhen
+                  checkEnabled="false">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <adapt
+                        type="org.eclipse.core.resources.IResource">
+                    <test
+                          forcePluginActivation="false"
+                          property="org.eclipse.core.resources.extension"
+                          value="kids">
+                    </test>
+                  </adapt>
+               </iterate>
+            </visibleWhen>
+         </command>
       </menuContribution>
             <menuContribution
                   locationURI="menu:de.cau.cs.kieler">
