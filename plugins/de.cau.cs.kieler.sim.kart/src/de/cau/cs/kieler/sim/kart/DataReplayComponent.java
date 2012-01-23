@@ -149,12 +149,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = null;
-        
-        if(trainingMode) {
-            addInputs(obj);
-        } else {
+
+              
+        if(!trainingMode) {
             retval = genInputs();
         }
+        
+        addInputs(obj, retval);
         
         // inject signals into simulation
         return retval;
@@ -163,13 +164,15 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /**
      * @param obj
      */
-    private void addInputs(JSONObject obj) {
+    private void addInputs(JSONObject obj, JSONObject obj2) {
+        System.out.println("Trying to push inputs");
         if(valComponent == null) {
             // TODO: Retrieve the actual instance of the active DataValidationComponent, not some fucked up new one.
             List<DataComponentWrapper> comps = KiemPlugin.getDefault().getDataComponentWrapperList();
             valComponent = null;
             for(DataComponentWrapper comp : comps) {
-                if(comp.getDataComponent().getDataComponentId().equals("de.cau.cs.kieler.sim.kart.DataValidationComponent")) {
+                if(comp.getDataComponent().getDataComponentId().equals(DataValidationComponent.COMPONENTID)) {
+                    System.out.println("Recognized validation component");
                     valComponent = (DataValidationComponent) comp.getDataComponent();
                 }
             }
@@ -183,6 +186,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     
             while(keys.hasNext()) {
                 String key = keys.next();
+                System.out.println("obj: Looking at key " + key);
                 try {
                     if(obj.getJSONObject(key).getBoolean("present")) {
                         Object val = obj.getJSONObject(key).opt("value");
@@ -194,6 +198,26 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 }
             }
         }
+        
+        if(obj2 != null) {
+            @SuppressWarnings("unchecked") // necessary because the JSON library does not return a parameterized Iterator
+            Iterator<String> keys = obj2.keys();
+    
+            while(keys.hasNext()) {
+                String key = keys.next();
+                System.out.println("obj2: Looking at key " + key);
+                try {
+                    if(obj2.getJSONObject(key).getBoolean("present") && !signals.containsKey(key)) {
+                        Object val = obj2.getJSONObject(key).opt("value");
+                        signals.put(key, val);
+                    }
+                } catch(JSONException e) {
+                    // we catched a special signal, which is not a JSON object.
+                    // simply do nothing
+                }
+            }
+        }
+        System.out.println("Pushing signals: " + signals);
         valComponent.putInputs(signals);
     }
 
