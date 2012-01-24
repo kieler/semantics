@@ -124,6 +124,10 @@ int main(){«name»_reset();
 			gen.newLine();
    	  		gen.append('''cJSON_AddNumberToObject(value, "value", i);''')
    	  	} 
+   	  	else if (signal.type == "bool") {
+			gen.newLine();
+   	  		gen.append('''cJSON_AddNumberToObject(value, "value", i);''')
+   	  	}
    	  	gen.append('''cJSON_AddItemToObject(output, "«signal.name»", value);
    	  	}''')
 		gen.newLine();

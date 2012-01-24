@@ -239,16 +239,27 @@ public class Esterel2CSimulationInterface {
               _builder_4.append("cJSON_AddNumberToObject(value, \"value\", i);");
               gen.append(_builder_4);
             }
+          } else {
+            ValueType _type_2 = signal.getType();
+            boolean _operator_equals_2 = ObjectExtensions.operator_equals(_type_2, "bool");
+            if (_operator_equals_2) {
+              {
+                gen.newLine();
+                StringConcatenation _builder_5 = new StringConcatenation();
+                _builder_5.append("cJSON_AddNumberToObject(value, \"value\", i);");
+                gen.append(_builder_5);
+              }
+            }
           }
-          StringConcatenation _builder_5 = new StringConcatenation();
-          _builder_5.append("cJSON_AddItemToObject(output, \"");
+          StringConcatenation _builder_6 = new StringConcatenation();
+          _builder_6.append("cJSON_AddItemToObject(output, \"");
           String _name_1 = signal.getName();
-          _builder_5.append(_name_1, "");
-          _builder_5.append("\", value);");
-          _builder_5.newLineIfNotEmpty();
-          _builder_5.append("   \t  \t");
-          _builder_5.append("}");
-          gen.append(_builder_5);
+          _builder_6.append(_name_1, "");
+          _builder_6.append("\", value);");
+          _builder_6.newLineIfNotEmpty();
+          _builder_6.append("   \t  \t");
+          _builder_6.append("}");
+          gen.append(_builder_6);
           gen.newLine();
         }
       }
