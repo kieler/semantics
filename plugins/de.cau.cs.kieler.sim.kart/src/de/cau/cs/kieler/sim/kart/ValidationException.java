@@ -14,21 +14,32 @@
 package de.cau.cs.kieler.sim.kart;
 
 /**
- * @author ssc
+ * This exception is raised whenever a validation error is encountered.
+ * It contains extended information pertaining to the validation error.
  *
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class ValidationException extends Exception {
-    /**
-     * 
-     */
     private static final long serialVersionUID = -1646882469325859198L;
     
+    /**
+     * The extended information pertaining to the validation error.
+     */
     private String message;
     
+    /**
+     * Create a new exception including some extended information.
+     * 
+     * @param message the extended information
+     */
     public ValidationException(String message) {
         this.message = message;
     }
     
+    /**
+     * {@inheritDoc}
+     */
     public String toString() {
         return message;
     }

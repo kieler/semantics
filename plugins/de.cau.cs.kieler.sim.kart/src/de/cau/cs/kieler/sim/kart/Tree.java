@@ -19,22 +19,48 @@ import java.util.List;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
- * @author ssc
- *
+ * A simple tree in which Scope instances can be inserted. The tree is able
+ * to produce a textual presentation of the scopes contained in it.
+ * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class Tree {
+    /**
+     * The value of this node
+     */
     private Scope value;
+    
+    /**
+     * A list of successor Scopes
+     */
     private List<Tree> children;
     
+    /**
+     * Create a new tree with a specific value
+     * 
+     * @param value the value contained in the root node of the tree
+     */
     public Tree(Scope value) {
         this.value = value;
         children = new LinkedList<Tree>();
     }
     
+    /**
+     * Retrieve the node's value.
+     * 
+     * @return the value contained in this node
+     */
     public Scope getValue() {
         return value;
     }
     
+    /**
+     * Search for a specific value in the tree.
+     * 
+     * @param find the Scope instance to find
+     * @return either the tree's node containing the searched Scope or null
+     */
     public Tree findValue(Scope find) {
         Tree retval = null;
         if(value != null && value.equals(find)) {
@@ -49,14 +75,30 @@ public class Tree {
         return retval;
     }
     
+    /**
+     * Add a child tree to this node
+     * 
+     * @param child the tree to add as a child
+     */
     public void addChild(Tree child) {
         this.children.add(child);
     }
     
+    /**
+     * Return a textual representation of this tree
+     * 
+     * @return the textual representation
+     */
     public String toString() {
         return toString("");
     }
     
+    /**
+     * Return a textual representation of this tree
+     * 
+     * @param indent a String to prepend before the node's value
+     * @return a textual representation of this tree
+     */
     public String toString(String indent) {
         String retval = "";
         if(value != null) {

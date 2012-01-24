@@ -19,10 +19,17 @@ import de.cau.cs.kieler.sim.kart.ISignalVisualization;
 import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
 
 /**
- * @author ssc
- *
+ * Class to create an interface between the extension point of the KART plugin
+ * and the signals.ui package to visually mark signals as invalid.
+ * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class SignalVisualization implements ISignalVisualization {
+    /**
+     * The color states will be marked with as invalid.
+     * This is the same color used by Esterel Studio.
+     */
     public static final RGB color = new RGB(255, 0, 255);
 
     /**

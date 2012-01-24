@@ -21,8 +21,11 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 /**
- * @author ssc
- *
+ * Class to create an interface between the extension point of the KART plugin and
+ * the DiffStateCombination to visually mark states as invalid.
+ * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class StateVisualization implements IStateVisualization {
 

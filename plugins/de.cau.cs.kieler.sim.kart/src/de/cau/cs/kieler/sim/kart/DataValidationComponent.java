@@ -114,7 +114,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     private IValidationEngine valEngine;
 
     /**
-     * 
+     * The name of the variable used for state information.
      */
     private String stateVariable;
 
@@ -389,5 +389,4 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     public String getDataComponentId() {
         return COMPONENTID;
     }
-
 }
