@@ -40,15 +40,15 @@ class InterfaceDeclarationFix {
 			
 			for (ISignal signal : signalList) {
 				if (signal.channelDescr != null) {
-//					switch (signal.channelDescr.type.type.toString) {
-//						case "int": signal.setType(ValueType::INT)
-//						case "bool": signal.setType(ValueType::BOOL)
-//						case "double": signal.setType(ValueType::DOUBLE)
-//						case "float": signal.setType(ValueType::FLOAT)
-//						case "host": signal.setType(ValueType::HOST)
-//						case "string": signal.setType(ValueType::STRING)
-//						case "unsigned": signal.setType(ValueType::UNSIGNED)
-//					}
+					switch (signal.channelDescr.type.type.toString) {
+						case "int": signal.setType(ValueType::INT)
+						case "bool": signal.setType(ValueType::BOOL)
+						case "double": signal.setType(ValueType::DOUBLE)
+						case "float": signal.setType(ValueType::FLOAT)
+						case "host": signal.setType(ValueType::HOST)
+						case "string": signal.setType(ValueType::STRING)
+						case "unsigned": signal.setType(ValueType::UNSIGNED)
+					}
 					var expression = signal.channelDescr.expression; 
 					if (expression instanceof ConstantExpression) {
 						var constantExpression = expression as ConstantExpression;

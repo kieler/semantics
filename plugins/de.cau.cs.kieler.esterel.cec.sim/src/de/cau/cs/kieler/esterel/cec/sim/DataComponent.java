@@ -234,8 +234,26 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				// Then add normal output signals
 				for (String outputSignal : outputSignalList) {
 					if (esterelOutput.has(outputSignal)) {
-						returnObj.accumulate(outputSignal,
-								JSONSignalValues.newValue(true));
+						
+						// retrieve jsonSignal
+						JSONObject jsonSignal = esterelOutput.getJSONObject(outputSignal);
+						
+						if (jsonSignal.has("value")) {
+							int value = 0;
+							try {
+								value = Integer.parseInt(jsonSignal.getString("value"));
+							} catch(Exception e) {
+								value = 0;
+							}
+							// valued signals
+							returnObj.accumulate(outputSignal,
+									JSONSignalValues.newValue(value, true));
+						}
+						else {
+							// pure signals
+							returnObj.accumulate(outputSignal,
+									JSONSignalValues.newValue(true));
+						}
 					} else {
 						returnObj.accumulate(outputSignal,
 								JSONSignalValues.newValue(false));

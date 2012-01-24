@@ -9,6 +9,7 @@ import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.ModuleInterface;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -214,9 +215,19 @@ public class Esterel2CSimulationInterface {
           _builder_1.append(_name, "");
           _builder_1.append("(");
           gen.append(_builder_1);
+          boolean _operator_or = false;
           ValueType _type = signal.getType();
-          boolean _operator_equals = ObjectExtensions.operator_equals(_type, "int");
+          String _literal = _type.getLiteral();
+          boolean _operator_equals = ObjectExtensions.operator_equals(_literal, "int");
           if (_operator_equals) {
+            _operator_or = true;
+          } else {
+            ValueType _type_1 = signal.getType();
+            String _literal_1 = _type_1.getLiteral();
+            boolean _operator_equals_1 = ObjectExtensions.operator_equals(_literal_1, "bool");
+            _operator_or = BooleanExtensions.operator_or(_operator_equals, _operator_equals_1);
+          }
+          if (_operator_or) {
             StringConcatenation _builder_2 = new StringConcatenation();
             _builder_2.append("int i");
             gen.append(_builder_2);
@@ -230,36 +241,35 @@ public class Esterel2CSimulationInterface {
           _builder_3.append("\t\t\t");
           _builder_3.append("cJSON_AddTrueToObject(value, \"present\");");
           gen.append(_builder_3);
-          ValueType _type_1 = signal.getType();
-          boolean _operator_equals_1 = ObjectExtensions.operator_equals(_type_1, "int");
-          if (_operator_equals_1) {
+          boolean _operator_or_1 = false;
+          ValueType _type_2 = signal.getType();
+          String _literal_2 = _type_2.getLiteral();
+          boolean _operator_equals_2 = ObjectExtensions.operator_equals(_literal_2, "int");
+          if (_operator_equals_2) {
+            _operator_or_1 = true;
+          } else {
+            ValueType _type_3 = signal.getType();
+            String _literal_3 = _type_3.getLiteral();
+            boolean _operator_equals_3 = ObjectExtensions.operator_equals(_literal_3, "bool");
+            _operator_or_1 = BooleanExtensions.operator_or(_operator_equals_2, _operator_equals_3);
+          }
+          if (_operator_or_1) {
             {
               gen.newLine();
               StringConcatenation _builder_4 = new StringConcatenation();
               _builder_4.append("cJSON_AddNumberToObject(value, \"value\", i);");
               gen.append(_builder_4);
             }
-          } else {
-            ValueType _type_2 = signal.getType();
-            boolean _operator_equals_2 = ObjectExtensions.operator_equals(_type_2, "bool");
-            if (_operator_equals_2) {
-              {
-                gen.newLine();
-                StringConcatenation _builder_5 = new StringConcatenation();
-                _builder_5.append("cJSON_AddNumberToObject(value, \"value\", i);");
-                gen.append(_builder_5);
-              }
-            }
           }
-          StringConcatenation _builder_6 = new StringConcatenation();
-          _builder_6.append("cJSON_AddItemToObject(output, \"");
+          StringConcatenation _builder_5 = new StringConcatenation();
+          _builder_5.append("cJSON_AddItemToObject(output, \"");
           String _name_1 = signal.getName();
-          _builder_6.append(_name_1, "");
-          _builder_6.append("\", value);");
-          _builder_6.newLineIfNotEmpty();
-          _builder_6.append("   \t  \t");
-          _builder_6.append("}");
-          gen.append(_builder_6);
+          _builder_5.append(_name_1, "");
+          _builder_5.append("\", value);");
+          _builder_5.newLineIfNotEmpty();
+          _builder_5.append("   \t  \t");
+          _builder_5.append("}");
+          gen.append(_builder_5);
           gen.newLine();
         }
       }
