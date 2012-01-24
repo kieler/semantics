@@ -1,5 +1,0 @@
-org.eclipse.emf.transaction
-org.eclipse.emf.transaction.impl
-org.eclipse.emf.transaction.ui.provider
-org.eclipse.emf.transaction.ui.view
-org.eclipse.emf.transaction.util
