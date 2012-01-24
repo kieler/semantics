@@ -114,7 +114,7 @@ ConstantAtom:
 	INT | ConstantLiteral;
 
 ConstantLiteral:
-	Float | Boolean | ID | STRING;
+	Float | "true" | "false" | ID | STRING;
 
 	// ==> Functions
 // -------------------------------------

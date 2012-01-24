@@ -1121,28 +1121,32 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantLiteral");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cFloatTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBooleanTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cSTRINGTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final Keyword cTrueKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
+		private final Keyword cFalseKeyword_2 = (Keyword)cAlternatives.eContents().get(2);
+		private final RuleCall cIDTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//ConstantLiteral:
-		//	Float | Boolean | ID | STRING;
+		//	Float | "true" | "false" | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
-		//Float | Boolean | ID | STRING
+		//Float | "true" | "false" | ID | STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
 		//Float
 		public RuleCall getFloatTerminalRuleCall_0() { return cFloatTerminalRuleCall_0; }
 
-		//Boolean
-		public RuleCall getBooleanTerminalRuleCall_1() { return cBooleanTerminalRuleCall_1; }
+		//"true"
+		public Keyword getTrueKeyword_1() { return cTrueKeyword_1; }
+
+		//"false"
+		public Keyword getFalseKeyword_2() { return cFalseKeyword_2; }
 
 		//ID
-		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
+		public RuleCall getIDTerminalRuleCall_3() { return cIDTerminalRuleCall_3; }
 
 		//STRING
-		public RuleCall getSTRINGTerminalRuleCall_3() { return cSTRINGTerminalRuleCall_3; }
+		public RuleCall getSTRINGTerminalRuleCall_4() { return cSTRINGTerminalRuleCall_4; }
 	}
 
 	public class FunctionDeclElements extends AbstractParserRuleElementFinder {
@@ -5854,7 +5858,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConstantLiteral:
-	//	Float | Boolean | ID | STRING;
+	//	Float | "true" | "false" | ID | STRING;
 	public ConstantLiteralElements getConstantLiteralAccess() {
 		return (pConstantLiteral != null) ? pConstantLiteral : (pConstantLiteral = new ConstantLiteralElements());
 	}

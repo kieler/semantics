@@ -4914,21 +4914,31 @@ rule__ConstantLiteral__Alternatives
 )
 
     |(
-{ before(grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); }
-	RULE_BOOLEAN
-{ after(grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); }
+{ before(grammarAccess.getConstantLiteralAccess().getTrueKeyword_1()); }
+
+	'true' 
+
+{ after(grammarAccess.getConstantLiteralAccess().getTrueKeyword_1()); }
 )
 
     |(
-{ before(grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_2()); }
+{ before(grammarAccess.getConstantLiteralAccess().getFalseKeyword_2()); }
+
+	'false' 
+
+{ after(grammarAccess.getConstantLiteralAccess().getFalseKeyword_2()); }
+)
+
+    |(
+{ before(grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_3()); }
 	RULE_ID
-{ after(grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_2()); }
+{ after(grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_3()); }
 )
 
     |(
-{ before(grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_3()); }
+{ before(grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_4()); }
 	RULE_STRING
-{ after(grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_3()); }
+{ after(grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_4()); }
 )
 
 ;

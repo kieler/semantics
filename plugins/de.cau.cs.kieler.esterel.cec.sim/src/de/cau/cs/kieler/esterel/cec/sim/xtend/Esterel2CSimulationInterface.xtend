@@ -120,10 +120,19 @@ int main(){«name»_reset();
    	  	gen.append('''){  	
    	  		value = cJSON_CreateObject();
 			cJSON_AddTrueToObject(value, "present");''')
-   	  	if (signal.type.literal == "int" || signal.type.literal == "bool") {
+   	  	if (signal.type.literal == "int") {
 			gen.newLine();
    	  		gen.append('''cJSON_AddNumberToObject(value, "value", i);''')
    	  	} 
+   	  	else if (signal.type.literal == "bool") {
+			gen.newLine();
+			gen.append('''if (i == 0) {
+				cJSON_AddFalseToObject(value, "value"); }
+				else {
+					cJSON_AddTrueToObject(value, "value");
+				} 
+			''')
+   	  	}
    	  	gen.append('''cJSON_AddItemToObject(output, "«signal.name»", value);
    	  	}''')
 		gen.newLine();

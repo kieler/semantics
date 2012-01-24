@@ -241,35 +241,51 @@ public class Esterel2CSimulationInterface {
           _builder_3.append("\t\t\t");
           _builder_3.append("cJSON_AddTrueToObject(value, \"present\");");
           gen.append(_builder_3);
-          boolean _operator_or_1 = false;
           ValueType _type_2 = signal.getType();
           String _literal_2 = _type_2.getLiteral();
           boolean _operator_equals_2 = ObjectExtensions.operator_equals(_literal_2, "int");
           if (_operator_equals_2) {
-            _operator_or_1 = true;
-          } else {
-            ValueType _type_3 = signal.getType();
-            String _literal_3 = _type_3.getLiteral();
-            boolean _operator_equals_3 = ObjectExtensions.operator_equals(_literal_3, "bool");
-            _operator_or_1 = BooleanExtensions.operator_or(_operator_equals_2, _operator_equals_3);
-          }
-          if (_operator_or_1) {
             {
               gen.newLine();
               StringConcatenation _builder_4 = new StringConcatenation();
               _builder_4.append("cJSON_AddNumberToObject(value, \"value\", i);");
               gen.append(_builder_4);
             }
+          } else {
+            ValueType _type_3 = signal.getType();
+            String _literal_3 = _type_3.getLiteral();
+            boolean _operator_equals_3 = ObjectExtensions.operator_equals(_literal_3, "bool");
+            if (_operator_equals_3) {
+              {
+                gen.newLine();
+                StringConcatenation _builder_5 = new StringConcatenation();
+                _builder_5.append("if (i == 0) {");
+                _builder_5.newLine();
+                _builder_5.append("\t\t\t\t");
+                _builder_5.append("cJSON_AddFalseToObject(value, \"value\"); }");
+                _builder_5.newLine();
+                _builder_5.append("\t\t\t\t");
+                _builder_5.append("else {");
+                _builder_5.newLine();
+                _builder_5.append("\t\t\t\t\t");
+                _builder_5.append("cJSON_AddTrueToObject(value, \"value\");");
+                _builder_5.newLine();
+                _builder_5.append("\t\t\t\t");
+                _builder_5.append("} ");
+                _builder_5.newLine();
+                gen.append(_builder_5);
+              }
+            }
           }
-          StringConcatenation _builder_5 = new StringConcatenation();
-          _builder_5.append("cJSON_AddItemToObject(output, \"");
+          StringConcatenation _builder_6 = new StringConcatenation();
+          _builder_6.append("cJSON_AddItemToObject(output, \"");
           String _name_1 = signal.getName();
-          _builder_5.append(_name_1, "");
-          _builder_5.append("\", value);");
-          _builder_5.newLineIfNotEmpty();
-          _builder_5.append("   \t  \t");
-          _builder_5.append("}");
-          gen.append(_builder_5);
+          _builder_6.append(_name_1, "");
+          _builder_6.append("\", value);");
+          _builder_6.newLineIfNotEmpty();
+          _builder_6.append("   \t  \t");
+          _builder_6.append("}");
+          gen.append(_builder_6);
           gen.newLine();
         }
       }
