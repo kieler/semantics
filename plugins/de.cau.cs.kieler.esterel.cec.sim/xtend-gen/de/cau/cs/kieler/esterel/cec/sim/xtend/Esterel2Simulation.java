@@ -43,6 +43,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtend.util.stdlib.CloningExtensions;
@@ -50,9 +51,9 @@ import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.IntegerExtensions;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
 import org.eclipse.xtext.xbase.lib.StringExtensions;
-import org.eclipse.xtext.xtend2.lib.EObjectExtensions;
 
 @SuppressWarnings("all")
 public class Esterel2Simulation {
@@ -81,16 +82,19 @@ public class Esterel2Simulation {
         Object _clone = CloningExtensions.clone(module);
         _modules_1.add(((Module) _clone));
       }
-      Iterable<EObject> _allContentsIterable = EObjectExtensions.allContentsIterable(program);
-      Iterable<Statement> _filter = IterableExtensions.<Statement>filter(_allContentsIterable, de.cau.cs.kieler.esterel.esterel.Statement.class);
+      TreeIterator<EObject> _eAllContents = program.eAllContents();
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_eAllContents);
+      Iterable<Statement> _filter = IterableExtensions.<Statement>filter(_iterable, de.cau.cs.kieler.esterel.esterel.Statement.class);
       Iterable<Statement> originalStatements = _filter;
-      Iterable<EObject> _allContentsIterable_1 = EObjectExtensions.allContentsIterable(target);
-      Iterable<Statement> _filter_1 = IterableExtensions.<Statement>filter(_allContentsIterable_1, de.cau.cs.kieler.esterel.esterel.Statement.class);
+      TreeIterator<EObject> _eAllContents_1 = target.eAllContents();
+      Iterable<EObject> _iterable_1 = IteratorExtensions.<EObject>toIterable(_eAllContents_1);
+      Iterable<Statement> _filter_1 = IterableExtensions.<Statement>filter(_iterable_1, de.cau.cs.kieler.esterel.esterel.Statement.class);
       Iterable<Statement> targetStatements = _filter_1;
       List<Statement> _list = IterableExtensions.<Statement>toList(targetStatements);
       List<Statement> targetStatementsCopy = _list;
-      Iterable<EObject> _allContentsIterable_2 = EObjectExtensions.allContentsIterable(target);
-      Iterable<Module> _filter_2 = IterableExtensions.<Module>filter(_allContentsIterable_2, de.cau.cs.kieler.esterel.esterel.Module.class);
+      TreeIterator<EObject> _eAllContents_2 = target.eAllContents();
+      Iterable<EObject> _iterable_2 = IteratorExtensions.<EObject>toIterable(_eAllContents_2);
+      Iterable<Module> _filter_2 = IterableExtensions.<Module>filter(_iterable_2, de.cau.cs.kieler.esterel.esterel.Module.class);
       List<Module> _list_1 = IterableExtensions.<Module>toList(_filter_2);
       Module _get = _list_1.get(0);
       Module targetMainmodule = _get;
@@ -110,12 +114,12 @@ public class Esterel2Simulation {
         {
           Statement _get_1 = originalStatementsList.get(i);
           Statement originalStatement = _get_1;
-          int _operator_plus = IntegerExtensions.operator_plus(((Integer)i), ((Integer)1));
+          int _operator_plus = IntegerExtensions.operator_plus(i, 1);
           i = _operator_plus;
           Resource _eResource = originalStatement.eResource();
           String _uRIFragment = _eResource.getURIFragment(originalStatement);
           int _hashCode = _uRIFragment.hashCode();
-          String _string = ((Integer)_hashCode).toString();
+          String _string = Integer.valueOf(_hashCode).toString();
           String _replace = _string.replace("-", "M");
           String _operator_plus_1 = StringExtensions.operator_plus(AUXILIARY_VARIABLE_TAG, _replace);
           String statementUID = _operator_plus_1;
@@ -441,7 +445,7 @@ public class Esterel2Simulation {
       if (_operator_or) {
         {
           int _hashCode = statement.hashCode();
-          String _string = ((Integer)_hashCode).toString();
+          String _string = Integer.valueOf(_hashCode).toString();
           String _replace = _string.replace("-", "M");
           String _operator_plus = StringExtensions.operator_plus("AP", _replace);
           abortISignal.setName(_operator_plus);

@@ -12,13 +12,10 @@ import de.cau.cs.kieler.core.kexpressions.*
 import de.cau.cs.kieler.esterel.esterel.*
 import de.cau.cs.kieler.esterel.esterel.impl.*
 
-import org.eclipse.xtext.xtend2.lib.StringConcatenation
+import org.eclipse.xtend2.lib.StringConcatenation
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import org.eclipse.xtend.util.stdlib.TraceComponent
 
-import static extension org.eclipse.xtext.xtend2.lib.ResourceExtensions.*
-import static extension org.eclipse.xtext.xtend2.lib.ResourceSetExtensions.*
-import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
 
 // Transformation of Esterel code into Esterelcode that is
 // enriched with additional signals for each statement.
@@ -45,11 +42,11 @@ class Esterel2Simulation {
 			target.modules.add(CloningExtensions::clone(module) as Module);	
 		}
 		
-		var originalStatements = program.allContentsIterable.filter(typeof(Statement));
-		var targetStatements = target.allContentsIterable.filter(typeof(Statement));
+		var originalStatements = program.eAllContents().toIterable().filter(typeof(Statement));
+		var targetStatements = target.eAllContents().toIterable().filter(typeof(Statement));
 		var targetStatementsCopy = targetStatements.toList;
 		
-		var targetMainmodule = target.allContentsIterable.filter(typeof(Module)).toList.get(0);
+		var targetMainmodule = target.eAllContents().toIterable().filter(typeof(Module)).toList.get(0);
 		
 		// Ensure an interface declaration
 		if (targetMainmodule.interface == null) {

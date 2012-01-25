@@ -7,7 +7,7 @@ import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject
 
-import org.eclipse.xtext.xtend2.lib.StringConcatenation
+import org.eclipse.xtend2.lib.StringConcatenation
 
 // Transformation of Esterel code into a c simulation interface wrapper
 // that is able to deal with JSON signals and can interface with
@@ -24,7 +24,9 @@ class Esterel2CSimulationInterface {
        «esterelHeader()»
 
 	   «/* Generate output functions for each Esterel signal */» 
-       «module.interface.intSignalDecls.map(e|e.outputFunctions(module.name)).toStringConcatenation()»
+	   «'''«FOR intSignalDecl : module.interface.intSignalDecls»
+	       		«intSignalDecl.outputFunctions(module.name)»
+	       «ENDFOR»'''»
 
 	   «/* Generate input functions that are then called my the main function's
 		   tick function of the module */»
@@ -55,12 +57,6 @@ cJSON* value = 0;
    
    // -------------------------------------------------------------------------   
    
-   def toStringConcatenation(List<StringConcatenation> list) {
-   	   '''«FOR element : list»«element»«ENDFOR»'''
-   }
-
-   // -------------------------------------------------------------------------   
-   
    // Generate input functions that are then called my the main function's
    // tick function of the module
    def esterelSetInputsFunction(Module module) {
@@ -82,7 +78,9 @@ void setInputs(){
 
 	object = cJSON_Parse(buffer);
 	
-	«module.interface.intSignalDecls.map(e|e.callInputs(module.name)).toStringConcatenation()»
+   «'''«FOR intSignalDecl : module.interface.intSignalDecls»
+	       		«intSignalDecl.callInputs(module.name)»
+   «ENDFOR»'''»	
    }'''
 }
    
@@ -111,33 +109,29 @@ int main(){«name»_reset();
    // Define output functions to return JSON for each Esterel signal 
    def dispatch outputFunctions(Output it, String moduleName) {
    	  var gen = '''''';
-   	  gen.newLine();
+   	  gen = gen.toString.concat("\n");
    	  for (signal : signals)  {
-   	  	gen.append('''«moduleName»_O_«signal.name»(''');
+   	  	gen = gen.toString.concat('''«moduleName»_O_«signal.name»('''.toString());
    	  	if (signal.type.literal == "int" || signal.type.literal == "bool") {
-   	  		gen.append('''int i''');
+   	  		gen = gen.toString.concat("int i");
    	  	}
-   	  	gen.append('''){  	
+   	  	gen = gen.toString.concat('''){  	
    	  		value = cJSON_CreateObject();
-			cJSON_AddTrueToObject(value, "present");''')
+			cJSON_AddTrueToObject(value, "present");'''.toString())
    	  	if (signal.type.literal == "int") {
-			gen.newLine();
-   	  		gen.append('''cJSON_AddNumberToObject(value, "value", i);''')
+   	  		gen = gen.toString.concat(''' cJSON_AddNumberToObject(value, "value", i);'''.toString())
    	  	} 
    	  	else if (signal.type.literal == "bool") {
-			gen.newLine();
-			gen.append('''if (i == 0) {
+			gen = gen.toString.concat(''' if (i == 0) {
 				cJSON_AddFalseToObject(value, "value"); }
 				else {
 					cJSON_AddTrueToObject(value, "value");
 				} 
-			''')
+			'''.toString())
    	  	}
-   	  	gen.append('''cJSON_AddItemToObject(output, "«signal.name»", value);
-   	  	}''')
-		gen.newLine();
-   	  }// next signal
-   	  gen;
+   	  	gen = gen.toString.concat('''cJSON_AddItemToObject(output, "«signal.name»", value);}'''.toString());
+   	  } // next signal
+   	  gen.toString;
    }
    
 //   // Define output functions to return JSON for each Esterel signal 
@@ -168,7 +162,7 @@ int main(){«name»_reset();
    def dispatch callInputs(Input it, String moduleName) {
     var gen = '''''';
    	for (signal : signals)  {
-   	   	gen.append('''
+   	   	gen = gen.toString.concat('''
    	child = cJSON_GetObjectItem(object, "«signal.name»");
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
@@ -176,9 +170,9 @@ int main(){«name»_reset();
 		if (present != NULL && present->type==cJSON_True) {
 			«moduleName»_I_«signal.name»();
 		}
-	}''');
+	}'''.toString());
    	} // next signal
- 	   	gen;
+ 	   	gen.toString();
    }
    
    // -------------------------------------------------------------------------   
