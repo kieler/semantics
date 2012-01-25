@@ -434,35 +434,35 @@ Boolean hasParentMacroState(State s):
  * converts a ConstantExpression into a kexpressions valid form. See javadoc for futher information.
  */
 Expression convertConstantExpressionJava(ConstantExpression e):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.kies.esterel.ConstantExpression)
+	JAVA de.cau.cs.kieler.kies.util.TransformationUtil.convertConstantExpression(de.cau.cs.kieler.esterel.esterel.ConstantExpression)
 ;
 
 /**
  * sets the state's body reference and adds TextualCode for the specific esterel element.  
  */
 Void setJavaBodyReference(State s, emf::EObject esterelElement):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
+	JAVA  de.cau.cs.kieler.kies.util.TransformationUtil.setBodyReference(de.cau.cs.kieler.synccharts.State, org.eclipse.emf.ecore.EObject)
 ;
  
 /**
  * adds all elements of list2 to the front of list1.
  */
 Void addToFrontOfList(List list1, List list2):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
+	JAVA  de.cau.cs.kieler.kies.util.TransformationUtil.addToFrontOfList(java.util.List, java.util.List)
 ;
 
 /**
  * compares the two passed triggers and returns wheter they are equivalent. Ignores possible delays and t2's effects.
  */
 Boolean compareTrigger(Action t1, Action t2):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.compareTrigger(de.cau.cs.kieler.synccharts.Action, 
+	JAVA de.cau.cs.kieler.kies.util.TransformationUtil.compareTrigger(de.cau.cs.kieler.synccharts.Action, 
 	de.cau.cs.kieler.synccharts.Action) 
 ;
 
 Void informUser(String s):
-	JAVA de.cau.cs.kieler.kies.transformation.util.TransformationUtil.raiseStatus(java.lang.String)
+	JAVA de.cau.cs.kieler.kies.util.TransformationUtil.raiseStatus(java.lang.String)
 ;
 
 /* Void debug(Object obj):
-	JAVA  de.cau.cs.kieler.kies.transformation.util.TransformationUtil.debug(java.lang.Object)
+	JAVA  de.cau.cs.kieler.kies.util.TransformationUtil.debug(java.lang.Object)
 ; */
