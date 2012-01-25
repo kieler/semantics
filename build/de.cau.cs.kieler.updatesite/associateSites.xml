@@ -1,9 +1,0 @@
-<associateSites>
-    <associateSite label="Indigo" url="http://download.eclipse.org/releases/indigo" />
-    <associateSite label="The Eclipse Project Updates" url="http://download.eclipse.org/eclipse/updates/3.7" />
-    <associateSite label="Google Guava Libraries" url="http://guava-osgi.googlecode.com/svn/trunk/repository/" />
-    <associateSite label="MDT/Papyrus Modeling Tools" url="http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo" />
-    <associateSite label="Graphiti" url="http://download.eclipse.org/graphiti/updates/0.8.1" />
-    <associateSite label="Itemis" url="http://download.itemis.com/updates/releases" />
-    <associateSite label="Ptolemy II" url="http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy" />
-</associateSites>

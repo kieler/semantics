@@ -47,6 +47,7 @@ import org.eclipse.ui.console.IConsoleManager;
 import org.eclipse.ui.console.MessageConsole;
 import org.eclipse.ui.console.MessageConsoleStream;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.xtend.util.stdlib.CloningExtensions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,6 +60,7 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
@@ -232,8 +234,21 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 				// Then add normal output signals
 				for (String outputSignal : outputSignalList) {
 					if (esterelOutput.has(outputSignal)) {
-						returnObj.accumulate(outputSignal,
-								JSONSignalValues.newValue(true));
+						
+						// retrieve jsonSignal
+						JSONObject jsonSignal = esterelOutput.getJSONObject(outputSignal);
+						
+						if (jsonSignal.has("value")) {
+							Object value = jsonSignal.get("value");
+							// valued signals
+							returnObj.accumulate(outputSignal,
+									JSONSignalValues.newValue(value, true));
+						}
+						else {
+							// pure signals
+							returnObj.accumulate(outputSignal,
+									JSONSignalValues.newValue(true));
+						}
 					} else {
 						returnObj.accumulate(outputSignal,
 								JSONSignalValues.newValue(false));
@@ -471,7 +486,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 			URI esterelOutput = URI.createURI("");
 			// By default there is no additional transformation necessary
 			Program transformedProgram = myModel;
-
+			
 			// If 'Full Debug Mode' is turned on then the user wants to have
 			// also states visualized.
 			// Hence some pre-processing is needed and done by the
@@ -514,8 +529,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					CEC.getDefaultOutFile(), esterelSimulationProgressMonitor)
 					.toURL();
 
+			
+			// Cannot be done before because otherwise the new model cannot be serialized (24.01.2012)
+			// Do this on a copy to not destroy original program;
+			// Make Esterel Interface delcration consistent
+			InterfaceDeclarationFix interfaceDeclarationFix = Guice.createInjector()
+					.getInstance(InterfaceDeclarationFix.class);
+			Program fixedTransformedProgram = (Program) CloningExtensions.clone(transformedProgram); 
+			interfaceDeclarationFix.fix(fixedTransformedProgram);
+			
+			
 			// Generate data.c
-			URL data = generateCSimulationInterface(transformedProgram,
+			URL data = generateCSimulationInterface(fixedTransformedProgram,
 					esterelOutput);
 
 			// Compile C code

@@ -1,6 +1,7 @@
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
 import java.util.HashMap;
+
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -21,6 +22,8 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import org.eclipse.ui.texteditor.ITextEditorExtension3.InsertMode;
 
 import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin;
 import de.cau.cs.kieler.esterel.esterel.Program;
@@ -73,6 +76,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	@Override
 	public void initialize() throws KiemInitializationException {
 		this.esterelEditor = this.getEsterelEditor();
+
+//		// Disable/Lock the editing of the editor
+//		Display.getDefault().asyncExec(new Runnable() {
+//			public void run() {
+//				esterelEditor.getInternalSourceViewer().setEditable(false);
+//			}
+//				
+//		});
+		
 		this.esterelProgram = this.getEsterelProgram(this.esterelEditor);
 		refreshEObjectMap();
 		this.semanticResource = this.getEsterelSemanticResource(esterelProgram);
@@ -173,9 +185,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		if ((eObjectID == null) || eObjectID.equals("")) {
 			return null;
 		}
-		if (eObjectMap.containsKey(eObjectID)) {
+		else if (eObjectMap.containsKey(eObjectID)) {
+			// only do this if editor input has not changed
 			return eObjectMap.get(eObjectID);
-		} else {
+		} 
+		else {
 			// Refresh the map and try again
 			refreshEObjectMap();
 			if (eObjectMap.containsKey(eObjectID)) {
@@ -236,7 +250,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	@Override
 	public JSONObject doStep(JSONObject jSONObject)
 			throws KiemExecutionException {
-
+		
 		String statementName = this.getProperties()[1].getValue();
 		LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
 
@@ -264,6 +278,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 						false, false, true, e);
 			}
 		}
+		
+		try {
+			if (failSilentRecoveryFromUserEditorChange(newActiveStatements)) {
+				// silently repeat
+				return doStep(jSONObject);
+			}
+		} catch (KiemInitializationException e) {
+			new KiemExecutionException("fail silent recovery from user editor change failed.", false, e);
+		}
+		
 
 		// Undo Highlighting
 		// Highlight the active statements
@@ -326,6 +350,32 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -----------------------------------------------------------------------------
 	
 	/**
+	 * Fail silent recovery from user editor change. If the user edits text in the 
+	 * editor during visualization, the highlighting is invalidated but the next time
+	 * he clicks on step (and has focused the right editor) the refreshed editor input
+	 * is used for visualization.
+	 *
+	 * @throws KiemInitializationException the kiem initialization exception
+	 */
+	private boolean failSilentRecoveryFromUserEditorChange(LinkedList<EObject> activeStatements) throws KiemInitializationException {
+		
+		for (EObject statement : activeStatements) {
+			String semanticElementFragment = semanticResource
+					.getURIFragment(statement);
+			if (semanticElementFragment.equals("/-1")) {
+				initialize();
+				// recovery action
+				return true;
+			}
+		}
+		// NO recovery action 
+		return false;
+	}
+	
+	
+	// -----------------------------------------------------------------------------
+
+	/**
 	 * Sets the xtext selection to have the last used background color.
 	 *
 	 * @param semanticElement the new xtext selection
@@ -343,6 +393,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		EObject semanticElementInDocument = xtextResource
 				.getEObject(semanticElementFragment);
 		xtextNode = NodeModelUtils.findActualNodeFor(semanticElementInDocument);
+		
 		
 		if (xtextNode != null) {
 			selectionDone = false;

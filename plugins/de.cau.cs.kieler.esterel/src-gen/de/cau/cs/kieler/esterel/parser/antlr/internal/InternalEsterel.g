@@ -1961,28 +1961,34 @@ ruleConstantLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
     newLeafNode(this_Float_0, grammarAccess.getConstantLiteralAccess().getFloatTerminalRuleCall_0()); 
     }
 
-    |    this_Boolean_1=RULE_BOOLEAN    {
-		$current.merge(this_Boolean_1);
+    |
+	kw='true' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getConstantLiteralAccess().getTrueKeyword_1()); 
+    }
+
+    |
+	kw='false' 
+    {
+        $current.merge(kw);
+        newLeafNode(kw, grammarAccess.getConstantLiteralAccess().getFalseKeyword_2()); 
+    }
+
+    |    this_ID_3=RULE_ID    {
+		$current.merge(this_ID_3);
     }
 
     { 
-    newLeafNode(this_Boolean_1, grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); 
+    newLeafNode(this_ID_3, grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_3()); 
     }
 
-    |    this_ID_2=RULE_ID    {
-		$current.merge(this_ID_2);
-    }
-
-    { 
-    newLeafNode(this_ID_2, grammarAccess.getConstantLiteralAccess().getIDTerminalRuleCall_2()); 
-    }
-
-    |    this_STRING_3=RULE_STRING    {
-		$current.merge(this_STRING_3);
+    |    this_STRING_4=RULE_STRING    {
+		$current.merge(this_STRING_4);
     }
 
     { 
-    newLeafNode(this_STRING_3, grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_3()); 
+    newLeafNode(this_STRING_4, grammarAccess.getConstantLiteralAccess().getSTRINGTerminalRuleCall_4()); 
     }
 )
     ;

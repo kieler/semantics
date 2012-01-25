@@ -492,6 +492,8 @@ rulekvpair returns [EObject current=null]
 
 RULE_ALPHA : ('a'..'z'|'A'..'Z')+;
 
+RULE_DIGIT : '0'..'9';
+
 RULE_NUM : ('+'|'-') ('0'..'9')+;
 
 RULE_ALPHANUM : (RULE_ALPHA|'0'..'9')+;
@@ -499,6 +501,8 @@ RULE_ALPHANUM : (RULE_ALPHA|'0'..'9')+;
 RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'^'|'&'|'*'|'_'|'='|'+'|'-');
 
 RULE_ALPHANUMSPECIAL : (RULE_ALPHA|'0'..'9'|RULE_SPECIAL)+;
+
+RULE_COMMENT : '%' ('a'..'z'|'A'..'N'|'P'..'Z'|RULE_DIGIT|RULE_SPECIAL) ( options {greedy=false;} : . )*'\n';
 
 RULE_WS : ('\t'|' '|'\r'|'\n');
 

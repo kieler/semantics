@@ -247,10 +247,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	private SignalElements pSignal;
 	private KvpairElements pKvpair;
 	private TerminalRule tAlpha;
+	private TerminalRule tDigit;
 	private TerminalRule tNum;
 	private TerminalRule tAlphaNum;
 	private TerminalRule tSpecial;
 	private TerminalRule tAlphaNumSpecial;
+	private TerminalRule tComment;
 	private TerminalRule tWS;
 	
 	private final GrammarProvider grammarProvider;
@@ -322,7 +324,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return (tAlpha != null) ? tAlpha : (tAlpha = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Alpha"));
 	} 
 
-	////terminal Digit : '0'..'9';
+	//terminal Digit:
+	//	"0".."9";
+	public TerminalRule getDigitRule() {
+		return (tDigit != null) ? tDigit : (tDigit = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Digit"));
+	} 
+
 	//terminal Num returns ecore::EInt:
 	//	("+" | "-") "0".."9"+;
 	public TerminalRule getNumRule() {
@@ -347,42 +354,13 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 
 
-	////terminal Comment : '%' (Alpha | Digit | Special | WS)*;
-	/// *tracelist:
-	//  (
-	//   (traces+=trace)?   
-	//    (('!' 'reset' ';' traces+=trace)+)
-	//   )
-	//   ;
-	//
-	//trace: 
-	//   {trace} ((ticks+=tick )+)
-	//   ;
-	//  
-	//tick:
-	//   (input+=signal)+ ('%' 'Output' ':' (output+=signal)*)? n=';' //(extraInfos+=kvpair)* n=';' 
-	//   ; 
-	//
-	/// *kvpair:
-	//    '%%' k=AlphaNumSpecial ':' val=AlphaNumSpecial
-	//;* / / *signal:     
-	//     name=ID (valued?='('  val=NUM ')')? 
-	//   ;
-	//               
-	/// *------------------------------------------------------------------
-	// * LEXER RULES
-	// *------------------------------------------------------------------* / / *terminal Digit : ('0' .. '9') ;
-	//
-	//terminal Letter : 'a'..'z'|'A'..'Z';
-	//
-	//terminal NUM returns ecore::EInt : ('+'|'-')?(Digit)+ ;
-	//terminal COMMENT : '%' ('A'..'N' | 'P'..'Z') -> '\n' ;
-	////terminal Special : '!' | '@' | '#' | '$' | '^' | '&' | '*' | '(' | ')' | '_' | '=' | '+' | '-'; // %
-	//
-	//terminal ID	: (Letter | '_') (Letter | Digit | '_')*;
-	//
-	////terminal AlphaNumSpecial : (Letter | Digit | Special) (Letter | Digit | Special)*;
-	// * / terminal WS:
+	//terminal Comment:
+	//	"%" ("a".."z" | "A".."N" | "P".."Z" | Digit | Special)->"\n";
+	public TerminalRule getCommentRule() {
+		return (tComment != null) ? tComment : (tComment = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Comment"));
+	} 
+
+	//terminal WS:
 	//	"\t" | " " | "\r" | "\n";
 	public TerminalRule getWSRule() {
 		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));

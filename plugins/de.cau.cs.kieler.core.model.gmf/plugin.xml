@@ -17,6 +17,11 @@
             description="Show the hierarchy levels of a diagram by painting each level in a different color."
             name="Show Hierarchy Levels">
       </combination>
+      <combination
+            class="de.cau.cs.kieler.core.model.gmf.combinations.DiffStateCombination"
+            description="Provide a graphical diff in a diagram by colorizing Is states and Shall states"
+            name="Graphical Diff">
+      </combination>
    </extension>
    <extension
          point="org.eclipse.core.expressions.definitions">

@@ -81,7 +81,7 @@ public class E2STransformationCombination extends AbstractCombination {
     // editor ids
     private static final String SYNCCHARTS_EDITOR_ID = "de.cau.cs.kieler.synccharts.diagram.part."
             + "SyncchartsDiagramEditorID";
-    private static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.kies.Esterel";
+    private static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.esterel.Esterel";
 
     // map holding the information whether a button should be active or not.
     private final Map<String, Boolean> buttonEnabling = Maps.newHashMap();

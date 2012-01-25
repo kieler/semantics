@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -22,23 +21,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.model.gmf.triggers.DiffStateTrigger;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.esi.EsiFile;
 import de.cau.cs.kieler.sim.esi.ISignal;
 import de.cau.cs.kieler.sim.esi.ITick;
 import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
+import de.cau.cs.kieler.sim.kart.engine.DefaultValidationEngine;
+import de.cau.cs.kieler.sim.kart.engine.IValidationEngine;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -56,6 +57,22 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  */
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
+    /*
+     * Strings used for properties
+     */
+    private static final String ESOFILE = "ESI/ESO trace file";
+    private static final String TRACENUM = "Trace number to replay";
+    private static final String VALEXTRA = "Validate extra information";
+    private static final String EXTRAVARS = "Extra information signals";
+    private static final String STATEVAR = "State variable";
+    private static final String IGNOREEXTRA = "Ignore additionally generated signals";
+    private static final String TRAINMODE = "Training mode";
+    
+    public static final String COMPONENTID = "de.cau.cs.kieler.sim.kart.DataValidationComponent";
+
+    /** The number of the current step */
+    private long step = 0;
+
     /** The single trace out of a ESI/ESO file the simulation shall be validated against */
     private ITrace trace = null;
 
@@ -92,6 +109,16 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     private Set<String> specialSignals;
 
     /**
+     * The validation engine that will be used to validate signal and variable information
+     */
+    private IValidationEngine valEngine;
+
+    /**
+     * The name of the variable used for state information.
+     */
+    private String stateVariable;
+
+    /**
      * Initialize the data component. Open an existing ESO file, read the expected signal and state
      * information and store it internally
      * 
@@ -120,18 +147,21 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         int tracenum = 0;
         specialSignals = new HashSet<String>();
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(ESOFILE)) {
                 filename = prop.getValue();
-            } else if (prop.getKey().equals("Trace to replay")) {
+            } else if (prop.getKey().equals(TRACENUM)) {
                 tracenum = prop.getValueAsInt();
-            } else if (prop.getKey().equals("Validate extra information")) {
+            } else if (prop.getKey().equals(VALEXTRA)) {
                 useState = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals("Ignore additionally generated signals")) {
+            } else if (prop.getKey().equals(IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals("Training mode")) {
+            } else if (prop.getKey().equals(TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals("Extra information signals")) {
-                specialSignals = makeSet(prop.getValue().split(","));
+            } else if (prop.getKey().equals(EXTRAVARS)) {
+                specialSignals = Utilities.makeSet(prop.getValue().split(","));
+            } else if (prop.getKey().equals(STATEVAR)) {
+                stateVariable = prop.getValue();
+                specialSignals.add(stateVariable);
             }
         }
 
@@ -141,24 +171,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             ITraceProvider tracefile = new EsiFile();
 
             try {
+                valEngine = new DefaultValidationEngine(editor, ignoreAdditionalSignals,
+                        stateVariable);
                 List<ITrace> tracelist = tracefile.loadTrace(filename);
-
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(
                             "The trace file does not contain a trace number " + tracenum, true, e);
                 }
-
-                /*
-                 * if (trace.current().getState() == null && useState == true) { useState = false;
-                 * throw new KiemInitializationException(
-                 * "The trace file does not contain state information. " +
-                 * "This validation run will not compare states!", false, null); }
-                 */
             } catch (KiemInitializationException e) {
                 trainingMode = true;
-                // FIXME: Although the mustStop param is set to false, execution is aborted.
                 throw new KiemInitializationException(
                         "Trace file is empty or does not exist. Switching to training mode.",
                         false, e);
@@ -167,67 +190,42 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     }
 
     /**
-     * @param split
-     * @return
-     */
-    private Set<String> makeSet(String[] split) {
-        HashSet<String> retval = new HashSet<String>();
-
-        for (int i = 0; i < split.length; i++) {
-            retval.add(split[i]);
-        }
-
-        return retval;
-    }
-
-    /**
-     * Wrapup this component. This component does not have anything to wrap up.
+     * Wrapup this component. This writes an ESO file in training mode and always resets the state
+     * visualization.
      * 
      * @throws KiemInitializationException
-     *             when {@link #removeInputFromOutput(List, List)} throws it
+     *             when TraceWriter.doWrite() throws it
      */
     public void wrapup() throws KiemInitializationException {
         if (trainingMode) {
-            // we rather do this when recording, seems more logical
-            // we would need to do it there anyway, to ensure correct validation
-            // removeInputFromOutput(recInputs, recOutputs);
             TraceWriter writer = new TraceWriter(recInputs, recOutputs, recSpecialSignals, filename);
             writer.doWrite();
-
         }
 
-        if (DiffStateTrigger.getInstance() != null) {
-            DiffStateTrigger.getInstance().synchronizedStep(null, null, editor);
+        Utilities.visualizeStates(null, null, editor);
+    }
+
+    /**
+     * Sets the step number according to the button the user pressed. This is needed to correctly
+     * handle history steps or jumps.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void notifyEvent(KiemEvent event) {
+        if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
+            step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
+            System.out.println("New step " + step);
         }
     }
 
     /**
-     * Removes the input signals from the map of output signals. This is necessary for writing
-     * ESI/ESO files, as the input signals may not appear in the list of output signals, although
-     * they are present in the simulation and thus recorded as an output signal. The list of maps
-     * given as parameter {outputSignals} will be modified by this method.
-     * 
-     * @param inputSignals
-     *            the list of maps of input signals
-     * @param outputSignals
-     *            the list of maps of output signals
-     * @throws KiemInitializationException
-     *             when the length of the input and output signals lists differs
-     * @deprecated no longer necessary and unused
+     * Return the types of events this component listens to
      */
-    private void removeInputFromOutput(List<HashMap<String, Object>> inputSignals,
-            List<HashMap<String, Object>> outputSignals) throws KiemInitializationException {
-        if (inputSignals.size() != outputSignals.size()) {
-            throw new KiemInitializationException(
-                    "The number of steps recorded for input and output signals differs! "
-                            + "Cannot remove input signals from list of output signals", true, null);
-        } else {
-            for (int i = 0; i < inputSignals.size(); i++) {
-                for (String signal : inputSignals.get(i).keySet()) {
-                    outputSignals.get(i).remove(signal);
-                }
-            }
-        }
+    @Override
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.STEP_INFO };
+        KiemEvent event = new KiemEvent(events);
+        return event;
     }
 
     /**
@@ -249,7 +247,15 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     }
 
     /**
-     * Tell KIEM that we are not a delta observer
+     * Tell KIEM that we are also interested in history data
+     */
+    @Override
+    public boolean isHistoryObserver() {
+        return true;
+    }
+
+    /**
+     * Tell KIEM that we are *not* a delta observer
      */
     @Override
     public boolean isDeltaObserver() {
@@ -263,15 +269,41 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[6];
-        // properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[0] = new KiemProperty("ESI/ESO trace file", new KiemPropertyTypeFile());
-        properties[1] = new KiemProperty("Trace number to replay", new KiemPropertyTypeInt(), 0);
-        properties[2] = new KiemProperty("Validate extra information", true);
-        properties[3] = new KiemProperty("Extra information signals", "state");
-        properties[4] = new KiemProperty("Ignore additionally generated signals",
-                new KiemPropertyTypeBool(), 0);
-        properties[5] = new KiemProperty("Training mode", false);
+        String[] exts = { "*.eso", "*.esi" };
+        String[] extNames = { "ESO", "ESI" };
+
+        KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
+        fileProperty.setFilterExts(exts);
+        fileProperty.setFilterNames(extNames);
+
+        String filename = null;
+        try {
+            /*
+             * The try block is necessary to suppress NPEs and other exception when we are either
+             * running in headless mode or there are no editor opened. Below, you will see that a
+             * filename is only proposed if this try block succeeds. We have to use absolute file
+             * paths here, because the KiemPropertyTypeFile dialog only returns absolute paths. I do
+             * not want to change that for fear that something else breaks.
+             */
+            URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
+                    .eResource().getURI().trimFileExtension().appendFileExtension("eso");
+            URI absFile = CommonPlugin.resolve(resource);
+            filename = absFile.toFileString();
+        } catch (Exception e) {
+            // do nothing
+        }
+
+        KiemProperty[] properties = new KiemProperty[7];
+        properties[0] = new KiemProperty(ESOFILE, fileProperty);
+        if (filename != null) {
+            fileProperty.setValue(properties[0], filename);
+        }
+        properties[1] = new KiemProperty(TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[2] = new KiemProperty(VALEXTRA, true);
+        properties[3] = new KiemProperty(EXTRAVARS);
+        properties[4] = new KiemProperty(STATEVAR, "state");
+        properties[5] = new KiemProperty(IGNOREEXTRA, false);
+        properties[6] = new KiemProperty(TRAINMODE, false);
 
         return properties;
     }
@@ -286,174 +318,32 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
-        Map<String, Object> outputSignals = convertAndRecordSignals(obj);
+        Map<String, Object> outputSignals = Utilities.convertAndRecordSignals(obj, recInputs,
+                recOutputs, recSpecialSignals, specialSignals);
+        
+        System.out.println("Doing step " + step);
 
-        if (!trainingMode && trace.hasNext()) {
-            ITick tick = trace.next();
+        if (!trainingMode && trace.getSize() >= (step - 1)) {
+            ITick tick = trace.get(step - 1);
             List<ISignal> signals = tick.getOutputs();
-            
-//FIXME: cmot, commented this whole block out to get KIELER compiled            
-//            Map<String, String> special = tick.getExtraInfos();
-//
-//            if (useState) {
-//                Iterator<String> it = special.keySet().iterator();
-//
-//                while (it.hasNext()) {
-//                    String key = it.next();
-//                    String value = special.get(key);
-//
-//                    diffSpecial(key, value, obj);
-//                }
-//
-//            }
 
-            diffSignals(signals, outputSignals);
+            Map<String, String> special = tick.getExtraInfos();
+
+            if (useState) {
+                Iterator<String> it = special.keySet().iterator();
+
+                while (it.hasNext()) {
+                    String key = it.next();
+                    String value = special.get(key);
+
+                    valEngine.validateVariable(key, value, obj.optString(key), isHistoryStep());
+                }
+            }
+
+            valEngine.validateSignals(signals, outputSignals, isHistoryStep(), step);
         }
 
         return null;
-    }
-
-    /**
-     * Converts a JSON object representing the simulation's signals to a map and records the signals
-     * internally. Input and special signals are automatically stripped from the returned map, thus
-     * a map of true output signals, i. e. those that only became present after executing the
-     * {@link DataReplayComponent}, is returned.
-     * 
-     * @param obj
-     *            the JSON object representing the simulation's signals
-     * @return the map of true output signals
-     */
-    private HashMap<String, Object> convertAndRecordSignals(JSONObject obj) {
-        @SuppressWarnings("unchecked")
-        // necessary because the JSON library does not return a parameterized Iterator
-        Iterator<String> keys = obj.keys();
-
-        HashMap<String, Object> signals = new HashMap<String, Object>();
-        HashMap<String, Object> extraInfo = new HashMap<String, Object>();
-        
-        HashMap<String, Object> inputs = recInputs.get(recInputs.size() - 1);
-
-        while (keys.hasNext()) {
-            String key = keys.next();
-            try {
-                if (!inputs.containsKey(key) && !isSpecialSignal(key) && obj.getJSONObject(key).getBoolean("present")) {
-                    Object val = obj.getJSONObject(key).opt("value");
-                    signals.put(key, val);
-                }
-                if (isSpecialSignal(key)) {
-                    Object val = obj.get(key);
-                    extraInfo.put(key, val);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-
-        recOutputs.add(signals);
-        recSpecialSignals.add(extraInfo);
-
-        return signals;
-    }
-
-    /**
-     * @param key
-     * @return
-     */
-    private boolean isSpecialSignal(String key) {
-        return specialSignals.contains(key);
-    }
-
-    // TODO: JavaDoc documentation
-    private void diffSpecial(String key, String value, JSONObject obj)
-            throws KiemExecutionException {
-        String simValue = obj.optString(key);
-        if (simValue == null) {
-            throw new KiemExecutionException(
-                    "The simulation step did not generate an extra signal \"" + key + "\". "
-                            + "No validation for this signal will take place in this step!", false,
-                    null);
-        } else {
-            if (!simValue.equals(value)) {
-                List<EObject> isStates = getStates(simValue);
-                List<EObject> shallStates = getStates(value);
-
-                // Get meaningful names for the states
-                String stateName = shallStates.get(shallStates.size() - 1).toString();
-                String simStateName = isStates.get(shallStates.size() - 1).toString();
-
-                // Colorize the diagram
-                if (DiffStateTrigger.getInstance() != null) {
-                    DiffStateTrigger.getInstance().synchronizedStep(isStates, shallStates, editor);
-                }
-
-                // Display an error message
-                throw new KiemExecutionException(
-                        "Validation error: The simulation should provide an extra info representing "
-                                + stateName + " but it actually provided " + simStateName, false,
-                        null);
-            }
-        }
-    }
-
-    /**
-     * Generate a List of the states contained in the parameter string
-     * 
-     * @param stateString
-     *            the string of states to be converted into a List
-     * @return a List of states
-     */
-    private List<EObject> getStates(String stateString) {
-        List<EObject> retval = new ArrayList<EObject>();
-        String[] states = stateString.replaceAll("\\s", "").split(",");
-        for (String state : states) {
-            retval.add(editor.getDiagram().getElement().eResource().getEObject(state));
-        }
-        return retval;
-    }
-
-    private void diffSignals(List<ISignal> recSignals, Map<String, Object> simSignals)
-            throws KiemExecutionException {
-        Iterator<ISignal> it = recSignals.iterator();
-        while (it.hasNext()) {
-            ISignal recSignal = it.next();
-            // presence
-            if (!simSignals.containsKey(recSignal.getName())) {
-                throw new KiemExecutionException("Validation error: Signal \""
-                        + recSignal.getName() + "\" is not present, but it should be.", false, null);
-            }
-
-            // value
-            if (recSignal.isValued()
-                    && !(recSignal.getValue() == simSignals.get(recSignal.getName()))) {
-                throw new KiemExecutionException(
-                        "Validation error: Signal \""
-                                + recSignal.getName()
-                                + "\" was recorded as a valued signal with value \""
-                                + recSignal.getValue()
-                                + "\" but "
-                                + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
-                                        : ("was simulatated with value \"" + recSignal.getValue() + "\".")),
-                        false, null);
-            }
-
-            it.remove();
-        }
-
-        // additional signals
-        if (!ignoreAdditionalSignals && !recSignals.isEmpty()) {
-            String excessSignals = "";
-            Iterator<ISignal> it2 = recSignals.iterator();
-            while (it2.hasNext()) {
-                excessSignals += "\"" + it2.next().getName() + "\"";
-
-                if (it2.hasNext()) {
-                    excessSignals += ", ";
-                }
-            }
-
-            throw new KiemExecutionException("Validation error: The signal(s) " + excessSignals
-                    + " were not recorded, but generated in the simulation", false, null);
-        }
     }
 
     /**
@@ -485,6 +375,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      *            the recorded input signals
      */
     public void putInputs(final HashMap<String, Object> signals) {
+        System.out.println("Input signals received: " + signals);
         this.recInputs.add(signals);
     }
 
@@ -496,22 +387,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public String getDataComponentId() {
-        return "de.cau.cs.kieler.sim.kart.DataValidationComponent";
-    }
-
-    public class MyString {
-        private volatile String bla;
-
-        public MyString(String blubb) {
-            bla = blubb;
-        }
-
-        public void append(String x) {
-            bla = bla.concat(x);
-        }
-
-        public String toString() {
-            return bla.toString();
-        }
+        return COMPONENTID;
     }
 }

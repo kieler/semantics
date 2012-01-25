@@ -72,40 +72,24 @@ public class ConvertModelHandler extends AbstractHandler {
         ISelection selection = HandlerUtil.getCurrentSelection(event);
         if (selection instanceof IStructuredSelection && targetExtension != null) {
             final Object[] elements = ((IStructuredSelection) selection).toArray();
-            Job job = new Job("convert model") {
 
-                // chsch: put the conversion into a job with a progress bar,
-                //  because the conversion may take a while :-/ 
-                
-                @Override
+            // put the conversion into a job with a progress bar,
+            // because the conversion may take a while :-/ 
+            Job job = new Job("convert model") {
                 protected IStatus run(final IProgressMonitor monitor) {
-//            try {
-//                PlatformUI.getWorkbench().getProgressService().run(
-//                        false, true, new IRunnableWithProgress() {
-//                    public void run(final IProgressMonitor monitor) {
-                        monitor.beginTask("Convert model", elements.length);
-                        for (Object object : elements) {
-                            if (monitor.isCanceled()) {
-                                break;
-                            }
-                            if (object instanceof IFile) {
-                                convert((IFile) object);
-                            }
-                            monitor.worked(1);
+                    monitor.beginTask("Convert model", elements.length);
+                    for (Object object : elements) {
+                        if (monitor.isCanceled()) {
+                            break;
                         }
-                        monitor.done();
-//                    }
-//                });
-//            } catch (InvocationTargetException exception) {
-//                IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
-//                        "Error while converting the selected model.", exception.getCause());
-//                StatusManager.getManager().handle(status, StatusManager.SHOW);
-//            } catch (InterruptedException exception) {
-//                // ignore exception
-//            }
+                        if (object instanceof IFile) {
+                            convert((IFile) object);
+                        }
+                        monitor.worked(1);
+                    }
+                    monitor.done();
                     return Status.OK_STATUS;
                 }
-                
                 
             };
             job.setUser(true);
@@ -187,27 +171,14 @@ public class ConvertModelHandler extends AbstractHandler {
      * @throws IOException if an error occurs while saving
      */
     private void saveModel(final List<EObject> models, final URI uri) throws IOException {
-        
-        // chsch: put it into a job avoiding a gui freeze
-//        new Job("save model") {
-//            protected IStatus run(final IProgressMonitor monitor) {
-//                try {
-                    // Create a resource set.
-                    ResourceSet resourceSet = new ResourceSetImpl();
-                    // Create a resource for this file.
-                    Resource resource = resourceSet.createResource(uri);
-                    // Add the model objects to the contents.
-                    resource.getContents().addAll(models);
-                    // Save the contents of the resource to the file system.
-                    resource.save(Collections.EMPTY_MAP);
-//                } catch (IOException exception) {
-//                    IStatus status = new Status(IStatus.ERROR, CoreModelPlugin.PLUGIN_ID,
-//                            "Error while converting the selected model.", exception);
-//                    StatusManager.getManager().handle(status, StatusManager.SHOW);
-//                }
-//                return Status.OK_STATUS;
-//            }
-//        } .schedule();
+        // Create a resource set.
+        ResourceSet resourceSet = new ResourceSetImpl();
+        // Create a resource for this file.
+        Resource resource = resourceSet.createResource(uri);
+        // Add the model objects to the contents.
+        resource.getContents().addAll(models);
+        // Save the contents of the resource to the file system.
+        resource.save(Collections.EMPTY_MAP);
     }
 
 }

@@ -44,5 +44,5 @@ public interface ITick {
      * 
      * @return the state information. If none is available <code>null</code> is returned
      */
-//    Map<String, String> getExtraInfos();
+    Map<String, String> getExtraInfos();
 }

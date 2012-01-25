@@ -21,24 +21,26 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsiParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHA", "RULE_ALPHANUM", "RULE_ALPHANUMSPECIAL", "RULE_NUM", "RULE_SPECIAL", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "'('", "')'", "'%%'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHA", "RULE_ALPHANUM", "RULE_ALPHANUMSPECIAL", "RULE_NUM", "RULE_DIGIT", "RULE_SPECIAL", "RULE_COMMENT", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "'('", "')'", "'%%'"
     };
+    public static final int RULE_ALPHANUM=5;
+    public static final int T__20=20;
+    public static final int RULE_ALPHA=4;
+    public static final int RULE_COMMENT=10;
+    public static final int EOF=-1;
+    public static final int RULE_NUM=7;
+    public static final int T__19=19;
     public static final int T__16=16;
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
-    public static final int RULE_ALPHANUM=5;
     public static final int T__12=12;
-    public static final int T__11=11;
     public static final int T__14=14;
-    public static final int RULE_SPECIAL=8;
     public static final int T__13=13;
+    public static final int RULE_SPECIAL=9;
     public static final int RULE_ALPHANUMSPECIAL=6;
-    public static final int T__10=10;
-    public static final int RULE_ALPHA=4;
-    public static final int RULE_WS=9;
-    public static final int EOF=-1;
-    public static final int RULE_NUM=7;
+    public static final int RULE_WS=11;
+    public static final int RULE_DIGIT=8;
 
     // delegates
     // delegators
@@ -135,7 +137,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==10) ) {
+                if ( (LA1_0==12) ) {
                     alt1=1;
                 }
 
@@ -255,15 +257,15 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:119:1: (otherlv_0= '!' otherlv_1= 'reset' otherlv_2= ';' ( (lv_ticks_3_0= ruletick ) )+ )
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:119:3: otherlv_0= '!' otherlv_1= 'reset' otherlv_2= ';' ( (lv_ticks_3_0= ruletick ) )+
             {
-            otherlv_0=(Token)match(input,10,FOLLOW_10_in_ruletrace213); 
+            otherlv_0=(Token)match(input,12,FOLLOW_12_in_ruletrace213); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getTraceAccess().getExclamationMarkKeyword_0());
                 
-            otherlv_1=(Token)match(input,11,FOLLOW_11_in_ruletrace225); 
+            otherlv_1=(Token)match(input,13,FOLLOW_13_in_ruletrace225); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getTraceAccess().getResetKeyword_1());
                 
-            otherlv_2=(Token)match(input,12,FOLLOW_12_in_ruletrace237); 
+            otherlv_2=(Token)match(input,14,FOLLOW_14_in_ruletrace237); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getTraceAccess().getSemicolonKeyword_2());
                 
@@ -274,7 +276,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( ((LA2_0>=RULE_ALPHA && LA2_0<=RULE_ALPHANUMSPECIAL)||(LA2_0>=12 && LA2_0<=13)||LA2_0==18) ) {
+                if ( ((LA2_0>=RULE_ALPHA && LA2_0<=RULE_ALPHANUMSPECIAL)||(LA2_0>=14 && LA2_0<=15)||LA2_0==20) ) {
                     alt2=1;
                 }
 
@@ -466,22 +468,22 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==13) ) {
+            if ( (LA5_0==15) ) {
                 alt5=1;
             }
             switch (alt5) {
                 case 1 :
                     // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:194:5: otherlv_2= '%' otherlv_3= 'Output' otherlv_4= ':' ( (lv_output_5_0= rulesignal ) )*
                     {
-                    otherlv_2=(Token)match(input,13,FOLLOW_13_in_ruletick374); 
+                    otherlv_2=(Token)match(input,15,FOLLOW_15_in_ruletick374); 
 
                         	newLeafNode(otherlv_2, grammarAccess.getTickAccess().getPercentSignKeyword_2_0());
                         
-                    otherlv_3=(Token)match(input,14,FOLLOW_14_in_ruletick386); 
+                    otherlv_3=(Token)match(input,16,FOLLOW_16_in_ruletick386); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getTickAccess().getOutputKeyword_2_1());
                         
-                    otherlv_4=(Token)match(input,15,FOLLOW_15_in_ruletick398); 
+                    otherlv_4=(Token)match(input,17,FOLLOW_17_in_ruletick398); 
 
                         	newLeafNode(otherlv_4, grammarAccess.getTickAccess().getColonKeyword_2_2());
                         
@@ -546,7 +548,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==18) ) {
+                if ( (LA6_0==20) ) {
                     alt6=1;
                 }
 
@@ -589,7 +591,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_7=(Token)match(input,12,FOLLOW_12_in_ruletick456); 
+            otherlv_7=(Token)match(input,14,FOLLOW_14_in_ruletick456); 
 
                 	newLeafNode(otherlv_7, grammarAccess.getTickAccess().getSemicolonKeyword_4());
                 
@@ -775,7 +777,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             int alt8=2;
             int LA8_0 = input.LA(1);
 
-            if ( (LA8_0==16) ) {
+            if ( (LA8_0==18) ) {
                 alt8=1;
             }
             switch (alt8) {
@@ -788,7 +790,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:319:1: (lv_valued_1_0= '(' )
                     // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:320:3: lv_valued_1_0= '('
                     {
-                    lv_valued_1_0=(Token)match(input,16,FOLLOW_16_in_rulesignal613); 
+                    lv_valued_1_0=(Token)match(input,18,FOLLOW_18_in_rulesignal613); 
 
                             newLeafNode(lv_valued_1_0, grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0());
                         
@@ -830,7 +832,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                     }
 
-                    otherlv_3=(Token)match(input,17,FOLLOW_17_in_rulesignal660); 
+                    otherlv_3=(Token)match(input,19,FOLLOW_19_in_rulesignal660); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2());
                         
@@ -919,7 +921,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:3: otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) )
             {
-            otherlv_0=(Token)match(input,18,FOLLOW_18_in_rulekvpair745); 
+            otherlv_0=(Token)match(input,20,FOLLOW_20_in_rulekvpair745); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0());
                 
@@ -1024,7 +1026,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             }
 
-            otherlv_2=(Token)match(input,15,FOLLOW_15_in_rulekvpair824); 
+            otherlv_2=(Token)match(input,17,FOLLOW_17_in_rulekvpair824); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getKvpairAccess().getColonKeyword_2());
                 
@@ -1155,37 +1157,37 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruletracelist_in_entryRuletracelist75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletracelist85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruletrace_in_ruletracelist130 = new BitSet(new long[]{0x0000000000000402L});
+    public static final BitSet FOLLOW_ruletrace_in_ruletracelist130 = new BitSet(new long[]{0x0000000000001002L});
     public static final BitSet FOLLOW_ruletrace_in_entryRuletrace166 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletrace176 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_10_in_ruletrace213 = new BitSet(new long[]{0x0000000000000800L});
-    public static final BitSet FOLLOW_11_in_ruletrace225 = new BitSet(new long[]{0x0000000000001000L});
-    public static final BitSet FOLLOW_12_in_ruletrace237 = new BitSet(new long[]{0x0000000000043070L});
-    public static final BitSet FOLLOW_ruletick_in_ruletrace258 = new BitSet(new long[]{0x0000000000043072L});
+    public static final BitSet FOLLOW_12_in_ruletrace213 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_ruletrace225 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_ruletrace237 = new BitSet(new long[]{0x000000000010C070L});
+    public static final BitSet FOLLOW_ruletick_in_ruletrace258 = new BitSet(new long[]{0x000000000010C072L});
     public static final BitSet FOLLOW_ruletick_in_entryRuletick295 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletick305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick360 = new BitSet(new long[]{0x0000000000043070L});
-    public static final BitSet FOLLOW_13_in_ruletick374 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_ruletick386 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_ruletick398 = new BitSet(new long[]{0x0000000000041070L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick419 = new BitSet(new long[]{0x0000000000041070L});
-    public static final BitSet FOLLOW_rulekvpair_in_ruletick443 = new BitSet(new long[]{0x0000000000041000L});
-    public static final BitSet FOLLOW_12_in_ruletick456 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick360 = new BitSet(new long[]{0x000000000010C070L});
+    public static final BitSet FOLLOW_15_in_ruletick374 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ruletick386 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_ruletick398 = new BitSet(new long[]{0x0000000000104070L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick419 = new BitSet(new long[]{0x0000000000104070L});
+    public static final BitSet FOLLOW_rulekvpair_in_ruletick443 = new BitSet(new long[]{0x0000000000104000L});
+    public static final BitSet FOLLOW_14_in_ruletick456 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulesignal_in_entryRulesignal492 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulesignal502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rulesignal546 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulesignal566 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal586 = new BitSet(new long[]{0x0000000000010002L});
-    public static final BitSet FOLLOW_16_in_rulesignal613 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_RULE_NUM_in_rulesignal643 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_rulesignal660 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHA_in_rulesignal546 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulesignal566 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal586 = new BitSet(new long[]{0x0000000000040002L});
+    public static final BitSet FOLLOW_18_in_rulesignal613 = new BitSet(new long[]{0x0000000000000080L});
+    public static final BitSet FOLLOW_RULE_NUM_in_rulesignal643 = new BitSet(new long[]{0x0000000000080000L});
+    public static final BitSet FOLLOW_19_in_rulesignal660 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulekvpair_in_entryRulekvpair698 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulekvpair708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rulekvpair745 = new BitSet(new long[]{0x0000000000000070L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rulekvpair764 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulekvpair784 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804 = new BitSet(new long[]{0x0000000000008000L});
-    public static final BitSet FOLLOW_15_in_rulekvpair824 = new BitSet(new long[]{0x0000000000000070L});
+    public static final BitSet FOLLOW_20_in_rulekvpair745 = new BitSet(new long[]{0x0000000000000070L});
+    public static final BitSet FOLLOW_RULE_ALPHA_in_rulekvpair764 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulekvpair784 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804 = new BitSet(new long[]{0x0000000000020000L});
+    public static final BitSet FOLLOW_17_in_rulekvpair824 = new BitSet(new long[]{0x0000000000000070L});
     public static final BitSet FOLLOW_RULE_ALPHA_in_rulekvpair843 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulekvpair863 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair883 = new BitSet(new long[]{0x0000000000000002L});

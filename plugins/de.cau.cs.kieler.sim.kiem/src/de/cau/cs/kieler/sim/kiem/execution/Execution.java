@@ -530,20 +530,21 @@ public class Execution extends Job {
         synchronized (this) {
             if (this.steps == NO_STEPS) {
                 // notify components
-                for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                    DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                    timeout.timeout(getTimeout(), "isEnabled, isHistoryObserver",
-                            dataComponentWrapper, this);
-                    if (dataComponentWrapper.isEnabled()
-                    // HISTORY COMPONENTS ONLY//
-                            && dataComponentWrapper.isHistoryObserver()) {
-                        timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
-                        if (eventManager != null) {
-                            eventManager.notify(KiemEvent.CMD_STEP_BACK);
-                        }
-                        // dataComponentWrapper.getDataComponent().commandStep();
-                    }
-                    timeout.abortTimeout();
+// TODO: dubious code, to be deleted            	
+//                for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+//                    DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+//                    timeout.timeout(getTimeout(), "isEnabled, isHistoryObserver",
+//                            dataComponentWrapper, this);
+//                    if (dataComponentWrapper.isEnabled()
+//                    // HISTORY COMPONENTS ONLY//
+//                            && dataComponentWrapper.isHistoryObserver()) {
+//                        timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
+//                        // dataComponentWrapper.getDataComponent().commandStep();
+//                    }
+//                    timeout.abortTimeout();
+//                }
+                if (eventManager != null) {
+                    eventManager.notify(KiemEvent.CMD_STEP_BACK);
                 }
                 // make one step backward
                 this.steps = BACKWARD_STEP;
@@ -576,17 +577,18 @@ public class Execution extends Job {
         synchronized (this) {
             if (this.steps == NO_STEPS) {
                 // notify components
-                for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                    DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                    timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
-                    if (dataComponentWrapper.isEnabled()) {
-                        timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
-                        if (eventManager != null) {
-                            eventManager.notify(KiemEvent.CMD_STEP);
-                        }
-                        // dataComponentWrapper.getDataComponent().commandStep();
-                    }
-                    timeout.abortTimeout();
+// TODO: dubious code, to be deleted            	
+//                for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+//                    DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+//                    timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
+//                    if (dataComponentWrapper.isEnabled()) {
+//                        timeout.timeout(getTimeout(), "commandStep", dataComponentWrapper, this);
+//                        // dataComponentWrapper.getDataComponent().commandStep();
+//                    }
+//                    timeout.abortTimeout();
+//                }
+                if (eventManager != null) {
+                    eventManager.notify(KiemEvent.CMD_STEP);
                 }
                 // make one step forward
                 this.steps = FORWARD_STEP;
@@ -623,18 +625,19 @@ public class Execution extends Job {
 
         synchronized (this) {
             // notify components
-            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
-                if (dataComponentWrapper.isEnabled()) {
-                    timeout.timeout(getTimeout(), "commandPause", dataComponentWrapper, this);
-                    if (eventManager != null) {
-                        eventManager.notify(KiemEvent.CMD_PAUSE);
-                    }
-                    // dataComponentWrapper.getDataComponent().commandPause();
-                }
-                timeout.abortTimeout();
-            }
+// TODO: dubious code, to be deleted            	
+//           for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+//                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+//                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
+//                if (dataComponentWrapper.isEnabled()) {
+//                    timeout.timeout(getTimeout(), "commandPause", dataComponentWrapper, this);
+//                    // dataComponentWrapper.getDataComponent().commandPause();
+//                }
+//                timeout.abortTimeout();
+//            }
+           if (eventManager != null) {
+               eventManager.notify(KiemEvent.CMD_PAUSE);
+           }
             this.steps = NO_STEPS;
             // update the GUI
             eventManager.notify(new KiemEvent(KiemEvent.VIEW_REFRESH));
@@ -654,17 +657,18 @@ public class Execution extends Job {
 
         synchronized (this) {
             // notify components
-            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
-                if (dataComponentWrapper.isEnabled()) {
-                    timeout.timeout(getTimeout(), "commandRun", dataComponentWrapper, this);
-                    if (eventManager != null) {
-                        eventManager.notify(KiemEvent.CMD_RUN);
-                    }
-                    // dataComponentWrapper.getDataComponent().commandRun();
-                }
-                timeout.abortTimeout();
+// TODO: dubious code, to be deleted            	
+//            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+//                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+//                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
+//                if (dataComponentWrapper.isEnabled()) {
+//                    timeout.timeout(getTimeout(), "commandRun", dataComponentWrapper, this);
+//                    // dataComponentWrapper.getDataComponent().commandRun();
+//                }
+//                timeout.abortTimeout();
+//            }
+            if (eventManager != null) {
+                eventManager.notify(KiemEvent.CMD_RUN);
             }
         }
         this.steps = INFINITY_STEPS; // indicates run mode
@@ -688,19 +692,20 @@ public class Execution extends Job {
 
         synchronized (this) {
             // notify components
-            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
-                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
-                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
-                if (dataComponentWrapper.isEnabled()) {
-                    timeout.abortTimeout();
-                    timeout.timeout(getTimeout(), "commandStop", dataComponentWrapper, this);
-                    if (eventManager != null) {
-                        eventManager.notify(KiemEvent.CMD_STOP);
-                    }
-                    // dataComponentWrapper.getDataComponent().commandStop();
-                    timeout.abortTimeout();
-                }
-                timeout.abortTimeout();
+// TODO: dubious code, to be deleted            	
+//            for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+//                DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
+//                timeout.timeout(getTimeout(), "isEnabled", dataComponentWrapper, this);
+//                if (dataComponentWrapper.isEnabled()) {
+//                    timeout.abortTimeout();
+//                    timeout.timeout(getTimeout(), "commandStop", dataComponentWrapper, this);
+//                    // dataComponentWrapper.getDataComponent().commandStop();
+//                    timeout.abortTimeout();
+//                }
+//                timeout.abortTimeout();
+//            }
+            if (eventManager != null) {
+                eventManager.notify(KiemEvent.CMD_STOP);
             }
 
             // for safety reasons do this synchronized again
@@ -889,7 +894,7 @@ public class Execution extends Job {
      * wrapupComponents is called by the handleComponentError to not get any recusive call!
      * 
      * @param quietmode
-     *            the quietmode ommits any errors
+     *            the quiet mode omits any errors
      */
     public synchronized void wrapupComponents(final boolean quietmode) {
         for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {

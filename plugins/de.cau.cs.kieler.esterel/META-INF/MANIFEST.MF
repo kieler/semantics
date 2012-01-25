@@ -21,19 +21,20 @@ Require-Bundle: org.eclipse.emf.ecore,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions;visibility:=reexport,
  de.cau.cs.kieler.core.kexpressions.ui;visibility:=reexport,
- de.cau.cs.kieler.core.annotations.text.ui
+ de.cau.cs.kieler.core.annotations.text.ui,
+ org.eclipse.xtend.util.stdlib;bundle-version="1.2.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Import-Package: org.apache.log4j
 Export-Package: de.cau.cs.kieler.esterel,
- de.cau.cs.kieler.esterel.services,
  de.cau.cs.kieler.esterel.esterel,
  de.cau.cs.kieler.esterel.esterel.impl,
  de.cau.cs.kieler.esterel.esterel.util,
+ de.cau.cs.kieler.esterel.formatting,
  de.cau.cs.kieler.esterel.parser.antlr,
  de.cau.cs.kieler.esterel.parser.antlr.internal,
- de.cau.cs.kieler.esterel.validation,
  de.cau.cs.kieler.esterel.scoping,
- de.cau.cs.kieler.esterel.formatting,
- de.cau.cs.kieler.esterel.serializer
- 
+ de.cau.cs.kieler.esterel.serializer,
+ de.cau.cs.kieler.esterel.services,
+ de.cau.cs.kieler.esterel.validation,
+ de.cau.cs.kieler.esterel.xtend
 

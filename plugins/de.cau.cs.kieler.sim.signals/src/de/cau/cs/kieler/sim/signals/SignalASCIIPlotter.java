@@ -26,32 +26,96 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
 /**
- * The SignalASCIIPlotter plots ASCII art signals to a text file
+ * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
-public class SignalASCIIPlotter {
+abstract public class SignalASCIIPlotter {
 
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Creates the spaced label.
+	 *
+	 * @param text the text
+	 * @param length the length
+	 * @param align the align
+	 * @return the string
+	 */
+	protected String createSpacedLabel(String text, int length, int align) {
+		return createSpacedLabel(text, length, align, ' ');
+	}
+	
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Creates the spaced label.
+	 *
+	 * @param text the text
+	 * @param length the length
+	 * @param align the style, 0 centered, -1 left, 1 right
+	 * @param fillChar the fill char
+	 * @return the string
+	 */
+	protected String createSpacedLabel(String text, int length, int align, char fillChar) {
+		
+		String spaceL = "";
+		String spaceR = "";
+		if (align == -1) {
+			//left
+			spaceR = getSpaceCharacters(length - text.length(), fillChar);
+		}
+		else if (align == 1) {
+			//left
+			spaceL = getSpaceCharacters(length - text.length(), fillChar);
+		}
+		else {
+			spaceR = getSpaceCharacters((length - text.length())/2, fillChar);
+			spaceL = getSpaceCharacters(length - text.length() - spaceR.length(), fillChar);
+		}
+		return (spaceL + text + spaceR);
+	}
+	
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Gets the space characters.
-	 * 
-	 * @param num
-	 *            the num
+	 *
+	 * @param num the num
 	 * @return the space characters
 	 */
-	private String getSpaceCharacters(int num) {
+	protected String getSpaceCharacters(int num) {
+		return getSpaceCharacters(num, ' ');
+	}
+	
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the space characters.
+	 *
+	 * @param num the num
+	 * @param fillChar the fill char
+	 * @return the space characters
+	 */
+	protected String getSpaceCharacters(int num, char fillChar) {
 		String returnText = "";
 		while (returnText.length() < num) {
-			returnText = " " + returnText;
+			returnText = fillChar + returnText;
 		}
 		return returnText;
 	}
 
 	// -------------------------------------------------------------------------
 
-	private String[] getTickLabels(long minTick, long maxTick,
+	/**
+	 * Gets the tick labels.
+	 *
+	 * @param minTick the min tick
+	 * @param maxTick the max tick
+	 * @param maxSignalNameLength the max signal name length
+	 * @return the tick labels
+	 */
+	protected String[] getTickLabels(long minTick, long maxTick,
 			int maxSignalNameLength) {
 		int lines = (maxTick + "").length();
 		String[] ascii = new String[lines];
@@ -84,7 +148,7 @@ public class SignalASCIIPlotter {
 	 *            the max signal name length
 	 * @return the aSCI signal data
 	 */
-	private String[] getASCISignalData(long minTick, long maxTick,
+	protected String[] getASCISignalData(long minTick, long maxTick,
 			Signal signal, int maxSignalNameLength) {
 		String[] ascii = new String[2];
 
@@ -137,7 +201,7 @@ public class SignalASCIIPlotter {
 	 * 
 	 * @return the max signal name length
 	 */
-	private int getMaxSignalNameLength(SignalList signalList) {
+	protected int getMaxSignalNameLength(SignalList signalList) {
 		int maxLength = 0;
 		for (Signal signal : signalList) {
 			maxLength = Math.max(maxLength, signal.getName().length());
@@ -156,34 +220,6 @@ public class SignalASCIIPlotter {
 	 */
 	public String[] plot(SignalList signalList) {
 		LinkedList<String> stringList = new LinkedList<String>();
-
-		long minTick = signalList.getMinTick();
-		long maxTick = signalList.getMaxTick();
-
-		// plot signal data
-		int maxSignalNameLength = getMaxSignalNameLength(signalList);
-		String spaceLine = "";
-		for (Signal signal : signalList) {
-			String[] signalData = getASCISignalData(minTick, maxTick, signal,
-					maxSignalNameLength);
-			if (spaceLine.equals("")) {
-				spaceLine = getSpaceCharacters(signalData[0].length());
-			}
-			// no space line by default
-			// stringList.add(spaceLine);
-			stringList.add(signalData[0]);
-			stringList.add(signalData[1]);
-		}
-
-		// build tick labels
-		stringList.add(spaceLine);
-		String[] tickLabels = getTickLabels(minTick, maxTick,
-				maxSignalNameLength);
-
-		for (int line = 0; line < tickLabels.length; line++) {
-			stringList.add(tickLabels[line]);
-		}
-
 		return (String[]) stringList.toArray(new String[signalList.size()]);
 	}
 

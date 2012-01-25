@@ -22,24 +22,26 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHA", "RULE_ALPHANUM", "RULE_ALPHANUMSPECIAL", "RULE_NUM", "RULE_SPECIAL", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "')'", "'%%'", "'('"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHA", "RULE_ALPHANUM", "RULE_ALPHANUMSPECIAL", "RULE_NUM", "RULE_DIGIT", "RULE_SPECIAL", "RULE_COMMENT", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "')'", "'%%'", "'('"
     };
+    public static final int RULE_ALPHANUM=5;
+    public static final int T__20=20;
+    public static final int RULE_ALPHA=4;
+    public static final int RULE_COMMENT=10;
+    public static final int EOF=-1;
+    public static final int RULE_NUM=7;
+    public static final int T__19=19;
     public static final int T__16=16;
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
-    public static final int RULE_ALPHANUM=5;
     public static final int T__12=12;
-    public static final int T__11=11;
     public static final int T__14=14;
-    public static final int RULE_SPECIAL=8;
     public static final int T__13=13;
+    public static final int RULE_SPECIAL=9;
     public static final int RULE_ALPHANUMSPECIAL=6;
-    public static final int T__10=10;
-    public static final int RULE_ALPHA=4;
-    public static final int RULE_WS=9;
-    public static final int EOF=-1;
-    public static final int RULE_NUM=7;
+    public static final int RULE_WS=11;
+    public static final int RULE_DIGIT=8;
 
     // delegates
     // delegators
@@ -150,7 +152,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==10) ) {
+                if ( (LA1_0==12) ) {
                     alt1=1;
                 }
 
@@ -843,7 +845,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:311:1: '!'
             {
              before(grammarAccess.getTraceAccess().getExclamationMarkKeyword_0()); 
-            match(input,10,FOLLOW_10_in_rule__Trace__Group__0__Impl614); 
+            match(input,12,FOLLOW_12_in_rule__Trace__Group__0__Impl614); 
              after(grammarAccess.getTraceAccess().getExclamationMarkKeyword_0()); 
 
             }
@@ -918,7 +920,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:342:1: 'reset'
             {
              before(grammarAccess.getTraceAccess().getResetKeyword_1()); 
-            match(input,11,FOLLOW_11_in_rule__Trace__Group__1__Impl676); 
+            match(input,13,FOLLOW_13_in_rule__Trace__Group__1__Impl676); 
              after(grammarAccess.getTraceAccess().getResetKeyword_1()); 
 
             }
@@ -993,7 +995,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:373:1: ';'
             {
              before(grammarAccess.getTraceAccess().getSemicolonKeyword_2()); 
-            match(input,12,FOLLOW_12_in_rule__Trace__Group__2__Impl738); 
+            match(input,14,FOLLOW_14_in_rule__Trace__Group__2__Impl738); 
              after(grammarAccess.getTraceAccess().getSemicolonKeyword_2()); 
 
             }
@@ -1091,7 +1093,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                 int alt5=2;
                 int LA5_0 = input.LA(1);
 
-                if ( ((LA5_0>=RULE_ALPHA && LA5_0<=RULE_ALPHANUMSPECIAL)||(LA5_0>=12 && LA5_0<=13)||LA5_0==17) ) {
+                if ( ((LA5_0>=RULE_ALPHA && LA5_0<=RULE_ALPHANUMSPECIAL)||(LA5_0>=14 && LA5_0<=15)||LA5_0==19) ) {
                     alt5=1;
                 }
 
@@ -1373,7 +1375,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             int alt7=2;
             int LA7_0 = input.LA(1);
 
-            if ( (LA7_0==13) ) {
+            if ( (LA7_0==15) ) {
                 alt7=1;
             }
             switch (alt7) {
@@ -1471,7 +1473,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                 int alt8=2;
                 int LA8_0 = input.LA(1);
 
-                if ( (LA8_0==17) ) {
+                if ( (LA8_0==19) ) {
                     alt8=1;
                 }
 
@@ -1563,7 +1565,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:564:1: ';'
             {
              before(grammarAccess.getTickAccess().getSemicolonKeyword_4()); 
-            match(input,12,FOLLOW_12_in_rule__Tick__Group__4__Impl1123); 
+            match(input,14,FOLLOW_14_in_rule__Tick__Group__4__Impl1123); 
              after(grammarAccess.getTickAccess().getSemicolonKeyword_4()); 
 
             }
@@ -1638,7 +1640,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:605:1: '%'
             {
              before(grammarAccess.getTickAccess().getPercentSignKeyword_2_0()); 
-            match(input,13,FOLLOW_13_in_rule__Tick__Group_2__0__Impl1195); 
+            match(input,15,FOLLOW_15_in_rule__Tick__Group_2__0__Impl1195); 
              after(grammarAccess.getTickAccess().getPercentSignKeyword_2_0()); 
 
             }
@@ -1713,7 +1715,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:636:1: 'Output'
             {
              before(grammarAccess.getTickAccess().getOutputKeyword_2_1()); 
-            match(input,14,FOLLOW_14_in_rule__Tick__Group_2__1__Impl1257); 
+            match(input,16,FOLLOW_16_in_rule__Tick__Group_2__1__Impl1257); 
              after(grammarAccess.getTickAccess().getOutputKeyword_2_1()); 
 
             }
@@ -1788,7 +1790,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:667:1: ':'
             {
              before(grammarAccess.getTickAccess().getColonKeyword_2_2()); 
-            match(input,15,FOLLOW_15_in_rule__Tick__Group_2__2__Impl1319); 
+            match(input,17,FOLLOW_17_in_rule__Tick__Group_2__2__Impl1319); 
              after(grammarAccess.getTickAccess().getColonKeyword_2_2()); 
 
             }
@@ -2045,7 +2047,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             int alt10=2;
             int LA10_0 = input.LA(1);
 
-            if ( (LA10_0==18) ) {
+            if ( (LA10_0==20) ) {
                 alt10=1;
             }
             switch (alt10) {
@@ -2302,7 +2304,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:852:1: ')'
             {
              before(grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2()); 
-            match(input,16,FOLLOW_16_in_rule__Signal__Group_1__2__Impl1686); 
+            match(input,18,FOLLOW_18_in_rule__Signal__Group_1__2__Impl1686); 
              after(grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2()); 
 
             }
@@ -2377,7 +2379,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:889:1: '%%'
             {
              before(grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0()); 
-            match(input,17,FOLLOW_17_in_rule__Kvpair__Group__0__Impl1754); 
+            match(input,19,FOLLOW_19_in_rule__Kvpair__Group__0__Impl1754); 
              after(grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0()); 
 
             }
@@ -2537,7 +2539,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:949:1: ':'
             {
              before(grammarAccess.getKvpairAccess().getColonKeyword_2()); 
-            match(input,15,FOLLOW_15_in_rule__Kvpair__Group__2__Impl1876); 
+            match(input,17,FOLLOW_17_in_rule__Kvpair__Group__2__Impl1876); 
              after(grammarAccess.getKvpairAccess().getColonKeyword_2()); 
 
             }
@@ -2910,7 +2912,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
             // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1098:1: '('
             {
              before(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0()); 
-            match(input,18,FOLLOW_18_in_rule__Signal__ValuedAssignment_1_02170); 
+            match(input,20,FOLLOW_20_in_rule__Signal__ValuedAssignment_1_02170); 
              after(grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0()); 
 
             }
@@ -3074,8 +3076,8 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
 
     public static final BitSet FOLLOW_ruletracelist_in_entryRuletracelist61 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletracelist68 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tracelist__TracesAssignment_in_ruletracelist96 = new BitSet(new long[]{0x0000000000000402L});
-    public static final BitSet FOLLOW_rule__Tracelist__TracesAssignment_in_ruletracelist108 = new BitSet(new long[]{0x0000000000000402L});
+    public static final BitSet FOLLOW_rule__Tracelist__TracesAssignment_in_ruletracelist96 = new BitSet(new long[]{0x0000000000001002L});
+    public static final BitSet FOLLOW_rule__Tracelist__TracesAssignment_in_ruletracelist108 = new BitSet(new long[]{0x0000000000001002L});
     public static final BitSet FOLLOW_ruletrace_in_entryRuletrace138 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletrace145 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Trace__Group__0_in_ruletrace171 = new BitSet(new long[]{0x0000000000000002L});
@@ -3097,43 +3099,43 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Kvpair__ValAlternatives_3_0519 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__ValAlternatives_3_0536 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__ValAlternatives_3_0553 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__Group__0__Impl_in_rule__Trace__Group__0583 = new BitSet(new long[]{0x0000000000000800L});
+    public static final BitSet FOLLOW_rule__Trace__Group__0__Impl_in_rule__Trace__Group__0583 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0586 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_10_in_rule__Trace__Group__0__Impl614 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__Group__1__Impl_in_rule__Trace__Group__1645 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_rule__Trace__Group__0__Impl614 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__Group__1__Impl_in_rule__Trace__Group__1645 = new BitSet(new long[]{0x0000000000004000L});
     public static final BitSet FOLLOW_rule__Trace__Group__2_in_rule__Trace__Group__1648 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_11_in_rule__Trace__Group__1__Impl676 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__Group__2__Impl_in_rule__Trace__Group__2707 = new BitSet(new long[]{0x0000000000023070L});
+    public static final BitSet FOLLOW_13_in_rule__Trace__Group__1__Impl676 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Trace__Group__2__Impl_in_rule__Trace__Group__2707 = new BitSet(new long[]{0x000000000008C070L});
     public static final BitSet FOLLOW_rule__Trace__Group__3_in_rule__Trace__Group__2710 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_rule__Trace__Group__2__Impl738 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_14_in_rule__Trace__Group__2__Impl738 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Trace__Group__3__Impl_in_rule__Trace__Group__3769 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl798 = new BitSet(new long[]{0x0000000000023072L});
-    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl810 = new BitSet(new long[]{0x0000000000023072L});
-    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__0851 = new BitSet(new long[]{0x0000000000023070L});
+    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl798 = new BitSet(new long[]{0x000000000008C072L});
+    public static final BitSet FOLLOW_rule__Trace__TicksAssignment_3_in_rule__Trace__Group__3__Impl810 = new BitSet(new long[]{0x000000000008C072L});
+    public static final BitSet FOLLOW_rule__Tick__Group__0__Impl_in_rule__Tick__Group__0851 = new BitSet(new long[]{0x000000000008C070L});
     public static final BitSet FOLLOW_rule__Tick__Group__1_in_rule__Tick__Group__0854 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__1912 = new BitSet(new long[]{0x0000000000023070L});
+    public static final BitSet FOLLOW_rule__Tick__Group__1__Impl_in_rule__Tick__Group__1912 = new BitSet(new long[]{0x000000000008C070L});
     public static final BitSet FOLLOW_rule__Tick__Group__2_in_rule__Tick__Group__1915 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__InputAssignment_1_in_rule__Tick__Group__1__Impl942 = new BitSet(new long[]{0x0000000000000072L});
-    public static final BitSet FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__2973 = new BitSet(new long[]{0x0000000000023070L});
+    public static final BitSet FOLLOW_rule__Tick__Group__2__Impl_in_rule__Tick__Group__2973 = new BitSet(new long[]{0x000000000008C070L});
     public static final BitSet FOLLOW_rule__Tick__Group__3_in_rule__Tick__Group__2976 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__0_in_rule__Tick__Group__2__Impl1003 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group__3__Impl_in_rule__Tick__Group__31034 = new BitSet(new long[]{0x0000000000023070L});
+    public static final BitSet FOLLOW_rule__Tick__Group__3__Impl_in_rule__Tick__Group__31034 = new BitSet(new long[]{0x000000000008C070L});
     public static final BitSet FOLLOW_rule__Tick__Group__4_in_rule__Tick__Group__31037 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__ExtraInfosAssignment_3_in_rule__Tick__Group__3__Impl1064 = new BitSet(new long[]{0x0000000000020002L});
+    public static final BitSet FOLLOW_rule__Tick__ExtraInfosAssignment_3_in_rule__Tick__Group__3__Impl1064 = new BitSet(new long[]{0x0000000000080002L});
     public static final BitSet FOLLOW_rule__Tick__Group__4__Impl_in_rule__Tick__Group__41095 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_rule__Tick__Group__4__Impl1123 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01164 = new BitSet(new long[]{0x0000000000004000L});
+    public static final BitSet FOLLOW_14_in_rule__Tick__Group__4__Impl1123 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__0__Impl_in_rule__Tick__Group_2__01164 = new BitSet(new long[]{0x0000000000010000L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__1_in_rule__Tick__Group_2__01167 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_13_in_rule__Tick__Group_2__0__Impl1195 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11226 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_rule__Tick__Group_2__0__Impl1195 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Tick__Group_2__1__Impl_in_rule__Tick__Group_2__11226 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__2_in_rule__Tick__Group_2__11229 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_14_in_rule__Tick__Group_2__1__Impl1257 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_16_in_rule__Tick__Group_2__1__Impl1257 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__2__Impl_in_rule__Tick__Group_2__21288 = new BitSet(new long[]{0x0000000000000070L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__3_in_rule__Tick__Group_2__21291 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Tick__Group_2__2__Impl1319 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Tick__Group_2__2__Impl1319 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__Group_2__3__Impl_in_rule__Tick__Group_2__31350 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Tick__OutputAssignment_2_3_in_rule__Tick__Group_2__3__Impl1377 = new BitSet(new long[]{0x0000000000000072L});
-    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01416 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_rule__Signal__Group__0__Impl_in_rule__Signal__Group__01416 = new BitSet(new long[]{0x0000000000100000L});
     public static final BitSet FOLLOW_rule__Signal__Group__1_in_rule__Signal__Group__01419 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAssignment_0_in_rule__Signal__Group__0__Impl1446 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group__1__Impl_in_rule__Signal__Group__11476 = new BitSet(new long[]{0x0000000000000002L});
@@ -3141,20 +3143,20 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Signal__Group_1__0__Impl_in_rule__Signal__Group_1__01538 = new BitSet(new long[]{0x0000000000000080L});
     public static final BitSet FOLLOW_rule__Signal__Group_1__1_in_rule__Signal__Group_1__01541 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__ValuedAssignment_1_0_in_rule__Signal__Group_1__0__Impl1568 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Signal__Group_1__1__Impl_in_rule__Signal__Group_1__11598 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_rule__Signal__Group_1__1__Impl_in_rule__Signal__Group_1__11598 = new BitSet(new long[]{0x0000000000040000L});
     public static final BitSet FOLLOW_rule__Signal__Group_1__2_in_rule__Signal__Group_1__11601 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__ValAssignment_1_1_in_rule__Signal__Group_1__1__Impl1628 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__Group_1__2__Impl_in_rule__Signal__Group_1__21658 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_16_in_rule__Signal__Group_1__2__Impl1686 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_18_in_rule__Signal__Group_1__2__Impl1686 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__0__Impl_in_rule__Kvpair__Group__01723 = new BitSet(new long[]{0x0000000000000070L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__1_in_rule__Kvpair__Group__01726 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_17_in_rule__Kvpair__Group__0__Impl1754 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__11785 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_19_in_rule__Kvpair__Group__0__Impl1754 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__11785 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__11788 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__KAssignment_1_in_rule__Kvpair__Group__1__Impl1815 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__21845 = new BitSet(new long[]{0x0000000000000070L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__21848 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_15_in_rule__Kvpair__Group__2__Impl1876 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_17_in_rule__Kvpair__Group__2__Impl1876 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__31907 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__ValAssignment_3_in_rule__Kvpair__Group__3__Impl1934 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment1977 = new BitSet(new long[]{0x0000000000000002L});
@@ -3163,7 +3165,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rulesignal_in_rule__Tick__OutputAssignment_2_32070 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulekvpair_in_rule__Tick__ExtraInfosAssignment_32101 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Signal__NameAlternatives_0_0_in_rule__Signal__NameAssignment_02132 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_18_in_rule__Signal__ValuedAssignment_1_02170 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_20_in_rule__Signal__ValuedAssignment_1_02170 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_NUM_in_rule__Signal__ValAssignment_1_12209 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__KAlternatives_1_0_in_rule__Kvpair__KAssignment_12240 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__ValAlternatives_3_0_in_rule__Kvpair__ValAssignment_32273 = new BitSet(new long[]{0x0000000000000002L});

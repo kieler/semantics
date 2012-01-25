@@ -54,7 +54,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
             + "KExpressionsPackage";
     private static final String ECORE_PACKAGE = "org.eclipse.emf.ecore.EcorePackage";
     /** necessary because KiesUtil.ext has to be evaluated!. */
-    private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.kies.esterel.EsterelPackage";
+    private static final String ESTEREL_PACKAGE = "de.cau.cs.kieler.esterel.esterel.EsterelPackage";
     private static final String TRANSFORMATION_FILE = "SyncchartOptimization.ext";
 
     private ArrayListMultimap<Integer, State> stateHierarchy = ArrayListMultimap.create();

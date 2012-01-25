@@ -49,28 +49,31 @@ public class SignalsPlotter {
 
 	/** The fixed size constants. */
 	private final int XSPACE = 25;
-	
+
 	/** The YOFFSET. */
 	private final int YOFFSET = 40;
-	
+
 	/** The YSPACE. */
 	private final int YSPACE = 40;
-	
+
 	/** The XOFFSET. */
 	private final int XOFFSET = 60;
-	
+
 	/** The SIGNALLABELSAFETYMARGINSPACE. */
-	private final String SIGNALLABELSAFETYMARGINSPACE = "    ";
+	private final String SIGNALLABELSAFETYMARGINSPACE = "  ";
 
 	/** The zoomed size variables. */
 	private int zoomedXSpace = 25;
-	
+
 	/** The zoomed y offset. */
 	private int zoomedYOffset = 40;
-	
+
 	/** The zoomed y space. */
 	private int zoomedYSpace = 40;
-	
+
+	/** The zoomed x space. */
+	private int zoomedXSpaceTimeLine = 5;
+
 	/** The zoomed x offset. */
 	private int zoomedXOffset = 60;
 
@@ -152,7 +155,8 @@ public class SignalsPlotter {
 		zoomedXSpace = (XSPACE * zoomLevel) / 100;
 		zoomedYOffset = (YOFFSET * zoomLevel) / 100;
 		zoomedYSpace = (YSPACE * zoomLevel) / 100;
-		zoomedXOffset = (XOFFSET * 1) / 100;
+		zoomedXOffset = (XOFFSET * zoomLevel) / 100;
+		zoomedXSpaceTimeLine = (signalNameSize.width * zoomLevel) / 100;
 	}
 
 	// -------------------------------------------------------------------------
@@ -163,7 +167,7 @@ public class SignalsPlotter {
 	 * @param zoomLevel
 	 *            the zoom level
 	 */
-	public void plot(int zoomLevel, Colors colors) {
+	public void plot(int zoomLevel, Colors colors, boolean defaultMode) {
 		// re-calculate zoomed values
 		zoom(zoomLevel);
 
@@ -207,26 +211,281 @@ public class SignalsPlotter {
 		// draw signal view content buffered
 		Panel buffer = new Panel();
 		buffer.setLayoutManager(new XYLayout());
-		buffer.setBackgroundColor(new Color(Display.getCurrent(),
-				colors.getBackgroundColor()));
+		buffer.setBackgroundColor(new Color(Display.getCurrent(), colors
+				.getBackgroundColor()));
 
-		drawSignals(buffer, colors);
-		drawSignalNames(buffer, 0, Label.RIGHT, colors);
-		if (signalList.size() > 0 && (signalList.getMaxTick() - signalList.getMinTick() > 0)) {
-			// only draw left signal names if there is already data to be displayed
-			drawSignalNames(buffer, outerScrolledComposite.getMinWidth()
-					- signalNameSize.width, Label.LEFT, colors);
+		if (defaultMode) {
+			// DRAW THE DEFAULT MODE
+			drawSignals(buffer, colors);
+			drawSignalNames(buffer, 0, Label.RIGHT, colors);
+			if (signalList.size() > 0
+					&& (signalList.getMaxTick() - signalList.getMinTick() > 0)) {
+				// only draw left signal names if there is already data to be
+				// displayed
+				drawSignalNames(buffer, outerScrolledComposite.getMinWidth()
+						- signalNameSize.width, Label.LEFT, colors);
+			}
+		} else {
+			// DRAW THE TIMELINE MODE 2776
+			drawTimeLine(buffer, colors, zoomLevel);
+
 		}
+
 		outerCanvas.setContents(buffer);
 
 		// scroll to the center of selected tick
 		long currentTick = signalList.getCurrentTick();
 		long minTick = signalList.getMinTick();
 		int visibleWidth = outerScrolledComposite.getParent().getSize().y;
+
 		int xScroll = ((int) (currentTick - minTick) * zoomedXSpace
 				- (visibleWidth / 2) + signalNameSize.width);
+		if (!defaultMode) {
+			// Scrolling in Time Line Mode
+			xScroll = ((int) (currentTick - minTick) * zoomedXSpaceTimeLine
+					- (visibleWidth / 2) + signalNameSize.width);
+
+		}
 		int yScroll = outerScrolledComposite.getOrigin().y;
 		outerScrolledComposite.setOrigin(xScroll, yScroll);
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate top position for time line.
+	 * 
+	 * @param font
+	 *            the font
+	 * @param signal
+	 *            the signal
+	 * @param space
+	 *            the space
+	 * @return the int
+	 */
+	private int calculateTopPositionForTimeLine(Font font, Signal signal,
+			int space) {
+		int totalHeight = calculateTotalHightForTimeLine(font, space);
+		int index = signalList.indexOf(signal);
+		int length = signalList.size();
+		return ((totalHeight * index) / length) + space / 2;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate top position for time line.
+	 * 
+	 * @param font
+	 *            the font
+	 * @param signal
+	 *            the signal
+	 * @param space
+	 *            the space
+	 * @return the int
+	 */
+	private int calculateTopPositionForTimeLine(Font font, int space) {
+		int totalHeight = calculateTotalHightForTimeLine(font, space);
+		return totalHeight;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate left position for time line.
+	 * 
+	 * @param font
+	 *            the font
+	 * @param signal
+	 *            the signal
+	 * @param tickXPos
+	 *            the tick x pos
+	 * @return the int
+	 */
+	private int calculateLeftPositionForTimeLine(Font font, Signal signal,
+			int tickXPos) {
+		Dimension currentDimension = TextUtilities.INSTANCE.getTextExtents(
+				SIGNALLABELSAFETYMARGINSPACE + signal.getName()
+						+ SIGNALLABELSAFETYMARGINSPACE, font);
+		return tickXPos - (currentDimension.width / 2);
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate width of a label.
+	 * 
+	 * @param font
+	 *            the font
+	 * @param text
+	 *            the text
+	 * @return the int
+	 */
+	private int calculateLabelWidth(Font font, String text) {
+		Dimension currentDimension = TextUtilities.INSTANCE.getTextExtents(
+				text, font);
+		return currentDimension.width;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Calculate total hight for time line signal names to be displayed on top
+	 * of each other.
+	 * 
+	 * @param font
+	 *            the font
+	 * @param space
+	 *            the space
+	 * @return the int
+	 */
+	private int calculateTotalHightForTimeLine(Font font, int space) {
+		int totalHeight = 0;
+		for (Signal signal : signalList) {
+			Dimension currentDimension = TextUtilities.INSTANCE.getTextExtents(
+					SIGNALLABELSAFETYMARGINSPACE + signal.getName()
+							+ SIGNALLABELSAFETYMARGINSPACE, font);
+			totalHeight += currentDimension.height;
+		}
+		return totalHeight;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Draw all signal present data.
+	 * 
+	 * @param contents
+	 *            the contents
+	 */
+	private void drawTimeLine(IFigure contents, Colors colors, int zoomLevel) {
+		Font fontDefault = new Font(Display.getCurrent(), "Arial",
+				(zoomedYOffset / 4), SWT.NORMAL);
+		Font fontMarker = new Font(Display.getCurrent(), "Arial",
+				(zoomedYOffset / 4), SWT.BOLD);
+
+		// update signal name width again
+		signalNameSize = getMaximumTextWidth(fontDefault);
+		// re-calculate zoomed values
+		zoom(zoomLevel);
+		
+		// calculate the top position of the time line
+		int y = zoomedYOffset
+				+ calculateTopPositionForTimeLine(fontDefault, zoomedYSpace);
+
+		long maxTick = signalList.getMaxTick();
+		long minTick = Math.max(1, signalList.getMinTick());
+		long currentTick = signalList.getCurrentTick();
+		RGB timeLineColor = colors.getSignalColor1();
+		RGB tickColor = colors.getSignalColor2();
+
+		outerScrolledComposite.setMinSize((int) (maxTick + 1 - minTick)
+				* zoomedXSpaceTimeLine + zoomedXOffset, y
+				+ zoomedYSpace);
+
+		Node lastNode = null;
+		Font font = null;
+		RGB color = null;
+
+		for (long tick = minTick; tick <= maxTick; tick++) {
+
+			// if this is the current tick then mark the node in the
+			// signalColorMarker color
+			if (tick == currentTick) {
+				font = fontMarker;
+				color = colors.getSignalColorMarker();
+			} else {
+				font = fontDefault;
+				color = colors.getSignalColor2();
+			}
+			
+			int tickXPos = ((int) (tick - minTick) * zoomedXSpaceTimeLine + zoomedXOffset/2
+					+ (zoomedXSpaceTimeLine / 2));
+			// Draw all Signals
+			for (Signal signal : signalList) {
+
+				
+				RGB signalColor = colors.getSignalSpareColor();
+				if (signal.isPresent(tick)) {
+					signalColor = colors.getSignalColor(signal.getName(), tick, color);
+				}
+
+				int xSignal = calculateLeftPositionForTimeLine(font, signal,
+						tickXPos);
+				int ySignal = calculateTopPositionForTimeLine(font, signal,
+						zoomedYSpace);
+
+				Label labelFigure = new Label();
+				String labelText = SIGNALLABELSAFETYMARGINSPACE
+						+ signal.getName() + SIGNALLABELSAFETYMARGINSPACE;
+				int labelWidth = calculateLabelWidth(font, labelText);
+				labelFigure.setText(labelText);
+				labelFigure.setVisible(true);
+				labelFigure.setFont(font);
+				labelFigure.setSize(labelWidth, signalNameSize.height);
+				labelFigure.setForegroundColor(new Color(Display.getCurrent(),
+						signalColor));
+				labelFigure.setLocation(new Point(xSignal, ySignal));
+				contents.add(labelFigure);
+			}
+
+			int presentOffset = 0;
+
+			Node nodeS = new Node();
+			nodeS.x = ((int) (tick - minTick) * zoomedXSpaceTimeLine + 2 + zoomedXOffset/2);
+			nodeS.y = y + presentOffset + zoomedYOffset / 11;
+			nodeS.data = null;
+			Node nodeE = new Node();
+			nodeE.x = ((int) (tick - minTick) * zoomedXSpaceTimeLine
+					+ zoomedXSpaceTimeLine + 2 + zoomedXOffset/2);
+			nodeE.y = y + presentOffset + zoomedYOffset / 11;
+			nodeE.data = null;
+
+			Node node = new Node();
+			node.x = tickXPos;
+			node.y = y + presentOffset;
+			node.data = null;
+
+			drawNode(contents, nodeS, timeLineColor, 0, tick, null);
+			drawNode(contents, nodeE, timeLineColor, 0, tick, null);
+
+			if (lastNode == null) {
+				lastNode = nodeE;
+			}
+			drawEdge(contents, lastNode, nodeS, timeLineColor);
+			drawEdge(contents, nodeS, nodeE, timeLineColor);
+			lastNode = nodeE;
+
+			Label labelFigure = new Label();
+			String labelText = SIGNALLABELSAFETYMARGINSPACE + tick
+					+ SIGNALLABELSAFETYMARGINSPACE;
+			int labelWidth = calculateLabelWidth(font, labelText);
+			labelFigure.setText(labelText);
+			labelFigure.setVisible(true);
+			labelFigure.setFont(font);
+			labelFigure.setSize(labelWidth, signalNameSize.height);
+			labelFigure.setForegroundColor(new Color(Display.getCurrent(),
+					tickColor));
+			labelFigure.setLocation(new Point(tickXPos - (labelWidth / 2),
+					zoomedYSpace / 2 + y));
+			contents.add(labelFigure);
+
+			// if this is the current tick then mark the node in the
+			// signalColorMarker color
+			if (tick != currentTick) {
+				drawNode(contents, node, timeLineColor, zoomedYOffset / 8,
+						tick, null);
+			} else {
+				node.y = node.y - zoomedYOffset / 14;
+				node.x = node.x - zoomedYOffset / 20;
+				drawNode(contents, node, colors.getSignalColorMarker(),
+						zoomedYOffset / 5, tick, null);
+				labelFigure.setForegroundColor(new Color(Display.getCurrent(),
+						colors.getSignalColorMarker()));
+			}
+
+		}
 
 	}
 
@@ -251,12 +510,11 @@ public class SignalsPlotter {
 
 		for (Signal signal : signalList) {
 			Node lastNode = null;
-			
+
 			// set a specific color if a color is set for this signal
 			if (colors.getSignalColor().containsKey(signal.getName())) {
 				signalColor = colors.getSignalColor().get(signal.getName());
 			}
-
 
 			for (long tick = minTick; tick <= maxTick; tick++) {
 				int presentOffset = 0;
@@ -292,14 +550,17 @@ public class SignalsPlotter {
 				if (lastNode == null) {
 					lastNode = nodeE;
 				}
-				drawEdge(contents, lastNode, nodeS, signalColor);
-				drawEdge(contents, nodeS, nodeE, signalColor);
+				// get possibly adapted signal color
+				RGB drawColor = colors.getSignalColor(signal.getName(), tick, signalColor);
+
+				drawEdge(contents, lastNode, nodeS, drawColor);
+				drawEdge(contents, nodeS, nodeE, drawColor);
 				lastNode = nodeE;
 
 				// if this is the current tick then mark the node in the
 				// signalColorMarker color
 				if (tick != currentTick) {
-					drawNode(contents, node, signalColor, zoomedYOffset / 8,
+					drawNode(contents, node, drawColor, zoomedYOffset / 8,
 							tick, signal.getName());
 				} else {
 					node.y = node.y - zoomedYOffset / 14;
@@ -429,12 +690,16 @@ public class SignalsPlotter {
 
 	/**
 	 * Draw the signal names. Ensure safety margin space left and right.
-	 *
-	 * @param contents the contents
-	 * @param xPos the xPos
-	 * @param align the align
+	 * 
+	 * @param contents
+	 *            the contents
+	 * @param xPos
+	 *            the xPos
+	 * @param align
+	 *            the align
 	 */
-	private void drawSignalNames(IFigure contents, int xPos, int align, Colors colors) {
+	private void drawSignalNames(IFigure contents, int xPos, int align,
+			Colors colors) {
 
 		outerScrolledComposite.setMinSize(outerScrolledComposite.getMinWidth(),
 				signalList.size() * zoomedYSpace + (zoomedYOffset / 2));
@@ -451,7 +716,7 @@ public class SignalsPlotter {
 			if (colors.getSignalColor().containsKey(signal.getName())) {
 				signalColor = colors.getSignalColor().get(signal.getName());
 			}
-			
+
 			Label labelFigure = new Label();
 			labelFigure.setText(SIGNALLABELSAFETYMARGINSPACE + signal.getName()
 					+ SIGNALLABELSAFETYMARGINSPACE);
@@ -461,7 +726,7 @@ public class SignalsPlotter {
 			labelFigure.setSize(signalNameSize.width, signalNameSize.height);
 			labelFigure.setForegroundColor(new Color(Display.getCurrent(),
 					signalColor));
-			labelFigure.setLocation(new Point(xPos - zoomedXOffset, y));
+			labelFigure.setLocation(new Point(xPos - 0, y));
 			contents.add(labelFigure);
 			y += zoomedYSpace;
 			// toggle color (iff default colors, otherwise starte with color1)

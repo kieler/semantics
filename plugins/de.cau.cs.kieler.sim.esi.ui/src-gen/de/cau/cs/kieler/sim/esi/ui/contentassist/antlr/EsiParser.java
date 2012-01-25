@@ -75,7 +75,7 @@ public class EsiParser extends AbstractContentAssistParser {
 	
 	@Override
 	protected String[] getInitialHiddenTokens() {
-		return new String[] { "RULE_WS" };
+		return new String[] { "RULE_WS", "RULE_COMMENT" };
 	}
 	
 	public EsiGrammarAccess getGrammarAccess() {

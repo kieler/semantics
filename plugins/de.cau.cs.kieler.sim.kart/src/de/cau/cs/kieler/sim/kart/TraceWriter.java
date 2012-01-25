@@ -93,8 +93,10 @@ public class TraceWriter {
     }
     
     /**
-     * @param hashMap
-     * @return
+     * Generate a string representing all variables in a map in ESO format.
+     * 
+     * @param hashMap the map linking variable names to variable values
+     * @return a string representing all variables and their values in the map in ESO format
      */
     private String getSpecialString(HashMap<String, Object> signals) {
         String retval = "";
