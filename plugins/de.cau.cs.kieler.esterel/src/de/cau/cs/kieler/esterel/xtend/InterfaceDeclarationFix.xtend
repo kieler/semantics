@@ -6,7 +6,7 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.Program
 
-import static extension org.eclipse.xtend2.lib.EObjectExtensions.*
+import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
 
 // Transformation of Esterel code into Esterel code that fixes inconsistencies
 // of signal declarations due to additional channel desciptions.
