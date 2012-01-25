@@ -1,4 +1,4 @@
-package de.cau.cs.kieler.kies.example;
+package de.cau.cs.kieler.esterel.example;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
@@ -9,7 +9,7 @@ import org.osgi.framework.BundleContext;
 public class EsterelExamplesPlugin extends AbstractUIPlugin {
 
 	// The plug-in ID
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.kies.example"; //$NON-NLS-1$
+	public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.example"; //$NON-NLS-1$
 
 	// The shared instance
 	private static EsterelExamplesPlugin plugin;
