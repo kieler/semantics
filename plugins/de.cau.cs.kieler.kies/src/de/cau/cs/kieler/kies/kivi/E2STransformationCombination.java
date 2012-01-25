@@ -72,11 +72,10 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 public class E2STransformationCombination extends AbstractCombination {
 
     // contributed button ids
-    private static final String BUTTON_STEP = "de.cau.cs.kieler.kies.transformation.step";
-    private static final String BUTTON_STEP_BACK = "de.cau.cs.kieler.kies.transformation.stepBack";
-    private static final String BUTTON_EXPAND = "de.cau.cs.kieler.kies.transformation.expand";
-    private static final String BUTTON_EXPAND_OPTIMIZE = "de.cau.cs.kieler.kies.transformation."
-            + "expandAndOptimize";
+    private static final String BUTTON_STEP = "de.cau.cs.kieler.kies.step";
+    private static final String BUTTON_STEP_BACK = "de.cau.cs.kieler.kies.stepBack";
+    private static final String BUTTON_EXPAND = "de.cau.cs.kieler.kies.expand";
+    private static final String BUTTON_EXPAND_OPTIMIZE = "de.cau.cs.kieler.kies.expandAndOptimize";
 
     // editor ids
     private static final String SYNCCHARTS_EDITOR_ID = "de.cau.cs.kieler.synccharts.diagram.part."

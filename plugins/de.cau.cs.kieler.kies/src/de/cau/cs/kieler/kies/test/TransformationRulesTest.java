@@ -261,9 +261,9 @@ public class TransformationRulesTest {
             throws Exception {
         // create links to the testfiles in the test project folder
         IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies.transformation/tests/transformation/" + strlName);
+                + "de.cau.cs.kieler.kies/tests/transformation/" + strlName);
         IPath pathExp = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies.transformation/tests/transformation/"
+                + "de.cau.cs.kieler.kies/tests/transformation/"
                 + strlName.substring(0, strlName.lastIndexOf('.')) + expectedSuffix + ".kixs");
         IFile strl = project.getFile(path.lastSegment());
         IFile kixsExp = project.getFile(pathExp.lastSegment());
@@ -301,9 +301,9 @@ public class TransformationRulesTest {
             throws Exception {
         // create links to the testfiles in the test project folder
         IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies.transformation/tests/optimization/" + kixsName);
+                + "de.cau.cs.kieler.kies/tests/optimization/" + kixsName);
         IPath pathExp = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies.transformation/tests/optimization/"
+                + "de.cau.cs.kieler.kies/tests/optimization/"
                 + kixsName.substring(0, kixsName.lastIndexOf('.')) + expectedSuffix + ".kixs");
         IFile kixsOrig = project.getFile(path.lastSegment());
         IFile kixsExp = project.getFile(pathExp.lastSegment());

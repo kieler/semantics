@@ -4,16 +4,16 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.kies.transformation.EsterelToSyncChartDataComponent"
-            id="de.cau.cs.kieler.kies.transformation.Transformation"
+            class="de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent"
+            id="de.cau.cs.kieler.kies.Transformation"
             name="Esterel to SyncCharts Transformation">
       </content>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
-            class="de.cau.cs.kieler.kies.transformation.SyncChartsOptimizationDataComponent"
-            id="de.cau.cs.kieler.kies.transformation.Optimization"
+            class="de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent"
+            id="de.cau.cs.kieler.kies.Optimization"
             name="SyncCharts Optimization">
       </content>
    </extension>
@@ -31,25 +31,25 @@
    <extension
          point="org.eclipse.ui.popupMenus">
       <objectContribution
-            id="de.cau.cs.kieler.kies.transformation.est"
+            id="de.cau.cs.kieler.kies.est"
             nameFilter="*.strl"
             objectClass="org.eclipse.core.resources.IFile">
          <action
-               class="de.cau.cs.kieler.kies.transformation.action.InitialTransformationAction"
+               class="de.cau.cs.kieler.kies.action.InitialTransformationAction"
                enablesFor="1!"
-               id="de.cau.cs.kieler.kies.transformation.initialTransformationHandler"
+               id="de.cau.cs.kieler.kies.initialTransformationHandler"
                label="Transform to SyncChart"
                menubarPath="de.cau.cs.kieler">
          </action>
       </objectContribution>
       <!--objectContribution
             adaptable="false"
-            id="de.cau.cs.kieler.kies.transformation.compare"
+            id="de.cau.cs.kieler.kies.compare"
             nameFilter="*.kixs"
             objectClass="org.eclipse.core.resources.IFile">
          <action
-               class="de.cau.cs.kieler.kies.transformation.test.CompareTwoKIXS"
-               id="de.cau.cs.kieler.kies.transformation.compare"
+               class="de.cau.cs.kieler.kies.test.CompareTwoKIXS"
+               id="de.cau.cs.kieler.kies.compare"
                label="Compare"
                menubarPath="de.cau.cs.kieler">
          </action>
@@ -59,8 +59,8 @@
          point="org.eclipse.ui.commands">
       <command
             categoryId="de.cau.cs.kieler"
-            defaultHandler="de.cau.cs.kieler.kies.transformation.RefreshGMFPoliciesHandler"
-            id="de.cau.cs.kieler.kies.transformation.command1"
+            defaultHandler="de.cau.cs.kieler.kies.RefreshGMFPoliciesHandler"
+            id="de.cau.cs.kieler.kies.command1"
             name="Refresh Edit Policies">
       </command>
    </extension-->
@@ -69,7 +69,7 @@
       <menuContribution
             locationURI="popup:de.cau.cs.kieler">
          <command
-               commandId="de.cau.cs.kieler.kies.transformation.command1"
+               commandId="de.cau.cs.kieler.kies.command1"
                label="Refresh GMF Edit Policies"
                style="push">
             <visibleWhen
