@@ -12,7 +12,6 @@ import java.util.List;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
@@ -22,9 +21,8 @@ public class InterfaceDeclarationFix {
   public Program fix(final Program program) {
     Program _xblockexpression = null;
     {
-      Resource _eResource = program.eResource();
-      TreeIterator<EObject> _allContents = _eResource.getAllContents();
-      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_allContents);
+      TreeIterator<EObject> _eAllContents = program.eAllContents();
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_eAllContents);
       Iterable<InterfaceSignalDecl> _filter = IterableExtensions.<InterfaceSignalDecl>filter(_iterable, de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl.class);
       List<InterfaceSignalDecl> _list = IterableExtensions.<InterfaceSignalDecl>toList(_filter);
       List<InterfaceSignalDecl> interfaceSignalDeclList = _list;

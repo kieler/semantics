@@ -22,7 +22,7 @@ class InterfaceDeclarationFix {
 //			target.modules.add(CloningExtensions::clone(module) as Module);	
 //		}   		
    		
-		var interfaceSignalDeclList = program.eResource.allContents.toIterable().filter(typeof(InterfaceSignalDecl)).toList;
+		var interfaceSignalDeclList = program.eAllContents().toIterable().filter(typeof(InterfaceSignalDecl)).toList;
 //WAS	var interfaceSignalDeclList = program.allContentsIterable.filter(typeof(InterfaceSignalDecl)).toList;
 		
 		for (Object object : interfaceSignalDeclList) {
