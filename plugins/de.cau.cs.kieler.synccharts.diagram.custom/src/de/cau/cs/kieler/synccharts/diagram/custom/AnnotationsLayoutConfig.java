@@ -59,6 +59,10 @@ public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
             LayoutDataService dataService = LayoutDataService.getInstance();
             List<LayoutOptionData<?>> data = new LinkedList<LayoutOptionData<?>>();
             for (Annotation annotation : ((Annotatable) semanticElem).getAnnotations()) {
+                // bugfix by alb
+                if (annotation.getName() == null) {
+                    continue;
+                }
                 LayoutOptionData<?> option = dataService.getOptionDataBySuffix(annotation.getName());
                 if (option != null) {
                     data.add(option);
