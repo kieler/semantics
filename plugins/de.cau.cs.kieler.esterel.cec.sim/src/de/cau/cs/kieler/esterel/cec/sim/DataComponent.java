@@ -34,10 +34,13 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
@@ -59,6 +62,7 @@ import de.cau.cs.kieler.core.kexpressions.Input;
 import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.esterel.cec.CEC;
@@ -155,7 +159,27 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	private LinkedList<String> outputSignalList = null;
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
+     */
+    @Override
+    public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
+        if (!(rootEObject instanceof Program)) {
+    		throw new KiemInitializationException(
+                    "CEC Esterel Simulator can only be used with an Esterel editor.\n\n"
+                            ,
+                    true, null);
+        }
+        
+        return true;
+    }    
+
+    // -------------------------------------------------------------------------
 
 	/**
 	 * {@inheritDoc}
@@ -462,7 +486,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		File executable = null;
 		String compile = "";
-		int blablabla = 0 ;
 		
 		try {
 			// get active editor
@@ -591,7 +614,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 		} catch (Exception e) {
 			throw new KiemInitializationException(
-					"Error "+blablabla+"compiling Esterel file:\n\n " + e.getMessage() + "\n\n" + compile,
+					"Error compiling Esterel file:\n\n " + e.getMessage() + "\n\n" + compile,
 					true, e);
 		}
 	}

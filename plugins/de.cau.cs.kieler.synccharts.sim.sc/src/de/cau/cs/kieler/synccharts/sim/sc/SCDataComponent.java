@@ -29,7 +29,9 @@ import java.util.Random;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.Diagnostician;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,7 +55,7 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
  * 
  * @kieler.rating 2010-06-14 proposed yellow
  * 
- * @author tam
+ * @author tam, cmot
  * 
  */
 public class SCDataComponent extends AbstractAutomatedProducer {
@@ -75,6 +77,43 @@ public class SCDataComponent extends AbstractAutomatedProducer {
     // - because the model has not changed for the validation - otherwise true
     private boolean newValidation;
     private String fileLocation;
+    
+    // -------------------------------------------------------------------------
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
+     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
+     */
+    @Override
+    public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
+        // Enable SC checks in possibly open GMF SyncCharts editor
+        ValidationManager
+                .enableCheck("de.cau.cs.kieler.synccharts.ScChecks");
+        ValidationManager.validateActiveEditor();
+        
+        if (!(rootEObject instanceof Region)) {
+    		throw new KiemInitializationException(
+                    "SyncCharts SC Simulator can only be used with a SyncCharts editor.\n\n"
+                            ,
+                    true, null);
+        }
+
+        // We don't want a dependency to synccharts diagram (custom) for
+        // validation
+        // because we might want to simulate head less!!!
+        // Check if the model conforms to all check files and no warnings left!
+        Diagnostician diagnostician = Diagnostician.INSTANCE;
+        Region syncChart = (de.cau.cs.kieler.synccharts.Region) rootEObject;
+        Diagnostic diagnostic = diagnostician.validate(syncChart);
+        int serenity = diagnostic.getSeverity();
+        boolean ok = (serenity == Diagnostic.OK);
+
+        return ok;
+    }    
+
+    // -------------------------------------------------------------------------
 
     /**
      * 
@@ -85,10 +124,6 @@ public class SCDataComponent extends AbstractAutomatedProducer {
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-        // Enable SC checks in possibly open GMF SyncCharts editor
-        ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.ScChecks");
-        ValidationManager.validateActiveEditor();
-
         // building path to bundle
         Bundle bundle = Platform.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
 
