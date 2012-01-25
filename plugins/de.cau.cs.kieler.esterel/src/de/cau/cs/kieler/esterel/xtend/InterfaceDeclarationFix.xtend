@@ -6,7 +6,8 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
 import de.cau.cs.kieler.esterel.esterel.ConstantExpression
 import de.cau.cs.kieler.esterel.esterel.Program
 
-import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
+import static extension org.eclipse.xtext.xbase.lib.IteratorExtensions.*
+//WAS import static extension org.eclipse.xtext.xtend2.lib.EObjectExtensions.*
 
 // Transformation of Esterel code into Esterel code that fixes inconsistencies
 // of signal declarations due to additional channel desciptions.
@@ -21,9 +22,11 @@ class InterfaceDeclarationFix {
 //			target.modules.add(CloningExtensions::clone(module) as Module);	
 //		}   		
    		
-		var interfaceSignalDeclList = program.allContentsIterable.filter(typeof(InterfaceSignalDecl)).toList;
+		var interfaceSignalDeclList = program.eResource.allContents.toIterable().filter(typeof(InterfaceSignalDecl)).toList;
+//WAS	var interfaceSignalDeclList = program.allContentsIterable.filter(typeof(InterfaceSignalDecl)).toList;
 		
-		for (InterfaceSignalDecl interfaceSignalDecl : interfaceSignalDeclList) {
+		for (Object object : interfaceSignalDeclList) {
+			var InterfaceSignalDecl interfaceSignalDecl = object as InterfaceSignalDecl;
 			var signalList = interfaceSignalDecl.signals;
 			
 			for (ISignal signal : signalList) {

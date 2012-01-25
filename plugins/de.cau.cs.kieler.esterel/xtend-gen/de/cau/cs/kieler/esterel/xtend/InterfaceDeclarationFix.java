@@ -10,22 +10,27 @@ import de.cau.cs.kieler.esterel.esterel.ConstantExpression;
 import de.cau.cs.kieler.esterel.esterel.Program;
 import java.util.List;
 import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
-import org.eclipse.xtext.xtend2.lib.EObjectExtensions;
 
 @SuppressWarnings("all")
 public class InterfaceDeclarationFix {
   public Program fix(final Program program) {
     Program _xblockexpression = null;
     {
-      Iterable<EObject> _allContentsIterable = EObjectExtensions.allContentsIterable(program);
-      Iterable<InterfaceSignalDecl> _filter = IterableExtensions.<InterfaceSignalDecl>filter(_allContentsIterable, de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl.class);
+      Resource _eResource = program.eResource();
+      TreeIterator<EObject> _allContents = _eResource.getAllContents();
+      Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_allContents);
+      Iterable<InterfaceSignalDecl> _filter = IterableExtensions.<InterfaceSignalDecl>filter(_iterable, de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl.class);
       List<InterfaceSignalDecl> _list = IterableExtensions.<InterfaceSignalDecl>toList(_filter);
       List<InterfaceSignalDecl> interfaceSignalDeclList = _list;
-      for (final InterfaceSignalDecl interfaceSignalDecl : interfaceSignalDeclList) {
+      for (final Object object : interfaceSignalDeclList) {
         {
+          InterfaceSignalDecl interfaceSignalDecl = ((InterfaceSignalDecl) object);
           EList<ISignal> _signals = interfaceSignalDecl.getSignals();
           EList<ISignal> signalList = _signals;
           for (final ISignal signal : signalList) {
