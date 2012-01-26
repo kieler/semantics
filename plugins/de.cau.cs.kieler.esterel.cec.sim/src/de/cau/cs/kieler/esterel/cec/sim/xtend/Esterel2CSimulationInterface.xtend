@@ -108,30 +108,30 @@ int main(){«name»_reset();
 
    // Define output functions to return JSON for each Esterel signal 
    def dispatch outputFunctions(Output it, String moduleName) {
-   	  var gen = '''''';
-   	  gen = gen.toString.concat("\n");
+   	  var gen = "";
+   	  gen = gen + "\n";
    	  for (signal : signals)  {
-   	  	gen = gen.toString.concat('''«moduleName»_O_«signal.name»('''.toString());
+   	  	gen = gen + '''«moduleName»_O_«signal.name»('''.toString();
    	  	if (signal.type.literal == "int" || signal.type.literal == "bool") {
-   	  		gen = gen.toString.concat("int i");
+   	  		gen = gen + "int i";
    	  	}
-   	  	gen = gen.toString.concat('''){  	
+   	  	gen = gen + '''){  	
    	  		value = cJSON_CreateObject();
-			cJSON_AddTrueToObject(value, "present");'''.toString())
+			cJSON_AddTrueToObject(value, "present");'''.toString();
    	  	if (signal.type.literal == "int") {
-   	  		gen = gen.toString.concat(''' cJSON_AddNumberToObject(value, "value", i);'''.toString())
+   	  		gen = gen + ''' cJSON_AddNumberToObject(value, "value", i);'''.toString();
    	  	} 
    	  	else if (signal.type.literal == "bool") {
-			gen = gen.toString.concat(''' if (i == 0) {
+			gen = gen + ''' if (i == 0) {
 				cJSON_AddFalseToObject(value, "value"); }
 				else {
 					cJSON_AddTrueToObject(value, "value");
 				} 
-			'''.toString())
+			'''.toString();
    	  	}
-   	  	gen = gen.toString.concat('''cJSON_AddItemToObject(output, "«signal.name»", value);}'''.toString());
+   	  	gen = gen + '''cJSON_AddItemToObject(output, "«signal.name»", value);}'''.toString();
    	  } // next signal
-   	  gen.toString;
+   	  gen;
    }
    
 //   // Define output functions to return JSON for each Esterel signal 
@@ -160,9 +160,9 @@ int main(){«name»_reset();
    
    // Call Esterel input functions for each JSON signal that is present
    def dispatch callInputs(Input it, String moduleName) {
-    var gen = '''''';
+    var gen = "";
    	for (signal : signals)  {
-   	   	gen = gen.toString.concat('''
+   	   	gen = gen + '''
    	child = cJSON_GetObjectItem(object, "«signal.name»");
 	if (child != NULL){
 		present = cJSON_GetObjectItem(child, "present");
@@ -170,9 +170,9 @@ int main(){«name»_reset();
 		if (present != NULL && present->type==cJSON_True) {
 			«moduleName»_I_«signal.name»();
 		}
-	}'''.toString());
+	}'''.toString();
    	} // next signal
- 	   	gen.toString();
+ 	   	gen;
    }
    
    // -------------------------------------------------------------------------   

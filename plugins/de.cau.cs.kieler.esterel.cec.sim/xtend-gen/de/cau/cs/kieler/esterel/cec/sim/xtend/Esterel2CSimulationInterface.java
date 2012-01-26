@@ -12,6 +12,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.xbase.lib.BooleanExtensions;
 import org.eclipse.xtext.xbase.lib.ObjectExtensions;
+import org.eclipse.xtext.xbase.lib.StringExtensions;
 
 @SuppressWarnings("all")
 public class Esterel2CSimulationInterface {
@@ -182,24 +183,21 @@ public class Esterel2CSimulationInterface {
   protected String _outputFunctions(final Output it, final String moduleName) {
     String _xblockexpression = null;
     {
-      StringConcatenation _builder = new StringConcatenation();
-      CharSequence gen = _builder;
-      String _string = gen.toString();
-      String _concat = _string.concat("\n");
-      gen = _concat;
+      String gen = "";
+      String _operator_plus = StringExtensions.operator_plus(gen, "\n");
+      gen = _operator_plus;
       EList<ISignal> _signals = it.getSignals();
       for (final ISignal signal : _signals) {
         {
-          String _string_1 = gen.toString();
-          StringConcatenation _builder_1 = new StringConcatenation();
-          _builder_1.append(moduleName, "");
-          _builder_1.append("_O_");
+          StringConcatenation _builder = new StringConcatenation();
+          _builder.append(moduleName, "");
+          _builder.append("_O_");
           String _name = signal.getName();
-          _builder_1.append(_name, "");
-          _builder_1.append("(");
-          String _string_2 = _builder_1.toString();
-          String _concat_1 = _string_1.concat(_string_2);
-          gen = _concat_1;
+          _builder.append(_name, "");
+          _builder.append("(");
+          String _string = _builder.toString();
+          String _operator_plus_1 = StringExtensions.operator_plus(gen, _string);
+          gen = _operator_plus_1;
           boolean _operator_or = false;
           ValueType _type = signal.getType();
           String _literal = _type.getLiteral();
@@ -213,73 +211,67 @@ public class Esterel2CSimulationInterface {
             _operator_or = BooleanExtensions.operator_or(_operator_equals, _operator_equals_1);
           }
           if (_operator_or) {
-            String _string_3 = gen.toString();
-            String _concat_2 = _string_3.concat("int i");
-            gen = _concat_2;
+            String _operator_plus_2 = StringExtensions.operator_plus(gen, "int i");
+            gen = _operator_plus_2;
           }
-          String _string_4 = gen.toString();
-          StringConcatenation _builder_2 = new StringConcatenation();
-          _builder_2.append("){  \t");
-          _builder_2.newLine();
-          _builder_2.append("   \t  \t\t");
-          _builder_2.append("value = cJSON_CreateObject();");
-          _builder_2.newLine();
-          _builder_2.append("\t\t\t");
-          _builder_2.append("cJSON_AddTrueToObject(value, \"present\");");
-          String _string_5 = _builder_2.toString();
-          String _concat_3 = _string_4.concat(_string_5);
-          gen = _concat_3;
+          StringConcatenation _builder_1 = new StringConcatenation();
+          _builder_1.append("){  \t");
+          _builder_1.newLine();
+          _builder_1.append("   \t  \t\t");
+          _builder_1.append("value = cJSON_CreateObject();");
+          _builder_1.newLine();
+          _builder_1.append("\t\t\t");
+          _builder_1.append("cJSON_AddTrueToObject(value, \"present\");");
+          String _string_1 = _builder_1.toString();
+          String _operator_plus_3 = StringExtensions.operator_plus(gen, _string_1);
+          gen = _operator_plus_3;
           ValueType _type_2 = signal.getType();
           String _literal_2 = _type_2.getLiteral();
           boolean _operator_equals_2 = ObjectExtensions.operator_equals(_literal_2, "int");
           if (_operator_equals_2) {
-            String _string_6 = gen.toString();
-            StringConcatenation _builder_3 = new StringConcatenation();
-            _builder_3.append(" ");
-            _builder_3.append("cJSON_AddNumberToObject(value, \"value\", i);");
-            String _string_7 = _builder_3.toString();
-            String _concat_4 = _string_6.concat(_string_7);
-            gen = _concat_4;
+            StringConcatenation _builder_2 = new StringConcatenation();
+            _builder_2.append(" ");
+            _builder_2.append("cJSON_AddNumberToObject(value, \"value\", i);");
+            String _string_2 = _builder_2.toString();
+            String _operator_plus_4 = StringExtensions.operator_plus(gen, _string_2);
+            gen = _operator_plus_4;
           } else {
             ValueType _type_3 = signal.getType();
             String _literal_3 = _type_3.getLiteral();
             boolean _operator_equals_3 = ObjectExtensions.operator_equals(_literal_3, "bool");
             if (_operator_equals_3) {
-              String _string_8 = gen.toString();
-              StringConcatenation _builder_4 = new StringConcatenation();
-              _builder_4.append(" ");
-              _builder_4.append("if (i == 0) {");
-              _builder_4.newLine();
-              _builder_4.append("\t\t\t\t");
-              _builder_4.append("cJSON_AddFalseToObject(value, \"value\"); }");
-              _builder_4.newLine();
-              _builder_4.append("\t\t\t\t");
-              _builder_4.append("else {");
-              _builder_4.newLine();
-              _builder_4.append("\t\t\t\t\t");
-              _builder_4.append("cJSON_AddTrueToObject(value, \"value\");");
-              _builder_4.newLine();
-              _builder_4.append("\t\t\t\t");
-              _builder_4.append("} ");
-              _builder_4.newLine();
-              String _string_9 = _builder_4.toString();
-              String _concat_5 = _string_8.concat(_string_9);
-              gen = _concat_5;
+              StringConcatenation _builder_3 = new StringConcatenation();
+              _builder_3.append(" ");
+              _builder_3.append("if (i == 0) {");
+              _builder_3.newLine();
+              _builder_3.append("\t\t\t\t");
+              _builder_3.append("cJSON_AddFalseToObject(value, \"value\"); }");
+              _builder_3.newLine();
+              _builder_3.append("\t\t\t\t");
+              _builder_3.append("else {");
+              _builder_3.newLine();
+              _builder_3.append("\t\t\t\t\t");
+              _builder_3.append("cJSON_AddTrueToObject(value, \"value\");");
+              _builder_3.newLine();
+              _builder_3.append("\t\t\t\t");
+              _builder_3.append("} ");
+              _builder_3.newLine();
+              String _string_3 = _builder_3.toString();
+              String _operator_plus_5 = StringExtensions.operator_plus(gen, _string_3);
+              gen = _operator_plus_5;
             }
           }
-          String _string_10 = gen.toString();
-          StringConcatenation _builder_5 = new StringConcatenation();
-          _builder_5.append("cJSON_AddItemToObject(output, \"");
+          StringConcatenation _builder_4 = new StringConcatenation();
+          _builder_4.append("cJSON_AddItemToObject(output, \"");
           String _name_1 = signal.getName();
-          _builder_5.append(_name_1, "");
-          _builder_5.append("\", value);}");
-          String _string_11 = _builder_5.toString();
-          String _concat_6 = _string_10.concat(_string_11);
-          gen = _concat_6;
+          _builder_4.append(_name_1, "");
+          _builder_4.append("\", value);}");
+          String _string_4 = _builder_4.toString();
+          String _operator_plus_6 = StringExtensions.operator_plus(gen, _string_4);
+          gen = _operator_plus_6;
         }
       }
-      String _string_12 = gen.toString();
-      _xblockexpression = (_string_12);
+      _xblockexpression = (gen);
     }
     return _xblockexpression;
   }
@@ -291,47 +283,44 @@ public class Esterel2CSimulationInterface {
   protected String _callInputs(final Input it, final String moduleName) {
     String _xblockexpression = null;
     {
-      StringConcatenation _builder = new StringConcatenation();
-      CharSequence gen = _builder;
+      String gen = "";
       EList<ISignal> _signals = it.getSignals();
       for (final ISignal signal : _signals) {
-        String _string = gen.toString();
-        StringConcatenation _builder_1 = new StringConcatenation();
-        _builder_1.append("child = cJSON_GetObjectItem(object, \"");
+        StringConcatenation _builder = new StringConcatenation();
+        _builder.append("child = cJSON_GetObjectItem(object, \"");
         String _name = signal.getName();
-        _builder_1.append(_name, "");
-        _builder_1.append("\");");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("\t");
-        _builder_1.append("if (child != NULL){");
-        _builder_1.newLine();
-        _builder_1.append("\t\t");
-        _builder_1.append("present = cJSON_GetObjectItem(child, \"present\");");
-        _builder_1.newLine();
-        _builder_1.append("\t\t");
-        _builder_1.append("value = cJSON_GetObjectItem(child, \"value\");");
-        _builder_1.newLine();
-        _builder_1.append("\t\t");
-        _builder_1.append("if (present != NULL && present->type==cJSON_True) {");
-        _builder_1.newLine();
-        _builder_1.append("\t\t\t");
-        _builder_1.append(moduleName, "			");
-        _builder_1.append("_I_");
+        _builder.append(_name, "");
+        _builder.append("\");");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t");
+        _builder.append("if (child != NULL){");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("present = cJSON_GetObjectItem(child, \"present\");");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("value = cJSON_GetObjectItem(child, \"value\");");
+        _builder.newLine();
+        _builder.append("\t\t");
+        _builder.append("if (present != NULL && present->type==cJSON_True) {");
+        _builder.newLine();
+        _builder.append("\t\t\t");
+        _builder.append(moduleName, "			");
+        _builder.append("_I_");
         String _name_1 = signal.getName();
-        _builder_1.append(_name_1, "			");
-        _builder_1.append("();");
-        _builder_1.newLineIfNotEmpty();
-        _builder_1.append("\t\t");
-        _builder_1.append("}");
-        _builder_1.newLine();
-        _builder_1.append("\t");
-        _builder_1.append("}");
-        String _string_1 = _builder_1.toString();
-        String _concat = _string.concat(_string_1);
-        gen = _concat;
+        _builder.append(_name_1, "			");
+        _builder.append("();");
+        _builder.newLineIfNotEmpty();
+        _builder.append("\t\t");
+        _builder.append("}");
+        _builder.newLine();
+        _builder.append("\t");
+        _builder.append("}");
+        String _string = _builder.toString();
+        String _operator_plus = StringExtensions.operator_plus(gen, _string);
+        gen = _operator_plus;
       }
-      String _string_2 = gen.toString();
-      _xblockexpression = (_string_2);
+      _xblockexpression = (gen);
     }
     return _xblockexpression;
   }
