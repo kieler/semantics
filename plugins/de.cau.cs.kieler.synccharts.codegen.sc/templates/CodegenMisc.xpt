@@ -48,7 +48,7 @@
 «ENDREM»
 «DEFINE callJSONTransition FOR Transition-»
 	«IF (boolean)(GLOBALVAR sim)-»
-		JSONstate("«getFragmentURI()»");
+		JSONtransition("«getFragmentURI()»");
 	«ENDIF-»
 «ENDDEFINE»
 
