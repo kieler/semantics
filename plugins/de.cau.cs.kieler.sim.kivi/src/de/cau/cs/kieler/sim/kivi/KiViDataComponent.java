@@ -35,7 +35,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 /**
  * A data component that observes the activity of syncchart states during simulation.
  * 
- * @author mmu
+ * @author mmu, cmot
  * 
  */
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements
@@ -45,6 +45,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     private static final String DEFAULT_STATE_KEY = "state";
 
+    private static final String DEFAULT_TRANSITION_KEY = "transition";
+
     private DiagramEditor diagramEditor;
 
     private Resource resource;
@@ -52,6 +54,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private int steps;
 
     private String stateKey;
+
+    private String transitionKey;
 
     private DataComponentWrapper wrapper;
 
@@ -70,8 +74,9 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return;
         }
         resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
-        steps = getProperties()[0].getValueAsInt();
-        stateKey = getProperties()[1].getValue();
+        stateKey = getProperties()[0].getValue();
+        transitionKey = getProperties()[1].getValue();
+        steps = getProperties()[2].getValueAsInt();
         for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
             if (w.getDataComponent() == this) {
                 wrapper = w;
@@ -122,9 +127,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("history steps", DEFAULT_STEPS);
-        properties[1] = new KiemProperty("state variable", DEFAULT_STATE_KEY);
+        KiemProperty[] properties = new KiemProperty[3];
+        properties[0] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
+        properties[1] = new KiemProperty("Transition Name", DEFAULT_TRANSITION_KEY);
+        properties[2] = new KiemProperty("History Steps", DEFAULT_STEPS);
         return properties;
     }
 
@@ -158,6 +164,23 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                                 }
                             }
                         }
+                    }
+                    if (currentJSONObject.has(transitionKey)) {
+                        String stateString = currentJSONObject.get(transitionKey).toString();
+                        String[] states = stateString.replaceAll("\\s", "").split(",");
+                        for (String state : states) {
+                            if (state.length() > 1) {
+                                EObject active = resource.getEObject(state);
+                                if (active != null) {
+                                    if (!contains(statesByStep, active)) { // filter out newer
+                                        currentStepObjects.add(active);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // redeclare/reset for the next step (save history)
+                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey)) {
                         statesByStep.add(currentStepObjects);
                         currentStepObjects = new ArrayList<EObject>();
                     }

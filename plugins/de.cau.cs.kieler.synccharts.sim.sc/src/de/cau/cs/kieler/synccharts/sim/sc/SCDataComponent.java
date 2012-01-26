@@ -148,7 +148,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             if (!validation || (validation && newValidation)) {
                 // compile
                 // -m32 = 32 bit compatibility mode. Otherwise compiler errors in 64bit archs
-                String compiler = (getProperties()[PROP_COMPILER]).getValue();
+                String compiler = (getProperties()[PROP_COMPILER+2]).getValue();
 
                 String compile = compiler
                         + " "
@@ -240,6 +240,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         JSONObject out = null;
         try {
             jSONObject.remove("state");
+            jSONObject.remove("transition");
             // boolToInt converts true and t to 1, false and f to 0
             String jSONString = boolToInt(jSONObject).toString();
             toSC.write(jSONString + "\n");
@@ -263,6 +264,12 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             e.printStackTrace();
             process.destroy();
         }
+        
+        // the stateName is the second KIEM property
+        String stateName = this.getProperties()[1].getValue();
+
+        // the transitionName is the third KIEM property
+        String transitionName = this.getProperties()[2].getValue();        
 
         try {
             if (out.has("state")) {
@@ -274,15 +281,34 @@ public class SCDataComponent extends AbstractAutomatedProducer {
                 }
                 allStates = allStates.substring(0, allStates.length() - 1);
                 out.remove("state");
-                out.put("state", allStates);
+                out.put(stateName, allStates);
             } else {
-                out.put("state", "");
+                out.put(stateName, "");
             }
         } catch (JSONException e) {
             System.err.println(e.getMessage());
             process.destroy();
         }
 
+        try {
+            if (out.has("transition")) {
+                JSONArray stateArray = out.getJSONArray("transition");
+                String allTransitions = "";
+
+                for (int i = 0; i < stateArray.length(); i++) {
+                	allTransitions += stateArray.opt(i) + ",";
+                }
+                allTransitions = allTransitions.substring(0, allTransitions.length() - 1);
+                out.remove("transition");
+                out.put(transitionName, allTransitions);
+            } else {
+                out.put(transitionName, "");
+            }
+        } catch (JSONException e) {
+            System.err.println(e.getMessage());
+            process.destroy();
+        }
+        
         return out;
     }
 
@@ -302,16 +328,20 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
     public KiemProperty[] doProvideProperties() {
 
-        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES];
+        KiemProperty[] properties = new KiemProperty[NUM_PROPERTIES+2];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile(true);
-        properties[PROP_COMPILER - 1] = new KiemProperty("Compiler", compilerFile, "gcc");
-        properties[PROP_PATH - 1] = new KiemProperty("File Location", "");
+
+        properties[0] = new KiemProperty("State Name", "state");
+        properties[1] = new KiemProperty("Transition Name", "transition");
+        
+        properties[PROP_COMPILER + 1] = new KiemProperty("Compiler", compilerFile, "gcc");
+        properties[PROP_PATH + 1] = new KiemProperty("File Location", "");
         // String[] items = { "complete hierarchie", "shortest hierarchie",
         // "unique incremental name" };
         // TODO: only complete hierarchie is supported yet
         String[] items = { "Complete Hierarchie" };
         KiemPropertyTypeChoice choice = new KiemPropertyTypeChoice(items);
-        properties[2] = new KiemProperty("Label Names for SC Code", choice, items[0]);
+        properties[4] = new KiemProperty("Label Names for SC Code", choice, items[0]);
 
         return properties;
     }
@@ -351,7 +381,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
 
         JSONObject returnObj = new JSONObject();
 
-        if ((getProperties()[PROP_PATH]).getValue().equals("")) {
+        if ((getProperties()[PROP_PATH+2]).getValue().equals("")) {
             String tempDir = System.getProperty("java.io.tmpdir");
             // for Windows (tmpdir ends with backslash)
             if (tempDir.endsWith("\\")) {
@@ -359,7 +389,7 @@ public class SCDataComponent extends AbstractAutomatedProducer {
             }
             outPath = tempDir + File.separator + randomString() + File.separator;
         } else {
-            outPath = (getProperties()[PROP_PATH]).getValue();
+            outPath = (getProperties()[PROP_PATH+2]).getValue();
             if (!outPath.endsWith(File.separator)) {
                 outPath += File.separator;
             }

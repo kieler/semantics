@@ -41,11 +41,19 @@
 	cJSON* output = 0;
 	cJSON* value = 0;
 	cJSON* stateArray = 0;
+	cJSON* transitionArray = 0;
 	
 	void JSONstate(char *state){
 		cJSON_AddItemToArray(stateArray, cJSON_CreateString(state));
 		if (cJSON_GetObjectItem(output, "state") == NULL){
 			cJSON_AddItemToObject(output, "state", stateArray);
+		}
+	}
+
+	void JSONtransition(char *state){
+		cJSON_AddItemToArray(transitionArray, cJSON_CreateString(state));
+		if (cJSON_GetObjectItem(output, "transition") == NULL){
+			cJSON_AddItemToObject(output, "transition", transitionArray);
 		}
 	}
 
@@ -108,6 +116,7 @@ void printOutputs(){
 int main(int argc, const char* argv[]){
 	«((String)(GLOBALVAR name))»_reset();
 	stateArray = cJSON_CreateArray();
+	transitionArray = cJSON_CreateArray();
 	output = cJSON_CreateObject();
 	RESET();
 	setInputs();
@@ -121,6 +130,7 @@ int main(int argc, const char* argv[]){
 		//reset();
 		output = cJSON_CreateObject();
 		stateArray = cJSON_CreateArray();
+		transitionArray = cJSON_CreateArray();
 		setInputs();
 		tick();
 	}
