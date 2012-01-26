@@ -29,7 +29,7 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
 /**
  * A trigger notifying the view management about the active states during simulation.
  * 
- * @author mmu
+ * @author mmu, cmot
  * 
  */
 public class StateActivityTrigger extends AbstractTrigger {
@@ -53,8 +53,8 @@ public class StateActivityTrigger extends AbstractTrigger {
      * @param editor
      *            the diagram editor
      */
-    public void step(final List<List<EObject>> aS, final DiagramEditor editor) {
-        trigger(new ActiveStates(aS, editor));
+    public void step(final List<List<EObject>> aS, final  List<List<EObject>> eS, final DiagramEditor editor) {
+        trigger(new ActiveStates(aS, eS, editor));
     }
 
     /**
@@ -64,12 +64,14 @@ public class StateActivityTrigger extends AbstractTrigger {
      * 
      * @param aS
      *            map of active states
+     * @param eS
+     *            map of error states
      * @param editor
      *            the diagram editor
      */
-    public void synchronizedStep(final List<List<EObject>> aS, final DiagramEditor editor) {
+    public void synchronizedStep(final List<List<EObject>> aS, final  List<List<EObject>> eS, final DiagramEditor editor) {
         try {
-            synchronizedTrigger(new ActiveStates(aS, editor));
+            synchronizedTrigger(new ActiveStates(aS, eS, editor));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -94,6 +96,8 @@ public class StateActivityTrigger extends AbstractTrigger {
     public static final class ActiveStates extends AbstractTriggerState {
 
         private List<List<EObject>> activeStates;
+        
+        private List<List<EObject>> errorStates;
 
         private DiagramEditor diagramEditor;
 
@@ -104,8 +108,9 @@ public class StateActivityTrigger extends AbstractTrigger {
 
         }
 
-        private ActiveStates(final List<List<EObject>> states, final DiagramEditor editor) {
-            activeStates = states;
+        private ActiveStates(final List<List<EObject>> activeStates, final List<List<EObject>> errorStates, final DiagramEditor editor) {
+            this.activeStates = activeStates;
+            this.errorStates = errorStates;
             diagramEditor = editor;
         }
 
@@ -116,6 +121,20 @@ public class StateActivityTrigger extends AbstractTrigger {
             return StateActivityTrigger.class;
         }
 
+        /**
+         * Get the list of states that were erroneous in a specific step, i.e. a list of lists. The
+         * outer list corresponds to the steps.
+         * 
+         * @return the list of lists of active states
+         */
+        public List<List<EObject>> getErrorStates() {
+            if (errorStates != null) {
+                return errorStates;
+            } else {
+                return new ArrayList<List<EObject>>();
+            }
+        }
+        
         /**
          * Get the list of states that were active in a specific step, i.e. a list of lists. The
          * outer list corresponds to the steps.
@@ -144,6 +163,20 @@ public class StateActivityTrigger extends AbstractTrigger {
             }
         }
 
+        /**
+         * Get list of currently error states in this step.
+         * 
+         * @return list of active states
+         */
+        public List<EObject> getCurrentErrorStates() {
+            List<List<EObject>> all = getErrorStates();
+            if (!all.isEmpty()) {
+                return all.get(0);
+            } else {
+                return new ArrayList<EObject>();
+            }
+        }
+        
         /**
          * Get list of all states that are active or that have been active.
          * 
