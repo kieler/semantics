@@ -228,7 +228,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                     }
                     
                     // redeclare/reset for the next step (save history)
-                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey)) {
+                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey) ||
+                   		currentJSONObject.has(errorStateKey) || currentJSONObject.has(errorTransitionKey)) {
                         statesByStep.add(currentStepObjects);
                         errorStatesByStep.add(currentErrorStepObjects);
                         currentErrorStepObjects = new ArrayList<EObject>();
