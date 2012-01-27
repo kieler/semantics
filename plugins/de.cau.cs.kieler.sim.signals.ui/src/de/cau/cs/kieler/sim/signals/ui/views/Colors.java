@@ -42,6 +42,7 @@ public class Colors {
 	private RGB signalColor2 = new RGB(200, 200, 255); // lighter blue
 	private RGB signalColor0 = new RGB(0, 0, 50); // dark blue
 	private RGB signalColorMarker = new RGB(255, 0, 0); // red
+	private RGB signalColorError = new RGB(255, 0, 255); // magenta
 
 	/** The variable signal color hashmap for default/all ticks */
 	private HashMap<String, RGB> signalColor = new HashMap<String, RGB>();
@@ -168,6 +169,31 @@ public class Colors {
 	 */
 	public void setSignalColorMarker(RGB signalColorMarker) {
 		this.signalColorMarker = signalColorMarker;
+	}
+
+	// -------------------------------------------------------------------------
+	
+	/**
+	 * Gets the signal color error that is used to mark the currently erroneous
+	 * signal.
+	 * 
+	 * @return the signalColorError
+	 */
+	public RGB getSignalColorError() {
+		return signalColorError;
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Sets the signal color error that is used to mark the currently erroneous
+	 * signal.
+	 * 
+	 * @param signalColorMarker
+	 *            the signalColorMarker to set
+	 */
+	public void setSignalColorError(RGB signalColorError) {
+		this.signalColorError = signalColorError;
 	}
 
 	// -------------------------------------------------------------------------

@@ -15,6 +15,8 @@
 package de.cau.cs.kieler.sim.signals.ui.views;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -75,7 +77,7 @@ public class SignalsView extends ViewPart {
 	
 	/** The signal list. */
 	private SignalList signalList = new SignalList(MAXIMALTICKS);
-
+	
 	/** The signal view colors. */
 	private Colors colors = new Colors();
 	
@@ -404,5 +406,5 @@ public class SignalsView extends ViewPart {
 	}
 
 	// -------------------------------------------------------------------------
-
+	
 }

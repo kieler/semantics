@@ -14,6 +14,9 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.FigureCanvas;
 import org.eclipse.draw2d.IFigure;
@@ -405,7 +408,7 @@ public class SignalsPlotter {
 			// Draw all Signals
 			for (Signal signal : signalList) {
 
-				
+				// find the appropriate color, default spare color
 				RGB signalColor = colors.getSignalSpareColor();
 				if (signal.isPresent(tick)) {
 					signalColor = colors.getSignalColor(signal.getName(), tick, color);
@@ -737,7 +740,5 @@ public class SignalsPlotter {
 			}
 		}
 	}
-
-	// -------------------------------------------------------------------------
 
 }

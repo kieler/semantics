@@ -16,9 +16,11 @@ package de.cau.cs.kieler.sim.signals.ui;
 
 import java.util.LinkedList;
 
+import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -26,6 +28,7 @@ import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.signals.Signal;
 import de.cau.cs.kieler.sim.signals.SignalList;
@@ -42,6 +45,18 @@ public class DataComponent extends JSONObjectDataComponent implements
 
 	/** The id of the view for KIEM. */
 	private static final String SIGNALSUIVIEWID = "de.cau.cs.kieler.sim.signals.ui.view";
+
+	/**
+	 * The Constant DEFAULT_ERROR_SIGNAL_KEY defines the default value for the
+	 * JSON key where erroneous signals can be declared.
+	 */
+	private static final String DEFAULT_ERROR_SIGNAL_KEY = "errorSignal";
+
+	/**
+	 * The error signal key the actual value for the JSON key where erroneous
+	 * signals can be declared. .
+	 */
+	private String errorSignalKey;
 
 	/** The Constant MAXIMALTICKS. */
 	private static final int MAXIMALTICKS = 1000;
@@ -103,6 +118,18 @@ public class DataComponent extends JSONObjectDataComponent implements
 		}
 
 		// SignalsView.getInstance().setSignalDataComponent(this);
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public KiemProperty[] provideProperties() {
+		KiemProperty[] properties = new KiemProperty[1];
+		properties[0] = new KiemProperty("Error Signal Name",
+				DEFAULT_ERROR_SIGNAL_KEY);
+		return properties;
 	}
 
 	// -------------------------------------------------------------------------
@@ -183,17 +210,19 @@ public class DataComponent extends JSONObjectDataComponent implements
 	 * {@inheritDoc}
 	 */
 	public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
+		// get the (currently) defined error signal key
+		errorSignalKey = getProperties()[0].getValue();
 
 		// update tick information
 		long tick = this.getTick();
 		signalList.setCurrentTick(tick);
-		
-		// set all signals to absent (signals that are present explicitly will be
-		// set to present afterwards
+
+		// set all signals to absent (signals that are present explicitly will
+		// be set to present afterwards
 		for (Signal signal : this.signalList) {
 			signal.setPresent(tick, false);
 		}
-		
+
 		try {
 			String[] fieldNames = JSONObject.getNames(jSONObject);
 			if (fieldNames != null) {
@@ -230,6 +259,33 @@ public class DataComponent extends JSONObjectDataComponent implements
 		} catch (Exception e) {
 			// this should not happen
 			e.printStackTrace();
+		}
+
+		// handle erroneous signals 
+		if (jSONObject.has(errorSignalKey)) {
+			String errorSignalString = "";
+			try {
+				errorSignalString = jSONObject.getString(errorSignalKey);
+				
+				String[] errorSignalArray = errorSignalString.split(",");
+				for (String errorSignalName : errorSignalArray) {
+					errorSignalName = errorSignalName.trim();
+					// use normal API to color the signal of this current tick erroneous
+					RGB errorSignalColor = SignalsView.getInstance().getColors().getSignalColorError();
+					SignalsView.getInstance().getColors().setSignalColor(errorSignalName, errorSignalColor, tick);
+				}
+				
+				
+			} catch (JSONException e) {
+				KiemPlugin
+						.getDefault()
+						.showError(
+								"Error signals ("
+										+ errorSignalKey
+										+ ") cannot be parsed and do not contain a comma spearated list of signal names.",
+								SignalsUIPlugin.PLUGIN_ID, e, true);
+			}
+
 		}
 
 		// update signal list
