@@ -42,8 +42,8 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 
 /**
  * Implements a data component for KIEM that reads a ESI/ESO trace file and in each step of the
- * simulation replays the corresponding signals. This component does not provide a training mode to
- * write ESO trace files, please use the {@link DataRecordingComponent} to do this.
+ * simulation replays the corresponding signals. This component also offers a training mode to
+ * write ESO files in conjunction with the {@link DataValidationComponent}.
  * 
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
  * @kieler.rating 2011-11-24 red
@@ -61,7 +61,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     private DataValidationComponent valComponent = null;
 
     /**
-     * Initialize the data component. Reads the whole ESI/ESO file and saves it internally for
+     * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
      * 
      * @throws KiemInitializationException
@@ -113,7 +113,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Wrapup the data component and revert the internal state.
+     * Wrapup the data component and revert the internal state, here this means do nothing.
      * 
      * @throws KiemInitializationException
      *             never thrown
@@ -140,7 +140,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Take a step in the simulation. The component reads its internal state and provides the
+     * Take a step in the simulation by reading the internal state and providing the
      * signals read from the ESI/ESO file to the simulation engine.
      * 
      * @throws KiemExecutionException 
@@ -224,7 +224,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Extract input signals from ESO file and prepare them for injection into the simulation
+     * Extract input signals from an ESO file and prepare them for injection into the simulation
      * 
      * @return the signals that shall be injected
      * @throws KiemExecutionException when building the JSONObject fails
@@ -302,7 +302,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Check whether the user actually selected an ESI or ESO file or messed up. This does not
+     * Check whether the user actually selected an ESO file or messed up. This does not
      * actually try to read the file, it just checks for the correct extension.
      * 
      * @throws KiemPropertyException
