@@ -70,14 +70,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void initialize() throws KiemInitializationException {
         KiemProperty[] properties = this.getProperties();
 
-        // Check whether an ESI/ESO file was provided
-        try {
-            checkProperties(properties);
-        } catch (KiemPropertyException e) {
-            throw new KiemInitializationException(
-                    Constants.ERR_NOTESO, true, e);
-        }
-
         // load properties
         String filename = "";
         int tracenum = 0;
