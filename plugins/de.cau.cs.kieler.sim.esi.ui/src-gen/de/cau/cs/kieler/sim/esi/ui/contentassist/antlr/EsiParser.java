@@ -38,8 +38,8 @@ public class EsiParser extends AbstractContentAssistParser {
 				private static final long serialVersionUID = 1L;
 				{
 					put(grammarAccess.getSignalAccess().getNameAlternatives_0_0(), "rule__Signal__NameAlternatives_0_0");
-					put(grammarAccess.getKvpairAccess().getKAlternatives_1_0(), "rule__Kvpair__KAlternatives_1_0");
-					put(grammarAccess.getKvpairAccess().getValAlternatives_3_0(), "rule__Kvpair__ValAlternatives_3_0");
+					put(grammarAccess.getKvpairAccess().getKeyAlternatives_1_0(), "rule__Kvpair__KeyAlternatives_1_0");
+					put(grammarAccess.getKvpairAccess().getValueAlternatives_3_0(), "rule__Kvpair__ValueAlternatives_3_0");
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_2(), "rule__Tick__Group_2__0");
@@ -54,8 +54,8 @@ public class EsiParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
 					put(grammarAccess.getSignalAccess().getValuedAssignment_1_0(), "rule__Signal__ValuedAssignment_1_0");
 					put(grammarAccess.getSignalAccess().getValAssignment_1_1(), "rule__Signal__ValAssignment_1_1");
-					put(grammarAccess.getKvpairAccess().getKAssignment_1(), "rule__Kvpair__KAssignment_1");
-					put(grammarAccess.getKvpairAccess().getValAssignment_3(), "rule__Kvpair__ValAssignment_3");
+					put(grammarAccess.getKvpairAccess().getKeyAssignment_1(), "rule__Kvpair__KeyAssignment_1");
+					put(grammarAccess.getKvpairAccess().getValueAssignment_3(), "rule__Kvpair__ValueAssignment_3");
 				}
 			};
 		}

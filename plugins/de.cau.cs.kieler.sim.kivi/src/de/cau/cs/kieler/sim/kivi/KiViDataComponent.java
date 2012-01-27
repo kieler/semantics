@@ -33,9 +33,10 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * A data component that observes the activity of syncchart states during simulation.
+ * A data component that observes the activity (active and error states and transitions)
+ *  of SyncCharts during simulation.
  * 
- * @author mmu
+ * @author mmu, cmot
  * 
  */
 public abstract class KiViDataComponent extends JSONObjectDataComponent implements
@@ -45,6 +46,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     private static final String DEFAULT_STATE_KEY = "state";
 
+    private static final String DEFAULT_TRANSITION_KEY = "transition";
+
+    private static final String DEFAULT_ERROR_STATE_KEY = "errorState";
+
+    private static final String DEFAULT_ERROR_TRANSITION_KEY = "errorTransition";
+
+    
     private DiagramEditor diagramEditor;
 
     private Resource resource;
@@ -53,6 +61,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     private String stateKey;
 
+    private String transitionKey;
+
+    private String errorStateKey;
+
+    private String errorTransitionKey;
+    
     private DataComponentWrapper wrapper;
 
     /** Remember when wrapup() was executed. */
@@ -70,8 +84,11 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return;
         }
         resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
-        steps = getProperties()[0].getValueAsInt();
-        stateKey = getProperties()[1].getValue();
+        stateKey = getProperties()[0].getValue();
+        transitionKey = getProperties()[1].getValue();
+        errorStateKey = getProperties()[2].getValue();
+        errorTransitionKey = getProperties()[3].getValue();
+        steps = getProperties()[4].getValueAsInt();
         for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
             if (w.getDataComponent() == this) {
                 wrapper = w;
@@ -93,7 +110,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             return;
         }
         if (StateActivityTrigger.getInstance() != null) {
-            StateActivityTrigger.getInstance().synchronizedStep(null, diagramEditor);
+            StateActivityTrigger.getInstance().synchronizedStep(null, null, diagramEditor);
         }
         wrapupDone = true;
     }
@@ -122,9 +139,12 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
      * {@inheritDoc}
      */
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("history steps", DEFAULT_STEPS);
-        properties[1] = new KiemProperty("state variable", DEFAULT_STATE_KEY);
+        KiemProperty[] properties = new KiemProperty[5];
+        properties[0] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
+        properties[1] = new KiemProperty("Transition Name", DEFAULT_TRANSITION_KEY);
+        properties[2] = new KiemProperty("Error State Name", DEFAULT_ERROR_STATE_KEY);
+        properties[3] = new KiemProperty("Error Transition Name", DEFAULT_ERROR_TRANSITION_KEY);
+        properties[4] = new KiemProperty("History Steps", DEFAULT_STEPS);
         return properties;
     }
 
@@ -141,10 +161,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
 
             List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
+            List<List<EObject>> errorStatesByStep = new ArrayList<List<EObject>>();
             List<EObject> currentStepObjects = new ArrayList<EObject>();
+            List<EObject> currentErrorStepObjects = new ArrayList<EObject>();
             JSONObject currentJSONObject = jSONObject;
             try {
                 for (int i = 0; i <= steps; i++) {
+                	// ACTIVE STATES AND TRANSITIONS
                     if (currentJSONObject.has(stateKey)) {
                         String stateString = currentJSONObject.get(stateKey).toString();
                         String[] states = stateString.replaceAll("\\s", "").split(",");
@@ -158,7 +181,58 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                                 }
                             }
                         }
+                    }
+                    if (currentJSONObject.has(transitionKey)) {
+                        String stateString = currentJSONObject.get(transitionKey).toString();
+                        String[] states = stateString.replaceAll("\\s", "").split(",");
+                        for (String state : states) {
+                            if (state.length() > 1) {
+                                EObject active = resource.getEObject(state);
+                                if (active != null) {
+                                    if (!contains(statesByStep, active)) { // filter out newer
+                                        currentStepObjects.add(active);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // ERROR STATES AND ERROR TRANSITIONS
+                    if (currentJSONObject.has(errorStateKey)) {
+                        String stateString = currentJSONObject.get(errorStateKey).toString();
+                        String[] states = stateString.replaceAll("\\s", "").split(",");
+                        for (String state : states) {
+                            if (state.length() > 1) {
+                                EObject errorState = resource.getEObject(state);
+                                if (errorState != null) {
+                                    if (!contains(errorStatesByStep, errorState)) { // filter out newer
+                                    	currentErrorStepObjects.add(errorState);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (currentJSONObject.has(errorTransitionKey)) {
+                        String stateString = currentJSONObject.get(errorTransitionKey).toString();
+                        String[] states = stateString.replaceAll("\\s", "").split(",");
+                        for (String state : states) {
+                            if (state.length() > 1) {
+                                EObject errorState = resource.getEObject(state);
+                                if (errorState != null) {
+                                    if (!contains(errorStatesByStep, errorState)) { // filter out newer
+                                    	currentErrorStepObjects.add(errorState);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                    // redeclare/reset for the next step (save history)
+                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey) ||
+                   		currentJSONObject.has(errorStateKey) || currentJSONObject.has(errorTransitionKey)) {
                         statesByStep.add(currentStepObjects);
+                        errorStatesByStep.add(currentErrorStepObjects);
+                        currentErrorStepObjects = new ArrayList<EObject>();
                         currentStepObjects = new ArrayList<EObject>();
                     }
                     long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
@@ -173,7 +247,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                          * until all effects have finished executing that are caused by this
                          * triggering. This way we create back pressure from the effects to KIEM.
                          */
-                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
+                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep, errorStatesByStep,
                                 diagramEditor);
                     }
                 }

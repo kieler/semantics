@@ -233,17 +233,17 @@ public class SyncchartsSimDataComponent extends
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[1].getValue();
 
-//        // the transitionName is the third KIEM property
-//        String transitionName = this.getProperties()[2].getValue();
+        // the transitionName is the third KIEM property
+        String transitionName = this.getProperties()[2].getValue();
         
         try {
-            returnObj.accumulate(stateName, activeStates + "," + activeTransitions);
+            returnObj.accumulate(stateName, activeStates );
         } catch (Exception e) {
         }
-//        try {
-//            returnObj.accumulate(transitionName, activeTransitions);
-//        } catch (Exception e) {
-//        }
+        try {
+            returnObj.accumulate(transitionName, activeTransitions);
+        } catch (Exception e) {
+        }
         return returnObj;
     }
 
@@ -308,10 +308,10 @@ public class SyncchartsSimDataComponent extends
                 org.ptolemy.moml.MomlPackage.eINSTANCE);
 
         // Global options for model transformation alternatives
-        XtendJava.setRaiseLocalSignals(this.getProperties()[2].getValueAsBoolean());
-        XtendJava.setInputOutputTransformation(this.getProperties()[3].getValueAsBoolean());
-        XtendJava.setOptimizeInputSignals(this.getProperties()[4].getValueAsBoolean());
-        XtendJava.setOptimizeOutputSignals(this.getProperties()[5].getValueAsBoolean());
+        XtendJava.setRaiseLocalSignals(this.getProperties()[3].getValueAsBoolean());
+        XtendJava.setInputOutputTransformation(this.getProperties()[4].getValueAsBoolean());
+        XtendJava.setOptimizeInputSignals(this.getProperties()[5].getValueAsBoolean());
+        XtendJava.setOptimizeOutputSignals(this.getProperties()[6].getValueAsBoolean());
 
         // XtendComponent
         XtendComponent xtendComponent = new XtendComponent();
@@ -485,13 +485,13 @@ public class SyncchartsSimDataComponent extends
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[5];
+        KiemProperty[] properties = new KiemProperty[6];
         properties[0] = new KiemProperty("State Name", "state");
-//        properties[1] = new KiemProperty("Transition Name", "transition");
-        properties[1] = new KiemProperty("Raise local signals", true);
-        properties[2] = new KiemProperty("Allow write inputs, read outputs", true);
-        properties[3] = new KiemProperty("Optimize signal input ports", true);
-        properties[4] = new KiemProperty("Optimize signal output ports (not always possible)", false);
+        properties[1] = new KiemProperty("Transition Name", "transition");
+        properties[2] = new KiemProperty("Raise local signals", true);
+        properties[3] = new KiemProperty("Allow write inputs, read outputs", true);
+        properties[4] = new KiemProperty("Optimize signal input ports", true);
+        properties[5] = new KiemProperty("Optimize signal output ports (not always possible)", false);
         return properties;
     }
 

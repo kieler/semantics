@@ -42,8 +42,8 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 
 /**
  * Implements a data component for KIEM that reads a ESI/ESO trace file and in each step of the
- * simulation replays the corresponding signals. This component does not provide a training mode to
- * write ESO trace files, please use the {@link DataRecordingComponent} to do this.
+ * simulation replays the corresponding signals. This component also offers a training mode to
+ * write ESO files in conjunction with the {@link DataValidationComponent}.
  * 
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
  * @kieler.rating 2011-11-24 red
@@ -61,7 +61,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     private DataValidationComponent valComponent = null;
 
     /**
-     * Initialize the data component. Reads the whole ESI/ESO file and saves it internally for
+     * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
      * 
      * @throws KiemInitializationException
@@ -70,25 +70,17 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void initialize() throws KiemInitializationException {
         KiemProperty[] properties = this.getProperties();
 
-        // Check whether an ESI/ESO file was provided
-        try {
-            checkProperties(properties);
-        } catch (KiemPropertyException e) {
-            throw new KiemInitializationException(
-                    "The replay file provided is not an .esi or .eso file", true, e);
-        }
-
         // load properties
         String filename = "";
         int tracenum = 0;
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 filename = prop.getValue();
             }
-            if (prop.getKey().equals("Trace to replay")) {
+            if (prop.getKey().equals(Constants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
             }
-            if (prop.getKey().equals("Training mode")) {
+            if (prop.getKey().equals(Constants.TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
             }
         }
@@ -102,18 +94,17 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
-                    throw new KiemInitializationException("The trace file does not contain a trace number "
+                    throw new KiemInitializationException(Constants.ERR_NOTRACE
                             + tracenum, true, e);
                 }
             } catch(KiemInitializationException e) {
-                trainingMode = true;
-                //throw new KiemInitializationException("Trace file is empty or does not exist. Switching to training mode", false, e);
+                throw new KiemInitializationException(Constants.ERR_READ, true, e);
             }
         }
     }
 
     /**
-     * Wrapup the data component and revert the internal state.
+     * Wrapup the data component and revert the internal state, here this means do nothing.
      * 
      * @throws KiemInitializationException
      *             never thrown
@@ -125,6 +116,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /**
      * Tell KIEM that this component does produce data.
      * 
+     * @return always true
      */
     public boolean isProducer() {
         return true;
@@ -133,6 +125,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /**
      * Tell KIEM that this component does observe data.
      * 
+     * @return always true
      */
     @Override
     public boolean isObserver() {
@@ -140,9 +133,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Take a step in the simulation. The component reads its internal state and provides the
+     * Take a step in the simulation by reading the internal state and providing the
      * signals read from the ESI/ESO file to the simulation engine.
      * 
+     * @return data that shall be injected into the simulation
      * @throws KiemExecutionException 
      *          when the JSON object with signals from ESI/ESO file could not be built.
      */
@@ -152,7 +146,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
               
         if(!trainingMode) {
-            retval = genInputs();
+            retval = loadInputs();
         }
         
         addInputs(obj, retval);
@@ -224,12 +218,12 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Extract input signals from ESO file and prepare them for injection into the simulation
+     * Extract input signals from an ESO file and prepare them for injection into the simulation
      * 
      * @return the signals that shall be injected
      * @throws KiemExecutionException when building the JSONObject fails
      */
-    public JSONObject genInputs() throws KiemExecutionException {
+    public JSONObject loadInputs() throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
         // Proceed to the next step in the trace file
@@ -250,7 +244,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 }
             } catch (JSONException e) {
                 throw new KiemExecutionException(
-                        "Could not build JSON object with signals read from ESI/ESO file", true, e);
+                        Constants.ERR_JSON, true, e);
             }
         }
         
@@ -264,16 +258,14 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        String[] exts = { "*.eso", "*.esi" };
-        String[] extNames = { "ESO", "ESI" };
-
         KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
-        fileProperty.setFilterExts(exts);
-        fileProperty.setFilterNames(extNames);
+        fileProperty.setFilterExts(Constants.FILEEXTS);
+        fileProperty.setFilterNames(Constants.FILEEXTNAMES);
         
         String filename = null;
         try {
             /*
+             * Try creating a default file name.
              * The try block is necessary to suppress NPEs and other exceptions when we are either
              * running in headless mode or there are no editor opened. Below, you will see that a
              * filename is only proposed if this try block succeeds. We have to use absolute file
@@ -290,19 +282,19 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         
         KiemProperty[] properties = new KiemProperty[3];
         //properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[0] = new KiemProperty("ESI/ESO trace file", fileProperty);
+        properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         if(filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
 
-        properties[1] = new KiemProperty("Trace to replay", new KiemPropertyTypeInt(), 0);
-        properties[2] = new KiemProperty("Training mode", false);
+        properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[2] = new KiemProperty(Constants.TRAINMODE, false);
 
         return properties;
     }
 
     /**
-     * Check whether the user actually selected an ESI or ESO file or messed up. This does not
+     * Check whether the user actually selected an ESO file or messed up. This does not
      * actually try to read the file, it just checks for the correct extension.
      * 
      * @throws KiemPropertyException
@@ -311,11 +303,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     @Override
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
                     throw new KiemPropertyException(
-                            "The replay file provided is not a .esi or .eso file");
+                            Constants.ERR_NOTESO);
                 }
             }
         }

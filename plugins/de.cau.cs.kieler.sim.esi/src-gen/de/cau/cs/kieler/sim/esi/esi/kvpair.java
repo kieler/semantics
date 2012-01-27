@@ -15,8 +15,8 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getK <em>K</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getVal <em>Val</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getKey <em>Key</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,55 +27,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface kvpair extends EObject
 {
   /**
-   * Returns the value of the '<em><b>K</b></em>' attribute.
+   * Returns the value of the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>K</em>' attribute isn't clear,
+   * If the meaning of the '<em>Key</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>K</em>' attribute.
-   * @see #setK(String)
-   * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#getkvpair_K()
+   * @return the value of the '<em>Key</em>' attribute.
+   * @see #setKey(String)
+   * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#getkvpair_Key()
    * @model
    * @generated
    */
-  String getK();
+  String getKey();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getK <em>K</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getKey <em>Key</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>K</em>' attribute.
-   * @see #getK()
+   * @param value the new value of the '<em>Key</em>' attribute.
+   * @see #getKey()
    * @generated
    */
-  void setK(String value);
+  void setKey(String value);
 
   /**
-   * Returns the value of the '<em><b>Val</b></em>' attribute.
+   * Returns the value of the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Val</em>' attribute isn't clear,
+   * If the meaning of the '<em>Value</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Val</em>' attribute.
-   * @see #setVal(String)
-   * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#getkvpair_Val()
+   * @return the value of the '<em>Value</em>' attribute.
+   * @see #setValue(String)
+   * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#getkvpair_Value()
    * @model
    * @generated
    */
-  String getVal();
+  String getValue();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getVal <em>Val</em>}' attribute.
+   * Sets the value of the '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getValue <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Val</em>' attribute.
-   * @see #getVal()
+   * @param value the new value of the '<em>Value</em>' attribute.
+   * @see #getValue()
    * @generated
    */
-  void setVal(String value);
+  void setValue(String value);
 
 } // kvpair

@@ -61,5 +61,14 @@
             name="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination"
+            description="Automatically loads a matching execution schedule if the editor is changed"
+            name="KIEM Execution Schedule Autoload">
+      </combination>
+   </extension>
 
 </plugin>
