@@ -75,20 +75,20 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             checkProperties(properties);
         } catch (KiemPropertyException e) {
             throw new KiemInitializationException(
-                    "The replay file provided is not an .esi or .eso file", true, e);
+                    Constants.ERR_NOTESO, true, e);
         }
 
         // load properties
         String filename = "";
         int tracenum = 0;
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 filename = prop.getValue();
             }
-            if (prop.getKey().equals("Trace to replay")) {
+            if (prop.getKey().equals(Constants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
             }
-            if (prop.getKey().equals("Training mode")) {
+            if (prop.getKey().equals(Constants.TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
             }
         }
@@ -102,7 +102,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
-                    throw new KiemInitializationException("The trace file does not contain a trace number "
+                    throw new KiemInitializationException(Constants.ERR_NOTRACE
                             + tracenum, true, e);
                 }
             } catch(KiemInitializationException e) {
@@ -250,7 +250,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 }
             } catch (JSONException e) {
                 throw new KiemExecutionException(
-                        "Could not build JSON object with signals read from ESI/ESO file", true, e);
+                        Constants.ERR_JSON, true, e);
             }
         }
         
@@ -264,12 +264,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        String[] exts = { "*.eso", "*.esi" };
-        String[] extNames = { "ESO", "ESI" };
-
         KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
-        fileProperty.setFilterExts(exts);
-        fileProperty.setFilterNames(extNames);
+        fileProperty.setFilterExts(Constants.FILEEXTS);
+        fileProperty.setFilterNames(Constants.FILEEXTNAMES);
         
         String filename = null;
         try {
@@ -290,13 +287,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         
         KiemProperty[] properties = new KiemProperty[3];
         //properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
-        properties[0] = new KiemProperty("ESI/ESO trace file", fileProperty);
+        properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         if(filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
 
-        properties[1] = new KiemProperty("Trace to replay", new KiemPropertyTypeInt(), 0);
-        properties[2] = new KiemProperty("Training mode", false);
+        properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[2] = new KiemProperty(Constants.TRAINMODE, false);
 
         return properties;
     }
@@ -311,11 +308,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     @Override
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
                     throw new KiemPropertyException(
-                            "The replay file provided is not a .esi or .eso file");
+                            Constants.ERR_NOTESO);
                 }
             }
         }

@@ -88,7 +88,7 @@ public class TraceWriter {
             
             outWriter.close();
         } catch (IOException e) {
-            throw new KiemInitializationException("An error occurred when writing ESO trace file", true, e);
+            throw new KiemInitializationException(Constants.ERR_WRITE, true, e);
         }
     }
     

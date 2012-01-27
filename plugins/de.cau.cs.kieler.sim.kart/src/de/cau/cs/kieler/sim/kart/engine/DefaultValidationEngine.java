@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 
 import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.sim.kart.Constants;
 import de.cau.cs.kieler.sim.kart.Utilities;
 import de.cau.cs.kieler.sim.kart.ValidationException;
 import de.cau.cs.kieler.sim.kart.Tree;
@@ -81,7 +82,7 @@ public class DefaultValidationEngine implements IValidationEngine {
                 
         //String simValue = ;
         if (simValue == null) {
-            throw new KiemExecutionException("Validation error", false, new ValidationException(
+            throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
                     "The simulation step did not generate a variable \"" + key + "\". "
                             + "No validation for this signal will take place in this step!"));
         } else {
@@ -105,11 +106,11 @@ public class DefaultValidationEngine implements IValidationEngine {
                                 + "\nbut the states actually active are:\n"
                                 + simStateNamesTree;
                         
-                        throw new KiemExecutionException("Validation error", false,
+                        throw new KiemExecutionException(Constants.VAL_TITLE, false,
                                 new ValidationException(errorMessage));
                     }
                 } else if(!isHistoryStep) {
-                    throw new KiemExecutionException("Validation error", false,
+                    throw new KiemExecutionException(Constants.VAL_TITLE, false,
                             new ValidationException(
                                     "Validation error: The simulation should provide a variable \""
                                             + key + "\" with a value of \"" + recValue
@@ -131,10 +132,9 @@ public class DefaultValidationEngine implements IValidationEngine {
             ISignal recSignal = it.next();
             // presence
             if (!simSignals.containsKey(recSignal.getName())) {
-                System.out.println("Presence check failed");
                 Utilities.visualizeSignals(recSignal.getName(), step);
                 if(!isHistoryStep) {
-                    throw new KiemExecutionException("Validation error", false,
+                    throw new KiemExecutionException(Constants.VAL_TITLE, false,
                             new ValidationException("Validation error: Signal \"" + recSignal.getName()
                                     + "\" is not present, but it should be."));
                 }
@@ -146,7 +146,7 @@ public class DefaultValidationEngine implements IValidationEngine {
                 Utilities.visualizeSignals(recSignal.getName(), step);
                 if(!isHistoryStep) {
                     throw new KiemExecutionException(
-                            "Validation error",
+                            Constants.VAL_TITLE,
                             false,
                             new ValidationException(
                                     "Validation error: Signal \""
@@ -178,7 +178,7 @@ public class DefaultValidationEngine implements IValidationEngine {
             }
 
             if(!isHistoryStep) {
-                throw new KiemExecutionException("Validation error", false, new ValidationException(
+                throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
                         "Validation error: The signal(s) " + excessSignals
                                 + " were not recorded, but generated in the simulation"));
             }

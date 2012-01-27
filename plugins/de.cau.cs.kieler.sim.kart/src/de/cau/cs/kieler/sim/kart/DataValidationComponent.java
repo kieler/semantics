@@ -57,17 +57,6 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  */
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
-    /*
-     * Strings used for properties
-     */
-    private static final String ESOFILE = "ESI/ESO trace file";
-    private static final String TRACENUM = "Trace number to replay";
-    private static final String VALEXTRA = "Validate extra information";
-    private static final String EXTRAVARS = "Extra information signals";
-    private static final String STATEVAR = "State variable";
-    private static final String IGNOREEXTRA = "Ignore additionally generated signals";
-    private static final String TRAINMODE = "Training mode";
-    
     public static final String COMPONENTID = "de.cau.cs.kieler.sim.kart.DataValidationComponent";
 
     /** The number of the current step */
@@ -140,26 +129,26 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             checkProperties(properties);
         } catch (KiemPropertyException e) {
             throw new KiemInitializationException(
-                    "The replay file provided is not an .esi or .eso file", true, e);
+                    Constants.ERR_NOTESO, true, e);
         }
 
         // load properties
         int tracenum = 0;
         specialSignals = new HashSet<String>();
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals(ESOFILE)) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 filename = prop.getValue();
-            } else if (prop.getKey().equals(TRACENUM)) {
+            } else if (prop.getKey().equals(Constants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
-            } else if (prop.getKey().equals(VALEXTRA)) {
+            } else if (prop.getKey().equals(Constants.VALEXTRA)) {
                 useState = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals(IGNOREEXTRA)) {
+            } else if (prop.getKey().equals(Constants.IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals(TRAINMODE)) {
+            } else if (prop.getKey().equals(Constants.TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals(EXTRAVARS)) {
+            } else if (prop.getKey().equals(Constants.EXTRAVARS)) {
                 specialSignals = Utilities.makeSet(prop.getValue().split(","));
-            } else if (prop.getKey().equals(STATEVAR)) {
+            } else if (prop.getKey().equals(Constants.STATEVAR)) {
                 stateVariable = prop.getValue();
                 specialSignals.add(stateVariable);
             }
@@ -178,12 +167,12 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(
-                            "The trace file does not contain a trace number " + tracenum, true, e);
+                            Constants.ERR_NOTRACE + tracenum, true, e);
                 }
             } catch (KiemInitializationException e) {
                 trainingMode = true;
                 throw new KiemInitializationException(
-                        "Trace file is empty or does not exist. Switching to training mode.",
+                         Constants.ERR_EMPTYESO,
                         false, e);
             }
         }
@@ -214,7 +203,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     public void notifyEvent(KiemEvent event) {
         if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
             step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
-            System.out.println("New step " + step);
         }
     }
 
@@ -269,12 +257,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        String[] exts = { "*.eso", "*.esi" };
-        String[] extNames = { "ESO", "ESI" };
-
         KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
-        fileProperty.setFilterExts(exts);
-        fileProperty.setFilterNames(extNames);
+        fileProperty.setFilterExts(Constants.FILEEXTS);
+        fileProperty.setFilterNames(Constants.FILEEXTNAMES);
 
         String filename = null;
         try {
@@ -294,16 +279,16 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         }
 
         KiemProperty[] properties = new KiemProperty[7];
-        properties[0] = new KiemProperty(ESOFILE, fileProperty);
+        properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         if (filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
-        properties[1] = new KiemProperty(TRACENUM, new KiemPropertyTypeInt(), 0);
-        properties[2] = new KiemProperty(VALEXTRA, true);
-        properties[3] = new KiemProperty(EXTRAVARS);
-        properties[4] = new KiemProperty(STATEVAR, "state");
-        properties[5] = new KiemProperty(IGNOREEXTRA, false);
-        properties[6] = new KiemProperty(TRAINMODE, false);
+        properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[2] = new KiemProperty(Constants.VALEXTRA, true);
+        properties[3] = new KiemProperty(Constants.EXTRAVARS);
+        properties[4] = new KiemProperty(Constants.STATEVAR, "state");
+        properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
+        properties[6] = new KiemProperty(Constants.TRAINMODE, false);
 
         return properties;
     }
@@ -321,8 +306,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         Map<String, Object> outputSignals = Utilities.convertAndRecordSignals(obj, recInputs,
                 recOutputs, recSpecialSignals, specialSignals);
         
-        System.out.println("Doing step " + step);
-
         if (!trainingMode && trace.getSize() >= (step - 1)) {
             ITick tick = trace.get(step - 1);
             List<ISignal> signals = tick.getOutputs();
@@ -356,11 +339,11 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals("ESI/ESO trace file")) {
+            if (prop.getKey().equals(Constants.ESOFILE)) {
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
                     throw new KiemPropertyException(
-                            "The replay file provided is not a .esi or .eso file");
+                            Constants.ERR_NOTESO);
                 }
             }
         }
@@ -375,7 +358,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      *            the recorded input signals
      */
     public void putInputs(final HashMap<String, Object> signals) {
-        System.out.println("Input signals received: " + signals);
         this.recInputs.add(signals);
     }
 
