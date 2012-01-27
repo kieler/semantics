@@ -53,6 +53,7 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
+import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
 
 /**
  * A KiVi Combination controlling the autoloading of execution files. While NO
@@ -72,7 +73,12 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 	public void execute(final EditorState editorState) {
 
 		// if currently active editor is also the active part
-		if (editorState.editorIsActivePart()) {
+		if (editorState != null && editorState.editorIsActivePart()) {
+			
+			// this is a special editor and we do'nt want to adjust kiem when it is loaded
+			if (editorState.getEditorPart() instanceof KiemProxyEditor) {
+				return;
+			}
 
 			// if no execution is running or is about to run
 			if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin
@@ -93,7 +99,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 					editorName = editor.getRegisteredName();
 
 					// only if editor has been changed
-					if (lastEditorId != editorId) {
+					if (editorId == null  || (!editorId.equals(lastEditorId))) {
 						lastEditorId = editorId;
 						ScheduleManager scheduleManager = ScheduleManager
 								.getInstance();
