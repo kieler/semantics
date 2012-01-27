@@ -19,6 +19,7 @@ import java.util.StringTokenizer;
 
 import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.geometry.Point;
+import org.eclipse.draw2d.geometry.PrecisionPoint;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -36,10 +37,12 @@ import de.cau.cs.kieler.core.kgraph.KNode;
 import de.cau.cs.kieler.core.kgraph.KPort;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.kaom.Port;
+import de.cau.cs.kieler.kiml.klayoutdata.KEdgeLayout;
+import de.cau.cs.kieler.kiml.klayoutdata.KInsets;
+import de.cau.cs.kieler.kiml.klayoutdata.KPoint;
 import de.cau.cs.kieler.kiml.klayoutdata.KShapeLayout;
 import de.cau.cs.kieler.kiml.options.LayoutOptions;
 import de.cau.cs.kieler.kiml.ui.diagram.LayoutMapping;
-import de.cau.cs.kieler.kiml.ui.util.KimlUiUtil;
 import de.cau.cs.kieler.kvid.data.KvidUri;
 import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
 
@@ -47,30 +50,30 @@ import de.cau.cs.kieler.kvid.datadistributor.RuntimeConfiguration;
  * Utility class for the KViD-Plugin. Holds commonly used methods statically.
  * 
  * @author jjc
- *
  */
 public final class KvidUtil {
-    
+
     /**
      * There shouldn't be an instance of this class.
      */
-    private KvidUtil() { }
+    private KvidUtil() {
+    }
 
-    
     /**
-     * Converts a EMF/GMF Fragment URI into a Ptolemy URI.
-     * A Fragment URI looks like: //(type).(number of child of this type)/ etc.
-     * A Ptolemy URI looks like: .(element name).(second element name)
+     * Converts a EMF/GMF Fragment URI into a Ptolemy URI. A Fragment URI looks like:
+     * //(type).(number of child of this type)/ etc. A Ptolemy URI looks like: .(element
+     * name).(second element name)
      * 
      * This requires unique names on the same hierarchy level.
      * 
-     * @param fragmentUri The Fragment URI to convert
-     * @param resource The resource which holds the model element referred by
-     *          the Fragment URI
+     * @param fragmentUri
+     *            The Fragment URI to convert
+     * @param resource
+     *            The resource which holds the model element referred by the Fragment URI
      * @return A Ptolemy URI referring the model element
      */
     public static String fragmentUri2PtolemyUri(final String fragmentUri, final Resource resource) {
-        //Ptolemy URIs do not tend to be larger than fragment URIs
+        // Ptolemy URIs do not tend to be larger than fragment URIs
         StringBuilder result = new StringBuilder(fragmentUri.length());
         if (fragmentUri.startsWith("//")) {
             EObject model = resource.getEObject(fragmentUri);
@@ -79,11 +82,12 @@ public final class KvidUtil {
                     result.insert(0, ((NamedObject) model).getName());
                     if (model instanceof Port) {
                         result.insert(0, ":");
-                    } else  {
+                    } else {
                         result.insert(0, ".");
                     }
                 } else {
-                    throw new IllegalArgumentException("Ptolemy URIs will only work with NamedObjects");
+                    throw new IllegalArgumentException(
+                            "Ptolemy URIs will only work with NamedObjects");
                 }
                 model = model.eContainer();
             }
@@ -92,49 +96,48 @@ public final class KvidUtil {
         }
         return result.toString();
     }
-    
+
     /**
-     * Converts a Ptolemy URI into a EMF/GMF Fragment URI.
-     * A Fragment URI looks like: //(type).(number of child of this type)/ etc.
-     * A Ptolemy URI looks like: .(element name).(second element name)
+     * Converts a Ptolemy URI into a EMF/GMF Fragment URI. A Fragment URI looks like:
+     * //(type).(number of child of this type)/ etc. A Ptolemy URI looks like: .(element
+     * name).(second element name)
      * 
      * This requires unique names on the same hierarchy level.
      * 
-     * @param ptolemyUri A Ptolemy URI referring the model element
-     * @param resource The resource which holds the model element referred by
-     *          the Fragment URI
+     * @param ptolemyUri
+     *            A Ptolemy URI referring the model element
+     * @param resource
+     *            The resource which holds the model element referred by the Fragment URI
      * @return The Fragment URI
      */
     public static String ptolemyUri2FragmentUri(final String ptolemyUri, final Resource resource) {
-        //Fragmemt URIs are about twice as long as PtolemyURIs
+        // Fragmemt URIs are about twice as long as PtolemyURIs
         StringBuilder result = new StringBuilder(ptolemyUri.length() * 2);
         if (ptolemyUri.startsWith(".")) {
             EObject root = resource.getContents().get(0);
             result.append("/");
             StringTokenizer tokenizer = new StringTokenizer(ptolemyUri, ".");
             while (tokenizer.hasMoreTokens()) {
-                //parse Ptolemy URI and find corresponding EObject on the current level 
+                // parse Ptolemy URI and find corresponding EObject on the current level
                 result.append("/");
                 String currentUri = tokenizer.nextToken();
-                
+
                 String currentResult = new String(result.toString());
                 for (EObject eo : root.eContents()) {
-                    //iterate through the current level and find the NamedObject with the same name
+                    // iterate through the current level and find the NamedObject with the same name
                     if (eo instanceof NamedObject) {
                         if (((NamedObject) eo).getName() != null
-                                && ((NamedObject) eo).getName().equals(
-                                        currentUri)) {
-                            result.append(((InternalEObject) eo.eContainer())
-                                    .eURIFragmentSegment(
-                                            eo.eContainingFeature(), eo));
+                                && ((NamedObject) eo).getName().equals(currentUri)) {
+                            result.append(((InternalEObject) eo.eContainer()).eURIFragmentSegment(
+                                    eo.eContainingFeature(), eo));
                             root = eo;
                             break;
                         }
                     }
                 }
                 if (currentResult.equals(result)) {
-                    //Element wasn't found, although this was the right level
-                    //Return null then
+                    // Element wasn't found, although this was the right level
+                    // Return null then
                     return null;
                 }
             }
@@ -143,11 +146,12 @@ public final class KvidUtil {
         }
         return result.toString();
     }
-    
+
     /**
      * Compute animation paths and location for a port.
      * 
-     * @param port The port to perform pathfinding for
+     * @param port
+     *            The port to perform pathfinding for
      * @return A list of paths for animation purposes
      */
     private static List<List<Point>> getPathsByPort(final KPort port) {
@@ -156,7 +160,7 @@ public final class KvidUtil {
         for (KEdge edge : port.getEdges()) {
             if (edge.getSourcePort() != null && edge.getSourcePort().equals(port)) {
                 List<Point> path = new LinkedList<Point>();
-                path.addAll(KimlUiUtil.getBendPointsAbsolutePositions(edge));
+                path.addAll(getBendPointsAbsolutePositions(edge));
                 if (edge.getTargetPort() == null) {
                     KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
                     if (targetLayout.getProperty(LayoutOptions.HYPERNODE)) {
@@ -178,11 +182,12 @@ public final class KvidUtil {
         }
         return result;
     }
-    
+
     /**
      * Compute animation paths and location for a node.
      * 
-     * @param port The node to perform pathfinding for
+     * @param port
+     *            The node to perform pathfinding for
      * @return A list of paths for animation purposes
      */
     private static List<List<Point>> getPathsByNode(final KNode node) {
@@ -190,12 +195,10 @@ public final class KvidUtil {
         List<List<Point>> subresult = new LinkedList<List<Point>>();
         for (KEdge edge : node.getOutgoingEdges()) {
             List<Point> path = new LinkedList<Point>();
-            path.addAll(KimlUiUtil.getBendPointsAbsolutePositions(edge));
+            path.addAll(getBendPointsAbsolutePositions(edge));
             if (edge.getTargetPort() == null) {
-                KShapeLayout targetLayout = edge.getTarget().getData(
-                        KShapeLayout.class);
-                if (targetLayout.getProperty(LayoutOptions.HYPERNODE)
-                        .booleanValue()) {
+                KShapeLayout targetLayout = edge.getTarget().getData(KShapeLayout.class);
+                if (targetLayout.getProperty(LayoutOptions.HYPERNODE).booleanValue()) {
                     subresult.addAll(getPathsByNode(edge.getTarget()));
                 }
             }
@@ -213,13 +216,72 @@ public final class KvidUtil {
         }
         return result;
     }
-    
+
+    /**
+     * Gives the absolute positions of all bend points on the given edge.
+     * 
+     * @param edge
+     *            The edge to get the bend points from
+     * @return A list of points, being the absolute positions of the bend points
+     * 
+     */
+    private static List<Point> getBendPointsAbsolutePositions(final KEdge edge) {
+        List<Point> result = new LinkedList<Point>();
+        KShapeLayout parentLayout = edge.getSource().getParent().getData(KShapeLayout.class);
+        Point parentPosition = getAbsolutePosition(edge.getSource().getParent());
+        KInsets insets = parentLayout.getInsets();
+        parentPosition.translate((int) insets.getLeft(), (int) insets.getTop());
+        Point pathStep = new Point(parentPosition);
+        KEdgeLayout edgeLayout = edge.getData(KEdgeLayout.class);
+        pathStep.translate((int) edgeLayout.getSourcePoint().getX(), (int) edgeLayout
+                .getSourcePoint().getY());
+        result.add(pathStep);
+        for (KPoint bendPoint : edge.getData(KEdgeLayout.class).getBendPoints()) {
+            pathStep = new Point(parentPosition);
+            pathStep.translate((int) bendPoint.getX(), (int) bendPoint.getY());
+            result.add(pathStep);
+        }
+        pathStep = new Point(parentPosition);
+        pathStep.translate((int) edgeLayout.getTargetPoint().getX(), (int) edgeLayout
+                .getTargetPoint().getY());
+        result.add(pathStep);
+        return result;
+    }
+
+    /**
+     * Returns the absolute position on the canvas of an KNode from a KGraph.
+     * 
+     * @param node
+     *            The node to find the absolute position for
+     * @return The absolute position on the canvas of the KNode
+     * 
+     */
+    public static Point getAbsolutePosition(final KNode node) {
+        KShapeLayout nodeLayout = node.getData(KShapeLayout.class);
+        float xPos = nodeLayout.getXpos();
+        float yPos = nodeLayout.getYpos();
+        KNode iterNode = node;
+        while (iterNode.getParent() != null) {
+            iterNode = iterNode.getParent();
+            KShapeLayout iterLayout = iterNode.getData(KShapeLayout.class);
+            xPos += iterLayout.getXpos();
+            yPos += iterLayout.getYpos();
+            KInsets iterInsets = iterLayout.getInsets();
+            xPos += iterInsets.getLeft();
+            yPos += iterInsets.getTop();
+        }
+        return new PrecisionPoint(xPos, yPos);
+    }
+
     /**
      * Compute animation paths and location for a given model element (referred by an URI).
      * 
-     * @param elementUri The URI object referring the model element
-     * @param currentEditor The editor which holds the model element
-     * @param diagramLayout The layout of the diagram which contains the model element
+     * @param elementUri
+     *            The URI object referring the model element
+     * @param currentEditor
+     *            The editor which holds the model element
+     * @param diagramLayout
+     *            The layout of the diagram which contains the model element
      * @return A list of paths, represented by a list of {@link Point}s
      * 
      */
@@ -231,48 +293,48 @@ public final class KvidUtil {
         if (currentEditor.getDiagram() != null && currentEditor.getDiagram().getElement() != null) {
             resource = currentEditor.getDiagram().getElement().eResource();
         } else {
-            Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+            Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID,
                     "There was a problem with the diagram's resource.");
             StatusManager.getManager().handle(status, StatusManager.SHOW);
             return null;
         }
-        
+
         if (!elementUriPart.startsWith("/")) {
             try {
-                //If not, it might be a Fragment URI, try to translate
+                // If not, it might be a Fragment URI, try to translate
                 elementUriPart = ptolemyUri2FragmentUri(elementUriPart, resource);
             } catch (IllegalArgumentException iaex) {
-                //Notify user about malformatted URI and ignore value during visualization
-                Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID, 
+                // Notify user about malformatted URI and ignore value during visualization
+                Status status = new Status(Status.WARNING, KvidPlugin.PLUGIN_ID,
                         "Needs Fragment URI or URI in Ptolemy Notation. Got: " + elementUriPart,
                         iaex);
                 StatusManager.getManager().handle(status, StatusManager.SHOW);
                 return null;
             }
         }
-        
+
         if (elementUriPart == null) {
-            //Element couldn't be resolved, can't decide on paths then
+            // Element couldn't be resolved, can't decide on paths then
             return null;
         }
         EObject modelElement;
         try {
             modelElement = resource.getEObject(elementUriPart);
         } catch (StringIndexOutOfBoundsException siobex) {
-            //Workaround for an error in the getEObject method
-            //Should return null for a non existing model element
-            //When something was deleted, it sometimes throws this exception instead
+            // Workaround for an error in the getEObject method
+            // Should return null for a non existing model element
+            // When something was deleted, it sometimes throws this exception instead
             return null;
         }
         if (modelElement == null) {
-            //Element couldn't be resolved, can't decide on paths then
+            // Element couldn't be resolved, can't decide on paths then
             return null;
         }
-        List<EditPart> parts = GmfModelingUtil.getEditParts(
-                currentEditor.getDiagramEditPart(), modelElement);
+        List<EditPart> parts = GmfModelingUtil.getEditParts(currentEditor.getDiagramEditPart(),
+                modelElement);
         KNode currentNode = null;
         for (EditPart part : parts) {
-        	Object obj = diagramLayout.getGraphMap().inverse().get(part);
+            Object obj = diagramLayout.getGraphMap().inverse().get(part);
             if (obj instanceof KNode) {
                 currentNode = (KNode) obj;
             }
@@ -281,22 +343,22 @@ public final class KvidUtil {
             }
         }
         if (currentNode == null) {
-            //Couldn't find the referred element, so no paths are created
+            // Couldn't find the referred element, so no paths are created
             return null;
         }
-        
+
         if (currentNode.getPorts().size() > 0) {
             for (KPort port : currentNode.getPorts()) {
                 String portName = "";
-                String portOption = RuntimeConfiguration.getInstance()
-                        .currentValueOfProperty(RuntimeConfiguration.DEFAULT_PORT);
+                String portOption = RuntimeConfiguration.getInstance().currentValueOfProperty(
+                        RuntimeConfiguration.DEFAULT_PORT);
                 if (elementUri.hasPort()) {
                     portName = elementUri.getPort();
                 } else if (portOption != "") {
                     portName = portOption;
                 }
-                if (!port.getLabels().isEmpty() && port.getLabels().get(0).getText().equals(portName)
-                        || portName.isEmpty()) {
+                if (!port.getLabels().isEmpty()
+                        && port.getLabels().get(0).getText().equals(portName) || portName.isEmpty()) {
                     result.addAll(getPathsByPort(port));
                 }
             }
@@ -305,7 +367,7 @@ public final class KvidUtil {
         }
         return result;
     }
-    
+
     /**
      * Helper method for getting the currently active editor.
      * 
@@ -313,8 +375,7 @@ public final class KvidUtil {
      */
     public static IEditorPart getActiveEditor() {
         IEditorPart editor = null;
-        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench()
-                .getWorkbenchWindows();
+        IWorkbenchWindow[] activeWindows = PlatformUI.getWorkbench().getWorkbenchWindows();
         for (int i = 0; i < activeWindows.length; i++) {
             IWorkbenchPage page = activeWindows[i].getActivePage();
             if (page.getActiveEditor() != null) {
