@@ -108,8 +108,13 @@ public final class ScheduleManager extends AbstractManager implements
 
     public void setEnabled(boolean enabled) {
     	this.enabled = enabled;
-    	ContributionManager.getInstance().getMatchingCombo().setEnabled(enabled);
-    	ContributionManager.getInstance().getRecentCombo().setEnabled(enabled);
+    	if (ContributionManager.getInstance().getMatchingCombo() != null) {
+        	ContributionManager.getInstance().getMatchingCombo().setEnabled(enabled);
+    	}
+    	if (ContributionManager.getInstance().getRecentCombo() != null) {
+        	ContributionManager.getInstance().getRecentCombo().setEnabled(enabled);
+    		
+    	}
     }
 
     // --------------------------------------------------------------------------

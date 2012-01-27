@@ -52,7 +52,7 @@ public final class ContributionManager extends AbstractManager {
     private boolean isSummaryMessageDisabled = false;
 
     /** true if the recent combo should be visible, false if not. */
-    private boolean isRecentVisible = true;
+    private boolean isRecentVisible = false;
 
     /** true if a configuration was already loaded from store, false if not. */
     private boolean loaded = false;
