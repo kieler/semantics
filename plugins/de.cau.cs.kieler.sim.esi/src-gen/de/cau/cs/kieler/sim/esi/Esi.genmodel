@@ -26,8 +26,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/val"/>
     </genClasses>
     <genClasses ecoreClass="Esi.ecore#//kvpair">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/k"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/val"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/key"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

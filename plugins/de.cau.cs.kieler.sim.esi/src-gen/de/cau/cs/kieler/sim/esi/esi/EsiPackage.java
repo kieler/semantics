@@ -218,22 +218,22 @@ public interface EsiPackage extends EPackage
   int KVPAIR = 4;
 
   /**
-   * The feature id for the '<em><b>K</b></em>' attribute.
+   * The feature id for the '<em><b>Key</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int KVPAIR__K = 0;
+  int KVPAIR__KEY = 0;
 
   /**
-   * The feature id for the '<em><b>Val</b></em>' attribute.
+   * The feature id for the '<em><b>Value</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int KVPAIR__VAL = 1;
+  int KVPAIR__VALUE = 1;
 
   /**
    * The number of structural features of the '<em>kvpair</em>' class.
@@ -384,26 +384,26 @@ public interface EsiPackage extends EPackage
   EClass getkvpair();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getK <em>K</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getKey <em>Key</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>K</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getK()
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getKey()
    * @see #getkvpair()
    * @generated
    */
-  EAttribute getkvpair_K();
+  EAttribute getkvpair_Key();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getVal <em>Val</em>}'.
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Val</em>'.
-   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getVal()
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getValue()
    * @see #getkvpair()
    * @generated
    */
-  EAttribute getkvpair_Val();
+  EAttribute getkvpair_Value();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -543,20 +543,20 @@ public interface EsiPackage extends EPackage
     EClass KVPAIR = eINSTANCE.getkvpair();
 
     /**
-     * The meta object literal for the '<em><b>K</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute KVPAIR__K = eINSTANCE.getkvpair_K();
+    EAttribute KVPAIR__KEY = eINSTANCE.getkvpair_Key();
 
     /**
-     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute KVPAIR__VAL = eINSTANCE.getkvpair_Val();
+    EAttribute KVPAIR__VALUE = eINSTANCE.getkvpair_Value();
 
   }
 

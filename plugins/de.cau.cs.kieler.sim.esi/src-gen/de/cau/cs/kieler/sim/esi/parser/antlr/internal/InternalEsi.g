@@ -380,9 +380,9 @@ rulekvpair returns [EObject current=null]
 (
 (
 (
-		lv_k_1_1=RULE_ALPHA
+		lv_key_1_1=RULE_ALPHA
 		{
-			newLeafNode(lv_k_1_1, grammarAccess.getKvpairAccess().getKAlphaTerminalRuleCall_1_0_0()); 
+			newLeafNode(lv_key_1_1, grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -390,14 +390,14 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"k",
-        		lv_k_1_1, 
+       			"key",
+        		lv_key_1_1, 
         		"Alpha");
 	    }
 
-    |		lv_k_1_2=RULE_ALPHANUM
+    |		lv_key_1_2=RULE_ALPHANUM
 		{
-			newLeafNode(lv_k_1_2, grammarAccess.getKvpairAccess().getKAlphaNumTerminalRuleCall_1_0_1()); 
+			newLeafNode(lv_key_1_2, grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
 		}
 		{
 	        if ($current==null) {
@@ -405,14 +405,14 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"k",
-        		lv_k_1_2, 
+       			"key",
+        		lv_key_1_2, 
         		"AlphaNum");
 	    }
 
-    |		lv_k_1_3=RULE_ALPHANUMSPECIAL
+    |		lv_key_1_3=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_k_1_3, grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0_2()); 
+			newLeafNode(lv_key_1_3, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
 		}
 		{
 	        if ($current==null) {
@@ -420,8 +420,8 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"k",
-        		lv_k_1_3, 
+       			"key",
+        		lv_key_1_3, 
         		"AlphaNumSpecial");
 	    }
 
@@ -435,9 +435,9 @@ rulekvpair returns [EObject current=null]
 (
 (
 (
-		lv_val_3_1=RULE_ALPHA
+		lv_value_3_1=RULE_ALPHA
 		{
-			newLeafNode(lv_val_3_1, grammarAccess.getKvpairAccess().getValAlphaTerminalRuleCall_3_0_0()); 
+			newLeafNode(lv_value_3_1, grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -445,14 +445,14 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"val",
-        		lv_val_3_1, 
+       			"value",
+        		lv_value_3_1, 
         		"Alpha");
 	    }
 
-    |		lv_val_3_2=RULE_ALPHANUM
+    |		lv_value_3_2=RULE_ALPHANUM
 		{
-			newLeafNode(lv_val_3_2, grammarAccess.getKvpairAccess().getValAlphaNumTerminalRuleCall_3_0_1()); 
+			newLeafNode(lv_value_3_2, grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
 		}
 		{
 	        if ($current==null) {
@@ -460,14 +460,14 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"val",
-        		lv_val_3_2, 
+       			"value",
+        		lv_value_3_2, 
         		"AlphaNum");
 	    }
 
-    |		lv_val_3_3=RULE_ALPHANUMSPECIAL
+    |		lv_value_3_3=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_val_3_3, grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0_2()); 
+			newLeafNode(lv_value_3_3, grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
 		}
 		{
 	        if ($current==null) {
@@ -475,8 +475,8 @@ rulekvpair returns [EObject current=null]
 	        }
        		setWithLastConsumed(
        			$current, 
-       			"val",
-        		lv_val_3_3, 
+       			"value",
+        		lv_value_3_3, 
         		"AlphaNumSpecial");
 	    }
 
@@ -500,7 +500,7 @@ RULE_ALPHANUM : (RULE_ALPHA|'0'..'9')+;
 
 RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'^'|'&'|'*'|'_'|'='|'+'|'-');
 
-RULE_ALPHANUMSPECIAL : (RULE_ALPHA|'0'..'9'|RULE_SPECIAL)+;
+RULE_ALPHANUMSPECIAL : (RULE_ALPHA|RULE_DIGIT|RULE_SPECIAL)+;
 
 RULE_COMMENT : '%' ('a'..'z'|'A'..'N'|'P'..'Z'|RULE_DIGIT|RULE_SPECIAL) ( options {greedy=false;} : . )*'\n';
 

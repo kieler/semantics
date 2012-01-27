@@ -68,7 +68,7 @@ public class EsiTick implements ITick {
     public Map<String, String> getExtraInfos() {
         HashMap<String, String> retval = new HashMap<String, String>();
         for (kvpair kv : tick.getExtraInfos()) {
-            retval.put(kv.getK(), kv.getVal());
+            retval.put(kv.getKey(), kv.getValue());
         }
         
         return retval;

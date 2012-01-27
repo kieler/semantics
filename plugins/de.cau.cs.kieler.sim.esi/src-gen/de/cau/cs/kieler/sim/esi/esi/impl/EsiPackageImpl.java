@@ -261,7 +261,7 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getkvpair_K()
+  public EAttribute getkvpair_Key()
   {
     return (EAttribute)kvpairEClass.getEStructuralFeatures().get(0);
   }
@@ -271,7 +271,7 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getkvpair_Val()
+  public EAttribute getkvpair_Value()
   {
     return (EAttribute)kvpairEClass.getEStructuralFeatures().get(1);
   }
@@ -323,8 +323,8 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     createEAttribute(signalEClass, SIGNAL__VAL);
 
     kvpairEClass = createEClass(KVPAIR);
-    createEAttribute(kvpairEClass, KVPAIR__K);
-    createEAttribute(kvpairEClass, KVPAIR__VAL);
+    createEAttribute(kvpairEClass, KVPAIR__KEY);
+    createEAttribute(kvpairEClass, KVPAIR__VALUE);
   }
 
   /**
@@ -375,8 +375,8 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     initEAttribute(getsignal_Val(), ecorePackage.getEInt(), "val", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(kvpairEClass, kvpair.class, "kvpair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getkvpair_K(), ecorePackage.getEString(), "k", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getkvpair_Val(), ecorePackage.getEString(), "val", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getkvpair_Key(), ecorePackage.getEString(), "key", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getkvpair_Value(), ecorePackage.getEString(), "value", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

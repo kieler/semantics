@@ -22,8 +22,8 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl#getK <em>K</em>}</li>
- *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl#getVal <em>Val</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl#getKey <em>Key</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -32,44 +32,44 @@ import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
 {
   /**
-   * The default value of the '{@link #getK() <em>K</em>}' attribute.
+   * The default value of the '{@link #getKey() <em>Key</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getK()
+   * @see #getKey()
    * @generated
    * @ordered
    */
-  protected static final String K_EDEFAULT = null;
+  protected static final String KEY_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getK() <em>K</em>}' attribute.
+   * The cached value of the '{@link #getKey() <em>Key</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getK()
+   * @see #getKey()
    * @generated
    * @ordered
    */
-  protected String k = K_EDEFAULT;
+  protected String key = KEY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getVal() <em>Val</em>}' attribute.
+   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVal()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected static final String VAL_EDEFAULT = null;
+  protected static final String VALUE_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getVal() <em>Val</em>}' attribute.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVal()
+   * @see #getValue()
    * @generated
    * @ordered
    */
-  protected String val = VAL_EDEFAULT;
+  protected String value = VALUE_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -97,9 +97,9 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getK()
+  public String getKey()
   {
-    return k;
+    return key;
   }
 
   /**
@@ -107,12 +107,12 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setK(String newK)
+  public void setKey(String newKey)
   {
-    String oldK = k;
-    k = newK;
+    String oldKey = key;
+    key = newKey;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__K, oldK, k));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__KEY, oldKey, key));
   }
 
   /**
@@ -120,9 +120,9 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getVal()
+  public String getValue()
   {
-    return val;
+    return value;
   }
 
   /**
@@ -130,12 +130,12 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVal(String newVal)
+  public void setValue(String newValue)
   {
-    String oldVal = val;
-    val = newVal;
+    String oldValue = value;
+    value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__VAL, oldVal, val));
+      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__VALUE, oldValue, value));
   }
 
   /**
@@ -148,10 +148,10 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
   {
     switch (featureID)
     {
-      case EsiPackage.KVPAIR__K:
-        return getK();
-      case EsiPackage.KVPAIR__VAL:
-        return getVal();
+      case EsiPackage.KVPAIR__KEY:
+        return getKey();
+      case EsiPackage.KVPAIR__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -166,11 +166,11 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
   {
     switch (featureID)
     {
-      case EsiPackage.KVPAIR__K:
-        setK((String)newValue);
+      case EsiPackage.KVPAIR__KEY:
+        setKey((String)newValue);
         return;
-      case EsiPackage.KVPAIR__VAL:
-        setVal((String)newValue);
+      case EsiPackage.KVPAIR__VALUE:
+        setValue((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -186,11 +186,11 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
   {
     switch (featureID)
     {
-      case EsiPackage.KVPAIR__K:
-        setK(K_EDEFAULT);
+      case EsiPackage.KVPAIR__KEY:
+        setKey(KEY_EDEFAULT);
         return;
-      case EsiPackage.KVPAIR__VAL:
-        setVal(VAL_EDEFAULT);
+      case EsiPackage.KVPAIR__VALUE:
+        setValue(VALUE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -206,10 +206,10 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
   {
     switch (featureID)
     {
-      case EsiPackage.KVPAIR__K:
-        return K_EDEFAULT == null ? k != null : !K_EDEFAULT.equals(k);
-      case EsiPackage.KVPAIR__VAL:
-        return VAL_EDEFAULT == null ? val != null : !VAL_EDEFAULT.equals(val);
+      case EsiPackage.KVPAIR__KEY:
+        return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
+      case EsiPackage.KVPAIR__VALUE:
+        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
     }
     return super.eIsSet(featureID);
   }
@@ -225,10 +225,10 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (k: ");
-    result.append(k);
-    result.append(", val: ");
-    result.append(val);
+    result.append(" (key: ");
+    result.append(key);
+    result.append(", value: ");
+    result.append(value);
     result.append(')');
     return result.toString();
   }

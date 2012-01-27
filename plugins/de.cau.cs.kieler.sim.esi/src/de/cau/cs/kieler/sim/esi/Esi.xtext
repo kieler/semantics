@@ -1,51 +1,64 @@
-grammar de.cau.cs.kieler.sim.esi.Esi  
+grammar de.cau.cs.kieler.sim.esi.Esi
 //  with org.eclipse.xtext.common.Terminals
-hidden (WS, Comment) 
+hidden(WS, Comment)
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-
 generate esi "http://www.cau.de/cs/kieler/sim/esi/Esi"
 
-tracelist :
-    (traces += trace)+
-;
+tracelist:
+    (traces+=trace)+;
 
-trace :
+trace:
     '!' 'reset' ';'
-    (ticks += tick)+
-;
+    (ticks+=tick)+;
 
-tick :
+tick:
     {tick}
-    (input += signal)* 
-    ('%' 'Output' ':' (output += signal)*)?
-    (extraInfos += kvpair)*
-    ';'
-;
+    (input+=signal)*
+    ('%' 'Output' ':' (output+=signal)*)?
+    (extraInfos+=kvpair)*
+    ';';
 
-signal :
-    name = (Alpha | AlphaNum | AlphaNumSpecial)
-    ( valued ?= '('
-      val = Num
-      ')'
-    )?
-;
+/* From the Xtext documentation:
+ * The ?= sign (boolean assignment operator) expects a feature of type EBoolean and sets it to true if
+ * the right hand side was consumed independently from the concrete value of the right hand side.
+ * 
+ * I. e. 'valued' is set to true if a value could be read.
+ */
+signal:
+    name=(Alpha | AlphaNum | AlphaNumSpecial)
+    (valued?='('
+    val=Num
+    ')')?;
 
-kvpair :
+kvpair:
     '%%'
-    k = (Alpha | AlphaNum | AlphaNumSpecial)
+    key=(Alpha | AlphaNum | AlphaNumSpecial)
     ':'
-    val = (Alpha | AlphaNum | AlphaNumSpecial)
-;
+    value=(Alpha | AlphaNum | AlphaNumSpecial);
 
-terminal Alpha : ('a'..'z' | 'A'..'Z')+;
-terminal Digit : '0'..'9';
-terminal Num returns ecore::EInt : ('+' | '-') ('0'..'9')+;
-terminal AlphaNum : (Alpha | '0'..'9')+;
-terminal Special : ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-';
-terminal AlphaNumSpecial: (Alpha | '0'..'9' | Special)+;
+terminal Alpha:
+    ('a'..'z' | 'A'..'Z')+;
 
-terminal Comment : '%' ('a'..'z' | 'A'..'N' | 'P'..'Z' | Digit | Special) -> '\n';
-terminal WS :  '\t' | ' ' | '\r' | '\n';
+terminal Digit:
+    '0'..'9';
+
+terminal Num returns ecore::EInt:
+    ('+' | '-') ('0'..'9')+;
+
+terminal AlphaNum:
+    (Alpha | '0'..'9')+;
+
+terminal Special:
+    ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-';
+
+terminal AlphaNumSpecial:
+    (Alpha | Digit | Special)+;
+
+terminal Comment:
+    '%' ('a'..'z' | 'A'..'N' | 'P'..'Z' | Digit | Special)->'\n';
+
+terminal WS:
+    '\t' | ' ' | '\r' | '\n';
 
 

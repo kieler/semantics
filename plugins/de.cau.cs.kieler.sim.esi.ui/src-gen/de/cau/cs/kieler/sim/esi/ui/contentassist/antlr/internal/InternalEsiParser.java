@@ -603,9 +603,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Signal__NameAlternatives_0_0"
 
 
-    // $ANTLR start "rule__Kvpair__KAlternatives_1_0"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:235:1: rule__Kvpair__KAlternatives_1_0 : ( ( RULE_ALPHA ) | ( RULE_ALPHANUM ) | ( RULE_ALPHANUMSPECIAL ) );
-    public final void rule__Kvpair__KAlternatives_1_0() throws RecognitionException {
+    // $ANTLR start "rule__Kvpair__KeyAlternatives_1_0"
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:235:1: rule__Kvpair__KeyAlternatives_1_0 : ( ( RULE_ALPHA ) | ( RULE_ALPHANUM ) | ( RULE_ALPHANUMSPECIAL ) );
+    public final void rule__Kvpair__KeyAlternatives_1_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -642,9 +642,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:240:1: ( RULE_ALPHA )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:241:1: RULE_ALPHA
                     {
-                     before(grammarAccess.getKvpairAccess().getKAlphaTerminalRuleCall_1_0_0()); 
-                    match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rule__Kvpair__KAlternatives_1_0453); 
-                     after(grammarAccess.getKvpairAccess().getKAlphaTerminalRuleCall_1_0_0()); 
+                     before(grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
+                    match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rule__Kvpair__KeyAlternatives_1_0453); 
+                     after(grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
 
                     }
 
@@ -657,9 +657,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:246:6: ( RULE_ALPHANUM )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:247:1: RULE_ALPHANUM
                     {
-                     before(grammarAccess.getKvpairAccess().getKAlphaNumTerminalRuleCall_1_0_1()); 
-                    match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__KAlternatives_1_0470); 
-                     after(grammarAccess.getKvpairAccess().getKAlphaNumTerminalRuleCall_1_0_1()); 
+                     before(grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
+                    match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__KeyAlternatives_1_0470); 
+                     after(grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
 
                     }
 
@@ -672,9 +672,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:252:6: ( RULE_ALPHANUMSPECIAL )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:253:1: RULE_ALPHANUMSPECIAL
                     {
-                     before(grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0_2()); 
-                    match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KAlternatives_1_0487); 
-                     after(grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0_2()); 
+                     before(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
+                    match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAlternatives_1_0487); 
+                     after(grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
 
                     }
 
@@ -695,12 +695,12 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Kvpair__KAlternatives_1_0"
+    // $ANTLR end "rule__Kvpair__KeyAlternatives_1_0"
 
 
-    // $ANTLR start "rule__Kvpair__ValAlternatives_3_0"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:263:1: rule__Kvpair__ValAlternatives_3_0 : ( ( RULE_ALPHA ) | ( RULE_ALPHANUM ) | ( RULE_ALPHANUMSPECIAL ) );
-    public final void rule__Kvpair__ValAlternatives_3_0() throws RecognitionException {
+    // $ANTLR start "rule__Kvpair__ValueAlternatives_3_0"
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:263:1: rule__Kvpair__ValueAlternatives_3_0 : ( ( RULE_ALPHA ) | ( RULE_ALPHANUM ) | ( RULE_ALPHANUMSPECIAL ) );
+    public final void rule__Kvpair__ValueAlternatives_3_0() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
@@ -737,9 +737,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:268:1: ( RULE_ALPHA )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:269:1: RULE_ALPHA
                     {
-                     before(grammarAccess.getKvpairAccess().getValAlphaTerminalRuleCall_3_0_0()); 
-                    match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rule__Kvpair__ValAlternatives_3_0519); 
-                     after(grammarAccess.getKvpairAccess().getValAlphaTerminalRuleCall_3_0_0()); 
+                     before(grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
+                    match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rule__Kvpair__ValueAlternatives_3_0519); 
+                     after(grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
 
                     }
 
@@ -752,9 +752,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:274:6: ( RULE_ALPHANUM )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:275:1: RULE_ALPHANUM
                     {
-                     before(grammarAccess.getKvpairAccess().getValAlphaNumTerminalRuleCall_3_0_1()); 
-                    match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__ValAlternatives_3_0536); 
-                     after(grammarAccess.getKvpairAccess().getValAlphaNumTerminalRuleCall_3_0_1()); 
+                     before(grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
+                    match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__ValueAlternatives_3_0536); 
+                     after(grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
 
                     }
 
@@ -767,9 +767,9 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:280:6: ( RULE_ALPHANUMSPECIAL )
                     // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:281:1: RULE_ALPHANUMSPECIAL
                     {
-                     before(grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0_2()); 
-                    match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__ValAlternatives_3_0553); 
-                     after(grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0_2()); 
+                     before(grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
+                    match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__ValueAlternatives_3_0553); 
+                     after(grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
 
                     }
 
@@ -790,7 +790,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Kvpair__ValAlternatives_3_0"
+    // $ANTLR end "rule__Kvpair__ValueAlternatives_3_0"
 
 
     // $ANTLR start "rule__Trace__Group__0"
@@ -2441,31 +2441,31 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__1__Impl"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:914:1: rule__Kvpair__Group__1__Impl : ( ( rule__Kvpair__KAssignment_1 ) ) ;
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:914:1: rule__Kvpair__Group__1__Impl : ( ( rule__Kvpair__KeyAssignment_1 ) ) ;
     public final void rule__Kvpair__Group__1__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:918:1: ( ( ( rule__Kvpair__KAssignment_1 ) ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:919:1: ( ( rule__Kvpair__KAssignment_1 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:918:1: ( ( ( rule__Kvpair__KeyAssignment_1 ) ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:919:1: ( ( rule__Kvpair__KeyAssignment_1 ) )
             {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:919:1: ( ( rule__Kvpair__KAssignment_1 ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:920:1: ( rule__Kvpair__KAssignment_1 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:919:1: ( ( rule__Kvpair__KeyAssignment_1 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:920:1: ( rule__Kvpair__KeyAssignment_1 )
             {
-             before(grammarAccess.getKvpairAccess().getKAssignment_1()); 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:921:1: ( rule__Kvpair__KAssignment_1 )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:921:2: rule__Kvpair__KAssignment_1
+             before(grammarAccess.getKvpairAccess().getKeyAssignment_1()); 
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:921:1: ( rule__Kvpair__KeyAssignment_1 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:921:2: rule__Kvpair__KeyAssignment_1
             {
-            pushFollow(FOLLOW_rule__Kvpair__KAssignment_1_in_rule__Kvpair__Group__1__Impl1815);
-            rule__Kvpair__KAssignment_1();
+            pushFollow(FOLLOW_rule__Kvpair__KeyAssignment_1_in_rule__Kvpair__Group__1__Impl1815);
+            rule__Kvpair__KeyAssignment_1();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getKvpairAccess().getKAssignment_1()); 
+             after(grammarAccess.getKvpairAccess().getKeyAssignment_1()); 
 
             }
 
@@ -2596,31 +2596,31 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
 
 
     // $ANTLR start "rule__Kvpair__Group__3__Impl"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:973:1: rule__Kvpair__Group__3__Impl : ( ( rule__Kvpair__ValAssignment_3 ) ) ;
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:973:1: rule__Kvpair__Group__3__Impl : ( ( rule__Kvpair__ValueAssignment_3 ) ) ;
     public final void rule__Kvpair__Group__3__Impl() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:977:1: ( ( ( rule__Kvpair__ValAssignment_3 ) ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:978:1: ( ( rule__Kvpair__ValAssignment_3 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:977:1: ( ( ( rule__Kvpair__ValueAssignment_3 ) ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:978:1: ( ( rule__Kvpair__ValueAssignment_3 ) )
             {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:978:1: ( ( rule__Kvpair__ValAssignment_3 ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:979:1: ( rule__Kvpair__ValAssignment_3 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:978:1: ( ( rule__Kvpair__ValueAssignment_3 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:979:1: ( rule__Kvpair__ValueAssignment_3 )
             {
-             before(grammarAccess.getKvpairAccess().getValAssignment_3()); 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:980:1: ( rule__Kvpair__ValAssignment_3 )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:980:2: rule__Kvpair__ValAssignment_3
+             before(grammarAccess.getKvpairAccess().getValueAssignment_3()); 
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:980:1: ( rule__Kvpair__ValueAssignment_3 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:980:2: rule__Kvpair__ValueAssignment_3
             {
-            pushFollow(FOLLOW_rule__Kvpair__ValAssignment_3_in_rule__Kvpair__Group__3__Impl1934);
-            rule__Kvpair__ValAssignment_3();
+            pushFollow(FOLLOW_rule__Kvpair__ValueAssignment_3_in_rule__Kvpair__Group__3__Impl1934);
+            rule__Kvpair__ValueAssignment_3();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getKvpairAccess().getValAssignment_3()); 
+             after(grammarAccess.getKvpairAccess().getValueAssignment_3()); 
 
             }
 
@@ -2976,32 +2976,32 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     // $ANTLR end "rule__Signal__ValAssignment_1_1"
 
 
-    // $ANTLR start "rule__Kvpair__KAssignment_1"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1128:1: rule__Kvpair__KAssignment_1 : ( ( rule__Kvpair__KAlternatives_1_0 ) ) ;
-    public final void rule__Kvpair__KAssignment_1() throws RecognitionException {
+    // $ANTLR start "rule__Kvpair__KeyAssignment_1"
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1128:1: rule__Kvpair__KeyAssignment_1 : ( ( rule__Kvpair__KeyAlternatives_1_0 ) ) ;
+    public final void rule__Kvpair__KeyAssignment_1() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1132:1: ( ( ( rule__Kvpair__KAlternatives_1_0 ) ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1133:1: ( ( rule__Kvpair__KAlternatives_1_0 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1132:1: ( ( ( rule__Kvpair__KeyAlternatives_1_0 ) ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1133:1: ( ( rule__Kvpair__KeyAlternatives_1_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1133:1: ( ( rule__Kvpair__KAlternatives_1_0 ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1134:1: ( rule__Kvpair__KAlternatives_1_0 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1133:1: ( ( rule__Kvpair__KeyAlternatives_1_0 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1134:1: ( rule__Kvpair__KeyAlternatives_1_0 )
             {
-             before(grammarAccess.getKvpairAccess().getKAlternatives_1_0()); 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1135:1: ( rule__Kvpair__KAlternatives_1_0 )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1135:2: rule__Kvpair__KAlternatives_1_0
+             before(grammarAccess.getKvpairAccess().getKeyAlternatives_1_0()); 
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1135:1: ( rule__Kvpair__KeyAlternatives_1_0 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1135:2: rule__Kvpair__KeyAlternatives_1_0
             {
-            pushFollow(FOLLOW_rule__Kvpair__KAlternatives_1_0_in_rule__Kvpair__KAssignment_12240);
-            rule__Kvpair__KAlternatives_1_0();
+            pushFollow(FOLLOW_rule__Kvpair__KeyAlternatives_1_0_in_rule__Kvpair__KeyAssignment_12240);
+            rule__Kvpair__KeyAlternatives_1_0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getKvpairAccess().getKAlternatives_1_0()); 
+             after(grammarAccess.getKvpairAccess().getKeyAlternatives_1_0()); 
 
             }
 
@@ -3020,35 +3020,35 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Kvpair__KAssignment_1"
+    // $ANTLR end "rule__Kvpair__KeyAssignment_1"
 
 
-    // $ANTLR start "rule__Kvpair__ValAssignment_3"
-    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1144:1: rule__Kvpair__ValAssignment_3 : ( ( rule__Kvpair__ValAlternatives_3_0 ) ) ;
-    public final void rule__Kvpair__ValAssignment_3() throws RecognitionException {
+    // $ANTLR start "rule__Kvpair__ValueAssignment_3"
+    // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1144:1: rule__Kvpair__ValueAssignment_3 : ( ( rule__Kvpair__ValueAlternatives_3_0 ) ) ;
+    public final void rule__Kvpair__ValueAssignment_3() throws RecognitionException {
 
         		int stackSize = keepStackSize();
             
         try {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1148:1: ( ( ( rule__Kvpair__ValAlternatives_3_0 ) ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1149:1: ( ( rule__Kvpair__ValAlternatives_3_0 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1148:1: ( ( ( rule__Kvpair__ValueAlternatives_3_0 ) ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1149:1: ( ( rule__Kvpair__ValueAlternatives_3_0 ) )
             {
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1149:1: ( ( rule__Kvpair__ValAlternatives_3_0 ) )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1150:1: ( rule__Kvpair__ValAlternatives_3_0 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1149:1: ( ( rule__Kvpair__ValueAlternatives_3_0 ) )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1150:1: ( rule__Kvpair__ValueAlternatives_3_0 )
             {
-             before(grammarAccess.getKvpairAccess().getValAlternatives_3_0()); 
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1151:1: ( rule__Kvpair__ValAlternatives_3_0 )
-            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1151:2: rule__Kvpair__ValAlternatives_3_0
+             before(grammarAccess.getKvpairAccess().getValueAlternatives_3_0()); 
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1151:1: ( rule__Kvpair__ValueAlternatives_3_0 )
+            // ../de.cau.cs.kieler.sim.esi.ui/src-gen/de/cau/cs/kieler/sim/esi/ui/contentassist/antlr/internal/InternalEsi.g:1151:2: rule__Kvpair__ValueAlternatives_3_0
             {
-            pushFollow(FOLLOW_rule__Kvpair__ValAlternatives_3_0_in_rule__Kvpair__ValAssignment_32273);
-            rule__Kvpair__ValAlternatives_3_0();
+            pushFollow(FOLLOW_rule__Kvpair__ValueAlternatives_3_0_in_rule__Kvpair__ValueAssignment_32273);
+            rule__Kvpair__ValueAlternatives_3_0();
 
             state._fsp--;
 
 
             }
 
-             after(grammarAccess.getKvpairAccess().getValAlternatives_3_0()); 
+             after(grammarAccess.getKvpairAccess().getValueAlternatives_3_0()); 
 
             }
 
@@ -3067,7 +3067,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
         }
         return ;
     }
-    // $ANTLR end "rule__Kvpair__ValAssignment_3"
+    // $ANTLR end "rule__Kvpair__ValueAssignment_3"
 
     // Delegated rules
 
@@ -3093,12 +3093,12 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Signal__NameAlternatives_0_0387 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Signal__NameAlternatives_0_0404 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Signal__NameAlternatives_0_0421 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Kvpair__KAlternatives_1_0453 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__KAlternatives_1_0470 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KAlternatives_1_0487 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Kvpair__ValAlternatives_3_0519 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__ValAlternatives_3_0536 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__ValAlternatives_3_0553 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Kvpair__KeyAlternatives_1_0453 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__KeyAlternatives_1_0470 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__KeyAlternatives_1_0487 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHA_in_rule__Kvpair__ValueAlternatives_3_0519 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rule__Kvpair__ValueAlternatives_3_0536 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rule__Kvpair__ValueAlternatives_3_0553 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Trace__Group__0__Impl_in_rule__Trace__Group__0583 = new BitSet(new long[]{0x0000000000002000L});
     public static final BitSet FOLLOW_rule__Trace__Group__1_in_rule__Trace__Group__0586 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_12_in_rule__Trace__Group__0__Impl614 = new BitSet(new long[]{0x0000000000000002L});
@@ -3153,12 +3153,12 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_19_in_rule__Kvpair__Group__0__Impl1754 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__1__Impl_in_rule__Kvpair__Group__11785 = new BitSet(new long[]{0x0000000000020000L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__2_in_rule__Kvpair__Group__11788 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__KAssignment_1_in_rule__Kvpair__Group__1__Impl1815 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__KeyAssignment_1_in_rule__Kvpair__Group__1__Impl1815 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__2__Impl_in_rule__Kvpair__Group__21845 = new BitSet(new long[]{0x0000000000000070L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__3_in_rule__Kvpair__Group__21848 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_17_in_rule__Kvpair__Group__2__Impl1876 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rule__Kvpair__Group__3__Impl_in_rule__Kvpair__Group__31907 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__ValAssignment_3_in_rule__Kvpair__Group__3__Impl1934 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__ValueAssignment_3_in_rule__Kvpair__Group__3__Impl1934 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruletrace_in_rule__Tracelist__TracesAssignment1977 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_ruletick_in_rule__Trace__TicksAssignment_32008 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulesignal_in_rule__Tick__InputAssignment_12039 = new BitSet(new long[]{0x0000000000000002L});
@@ -3167,7 +3167,7 @@ public class InternalEsiParser extends AbstractInternalContentAssistParser {
     public static final BitSet FOLLOW_rule__Signal__NameAlternatives_0_0_in_rule__Signal__NameAssignment_02132 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_20_in_rule__Signal__ValuedAssignment_1_02170 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_RULE_NUM_in_rule__Signal__ValAssignment_1_12209 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__KAlternatives_1_0_in_rule__Kvpair__KAssignment_12240 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rule__Kvpair__ValAlternatives_3_0_in_rule__Kvpair__ValAssignment_32273 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__KeyAlternatives_1_0_in_rule__Kvpair__KeyAssignment_12240 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rule__Kvpair__ValueAlternatives_3_0_in_rule__Kvpair__ValueAssignment_32273 = new BitSet(new long[]{0x0000000000000002L});
 
 }

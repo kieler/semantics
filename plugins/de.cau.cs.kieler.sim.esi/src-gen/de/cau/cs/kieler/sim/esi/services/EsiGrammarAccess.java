@@ -139,7 +139,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cValNumTerminalRuleCall_1_1_0 = (RuleCall)cValAssignment_1_1.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
 		
-		//signal:
+		/// * From the Xtext documentation:
+		// * The ?= sign (boolean assignment operator) expects a feature of type EBoolean and sets it to true if
+		// * the right hand side was consumed independently from the concrete value of the right hand side.
+		// * 
+		// * I. e. 'valued' is set to true if a value could be read.
+		// * / signal:
 		//	name=(Alpha | AlphaNum | AlphaNumSpecial) (valued?="(" val=Num ")")?;
 		public ParserRule getRule() { return rule; }
 
@@ -184,60 +189,60 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "kvpair");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Keyword cPercentSignPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cKAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cKAlternatives_1_0 = (Alternatives)cKAssignment_1.eContents().get(0);
-		private final RuleCall cKAlphaTerminalRuleCall_1_0_0 = (RuleCall)cKAlternatives_1_0.eContents().get(0);
-		private final RuleCall cKAlphaNumTerminalRuleCall_1_0_1 = (RuleCall)cKAlternatives_1_0.eContents().get(1);
-		private final RuleCall cKAlphaNumSpecialTerminalRuleCall_1_0_2 = (RuleCall)cKAlternatives_1_0.eContents().get(2);
+		private final Assignment cKeyAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Alternatives cKeyAlternatives_1_0 = (Alternatives)cKeyAssignment_1.eContents().get(0);
+		private final RuleCall cKeyAlphaTerminalRuleCall_1_0_0 = (RuleCall)cKeyAlternatives_1_0.eContents().get(0);
+		private final RuleCall cKeyAlphaNumTerminalRuleCall_1_0_1 = (RuleCall)cKeyAlternatives_1_0.eContents().get(1);
+		private final RuleCall cKeyAlphaNumSpecialTerminalRuleCall_1_0_2 = (RuleCall)cKeyAlternatives_1_0.eContents().get(2);
 		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Alternatives cValAlternatives_3_0 = (Alternatives)cValAssignment_3.eContents().get(0);
-		private final RuleCall cValAlphaTerminalRuleCall_3_0_0 = (RuleCall)cValAlternatives_3_0.eContents().get(0);
-		private final RuleCall cValAlphaNumTerminalRuleCall_3_0_1 = (RuleCall)cValAlternatives_3_0.eContents().get(1);
-		private final RuleCall cValAlphaNumSpecialTerminalRuleCall_3_0_2 = (RuleCall)cValAlternatives_3_0.eContents().get(2);
+		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
+		private final Alternatives cValueAlternatives_3_0 = (Alternatives)cValueAssignment_3.eContents().get(0);
+		private final RuleCall cValueAlphaTerminalRuleCall_3_0_0 = (RuleCall)cValueAlternatives_3_0.eContents().get(0);
+		private final RuleCall cValueAlphaNumTerminalRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
+		private final RuleCall cValueAlphaNumSpecialTerminalRuleCall_3_0_2 = (RuleCall)cValueAlternatives_3_0.eContents().get(2);
 		
 		//kvpair:
-		//	"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial);
+		//	"%%" key=(Alpha | AlphaNum | AlphaNumSpecial) ":" value=(Alpha | AlphaNum | AlphaNumSpecial);
 		public ParserRule getRule() { return rule; }
 
-		//"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial)
+		//"%%" key=(Alpha | AlphaNum | AlphaNumSpecial) ":" value=(Alpha | AlphaNum | AlphaNumSpecial)
 		public Group getGroup() { return cGroup; }
 
 		//"%%"
 		public Keyword getPercentSignPercentSignKeyword_0() { return cPercentSignPercentSignKeyword_0; }
 
-		//k=(Alpha | AlphaNum | AlphaNumSpecial)
-		public Assignment getKAssignment_1() { return cKAssignment_1; }
+		//key=(Alpha | AlphaNum | AlphaNumSpecial)
+		public Assignment getKeyAssignment_1() { return cKeyAssignment_1; }
 
 		//Alpha | AlphaNum | AlphaNumSpecial
-		public Alternatives getKAlternatives_1_0() { return cKAlternatives_1_0; }
+		public Alternatives getKeyAlternatives_1_0() { return cKeyAlternatives_1_0; }
 
 		//Alpha
-		public RuleCall getKAlphaTerminalRuleCall_1_0_0() { return cKAlphaTerminalRuleCall_1_0_0; }
+		public RuleCall getKeyAlphaTerminalRuleCall_1_0_0() { return cKeyAlphaTerminalRuleCall_1_0_0; }
 
 		//AlphaNum
-		public RuleCall getKAlphaNumTerminalRuleCall_1_0_1() { return cKAlphaNumTerminalRuleCall_1_0_1; }
+		public RuleCall getKeyAlphaNumTerminalRuleCall_1_0_1() { return cKeyAlphaNumTerminalRuleCall_1_0_1; }
 
 		//AlphaNumSpecial
-		public RuleCall getKAlphaNumSpecialTerminalRuleCall_1_0_2() { return cKAlphaNumSpecialTerminalRuleCall_1_0_2; }
+		public RuleCall getKeyAlphaNumSpecialTerminalRuleCall_1_0_2() { return cKeyAlphaNumSpecialTerminalRuleCall_1_0_2; }
 
 		//":"
 		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
 
-		//val=(Alpha | AlphaNum | AlphaNumSpecial)
-		public Assignment getValAssignment_3() { return cValAssignment_3; }
+		//value=(Alpha | AlphaNum | AlphaNumSpecial)
+		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
 
 		//Alpha | AlphaNum | AlphaNumSpecial
-		public Alternatives getValAlternatives_3_0() { return cValAlternatives_3_0; }
+		public Alternatives getValueAlternatives_3_0() { return cValueAlternatives_3_0; }
 
 		//Alpha
-		public RuleCall getValAlphaTerminalRuleCall_3_0_0() { return cValAlphaTerminalRuleCall_3_0_0; }
+		public RuleCall getValueAlphaTerminalRuleCall_3_0_0() { return cValueAlphaTerminalRuleCall_3_0_0; }
 
 		//AlphaNum
-		public RuleCall getValAlphaNumTerminalRuleCall_3_0_1() { return cValAlphaNumTerminalRuleCall_3_0_1; }
+		public RuleCall getValueAlphaNumTerminalRuleCall_3_0_1() { return cValueAlphaNumTerminalRuleCall_3_0_1; }
 
 		//AlphaNumSpecial
-		public RuleCall getValAlphaNumSpecialTerminalRuleCall_3_0_2() { return cValAlphaNumSpecialTerminalRuleCall_3_0_2; }
+		public RuleCall getValueAlphaNumSpecialTerminalRuleCall_3_0_2() { return cValueAlphaNumSpecialTerminalRuleCall_3_0_2; }
 	}
 	
 	
@@ -298,7 +303,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getTickAccess().getRule();
 	}
 
-	//signal:
+	/// * From the Xtext documentation:
+	// * The ?= sign (boolean assignment operator) expects a feature of type EBoolean and sets it to true if
+	// * the right hand side was consumed independently from the concrete value of the right hand side.
+	// * 
+	// * I. e. 'valued' is set to true if a value could be read.
+	// * / signal:
 	//	name=(Alpha | AlphaNum | AlphaNumSpecial) (valued?="(" val=Num ")")?;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
@@ -309,7 +319,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//kvpair:
-	//	"%%" k=(Alpha | AlphaNum | AlphaNumSpecial) ":" val=(Alpha | AlphaNum | AlphaNumSpecial);
+	//	"%%" key=(Alpha | AlphaNum | AlphaNumSpecial) ":" value=(Alpha | AlphaNum | AlphaNumSpecial);
 	public KvpairElements getKvpairAccess() {
 		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
 	}
@@ -349,7 +359,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal AlphaNumSpecial:
-	//	(Alpha | "0".."9" | Special)+;
+	//	(Alpha | Digit | Special)+;
 	public TerminalRule getAlphaNumSpecialRule() {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 
