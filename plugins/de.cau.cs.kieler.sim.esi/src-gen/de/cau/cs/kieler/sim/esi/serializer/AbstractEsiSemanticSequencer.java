@@ -82,7 +82,7 @@ public class AbstractEsiSemanticSequencer extends AbstractSemanticSequencer {
 	
 	/**
 	 * Constraint:
-	 *     ((k=Alpha | k=AlphaNum | k=AlphaNumSpecial) (val=Alpha | val=AlphaNum | val=AlphaNumSpecial))
+	 *     ((key=Alpha | key=AlphaNum | key=AlphaNumSpecial) (value=Alpha | value=AlphaNum | value=AlphaNumSpecial))
 	 */
 	protected void sequence_kvpair(EObject context, kvpair semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

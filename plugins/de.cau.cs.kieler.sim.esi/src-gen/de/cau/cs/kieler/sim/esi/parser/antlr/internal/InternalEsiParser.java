@@ -899,39 +899,39 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulekvpair"
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:372:1: rulekvpair returns [EObject current=null] : (otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:372:1: rulekvpair returns [EObject current=null] : (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) ;
     public final EObject rulekvpair() throws RecognitionException {
         EObject current = null;
 
         Token otherlv_0=null;
-        Token lv_k_1_1=null;
-        Token lv_k_1_2=null;
-        Token lv_k_1_3=null;
+        Token lv_key_1_1=null;
+        Token lv_key_1_2=null;
+        Token lv_key_1_3=null;
         Token otherlv_2=null;
-        Token lv_val_3_1=null;
-        Token lv_val_3_2=null;
-        Token lv_val_3_3=null;
+        Token lv_value_3_1=null;
+        Token lv_value_3_2=null;
+        Token lv_value_3_3=null;
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:375:28: ( (otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:375:28: ( (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:3: otherlv_0= '%%' ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:3: otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) )
             {
             otherlv_0=(Token)match(input,20,FOLLOW_20_in_rulekvpair745); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0());
                 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:380:1: ( ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:380:1: ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_k_1_1= RULE_ALPHA | lv_k_1_2= RULE_ALPHANUM | lv_k_1_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL )
             int alt9=3;
             switch ( input.LA(1) ) {
             case RULE_ALPHA:
@@ -958,11 +958,11 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             switch (alt9) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:383:3: lv_k_1_1= RULE_ALPHA
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:383:3: lv_key_1_1= RULE_ALPHA
                     {
-                    lv_k_1_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair764); 
+                    lv_key_1_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair764); 
 
-                    			newLeafNode(lv_k_1_1, grammarAccess.getKvpairAccess().getKAlphaTerminalRuleCall_1_0_0()); 
+                    			newLeafNode(lv_key_1_1, grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
                     		
 
                     	        if (current==null) {
@@ -970,19 +970,19 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"k",
-                            		lv_k_1_1, 
+                           			"key",
+                            		lv_key_1_1, 
                             		"Alpha");
                     	    
 
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:398:8: lv_k_1_2= RULE_ALPHANUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:398:8: lv_key_1_2= RULE_ALPHANUM
                     {
-                    lv_k_1_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair784); 
+                    lv_key_1_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair784); 
 
-                    			newLeafNode(lv_k_1_2, grammarAccess.getKvpairAccess().getKAlphaNumTerminalRuleCall_1_0_1()); 
+                    			newLeafNode(lv_key_1_2, grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
                     		
 
                     	        if (current==null) {
@@ -990,19 +990,19 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"k",
-                            		lv_k_1_2, 
+                           			"key",
+                            		lv_key_1_2, 
                             		"AlphaNum");
                     	    
 
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:413:8: lv_k_1_3= RULE_ALPHANUMSPECIAL
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:413:8: lv_key_1_3= RULE_ALPHANUMSPECIAL
                     {
-                    lv_k_1_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804); 
+                    lv_key_1_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804); 
 
-                    			newLeafNode(lv_k_1_3, grammarAccess.getKvpairAccess().getKAlphaNumSpecialTerminalRuleCall_1_0_2()); 
+                    			newLeafNode(lv_key_1_3, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
                     		
 
                     	        if (current==null) {
@@ -1010,8 +1010,8 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"k",
-                            		lv_k_1_3, 
+                           			"key",
+                            		lv_key_1_3, 
                             		"AlphaNumSpecial");
                     	    
 
@@ -1030,13 +1030,13 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
                 	newLeafNode(otherlv_2, grammarAccess.getKvpairAccess().getColonKeyword_2());
                 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:435:1: ( ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:435:1: ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_val_3_1= RULE_ALPHA | lv_val_3_2= RULE_ALPHANUM | lv_val_3_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL )
             int alt10=3;
             switch ( input.LA(1) ) {
             case RULE_ALPHA:
@@ -1063,11 +1063,11 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:438:3: lv_val_3_1= RULE_ALPHA
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:438:3: lv_value_3_1= RULE_ALPHA
                     {
-                    lv_val_3_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair843); 
+                    lv_value_3_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair843); 
 
-                    			newLeafNode(lv_val_3_1, grammarAccess.getKvpairAccess().getValAlphaTerminalRuleCall_3_0_0()); 
+                    			newLeafNode(lv_value_3_1, grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
                     		
 
                     	        if (current==null) {
@@ -1075,19 +1075,19 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"val",
-                            		lv_val_3_1, 
+                           			"value",
+                            		lv_value_3_1, 
                             		"Alpha");
                     	    
 
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:453:8: lv_val_3_2= RULE_ALPHANUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:453:8: lv_value_3_2= RULE_ALPHANUM
                     {
-                    lv_val_3_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair863); 
+                    lv_value_3_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair863); 
 
-                    			newLeafNode(lv_val_3_2, grammarAccess.getKvpairAccess().getValAlphaNumTerminalRuleCall_3_0_1()); 
+                    			newLeafNode(lv_value_3_2, grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
                     		
 
                     	        if (current==null) {
@@ -1095,19 +1095,19 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"val",
-                            		lv_val_3_2, 
+                           			"value",
+                            		lv_value_3_2, 
                             		"AlphaNum");
                     	    
 
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:468:8: lv_val_3_3= RULE_ALPHANUMSPECIAL
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:468:8: lv_value_3_3= RULE_ALPHANUMSPECIAL
                     {
-                    lv_val_3_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair883); 
+                    lv_value_3_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair883); 
 
-                    			newLeafNode(lv_val_3_3, grammarAccess.getKvpairAccess().getValAlphaNumSpecialTerminalRuleCall_3_0_2()); 
+                    			newLeafNode(lv_value_3_3, grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
                     		
 
                     	        if (current==null) {
@@ -1115,8 +1115,8 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                     	        }
                            		setWithLastConsumed(
                            			current, 
-                           			"val",
-                            		lv_val_3_3, 
+                           			"value",
+                            		lv_value_3_3, 
                             		"AlphaNumSpecial");
                     	    
 

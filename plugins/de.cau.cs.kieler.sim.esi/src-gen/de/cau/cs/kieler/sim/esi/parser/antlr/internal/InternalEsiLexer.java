@@ -454,10 +454,10 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = RULE_ALPHANUMSPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:22: ( ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+ )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:24: ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:22: ( ( RULE_ALPHA | RULE_DIGIT | RULE_SPECIAL )+ )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:24: ( RULE_ALPHA | RULE_DIGIT | RULE_SPECIAL )+
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:24: ( RULE_ALPHA | '0' .. '9' | RULE_SPECIAL )+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:24: ( RULE_ALPHA | RULE_DIGIT | RULE_SPECIAL )+
             int cnt4=0;
             loop4:
             do {
@@ -562,14 +562,14 @@ public class InternalEsiLexer extends Lexer {
             	    }
             	    break;
             	case 2 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:36: '0' .. '9'
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:36: RULE_DIGIT
             	    {
-            	    matchRange('0','9'); 
+            	    mRULE_DIGIT(); 
 
             	    }
             	    break;
             	case 3 :
-            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:45: RULE_SPECIAL
+            	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:503:47: RULE_SPECIAL
             	    {
             	    mRULE_SPECIAL(); 
 

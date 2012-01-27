@@ -83,7 +83,7 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Keyword" value="%%"/>
-      <elements xsi:type="xtext:Assignment" feature="k" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="key" operator="=">
         <terminal xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
           <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
@@ -91,7 +91,7 @@
         </terminal>
       </elements>
       <elements xsi:type="xtext:Keyword" value=":"/>
-      <elements xsi:type="xtext:Assignment" feature="val" operator="=">
+      <elements xsi:type="xtext:Assignment" feature="value" operator="=">
         <terminal xsi:type="xtext:Alternatives">
           <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
           <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
@@ -177,10 +177,7 @@
     </type>
     <alternatives xsi:type="xtext:Alternatives" cardinality="+">
       <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
-      <elements xsi:type="xtext:CharacterRange">
-        <left value="0"/>
-        <right value="9"/>
-      </elements>
+      <elements xsi:type="xtext:RuleCall" rule="//@rules.6"/>
       <elements xsi:type="xtext:RuleCall" rule="//@rules.9"/>
     </alternatives>
   </rules>
