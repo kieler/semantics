@@ -106,8 +106,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                             + tracenum, true, e);
                 }
             } catch(KiemInitializationException e) {
-                trainingMode = true;
-                //throw new KiemInitializationException("Trace file is empty or does not exist. Switching to training mode", false, e);
+                throw new KiemInitializationException(Constants.ERR_READ, true, e);
             }
         }
     }
@@ -125,6 +124,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /**
      * Tell KIEM that this component does produce data.
      * 
+     * @return always true
      */
     public boolean isProducer() {
         return true;
@@ -133,6 +133,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /**
      * Tell KIEM that this component does observe data.
      * 
+     * @return always true
      */
     @Override
     public boolean isObserver() {
@@ -143,6 +144,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * Take a step in the simulation by reading the internal state and providing the
      * signals read from the ESI/ESO file to the simulation engine.
      * 
+     * @return data that shall be injected into the simulation
      * @throws KiemExecutionException 
      *          when the JSON object with signals from ESI/ESO file could not be built.
      */
@@ -152,7 +154,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
               
         if(!trainingMode) {
-            retval = genInputs();
+            retval = loadInputs();
         }
         
         addInputs(obj, retval);
@@ -229,7 +231,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @return the signals that shall be injected
      * @throws KiemExecutionException when building the JSONObject fails
      */
-    public JSONObject genInputs() throws KiemExecutionException {
+    public JSONObject loadInputs() throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
         // Proceed to the next step in the trace file
@@ -271,6 +273,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         String filename = null;
         try {
             /*
+             * Try creating a default file name.
              * The try block is necessary to suppress NPEs and other exceptions when we are either
              * running in headless mode or there are no editor opened. Below, you will see that a
              * filename is only proposed if this try block succeeds. We have to use absolute file

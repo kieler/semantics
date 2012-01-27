@@ -33,7 +33,8 @@ public class Constants {
     public static final String ERR_NOTRACE = "The trace file does not contain a trace number ";
     public static final String ERR_JSON = "Could not build JSON object with signals read from ESO file";
     public static final String ERR_EMPTYESO = "Trace file is empty or does not exist.";
-    public static final String ERR_WRITE = "An error occurred when writing ESO trace file";
+    public static final String ERR_WRITE = "An error occurred when writing the ESO trace file";
+    public static final String ERR_READ = "An error occurred when reading the ESO trace file";
     
     public static final String VAL_TITLE = "Validation error";
 }
