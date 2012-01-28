@@ -652,9 +652,12 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		JSONObject res = new JSONObject();
 		try {
 			if (myModel != null) {
-				for (Module mod : myModel.getModules()) {
-					if (mod.getInterface() != null && mod.getInterface().getIntSignalDecls() != null) {
-						for (InterfaceSignalDecl sig : mod.getInterface()
+				// only do this for the first module as it is the main module
+				if (myModel.getModules() != null && myModel.getModules().size() > 0) {
+					Module module = myModel.getModules().get(0);
+
+					if (module.getInterface() != null && module.getInterface().getIntSignalDecls() != null) {
+						for (InterfaceSignalDecl sig : module.getInterface()
 								.getIntSignalDecls()) {
 							if (sig instanceof Input) {
 								for (Signal s : sig.getSignals()) {
