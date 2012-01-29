@@ -58,30 +58,11 @@ import org.eclipse.xtext.xbase.lib.StringExtensions;
 @SuppressWarnings("all")
 public class Esterel2Simulation {
   public Program transform2Simulation(final Program program) {
-    final ArrayList<?>_cacheKey = CollectionLiterals.newArrayList(program);
-    final Program _result;
-    synchronized (_createCache_transform2Simulation) {
-      if (_createCache_transform2Simulation.containsKey(_cacheKey)) {
-        return _createCache_transform2Simulation.get(_cacheKey);
-      }
-      Program _createProgram = EsterelFactory.eINSTANCE.createProgram();
-      _result = _createProgram;
-      _createCache_transform2Simulation.put(_cacheKey, _result);
-    }
-    _init_transform2Simulation(_result, program);
-    return _result;
-  }
-  
-  private final HashMap<ArrayList<?>,Program> _createCache_transform2Simulation = CollectionLiterals.newHashMap();
-  
-  private void _init_transform2Simulation(final Program target, final Program program) {
+    Program _xblockexpression = null;
+    {
       String AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
-      EList<Module> _modules = program.getModules();
-      for (final Module module : _modules) {
-        EList<Module> _modules_1 = target.getModules();
-        Object _clone = CloningExtensions.clone(module);
-        _modules_1.add(((Module) _clone));
-      }
+      Object _clone = CloningExtensions.clone(program);
+      Program target = ((Program) _clone);
       TreeIterator<EObject> _eAllContents = program.eAllContents();
       Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_eAllContents);
       Iterable<Statement> _filter = IterableExtensions.<Statement>filter(_iterable, de.cau.cs.kieler.esterel.esterel.Statement.class);
@@ -98,6 +79,12 @@ public class Esterel2Simulation {
       List<Module> _list_1 = IterableExtensions.<Module>toList(_filter_2);
       Module _get = _list_1.get(0);
       Module targetMainmodule = _get;
+      TreeIterator<EObject> _eAllContents_3 = targetMainmodule.eAllContents();
+      Iterable<EObject> _iterable_3 = IteratorExtensions.<EObject>toIterable(_eAllContents_3);
+      Iterable<Statement> _filter_3 = IterableExtensions.<Statement>filter(_iterable_3, de.cau.cs.kieler.esterel.esterel.Statement.class);
+      Iterable<Statement> targetMainmoduleStatements = _filter_3;
+      List<Statement> _list_2 = IterableExtensions.<Statement>toList(targetMainmoduleStatements);
+      List<Statement> targetMainmoduleStatemensCopy = _list_2;
       ModuleInterface _interface = targetMainmodule.getInterface();
       boolean _operator_equals = ObjectExtensions.operator_equals(_interface, null);
       if (_operator_equals) {
@@ -108,9 +95,9 @@ public class Esterel2Simulation {
         }
       }
       int i = 0;
-      List<Statement> _list_2 = IterableExtensions.<Statement>toList(originalStatements);
-      List<Statement> originalStatementsList = _list_2;
-      for (final Statement targetStatement : targetStatementsCopy) {
+      List<Statement> _list_3 = IterableExtensions.<Statement>toList(originalStatements);
+      List<Statement> originalStatementsList = _list_3;
+      for (final Statement targetStatement : targetMainmoduleStatemensCopy) {
         {
           Statement _get_1 = originalStatementsList.get(i);
           Statement originalStatement = _get_1;
@@ -126,6 +113,9 @@ public class Esterel2Simulation {
           this.transformStatement(targetStatement, targetMainmodule, statementUID);
         }
       }
+      _xblockexpression = (target);
+    }
+    return _xblockexpression;
   }
   
   public Pause createPause(final Object object) {

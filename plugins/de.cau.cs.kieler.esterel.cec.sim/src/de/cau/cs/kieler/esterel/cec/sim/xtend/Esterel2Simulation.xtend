@@ -34,19 +34,21 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 class Esterel2Simulation {
     
     // Generale method to create the enriched Esterel simulation code
-   	def create target : EsterelFactory::eINSTANCE.createProgram transform2Simulation (Program program) {
+   	def Program transform2Simulation (Program program) {
    		var AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
    		
 		// Clone the complete Esterel program
-		for (module : program.modules) {
-			target.modules.add(CloningExtensions::clone(module) as Module);	
-		}
+		// clone the program and then copy modules to preserve the run-links
+   		var target = CloningExtensions::clone(program) as Program;
+
 		
 		var originalStatements = program.eAllContents().toIterable().filter(typeof(Statement));
 		var targetStatements = target.eAllContents().toIterable().filter(typeof(Statement));
 		var targetStatementsCopy = targetStatements.toList;
 		
 		var targetMainmodule = target.eAllContents().toIterable().filter(typeof(Module)).toList.get(0);
+		var targetMainmoduleStatements = targetMainmodule.eAllContents().toIterable().filter(typeof(Statement));
+		var targetMainmoduleStatemensCopy = targetMainmoduleStatements.toList;
 		
 		// Ensure an interface declaration
 		if (targetMainmodule.interface == null) {
@@ -58,18 +60,16 @@ class Esterel2Simulation {
 		// Iterate over a copy of the list	
 		var i = 0;	
 		var originalStatementsList = originalStatements.toList;
-		for(targetStatement : targetStatementsCopy) {
+//		for(targetStatement : targetStatemensCopy) {
+		for(targetStatement : targetMainmoduleStatemensCopy) {
 			var originalStatement = originalStatementsList.get(i);
 			i = i + 1;
-			// First find the according statement in the orginal statements list
-			//val predicate = [ Statement statement | originalStatement == statement ]
-			//var targetStatement = targetStatements.filter(predicate).toList.get(0) as Statement;
-//			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).replace("/","x").replace("@","").replace(".","") ;//.hashCode.toString();
 			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetStatement.transformStatement(targetMainmodule, statementUID);
 		}
 		
+		target;
 	}	
 	
 	
