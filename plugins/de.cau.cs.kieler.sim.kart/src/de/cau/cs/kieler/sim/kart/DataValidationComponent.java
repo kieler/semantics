@@ -24,6 +24,7 @@ import java.util.Set;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
@@ -45,10 +46,10 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
- * This component implements a KIEM data component to validate signal and state information generated in a
- * simulation against pre-recorded values. If the validation fails, the simulation is stopped and
- * the error is visualized in the SyncChart. Additionally, an explanatory error message is
- * displayed. This component does not provide any means to record or replay signal and state
+ * This component implements a KIEM data component to validate signal and state information
+ * generated in a simulation against pre-recorded values. If the validation fails, the simulation is
+ * stopped and the error is visualized in the SyncChart. Additionally, an explanatory error message
+ * is displayed. This component does not provide any means to record or replay signal and state
  * information, refer to {@link DataRecordingComponent} and {@link DataReplayComponent}
  * 
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
@@ -76,10 +77,11 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     private List<HashMap<String, Object>> recOutputs;
 
     /** A map of all values of all recorded special signals in each step */
-    private List<HashMap<String, Object>> recSpecialSignals;
+    private List<HashMap<String, String>> recVariables;
 
     /**
-     * A map f all values of all simulated or recorded input signals in each step. Pushed here by the DataReplayComponent
+     * A map f all values of all simulated or recorded input signals in each step. Pushed here by
+     * the DataReplayComponent
      */
     private List<HashMap<String, Object>> recInputs;
 
@@ -87,7 +89,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * A list of special signals from the properties like a state signal that will be compared
      * differently than regular signals and are found in special comments in the ESO file
      */
-    private Set<Pair<String,String>> variables;
+    private Set<Pair<String, String>> variables;
 
     /**
      * The validation engine that will be used to validate signal and variable information
@@ -97,10 +99,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     /** Name of the variable the replay component will give us our configuration through */
     private String configVarName;
 
-    /** Name of the variable the replay component will give us the values of the output signals
-     * and variables through
+    /**
+     * Name of the variable the replay component will give us the values of the output signals and
+     * variables through
      */
     private String outputVarName;
+    
+    /** Name of the variable under which all signals injected into the simulation by components
+     * in front of this component will be saved. These will be regarded as input signals when
+     * writing an ESO file.
+     */
+    private String prevInputVar;
 
     /**
      * Initialize the data component. Open an existing ESO file, read the expected signal and state
@@ -114,17 +123,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         step = 0;
         filename = "";
         ignoreAdditionalSignals = false;
-        
+
         KiemProperty[] properties = this.getProperties();
 
         recOutputs = new LinkedList<HashMap<String, Object>>();
-        recSpecialSignals = new LinkedList<HashMap<String, Object>>();
+        recVariables = new LinkedList<HashMap<String, String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
 
         editor = (DiagramEditor) getActivePage().getActiveEditor();
 
         // load properties
-        variables = new HashSet<Pair<String,String>>();
+        variables = new HashSet<Pair<String, String>>();
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
@@ -140,8 +149,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         // Read the file
 
         if (!trainingMode) {
-            valEngine = new DefaultValidationEngine(editor, ignoreAdditionalSignals,
-                        null);
+            valEngine = new DefaultValidationEngine(editor, ignoreAdditionalSignals, null);
         }
     }
 
@@ -154,9 +162,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     public void wrapup() throws KiemInitializationException {
         Utilities.visualizeStates(null, null, editor);
-        
+
         if (trainingMode) {
-            TraceWriter writer = new TraceWriter(recInputs, recOutputs, recSpecialSignals, filename);
+            TraceWriter writer = new TraceWriter(recInputs, recOutputs, recVariables, filename);
             writer.doWrite();
         }
     }
@@ -240,12 +248,12 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         String filename = null;
         try {
             /*
-             * Try creating a default file name
-             * The try block is necessary to suppress NPEs and other exception when we are either
-             * running in headless mode or there are no editor opened. Below, you will see that a
-             * filename is only proposed if this try block succeeds. We have to use absolute file
-             * paths here, because the KiemPropertyTypeFile dialog only returns absolute paths. I do
-             * not want to change that for fear that something else breaks.
+             * Try creating a default file name The try block is necessary to suppress NPEs and
+             * other exception when we are either running in headless mode or there are no editor
+             * opened. Below, you will see that a filename is only proposed if this try block
+             * succeeds. We have to use absolute file paths here, because the KiemPropertyTypeFile
+             * dialog only returns absolute paths. I do not want to change that for fear that
+             * something else breaks.
              */
             URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
                     .eResource().getURI().trimFileExtension().appendFileExtension("eso");
@@ -255,16 +263,17 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             // do nothing
         }
 
-        KiemProperty[] properties = new KiemProperty[6];
+        KiemProperty[] properties = new KiemProperty[7];
         properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         if (filename != null) {
             fileProperty.setValue(properties[0], filename);
         }
         properties[1] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
         properties[2] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
-        properties[3] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
-        properties[4] = new KiemProperty(Constants.IGNOREEXTRA, false);
-        properties[5] = new KiemProperty(Constants.TRAINMODE, false);
+        properties[3] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
+        properties[4] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
+        properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
+        properties[6] = new KiemProperty(Constants.TRAINMODE, false);
 
         return properties;
     }
@@ -280,31 +289,89 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
-        /*
-        Map<String, Object> outputSignals = Utilities.convertAndRecordSignals(obj, recInputs,
-                recOutputs, recSpecialSignals, variables);
+        updateConfiguration(obj);
+        recordDataPool(obj);
         
-        if (!trainingMode && trace.getSize() >= (step - 1)) {
-            ITick tick = trace.get(step - 1);
-            List<ISignal> signals = tick.getOutputs();
+        JSONObject retval = new JSONObject();
 
-            Map<String, String> special = tick.getExtraInfos();
+        for (Pair<String, String> variable : variables) {
+            valEngine.validateVariable(variable.getFirst(),
+                    recVariables.get((int) step).get(variable.getFirst()),
+                    obj.opt(variable.getFirst()), isHistoryStep(), retval);
+        }
 
-            if (useState) {
-                Iterator<String> it = special.keySet().iterator();
-
-                while (it.hasNext()) {
-                    String key = it.next();
-                    String value = special.get(key);
-
-                    valEngine.validateVariable(key, value, obj.optString(key), isHistoryStep());
+        valEngine.validateSignals(recOutputs.get((int) step), obj, isHistoryStep(), retval);
+        
+        return retval;
+    }
+    
+    /**
+     * Update the internal configuration with values received from the replay component
+     * through the data pool.
+     * 
+     * @param json the data pool JSON object
+     * @throws KiemExecutionException when reading the JSON object fails
+     */
+    private void updateConfiguration(JSONObject json) throws KiemExecutionException {
+        try {
+            JSONObject config = json.getJSONObject(configVarName);
+            filename = (String) config.get(Constants.VAR_ESOFILE);
+            trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
+        } catch (JSONException e) {
+            throw new KiemExecutionException("Could not update configuration", true, e);
+        }
+    }
+    
+    private void recordDataPool(JSONObject json) throws KiemExecutionException {
+        try {
+            /*
+             * Record previous input signals
+             */
+            HashMap<String,Object> inputSignals = new HashMap<String,Object>();
+            JSONObject prevInput = json.getJSONObject(prevInputVar);
+            
+            // this is necessary because the JSON library return an unparameterized Iterator.
+            @SuppressWarnings("unchecked")
+            Iterator<String> keys = prevInput.keys();
+            
+            while(keys.hasNext()) {
+                String key = keys.next();
+                inputSignals.put(key, prevInput.opt(key));
+            }
+            recInputs.add(inputSignals);
+            
+            /*
+             * Record output signals and variables
+             */
+            HashMap<String,Object> outputSignals = new HashMap<String,Object>();
+            HashMap<String,String> outputVariables = new HashMap<String,String>();
+            JSONObject output = json.getJSONObject(outputVarName);
+            
+            // again, this is necessary because the JSON library returns an unparameterized Iterator.
+            @SuppressWarnings("unchecked")
+            Iterator<String> outputKeys = output.keys();
+            
+            while(outputKeys.hasNext()) {
+                String outputKey = keys.next();
+                
+                try {
+                    JSONObject outputSignal = output.getJSONObject(outputKey);
+                    if(outputSignal.has("present") && outputSignal.getBoolean("present") == true) {
+                        // it actually is a present signal
+                        outputSignals.put(outputKey, outputSignal.opt("value"));
+                    }
+                } catch (JSONException e) {
+                    // it probably is a variable
+                    outputVariables.put(outputKey, output.optString(outputKey));
                 }
             }
-
-            valEngine.validateSignals(signals, outputSignals, isHistoryStep(), step);
+            
+            recOutputs.add(outputSignals);
+            recVariables.add(outputVariables);
+            
+        } catch(JSONException e) {
+            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
         }
-*/
-        return null;
     }
 
     /**
@@ -320,8 +387,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             if (prop.getKey().equals(Constants.ESOFILE)) {
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
-                    throw new KiemPropertyException(
-                            Constants.ERR_NOTESO);
+                    throw new KiemPropertyException(Constants.ERR_NOTESO);
                 }
             }
         }
