@@ -15,6 +15,14 @@
 
 package de.cau.cs.kieler.synccharts.custom;
 
+import java.util.Collections;
+
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.operations.OperationHistoryFactory;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
@@ -26,8 +34,14 @@ import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.PointList;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.Transaction;
+import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.notation.LineStyle;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.Style;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.LineAttributes;
 
@@ -47,6 +61,9 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
      */
     public IFigure getFigureByString(final String input, final IFigure oldFigure,
             final EObject object, final EditPart part) {
+        
+        this.setLineStyle(part);
+        
         if (oldFigure instanceof PolylineConnection) {
             PolylineConnection splineFigure = (PolylineConnection) oldFigure;
             splineFigure.setForegroundColor(ColorConstants.black);
@@ -75,7 +92,37 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
         }
         return oldFigure;
     }
+   
+    private void setLineStyle(final EditPart part) {
 
+        if (part instanceof IGraphicalEditPart) {
+            final IGraphicalEditPart gPart = (IGraphicalEditPart) part;
+
+            AbstractEMFOperation emfOp = new AbstractEMFOperation(gPart.getEditingDomain(),
+                    "set line color",
+                    Collections.singletonMap(Transaction.OPTION_UNPROTECTED, true)) {
+                @Override
+                protected IStatus doExecute(final IProgressMonitor monitor, final IAdaptable info)
+                        throws ExecutionException {
+                    Style style = gPart.getPrimaryView().getStyle(
+                            NotationPackage.Literals.LINE_STYLE);
+                    if (style != null && style instanceof LineStyle) {
+                        LineStyle lineStyle = (LineStyle) style;
+                        lineStyle.setLineColor(SWT.COLOR_BLACK);
+                    }
+                    return Status.OK_STATUS;
+                }
+            };
+
+            try {
+                // execute above operation
+                OperationHistoryFactory.getOperationHistory().execute(emfOp, null, null);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }   
+    
     /**
      * {@inheritDoc}
      */
