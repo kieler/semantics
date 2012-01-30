@@ -20,11 +20,11 @@ package de.cau.cs.kieler.sim.kart;
 public class Constants {
     public static final String ESOFILE = "ESI/ESO trace file";
     public static final String TRACENUM = "Trace number to replay";
-    public static final String VALEXTRA = "Validate extra information";
-    public static final String EXTRAVARS = "Extra information signals";
-    public static final String STATEVAR = "State variable";
     public static final String IGNOREEXTRA = "Ignore additionally generated signals";
     public static final String TRAINMODE = "Training mode";
+    public static final String CONFIGVAR = "Configuration variable";
+    public static final String OUTPUTVAR = "Output signals/variables variable name";
+    public static final String VALVAR = "Names of variables to validate and their respective error variable names";
     
     public static final String[] FILEEXTS = { "*.eso", "*.esi" };
     public static final String[] FILEEXTNAMES = { "ESO", "ESI" };
@@ -37,4 +37,11 @@ public class Constants {
     public static final String ERR_READ = "An error occurred when reading the ESO trace file";
     
     public static final String VAL_TITLE = "Validation error";
+    
+    public static final String VAR_TRAINMODE = "trainmode";
+    public static final String VAR_ESOFILE = "esofile";
+    
+    public static final String DEF_CONFIGVAR = "kartConfig";
+    public static final String DEF_OUTPUTVAR = "kartOutput";
+    public static final String DEF_VALVAR = "(state, errorStates)";
 }

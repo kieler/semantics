@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kart;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
@@ -23,6 +24,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.esi.EsiFile;
 import de.cau.cs.kieler.sim.esi.ISignal;
 import de.cau.cs.kieler.sim.esi.ITick;
@@ -30,6 +32,7 @@ import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -50,16 +53,26 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  */
 public class DataReplayComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
+    /** The number of the current step */
+    private long step;
+    
+    /** Name of the ESO file to be replayed/recorded from/to. */
+    private String filename;
+    
+    /** Name of the variable that will be used to communicate with the validation component */
+    private String configVarName;
+    
+    /** Name of the variable that will be used to communicate the values of output signals and
+     * variables to the validation component.
+     */
+    private String outputVarName;
 
     /** The single trace out of a ESI/ESO file that shall be replayed */
-    private ITrace trace = null;
+    private ITrace trace;
     
     /** Are we in training mode, i. e. recording, or not */
     private boolean trainingMode;
     
-    /** The validation component input signals will be sent to when in training mode */
-    private DataValidationComponent valComponent = null;
-
     /**
      * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
@@ -69,19 +82,25 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     public void initialize() throws KiemInitializationException {
         KiemProperty[] properties = this.getProperties();
+        trace = null;
+        filename = "";
+        int tracenum = 0;
+        step = 0;
+        configVarName = "";
+        outputVarName = "";
 
         // load properties
-        String filename = "";
-        int tracenum = 0;
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.ESOFILE)) {
                 filename = prop.getValue();
-            }
-            if (prop.getKey().equals(Constants.TRACENUM)) {
+            } else if (prop.getKey().equals(Constants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
-            }
-            if (prop.getKey().equals(Constants.TRAINMODE)) {
+            } else if (prop.getKey().equals(Constants.TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
+            } else if (prop.getKey().equals(Constants.CONFIGVAR)) {
+                configVarName = prop.getValue();
+            } else if (prop.getKey().equals(Constants.OUTPUTVAR)) {
+                outputVarName = prop.getValue();
             }
         }
 
@@ -111,6 +130,30 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     public void wrapup() throws KiemInitializationException {
         
+    }
+    
+    /**
+     * Sets the step number according to the button the user pressed. This is needed to correctly
+     * handle history steps or jumps.
+     */
+    @SuppressWarnings("unchecked")
+    @Override
+    public void notifyEvent(KiemEvent event) {
+        if (event.isEvent(KiemEvent.STEP_INFO) && event.getInfo() instanceof Pair) {
+            step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
+        }
+    }
+
+    /**
+     * Return the types of events this component listens to
+     * 
+     * @return the event types, currently only {@code KiemEvent.STEP_INFO}
+     */
+    @Override
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.STEP_INFO };
+        KiemEvent event = new KiemEvent(events);
+        return event;
     }
 
     /**
@@ -144,77 +187,15 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = null;
 
-              
         if(!trainingMode) {
-            retval = loadInputs();
+            loadInputs(retval);
+            loadOutputs(retval);
         }
-        
-        addInputs(obj, retval);
-        
+
+        loadValConfigVars(retval);
+
         // inject signals into simulation
         return retval;
-    }
-
-    /**
-     * Pushes signals currently present in the simulation (i. e. input signals)
-     * to the DataValidation component which is thus able to differentiate between
-     * input and output signals.
-     * This method takes two JSONObjects as parameters. It extracts the actual signals
-     * from both and sends a union of those two sets to the validation component.
-     * 
-     * @param obj First set of signals
-     * @param obj2 Second set of signals
-     */
-    private void addInputs(JSONObject obj, JSONObject obj2) {
-        if(valComponent == null) {
-            // TODO: Retrieve the actual instance of the active DataValidationComponent, not some fucked up new one.
-            List<DataComponentWrapper> comps = KiemPlugin.getDefault().getDataComponentWrapperList();
-            valComponent = null;
-            for(DataComponentWrapper comp : comps) {
-                if(comp.getDataComponent().getDataComponentId().equals(DataValidationComponent.COMPONENTID)) {
-                    valComponent = (DataValidationComponent) comp.getDataComponent();
-                }
-            }
-        }
-        
-        final HashMap<String, Object> signals = new HashMap<String, Object>();
-        
-        if(obj != null) {
-            @SuppressWarnings("unchecked") // necessary because the JSON library does not return a parameterized Iterator
-            Iterator<String> keys = obj.keys();
-    
-            while(keys.hasNext()) {
-                String key = keys.next();
-                try {
-                    if(obj.getJSONObject(key).getBoolean("present")) {
-                        Object val = obj.getJSONObject(key).opt("value");
-                        signals.put(key, val);
-                    }
-                } catch(JSONException e) {
-                    // we catched a special signal, which is not a JSON object.
-                    // simply do nothing
-                }
-            }
-        }
-        
-        if(obj2 != null) {
-            @SuppressWarnings("unchecked") // necessary because the JSON library does not return a parameterized Iterator
-            Iterator<String> keys = obj2.keys();
-    
-            while(keys.hasNext()) {
-                String key = keys.next();
-                try {
-                    if(obj2.getJSONObject(key).getBoolean("present") && !signals.containsKey(key)) {
-                        Object val = obj2.getJSONObject(key).opt("value");
-                        signals.put(key, val);
-                    }
-                } catch(JSONException e) {
-                    // we catched a special signal, which is not a JSON object.
-                    // simply do nothing
-                }
-            }
-        }
-        valComponent.putInputs(signals);
     }
 
     /**
@@ -223,9 +204,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @return the signals that shall be injected
      * @throws KiemExecutionException when building the JSONObject fails
      */
-    public JSONObject loadInputs() throws KiemExecutionException {
-        JSONObject retval = new JSONObject();
-
+    private void loadInputs(JSONObject retval) throws KiemExecutionException {
         // Proceed to the next step in the trace file
         if (trace.hasNext()) {
             ITick tick = trace.next();
@@ -247,8 +226,64 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                         Constants.ERR_JSON, true, e);
             }
         }
+    }
+    
+    /**
+     * Load output signals and variables from ESO trace and prepare them for injection into the
+     * data pool. This data will later on be used by the validation component.
+     * 
+     * @param json the JSON object the output data will be added to
+     * @throws KiemExecutionException when adding to the JSON object fails
+     */
+    private void loadOutputs(JSONObject json) throws KiemExecutionException {
+        ITick curTick = trace.get(step);
+        Iterator<ISignal> outputSignals = curTick.getOutputs().iterator();
+        JSONObject value = new JSONObject();
         
-        return retval;
+        // Add output signals
+        try {
+            while (outputSignals.hasNext()) {
+                ISignal outputSignal = outputSignals.next();
+                if (outputSignal.isValued()) {
+                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(outputSignal.getValue(), true));
+                } else {
+                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(true));
+                }
+            }
+        
+            // Add variables
+            Iterator<Entry<String,String>> variables = curTick.getExtraInfos().entrySet().iterator();
+            
+            while (variables.hasNext()) {
+                    Entry<String,String> variable = variables.next();
+                    value.accumulate(variable.getKey(), variable.getValue());
+            }
+            
+            json.accumulate(outputVarName, value);
+        } catch (JSONException e) {
+            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+        }
+    }
+    
+    /**
+     * Prepare the current configuration of the replay component for addition to the data pool.
+     * This configuration will be used by the validation component, so we save several properties there
+     * and most properties will always be in sync (e. g. training mode).
+     * 
+     * @param json The JSONObject the configuration variables will be added to
+     * @throws KiemExecutionException when adding to the JSON object fails
+     */
+    private void loadValConfigVars(JSONObject json) throws KiemExecutionException {
+        JSONObject value = new JSONObject();
+        
+        try {
+            value.accumulate(Constants.TRAINMODE, trainingMode);
+            value.accumulate(Constants.VAR_ESOFILE, filename);
+            
+            json.accumulate(configVarName, value);
+        } catch (JSONException e) {
+            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+        }
     }
 
     /**
@@ -280,8 +315,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             // do nothing
         }
         
-        KiemProperty[] properties = new KiemProperty[3];
-        //properties[0] = new KiemProperty("Model editor", new KiemPropertyTypeEditor());
+        KiemProperty[] properties = new KiemProperty[5];
         properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         if(filename != null) {
             fileProperty.setValue(properties[0], filename);
@@ -289,6 +323,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
         properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty(Constants.TRAINMODE, false);
+        properties[3] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
+        properties[4] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
 
         return properties;
     }

@@ -28,6 +28,8 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -106,14 +108,22 @@ public class Utilities {
      * @param split the array of Strings
      * @return a set including all String from the parameter
      */
-    public static Set<String> makeSet(String[] split) {
-        HashSet<String> retval = new HashSet<String>();
-
-        for (int i = 0; i < split.length; i++) {
-            retval.add(split[i]);
+    public static Set<Pair<String,String>> makeSetOfPairs(String string) throws KiemInitializationException {
+        try {
+            String[] strPairs = string.split("\\)\\s*,\\s*\\(|\\(|\\)");
+            HashSet<Pair<String,String>> retval = new HashSet<Pair<String,String>>();
+    
+            for (String strPair : strPairs) {
+                if(!strPair.equals("")) {
+                    String[] pair = strPair.split(",");
+                    retval.add(new Pair<String,String>(pair[0], pair[1]));
+                } else {
+                }
+            }
+            return retval;
+        } catch (Exception e) {
+            throw new KiemInitializationException("Error during gathering variable names to validate", true, e);
         }
-
-        return retval;
     }
 
     /**
