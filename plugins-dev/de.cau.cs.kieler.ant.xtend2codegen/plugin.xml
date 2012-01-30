@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.ant.core.antTasks">
+      <antTask
+            class="de.cau.cs.kieler.ant.xtend2codegen.Xtend2CodegenTask"
+            eclipseRuntime="true"
+            headless="true"
+            library="antTasks.jar"
+            name="xtend2codegen">
+      </antTask>
+   </extension>
+
+</plugin>

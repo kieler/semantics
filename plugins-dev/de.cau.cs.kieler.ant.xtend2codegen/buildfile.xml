@@ -1,0 +1,16 @@
+<project name="build KIELER elements" default="test">
+	
+	<target name="test">
+		<!-- xtend2codegen
+		    sourceFolder="de.cau.cs.kieler.ant.xtend2codegen/src"
+		    outputFolder="de.cau.cs.kieler.ant.xtend2codegen/xtend-gen3 " / -->
+		<xtend2codegen
+		    sourceFolder="../plugins/de.cau.cs.kieler.klighd.graphiti/transformations"
+		    outputFolder="../plugins/de.cau.cs.kieler.klighd.graphiti/xtend-gen3 ">
+			<classpath>
+				<pathelement path="/Applications/Eclipse 3.7.1/plugins/org.eclipse.graphiti.mm_0.8.1.v20110907-0857.jar"/>
+			</classpath>
+		</xtend2codegen>
+    </target>
+	
+</project>
