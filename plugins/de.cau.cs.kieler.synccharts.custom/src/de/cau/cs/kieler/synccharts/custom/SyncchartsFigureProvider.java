@@ -14,6 +14,14 @@
  *****************************************************************************/
 package de.cau.cs.kieler.synccharts.custom;
 
+import java.util.Collections;
+
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.commands.operations.OperationHistoryFactory;
+import org.eclipse.core.runtime.IAdaptable;
+import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
@@ -22,8 +30,18 @@ import org.eclipse.draw2d.RoundedRectangle;
 import org.eclipse.draw2d.geometry.Dimension;
 import org.eclipse.draw2d.geometry.Rectangle;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.transaction.Transaction;
+import org.eclipse.emf.workspace.AbstractEMFOperation;
 import org.eclipse.gef.EditPart;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
+import org.eclipse.gmf.runtime.notation.LineStyle;
+import org.eclipse.gmf.runtime.notation.NotationPackage;
+import org.eclipse.gmf.runtime.notation.RoutingStyle;
+import org.eclipse.gmf.runtime.notation.Smoothness;
+import org.eclipse.gmf.runtime.notation.Style;
+import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.core.model.figures.DoubleRoundedRectangle;
 import de.cau.cs.kieler.core.model.gmf.figures.layout.container.Cell;
@@ -88,6 +106,9 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      */
     public IFigure getFigureByString(final String input, final IFigure oldFigure,
             final EObject object, final EditPart part) {
+
+        this.setLineStyle(part);
+
         if (input.equals("normalState")) {
             return createNormalFigure();
         } else if (input.equals("initialState")) {
@@ -117,6 +138,36 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         } else {
             // FIXME throw a more specific exception
             throw new RuntimeException(input + "wasn't found in figureProvider");
+        }
+    }
+
+    private void setLineStyle(final EditPart part) {
+
+        if (part instanceof IGraphicalEditPart) {
+            final IGraphicalEditPart gPart = (IGraphicalEditPart) part;
+
+            AbstractEMFOperation emfOp = new AbstractEMFOperation(gPart.getEditingDomain(),
+                    "set line color",
+                    Collections.singletonMap(Transaction.OPTION_UNPROTECTED, true)) {
+                @Override
+                protected IStatus doExecute(final IProgressMonitor monitor, final IAdaptable info)
+                        throws ExecutionException {
+                    Style style = gPart.getPrimaryView().getStyle(
+                            NotationPackage.Literals.LINE_STYLE);
+                    if (style != null && style instanceof LineStyle) {
+                        LineStyle lineStyle = (LineStyle) style;
+                        lineStyle.setLineColor(SWT.COLOR_BLACK);
+                    }
+                    return Status.OK_STATUS;
+                }
+            };
+
+            try {
+                // execute above operation
+                OperationHistoryFactory.getOperationHistory().execute(emfOp, null, null);
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -387,47 +438,32 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
      */
     public LayoutManager getLayoutManagerByString(final String input,
             final LayoutManager oldLayoutManager, final EObject object) {
-        
-         if (oldLayoutManager instanceof StateLayout) { 
-             StateLayout stateLayout = (StateLayout) oldLayoutManager; 
-             stateLayout.setModelElement(object); 
-         }
-         
-        
-        /*
-        StateLayout.AbstractSyncChartsConfiguration layout = new SyncChartsConfiguration();
-        if (oldLayoutManager instanceof StateLayout && object instanceof State) {
-            State state = (State) object;
-            StateLayout stateLayout = ((StateLayout) oldLayoutManager);
-            ExtendedTable newLayout;
-            if (input.startsWith("simpleNormal")) {
-                newLayout = layouts.simpleStateLayout;
-            } else if (input.startsWith("complexNormal")) {
-                setIsEmptyValues(layouts.complexStateLayout, state);
-                newLayout = layouts.complexStateLayout;
-            } else if (input.startsWith("reference")) {
-                setIsEmptyValues(layouts.referenceStateLayout, state);
-                newLayout = layouts.referenceStateLayout;
-            } else if (input.startsWith("conditional")) {
-                setIsEmptyValues(layouts.conditionalStateLayout, state);
-                newLayout = layouts.conditionalStateLayout;
-            } else if (input.startsWith("textual")) {
-                setIsEmptyValues(layouts.complexStateLayout, state);
-                newLayout = layouts.complexStateLayout;
-            } else {
-                newLayout = layouts.simpleStateLayout;
-            }
-            if (input.endsWith("/final")) {
-                newLayout.padding(DoubleRoundedRectangle.BORDER_WIDTH);
-            } else {
-                newLayout.padding(0);
-            }
-            stateLayout.setCorrespondingLayout(newLayout);
+
+        if (oldLayoutManager instanceof StateLayout) {
+            StateLayout stateLayout = (StateLayout) oldLayoutManager;
+            stateLayout.setModelElement(object);
         }
-        */
+
+        /*
+         * StateLayout.AbstractSyncChartsConfiguration layout = new SyncChartsConfiguration(); if
+         * (oldLayoutManager instanceof StateLayout && object instanceof State) { State state =
+         * (State) object; StateLayout stateLayout = ((StateLayout) oldLayoutManager); ExtendedTable
+         * newLayout; if (input.startsWith("simpleNormal")) { newLayout = layouts.simpleStateLayout;
+         * } else if (input.startsWith("complexNormal")) {
+         * setIsEmptyValues(layouts.complexStateLayout, state); newLayout =
+         * layouts.complexStateLayout; } else if (input.startsWith("reference")) {
+         * setIsEmptyValues(layouts.referenceStateLayout, state); newLayout =
+         * layouts.referenceStateLayout; } else if (input.startsWith("conditional")) {
+         * setIsEmptyValues(layouts.conditionalStateLayout, state); newLayout =
+         * layouts.conditionalStateLayout; } else if (input.startsWith("textual")) {
+         * setIsEmptyValues(layouts.complexStateLayout, state); newLayout =
+         * layouts.complexStateLayout; } else { newLayout = layouts.simpleStateLayout; } if
+         * (input.endsWith("/final")) { newLayout.padding(DoubleRoundedRectangle.BORDER_WIDTH); }
+         * else { newLayout.padding(0); } stateLayout.setCorrespondingLayout(newLayout); }
+         */
         return oldLayoutManager;
     }
-    
+
     /** Define isEmpty-value for every graphical element. */
     private void setIsEmptyValues(final ExtendedTable layout, final State state) {
         for (int row = 0; row < layout.table.length; row++) {
@@ -437,11 +473,11 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
             }
         }
     }
-    
+
     /** the layout elements resp. the indices of the children */
     public static final int STATELABEL = 0;
     public static final int POLYLINE = 1;
-    //public static final int BODYTEXT = 2;
+    // public static final int BODYTEXT = 2;
     public static final int INTERFACEDECL = 2;
     public static final int SIGNALS = 3;
     public static final int ENTRYACTIONS = 4;
@@ -449,11 +485,10 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
     public static final int EXITACTIONS = 6;
     public static final int SUSPENDTRIGGER = 7;
     public static final int REGION = 8;
-    
+
     /**
-     * Method defines for every graphical element if it will be painted or
-     * hidden. It does so by checking constraints for the associated model
-     * elements.
+     * Method defines for every graphical element if it will be painted or hidden. It does so by
+     * checking constraints for the associated model elements.
      */
     private boolean isEmptyCell(final int figureConstant, final State state) {
         boolean isEmpty = false;
@@ -465,10 +500,10 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
             isEmpty = state.getInterfaceDeclaration() == null
                     || state.getInterfaceDeclaration().length() == 0;
             break;
-//        case BODYTEXT:
-//            isEmpty = state.getBodyText() == null
-//                    || state.getBodyText().isEmpty();
-//            break;
+        // case BODYTEXT:
+        // isEmpty = state.getBodyText() == null
+        // || state.getBodyText().isEmpty();
+        // break;
         case SIGNALS:
             isEmpty = (state.getSignals().size() == 0 && state.getVariables().size() == 0);
             break;
@@ -494,7 +529,6 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         }
         return isEmpty;
     }
-    
 
     /**
      * {@inheritDoc}

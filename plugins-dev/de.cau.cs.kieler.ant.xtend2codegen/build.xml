@@ -1,0 +1,423 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="de.cau.cs.kieler.ant.xtend2codegen" default="build.jars" basedir=".">
+
+	<property name="p2.build.repo" value="file:${buildDirectory}/buildRepo"/>
+	<property name="basews" value="${ws}"/>
+	<property name="baseos" value="${os}"/>
+	<property name="basearch" value="${arch}"/>
+	<property name="basenl" value="${nl}"/>
+	<property name="bundleId" value="de.cau.cs.kieler.ant.xtend2codegen"/>
+	<property name="bundleVersion" value="0.1.0.201201271757"/>
+	<property name="p2.publishonerror" value="false"/>
+
+	<!-- Compiler settings. -->
+	<property name="javacFailOnError" value="false"/>
+	<property name="javacDebugInfo" value="on"/>
+	<property name="javacVerbose" value="false"/>
+	<property name="logExtension" value=".log"/>
+	<property name="compilerArg" value=""/>
+	<property name="compilation.prereq.log" value="${buildDirectory}/prereqErrors.log"/>
+	<property name="javacSource" value="1.3"/>
+	<property name="javacTarget" value="1.2"/>
+	<condition property="dir_bootclasspath" value="${java.home}/../Classes">
+		<os family="mac"/>
+	</condition>
+	<property name="dir_bootclasspath" value="${java.home}/lib"/>
+	<path id="path_bootclasspath">
+		<fileset dir="${dir_bootclasspath}">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	<property name="bootclasspath" refid="path_bootclasspath"/>
+	<condition property="bundleBootClasspath" value="${J2SE-1.5}"	>
+		<isset property="J2SE-1.5"/>
+	</condition>
+	<condition property="bundleJavacSource" value="1.5"	>
+		<isset property="J2SE-1.5"/>
+	</condition>
+	<condition property="bundleJavacTarget" value="1.5"	>
+		<isset property="J2SE-1.5"/>
+	</condition>
+	<property name="bundleJavacSource" value="${javacSource}"/>
+	<property name="bundleJavacTarget" value="${javacTarget}"/>
+	<property name="bundleBootClasspath" value="${bootclasspath}"/>
+
+	<target name="init" depends="properties">
+		<condition property="pluginTemp" value="${buildTempFolder}/plugins"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="pluginTemp" value="${basedir}"/>
+		<condition property="build.result.folder" value="${pluginTemp}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"		>
+			<isset property="buildTempFolder"/>
+		</condition>
+		<property name="build.result.folder" value="${basedir}"/>
+		<property name="temp.folder" value="${basedir}/temp.folder"/>
+		<property name="plugin.destination" value="${basedir}"/>
+		<condition property="p2.publish.parts" value="true"		>
+			<istrue value="${p2.gathering}"/>
+		</condition>
+		<property name="compilation.problem.marker" value="${build.result.folder}/compilation.problem"/>
+		<condition property="compilation.problem.marker.exists" value="true"		>
+			<and>
+			<available file="${compilation.problem.marker}"/>
+			<isfalse value="${p2.publishonerror}"/>
+			</and>
+		</condition>
+	</target>
+
+	<target name="properties" if="eclipse.running">
+		<property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
+
+	</target>
+
+	<target name="build.update.jar" depends="init" description="Build the plug-in: de.cau.cs.kieler.ant.xtend2codegen for an update site.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<jar destfile="${plugin.destination}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757.jar" basedir="${temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" filesetmanifest="merge"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="@dot.nestedJars">
+		<mkdir dir="${buildDirectory}/nestedJars/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611"/>
+		<unzip src="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar" dest="${buildDirectory}/nestedJars/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611" overwrite="false">
+			<patternset includes="runtime_registry_compatibility.jar"/>
+		</unzip>
+		<mkdir dir="${buildDirectory}/nestedJars/com.ibm.icu_4.4.2.v20110208"/>
+		<unzip src="../../../../../../Applications/Eclipse 3.7.1/plugins/com.ibm.icu_4.4.2.v20110208.jar" dest="${buildDirectory}/nestedJars/com.ibm.icu_4.4.2.v20110208" overwrite="false">
+			<patternset includes="icu-data.jar"/>
+		</unzip>
+		<mkdir dir="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100"/>
+		<unzip src="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench_3.7.0.I20110519-0100.jar" dest="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100" overwrite="false">
+			<patternset includes="e4-workbench.jar"/>
+		</unzip>
+		<mkdir dir="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100"/>
+		<unzip src="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench_3.7.0.I20110519-0100.jar" dest="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100" overwrite="false">
+			<patternset includes="compatibility.jar"/>
+		</unzip>
+		<mkdir dir="${buildDirectory}/nestedJars/org.eclipse.ui.ide_3.7.0.v20110809-1737"/>
+		<unzip src="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.ide_3.7.0.v20110809-1737.jar" dest="${buildDirectory}/nestedJars/org.eclipse.ui.ide_3.7.0.v20110809-1737" overwrite="false">
+			<patternset includes="e4-ide.jar"/>
+		</unzip>
+	</target>
+	<target name="@dot" depends="init,@dot.nestedJars" unless="@dot" description="Create jar: de.cau.cs.kieler.ant.xtend2codegen @dot.">
+		<delete dir="${build.result.folder}/@dot"/>
+		<mkdir dir="${build.result.folder}/@dot"/>
+		<path id="@dot.classpath">
+			<pathelement path="../../../../workspace-dev-git/org.eclipse.ant.core/bin"/>
+			<pathelement path="../../../../workspace-dev-git/org.eclipse.ant.core/@dot"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.variables_3.2.500.v20110511.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.runtime_3.7.0.v20110110.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.osgi_3.7.1.R37x_v20110808-1106.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.common_3.6.0.v20110523.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.jobs_3.5.100.v20110404.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.runtime.compatibility.registry_3.5.0.v20110505/runtime_registry_compatibility.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.runtime.compatibility.registry_3.5.0.v20110505"/>
+			<pathelement path="${buildDirectory}/nestedJars/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611/runtime_registry_compatibility.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.registry_3.5.101.R37x_v20110810-1611.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.preferences_3.4.1.R37x_v20110725.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.contenttype_3.4.100.v20110423-0524.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.runtime.compatibility.auth_3.2.200.v20110110.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.app_1.3.100.v20110321.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.osgi.services_3.3.0.v20110513.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/javax.servlet_2.5.0.v201103041518.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-antlr.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-bcel.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-bsf.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-log4j.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-oro.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-regexp.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-resolver.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-apache-xalan2.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-commons-logging.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-commons-net.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-jai.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-javamail.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-jdepend.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-jmf.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-jsch.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-junit.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-junit4.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-launcher.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-netrexx.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-swing.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant-testutil.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.ant_1.8.2.v20110505-1300/lib/ant.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.log4j_1.2.15.v201012070815.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.logging_1.2.15.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.xtend2_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.ecore_2.7.0.v20110912-0920.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.common_2.7.0.v20110912-0920.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.resources_3.7.100.v20110510-0712.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.expressions_3.4.300.v20110228.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.filesystem_1.3.100.v20110423-0524.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.filesystem.macosx_1.3.0.v20110423-0524.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.common.types_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/com.google.inject_3.0.0.no_aop.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/javax.inject_1.0.0.v20091030.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.ecore.xmi_2.7.0.v20110520-1406.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.util_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/com.google.guava_10.0.1.1.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.antlr.runtime_3.2.0.v201101311130.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.codegen_2.6.0.v20110913-1156.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.core_3.7.1.v_B76_R37x.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.compiler.apt_1.0.400.v0110816-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.compiler.tool_1.0.100.v_B76_R37x.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.text_3.5.101.r371_v20110810-0800.jar"/>
+			<pathelement path="${buildDirectory}/nestedJars/com.ibm.icu_4.4.2.v20110208/icu-data.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/com.ibm.icu_4.4.2.v20110208.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.commands_3.6.0.I20110111-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.team.core_3.6.0.I20110525-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.launching_3.6.1.v20110803_r371.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.debug.core_3.7.0.v20110518.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.debug_3.7.1.v20110802_r371/jdi.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.debug_3.7.1.v20110802_r371/jdimodel.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.debug_3.7.1.v20110802_r371/tools.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.codegen.ecore_2.7.0.v20110913-1156.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe.core_1.2.1.v201109270437.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.commons.logging_1.1.1.v201101211721.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.commons.cli_1.2.0.v201105210650.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.apache.commons.lang_2.4.0.v201005080502.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe2.runtime_2.3.0.v201201160723.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe.utils_1.2.1.v201109270437.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtend_1.2.0.v201111091014.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtend.typesystem.emf_1.2.0.v201111091014.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe2.lib_2.3.0.v201201160723.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.xbase_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.generator_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xpand_1.2.0.v201111091014.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/de.itemis.xtext.antlr_2.0.0.v201108011202.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.antlr.generator_3.2.0.v201108011202.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.xbase.lib_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtext.ecore_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.xtend2.lib_2.2.1.v201112130541.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe2.launch_2.2.0.v201112071250.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.emf.mwe2.language_2.2.0.v201112071250.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.debug.ui_3.7.101.v20110817_r371.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.forms_3.5.100.v20110425.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jface_3.7.0.I20110522-1430.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.swt_3.7.1.v3738a.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.swt.cocoa.macosx.x86_64_3.7.1.v3738a.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui_3.7.0.I20110602-0100.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.cocoa_1.1.0.I20101109-0800.jar"/>
+			<pathelement path="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100/e4-workbench.jar"/>
+			<pathelement path="${buildDirectory}/nestedJars/org.eclipse.ui.workbench_3.7.0.I20110519-0100/compatibility.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench_3.7.0.I20110519-0100.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench.compatibility_3.2.100.I20110413-1600/compatibility.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench.compatibility_3.2.100.I20110413-1600/e4-workbench.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench.compatibility_3.2.100.I20110413-1600"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.help_3.5.100.v20110426.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jface.databinding_1.5.0.I20100907-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.databinding.observable_1.4.0.I20110222-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.databinding.property_1.4.0.I20110222-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.databinding_1.4.0.I20110111-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.console_3.5.100.v20110511.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jface.text_3.7.1.r371_v20110825-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.workbench.texteditor_3.7.0.v20110505-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.compare.core_3.5.200.I20110208-0800.jar"/>
+			<pathelement path="${buildDirectory}/nestedJars/org.eclipse.ui.ide_3.7.0.v20110809-1737/e4-ide.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.ide_3.7.0.v20110809-1737.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.views_3.6.0.I20110412-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.p2.engine_2.1.0.v20110511.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.p2.core_2.1.0.v20110502-1955.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.p2.metadata_2.1.0.v20110510.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.p2.metadata.repository_1.2.0.v20110511-1359.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.p2.repository_2.1.0.v20110601.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.security_1.1.1.R37x_v20110822-1018.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.equinox.security.macosx_1.100.100.v20100503.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.editors_3.7.0.v20110517-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.core.filebuffers_3.5.200.v20110505-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.debug.ui_3.6.1.v20110803_r371.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.ui_3.7.1.r371_v20110824-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.search_3.7.0.v20110505-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ltk.core.refactoring_3.5.201.r371_v20110824-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ltk.ui.refactoring_3.6.0.v20110505-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.navigator_3.5.100.v20110809-2227.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.compare_3.5.201.R37x_v20110817-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.team.ui_3.6.100.I20110525-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.navigator.resources_3.4.300.I20110421-1800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.ui.views.properties.tabbed_3.5.200.I20110201-0800.jar"/>
+			<pathelement path="../../../../../../Applications/Eclipse 3.7.1/plugins/org.eclipse.jdt.core.manipulation_1.4.0.v20110505-0800.jar"/>
+			<pathelement path="../../../../workspace-dev-git/org.eclipse.xtext.xtend2.standalone/bin"/>
+			<pathelement path="../../../../workspace-dev-git/org.eclipse.xtext.xtend2.standalone/@dot"/>
+		</path>
+		<!-- compile the source code -->
+		<!-- javac destdir="${build.result.folder}/@dot" failonerror="${javacFailOnError}" verbose="${javacVerbose}" debug="${javacDebugInfo}" includeAntRuntime="no" bootclasspath="${bundleBootClasspath}" source="${bundleJavacSource}" target="${bundleJavacTarget}"		>
+			<compilerarg line="${compilerArg}" compiler="${build.compiler}"/>
+			<classpath refid="@dot.classpath" />
+			<src path="src/"			/>
+			<compilerarg value="@${basedir}/javaCompiler...args" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"			/>
+			<compilerarg line="-log &apos;${build.result.folder}/@dot${logExtension}&apos;" compiler="org.eclipse.jdt.core.JDTCompilerAdapter"			/>
+		</javac -->
+		<antcall target="checkCompilationResults"/>
+		<!-- Copy necessary resources -->
+		<!-- copy todir="${build.result.folder}/@dot" failonerror="true" overwrite="false">
+			<fileset dir="src/">
+				<exclude name="**/*.java"/>
+				<exclude name="**/package.htm*"/>
+			</fileset>
+		</copy -->
+	</target>
+
+	<target name="src.zip" depends="init" unless="src.zip">
+		<mkdir dir="${build.result.folder}"/>
+		<antcall target="zip.src.zip"/>
+	</target>
+	<target name="zip.src.zip">
+		<zip destfile="${build.result.folder}/src.zip" filesonly="false" whenempty="skip" update="false">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+		</zip>
+	</target>
+	<target name="copy.src.zip">
+		<copy todir="${source.destination.folder}/" failonerror="true" overwrite="true">
+			<fileset dir="src/">
+				<include name="**/*.java"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="build.jars" depends="init" description="Compile classes and build nested jars for the plug-in: de.cau.cs.kieler.ant.xtend2codegen.">
+		<delete file="${compilation.problem.marker}" quiet="true"/>
+		<available property="@dot" file="${build.result.folder}/@dot"/>
+		<antcall target="@dot"/>
+	</target>
+
+	<target name="checkCompilationResults" if="compilation.error.occured">
+		<echo file="${compilation.problem.marker}" message="de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757${line.separator}compilation.error.occured=${compilation.error.occured}"/>
+		<eclipse.logCompileError bundle="de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" log="${compilation.prereq.log}">
+			<include name="/Users/chsch/workspace-dev-git/org.eclipse.xtext.xtend2.standalone/compilation.problem"/>
+			<include name="${pluginTemp}/org.eclipse.xtext.xtend2.standalone_2.2.1.v201112130541/compilation.problem"/>
+			<include name="/Users/chsch/workspace-dev-git/org.eclipse.ant.core/compilation.problem"/>
+			<include name="${pluginTemp}/org.eclipse.ant.core_3.2.300.v20110511/compilation.problem"/>
+		</eclipse.logCompileError>
+	</target>
+
+	<target name="build.sources" depends="init">
+		<available property="src.zip" file="${build.result.folder}/src.zip"/>
+		<antcall target="src.zip"/>
+	</target>
+
+	<target name="publish.bin.parts" depends="init" if="p2.publish.parts" unless="compilation.problem.marker.exists">
+		<mkdir dir="${build.result.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+		<copy todir="${build.result.folder}" failonerror="true" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="META-INF/MANIFEST.MF"/>
+				<include name="plugin.xml"/>
+				<include name="fragment.xml"/>
+			</fileset>
+		</copy>
+		<eclipse.versionReplacer path="${build.result.folder}" version="0.1.0.201201271757"/>
+		<antcall target="apitools.generation">
+			<param name="target.folder" value="${build.result.folder}"/>
+			<param name="projectLocation" value="${basedir}"/>
+			<param name="binary.folders" value="${build.result.folder}/@dot"/>
+			<param name="projectName" value="${bundleId}_${bundleVersion}"/>
+		</antcall>
+		<eclipse.gatherBundle 
+		   metadataRepository="${p2.build.repo}"
+		   artifactRepository="${p2.build.repo}"
+		   buildResultFolder="${build.result.folder}"
+		   baseDirectory="${basedir}"
+		/>
+	</target>
+
+	<target name="gather.bin.parts" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+		<!-- copy todir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" failonerror="true" overwrite="false">
+			<fileset dir="${build.result.folder}/@dot">
+				<include name="**"/>
+			</fileset>
+		</cop -->
+		<copy todir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" failonerror="true" overwrite="true">
+			<fileset dir="${basedir}">
+				<include name="META-INF/"/>
+				<include name="plugin.xml"/>
+				<include name="antTasks.jar"/>
+			</fileset>
+		</copy>
+		<eclipse.versionReplacer path="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" version="0.1.0.201201271757"/>
+		<antcall target="apitools.generation">
+			<param name="target.folder" value="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+			<param name="projectLocation" value="${basedir}"/>
+			<param name="binary.folders" value="${build.result.folder}/@dot"/>
+			<param name="projectName" value="${bundleId}_${bundleVersion}"/>
+		</antcall>
+	</target>
+
+	<target name="build.zips" depends="init">
+	</target>
+
+	<target name="gather.sources" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+		<copy file="${build.result.folder}/src.zip" todir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" failonerror="false" overwrite="false"/>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+		</antcall>
+	</target>
+
+	<target name="gather.individual.sources" depends="init">
+		<antcall target="copy.src.zip">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+		<antcall target="copy.src.includes">
+			<param name="source.destination.folder" value="${destination.temp.folder}"/>
+		</antcall>
+	</target>
+
+	<target name="copy.src.includes" depends="init">
+	</target>
+
+	<target name="gather.logs" depends="init" if="destination.temp.folder">
+		<mkdir dir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757"/>
+		<copy todir="${destination.temp.folder}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757" failonerror="false" overwrite="false">
+			<fileset dir="${build.result.folder}">
+				<include name="@dot${logExtension}"/>
+			</fileset>
+		</copy>
+	</target>
+
+	<target name="clean" depends="init" description="Clean the plug-in: de.cau.cs.kieler.ant.xtend2codegen of all the zips, jars and logs created.">
+		<delete dir="${build.result.folder}/@dot"/>
+		<delete file="${build.result.folder}/src.zip"/>
+		<delete file="${plugin.destination}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757.jar"/>
+		<delete file="${plugin.destination}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757.zip"/>
+		<delete dir="${temp.folder}"/>
+		<delete file="${compilation.problem.marker}" quiet="true"/>
+	</target>
+
+	<target name="refresh" depends="init" if="eclipse.running" description="Refresh this folder.">
+		<eclipse.convertPath fileSystemPath="/Users/chsch/GIT/kieler-mainline/plugins-dev/de.cau.cs.kieler.ant.xtend2codegen" property="resourcePath"/>
+		<eclipse.refreshLocal resource="${resourcePath}" depth="infinite"/>
+	</target>
+
+	<target name="zip.plugin" depends="init" description="Create a zip containing all the elements for the plug-in: de.cau.cs.kieler.ant.xtend2codegen.">
+		<delete dir="${temp.folder}"/>
+		<mkdir dir="${temp.folder}"/>
+		<antcall target="build.jars"/>
+		<antcall target="build.sources"/>
+		<antcall target="gather.bin.parts">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<antcall target="gather.sources">
+			<param name="destination.temp.folder" value="${temp.folder}/"/>
+		</antcall>
+		<delete>
+			<fileset dir="${temp.folder}">
+				<include name="**/*.bin${logExtension}"/>
+			</fileset>
+		</delete>
+		<zip destfile="${plugin.destination}/de.cau.cs.kieler.ant.xtend2codegen_0.1.0.201201271757.zip" basedir="${temp.folder}" filesonly="true" whenempty="skip" update="false"/>
+		<delete dir="${temp.folder}"/>
+	</target>
+
+	<target name="apitools.generation" if="generateAPIDescription">
+		<apitooling.apigeneration  projectName="${projectName}" project="${projectLocation}" binary="${binary.folders}" target="${target.folder}" extramanifests="${extraManifests}" allownonapiproject="${allowNonApiProject}"		/>
+	</target>
+
+</project>
