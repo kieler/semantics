@@ -20,8 +20,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.emf.common.CommonPlugin;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,8 +33,8 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
  * This component implements a KIEM data component to validate signal and state information
@@ -66,11 +64,21 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     /** Are we operating in training mode, i. e. generate an ESO file */
     private boolean trainingMode;
 
-    /** A map of all values of all recorded output signals in each step */
-    private List<HashMap<String, Object>> recOutputs;
+    /** A map of all values of all previously recorded output signals in each step */
+    private List<HashMap<String, Object>> esoOutputs;
 
-    /** A map of all values of all recorded special signals in each step */
-    private List<HashMap<String, String>> recVariables;
+    /** A map of all values of all previously recorded special signals in each step */
+    private List<HashMap<String, String>> esoVariables;
+    
+    /** In training mode, this list will hold all simulated output signals and their values
+     * for each step
+     */
+    private List<HashMap<String, Object>> simOutputs;
+    
+    /** In training mode, this list will hold all simulated output variables and their values
+     * for each step
+     */
+    private List<HashMap<String, String>> simVariables;
 
     /**
      * A map f all values of all simulated or recorded input signals in each step. Pushed here by
@@ -127,8 +135,10 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         KiemProperty[] properties = this.getProperties();
 
-        recOutputs = new LinkedList<HashMap<String, Object>>();
-        recVariables = new LinkedList<HashMap<String, String>>();
+        esoOutputs = new LinkedList<HashMap<String, Object>>();
+        esoVariables = new LinkedList<HashMap<String, String>>();
+        simOutputs = new LinkedList<HashMap<String, Object>>();
+        simVariables = new LinkedList<HashMap<String,String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
 
         editor = (DiagramEditor) getActivePage().getActiveEditor();
@@ -146,7 +156,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 outputVarName = prop.getValue();
             } else if (prop.getKey().equals(Constants.PREVINVAR)) {
                 prevInputVar = prop.getValue();
-            } else if (prop.getKey().equals(Constants.DEF_SIGNALVAR)) {
+            } else if (prop.getKey().equals(Constants.SIGNALVAR)) {
                 errSignalVar = prop.getValue();
             }
         }
@@ -167,7 +177,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     public void wrapup() throws KiemInitializationException {
         if (trainingMode) {
-            TraceWriter writer = new TraceWriter(recInputs, recOutputs, recVariables, filename);
+            TraceWriter writer = new TraceWriter(recInputs, simOutputs, simVariables, filename);
             writer.doWrite();
         }
     }
@@ -244,40 +254,13 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
-        fileProperty.setFilterExts(Constants.FILEEXTS);
-        fileProperty.setFilterNames(Constants.FILEEXTNAMES);
-
-        String filename = null;
-        try {
-            /*
-             * Try creating a default file name The try block is necessary to suppress NPEs and
-             * other exception when we are either running in headless mode or there are no editor
-             * opened. Below, you will see that a filename is only proposed if this try block
-             * succeeds. We have to use absolute file paths here, because the KiemPropertyTypeFile
-             * dialog only returns absolute paths. I do not want to change that for fear that
-             * something else breaks.
-             */
-            URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
-                    .eResource().getURI().trimFileExtension().appendFileExtension("eso");
-            URI absFile = CommonPlugin.resolve(resource);
-            filename = absFile.toFileString();
-        } catch (Exception e) {
-            // do nothing
-        }
-
-        KiemProperty[] properties = new KiemProperty[7];
-        properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
-        if (filename != null) {
-            fileProperty.setValue(properties[0], filename);
-        }
-        properties[1] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
-        properties[2] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
-        properties[3] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
-        properties[4] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
-        properties[5] = new KiemProperty(Constants.SIGNALVAR, Constants.DEF_SIGNALVAR);
+        KiemProperty[] properties = new KiemProperty[6];
+        properties[0] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
+        properties[1] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
+        properties[2] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
+        properties[3] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
+        properties[4] = new KiemProperty(Constants.SIGNALVAR, Constants.DEF_SIGNALVAR);
         properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
-        properties[6] = new KiemProperty(Constants.TRAINMODE, false);
 
         return properties;
     }
@@ -294,18 +277,19 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         updateConfiguration(obj);
-        recordDataPool(obj);
+        getEsoData(obj);
+        JSONObject retval = null;
         
-        JSONObject retval = new JSONObject();
+        recordDataPool(obj);
+        retval = new JSONObject();
 
         for (Pair<String, String> variable : variables) {
             valEngine.validateVariable(variable,
-                    recVariables.get((int) step).get(variable.getFirst()),
+                    esoVariables.get((int) step - 1).get(variable.getFirst()),
                     obj.optString(variable.getFirst()), isHistoryStep(), retval);
         }
 
-        valEngine.validateSignals(recOutputs.get((int) step), Utilities.getSignals(obj), isHistoryStep(), step, errSignalVar, retval);
-        
+        valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
         return retval;
     }
     
@@ -327,6 +311,39 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     }
     
     private void recordDataPool(JSONObject json) throws KiemExecutionException {
+        String[] fieldNames = JSONObject.getNames(json);
+        HashMap<String,Object> signals = new HashMap<String,Object>();
+        HashMap<String,String> vars = new HashMap<String,String>();
+        
+        for(String field : fieldNames) {
+            try {
+                Object obj = json.get(field);
+                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
+                    // it's a signal
+                    if(JSONSignalValues.isPresent(obj) && !recInputs.get((int) step - 1).containsKey(field)) {
+                        signals.put(field, JSONSignalValues.getSignalValue(obj));
+                    }
+                } else {
+                    // we do not want to record our internal variables to the ESO file, that
+                    // would most definitely bite us in the ass during replay. We also do not
+                    // want variables with no value in the ESO file.
+                    if(!( field.equals(configVarName)
+                       || field.equals(outputVarName)
+                       || field.equals(prevInputVar)
+                       || obj.toString().isEmpty())) {
+                        vars.put(field, obj.toString());
+                    }
+                }
+            } catch (JSONException e) {
+                throw new KiemExecutionException("Cannot read data pool", true, e);
+            }
+        }
+        
+        simOutputs.add(signals);
+        simVariables.add(vars);
+    }
+    
+    private void getEsoData(JSONObject json) throws KiemExecutionException {
         try {
             /*
              * Record previous input signals
@@ -340,39 +357,42 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             
             while(keys.hasNext()) {
                 String key = keys.next();
-                inputSignals.put(key, prevInput.opt(key));
+                if(JSONSignalValues.isPresent(prevInput.opt(key))) {
+                    inputSignals.put(key, JSONSignalValues.getSignalValue(prevInput.opt(key)));
+                }
             }
             recInputs.add(inputSignals);
             
-            /*
-             * Record output signals and variables
-             */
-            HashMap<String,Object> outputSignals = new HashMap<String,Object>();
-            HashMap<String,String> outputVariables = new HashMap<String,String>();
-            JSONObject output = json.getJSONObject(outputVarName);
-            
-            // again, this is necessary because the JSON library returns an unparameterized Iterator.
-            @SuppressWarnings("unchecked")
-            Iterator<String> outputKeys = output.keys();
-            
-            while(outputKeys.hasNext()) {
-                String outputKey = keys.next();
+            if(!trainingMode) {
+                /*
+                 * Record output signals and variables
+                 */
+                HashMap<String,Object> outputSignals = new HashMap<String,Object>();
+                HashMap<String,String> outputVariables = new HashMap<String,String>();
+                JSONObject output = json.getJSONObject(outputVarName);
                 
-                try {
-                    JSONObject outputSignal = output.getJSONObject(outputKey);
-                    if(outputSignal.has("present") && outputSignal.getBoolean("present") == true) {
-                        // it actually is a present signal
-                        outputSignals.put(outputKey, outputSignal.opt("value"));
+                // again, this is necessary because the JSON library returns an unparameterized Iterator.
+                @SuppressWarnings("unchecked")
+                Iterator<String> outputKeys = output.keys();
+                
+                while(outputKeys.hasNext()) {
+                    String outputKey = outputKeys.next();
+                    
+                    try {
+                        JSONObject outputSignal = output.getJSONObject(outputKey);
+                        if(outputSignal.has("present") && outputSignal.getBoolean("present") == true) {
+                            // it actually is a present signal
+                            outputSignals.put(outputKey, outputSignal.opt("value"));
+                        }
+                    } catch (JSONException e) {
+                        // it probably is a variable
+                        outputVariables.put(outputKey, output.optString(outputKey));
                     }
-                } catch (JSONException e) {
-                    // it probably is a variable
-                    outputVariables.put(outputKey, output.optString(outputKey));
                 }
+                
+                esoOutputs.add(outputSignals);
+                esoVariables.add(outputVariables);
             }
-            
-            recOutputs.add(outputSignals);
-            recVariables.add(outputVariables);
-            
         } catch(JSONException e) {
             throw new KiemExecutionException(Constants.ERR_JSON, true, e);
         }

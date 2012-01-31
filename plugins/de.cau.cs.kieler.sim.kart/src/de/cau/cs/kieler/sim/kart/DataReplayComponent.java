@@ -191,7 +191,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
-        JSONObject retval = null;
+        JSONObject retval = new JSONObject();
 
         if(!trainingMode) {
             loadInputs(retval);
@@ -212,26 +212,24 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemExecutionException when building the JSONObject fails
      */
     private void loadInputs(JSONObject retval) throws KiemExecutionException {
-        // Proceed to the next step in the trace file
-        if (trace.hasNext()) {
-            ITick tick = trace.next();
-            Iterator<ISignal> signals = tick.getInputs().iterator();
+        ITick tick = trace.get(step - 1);
 
-            // Add signals from the trace to the simulation
-            try {
-                while (signals.hasNext()) {
-                    ISignal signal = signals.next();
-                    if (signal.isValued()) {
-                        retval.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
-                    }
-                    else {
-                        retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
-                    }
+        Iterator<ISignal> signals = tick.getInputs().iterator();
+
+        // Add signals from the trace to the simulation
+        try {
+            while (signals.hasNext()) {
+                ISignal signal = signals.next();
+                if (signal.isValued()) {
+                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
                 }
-            } catch (JSONException e) {
-                throw new KiemExecutionException(
-                        Constants.ERR_JSON, true, e);
+                else {
+                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
+                }
             }
+        } catch (JSONException e) {
+            throw new KiemExecutionException(
+                    Constants.ERR_JSON, true, e);
         }
     }
     
@@ -248,21 +246,17 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private void loadPreviousInputSignals(JSONObject json, JSONObject retval) throws KiemExecutionException {
         JSONObject prevSignals = new JSONObject();
-        // necessary because the JSON library returns an unparameterized Iterator.
-        @SuppressWarnings("unchecked")
-        Iterator<String> jsonKeys = json.keys();
-        while(jsonKeys.hasNext()) {
-            String key = jsonKeys.next();
-            
+        String[] fieldNames = JSONObject.getNames(json);
+        for (String field : fieldNames) {
             try {
-                JSONObject signal = json.getJSONObject(key);
-                if(signal.has("present") && signal.getBoolean("present") == true) {
-                    // it actually is a present signal
-                    prevSignals.accumulate(key, signal.opt("value"));
+                Object obj = json.get(field);
+                
+                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
+                    prevSignals.accumulate(field, obj);
                 }
             } catch (JSONException e) {
-                // it probably is a variable.
-                // We do not care about variables at this point.
+                System.out.println(e.getMessage());
+                e.printStackTrace();
             }
         }
         try {
@@ -280,7 +274,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemExecutionException when adding to the JSON object fails
      */
     private void loadOutputs(JSONObject json) throws KiemExecutionException {
-        ITick curTick = trace.get(step);
+        ITick curTick = trace.get(step - 1);
         Iterator<ISignal> outputSignals = curTick.getOutputs().iterator();
         JSONObject value = new JSONObject();
         
@@ -321,7 +315,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         JSONObject value = new JSONObject();
         
         try {
-            value.accumulate(Constants.TRAINMODE, trainingMode);
+            value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
             value.accumulate(Constants.VAR_ESOFILE, filename);
             
             json.accumulate(configVarName, value);

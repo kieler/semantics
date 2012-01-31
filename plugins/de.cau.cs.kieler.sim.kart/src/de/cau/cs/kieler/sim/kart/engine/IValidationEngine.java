@@ -55,11 +55,10 @@ public interface IValidationEngine {
      * @param recSignals a list of recorded signals, taken from an ESO file
      * @param simSignals the JSON object representing the data pool
      * @param isHistoryStep flag to indicate that the user is stepping through history
-     * @param step the step number these signals were generated
      * @param errSignalVar the name of the variable informing about erroneous signals
      * @param retval the JSON object that will be injected into the simulation
      * @throws KiemExecutionException if one or more signals are invalid
      */
     public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
-            boolean isHistoryStep, long step, String errSignalVar, JSONObject retval) throws KiemExecutionException;
+            boolean isHistoryStep, String errSignalVar, JSONObject retval) throws KiemExecutionException;
 }

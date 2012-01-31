@@ -84,9 +84,11 @@ public class DefaultValidationEngine implements IValidationEngine {
                     String simStateNamesTree = Utilities.buildTree(new Tree(null), isStates).toString();
 
                     // Display an error message
-                    String errorMessage = "Validation error: The simulation's active states should be:\n"
+                    String errorMessage = "Validation error: The simulation should have generated the "
+                            + "variable \"" + variable.getFirst() + "\", representing the following "
+                            + "diagram objects:\n"
                             + stateNamesTree
-                            + "\nbut the states actually active are:\n"
+                            + "\nbut the variable actually represents:\n"
                             + simStateNamesTree;
                     
                     try {
@@ -122,7 +124,7 @@ public class DefaultValidationEngine implements IValidationEngine {
      * {@inheritDoc}
      */
     public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
-            boolean isHistoryStep, long step, String errSignalVar, JSONObject retval)
+            boolean isHistoryStep, String errSignalVar, JSONObject retval)
             throws KiemExecutionException {
         
         Iterator<String> signals = recSignals.keySet().iterator();
