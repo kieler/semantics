@@ -26,6 +26,7 @@ public class Constants {
     public static final String OUTPUTVAR = "Output signals/variables variable name";
     public static final String PREVINVAR = "Previous input signals variable name";
     public static final String VALVAR = "Names of variables to validate and their respective error variable names";
+    public static final String SIGNALVAR = "Erroneous signals variable";
     
     public static final String[] FILEEXTS = { "*.eso", "*.esi" };
     public static final String[] FILEEXTNAMES = { "ESO", "ESI" };
@@ -46,4 +47,5 @@ public class Constants {
     public static final String DEF_OUTPUTVAR = "kartOutput";
     public static final String DEF_VALVAR = "(state, errorStates)";
     public static final String DEF_PREVINVAR = "kartPrevInput";
+    public static final String DEF_SIGNALVAR = "errorSignal";
 }

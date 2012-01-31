@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.kart;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.emf.ecore.EObject;
+
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -29,7 +31,7 @@ public class Tree {
     /**
      * The value of this node
      */
-    private Scope value;
+    private EObject value;
     
     /**
      * A list of successor Scopes
@@ -41,7 +43,7 @@ public class Tree {
      * 
      * @param value the value contained in the root node of the tree
      */
-    public Tree(Scope value) {
+    public Tree(EObject value) {
         this.value = value;
         children = new LinkedList<Tree>();
     }
@@ -51,7 +53,7 @@ public class Tree {
      * 
      * @return the value contained in this node
      */
-    public Scope getValue() {
+    public EObject getValue() {
         return value;
     }
     
@@ -61,7 +63,7 @@ public class Tree {
      * @param find the Scope instance to find
      * @return either the tree's node containing the searched Scope or null
      */
-    public Tree findValue(Scope find) {
+    public Tree findValue(EObject find) {
         Tree retval = null;
         if(value != null && value.equals(find)) {
             retval = this;
@@ -102,7 +104,7 @@ public class Tree {
     public String toString(String indent) {
         String retval = "";
         if(value != null) {
-            retval = indent + "- " + getValue().getLabel() + "\n";
+            retval = indent + "- " + getValue().toString() + "\n";
         }
         for(Tree child : children) {
             retval += child.toString(indent + "  ");

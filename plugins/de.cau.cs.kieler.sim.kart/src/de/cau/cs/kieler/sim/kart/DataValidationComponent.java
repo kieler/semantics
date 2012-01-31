@@ -18,7 +18,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.emf.common.CommonPlugin;
@@ -28,11 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.sim.esi.EsiFile;
-import de.cau.cs.kieler.sim.esi.ISignal;
-import de.cau.cs.kieler.sim.esi.ITick;
-import de.cau.cs.kieler.sim.esi.ITrace;
-import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kart.engine.DefaultValidationEngine;
 import de.cau.cs.kieler.sim.kart.engine.IValidationEngine;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
@@ -42,7 +36,6 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
@@ -110,6 +103,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * writing an ESO file.
      */
     private String prevInputVar;
+    
+    /** Name of the variable used to communicate information about erroneous signals */
+    private String errSignalVar;
 
     /**
      * Initialize the data component. Open an existing ESO file, read the expected signal and state
@@ -123,6 +119,11 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         step = 0;
         filename = "";
         ignoreAdditionalSignals = false;
+        configVarName = Constants.DEF_CONFIGVAR;
+        outputVarName = Constants.DEF_OUTPUTVAR;
+        prevInputVar = Constants.DEF_PREVINVAR;
+        errSignalVar = Constants.DEF_SIGNALVAR;
+        variables = Utilities.makeSetOfPairs(Constants.DEF_VALVAR);
 
         KiemProperty[] properties = this.getProperties();
 
@@ -140,16 +141,20 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             } else if (prop.getKey().equals(Constants.VALVAR)) {
                 variables = Utilities.makeSetOfPairs(prop.getValue());
             } else if (prop.getKey().equals(Constants.CONFIGVAR)) {
-                configVarName = prop.getKey();
+                configVarName = prop.getValue();
             } else if (prop.getKey().equals(Constants.OUTPUTVAR)) {
-                outputVarName = prop.getKey();
+                outputVarName = prop.getValue();
+            } else if (prop.getKey().equals(Constants.PREVINVAR)) {
+                prevInputVar = prop.getValue();
+            } else if (prop.getKey().equals(Constants.DEF_SIGNALVAR)) {
+                errSignalVar = prop.getValue();
             }
         }
 
         // Read the file
 
         if (!trainingMode) {
-            valEngine = new DefaultValidationEngine(editor, ignoreAdditionalSignals, null);
+            valEngine = new DefaultValidationEngine(editor, ignoreAdditionalSignals);
         }
     }
 
@@ -161,8 +166,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      *             when TraceWriter.doWrite() throws it
      */
     public void wrapup() throws KiemInitializationException {
-        Utilities.visualizeStates(null, null, editor);
-
         if (trainingMode) {
             TraceWriter writer = new TraceWriter(recInputs, recOutputs, recVariables, filename);
             writer.doWrite();
@@ -272,6 +275,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         properties[2] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
         properties[3] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
         properties[4] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
+        properties[5] = new KiemProperty(Constants.SIGNALVAR, Constants.DEF_SIGNALVAR);
         properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
         properties[6] = new KiemProperty(Constants.TRAINMODE, false);
 
@@ -295,12 +299,12 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         JSONObject retval = new JSONObject();
 
         for (Pair<String, String> variable : variables) {
-            valEngine.validateVariable(variable.getFirst(),
+            valEngine.validateVariable(variable,
                     recVariables.get((int) step).get(variable.getFirst()),
-                    obj.opt(variable.getFirst()), isHistoryStep(), retval);
+                    obj.optString(variable.getFirst()), isHistoryStep(), retval);
         }
 
-        valEngine.validateSignals(recOutputs.get((int) step), obj, isHistoryStep(), retval);
+        valEngine.validateSignals(recOutputs.get((int) step), Utilities.getSignals(obj), isHistoryStep(), step, errSignalVar, retval);
         
         return retval;
     }
