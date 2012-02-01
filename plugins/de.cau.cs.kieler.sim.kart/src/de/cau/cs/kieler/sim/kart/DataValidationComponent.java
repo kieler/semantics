@@ -114,6 +114,11 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     
     /** Name of the variable used to communicate information about erroneous signals */
     private String errSignalVar;
+    
+    /** Set to true when the end of the trace is reached. At this point no further validation will
+     * take place
+     */
+    private boolean eot;
 
     /**
      * Initialize the data component. Open an existing ESO file, read the expected signal and state
@@ -125,6 +130,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public void initialize() throws KiemInitializationException {
         step = 0;
+        eot = false;
         filename = "";
         ignoreAdditionalSignals = false;
         configVarName = Constants.DEF_CONFIGVAR;
@@ -244,7 +250,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public boolean isDeltaObserver() {
-        return false;
+        return true;
     }
 
     /**
@@ -277,19 +283,23 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         updateConfiguration(obj);
-        getEsoData(obj);
-        JSONObject retval = null;
-        
-        recordDataPool(obj);
-        retval = new JSONObject();
-
-        for (Pair<String, String> variable : variables) {
-            valEngine.validateVariable(variable,
-                    esoVariables.get((int) step - 1).get(variable.getFirst()),
-                    obj.optString(variable.getFirst()), isHistoryStep(), retval);
+        if(!eot) {
+            getEsoData(obj);
+            recordDataPool(obj);
         }
-
-        valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
+        
+        JSONObject retval = null;
+        if (!trainingMode && !eot) {
+            retval = new JSONObject();
+    
+            for (Pair<String, String> variable : variables) {
+                valEngine.validateVariable(variable,
+                        esoVariables.get((int) step - 1).get(variable.getFirst()),
+                        obj.optString(variable.getFirst()), isHistoryStep(), retval);
+            }
+            
+            valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
+        }
         return retval;
     }
     
@@ -305,6 +315,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             JSONObject config = json.getJSONObject(configVarName);
             filename = (String) config.get(Constants.VAR_ESOFILE);
             trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
+            eot = ((Boolean) config.get(Constants.VAR_EOT)).booleanValue();
         } catch (JSONException e) {
             throw new KiemExecutionException("Could not update configuration", true, e);
         }

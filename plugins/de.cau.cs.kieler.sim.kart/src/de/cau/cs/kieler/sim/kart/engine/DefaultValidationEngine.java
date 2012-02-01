@@ -25,9 +25,8 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.Constants;
 import de.cau.cs.kieler.sim.kart.Utilities;
-import de.cau.cs.kieler.sim.kart.ValidationException;
 import de.cau.cs.kieler.sim.kart.Tree;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The default validation engine to validate simulation runs with.
@@ -67,12 +66,11 @@ public class DefaultValidationEngine implements IValidationEngine {
      * 
      * {@inheritDoc}
      */
-    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval)
-            throws KiemExecutionException {
+    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval) {
         if (simValue == null) {
-            throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
+            KiemPlugin.getDefault().showError(
                     "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
-                            + "No validation for this variable will take place in this step!"));
+                            + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
         } else if (!(recValue.equals(simValue))) {
             try {
                 if(!isHistoryStep) {
@@ -97,11 +95,10 @@ public class DefaultValidationEngine implements IValidationEngine {
                         // do nothing
                     }
                     
-                    throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                            new ValidationException(errorMessage));
+                    KiemPlugin.getDefault().showError(errorMessage, Constants.PLUGINID, null, Constants.ERR_SILENT);
+                    //throw new KiemExecutionException(Constants.VAL_TITLE, false,
+                    //        new ValidationException(errorMessage));
                 }
-            } catch (KiemExecutionException e) {
-                throw e;
             } catch (Exception e) {
                 // something went terribly wrong when trying to get real names, just print that string
                 try {
@@ -109,12 +106,16 @@ public class DefaultValidationEngine implements IValidationEngine {
                 } catch (JSONException j) {
                     // do nothing
                 }
-                throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                        new ValidationException(
-                                "Validation error: The simulation should provide a variable \""
+                KiemPlugin.getDefault().showError("Validation error: The simulation should provide a variable \""
                                         + variable.getFirst() + "\" with a value of \"" + recValue
                                         + "\", but it actually generated the value \""
-                                        + simValue + "\"."));
+                                        + simValue + "\".", Constants.PLUGINID, null, Constants.ERR_SILENT);
+            }
+        } else {
+            try {
+                retval.accumulate(variable.getSecond(), "");
+            } catch (JSONException e) {
+                // do nothing
             }
         }
     }
@@ -124,8 +125,7 @@ public class DefaultValidationEngine implements IValidationEngine {
      * {@inheritDoc}
      */
     public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
-            boolean isHistoryStep, String errSignalVar, JSONObject retval)
-            throws KiemExecutionException {
+            boolean isHistoryStep, String errSignalVar, JSONObject retval) {
         
         Iterator<String> signals = recSignals.keySet().iterator();
         String errSignals = "";
@@ -133,52 +133,50 @@ public class DefaultValidationEngine implements IValidationEngine {
         while (signals.hasNext()) {
             String signal = signals.next();
             
-            if(!(simSignals.containsKey(signal) && recSignals.get(signal).equals(simSignals.get(signal)))) {
+            if(!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || recSignals.get(signal).equals(simSignals.get(signal))))) {
                 if(!errSignals.isEmpty()) {
                     errSignals += ", ";
                 }
                 errSignals += signal;
-                simSignals.remove(signal);
             }
+            simSignals.remove(signal);
         }
         
         if(!errSignals.isEmpty()) {
-            try {
-                retval.accumulate(errSignalVar, errSignals);
-            } catch(JSONException e) {
-                // do nothing
-            }
-            
             if(!isHistoryStep) {
-                throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                        new ValidationException("Validation error: The signals " + errSignals +
-                                "were produced erroneously, they were either not present when they should " +
-                                "have been or in the case of valued signals were present with a wrong value"));
+                KiemPlugin.getDefault().showError(
+                "Validation error: The signals " + errSignals +
+                                " were produced erroneously, they were either not present when they should " +
+                                "have been or in the case of valued signals were present with a wrong value", Constants.PLUGINID, null, Constants.ERR_SILENT);
             }
         }
-        
+
+        String excessSignals = "";
         if(!(ignoreAdditionalSignals || simSignals.isEmpty())) {
-            String excessSignals = "";
             Iterator<String> it2 = simSignals.keySet().iterator();
             while (it2.hasNext()) {
                 String signal = it2.next();
-                excessSignals += "\"" + signal + "\"";
+                excessSignals += signal;
 
                 if (it2.hasNext()) {
                     excessSignals += ", ";
                 }
             }
-
-            try {
-                retval.accumulate(errSignalVar, excessSignals);
-            } catch (JSONException e) {
-                // do nothing
-            }
             if(!isHistoryStep) {
-                throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
+                KiemPlugin.getDefault().showError(
                         "Validation error: The signal(s) " + excessSignals
-                                + " were not recorded, but generated in the simulation"));
+                                + " were not recorded, but generated in the simulation", Constants.PLUGINID, null, Constants.ERR_SILENT);
             }
+        }
+        
+        if(!errSignals.isEmpty()) {
+            errSignals += ", ";
+        }
+        
+        try {
+            retval.accumulate(errSignalVar, errSignals + excessSignals);
+        } catch (JSONException e) {
+            // do nothing
         }
     }
 }

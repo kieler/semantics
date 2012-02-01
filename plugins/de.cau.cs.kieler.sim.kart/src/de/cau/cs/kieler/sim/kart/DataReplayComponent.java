@@ -180,6 +180,16 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public boolean isObserver() {
         return true;
     }
+    
+    /**
+     * Tell KIEM that we are a delta observer.
+     * 
+     * @return always true
+     */
+    @Override
+    public boolean isDeltaObserver() {
+        return true;
+    }
 
     /**
      * Take a step in the simulation by reading the internal state and providing the
@@ -193,7 +203,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
-        if(!trainingMode) {
+        if(!trainingMode && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
         }
@@ -212,6 +222,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemExecutionException when building the JSONObject fails
      */
     private void loadInputs(JSONObject retval) throws KiemExecutionException {
+        JSONObject prevSignals = new JSONObject();
         ITick tick = trace.get(step - 1);
 
         Iterator<ISignal> signals = tick.getInputs().iterator();
@@ -222,11 +233,14 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 ISignal signal = signals.next();
                 if (signal.isValued()) {
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
+                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
                 }
                 else {
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
+                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                 }
             }
+            retval.accumulate(prevInputVarName, prevSignals);
         } catch (JSONException e) {
             throw new KiemExecutionException(
                     Constants.ERR_JSON, true, e);
@@ -245,13 +259,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * @throws KiemExecutionException when adding to {@code retval} fails.
      */
     private void loadPreviousInputSignals(JSONObject json, JSONObject retval) throws KiemExecutionException {
-        JSONObject prevSignals = new JSONObject();
+        JSONObject prevSignals = retval.optJSONObject(prevInputVarName);
+        retval.remove(prevInputVarName);
+        if(prevSignals == null) {
+            prevSignals = new JSONObject();
+        }
+        
         String[] fieldNames = JSONObject.getNames(json);
         for (String field : fieldNames) {
             try {
                 Object obj = json.get(field);
                 
-                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
+                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj) && !retval.has(field)) {
                     prevSignals.accumulate(field, obj);
                 }
             } catch (JSONException e) {
@@ -317,6 +336,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         try {
             value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
             value.accumulate(Constants.VAR_ESOFILE, filename);
+            if(trace.getSize() <= (step - 1)) {
+                value.accumulate(Constants.VAR_EOT, true);
+            } else {
+                value.accumulate(Constants.VAR_EOT, false);
+            }
             
             json.accumulate(configVarName, value);
         } catch (JSONException e) {

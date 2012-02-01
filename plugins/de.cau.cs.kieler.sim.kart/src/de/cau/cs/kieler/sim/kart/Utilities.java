@@ -118,7 +118,7 @@ public class Utilities {
             for (String strPair : strPairs) {
                 if(!strPair.equals("")) {
                     String[] pair = strPair.split(",");
-                    retval.add(new Pair<String,String>(pair[0], pair[1]));
+                    retval.add(new Pair<String,String>(pair[0].trim(), pair[1].trim()));
                 } else {
                 }
             }

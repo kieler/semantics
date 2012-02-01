@@ -43,10 +43,8 @@ public interface IValidationEngine {
      * @param simValue the simulated value of the variable
      * @param isHistoryStep flag to indicate that the user is stepping through history
      * @param retval the JSON object that will be injected into the data pool
-     * @throws KiemExecutionException if the variable is invalid
      */
-    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval)
-            throws KiemExecutionException;
+    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval);
 
     /**
      * Validate a set of signals. The lists only contain present signals and also their value,
@@ -57,8 +55,7 @@ public interface IValidationEngine {
      * @param isHistoryStep flag to indicate that the user is stepping through history
      * @param errSignalVar the name of the variable informing about erroneous signals
      * @param retval the JSON object that will be injected into the simulation
-     * @throws KiemExecutionException if one or more signals are invalid
      */
     public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
-            boolean isHistoryStep, String errSignalVar, JSONObject retval) throws KiemExecutionException;
+            boolean isHistoryStep, String errSignalVar, JSONObject retval);
 }

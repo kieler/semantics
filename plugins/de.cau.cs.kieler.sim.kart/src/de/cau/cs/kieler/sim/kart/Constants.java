@@ -18,6 +18,7 @@ package de.cau.cs.kieler.sim.kart;
  *
  */
 public class Constants {
+    public static final String PLUGINID = "de.cau.cs.kieler.sim.kart";
     public static final String ESOFILE = "ESI/ESO trace file";
     public static final String TRACENUM = "Trace number to replay";
     public static final String IGNOREEXTRA = "Ignore additionally generated signals";
@@ -37,15 +38,17 @@ public class Constants {
     public static final String ERR_EMPTYESO = "Trace file is empty or does not exist.";
     public static final String ERR_WRITE = "An error occurred when writing the ESO trace file";
     public static final String ERR_READ = "An error occurred when reading the ESO trace file";
+    public static final boolean ERR_SILENT = true;
     
     public static final String VAL_TITLE = "Validation error";
     
     public static final String VAR_TRAINMODE = "trainmode";
     public static final String VAR_ESOFILE = "esofile";
+    public static final String VAR_EOT = "eot";
     
     public static final String DEF_CONFIGVAR = "kartConfig";
     public static final String DEF_OUTPUTVAR = "kartOutput";
-    public static final String DEF_VALVAR = "(state, errorStates)";
+    public static final String DEF_VALVAR = "(state, errorState)";
     public static final String DEF_PREVINVAR = "kartPrevInput";
     public static final String DEF_SIGNALVAR = "errorSignal";
 }
