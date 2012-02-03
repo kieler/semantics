@@ -17,7 +17,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.esi.ISignal;
 
@@ -36,25 +38,24 @@ public interface IValidationEngine {
      * Validate a single variable. A variable is generally seen as valid when
      * simValue equals recValue.
      * 
-     * @param key the name of the variable
+     * @param variable the names of the variable and the respective error variable
      * @param recValue the recorded value of the variable, taken from an ESO file
      * @param simValue the simulated value of the variable
      * @param isHistoryStep flag to indicate that the user is stepping through history
-     * @throws KiemExecutionException if the variable is invalid
+     * @param retval the JSON object that will be injected into the data pool
      */
-    public void validateVariable(String key, String recValue, String simValue, boolean isHistoryStep)
-            throws KiemExecutionException;
+    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval);
 
     /**
      * Validate a set of signals. The lists only contain present signals and also their value,
      * should they be valued signals.
      * 
      * @param recSignals a list of recorded signals, taken from an ESO file
-     * @param simSignals a list of simulated signals
+     * @param simSignals the JSON object representing the data pool
      * @param isHistoryStep flag to indicate that the user is stepping through history
-     * @param step the step number these signals were generated
-     * @throws KiemExecutionException if one or more signals are invalid
+     * @param errSignalVar the name of the variable informing about erroneous signals
+     * @param retval the JSON object that will be injected into the simulation
      */
-    public void validateSignals(List<ISignal> recSignals, Map<String, Object> simSignals,
-            boolean isHistoryStep, long step) throws KiemExecutionException;
+    public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
+            boolean isHistoryStep, String errSignalVar, JSONObject retval);
 }

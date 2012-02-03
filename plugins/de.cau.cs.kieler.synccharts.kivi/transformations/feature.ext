@@ -1,0 +1,20 @@
+import synccharts;
+
+//Creates a default StateChart
+Void createDefault(Region rootRegion):
+let state = new State:
+let innerState = new State:
+let region = new Region:
+state.setLabel(getFileNameOfActiveEditor()) ->
+state.regions.add(region) ->
+// haf: no default name: innerState.setLabel("Initial") ->
+innerState.setIsInitial(true) -> 
+region.states.add(innerState) ->
+// haf: no default name: region.setLabel("R0") ->
+rootRegion.states.add(state) 
+//setSelection(innerState)
+;
+
+String getFileNameOfActiveEditor():
+JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+;

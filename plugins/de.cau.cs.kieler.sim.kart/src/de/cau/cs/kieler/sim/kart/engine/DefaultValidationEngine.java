@@ -19,13 +19,14 @@ import java.util.Map;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.Constants;
 import de.cau.cs.kieler.sim.kart.Utilities;
-import de.cau.cs.kieler.sim.kart.ValidationException;
 import de.cau.cs.kieler.sim.kart.Tree;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * The default validation engine to validate simulation runs with.
@@ -50,73 +51,71 @@ public class DefaultValidationEngine implements IValidationEngine {
     private boolean ignoreAdditionalSignals;
     
     /**
-     * The name of the variable containing state validation information
-     */
-    private String stateVariable;
-
-    /**
      * Create a new DefaultValidationEngine
      * 
      * @param editor the diagram editor to visualize state validation errors in
      * @param ignoreAdditionalSignals flag to indicate to ignore additionally generated signals
      * @param stateVariable the name of the variable containing state validation information
      */
-    public DefaultValidationEngine(DiagramEditor editor, boolean ignoreAdditionalSignals, String stateVariable) {
+    public DefaultValidationEngine(DiagramEditor editor, boolean ig) {
         this.editor = editor;
-        this.ignoreAdditionalSignals = ignoreAdditionalSignals;
-        this.stateVariable = stateVariable;
+        this.ignoreAdditionalSignals = ig;
     }
     
     /**
      * 
      * {@inheritDoc}
      */
-    public void validateVariable(String key, String recValue, String simValue, boolean isHistoryStep)
-            throws KiemExecutionException {
-        
-        System.out.println("RecValue: " + recValue);
-        System.out.println("SimValue: " + simValue);
-        
-        // undo effects from previous step
-        Utilities.visualizeStates(null, null, editor);
-                
-        //String simValue = ;
+    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval) {
         if (simValue == null) {
-            throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
-                    "The simulation step did not generate a variable \"" + key + "\". "
-                            + "No validation for this signal will take place in this step!"));
-        } else {
-            if (!simValue.equals(recValue)) {
-                if (key.equals(stateVariable)) {
-                
+            KiemPlugin.getDefault().showError(
+                    "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
+                            + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
+        } else if (!(recValue.equals(simValue))) {
+            try {
+                if(!isHistoryStep) {
                     List<EObject> isStates = Utilities.getStates(editor, simValue);
                     List<EObject> shallStates = Utilities.getStates(editor, recValue);
-
-                    // Colorize the diagram
-                    Utilities.visualizeStates(isStates, shallStates, editor);
-
+                    
                     // Get meaningful names for the states
                     String stateNamesTree = Utilities.buildTree(new Tree(null), shallStates).toString();
                     String simStateNamesTree = Utilities.buildTree(new Tree(null), isStates).toString();
+
+                    // Display an error message
+                    String errorMessage = "Validation error: The simulation should have generated the "
+                            + "variable \"" + variable.getFirst() + "\", representing the following "
+                            + "diagram objects:\n"
+                            + stateNamesTree
+                            + "\nbut the variable actually represents:\n"
+                            + simStateNamesTree;
                     
-                    if(!isHistoryStep) {
-                        // Display an error message
-                        String errorMessage = "Validation error: The simulation's active states should be:\n"
-                                + stateNamesTree
-                                + "\nbut the states actually active are:\n"
-                                + simStateNamesTree;
-                        
-                        throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                                new ValidationException(errorMessage));
+                    try {
+                        retval.accumulate(variable.getSecond(), recValue);
+                    } catch (JSONException e) {
+                        // do nothing
                     }
-                } else if(!isHistoryStep) {
-                    throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                            new ValidationException(
-                                    "Validation error: The simulation should provide a variable \""
-                                            + key + "\" with a value of \"" + recValue
-                                            + "\", but it actually generated the value \""
-                                            + simValue + "\"."));
+                    
+                    KiemPlugin.getDefault().showError(errorMessage, Constants.PLUGINID, null, Constants.ERR_SILENT);
+                    //throw new KiemExecutionException(Constants.VAL_TITLE, false,
+                    //        new ValidationException(errorMessage));
                 }
+            } catch (Exception e) {
+                // something went terribly wrong when trying to get real names, just print that string
+                try {
+                    retval.accumulate(variable.getSecond(), recValue);
+                } catch (JSONException j) {
+                    // do nothing
+                }
+                KiemPlugin.getDefault().showError("Validation error: The simulation should provide a variable \""
+                                        + variable.getFirst() + "\" with a value of \"" + recValue
+                                        + "\", but it actually generated the value \""
+                                        + simValue + "\".", Constants.PLUGINID, null, Constants.ERR_SILENT);
+            }
+        } else {
+            try {
+                retval.accumulate(variable.getSecond(), "");
+            } catch (JSONException e) {
+                // do nothing
             }
         }
     }
@@ -125,63 +124,59 @@ public class DefaultValidationEngine implements IValidationEngine {
      * 
      * {@inheritDoc}
      */
-    public void validateSignals(List<ISignal> recSignals, Map<String, Object> simSignals, boolean isHistoryStep, long step)
-            throws KiemExecutionException {
-        Iterator<ISignal> it = recSignals.iterator();
-        while (it.hasNext()) {
-            ISignal recSignal = it.next();
-            // presence
-            if (!simSignals.containsKey(recSignal.getName())) {
-                Utilities.visualizeSignals(recSignal.getName(), step);
-                if(!isHistoryStep) {
-                    throw new KiemExecutionException(Constants.VAL_TITLE, false,
-                            new ValidationException("Validation error: Signal \"" + recSignal.getName()
-                                    + "\" is not present, but it should be."));
+    public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
+            boolean isHistoryStep, String errSignalVar, JSONObject retval) {
+        
+        Iterator<String> signals = recSignals.keySet().iterator();
+        String errSignals = "";
+        
+        while (signals.hasNext()) {
+            String signal = signals.next();
+            
+            if(!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || recSignals.get(signal).equals(simSignals.get(signal))))) {
+                if(!errSignals.isEmpty()) {
+                    errSignals += ", ";
                 }
+                errSignals += signal;
             }
-
-            // value
-            if (recSignal.isValued()
-                    && !(recSignal.getValue() == simSignals.get(recSignal.getName()))) {
-                Utilities.visualizeSignals(recSignal.getName(), step);
-                if(!isHistoryStep) {
-                    throw new KiemExecutionException(
-                            Constants.VAL_TITLE,
-                            false,
-                            new ValidationException(
-                                    "Validation error: Signal \""
-                                            + recSignal.getName()
-                                            + "\" was recorded as a valued signal with value \""
-                                            + recSignal.getValue()
-                                            + "\" but "
-                                            + ((simSignals.get(recSignal.getName()) == null) ? "is not a valued signal in the simulation."
-                                                    : ("was simulatated with value \""
-                                                            + recSignal.getValue() + "\"."))));
-                }
+            simSignals.remove(signal);
+        }
+        
+        if(!errSignals.isEmpty()) {
+            if(!isHistoryStep) {
+                KiemPlugin.getDefault().showError(
+                "Validation error: The signals " + errSignals +
+                                " were produced erroneously, they were either not present when they should " +
+                                "have been or in the case of valued signals were present with a wrong value", Constants.PLUGINID, null, Constants.ERR_SILENT);
             }
-
-            simSignals.remove(recSignal.getName());
         }
 
-        // additional signals
-        if (!ignoreAdditionalSignals && !simSignals.isEmpty()) {
-            String excessSignals = "";
+        String excessSignals = "";
+        if(!(ignoreAdditionalSignals || simSignals.isEmpty())) {
             Iterator<String> it2 = simSignals.keySet().iterator();
             while (it2.hasNext()) {
                 String signal = it2.next();
-                Utilities.visualizeSignals(signal, step);
-                excessSignals += "\"" + signal + "\"";
+                excessSignals += signal;
 
                 if (it2.hasNext()) {
                     excessSignals += ", ";
                 }
             }
-
             if(!isHistoryStep) {
-                throw new KiemExecutionException(Constants.VAL_TITLE, false, new ValidationException(
+                KiemPlugin.getDefault().showError(
                         "Validation error: The signal(s) " + excessSignals
-                                + " were not recorded, but generated in the simulation"));
+                                + " were not recorded, but generated in the simulation", Constants.PLUGINID, null, Constants.ERR_SILENT);
             }
+        }
+        
+        if(!errSignals.isEmpty()) {
+            errSignals += ", ";
+        }
+        
+        try {
+            retval.accumulate(errSignalVar, errSignals + excessSignals);
+        } catch (JSONException e) {
+            // do nothing
         }
     }
 }

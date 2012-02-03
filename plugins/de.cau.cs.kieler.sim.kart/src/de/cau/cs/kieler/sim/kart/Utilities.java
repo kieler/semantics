@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.eclipse.core.runtime.CoreException;
@@ -28,6 +29,9 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.synccharts.Scope;
 
 /**
@@ -106,119 +110,47 @@ public class Utilities {
      * @param split the array of Strings
      * @return a set including all String from the parameter
      */
-    public static Set<String> makeSet(String[] split) {
-        HashSet<String> retval = new HashSet<String>();
-
-        for (int i = 0; i < split.length; i++) {
-            retval.add(split[i]);
-        }
-
-        return retval;
-    }
-
-    /**
-     * Decide whether a signal is a signal or a variable
-     * 
-     * @param variables the set of known variables
-     * @param key the name of the signal
-     * @return true if variables contains the key, false otherwise
-     */
-    public static boolean isVariable(Set<String> variables, String key) {
-        return variables.contains(key);
-    }
-
-    /**
-     * Converts a JSON object representing the simulation's signals to a map and records the signals
-     * internally. Input and special signals are automatically stripped from the returned map, thus
-     * a map of true output signals, i. e. those that only became present after executing the
-     * {@link DataReplayComponent}, is returned.
-     * 
-     * @param obj
-     *            the JSON object representing the simulation's signals
-     * @return the map of true output signals
-     */
-    public static HashMap<String, Object> convertAndRecordSignals(JSONObject obj,
-            List<HashMap<String, Object>> recInputs, List<HashMap<String, Object>> recOutputs,
-            List<HashMap<String, Object>> recVariables, Set<String> variables) {
-        @SuppressWarnings("unchecked")
-        // necessary because the JSON library does not return a parameterized Iterator
-        Iterator<String> keys = obj.keys();
-
-        HashMap<String, Object> signals = new HashMap<String, Object>();
-        HashMap<String, Object> extraInfo = new HashMap<String, Object>();
-
-        HashMap<String, Object> inputs = new HashMap<String, Object>();
-        if (recInputs.size() > 0) {
-            inputs = recInputs.get(recInputs.size() - 1);
-        }
-
-        while (keys.hasNext()) {
-            String key = keys.next();
-            try {
-                if (!inputs.containsKey(key) && !isVariable(variables, key)
-                        && obj.getJSONObject(key).getBoolean("present")) {
-                    Object val = obj.getJSONObject(key).opt("value");
-                    signals.put(key, val);
+    public static Set<Pair<String,String>> makeSetOfPairs(String string) throws KiemInitializationException {
+        try {
+            String[] strPairs = string.split("\\)\\s*,\\s*\\(|\\(|\\)");
+            HashSet<Pair<String,String>> retval = new HashSet<Pair<String,String>>();
+    
+            for (String strPair : strPairs) {
+                if(!strPair.equals("")) {
+                    String[] pair = strPair.split(",");
+                    retval.add(new Pair<String,String>(pair[0].trim(), pair[1].trim()));
+                } else {
                 }
-                if (isVariable(variables, key)) {
-                    Object val = obj.get(key);
-                    extraInfo.put(key, val);
+            }
+            return retval;
+        } catch (Exception e) {
+            throw new KiemInitializationException("Error during gathering variable names to validate", true, e);
+        }
+    }
+
+
+    /**
+     * Extract signal information from a JSON object and create a Map of signal names and signal values.
+     * Signals without a value will be assigned {@code null} as value. Only present signals will be
+     * put into the map
+     * @param json the JSON object to extract signal information from
+     * @return a map of signal names and their corresponding values (or null if not applicable)
+     */
+    public static Map<String,Object> getSignals(JSONObject json) {
+        String[] fieldNames = JSONObject.getNames(json);
+        HashMap<String,Object> retval = new HashMap<String,Object>();
+        
+        for(String field : fieldNames) {
+            try {
+            Object obj = json.get(field);
+                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj) && JSONSignalValues.isPresent(obj)) {
+                    retval.put(field, JSONSignalValues.getSignalValue(obj));
                 }
             } catch (JSONException e) {
-                e.printStackTrace();
+                // do nothing
             }
         }
-
-        recOutputs.add(signals);
-        recVariables.add(extraInfo);
-
-        return signals;
-    }
-
-    /**
-     * Visualize invalid states. This method will visually mark invalid states using all
-     * currently registered extensions to the visualStates extension point.
-     * 
-     * @param isStates set of states generated by the simulation
-     * @param shallStates set of states expected to be generated but not generated
-     */
-    public static void visualizeStates(List<EObject> isStates, List<EObject> shallStates,
-            DiagramEditor editor) {
-        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualStates");
-
-        for (IConfigurationElement element : extensions) {
-            try {
-                IStateVisualization vis = (IStateVisualization) (element
-                        .createExecutableExtension("class"));
-
-                vis.visualize(isStates, shallStates, editor);
-            } catch (CoreException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Visualize invalid signals. This method will visually mark invalid signals using all
-     * currently registered extensions to the visualSignals extension point.
-     * 
-     * @param signalName the name of the signal to be marked invalid
-     * @param step the step in which the signal shall be marked invalid
-     */
-    public static void visualizeSignals(String signalName, long step) {
-        IConfigurationElement[] extensions = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.visualSignals");
-
-        for (IConfigurationElement element : extensions) {
-            try {
-                ISignalVisualization vis = (ISignalVisualization) (element
-                        .createExecutableExtension("class"));
-
-                vis.visualize(signalName, step);
-            } catch (CoreException e) {
-                e.printStackTrace();
-            }
-        }
+        
+        return retval;
     }
 }
