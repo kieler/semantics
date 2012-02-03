@@ -39,6 +39,7 @@ import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationEffect;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
@@ -48,17 +49,19 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * This combination is used for creating a default state on empty SyscchartsDiagrams.
  * 
  * @author ckru
- *
+ * 
  */
 public class GenerateDefaultCombination extends AbstractCombination implements ResourceSetListener {
 
     String absolutePath = null;
     
+    SyncchartsDiagramEditor lastEditor = null;
+    
+
     public GenerateDefaultCombination() {
         InputStream inStream;
         StringBuffer contentBuffer = new StringBuffer();
-        URL url = Activator.getDefault().getBundle()
-                .getEntry("/transformations/feature.ext");
+        URL url = Activator.getDefault().getBundle().getEntry("/transformations/feature.ext");
         try {
             inStream = url.openStream();
 
@@ -108,17 +111,17 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
             e.printStackTrace();
         }
     }
-    
-    
+
     public void execute(final DiagramState diagram) {
         if (diagram.getDiagramPart() instanceof SyncchartsDiagramEditor) {
             SyncchartsDiagramEditor sde = (SyncchartsDiagramEditor) diagram.getDiagramPart();
+            lastEditor = sde;
             EObject object = diagram.getSemanticModel();
             Region r = (Region) object;
             sde.getEditingDomain().addResourceSetListener(this);
             EList<State> states = r.getStates();
             EList<Signal> signals = r.getSignals();
-            if (states.isEmpty() && signals.isEmpty()) {            
+            if (states.isEmpty() && signals.isEmpty()) {
                 if (absolutePath != null) {
                     Object[] mapping = { r };
                     TransformationDescriptor descriptor = new TransformationDescriptor(
@@ -129,7 +132,9 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
                             absolutePath, packages, null, sde.getEditingDomain());
                     XtendTransformationEffect effect = new XtendTransformationEffect(context,
                             descriptor);
+                    LayoutEffect layout = new LayoutEffect(sde, r, false);
                     effect.schedule();
+                    layout.schedule();
                 }
             }
         }
@@ -152,22 +157,25 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
                 EList<State> states = r.getStates();
                 EList<Signal> signals = r.getSignals();
                 if (states.isEmpty() && signals.isEmpty()) {
-                if (absolutePath != null) {
-                    Object[] mapping = { r };
-                    TransformationDescriptor descriptor = new TransformationDescriptor(
-                            "createDefault", mapping);
-                    String[] packages = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
+                    if (absolutePath != null) {
+                        Object[] mapping = { r };
+                        TransformationDescriptor descriptor = new TransformationDescriptor(
+                                "createDefault", mapping);
+                        String[] packages = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
 
-                    XtendTransformationContext context = new XtendTransformationContext(
-                            absolutePath, packages, null, event.getEditingDomain());
-                    XtendTransformationEffect effect = new XtendTransformationEffect(context,
-                            descriptor);
-                    effect.schedule();
-                }
+                        XtendTransformationContext context = new XtendTransformationContext(
+                                absolutePath, packages, null, event.getEditingDomain());
+                        XtendTransformationEffect effect = new XtendTransformationEffect(context,
+                                descriptor);
+                        LayoutEffect layout = new LayoutEffect(lastEditor, r, false);
+                        effect.schedule();
+                        layout.schedule();
+                        break;
+                    }
                 }
             }
         }
-        
+
     }
 
     private Region getRootRegion(Region r) {
@@ -177,7 +185,7 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
             return this.getRootRegion(r.getParentState().getParentRegion());
         }
     }
-    
+
     public boolean isAggregatePrecommitListener() {
         // TODO Auto-generated method stub
         return false;
