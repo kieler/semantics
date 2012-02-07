@@ -209,7 +209,7 @@ public class TimeoutThread extends Thread {
                     // timeout aborted
                     this.active = false;
                 } else if (this.terminate) {
-                    // timeout thrad terminated
+                    // timeout thread terminated
                     return;
                 } else if (this.execution.getExecutionProgressMonitor().isCanceled()) {
                     this.execution.abortExecutionAsync();
