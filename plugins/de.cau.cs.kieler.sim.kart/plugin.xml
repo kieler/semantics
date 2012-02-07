@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.sim.kart.DataValidationComponent"
             id="de.cau.cs.kieler.sim.kart.validation"
-            name="ESO Validation">
+            name="KART - Validate/Record Output">
       </content>
    </extension>
    <extension
@@ -14,7 +14,7 @@
       <content
             class="de.cau.cs.kieler.sim.kart.DataReplayComponent"
             id="de.cau.cs.kieler.sim.kart.replay"
-            name="ESO Replay">
+            name="KART - Replay/Record Input">
       </content>
    </extension>
 

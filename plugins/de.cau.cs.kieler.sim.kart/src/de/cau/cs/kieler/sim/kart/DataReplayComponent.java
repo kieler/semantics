@@ -203,6 +203,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
+        System.out.println("Training mode: " + trainingMode);
         if(!trainingMode && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
@@ -336,7 +337,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         try {
             value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
             value.accumulate(Constants.VAR_ESOFILE, filename);
-            if(trace.getSize() <= (step - 1)) {
+            if(!trainingMode && trace.getSize() <= (step - 1)) {
                 value.accumulate(Constants.VAR_EOT, true);
             } else {
                 value.accumulate(Constants.VAR_EOT, false);

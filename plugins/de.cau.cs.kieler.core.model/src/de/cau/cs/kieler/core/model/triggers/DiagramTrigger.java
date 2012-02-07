@@ -102,7 +102,10 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        // TODO Auto-generated method stub
+        if (part != currentEditor) {
+            currentEditor = part;
+            tryTrigger(currentEditor);
+        }
     }
 
     private void tryTrigger(final IWorkbenchPart part) {
