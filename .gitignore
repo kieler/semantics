@@ -1,4 +1,5 @@
 *.class
 bin/
 .checkstyle
+.svn/
 
