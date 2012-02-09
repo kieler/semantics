@@ -146,13 +146,14 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
      */
     private void doTableLayout(final /*IAttributeAware*/IFigure stateFigure,
             final ExtendedTable tableLayout) {
+        if (tableLayout != null) {
         /* first set all children to zero size */
         setChildrenToZeroSize(stateFigure);
 
         /*
          * now calculate the new dimensions for the child-figures of the stateFigure on the basis of
          * the given tableLayout
-         */
+         */      
         LayoutSizes layoutSizes = calculateLayoutSizes(tableLayout, stateFigure);
 
         /*
@@ -173,6 +174,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
 
         /* Assign the calculated dimensions to the stateFigure */
         setAlignedLayout(tableLayout, stateFigure, layoutSizes);
+        }
     }
 
     /**

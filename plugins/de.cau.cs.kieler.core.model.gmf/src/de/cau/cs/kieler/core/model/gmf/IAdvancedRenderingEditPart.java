@@ -43,4 +43,6 @@ public interface IAdvancedRenderingEditPart {
      * @return the model element
      */
     EObject getModelElement();
+    
+    IFigure getPrimaryShape();
 }
