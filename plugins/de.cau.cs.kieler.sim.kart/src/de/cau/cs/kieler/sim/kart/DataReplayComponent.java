@@ -13,10 +13,14 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -35,6 +39,7 @@ import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -122,6 +127,28 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(Constants.ERR_NOTRACE
                             + tracenum, true, e);
+                }
+            } catch(FileNotFoundException e) {
+                IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                        .getConfigurationElementsFor(
+                                "de.cau.cs.kieler.sim.kart.MessageDialog");
+
+                if(contributors.length > 0) {
+                    try {
+                        IMessageDialog msg = (IMessageDialog) (contributors[0]
+                                .createExecutableExtension("class"));
+                        if(msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
+                            trainingMode = true;
+                        } else {
+                            KiemPlugin.getDefault().cancelInitialization();
+                            KiemPlugin.getDefault().showError(Constants.ERR_NOTFOUND, Constants.PLUGINID, null, Constants.ERR_SILENT);
+                        }
+                    } catch (CoreException e0) {
+                        // TODO Auto-generated catch block
+                        e0.printStackTrace();
+                    }
+                } else {
+                    throw new KiemInitializationException(Constants.ERR_NOTFOUND, true, e);
                 }
             } catch(KiemInitializationException e) {
                 throw new KiemInitializationException(Constants.ERR_READ, true, e);
@@ -364,7 +391,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         String filename = null;
         try {
             /*
-             * Try creating a default file name.
+             * Try creating a default file name from the model name.
              * The try block is necessary to suppress NPEs and other exceptions when we are either
              * running in headless mode or there are no editor opened. Below, you will see that a
              * filename is only proposed if this try block succeeds. We have to use absolute file

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.sim.kart.MessageDialog" name="KART Message Dialog" schema="schema/de.cau.cs.kieler.sim.kart.MessageDialog.exsd"/>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content

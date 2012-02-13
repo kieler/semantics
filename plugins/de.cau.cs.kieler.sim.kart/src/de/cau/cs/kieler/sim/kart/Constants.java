@@ -38,6 +38,8 @@ public class Constants {
     public static final String ERR_EMPTYESO = "Trace file is empty or does not exist.";
     public static final String ERR_WRITE = "An error occurred when writing the ESO trace file";
     public static final String ERR_READ = "An error occurred when reading the ESO trace file";
+    public static final String ERR_NOTFOUND_TITLE = "Trace file could not be found";
+    public static final String ERR_NOTFOUND = "bla";
     public static final boolean ERR_SILENT = true;
     
     public static final String VAL_TITLE = "Validation error";

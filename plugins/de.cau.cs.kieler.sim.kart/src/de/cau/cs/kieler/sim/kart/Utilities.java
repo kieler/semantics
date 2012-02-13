@@ -52,7 +52,7 @@ public class Utilities {
         List<EObject> retval = new ArrayList<EObject>();
         String[] states = stateString.replaceAll("\\s", "").split(",");
         for (String state : states) {
-            retval.add(editor.getDiagram().getElement().eResource().getEObject(state));
+            retval.add(editor.getDiagram().getElement().eResource().getEObject(state.trim()));
         }
         return retval;
     }
