@@ -149,7 +149,11 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         simVariables = new LinkedList<HashMap<String,String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
 
-        editor = (DiagramEditor) getActivePage().getActiveEditor();
+        try {
+            editor = (DiagramEditor) getActivePage().getActiveEditor();
+        } catch (NullPointerException e) {
+            editor = null;
+        }
 
         // load properties
         variables = new HashSet<Pair<String, String>>();
