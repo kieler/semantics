@@ -88,12 +88,12 @@ public interface signal extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Val</em>' attribute.
-   * @see #setVal(int)
+   * @see #setVal(String)
    * @see de.cau.cs.kieler.sim.esi.esi.EsiPackage#getsignal_Val()
    * @model
    * @generated
    */
-  int getVal();
+  String getVal();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.sim.esi.esi.signal#getVal <em>Val</em>}' attribute.
@@ -103,6 +103,6 @@ public interface signal extends EObject
    * @see #getVal()
    * @generated
    */
-  void setVal(int value);
+  void setVal(String value);
 
 } // signal

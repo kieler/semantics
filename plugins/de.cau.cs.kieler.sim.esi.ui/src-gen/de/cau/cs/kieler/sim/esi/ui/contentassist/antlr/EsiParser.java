@@ -37,8 +37,8 @@ public class EsiParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getSignalAccess().getNameAlternatives_0_0(), "rule__Signal__NameAlternatives_0_0");
-					put(grammarAccess.getKvpairAccess().getKeyAlternatives_1_0(), "rule__Kvpair__KeyAlternatives_1_0");
+					put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
+					put(grammarAccess.getEsoBoolAccess().getAlternatives(), "rule__EsoBool__Alternatives");
 					put(grammarAccess.getKvpairAccess().getValueAlternatives_3_0(), "rule__Kvpair__ValueAlternatives_3_0");
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
@@ -75,7 +75,7 @@ public class EsiParser extends AbstractContentAssistParser {
 	
 	@Override
 	protected String[] getInitialHiddenTokens() {
-		return new String[] { "RULE_WS", "RULE_COMMENT" };
+		return new String[] { "RULE_WS" };
 	}
 	
 	public EsiGrammarAccess getGrammarAccess() {
