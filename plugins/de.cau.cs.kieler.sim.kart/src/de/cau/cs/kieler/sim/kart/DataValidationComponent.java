@@ -51,7 +51,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
-    private long step;
+    private static volatile long step;
 
     /** The name of the ESI/ESO file the trace shall be read/written from/to */
     private String filename;
