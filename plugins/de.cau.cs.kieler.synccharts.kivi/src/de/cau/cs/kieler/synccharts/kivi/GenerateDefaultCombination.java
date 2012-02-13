@@ -20,6 +20,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -35,6 +37,7 @@ import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
@@ -151,6 +154,9 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
     }
 
     public void resourceSetChanged(ResourceSetChangeEvent event) {
+        List<IEffect> effects = new LinkedList<IEffect>();
+        LayoutEffect layout = null;
+        XtendTransformationEffect effect = null;
         for (Notification n : event.getNotifications()) {
             if ((n.getEventType() == Notification.REMOVE) && (n.getNotifier() instanceof Region)) {
                 Region r = this.getRootRegion((Region) n.getNotifier());
@@ -165,17 +171,18 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
 
                         XtendTransformationContext context = new XtendTransformationContext(
                                 absolutePath, packages, null, event.getEditingDomain());
-                        XtendTransformationEffect effect = new XtendTransformationEffect(context,
+                        effect = new XtendTransformationEffect(context,
                                 descriptor);
-                        LayoutEffect layout = new LayoutEffect(lastEditor, r, false);
-                        effect.schedule();
-                        layout.schedule();
-                        break;
+                        layout = new LayoutEffect(lastEditor, r, false);
                     }
                 }
             }
         }
-
+        if (effect != null && layout != null) {
+            effect.schedule();
+            layout.schedule();
+        }
+        
     }
 
     private Region getRootRegion(Region r) {
@@ -198,7 +205,7 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
 
     public boolean isPostcommitOnly() {
         // TODO Auto-generated method stub
-        return false;
+        return true;
     }
 
 }
