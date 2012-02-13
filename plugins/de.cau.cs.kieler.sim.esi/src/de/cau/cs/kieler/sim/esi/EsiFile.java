@@ -154,7 +154,7 @@ public class EsiFile implements ITraceProvider {
      * 
      * @throws KiemInitializationException
      */
-    public List<ITrace> loadTrace(final String fileName) throws KiemInitializationException {
+    public List<ITrace> loadTrace(final String fileName) throws KiemInitializationException, FileNotFoundException {
         ISetup setup = new EsiStandaloneSetup();
         Injector injector = setup.createInjectorAndDoEMFRegistration();
         XtextResourceSet rs = injector.getInstance(XtextResourceSet.class);
@@ -167,31 +167,25 @@ public class EsiFile implements ITraceProvider {
         rs.getResources().add(resource);
 
         InputStream in;
-        try {
-
-            if (fileName != null && fileName.length() > 0) {
-                in = new FileInputStream(fileName);
-            } else {
-                throw new KiemInitializationException(
-                        "EsiComponent is activated but no trace file is set", false, null);
-            }
-
-            Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
-            IParser parser = inj.getInstance(IParser.class);
-            IParseResult parseResult = parser.parse(new InputStreamReader(in));
-            if (parseResult.getSyntaxErrors().iterator().hasNext()) {
-                INode errorElem = parseResult.getSyntaxErrors().iterator().next();
-                throw new KiemInitializationException("Parse error on line "
-                        + errorElem.getStartLine() + " at column " + errorElem.getTotalOffset()
-                        + ": " + parseResult.getSyntaxErrors().iterator().next().getText(), true,
-                        null);
-            }
-            traceList = (tracelist) parseResult.getRootASTElement();
-        } catch (FileNotFoundException e) {
-            throw new KiemInitializationException("File not found", false, e);
-            // } catch (Exception e) {
-            // throw new KiemInitializationException("Unknown error", false, e);
+        if (fileName != null && fileName.length() > 0) {
+            in = new FileInputStream(fileName);
+        } else {
+            throw new KiemInitializationException(
+                    "EsiComponent is activated but no trace file is set", false, null);
         }
+
+        Injector inj = new EsiStandaloneSetup().createInjectorAndDoEMFRegistration();
+        IParser parser = inj.getInstance(IParser.class);
+        IParseResult parseResult = parser.parse(new InputStreamReader(in));
+        if (parseResult.getSyntaxErrors().iterator().hasNext()) {
+            INode errorElem = parseResult.getSyntaxErrors().iterator().next();
+            throw new KiemInitializationException("Parse error on line "
+                    + errorElem.getStartLine() + " at column " + errorElem.getTotalOffset()
+                    + ": " + parseResult.getSyntaxErrors().iterator().next().getText(), true,
+                    null);
+        }
+        traceList = (tracelist) parseResult.getRootASTElement();
+        
 
         LinkedList<ITrace> res = new LinkedList<ITrace>();
         for (trace trace : traceList.getTraces()) {

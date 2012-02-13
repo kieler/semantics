@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -33,7 +34,7 @@ public interface ITraceProvider {
      * @throws KiemInitializationException
      *             thrown for any parse error
      */
-    List<ITrace> loadTrace(String fileName) throws KiemInitializationException;
+    List<ITrace> loadTrace(String fileName) throws KiemInitializationException, FileNotFoundException;
 
     /**
      * 

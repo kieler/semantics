@@ -251,7 +251,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private void loadInputs(JSONObject retval) throws KiemExecutionException {
         JSONObject prevSignals = new JSONObject();
-        System.out.println("XX Step: " + step);
         ITick tick = trace.get(step - 1);
 
         Iterator<ISignal> signals = tick.getInputs().iterator();

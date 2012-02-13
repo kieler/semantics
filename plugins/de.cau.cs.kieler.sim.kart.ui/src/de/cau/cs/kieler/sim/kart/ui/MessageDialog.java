@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sim.kart.ui;
 
+import java.util.concurrent.Exchanger;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 
@@ -34,17 +36,41 @@ public class MessageDialog implements IMessageDialog {
      *         could not be displayed.
      */
     public boolean question(String title, String message) {
-        /* Displaying a question dialog does not currently work, because the following
-         * code would be executed in a non-UI thread. SWT is single-threaded only and can only
-         * be displayed in the UI thread.
-         */
-        //Shell shell = Display.getCurrent().getShells()[0];
-        //if (shell != null) {
-        //    return org.eclipse.jface.dialogs.MessageDialog.openQuestion(null, title, message);
-        //} else {
-        //    return false;
-        //}
-        return false;
+        Exchanger<Boolean> ex = new Exchanger<Boolean>();
+        Display.getDefault().asyncExec(new DialogRunnable(ex, title, message));
+        
+        try {
+            boolean b = ex.exchange(false); // Doesn't matter what we send
+            return b;
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
+    private class DialogRunnable implements Runnable {
+        private Exchanger<Boolean> ex;
+        private String title;
+        private String message;
+        
+        public DialogRunnable(Exchanger<Boolean> ex, String title, String message) {
+            this.ex = ex;
+            this.title = title;
+            this.message = message;
+        }
+        
+        public void run() {
+            Shell shell = Display.getCurrent().getShells()[0];
+            try {
+                if (shell != null) {
+                    ex.exchange(org.eclipse.jface.dialogs.MessageDialog.openQuestion(null, title, message));
+                } else {
+                    ex.exchange(false);
+                }
+            } catch (InterruptedException e) {
+                // Blast...
+                e.printStackTrace();
+            }
+        }
+    }
 }

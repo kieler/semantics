@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sim.trace;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -271,7 +272,11 @@ public class TraceReader extends AbstractAutomatedProducer  {
 
                 for (Entry<String, ITraceProvider> i : provider.entrySet()) {
                     if (new File(name + "." + i.getKey()).exists()) {
-                        tracelist = i.getValue().loadTrace(name + "." + i.getKey());
+                        try {
+                            tracelist = i.getValue().loadTrace(name + "." + i.getKey());
+                        } catch (FileNotFoundException e) {
+                            throw new KiemInitializationException(e.getMessage(), true, e);
+                        }
                         current = tracelist.get(0);
                         break;
                     }
