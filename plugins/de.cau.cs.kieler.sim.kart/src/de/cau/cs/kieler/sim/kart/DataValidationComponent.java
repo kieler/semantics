@@ -292,7 +292,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         JSONObject retval = null;
         if (!trainingMode && !eot) {
             retval = new JSONObject();
-    
             for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),

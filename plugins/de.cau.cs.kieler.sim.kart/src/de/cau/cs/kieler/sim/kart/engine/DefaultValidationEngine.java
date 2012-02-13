@@ -71,6 +71,10 @@ public class DefaultValidationEngine implements IValidationEngine {
             KiemPlugin.getDefault().showError(
                     "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
                             + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
+        } else if (recValue == null) {
+            KiemPlugin.getDefault().showError(
+                    "The trace file did not contain a variable \"" + variable.getFirst() + "\"."
+                    + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
         } else if (!(recValue.equals(simValue))) {
             try {
                 if(!isHistoryStep) {
