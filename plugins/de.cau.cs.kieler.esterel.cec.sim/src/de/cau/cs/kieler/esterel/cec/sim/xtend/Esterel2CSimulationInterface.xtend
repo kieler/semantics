@@ -15,7 +15,7 @@ import org.eclipse.xtend2.lib.StringConcatenation
 //
 // author: cmot
 // (original transormation xtend (1.0) ctr)
-class Esterel2CSimulationInterface {
+class Esterel2CSimulationInterface { 
     
     // Generale method to create the c simulation interface
 	def createCSimulationInterface (Module module) {

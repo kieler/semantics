@@ -167,7 +167,17 @@ public class InitializeExecution implements Runnable {
 
         if (!this.cancelInitialize) {
             // now create and run the execution thread
-            this.kIEMInstance.setExecution(new Execution(dataComponentWrapperList, eventManager));
+        	try {
+        		Execution execution = new Execution(dataComponentWrapperList, eventManager);
+        		if (execution != null) {
+                    this.kIEMInstance.setExecution(execution);
+        		}
+        	}
+        	catch(Exception e) {
+        		// non-successful exit
+        		cleanUpBeforeExit(false);
+        		return;
+        	}
             execution = this.kIEMInstance.getExecution();
             // take the last set delay
             execution.setAimedStepDuration(this.kIEMInstance.getAimedStepDuration());
