@@ -1,5 +1,5 @@
 *.class
 bin/
 .checkstyle
+.svn/
 xtend-gen/
-
