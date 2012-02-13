@@ -17,5 +17,21 @@
             name="KART - Replay/Record Input">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kart.DataReplayComponent"
+            id="de.cau.cs.kieler.sim.kart.DataReplayComponent"
+            name="DataReplayComponent">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kart.DataValidationComponent"
+            id="de.cau.cs.kieler.sim.kart.DataValidationComponent"
+            name="DataValidationComponent">
+      </content>
+   </extension>
 
 </plugin>

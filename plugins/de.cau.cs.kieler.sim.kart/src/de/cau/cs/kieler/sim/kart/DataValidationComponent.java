@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.engine.DefaultValidationEngine;
 import de.cau.cs.kieler.sim.kart.engine.IValidationEngine;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -48,7 +49,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * 
  */
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
-        IJSONObjectDataComponent {
+        IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
     private long step;
 

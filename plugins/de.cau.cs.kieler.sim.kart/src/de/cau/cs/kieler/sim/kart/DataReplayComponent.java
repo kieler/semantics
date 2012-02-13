@@ -31,6 +31,7 @@ import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -49,9 +50,9 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * @kieler.rating 2011-11-24 red
  */
 public class DataReplayComponent extends JSONObjectSimulationDataComponent implements
-        IJSONObjectDataComponent {
+        IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
-    private long step;
+    private static volatile long step;
     
     /** Name of the ESO file to be replayed/recorded from/to. */
     private String filename;
@@ -203,7 +204,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
-        System.out.println("Training mode: " + trainingMode);
         if(!trainingMode && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
@@ -224,6 +224,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private void loadInputs(JSONObject retval) throws KiemExecutionException {
         JSONObject prevSignals = new JSONObject();
+        System.out.println("XX Step: " + step);
         ITick tick = trace.get(step - 1);
 
         Iterator<ISignal> signals = tick.getInputs().iterator();
