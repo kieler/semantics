@@ -133,6 +133,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         step = 0;
         eot = false;
         filename = "";
+        trainingMode = false;
         ignoreAdditionalSignals = false;
         configVarName = Constants.DEF_CONFIGVAR;
         outputVarName = Constants.DEF_OUTPUTVAR;
