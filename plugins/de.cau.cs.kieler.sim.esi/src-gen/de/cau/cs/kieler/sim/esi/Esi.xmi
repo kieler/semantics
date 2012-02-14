@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ASCII"?>
-<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext" name="de.cau.cs.kieler.sim.esi.Esi" definesHiddenTokens="true" hiddenTokens="//@rules.15">
+<xtext:Grammar xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" xmlns:xtext="http://www.eclipse.org/2008/Xtext" name="de.cau.cs.kieler.sim.esi.Esi" definesHiddenTokens="true" hiddenTokens="//@rules.16">
   <metamodelDeclarations xsi:type="xtext:ReferencedMetamodel" alias="ecore">
     <ePackage href="http://www.eclipse.org/emf/2002/Ecore#/"/>
   </metamodelDeclarations>
@@ -49,7 +49,7 @@
         </elements>
       </elements>
       <elements xsi:type="xtext:Assignment" cardinality="*" feature="extraInfos" operator="+=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.9"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
       </elements>
       <elements xsi:type="xtext:Keyword" value=";"/>
     </alternatives>
@@ -60,55 +60,22 @@
     </type>
     <alternatives xsi:type="xtext:Group">
       <elements xsi:type="xtext:Assignment" feature="name" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.11"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
+      </elements>
+      <elements xsi:type="xtext:Assignment" cardinality="?" feature="valued" operator="?=">
+        <terminal xsi:type="xtext:Keyword" value="("/>
       </elements>
       <elements xsi:type="xtext:Group" cardinality="?">
-        <elements xsi:type="xtext:Assignment" feature="valued" operator="?=">
-          <terminal xsi:type="xtext:Keyword" value="("/>
-        </elements>
         <elements xsi:type="xtext:Assignment" feature="val" operator="=">
-          <terminal xsi:type="xtext:RuleCall" rule="//@rules.4"/>
+          <terminal xsi:type="xtext:Alternatives">
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
+            <elements xsi:type="xtext:RuleCall" rule="//@rules.6"/>
+          </terminal>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
       </elements>
-    </alternatives>
-  </rules>
-  <rules xsi:type="xtext:ParserRule" name="value">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </type>
-    <alternatives xsi:type="xtext:Alternatives">
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
-      <elements xsi:type="xtext:RuleCall" rule="//@rules.6"/>
-    </alternatives>
-  </rules>
-  <rules xsi:type="xtext:ParserRule" name="EsoInt">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    </type>
-    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.13"/>
-  </rules>
-  <rules xsi:type="xtext:ParserRule" name="EsoString">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </type>
-    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.12"/>
-  </rules>
-  <rules xsi:type="xtext:ParserRule" name="EsoFloat">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
-    </type>
-    <alternatives xsi:type="xtext:RuleCall" rule="//@rules.14"/>
-  </rules>
-  <rules xsi:type="xtext:ParserRule" name="EsoBool">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    </type>
-    <alternatives xsi:type="xtext:Alternatives">
-      <elements xsi:type="xtext:Keyword" value="true"/>
-      <elements xsi:type="xtext:Keyword" value="false"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:ParserRule" name="kvpair">
@@ -116,18 +83,65 @@
       <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//kvpair"/>
     </type>
     <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Action">
+        <type metamodel="//@metamodelDeclarations.1">
+          <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//kvpair"/>
+        </type>
+      </elements>
       <elements xsi:type="xtext:Keyword" value="%%"/>
       <elements xsi:type="xtext:Assignment" feature="key" operator="=">
-        <terminal xsi:type="xtext:RuleCall" rule="//@rules.11"/>
+        <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
       </elements>
       <elements xsi:type="xtext:Keyword" value=":"/>
       <elements xsi:type="xtext:Assignment" feature="value" operator="=">
         <terminal xsi:type="xtext:Alternatives">
-          <elements xsi:type="xtext:RuleCall" rule="//@rules.11"/>
-          <elements xsi:type="xtext:RuleCall" rule="//@rules.13"/>
-          <elements xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.9"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.6"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.7"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.8"/>
+          <elements xsi:type="xtext:RuleCall" rule="//@rules.5"/>
         </terminal>
       </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EsoInt">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//EsoInt"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.14"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EsoString">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//EsoString"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.15"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EsoFloat">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//EsoFloat"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.13"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EsoBool">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//EsoBool"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.11"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:ParserRule" name="EsoJson">
+    <type metamodel="//@metamodelDeclarations.1">
+      <classifier xsi:type="ecore:EClass" href="http://www.cau.de/cs/kieler/sim/esi/Esi#//EsoJson"/>
+    </type>
+    <alternatives xsi:type="xtext:Assignment" feature="value" operator="=">
+      <terminal xsi:type="xtext:RuleCall" rule="//@rules.12"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="Special">
@@ -146,6 +160,15 @@
       <elements xsi:type="xtext:Keyword" value="="/>
       <elements xsi:type="xtext:Keyword" value="+"/>
       <elements xsi:type="xtext:Keyword" value="-"/>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="BOOL">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    </type>
+    <alternatives xsi:type="xtext:Alternatives">
+      <elements xsi:type="xtext:Keyword" value="true"/>
+      <elements xsi:type="xtext:Keyword" value="false"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="AlphaNumSpecial">
@@ -179,6 +202,35 @@
         </elements>
         <elements xsi:type="xtext:RuleCall" rule="//@rules.10"/>
       </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="FLOAT">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
+    </type>
+    <alternatives xsi:type="xtext:Group">
+      <elements xsi:type="xtext:Alternatives" cardinality="?">
+        <elements xsi:type="xtext:Keyword" value="+"/>
+        <elements xsi:type="xtext:Keyword" value="-"/>
+      </elements>
+      <elements xsi:type="xtext:CharacterRange" cardinality="+">
+        <left value="0"/>
+        <right value="9"/>
+      </elements>
+      <elements xsi:type="xtext:Keyword" value="."/>
+      <elements xsi:type="xtext:CharacterRange" cardinality="+">
+        <left value="0"/>
+        <right value="9"/>
+      </elements>
+    </alternatives>
+  </rules>
+  <rules xsi:type="xtext:TerminalRule" name="INT">
+    <type metamodel="//@metamodelDeclarations.0">
+      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    </type>
+    <alternatives xsi:type="xtext:CharacterRange" cardinality="+">
+      <left value="0"/>
+      <right value="9"/>
     </alternatives>
   </rules>
   <rules xsi:type="xtext:TerminalRule" name="STRING">
@@ -240,48 +292,13 @@
       </elements>
     </alternatives>
   </rules>
-  <rules xsi:type="xtext:TerminalRule" name="Int">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </type>
-    <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:Alternatives" cardinality="?">
-        <elements xsi:type="xtext:Keyword" value="+"/>
-        <elements xsi:type="xtext:Keyword" value="-"/>
-      </elements>
-      <elements xsi:type="xtext:CharacterRange" cardinality="+">
-        <left value="0"/>
-        <right value="9"/>
-      </elements>
-    </alternatives>
-  </rules>
-  <rules xsi:type="xtext:TerminalRule" name="Float">
-    <type metamodel="//@metamodelDeclarations.0">
-      <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    </type>
-    <alternatives xsi:type="xtext:Group">
-      <elements xsi:type="xtext:Alternatives" cardinality="?">
-        <elements xsi:type="xtext:Keyword" value="+"/>
-        <elements xsi:type="xtext:Keyword" value="-"/>
-      </elements>
-      <elements xsi:type="xtext:CharacterRange" cardinality="+">
-        <left value="0"/>
-        <right value="9"/>
-      </elements>
-      <elements xsi:type="xtext:Keyword" value="."/>
-      <elements xsi:type="xtext:CharacterRange" cardinality="+">
-        <left value="0"/>
-        <right value="9"/>
-      </elements>
-    </alternatives>
-  </rules>
   <rules xsi:type="xtext:TerminalRule" name="WS">
     <type metamodel="//@metamodelDeclarations.0">
       <classifier xsi:type="ecore:EDataType" href="http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     </type>
-    <alternatives xsi:type="xtext:Alternatives">
-      <elements xsi:type="xtext:Keyword" value="&#x9;"/>
+    <alternatives xsi:type="xtext:Alternatives" cardinality="+">
       <elements xsi:type="xtext:Keyword" value=" "/>
+      <elements xsi:type="xtext:Keyword" value="&#x9;"/>
       <elements xsi:type="xtext:Keyword" value="&#xD;"/>
       <elements xsi:type="xtext:Keyword" value="&#xA;"/>
     </alternatives>

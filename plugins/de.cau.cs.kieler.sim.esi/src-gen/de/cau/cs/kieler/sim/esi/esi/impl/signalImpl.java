@@ -9,8 +9,11 @@ import de.cau.cs.kieler.sim.esi.esi.EsiPackage;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -73,24 +76,14 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
   protected boolean valued = VALUED_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getVal() <em>Val</em>}' attribute.
+   * The cached value of the '{@link #getVal() <em>Val</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getVal()
    * @generated
    * @ordered
    */
-  protected static final String VAL_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getVal() <em>Val</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getVal()
-   * @generated
-   * @ordered
-   */
-  protected String val = VAL_EDEFAULT;
+  protected EObject val;
 
   /**
    * <!-- begin-user-doc -->
@@ -164,7 +157,7 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getVal()
+  public EObject getVal()
   {
     return val;
   }
@@ -174,12 +167,53 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setVal(String newVal)
+  public NotificationChain basicSetVal(EObject newVal, NotificationChain msgs)
   {
-    String oldVal = val;
+    EObject oldVal = val;
     val = newVal;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.SIGNAL__VAL, oldVal, val));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsiPackage.SIGNAL__VAL, oldVal, newVal);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVal(EObject newVal)
+  {
+    if (newVal != val)
+    {
+      NotificationChain msgs = null;
+      if (val != null)
+        msgs = ((InternalEObject)val).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsiPackage.SIGNAL__VAL, null, msgs);
+      if (newVal != null)
+        msgs = ((InternalEObject)newVal).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsiPackage.SIGNAL__VAL, null, msgs);
+      msgs = basicSetVal(newVal, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.SIGNAL__VAL, newVal, newVal));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case EsiPackage.SIGNAL__VAL:
+        return basicSetVal(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -219,7 +253,7 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
         setValued((Boolean)newValue);
         return;
       case EsiPackage.SIGNAL__VAL:
-        setVal((String)newValue);
+        setVal((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -242,7 +276,7 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
         setValued(VALUED_EDEFAULT);
         return;
       case EsiPackage.SIGNAL__VAL:
-        setVal(VAL_EDEFAULT);
+        setVal((EObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -263,7 +297,7 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
       case EsiPackage.SIGNAL__VALUED:
         return valued != VALUED_EDEFAULT;
       case EsiPackage.SIGNAL__VAL:
-        return VAL_EDEFAULT == null ? val != null : !VAL_EDEFAULT.equals(val);
+        return val != null;
     }
     return super.eIsSet(featureID);
   }
@@ -283,8 +317,6 @@ public class signalImpl extends MinimalEObjectImpl.Container implements signal
     result.append(name);
     result.append(", valued: ");
     result.append(valued);
-    result.append(", val: ");
-    result.append(val);
     result.append(')');
     return result.toString();
   }

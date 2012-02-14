@@ -260,10 +260,12 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (signals.hasNext()) {
                 ISignal signal = signals.next();
                 if (signal.isValued()) {
-                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
-                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
+                    System.out.println("Signal is valued");
+                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
+                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
                 }
                 else {
+                    System.out.println("Signal is not valued");
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                     prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                 }
@@ -330,18 +332,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (outputSignals.hasNext()) {
                 ISignal outputSignal = outputSignals.next();
                 if (outputSignal.isValued()) {
-                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(outputSignal.getValue(), true));
+                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(outputSignal), true));
                 } else {
                     value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(true));
                 }
             }
         
             // Add variables
-            Iterator<Entry<String,String>> variables = curTick.getExtraInfos().entrySet().iterator();
+            Iterator<Entry<String,Object>> variables = curTick.getExtraInfos().entrySet().iterator();
             
             while (variables.hasNext()) {
-                    Entry<String,String> variable = variables.next();
-                    value.accumulate(variable.getKey(), variable.getValue());
+                    Entry<String,Object> variable = variables.next();
+                    value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
             }
             
             json.accumulate(outputVarName, value);

@@ -37,14 +37,13 @@ public class EsiParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getValueAccess().getAlternatives(), "rule__Value__Alternatives");
-					put(grammarAccess.getEsoBoolAccess().getAlternatives(), "rule__EsoBool__Alternatives");
-					put(grammarAccess.getKvpairAccess().getValueAlternatives_3_0(), "rule__Kvpair__ValueAlternatives_3_0");
+					put(grammarAccess.getSignalAccess().getValAlternatives_2_0_0(), "rule__Signal__ValAlternatives_2_0_0");
+					put(grammarAccess.getKvpairAccess().getValueAlternatives_4_0(), "rule__Kvpair__ValueAlternatives_4_0");
 					put(grammarAccess.getTraceAccess().getGroup(), "rule__Trace__Group__0");
 					put(grammarAccess.getTickAccess().getGroup(), "rule__Tick__Group__0");
 					put(grammarAccess.getTickAccess().getGroup_2(), "rule__Tick__Group_2__0");
 					put(grammarAccess.getSignalAccess().getGroup(), "rule__Signal__Group__0");
-					put(grammarAccess.getSignalAccess().getGroup_1(), "rule__Signal__Group_1__0");
+					put(grammarAccess.getSignalAccess().getGroup_2(), "rule__Signal__Group_2__0");
 					put(grammarAccess.getKvpairAccess().getGroup(), "rule__Kvpair__Group__0");
 					put(grammarAccess.getTracelistAccess().getTracesAssignment(), "rule__Tracelist__TracesAssignment");
 					put(grammarAccess.getTraceAccess().getTicksAssignment_3(), "rule__Trace__TicksAssignment_3");
@@ -52,10 +51,15 @@ public class EsiParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTickAccess().getOutputAssignment_2_3(), "rule__Tick__OutputAssignment_2_3");
 					put(grammarAccess.getTickAccess().getExtraInfosAssignment_3(), "rule__Tick__ExtraInfosAssignment_3");
 					put(grammarAccess.getSignalAccess().getNameAssignment_0(), "rule__Signal__NameAssignment_0");
-					put(grammarAccess.getSignalAccess().getValuedAssignment_1_0(), "rule__Signal__ValuedAssignment_1_0");
-					put(grammarAccess.getSignalAccess().getValAssignment_1_1(), "rule__Signal__ValAssignment_1_1");
-					put(grammarAccess.getKvpairAccess().getKeyAssignment_1(), "rule__Kvpair__KeyAssignment_1");
-					put(grammarAccess.getKvpairAccess().getValueAssignment_3(), "rule__Kvpair__ValueAssignment_3");
+					put(grammarAccess.getSignalAccess().getValuedAssignment_1(), "rule__Signal__ValuedAssignment_1");
+					put(grammarAccess.getSignalAccess().getValAssignment_2_0(), "rule__Signal__ValAssignment_2_0");
+					put(grammarAccess.getKvpairAccess().getKeyAssignment_2(), "rule__Kvpair__KeyAssignment_2");
+					put(grammarAccess.getKvpairAccess().getValueAssignment_4(), "rule__Kvpair__ValueAssignment_4");
+					put(grammarAccess.getEsoIntAccess().getValueAssignment(), "rule__EsoInt__ValueAssignment");
+					put(grammarAccess.getEsoStringAccess().getValueAssignment(), "rule__EsoString__ValueAssignment");
+					put(grammarAccess.getEsoFloatAccess().getValueAssignment(), "rule__EsoFloat__ValueAssignment");
+					put(grammarAccess.getEsoBoolAccess().getValueAssignment(), "rule__EsoBool__ValueAssignment");
+					put(grammarAccess.getEsoJsonAccess().getValueAssignment(), "rule__EsoJson__ValueAssignment");
 				}
 			};
 		}

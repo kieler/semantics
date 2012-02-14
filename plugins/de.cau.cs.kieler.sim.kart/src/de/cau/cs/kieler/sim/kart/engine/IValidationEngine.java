@@ -13,15 +13,9 @@
  */
 package de.cau.cs.kieler.sim.kart.engine;
 
-import java.util.List;
 import java.util.Map;
-
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONObject;
-
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
-import de.cau.cs.kieler.sim.esi.ISignal;
 
 /**
  * Interface to define an API for validation engines that can check the validity
@@ -44,7 +38,7 @@ public interface IValidationEngine {
      * @param isHistoryStep flag to indicate that the user is stepping through history
      * @param retval the JSON object that will be injected into the data pool
      */
-    public void validateVariable(Pair<String,String> variable, String recValue, String simValue, boolean isHistoryStep, JSONObject retval);
+    public void validateVariable(Pair<String,Object> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval);
 
     /**
      * Validate a set of signals. The lists only contain present signals and also their value,

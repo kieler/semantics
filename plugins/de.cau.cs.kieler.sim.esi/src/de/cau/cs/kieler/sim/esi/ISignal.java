@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * @author ssc
  *
@@ -22,7 +24,7 @@ public interface ISignal {
     /**
      * @return value of the signal
      */
-    public Integer getValue();
+    public Object getValue();
 
     /**
      * 

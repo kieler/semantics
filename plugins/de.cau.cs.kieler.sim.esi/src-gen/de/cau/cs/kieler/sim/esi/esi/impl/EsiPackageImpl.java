@@ -7,6 +7,11 @@ package de.cau.cs.kieler.sim.esi.esi.impl;
 
 import de.cau.cs.kieler.sim.esi.esi.EsiFactory;
 import de.cau.cs.kieler.sim.esi.esi.EsiPackage;
+import de.cau.cs.kieler.sim.esi.esi.EsoBool;
+import de.cau.cs.kieler.sim.esi.esi.EsoFloat;
+import de.cau.cs.kieler.sim.esi.esi.EsoInt;
+import de.cau.cs.kieler.sim.esi.esi.EsoJson;
+import de.cau.cs.kieler.sim.esi.esi.EsoString;
 import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
@@ -62,6 +67,41 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * @generated
    */
   private EClass kvpairEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass esoIntEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass esoStringEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass esoFloatEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass esoBoolEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass esoJsonEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -241,9 +281,9 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getsignal_Val()
+  public EReference getsignal_Val()
   {
-    return (EAttribute)signalEClass.getEStructuralFeatures().get(2);
+    return (EReference)signalEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -271,9 +311,109 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getkvpair_Value()
+  public EReference getkvpair_Value()
   {
-    return (EAttribute)kvpairEClass.getEStructuralFeatures().get(1);
+    return (EReference)kvpairEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEsoInt()
+  {
+    return esoIntEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEsoInt_Value()
+  {
+    return (EAttribute)esoIntEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEsoString()
+  {
+    return esoStringEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEsoString_Value()
+  {
+    return (EAttribute)esoStringEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEsoFloat()
+  {
+    return esoFloatEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEsoFloat_Value()
+  {
+    return (EAttribute)esoFloatEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEsoBool()
+  {
+    return esoBoolEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEsoBool_Value()
+  {
+    return (EAttribute)esoBoolEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEsoJson()
+  {
+    return esoJsonEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEsoJson_Value()
+  {
+    return (EAttribute)esoJsonEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -320,11 +460,26 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     signalEClass = createEClass(SIGNAL);
     createEAttribute(signalEClass, SIGNAL__NAME);
     createEAttribute(signalEClass, SIGNAL__VALUED);
-    createEAttribute(signalEClass, SIGNAL__VAL);
+    createEReference(signalEClass, SIGNAL__VAL);
 
     kvpairEClass = createEClass(KVPAIR);
     createEAttribute(kvpairEClass, KVPAIR__KEY);
-    createEAttribute(kvpairEClass, KVPAIR__VALUE);
+    createEReference(kvpairEClass, KVPAIR__VALUE);
+
+    esoIntEClass = createEClass(ESO_INT);
+    createEAttribute(esoIntEClass, ESO_INT__VALUE);
+
+    esoStringEClass = createEClass(ESO_STRING);
+    createEAttribute(esoStringEClass, ESO_STRING__VALUE);
+
+    esoFloatEClass = createEClass(ESO_FLOAT);
+    createEAttribute(esoFloatEClass, ESO_FLOAT__VALUE);
+
+    esoBoolEClass = createEClass(ESO_BOOL);
+    createEAttribute(esoBoolEClass, ESO_BOOL__VALUE);
+
+    esoJsonEClass = createEClass(ESO_JSON);
+    createEAttribute(esoJsonEClass, ESO_JSON__VALUE);
   }
 
   /**
@@ -372,11 +527,26 @@ public class EsiPackageImpl extends EPackageImpl implements EsiPackage
     initEClass(signalEClass, signal.class, "signal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getsignal_Name(), ecorePackage.getEString(), "name", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getsignal_Valued(), ecorePackage.getEBoolean(), "valued", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getsignal_Val(), ecorePackage.getEString(), "val", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getsignal_Val(), ecorePackage.getEObject(), null, "val", null, 0, 1, signal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(kvpairEClass, kvpair.class, "kvpair", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getkvpair_Key(), ecorePackage.getEString(), "key", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getkvpair_Value(), ecorePackage.getEString(), "value", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getkvpair_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, kvpair.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(esoIntEClass, EsoInt.class, "EsoInt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEsoInt_Value(), ecorePackage.getEInt(), "value", null, 0, 1, EsoInt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(esoStringEClass, EsoString.class, "EsoString", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEsoString_Value(), ecorePackage.getEString(), "value", null, 0, 1, EsoString.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(esoFloatEClass, EsoFloat.class, "EsoFloat", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEsoFloat_Value(), ecorePackage.getEFloat(), "value", null, 0, 1, EsoFloat.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(esoBoolEClass, EsoBool.class, "EsoBool", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEsoBool_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, EsoBool.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(esoJsonEClass, EsoJson.class, "EsoJson", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEsoJson_Value(), ecorePackage.getEString(), "value", null, 0, 1, EsoJson.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

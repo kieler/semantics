@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.sim.esi;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * Implementation of a signal, which has a name, as status and an optional value. A signal does not
  * have a status: a signal that exists is present.
@@ -22,7 +24,7 @@ package de.cau.cs.kieler.sim.esi;
  */
 public class EsiSignal implements ISignal {
     private String name;
-    private Integer value = null;
+    private Object value = null;
 
     /**
      * Generate pure signal
@@ -42,7 +44,7 @@ public class EsiSignal implements ISignal {
      * @param theValue
      *            value of the signal.
      */
-    public EsiSignal(String theName, int theValue) {
+    public EsiSignal(String theName, Object theValue) {
         name = theName;
         value = theValue;
     }
@@ -50,7 +52,7 @@ public class EsiSignal implements ISignal {
     /**
      * {@inheritDoc}
      */
-    public Integer getValue() {
+    public Object getValue() {
         return value;
     }
 

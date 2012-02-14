@@ -72,6 +72,11 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
       case EsiPackage.TICK: return createtick();
       case EsiPackage.SIGNAL: return createsignal();
       case EsiPackage.KVPAIR: return createkvpair();
+      case EsiPackage.ESO_INT: return createEsoInt();
+      case EsiPackage.ESO_STRING: return createEsoString();
+      case EsiPackage.ESO_FLOAT: return createEsoFloat();
+      case EsiPackage.ESO_BOOL: return createEsoBool();
+      case EsiPackage.ESO_JSON: return createEsoJson();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -130,6 +135,61 @@ public class EsiFactoryImpl extends EFactoryImpl implements EsiFactory
   {
     kvpairImpl kvpair = new kvpairImpl();
     return kvpair;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsoInt createEsoInt()
+  {
+    EsoIntImpl esoInt = new EsoIntImpl();
+    return esoInt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsoString createEsoString()
+  {
+    EsoStringImpl esoString = new EsoStringImpl();
+    return esoString;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsoFloat createEsoFloat()
+  {
+    EsoFloatImpl esoFloat = new EsoFloatImpl();
+    return esoFloat;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsoBool createEsoBool()
+  {
+    EsoBoolImpl esoBool = new EsoBoolImpl();
+    return esoBool;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EsoJson createEsoJson()
+  {
+    EsoJsonImpl esoJson = new EsoJsonImpl();
+    return esoJson;
   }
 
   /**

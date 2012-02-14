@@ -3,6 +3,7 @@ grammar de.cau.cs.kieler.sim.esi.Esi
 hidden(WS)
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
 generate esi "http://www.cau.de/cs/kieler/sim/esi/Esi"
 
 tracelist:
@@ -26,69 +27,54 @@ tick:
  * I. e. 'valued' is set to true if a value could be read.
  */
 signal:
-    name=(AlphaNumSpecial) // | AlphaNumSpecial)
-    (valued?='('
-    val=(value)
-    ')')?;
-
-value:
-    (EsoInt | EsoFloat | EsoBool | EsoString)
-;
-
-EsoInt returns ecore::EInt:
-    Int
-;
-
-EsoString returns ecore::EString:
-    STRING
-;
-
-EsoFloat returns ecore::EFloat:
-    Float
-;
-
-EsoBool returns ecore::EBoolean:
-    'true' | 'false'
-;
+    name=(AlphaNumSpecial)
+    valued ?= '('? 
+    (val = (EsoInt | EsoFloat | EsoBool | EsoString) ')')?;
 
 kvpair:
+    {kvpair}
     '%%'
-    key=(AlphaNumSpecial) // | AlphaNumSpecial)
+    key=(AlphaNumSpecial)
     ':'
-    value=(AlphaNumSpecial | Int | Float);
+    value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
+    
+EsoInt:
+    value = INT
+;
+
+EsoString:
+    value = STRING
+;
+
+EsoFloat:
+    value = FLOAT
+;
+
+EsoBool:
+    value = BOOL
+;
+
+EsoJson:
+    value = AlphaNumSpecial
+;
 
 terminal Special:
     ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-';
     
+terminal BOOL returns ecore::EBoolean:
+    ('true' | 'false');
+    
 terminal AlphaNumSpecial:
-('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)* ;
+    ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*;
+    
+terminal FLOAT returns ecore::EFloat:
+    ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+;
+
+terminal INT returns ecore::EInt: ('0'..'9')+;
 
 terminal STRING : 
             '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
             "'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
-        ; 
-
-//terminal Alpha:
-//    ('a'..'z' | 'A'..'Z')+;
-
-terminal Int:
-    ('+' | '-')? ('0'..'9')+
-;
-
-terminal Float:
-    ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+;
-    
-//terminal AlphaNum:
-//    (Alpha | '0'..'9')+;
-
-
-
-
-    
-//terminal Comment:
-//    '%' ('a'..'z' | 'A'..'N' | 'P'..'Z' | ('0' .. '9') | Special)->'\n';
-
-terminal WS:
-    '\t' | ' ' | '\r' | '\n';
-
-
+        ;
+        
+terminal WS         : (' '|'\t'|'\r'|'\n')+;

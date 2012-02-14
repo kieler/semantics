@@ -129,185 +129,204 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cNameAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cNameAlphaNumSpecialTerminalRuleCall_0_0 = (RuleCall)cNameAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Assignment cValuedAssignment_1_0 = (Assignment)cGroup_1.eContents().get(0);
-		private final Keyword cValuedLeftParenthesisKeyword_1_0_0 = (Keyword)cValuedAssignment_1_0.eContents().get(0);
-		private final Assignment cValAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cValValueParserRuleCall_1_1_0 = (RuleCall)cValAssignment_1_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cValuedAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final Keyword cValuedLeftParenthesisKeyword_1_0 = (Keyword)cValuedAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Assignment cValAssignment_2_0 = (Assignment)cGroup_2.eContents().get(0);
+		private final Alternatives cValAlternatives_2_0_0 = (Alternatives)cValAssignment_2_0.eContents().get(0);
+		private final RuleCall cValEsoIntParserRuleCall_2_0_0_0 = (RuleCall)cValAlternatives_2_0_0.eContents().get(0);
+		private final RuleCall cValEsoFloatParserRuleCall_2_0_0_1 = (RuleCall)cValAlternatives_2_0_0.eContents().get(1);
+		private final RuleCall cValEsoBoolParserRuleCall_2_0_0_2 = (RuleCall)cValAlternatives_2_0_0.eContents().get(2);
+		private final RuleCall cValEsoStringParserRuleCall_2_0_0_3 = (RuleCall)cValAlternatives_2_0_0.eContents().get(3);
+		private final Keyword cRightParenthesisKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
 		
 		/// * From the Xtext documentation:
 		// * The ?= sign (boolean assignment operator) expects a feature of type EBoolean and sets it to true if
 		// * the right hand side was consumed independently from the concrete value of the right hand side.
 		// * 
 		// * I. e. 'valued' is set to true if a value could be read.
-		// * / signal: // | AlphaNumSpecial)
-		//	name=AlphaNumSpecial (valued?="(" val=value ")")?;
+		// * / signal:
+		//	name=AlphaNumSpecial valued?="("? (val=(EsoInt | EsoFloat | EsoBool | EsoString) ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//// | AlphaNumSpecial)
-		//name=AlphaNumSpecial (valued?="(" val=value ")")?
+		//name=AlphaNumSpecial valued?="("? (val=(EsoInt | EsoFloat | EsoBool | EsoString) ")")?
 		public Group getGroup() { return cGroup; }
 
-		//// | AlphaNumSpecial)
 		//name=AlphaNumSpecial
 		public Assignment getNameAssignment_0() { return cNameAssignment_0; }
 
 		//AlphaNumSpecial
 		public RuleCall getNameAlphaNumSpecialTerminalRuleCall_0_0() { return cNameAlphaNumSpecialTerminalRuleCall_0_0; }
 
-		//(valued?="(" val=value ")")?
-		public Group getGroup_1() { return cGroup_1; }
-
-		//valued?="("
-		public Assignment getValuedAssignment_1_0() { return cValuedAssignment_1_0; }
+		//valued?="("?
+		public Assignment getValuedAssignment_1() { return cValuedAssignment_1; }
 
 		//"("
-		public Keyword getValuedLeftParenthesisKeyword_1_0_0() { return cValuedLeftParenthesisKeyword_1_0_0; }
+		public Keyword getValuedLeftParenthesisKeyword_1_0() { return cValuedLeftParenthesisKeyword_1_0; }
 
-		//val=value
-		public Assignment getValAssignment_1_1() { return cValAssignment_1_1; }
+		//(val=(EsoInt | EsoFloat | EsoBool | EsoString) ")")?
+		public Group getGroup_2() { return cGroup_2; }
 
-		//value
-		public RuleCall getValValueParserRuleCall_1_1_0() { return cValValueParserRuleCall_1_1_0; }
-
-		//")"
-		public Keyword getRightParenthesisKeyword_1_2() { return cRightParenthesisKeyword_1_2; }
-	}
-
-	public class ValueElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "value");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cEsoIntParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cEsoFloatParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cEsoBoolParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		private final RuleCall cEsoStringParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
-		
-		//value:
-		//	EsoInt | EsoFloat | EsoBool | EsoString;
-		public ParserRule getRule() { return rule; }
+		//val=(EsoInt | EsoFloat | EsoBool | EsoString)
+		public Assignment getValAssignment_2_0() { return cValAssignment_2_0; }
 
 		//EsoInt | EsoFloat | EsoBool | EsoString
-		public Alternatives getAlternatives() { return cAlternatives; }
+		public Alternatives getValAlternatives_2_0_0() { return cValAlternatives_2_0_0; }
 
 		//EsoInt
-		public RuleCall getEsoIntParserRuleCall_0() { return cEsoIntParserRuleCall_0; }
+		public RuleCall getValEsoIntParserRuleCall_2_0_0_0() { return cValEsoIntParserRuleCall_2_0_0_0; }
 
 		//EsoFloat
-		public RuleCall getEsoFloatParserRuleCall_1() { return cEsoFloatParserRuleCall_1; }
+		public RuleCall getValEsoFloatParserRuleCall_2_0_0_1() { return cValEsoFloatParserRuleCall_2_0_0_1; }
 
 		//EsoBool
-		public RuleCall getEsoBoolParserRuleCall_2() { return cEsoBoolParserRuleCall_2; }
+		public RuleCall getValEsoBoolParserRuleCall_2_0_0_2() { return cValEsoBoolParserRuleCall_2_0_0_2; }
 
 		//EsoString
-		public RuleCall getEsoStringParserRuleCall_3() { return cEsoStringParserRuleCall_3; }
-	}
+		public RuleCall getValEsoStringParserRuleCall_2_0_0_3() { return cValEsoStringParserRuleCall_2_0_0_3; }
 
-	public class EsoIntElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoInt");
-		private final RuleCall cIntTerminalRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//EsoInt returns ecore::EInt:
-		//	Int;
-		public ParserRule getRule() { return rule; }
-
-		//Int
-		public RuleCall getIntTerminalRuleCall() { return cIntTerminalRuleCall; }
-	}
-
-	public class EsoStringElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoString");
-		private final RuleCall cSTRINGTerminalRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//EsoString returns ecore::EString:
-		//	STRING;
-		public ParserRule getRule() { return rule; }
-
-		//STRING
-		public RuleCall getSTRINGTerminalRuleCall() { return cSTRINGTerminalRuleCall; }
-	}
-
-	public class EsoFloatElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoFloat");
-		private final RuleCall cFloatTerminalRuleCall = (RuleCall)rule.eContents().get(1);
-		
-		//EsoFloat returns ecore::EFloat:
-		//	Float;
-		public ParserRule getRule() { return rule; }
-
-		//Float
-		public RuleCall getFloatTerminalRuleCall() { return cFloatTerminalRuleCall; }
-	}
-
-	public class EsoBoolElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoBool");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Keyword cTrueKeyword_0 = (Keyword)cAlternatives.eContents().get(0);
-		private final Keyword cFalseKeyword_1 = (Keyword)cAlternatives.eContents().get(1);
-		
-		//EsoBool returns ecore::EBoolean:
-		//	"true" | "false";
-		public ParserRule getRule() { return rule; }
-
-		//"true" | "false"
-		public Alternatives getAlternatives() { return cAlternatives; }
-
-		//"true"
-		public Keyword getTrueKeyword_0() { return cTrueKeyword_0; }
-
-		//"false"
-		public Keyword getFalseKeyword_1() { return cFalseKeyword_1; }
+		//")"
+		public Keyword getRightParenthesisKeyword_2_1() { return cRightParenthesisKeyword_2_1; }
 	}
 
 	public class KvpairElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "kvpair");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cPercentSignPercentSignKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cKeyAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cKeyAlphaNumSpecialTerminalRuleCall_1_0 = (RuleCall)cKeyAssignment_1.eContents().get(0);
-		private final Keyword cColonKeyword_2 = (Keyword)cGroup.eContents().get(2);
-		private final Assignment cValueAssignment_3 = (Assignment)cGroup.eContents().get(3);
-		private final Alternatives cValueAlternatives_3_0 = (Alternatives)cValueAssignment_3.eContents().get(0);
-		private final RuleCall cValueAlphaNumSpecialTerminalRuleCall_3_0_0 = (RuleCall)cValueAlternatives_3_0.eContents().get(0);
-		private final RuleCall cValueIntTerminalRuleCall_3_0_1 = (RuleCall)cValueAlternatives_3_0.eContents().get(1);
-		private final RuleCall cValueFloatTerminalRuleCall_3_0_2 = (RuleCall)cValueAlternatives_3_0.eContents().get(2);
+		private final Action cKvpairAction_0 = (Action)cGroup.eContents().get(0);
+		private final Keyword cPercentSignPercentSignKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cKeyAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cKeyAlphaNumSpecialTerminalRuleCall_2_0 = (RuleCall)cKeyAssignment_2.eContents().get(0);
+		private final Keyword cColonKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final Alternatives cValueAlternatives_4_0 = (Alternatives)cValueAssignment_4.eContents().get(0);
+		private final RuleCall cValueEsoJsonParserRuleCall_4_0_0 = (RuleCall)cValueAlternatives_4_0.eContents().get(0);
+		private final RuleCall cValueEsoStringParserRuleCall_4_0_1 = (RuleCall)cValueAlternatives_4_0.eContents().get(1);
+		private final RuleCall cValueEsoFloatParserRuleCall_4_0_2 = (RuleCall)cValueAlternatives_4_0.eContents().get(2);
+		private final RuleCall cValueEsoBoolParserRuleCall_4_0_3 = (RuleCall)cValueAlternatives_4_0.eContents().get(3);
+		private final RuleCall cValueEsoIntParserRuleCall_4_0_4 = (RuleCall)cValueAlternatives_4_0.eContents().get(4);
 		
 		//kvpair:
-		//	"%%" // | AlphaNumSpecial)
-		//	key=AlphaNumSpecial ":" value=(AlphaNumSpecial | Int | Float);
+		//	{kvpair} "%%" key=AlphaNumSpecial ":" value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
 		public ParserRule getRule() { return rule; }
 
-		//"%%" // | AlphaNumSpecial)
-		//key=AlphaNumSpecial ":" value=(AlphaNumSpecial | Int | Float)
+		//{kvpair} "%%" key=AlphaNumSpecial ":" value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt)
 		public Group getGroup() { return cGroup; }
 
-		//"%%"
-		public Keyword getPercentSignPercentSignKeyword_0() { return cPercentSignPercentSignKeyword_0; }
+		//{kvpair}
+		public Action getKvpairAction_0() { return cKvpairAction_0; }
 
-		//// | AlphaNumSpecial)
+		//"%%"
+		public Keyword getPercentSignPercentSignKeyword_1() { return cPercentSignPercentSignKeyword_1; }
+
 		//key=AlphaNumSpecial
-		public Assignment getKeyAssignment_1() { return cKeyAssignment_1; }
+		public Assignment getKeyAssignment_2() { return cKeyAssignment_2; }
 
 		//AlphaNumSpecial
-		public RuleCall getKeyAlphaNumSpecialTerminalRuleCall_1_0() { return cKeyAlphaNumSpecialTerminalRuleCall_1_0; }
+		public RuleCall getKeyAlphaNumSpecialTerminalRuleCall_2_0() { return cKeyAlphaNumSpecialTerminalRuleCall_2_0; }
 
 		//":"
-		public Keyword getColonKeyword_2() { return cColonKeyword_2; }
+		public Keyword getColonKeyword_3() { return cColonKeyword_3; }
 
-		//value=(AlphaNumSpecial | Int | Float)
-		public Assignment getValueAssignment_3() { return cValueAssignment_3; }
+		//value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt)
+		public Assignment getValueAssignment_4() { return cValueAssignment_4; }
 
-		//AlphaNumSpecial | Int | Float
-		public Alternatives getValueAlternatives_3_0() { return cValueAlternatives_3_0; }
+		//EsoJson | EsoString | EsoFloat | EsoBool | EsoInt
+		public Alternatives getValueAlternatives_4_0() { return cValueAlternatives_4_0; }
+
+		//EsoJson
+		public RuleCall getValueEsoJsonParserRuleCall_4_0_0() { return cValueEsoJsonParserRuleCall_4_0_0; }
+
+		//EsoString
+		public RuleCall getValueEsoStringParserRuleCall_4_0_1() { return cValueEsoStringParserRuleCall_4_0_1; }
+
+		//EsoFloat
+		public RuleCall getValueEsoFloatParserRuleCall_4_0_2() { return cValueEsoFloatParserRuleCall_4_0_2; }
+
+		//EsoBool
+		public RuleCall getValueEsoBoolParserRuleCall_4_0_3() { return cValueEsoBoolParserRuleCall_4_0_3; }
+
+		//EsoInt
+		public RuleCall getValueEsoIntParserRuleCall_4_0_4() { return cValueEsoIntParserRuleCall_4_0_4; }
+	}
+
+	public class EsoIntElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoInt");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueINTTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//EsoInt:
+		//	value=INT;
+		public ParserRule getRule() { return rule; }
+
+		//value=INT
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//INT
+		public RuleCall getValueINTTerminalRuleCall_0() { return cValueINTTerminalRuleCall_0; }
+	}
+
+	public class EsoStringElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoString");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueSTRINGTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//EsoString:
+		//	value=STRING;
+		public ParserRule getRule() { return rule; }
+
+		//value=STRING
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//STRING
+		public RuleCall getValueSTRINGTerminalRuleCall_0() { return cValueSTRINGTerminalRuleCall_0; }
+	}
+
+	public class EsoFloatElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoFloat");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//EsoFloat:
+		//	value=FLOAT;
+		public ParserRule getRule() { return rule; }
+
+		//value=FLOAT
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//FLOAT
+		public RuleCall getValueFLOATTerminalRuleCall_0() { return cValueFLOATTerminalRuleCall_0; }
+	}
+
+	public class EsoBoolElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoBool");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueBOOLTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//EsoBool:
+		//	value=BOOL;
+		public ParserRule getRule() { return rule; }
+
+		//value=BOOL
+		public Assignment getValueAssignment() { return cValueAssignment; }
+
+		//BOOL
+		public RuleCall getValueBOOLTerminalRuleCall_0() { return cValueBOOLTerminalRuleCall_0; }
+	}
+
+	public class EsoJsonElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "EsoJson");
+		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cValueAlphaNumSpecialTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		
+		//EsoJson:
+		//	value=AlphaNumSpecial;
+		public ParserRule getRule() { return rule; }
+
+		//value=AlphaNumSpecial
+		public Assignment getValueAssignment() { return cValueAssignment; }
 
 		//AlphaNumSpecial
-		public RuleCall getValueAlphaNumSpecialTerminalRuleCall_3_0_0() { return cValueAlphaNumSpecialTerminalRuleCall_3_0_0; }
-
-		//Int
-		public RuleCall getValueIntTerminalRuleCall_3_0_1() { return cValueIntTerminalRuleCall_3_0_1; }
-
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_3_0_2() { return cValueFloatTerminalRuleCall_3_0_2; }
+		public RuleCall getValueAlphaNumSpecialTerminalRuleCall_0() { return cValueAlphaNumSpecialTerminalRuleCall_0; }
 	}
 	
 	
@@ -315,17 +334,18 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	private TraceElements pTrace;
 	private TickElements pTick;
 	private SignalElements pSignal;
-	private ValueElements pValue;
+	private KvpairElements pKvpair;
 	private EsoIntElements pEsoInt;
 	private EsoStringElements pEsoString;
 	private EsoFloatElements pEsoFloat;
 	private EsoBoolElements pEsoBool;
-	private KvpairElements pKvpair;
+	private EsoJsonElements pEsoJson;
 	private TerminalRule tSpecial;
+	private TerminalRule tBOOL;
 	private TerminalRule tAlphaNumSpecial;
+	private TerminalRule tFLOAT;
+	private TerminalRule tINT;
 	private TerminalRule tSTRING;
-	private TerminalRule tInt;
-	private TerminalRule tFloat;
 	private TerminalRule tWS;
 	
 	private final GrammarProvider grammarProvider;
@@ -376,8 +396,8 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	// * the right hand side was consumed independently from the concrete value of the right hand side.
 	// * 
 	// * I. e. 'valued' is set to true if a value could be read.
-	// * / signal: // | AlphaNumSpecial)
-	//	name=AlphaNumSpecial (valued?="(" val=value ")")?;
+	// * / signal:
+	//	name=AlphaNumSpecial valued?="("? (val=(EsoInt | EsoFloat | EsoBool | EsoString) ")")?;
 	public SignalElements getSignalAccess() {
 		return (pSignal != null) ? pSignal : (pSignal = new SignalElements());
 	}
@@ -386,59 +406,8 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
-	//value:
-	//	EsoInt | EsoFloat | EsoBool | EsoString;
-	public ValueElements getValueAccess() {
-		return (pValue != null) ? pValue : (pValue = new ValueElements());
-	}
-	
-	public ParserRule getValueRule() {
-		return getValueAccess().getRule();
-	}
-
-	//EsoInt returns ecore::EInt:
-	//	Int;
-	public EsoIntElements getEsoIntAccess() {
-		return (pEsoInt != null) ? pEsoInt : (pEsoInt = new EsoIntElements());
-	}
-	
-	public ParserRule getEsoIntRule() {
-		return getEsoIntAccess().getRule();
-	}
-
-	//EsoString returns ecore::EString:
-	//	STRING;
-	public EsoStringElements getEsoStringAccess() {
-		return (pEsoString != null) ? pEsoString : (pEsoString = new EsoStringElements());
-	}
-	
-	public ParserRule getEsoStringRule() {
-		return getEsoStringAccess().getRule();
-	}
-
-	//EsoFloat returns ecore::EFloat:
-	//	Float;
-	public EsoFloatElements getEsoFloatAccess() {
-		return (pEsoFloat != null) ? pEsoFloat : (pEsoFloat = new EsoFloatElements());
-	}
-	
-	public ParserRule getEsoFloatRule() {
-		return getEsoFloatAccess().getRule();
-	}
-
-	//EsoBool returns ecore::EBoolean:
-	//	"true" | "false";
-	public EsoBoolElements getEsoBoolAccess() {
-		return (pEsoBool != null) ? pEsoBool : (pEsoBool = new EsoBoolElements());
-	}
-	
-	public ParserRule getEsoBoolRule() {
-		return getEsoBoolAccess().getRule();
-	}
-
 	//kvpair:
-	//	"%%" // | AlphaNumSpecial)
-	//	key=AlphaNumSpecial ":" value=(AlphaNumSpecial | Int | Float);
+	//	{kvpair} "%%" key=AlphaNumSpecial ":" value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
 	public KvpairElements getKvpairAccess() {
 		return (pKvpair != null) ? pKvpair : (pKvpair = new KvpairElements());
 	}
@@ -447,16 +416,84 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return getKvpairAccess().getRule();
 	}
 
+	//EsoInt:
+	//	value=INT;
+	public EsoIntElements getEsoIntAccess() {
+		return (pEsoInt != null) ? pEsoInt : (pEsoInt = new EsoIntElements());
+	}
+	
+	public ParserRule getEsoIntRule() {
+		return getEsoIntAccess().getRule();
+	}
+
+	//EsoString:
+	//	value=STRING;
+	public EsoStringElements getEsoStringAccess() {
+		return (pEsoString != null) ? pEsoString : (pEsoString = new EsoStringElements());
+	}
+	
+	public ParserRule getEsoStringRule() {
+		return getEsoStringAccess().getRule();
+	}
+
+	//EsoFloat:
+	//	value=FLOAT;
+	public EsoFloatElements getEsoFloatAccess() {
+		return (pEsoFloat != null) ? pEsoFloat : (pEsoFloat = new EsoFloatElements());
+	}
+	
+	public ParserRule getEsoFloatRule() {
+		return getEsoFloatAccess().getRule();
+	}
+
+	//EsoBool:
+	//	value=BOOL;
+	public EsoBoolElements getEsoBoolAccess() {
+		return (pEsoBool != null) ? pEsoBool : (pEsoBool = new EsoBoolElements());
+	}
+	
+	public ParserRule getEsoBoolRule() {
+		return getEsoBoolAccess().getRule();
+	}
+
+	//EsoJson:
+	//	value=AlphaNumSpecial;
+	public EsoJsonElements getEsoJsonAccess() {
+		return (pEsoJson != null) ? pEsoJson : (pEsoJson = new EsoJsonElements());
+	}
+	
+	public ParserRule getEsoJsonRule() {
+		return getEsoJsonAccess().getRule();
+	}
+
 	//terminal Special:
 	//	"," | "." | "/" | "@" | "#" | "$" | "&" | "*" | "=" | "+" | "-";
 	public TerminalRule getSpecialRule() {
 		return (tSpecial != null) ? tSpecial : (tSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Special"));
 	} 
 
+	//terminal BOOL returns ecore::EBoolean:
+	//	"true" | "false";
+	public TerminalRule getBOOLRule() {
+		return (tBOOL != null) ? tBOOL : (tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOL"));
+	} 
+
 	//terminal AlphaNumSpecial:
 	//	("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | Special)*;
 	public TerminalRule getAlphaNumSpecialRule() {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
+	} 
+
+	//terminal FLOAT returns ecore::EFloat:
+	//	("+" | "-")? "0".."9"+ "." "0".."9"+;
+	public TerminalRule getFLOATRule() {
+		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
+	} 
+
+	//terminal INT returns ecore::EInt:
+	//	"0".."9"+;
+	public TerminalRule getINTRule() {
+		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
 	} 
 
 	//terminal STRING:
@@ -466,26 +503,8 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return (tSTRING != null) ? tSTRING : (tSTRING = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "STRING"));
 	} 
 
-	////terminal Alpha:
-	////    ('a'..'z' | 'A'..'Z')+;
-	//terminal Int:
-	//	("+" | "-")? "0".."9"+;
-	public TerminalRule getIntRule() {
-		return (tInt != null) ? tInt : (tInt = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Int"));
-	} 
-
-	//terminal Float:
-	//	("+" | "-")? "0".."9"+ "." "0".."9"+;
-	public TerminalRule getFloatRule() {
-		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
-	} 
-
-	////terminal AlphaNum:
-	////    (Alpha | '0'..'9')+;
-	////terminal Comment:
-	////    '%' ('a'..'z' | 'A'..'N' | 'P'..'Z' | ('0' .. '9') | Special)->'\n';
 	//terminal WS:
-	//	"\t" | " " | "\r" | "\n";
+	//	(" " | "\t" | "\r" | "\n")+;
 	public TerminalRule getWSRule() {
 		return (tWS != null) ? tWS : (tWS = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "WS"));
 	} 
