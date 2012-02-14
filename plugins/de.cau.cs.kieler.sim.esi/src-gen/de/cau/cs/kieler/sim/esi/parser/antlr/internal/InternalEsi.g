@@ -266,10 +266,9 @@ rulesignal returns [EObject current=null]
     @after { leaveRule(); }:
 ((
 (
-(
-		lv_name_0_1=RULE_ALPHA
+		lv_name_0_0=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_name_0_1, grammarAccess.getSignalAccess().getNameAlphaTerminalRuleCall_0_0_0()); 
+			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -278,48 +277,16 @@ rulesignal returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"name",
-        		lv_name_0_1, 
-        		"Alpha");
-	    }
-
-    |		lv_name_0_2=RULE_ALPHANUM
-		{
-			newLeafNode(lv_name_0_2, grammarAccess.getSignalAccess().getNameAlphaNumTerminalRuleCall_0_0_1()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_0_2, 
-        		"AlphaNum");
-	    }
-
-    |		lv_name_0_3=RULE_ALPHANUMSPECIAL
-		{
-			newLeafNode(lv_name_0_3, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0_2()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"name",
-        		lv_name_0_3, 
+        		lv_name_0_0, 
         		"AlphaNumSpecial");
 	    }
 
 )
-
-)
-)((
+)(
 (
 		lv_valued_1_0=	'(' 
     {
-        newLeafNode(lv_valued_1_0, grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0());
+        newLeafNode(lv_valued_1_0, grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0());
     }
  
 	    {
@@ -330,27 +297,75 @@ rulesignal returns [EObject current=null]
 	    }
 
 )
-)(
+)?((
 (
-		lv_val_2_0=RULE_NUM
-		{
-			newLeafNode(lv_val_2_0, grammarAccess.getSignalAccess().getValNumTerminalRuleCall_1_1_0()); 
-		}
-		{
+(
+		{ 
+	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoIntParserRuleCall_2_0_0_0()); 
+	    }
+		lv_val_2_1=ruleEsoInt		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getSignalRule());
+	            $current = createModelElementForParent(grammarAccess.getSignalRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"val",
-        		lv_val_2_0, 
-        		"Num");
+        		lv_val_2_1, 
+        		"EsoInt");
+	        afterParserOrEnumRuleCall();
 	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoFloatParserRuleCall_2_0_0_1()); 
+	    }
+		lv_val_2_2=ruleEsoFloat		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRule());
+	        }
+       		set(
+       			$current, 
+       			"val",
+        		lv_val_2_2, 
+        		"EsoFloat");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoBoolParserRuleCall_2_0_0_2()); 
+	    }
+		lv_val_2_3=ruleEsoBool		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRule());
+	        }
+       		set(
+       			$current, 
+       			"val",
+        		lv_val_2_3, 
+        		"EsoBool");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoStringParserRuleCall_2_0_0_3()); 
+	    }
+		lv_val_2_4=ruleEsoString		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getSignalRule());
+	        }
+       		set(
+       			$current, 
+       			"val",
+        		lv_val_2_4, 
+        		"EsoString");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
 
 )
 )	otherlv_3=')' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2());
+    	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getRightParenthesisKeyword_2_1());
     }
 )?)
 ;
@@ -373,16 +388,21 @@ rulekvpair returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(	otherlv_0='%%' 
+((
     {
-    	newLeafNode(otherlv_0, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0());
+        $current = forceCreateModelElement(
+            grammarAccess.getKvpairAccess().getKvpairAction_0(),
+            $current);
+    }
+)	otherlv_1='%%' 
+    {
+    	newLeafNode(otherlv_1, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_1());
     }
 (
 (
-(
-		lv_key_1_1=RULE_ALPHA
+		lv_key_2_0=RULE_ALPHANUMSPECIAL
 		{
-			newLeafNode(lv_key_1_1, grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
+			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -391,93 +411,91 @@ rulekvpair returns [EObject current=null]
        		setWithLastConsumed(
        			$current, 
        			"key",
-        		lv_key_1_1, 
-        		"Alpha");
-	    }
-
-    |		lv_key_1_2=RULE_ALPHANUM
-		{
-			newLeafNode(lv_key_1_2, grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKvpairRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"key",
-        		lv_key_1_2, 
-        		"AlphaNum");
-	    }
-
-    |		lv_key_1_3=RULE_ALPHANUMSPECIAL
-		{
-			newLeafNode(lv_key_1_3, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
-		}
-		{
-	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKvpairRule());
-	        }
-       		setWithLastConsumed(
-       			$current, 
-       			"key",
-        		lv_key_1_3, 
+        		lv_key_2_0, 
         		"AlphaNumSpecial");
 	    }
 
 )
-
-)
-)	otherlv_2=':' 
+)	otherlv_3=':' 
     {
-    	newLeafNode(otherlv_2, grammarAccess.getKvpairAccess().getColonKeyword_2());
+    	newLeafNode(otherlv_3, grammarAccess.getKvpairAccess().getColonKeyword_3());
     }
 (
 (
 (
-		lv_value_3_1=RULE_ALPHA
-		{
-			newLeafNode(lv_value_3_1, grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
-		}
-		{
+		{ 
+	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoJsonParserRuleCall_4_0_0()); 
+	    }
+		lv_value_4_1=ruleEsoJson		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKvpairRule());
+	            $current = createModelElementForParent(grammarAccess.getKvpairRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"value",
-        		lv_value_3_1, 
-        		"Alpha");
+        		lv_value_4_1, 
+        		"EsoJson");
+	        afterParserOrEnumRuleCall();
 	    }
 
-    |		lv_value_3_2=RULE_ALPHANUM
-		{
-			newLeafNode(lv_value_3_2, grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
-		}
-		{
+    |		{ 
+	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoStringParserRuleCall_4_0_1()); 
+	    }
+		lv_value_4_2=ruleEsoString		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKvpairRule());
+	            $current = createModelElementForParent(grammarAccess.getKvpairRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"value",
-        		lv_value_3_2, 
-        		"AlphaNum");
+        		lv_value_4_2, 
+        		"EsoString");
+	        afterParserOrEnumRuleCall();
 	    }
 
-    |		lv_value_3_3=RULE_ALPHANUMSPECIAL
-		{
-			newLeafNode(lv_value_3_3, grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
-		}
-		{
+    |		{ 
+	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoFloatParserRuleCall_4_0_2()); 
+	    }
+		lv_value_4_3=ruleEsoFloat		{
 	        if ($current==null) {
-	            $current = createModelElement(grammarAccess.getKvpairRule());
+	            $current = createModelElementForParent(grammarAccess.getKvpairRule());
 	        }
-       		setWithLastConsumed(
+       		set(
        			$current, 
        			"value",
-        		lv_value_3_3, 
-        		"AlphaNumSpecial");
+        		lv_value_4_3, 
+        		"EsoFloat");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoBoolParserRuleCall_4_0_3()); 
+	    }
+		lv_value_4_4=ruleEsoBool		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getKvpairRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_4_4, 
+        		"EsoBool");
+	        afterParserOrEnumRuleCall();
+	    }
+
+    |		{ 
+	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoIntParserRuleCall_4_0_4()); 
+	    }
+		lv_value_4_5=ruleEsoInt		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getKvpairRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_4_5, 
+        		"EsoInt");
+	        afterParserOrEnumRuleCall();
 	    }
 
 )
@@ -490,20 +508,213 @@ rulekvpair returns [EObject current=null]
 
 
 
-RULE_ALPHA : ('a'..'z'|'A'..'Z')+;
+// Entry rule entryRuleEsoInt
+entryRuleEsoInt returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEsoIntRule()); }
+	 iv_ruleEsoInt=ruleEsoInt 
+	 { $current=$iv_ruleEsoInt.current; } 
+	 EOF 
+;
 
-RULE_DIGIT : '0'..'9';
+// Rule EsoInt
+ruleEsoInt returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_INT
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoIntAccess().getValueINTTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEsoIntRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_0_0, 
+        		"INT");
+	    }
 
-RULE_NUM : ('+'|'-') ('0'..'9')+;
+)
+)
+;
 
-RULE_ALPHANUM : (RULE_ALPHA|'0'..'9')+;
 
-RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'^'|'&'|'*'|'_'|'='|'+'|'-');
 
-RULE_ALPHANUMSPECIAL : (RULE_ALPHA|RULE_DIGIT|RULE_SPECIAL)+;
 
-RULE_COMMENT : '%' ('a'..'z'|'A'..'N'|'P'..'Z'|RULE_DIGIT|RULE_SPECIAL) ( options {greedy=false;} : . )*'\n';
 
-RULE_WS : ('\t'|' '|'\r'|'\n');
+// Entry rule entryRuleEsoString
+entryRuleEsoString returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEsoStringRule()); }
+	 iv_ruleEsoString=ruleEsoString 
+	 { $current=$iv_ruleEsoString.current; } 
+	 EOF 
+;
+
+// Rule EsoString
+ruleEsoString returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_STRING
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoStringAccess().getValueSTRINGTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEsoStringRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_0_0, 
+        		"STRING");
+	    }
+
+)
+)
+;
+
+
+
+
+
+// Entry rule entryRuleEsoFloat
+entryRuleEsoFloat returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEsoFloatRule()); }
+	 iv_ruleEsoFloat=ruleEsoFloat 
+	 { $current=$iv_ruleEsoFloat.current; } 
+	 EOF 
+;
+
+// Rule EsoFloat
+ruleEsoFloat returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_FLOAT
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoFloatAccess().getValueFLOATTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEsoFloatRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_0_0, 
+        		"FLOAT");
+	    }
+
+)
+)
+;
+
+
+
+
+
+// Entry rule entryRuleEsoBool
+entryRuleEsoBool returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEsoBoolRule()); }
+	 iv_ruleEsoBool=ruleEsoBool 
+	 { $current=$iv_ruleEsoBool.current; } 
+	 EOF 
+;
+
+// Rule EsoBool
+ruleEsoBool returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_BOOL
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoBoolAccess().getValueBOOLTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEsoBoolRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_0_0, 
+        		"BOOL");
+	    }
+
+)
+)
+;
+
+
+
+
+
+// Entry rule entryRuleEsoJson
+entryRuleEsoJson returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getEsoJsonRule()); }
+	 iv_ruleEsoJson=ruleEsoJson 
+	 { $current=$iv_ruleEsoJson.current; } 
+	 EOF 
+;
+
+// Rule EsoJson
+ruleEsoJson returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		lv_value_0_0=RULE_ALPHANUMSPECIAL
+		{
+			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+		}
+		{
+	        if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEsoJsonRule());
+	        }
+       		setWithLastConsumed(
+       			$current, 
+       			"value",
+        		lv_value_0_0, 
+        		"AlphaNumSpecial");
+	    }
+
+)
+)
+;
+
+
+
+
+
+RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-');
+
+RULE_BOOL : ('true'|'false');
+
+RULE_ALPHANUMSPECIAL : ('a'..'z'|'A'..'Z'|RULE_SPECIAL) ('a'..'z'|'A'..'Z'|'0'..'9'|RULE_SPECIAL)*;
+
+RULE_FLOAT : ('+'|'-')? ('0'..'9')+ '.' ('0'..'9')+;
+
+RULE_INT : ('0'..'9')+;
+
+RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
+
+RULE_WS : (' '|'\t'|'\r'|'\n')+;
 
 

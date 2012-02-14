@@ -190,7 +190,7 @@ public interface EsiPackage extends EPackage
   int SIGNAL__VALUED = 1;
 
   /**
-   * The feature id for the '<em><b>Val</b></em>' attribute.
+   * The feature id for the '<em><b>Val</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -227,7 +227,7 @@ public interface EsiPackage extends EPackage
   int KVPAIR__KEY = 0;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -243,6 +243,146 @@ public interface EsiPackage extends EPackage
    * @ordered
    */
   int KVPAIR_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl <em>Eso Int</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoInt()
+   * @generated
+   */
+  int ESO_INT = 5;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_INT__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Eso Int</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_INT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl <em>Eso String</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoString()
+   * @generated
+   */
+  int ESO_STRING = 6;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_STRING__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Eso String</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_STRING_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl <em>Eso Float</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoFloat()
+   * @generated
+   */
+  int ESO_FLOAT = 7;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_FLOAT__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Eso Float</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_FLOAT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl <em>Eso Bool</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoBool()
+   * @generated
+   */
+  int ESO_BOOL = 8;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_BOOL__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Eso Bool</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_BOOL_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl <em>Eso Json</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl
+   * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoJson()
+   * @generated
+   */
+  int ESO_JSON = 9;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_JSON__VALUE = 0;
+
+  /**
+   * The number of structural features of the '<em>Eso Json</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ESO_JSON_FEATURE_COUNT = 1;
 
 
   /**
@@ -363,15 +503,15 @@ public interface EsiPackage extends EPackage
   EAttribute getsignal_Valued();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.signal#getVal <em>Val</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sim.esi.esi.signal#getVal <em>Val</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Val</em>'.
+   * @return the meta object for the containment reference '<em>Val</em>'.
    * @see de.cau.cs.kieler.sim.esi.esi.signal#getVal()
    * @see #getsignal()
    * @generated
    */
-  EAttribute getsignal_Val();
+  EReference getsignal_Val();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.kvpair <em>kvpair</em>}'.
@@ -395,15 +535,120 @@ public interface EsiPackage extends EPackage
   EAttribute getkvpair_Key();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.sim.esi.esi.kvpair#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Value</em>'.
+   * @return the meta object for the containment reference '<em>Value</em>'.
    * @see de.cau.cs.kieler.sim.esi.esi.kvpair#getValue()
    * @see #getkvpair()
    * @generated
    */
-  EAttribute getkvpair_Value();
+  EReference getkvpair_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.EsoInt <em>Eso Int</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eso Int</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoInt
+   * @generated
+   */
+  EClass getEsoInt();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.EsoInt#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoInt#getValue()
+   * @see #getEsoInt()
+   * @generated
+   */
+  EAttribute getEsoInt_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.EsoString <em>Eso String</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eso String</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoString
+   * @generated
+   */
+  EClass getEsoString();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.EsoString#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoString#getValue()
+   * @see #getEsoString()
+   * @generated
+   */
+  EAttribute getEsoString_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.EsoFloat <em>Eso Float</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eso Float</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoFloat
+   * @generated
+   */
+  EClass getEsoFloat();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.EsoFloat#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoFloat#getValue()
+   * @see #getEsoFloat()
+   * @generated
+   */
+  EAttribute getEsoFloat_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.EsoBool <em>Eso Bool</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eso Bool</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoBool
+   * @generated
+   */
+  EClass getEsoBool();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.EsoBool#isValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoBool#isValue()
+   * @see #getEsoBool()
+   * @generated
+   */
+  EAttribute getEsoBool_Value();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.sim.esi.esi.EsoJson <em>Eso Json</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Eso Json</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoJson
+   * @generated
+   */
+  EClass getEsoJson();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.sim.esi.esi.EsoJson#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoJson#getValue()
+   * @see #getEsoJson()
+   * @generated
+   */
+  EAttribute getEsoJson_Value();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -525,12 +770,12 @@ public interface EsiPackage extends EPackage
     EAttribute SIGNAL__VALUED = eINSTANCE.getsignal_Valued();
 
     /**
-     * The meta object literal for the '<em><b>Val</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Val</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SIGNAL__VAL = eINSTANCE.getsignal_Val();
+    EReference SIGNAL__VAL = eINSTANCE.getsignal_Val();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.kvpairImpl <em>kvpair</em>}' class.
@@ -551,12 +796,102 @@ public interface EsiPackage extends EPackage
     EAttribute KVPAIR__KEY = eINSTANCE.getkvpair_Key();
 
     /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference KVPAIR__VALUE = eINSTANCE.getkvpair_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl <em>Eso Int</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoInt()
+     * @generated
+     */
+    EClass ESO_INT = eINSTANCE.getEsoInt();
+
+    /**
      * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute KVPAIR__VALUE = eINSTANCE.getkvpair_Value();
+    EAttribute ESO_INT__VALUE = eINSTANCE.getEsoInt_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl <em>Eso String</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoString()
+     * @generated
+     */
+    EClass ESO_STRING = eINSTANCE.getEsoString();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ESO_STRING__VALUE = eINSTANCE.getEsoString_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl <em>Eso Float</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoFloat()
+     * @generated
+     */
+    EClass ESO_FLOAT = eINSTANCE.getEsoFloat();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ESO_FLOAT__VALUE = eINSTANCE.getEsoFloat_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl <em>Eso Bool</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoBool()
+     * @generated
+     */
+    EClass ESO_BOOL = eINSTANCE.getEsoBool();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ESO_BOOL__VALUE = eINSTANCE.getEsoBool_Value();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl <em>Eso Json</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl
+     * @see de.cau.cs.kieler.sim.esi.esi.impl.EsiPackageImpl#getEsoJson()
+     * @generated
+     */
+    EClass ESO_JSON = eINSTANCE.getEsoJson();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute ESO_JSON__VALUE = eINSTANCE.getEsoJson_Value();
 
   }
 

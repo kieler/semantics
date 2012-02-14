@@ -16,20 +16,23 @@ package de.cau.cs.kieler.sim.kart;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.synccharts.Scope;
@@ -48,13 +51,59 @@ public class Utilities {
      *            the string of states to be converted into a List
      * @return a List of states
      */
-    public static List<EObject> getStates(DiagramEditor editor, String stateString) {
+    public static List<EObject> getStates(DiagramEditor editor, Object stateObject) {
         List<EObject> retval = new ArrayList<EObject>();
-        String[] states = stateString.replaceAll("\\s", "").split(",");
+        String[] states = stateObject.toString().replaceAll("\\s", "").split(",");
         for (String state : states) {
-            retval.add(editor.getDiagram().getElement().eResource().getEObject(state));
+            retval.add(editor.getDiagram().getElement().eResource().getEObject(state.trim()));
         }
         return retval;
+    }
+    
+    /**
+     * Convert the value of a signal from an ESO file to its actual, typed
+     * Java representation
+     * 
+     * @param signal the signal the value shall be extracted from
+     * @return the signal value
+     */
+    public static Object getEsoSignalValue(ISignal signal) {
+        if (signal.getValue() instanceof EsoIntImpl) {
+            return ((EsoIntImpl)signal.getValue()).getValue();
+        } else if (signal.getValue() instanceof EsoFloatImpl) {
+            return ((EsoFloatImpl)signal.getValue()).getValue();
+        } else if (signal.getValue() instanceof EsoBoolImpl) {
+            //return ((EsoBoolImpl)signal.getValue()).getValue();
+            return false;
+        } else if (signal.getValue() instanceof EsoStringImpl) {
+            return ((EsoStringImpl)signal.getValue()).getValue();
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Convert the value of a variable from an ESO file to its actual, typed
+     * Java representation
+     * 
+     * @param var the variable value which shall be converted
+     * @return the converted variable value
+     */
+    public static Object getEsoVarValue(Entry<String,Object> var) {
+        if (var.getValue() instanceof EsoIntImpl) {
+            return ((EsoIntImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoFloatImpl) {
+            return ((EsoFloatImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoBoolImpl) {
+            //return ((EsoBoolImpl)var.getValue()).getValue();
+            return false;
+        } else if (var.getValue() instanceof EsoStringImpl) {
+            return ((EsoStringImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoJsonImpl) {
+            return ((EsoJsonImpl)var.getValue()).getValue();
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -110,15 +159,15 @@ public class Utilities {
      * @param split the array of Strings
      * @return a set including all String from the parameter
      */
-    public static Set<Pair<String,String>> makeSetOfPairs(String string) throws KiemInitializationException {
+    public static Set<Pair<String,Object>> makeSetOfPairs(String string) throws KiemInitializationException {
         try {
             String[] strPairs = string.split("\\)\\s*,\\s*\\(|\\(|\\)");
-            HashSet<Pair<String,String>> retval = new HashSet<Pair<String,String>>();
+            HashSet<Pair<String,Object>> retval = new HashSet<Pair<String,Object>>();
     
             for (String strPair : strPairs) {
                 if(!strPair.equals("")) {
                     String[] pair = strPair.split(",");
-                    retval.add(new Pair<String,String>(pair[0].trim(), pair[1].trim()));
+                    retval.add(new Pair<String,Object>(pair[0].trim(), pair[1].trim()));
                 } else {
                 }
             }

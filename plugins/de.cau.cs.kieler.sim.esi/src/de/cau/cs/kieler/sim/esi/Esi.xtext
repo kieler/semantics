@@ -1,8 +1,9 @@
 grammar de.cau.cs.kieler.sim.esi.Esi
-//  with org.eclipse.xtext.common.Terminals
-hidden(WS, Comment)
+//with org.eclipse.xtext.common.Terminals
+hidden(WS)
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
 generate esi "http://www.cau.de/cs/kieler/sim/esi/Esi"
 
 tracelist:
@@ -26,39 +27,54 @@ tick:
  * I. e. 'valued' is set to true if a value could be read.
  */
 signal:
-    name=(Alpha | AlphaNum | AlphaNumSpecial)
-    (valued?='('
-    val=Num
-    ')')?;
+    name=(AlphaNumSpecial)
+    valued ?= '('? 
+    (val = (EsoInt | EsoFloat | EsoBool | EsoString) ')')?;
 
 kvpair:
+    {kvpair}
     '%%'
-    key=(Alpha | AlphaNum | AlphaNumSpecial)
+    key=(AlphaNumSpecial)
     ':'
-    value=(Alpha | AlphaNum | AlphaNumSpecial);
+    value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
+    
+EsoInt:
+    value = INT
+;
 
-terminal Alpha:
-    ('a'..'z' | 'A'..'Z')+;
+EsoString:
+    value = STRING
+;
 
-terminal Digit:
-    '0'..'9';
+EsoFloat:
+    value = FLOAT
+;
 
-terminal Num returns ecore::EInt:
-    ('+' | '-') ('0'..'9')+;
+EsoBool:
+    value = BOOL
+;
 
-terminal AlphaNum:
-    (Alpha | '0'..'9')+;
+EsoJson:
+    value = AlphaNumSpecial
+;
 
 terminal Special:
-    ',' | '.' | '/' | '@' | '#' | '$' | '^' | '&' | '*' | '_' | '=' | '+' | '-';
-
+    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-';
+    
+terminal BOOL returns ecore::EBoolean:
+    ('true' | 'false');
+    
 terminal AlphaNumSpecial:
-    (Alpha | Digit | Special)+;
+    ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*;
+    
+terminal FLOAT returns ecore::EFloat:
+    ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+;
 
-terminal Comment:
-    '%' ('a'..'z' | 'A'..'N' | 'P'..'Z' | Digit | Special)->'\n';
+terminal INT returns ecore::EInt: ('0'..'9')+;
 
-terminal WS:
-    '\t' | ' ' | '\r' | '\n';
-
-
+terminal STRING : 
+            '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+            "'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
+        ;
+        
+terminal WS         : (' '|'\t'|'\r'|'\n')+;

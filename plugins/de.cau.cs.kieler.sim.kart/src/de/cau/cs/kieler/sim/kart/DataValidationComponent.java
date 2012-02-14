@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.sim.kart.engine.DefaultValidationEngine;
 import de.cau.cs.kieler.sim.kart.engine.IValidationEngine;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -48,9 +49,9 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * 
  */
 public class DataValidationComponent extends JSONObjectSimulationDataComponent implements
-        IJSONObjectDataComponent {
+        IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
-    private long step;
+    private static volatile long step;
 
     /** The name of the ESI/ESO file the trace shall be read/written from/to */
     private String filename;
@@ -68,7 +69,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     private List<HashMap<String, Object>> esoOutputs;
 
     /** A map of all values of all previously recorded special signals in each step */
-    private List<HashMap<String, String>> esoVariables;
+    private List<HashMap<String, Object>> esoVariables;
     
     /** In training mode, this list will hold all simulated output signals and their values
      * for each step
@@ -90,7 +91,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * A list of special signals from the properties like a state signal that will be compared
      * differently than regular signals and are found in special comments in the ESO file
      */
-    private Set<Pair<String, String>> variables;
+    private Set<Pair<String, Object>> variables;
 
     /**
      * The validation engine that will be used to validate signal and variable information
@@ -132,6 +133,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         step = 0;
         eot = false;
         filename = "";
+        trainingMode = false;
         ignoreAdditionalSignals = false;
         configVarName = Constants.DEF_CONFIGVAR;
         outputVarName = Constants.DEF_OUTPUTVAR;
@@ -142,15 +144,19 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         KiemProperty[] properties = this.getProperties();
 
         esoOutputs = new LinkedList<HashMap<String, Object>>();
-        esoVariables = new LinkedList<HashMap<String, String>>();
+        esoVariables = new LinkedList<HashMap<String, Object>>();
         simOutputs = new LinkedList<HashMap<String, Object>>();
         simVariables = new LinkedList<HashMap<String,String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
 
-        editor = (DiagramEditor) getActivePage().getActiveEditor();
+        try {
+            editor = (DiagramEditor) getActivePage().getActiveEditor();
+        } catch (NullPointerException e) {
+            editor = null;
+        }
 
         // load properties
-        variables = new HashSet<Pair<String, String>>();
+        variables = new HashSet<Pair<String, Object>>();
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
@@ -291,8 +297,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         JSONObject retval = null;
         if (!trainingMode && !eot) {
             retval = new JSONObject();
-    
-            for (Pair<String, String> variable : variables) {
+            for (Pair<String, Object> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
                         obj.optString(variable.getFirst()), isHistoryStep(), retval);
@@ -379,7 +384,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                  * Record output signals and variables
                  */
                 HashMap<String,Object> outputSignals = new HashMap<String,Object>();
-                HashMap<String,String> outputVariables = new HashMap<String,String>();
+                HashMap<String,Object> outputVariables = new HashMap<String,Object>();
                 JSONObject output = json.getJSONObject(outputVarName);
                 
                 // again, this is necessary because the JSON library returns an unparameterized Iterator.

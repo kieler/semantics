@@ -110,6 +110,41 @@ public class EsiSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case EsiPackage.ESO_INT:
+      {
+        EsoInt esoInt = (EsoInt)theEObject;
+        T result = caseEsoInt(esoInt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsiPackage.ESO_STRING:
+      {
+        EsoString esoString = (EsoString)theEObject;
+        T result = caseEsoString(esoString);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsiPackage.ESO_FLOAT:
+      {
+        EsoFloat esoFloat = (EsoFloat)theEObject;
+        T result = caseEsoFloat(esoFloat);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsiPackage.ESO_BOOL:
+      {
+        EsoBool esoBool = (EsoBool)theEObject;
+        T result = caseEsoBool(esoBool);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case EsiPackage.ESO_JSON:
+      {
+        EsoJson esoJson = (EsoJson)theEObject;
+        T result = caseEsoJson(esoJson);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       default: return defaultCase(theEObject);
     }
   }
@@ -190,6 +225,86 @@ public class EsiSwitch<T> extends Switch<T>
    * @generated
    */
   public T casekvpair(kvpair object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eso Int</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eso Int</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEsoInt(EsoInt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eso String</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eso String</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEsoString(EsoString object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eso Float</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eso Float</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEsoFloat(EsoFloat object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eso Bool</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eso Bool</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEsoBool(EsoBool object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Eso Json</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Eso Json</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEsoJson(EsoJson object)
   {
     return null;
   }
