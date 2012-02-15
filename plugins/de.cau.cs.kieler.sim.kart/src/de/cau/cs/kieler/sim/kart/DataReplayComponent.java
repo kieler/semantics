@@ -260,12 +260,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (signals.hasNext()) {
                 ISignal signal = signals.next();
                 if (signal.isValued()) {
-                    System.out.println("Signal is valued");
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
                     prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
                 }
                 else {
-                    System.out.println("Signal is not valued");
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                     prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                 }
