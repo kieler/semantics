@@ -65,7 +65,8 @@ terminal BOOL returns ecore::EBoolean:
     ('true' | 'false');
     
 terminal AlphaNumSpecial:
-    ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*;
+    ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | ' ' | Special)*
+;
     
 terminal FLOAT returns ecore::EFloat:
     ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+;

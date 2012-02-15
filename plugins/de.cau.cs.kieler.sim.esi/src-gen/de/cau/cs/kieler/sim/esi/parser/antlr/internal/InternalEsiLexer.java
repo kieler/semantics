@@ -314,8 +314,8 @@ public class InternalEsiLexer extends Lexer {
         try {
             int _type = RULE_ALPHANUMSPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:22: ( ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )* )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:24: ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:22: ( ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )* )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:24: ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )*
             {
             if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='/')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
                 input.consume();
@@ -326,13 +326,13 @@ public class InternalEsiLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:57: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:710:57: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )*
             loop2:
             do {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( ((LA2_0>='#' && LA2_0<='$')||LA2_0=='&'||(LA2_0>='*' && LA2_0<='9')||LA2_0=='='||(LA2_0>='@' && LA2_0<='Z')||(LA2_0>='a' && LA2_0<='z')) ) {
+                if ( (LA2_0==' '||(LA2_0>='#' && LA2_0<='$')||LA2_0=='&'||(LA2_0>='*' && LA2_0<='9')||LA2_0=='='||(LA2_0>='@' && LA2_0<='Z')||(LA2_0>='a' && LA2_0<='z')) ) {
                     alt2=1;
                 }
 
@@ -341,7 +341,7 @@ public class InternalEsiLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:
             	    {
-            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( input.LA(1)==' '||(input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -872,10 +872,10 @@ public class InternalEsiLexer extends Lexer {
     static final String DFA11_eofS =
         "\54\uffff";
     static final String DFA11_minS =
-        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\43\1\162\1\141"+
-        "\1\uffff\1\43\1\56\2\uffff\1\163\2\uffff\1\164\1\uffff\1\56\1\165"+
-        "\1\154\2\uffff\1\145\1\160\1\60\1\145\1\163\1\164\1\165\1\60\1\43"+
-        "\1\145\1\43\1\164\1\uffff\1\43\1\uffff\1\43\1\uffff";
+        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\40\1\162\1\141"+
+        "\1\uffff\1\40\1\56\2\uffff\1\163\2\uffff\1\164\1\uffff\1\56\1\165"+
+        "\1\154\2\uffff\1\145\1\160\1\60\1\145\1\163\1\164\1\165\1\60\1\40"+
+        "\1\145\1\40\1\164\1\uffff\1\40\1\uffff\1\40\1\uffff";
     static final String DFA11_maxS =
         "\1\172\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\172\1\162\1\141"+
         "\1\uffff\1\172\1\71\2\uffff\1\163\2\uffff\1\164\1\uffff\1\71\1\165"+
@@ -900,13 +900,13 @@ public class InternalEsiLexer extends Lexer {
             "",
             "",
             "",
-            "\2\14\1\uffff\1\14\3\uffff\6\14\12\26\3\uffff\1\14\2\uffff"+
-            "\33\14\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\6\14\12\26\3\uffff"+
+            "\1\14\2\uffff\33\14\6\uffff\32\14",
             "\1\27",
             "\1\30",
             "",
-            "\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14\2\uffff\33\14"+
-            "\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14"+
+            "\2\uffff\33\14\6\uffff\32\14",
             "\1\32\1\uffff\12\16",
             "",
             "",
@@ -928,18 +928,18 @@ public class InternalEsiLexer extends Lexer {
             "\1\45",
             "\1\46",
             "\12\42",
-            "\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14\2\uffff\33\14"+
-            "\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14"+
+            "\2\uffff\33\14\6\uffff\32\14",
             "\1\50",
-            "\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14\2\uffff\33\14"+
-            "\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14"+
+            "\2\uffff\33\14\6\uffff\32\14",
             "\1\52",
             "",
-            "\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14\2\uffff\33\14"+
-            "\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14"+
+            "\2\uffff\33\14\6\uffff\32\14",
             "",
-            "\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14\2\uffff\33\14"+
-            "\6\uffff\32\14",
+            "\1\14\2\uffff\2\14\1\uffff\1\14\3\uffff\20\14\3\uffff\1\14"+
+            "\2\uffff\33\14\6\uffff\32\14",
             ""
     };
 
