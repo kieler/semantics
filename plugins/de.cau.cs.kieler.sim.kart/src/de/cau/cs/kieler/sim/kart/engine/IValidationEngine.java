@@ -38,7 +38,7 @@ public interface IValidationEngine {
      * @param isHistoryStep flag to indicate that the user is stepping through history
      * @param retval the JSON object that will be injected into the data pool
      */
-    public void validateVariable(Pair<String,Object> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval);
+    public void validateVariable(Pair<String,String> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval);
 
     /**
      * Validate a set of signals. The lists only contain present signals and also their value,

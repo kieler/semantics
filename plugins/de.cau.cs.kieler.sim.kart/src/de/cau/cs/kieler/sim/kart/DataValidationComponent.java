@@ -91,7 +91,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      * A list of special signals from the properties like a state signal that will be compared
      * differently than regular signals and are found in special comments in the ESO file
      */
-    private Set<Pair<String, Object>> variables;
+    private Set<Pair<String, String>> variables;
 
     /**
      * The validation engine that will be used to validate signal and variable information
@@ -156,7 +156,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         }
 
         // load properties
-        variables = new HashSet<Pair<String, Object>>();
+        variables = new HashSet<Pair<String, String>>();
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
@@ -297,7 +297,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         JSONObject retval = null;
         if (!trainingMode && !eot) {
             retval = new JSONObject();
-            for (Pair<String, Object> variable : variables) {
+            for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
                         obj.optString(variable.getFirst()), isHistoryStep(), retval);

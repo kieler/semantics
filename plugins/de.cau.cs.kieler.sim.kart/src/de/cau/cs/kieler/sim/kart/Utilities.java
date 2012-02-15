@@ -159,15 +159,15 @@ public class Utilities {
      * @param split the array of Strings
      * @return a set including all String from the parameter
      */
-    public static Set<Pair<String,Object>> makeSetOfPairs(String string) throws KiemInitializationException {
+    public static Set<Pair<String,String>> makeSetOfPairs(String string) throws KiemInitializationException {
         try {
             String[] strPairs = string.split("\\)\\s*,\\s*\\(|\\(|\\)");
-            HashSet<Pair<String,Object>> retval = new HashSet<Pair<String,Object>>();
+            HashSet<Pair<String,String>> retval = new HashSet<Pair<String,String>>();
     
             for (String strPair : strPairs) {
                 if(!strPair.equals("")) {
                     String[] pair = strPair.split(",");
-                    retval.add(new Pair<String,Object>(pair[0].trim(), pair[1].trim()));
+                    retval.add(new Pair<String,String>(pair[0].trim(), pair[1].trim()));
                 } else {
                 }
             }

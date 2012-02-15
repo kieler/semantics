@@ -66,7 +66,7 @@ public class DefaultValidationEngine implements IValidationEngine {
      * 
      * {@inheritDoc}
      */
-    public void validateVariable(Pair<String,Object> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval) {
+    public void validateVariable(Pair<String,String> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval) {
         if (simValue == null) {
             KiemPlugin.getDefault().showError(
                     "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
