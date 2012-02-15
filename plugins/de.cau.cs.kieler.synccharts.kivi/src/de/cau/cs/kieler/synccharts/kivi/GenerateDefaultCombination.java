@@ -57,9 +57,8 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 public class GenerateDefaultCombination extends AbstractCombination implements ResourceSetListener {
 
     String absolutePath = null;
-    
+
     SyncchartsDiagramEditor lastEditor = null;
-    
 
     public GenerateDefaultCombination() {
         InputStream inStream;
@@ -154,26 +153,40 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
     }
 
     public void resourceSetChanged(ResourceSetChangeEvent event) {
-        List<IEffect> effects = new LinkedList<IEffect>();
         LayoutEffect layout = null;
         XtendTransformationEffect effect = null;
         for (Notification n : event.getNotifications()) {
             if ((n.getEventType() == Notification.REMOVE) && (n.getNotifier() instanceof Region)) {
-                Region r = this.getRootRegion((Region) n.getNotifier());
+                Region r = ((Region) n.getNotifier());
                 EList<State> states = r.getStates();
                 EList<Signal> signals = r.getSignals();
-                if (states.isEmpty() && signals.isEmpty()) {
-                    if (absolutePath != null) {
-                        Object[] mapping = { r };
-                        TransformationDescriptor descriptor = new TransformationDescriptor(
-                                "createDefault", mapping);
-                        String[] packages = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
+                if (r.getParentState() == null) {
+                    if (states.isEmpty() && signals.isEmpty()) {
+                        if (absolutePath != null) {
+                            Object[] mapping = { r };
+                            TransformationDescriptor descriptor = new TransformationDescriptor(
+                                    "createDefault", mapping);
+                            String[] packages = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
 
-                        XtendTransformationContext context = new XtendTransformationContext(
-                                absolutePath, packages, null, event.getEditingDomain());
-                        effect = new XtendTransformationEffect(context,
-                                descriptor);
-                        layout = new LayoutEffect(lastEditor, r, false);
+                            XtendTransformationContext context = new XtendTransformationContext(
+                                    absolutePath, packages, null, event.getEditingDomain());
+                            effect = new XtendTransformationEffect(context, descriptor);
+                            layout = new LayoutEffect(lastEditor, r, false);
+                        }
+                    }
+                } else {
+                    if (states.isEmpty() && signals.isEmpty()) {
+                        if (absolutePath != null) {
+                            Object[] mapping = { r };
+                            TransformationDescriptor descriptor = new TransformationDescriptor(
+                                    "addInitialState", mapping);
+                            String[] packages = { "de.cau.cs.kieler.synccharts.SyncchartsPackage" };
+
+                            XtendTransformationContext context = new XtendTransformationContext(
+                                    absolutePath, packages, null, event.getEditingDomain());
+                            effect = new XtendTransformationEffect(context, descriptor);
+                            layout = new LayoutEffect(lastEditor, r, false);
+                        }
                     }
                 }
             }
@@ -182,15 +195,7 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
             effect.schedule();
             layout.schedule();
         }
-        
-    }
 
-    private Region getRootRegion(Region r) {
-        if (r.getParentState() == null) {
-            return r;
-        } else {
-            return this.getRootRegion(r.getParentState().getParentRegion());
-        }
     }
 
     public boolean isAggregatePrecommitListener() {

@@ -274,19 +274,6 @@
                     transformationId="de.cau.cs.kieler.ksbase.addABRO">
               </transformation>
               <transformation
-                    icon="icons/default.gif"
-                    menu="true"
-                    name="Create Default"
-                    popup="true"
-                    popupbar="false"
-                    separated="false"
-                    toolbar="false"
-                    tooltip="Create a default SyncChart"
-                    transformation="createDefault"
-                    transformationId="de.cau.cs.kieler.ksbase.createDefault"
-                    validation="isRootRegion">
-              </transformation>
-              <transformation
                     icon="icons/quickfix_obj.gif"
                     menu="false"
                     name="Fix SyncChart"

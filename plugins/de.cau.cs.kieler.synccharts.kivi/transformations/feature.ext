@@ -16,5 +16,11 @@ rootRegion.states.add(state)
 ;
 
 String getFileNameOfActiveEditor():
-JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+  JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.getFileNameOfActiveEditor()
+;
+
+Void addInitialState(Region region):
+let state = new State:
+state.setIsInitial(true) ->
+region.states.add(state)
 ;
