@@ -34,5 +34,11 @@
             name="DataValidationComponent">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/synccharts_sc_kart.execution">
+      </executionFile>
+   </extension>
 
 </plugin>

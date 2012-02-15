@@ -37,7 +37,6 @@ import de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl;
 import de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
-import de.cau.cs.kieler.synccharts.Scope;
 
 /**
  * Provides utility methods used by the validation component and the validation engine.
@@ -127,33 +126,31 @@ public class Utilities {
             EObject itemObject = states.get(0);
             states.remove(0);
 
-            if (itemObject instanceof Scope) {
-                boolean breakIf = false;
-                Scope item = (Scope) itemObject;
-                Tree itemTree = new Tree(item);
+            boolean breakIf = false;
+            EObject item = (EObject) itemObject;
+            Tree itemTree = new Tree(item);
 
-                while (item.eContainer() != null) {
-                    if (states.contains(item.eContainer())) {
-                        states.remove(item.eContainer());
-                        Tree parentTree = new Tree((Scope) item.eContainer());
+            while (item.eContainer() != null) {
+                if (states.contains(item.eContainer())) {
+                    states.remove(item.eContainer());
+                    Tree parentTree = new Tree((EObject) item.eContainer());
+                    parentTree.addChild(itemTree);
+                    itemTree = parentTree;
+                } else {
+                    Tree parentTree = root.findValue((EObject) item.eContainer());
+                    if (parentTree != null) {
                         parentTree.addChild(itemTree);
-                        itemTree = parentTree;
-                    } else {
-                        Tree parentTree = root.findValue((Scope) item.eContainer());
-                        if (parentTree != null) {
-                            parentTree.addChild(itemTree);
-                            breakIf = true;
-                            break;
-                        }
+                        breakIf = true;
+                        break;
                     }
-                    item = (Scope) item.eContainer();
                 }
-
-                if (!breakIf) {
-                    root.addChild(itemTree);
-                }
-
+                item = (EObject) item.eContainer();
             }
+
+            if (!breakIf) {
+                root.addChild(itemTree);
+            }
+
         }
 
         return root;

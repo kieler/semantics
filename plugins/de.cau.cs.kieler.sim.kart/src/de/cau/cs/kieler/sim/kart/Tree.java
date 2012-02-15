@@ -13,13 +13,10 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
-
-import de.cau.cs.kieler.synccharts.Scope;
 
 /**
  * A simple tree in which Scope instances can be inserted. The tree is able
