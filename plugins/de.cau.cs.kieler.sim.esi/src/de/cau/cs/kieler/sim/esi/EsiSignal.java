@@ -33,7 +33,7 @@ public class EsiSignal implements ISignal {
      *            name of the signal
      */
     public EsiSignal(String theName) {
-        name = theName;
+        name = theName.trim();
     }
 
     /**
@@ -45,7 +45,7 @@ public class EsiSignal implements ISignal {
      *            value of the signal.
      */
     public EsiSignal(String theName, Object theValue) {
-        name = theName;
+        name = theName.trim();
         value = theValue;
     }
 
