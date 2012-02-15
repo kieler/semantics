@@ -66,14 +66,17 @@ public class TraceValidator extends AbstractAutomatedProducer   {
                                 break;
                             }
 
-                            if (sig.isValued()) {
+                            // FIXME: This does no longer work because of changes in the ESO grammar.
+                            //        As KART supercedes this component, I do not think it is necessary
+                            //        to fix this at this point.
+                            /*if (sig.isValued()) {
                                 int v1 = (Integer) (JSONSignalValues.getSignalValue(obj));
                                 int v2 = sig.getValue();
                                 if (v1 != v2) {
                                     valid = false;
                                     break;
                                 }
-                            }
+                            }*/
 
                         } else {
                             valid = false;

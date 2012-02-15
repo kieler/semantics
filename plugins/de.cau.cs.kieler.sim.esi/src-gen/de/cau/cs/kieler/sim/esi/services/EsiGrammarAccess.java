@@ -479,7 +479,7 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal AlphaNumSpecial:
-	//	("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | Special)*;
+	//	("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | " " | Special)*;
 	public TerminalRule getAlphaNumSpecialRule() {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 

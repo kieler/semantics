@@ -707,7 +707,7 @@ RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-');
 
 RULE_BOOL : ('true'|'false');
 
-RULE_ALPHANUMSPECIAL : ('a'..'z'|'A'..'Z'|RULE_SPECIAL) ('a'..'z'|'A'..'Z'|'0'..'9'|RULE_SPECIAL)*;
+RULE_ALPHANUMSPECIAL : ('a'..'z'|'A'..'Z'|RULE_SPECIAL) ('a'..'z'|'A'..'Z'|'0'..'9'|' '|RULE_SPECIAL)*;
 
 RULE_FLOAT : ('+'|'-')? ('0'..'9')+ '.' ('0'..'9')+;
 
