@@ -300,7 +300,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
-                        obj.optString(variable.getFirst()), isHistoryStep(), retval);
+                        obj.opt(variable.getFirst()), isHistoryStep(), retval);
             }
             
             valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
@@ -402,7 +402,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                         }
                     } catch (JSONException e) {
                         // it probably is a variable
-                        outputVariables.put(outputKey, output.optString(outputKey));
+                        outputVariables.put(outputKey, output.opt(outputKey));
                     }
                 }
                 

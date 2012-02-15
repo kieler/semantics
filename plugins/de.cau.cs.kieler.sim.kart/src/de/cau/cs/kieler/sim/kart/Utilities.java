@@ -14,8 +14,10 @@
 package de.cau.cs.kieler.sim.kart;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -100,7 +102,11 @@ public class Utilities {
         } else if (var.getValue() instanceof EsoStringImpl) {
             return ((EsoStringImpl)var.getValue()).getValue();
         } else if (var.getValue() instanceof EsoJsonImpl) {
-            return ((EsoJsonImpl)var.getValue()).getValue();
+            try {
+                return new JSONObject(((EsoJsonImpl)var.getValue()).getValue());
+            } catch (JSONException e) {
+                return ((EsoJsonImpl)var.getValue()).getValue();
+            }
         } else {
             return null;
         }
@@ -200,6 +206,54 @@ public class Utilities {
             }
         }
         
+        return retval;
+    }
+
+    /**
+     * Compare two variables, normally one taken from an ESO file and one taken from the simulation.
+     * 
+     * @param recValue first value
+     * @param simValue second value
+     * @return true if both values are of the same type and represent the same value, false otherwise
+     */
+    public static boolean compareVariables(DiagramEditor ed, Object a, Object b) {
+        if(a.getClass().equals(b.getClass())) {
+            if (a instanceof Integer && b instanceof Integer) {
+                return ((Integer)a).equals((Integer)b);
+            } else if (a instanceof Float && b instanceof Float) {
+                return ((Float)a).equals((Float)b);
+            } else if (a instanceof Boolean && b instanceof Boolean) {
+                return ((Boolean)a).equals((Boolean)b);
+            } else if (a instanceof JSONObject && b instanceof JSONObject) {
+                return ((JSONObject)a).equals((JSONObject)b);
+            } else if(a instanceof String && b instanceof String) {
+                try {
+                    List<String> aS = getStrings(getStates(ed, a));
+                    List<String> bS = getStrings(getStates(ed, b));
+                    Collections.sort(aS);
+                    Collections.sort(bS);
+                    return aS.equals(bS);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return ((String)a).equals((String)b);
+                }
+            } else {
+                return a.equals(b);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param states
+     * @return
+     */
+    private static List<String> getStrings(List<EObject> states) {
+        List<String> retval = new LinkedList<String>();
+        for(EObject s : states) {
+            retval.add(s.toString());
+        }
         return retval;
     }
 }

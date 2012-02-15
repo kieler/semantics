@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -37,6 +38,14 @@ public class Tree {
      * A list of successor Scopes
      */
     private List<Tree> children;
+    
+    /**
+     * Create a new empty tree
+     */
+    public Tree() {
+        this.value = null;
+        children = new LinkedList<Tree>();
+    }
     
     /**
      * Create a new tree with a specific value
