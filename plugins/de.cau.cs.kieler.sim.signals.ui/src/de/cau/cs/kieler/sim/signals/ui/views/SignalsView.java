@@ -166,6 +166,7 @@ public class SignalsView extends ViewPart {
 	public void setSignalList(SignalList signalList) {
 		this.signalList = signalList;
 		this.signalList.setMaximalTicks(MAXIMALTICKS);
+		this.signalsPlotter.setSignalList(signalList);
 	}
 
 	// -------------------------------------------------------------------------
