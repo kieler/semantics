@@ -16,6 +16,8 @@ package de.cau.cs.kieler.sim.esi;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.emf.ecore.EObject;
+
 /**
  * @author ctr
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
@@ -44,5 +46,5 @@ public interface ITick {
      * 
      * @return the state information. If none is available <code>null</code> is returned
      */
-    Map<String, String> getExtraInfos();
+    Map<String, Object> getExtraInfos();
 }

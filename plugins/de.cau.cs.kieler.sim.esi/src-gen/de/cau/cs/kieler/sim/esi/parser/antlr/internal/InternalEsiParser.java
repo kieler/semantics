@@ -21,26 +21,25 @@ import java.util.ArrayList;
 @SuppressWarnings("all")
 public class InternalEsiParser extends AbstractInternalAntlrParser {
     public static final String[] tokenNames = new String[] {
-        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHA", "RULE_ALPHANUM", "RULE_ALPHANUMSPECIAL", "RULE_NUM", "RULE_DIGIT", "RULE_SPECIAL", "RULE_COMMENT", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "'('", "')'", "'%%'"
+        "<invalid>", "<EOR>", "<DOWN>", "<UP>", "RULE_ALPHANUMSPECIAL", "RULE_INT", "RULE_STRING", "RULE_FLOAT", "RULE_BOOL", "RULE_SPECIAL", "RULE_WS", "'!'", "'reset'", "';'", "'%'", "'Output'", "':'", "'('", "')'", "'%%'"
     };
-    public static final int RULE_ALPHANUM=5;
-    public static final int T__20=20;
-    public static final int RULE_ALPHA=4;
-    public static final int RULE_COMMENT=10;
+    public static final int RULE_BOOL=8;
+    public static final int RULE_FLOAT=7;
     public static final int EOF=-1;
-    public static final int RULE_NUM=7;
     public static final int T__19=19;
+    public static final int RULE_STRING=6;
     public static final int T__16=16;
     public static final int T__15=15;
     public static final int T__18=18;
     public static final int T__17=17;
     public static final int T__12=12;
+    public static final int T__11=11;
     public static final int T__14=14;
     public static final int T__13=13;
     public static final int RULE_SPECIAL=9;
-    public static final int RULE_ALPHANUMSPECIAL=6;
-    public static final int RULE_WS=11;
-    public static final int RULE_DIGIT=8;
+    public static final int RULE_ALPHANUMSPECIAL=4;
+    public static final int RULE_INT=5;
+    public static final int RULE_WS=10;
 
     // delegates
     // delegators
@@ -137,7 +136,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt1=2;
                 int LA1_0 = input.LA(1);
 
-                if ( (LA1_0==12) ) {
+                if ( (LA1_0==11) ) {
                     alt1=1;
                 }
 
@@ -257,15 +256,15 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:119:1: (otherlv_0= '!' otherlv_1= 'reset' otherlv_2= ';' ( (lv_ticks_3_0= ruletick ) )+ )
             // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:119:3: otherlv_0= '!' otherlv_1= 'reset' otherlv_2= ';' ( (lv_ticks_3_0= ruletick ) )+
             {
-            otherlv_0=(Token)match(input,12,FOLLOW_12_in_ruletrace213); 
+            otherlv_0=(Token)match(input,11,FOLLOW_11_in_ruletrace213); 
 
                 	newLeafNode(otherlv_0, grammarAccess.getTraceAccess().getExclamationMarkKeyword_0());
                 
-            otherlv_1=(Token)match(input,13,FOLLOW_13_in_ruletrace225); 
+            otherlv_1=(Token)match(input,12,FOLLOW_12_in_ruletrace225); 
 
                 	newLeafNode(otherlv_1, grammarAccess.getTraceAccess().getResetKeyword_1());
                 
-            otherlv_2=(Token)match(input,14,FOLLOW_14_in_ruletrace237); 
+            otherlv_2=(Token)match(input,13,FOLLOW_13_in_ruletrace237); 
 
                 	newLeafNode(otherlv_2, grammarAccess.getTraceAccess().getSemicolonKeyword_2());
                 
@@ -276,7 +275,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt2=2;
                 int LA2_0 = input.LA(1);
 
-                if ( ((LA2_0>=RULE_ALPHA && LA2_0<=RULE_ALPHANUMSPECIAL)||(LA2_0>=14 && LA2_0<=15)||LA2_0==20) ) {
+                if ( (LA2_0==RULE_ALPHANUMSPECIAL||(LA2_0>=13 && LA2_0<=14)||LA2_0==19) ) {
                     alt2=1;
                 }
 
@@ -421,7 +420,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt3=2;
                 int LA3_0 = input.LA(1);
 
-                if ( ((LA3_0>=RULE_ALPHA && LA3_0<=RULE_ALPHANUMSPECIAL)) ) {
+                if ( (LA3_0==RULE_ALPHANUMSPECIAL) ) {
                     alt3=1;
                 }
 
@@ -468,22 +467,22 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( (LA5_0==15) ) {
+            if ( (LA5_0==14) ) {
                 alt5=1;
             }
             switch (alt5) {
                 case 1 :
                     // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:194:5: otherlv_2= '%' otherlv_3= 'Output' otherlv_4= ':' ( (lv_output_5_0= rulesignal ) )*
                     {
-                    otherlv_2=(Token)match(input,15,FOLLOW_15_in_ruletick374); 
+                    otherlv_2=(Token)match(input,14,FOLLOW_14_in_ruletick374); 
 
                         	newLeafNode(otherlv_2, grammarAccess.getTickAccess().getPercentSignKeyword_2_0());
                         
-                    otherlv_3=(Token)match(input,16,FOLLOW_16_in_ruletick386); 
+                    otherlv_3=(Token)match(input,15,FOLLOW_15_in_ruletick386); 
 
                         	newLeafNode(otherlv_3, grammarAccess.getTickAccess().getOutputKeyword_2_1());
                         
-                    otherlv_4=(Token)match(input,17,FOLLOW_17_in_ruletick398); 
+                    otherlv_4=(Token)match(input,16,FOLLOW_16_in_ruletick398); 
 
                         	newLeafNode(otherlv_4, grammarAccess.getTickAccess().getColonKeyword_2_2());
                         
@@ -493,7 +492,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                         int alt4=2;
                         int LA4_0 = input.LA(1);
 
-                        if ( ((LA4_0>=RULE_ALPHA && LA4_0<=RULE_ALPHANUMSPECIAL)) ) {
+                        if ( (LA4_0==RULE_ALPHANUMSPECIAL) ) {
                             alt4=1;
                         }
 
@@ -548,7 +547,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 int alt6=2;
                 int LA6_0 = input.LA(1);
 
-                if ( (LA6_0==20) ) {
+                if ( (LA6_0==19) ) {
                     alt6=1;
                 }
 
@@ -591,7 +590,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
                 }
             } while (true);
 
-            otherlv_7=(Token)match(input,14,FOLLOW_14_in_ruletick456); 
+            otherlv_7=(Token)match(input,13,FOLLOW_13_in_ruletick456); 
 
                 	newLeafNode(otherlv_7, grammarAccess.getTickAccess().getSemicolonKeyword_4());
                 
@@ -652,147 +651,74 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulesignal"
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:263:1: rulesignal returns [EObject current=null] : ( ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )? ) ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:263:1: rulesignal returns [EObject current=null] : ( ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) ) ( (lv_valued_1_0= '(' ) )? ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )? ) ;
     public final EObject rulesignal() throws RecognitionException {
         EObject current = null;
 
-        Token lv_name_0_1=null;
-        Token lv_name_0_2=null;
-        Token lv_name_0_3=null;
+        Token lv_name_0_0=null;
         Token lv_valued_1_0=null;
-        Token lv_val_2_0=null;
         Token otherlv_3=null;
+        EObject lv_val_2_1 = null;
+
+        EObject lv_val_2_2 = null;
+
+        EObject lv_val_2_3 = null;
+
+        EObject lv_val_2_4 = null;
+
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:266:28: ( ( ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )? ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:1: ( ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )? )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:266:28: ( ( ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) ) ( (lv_valued_1_0= '(' ) )? ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )? ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:1: ( ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) ) ( (lv_valued_1_0= '(' ) )? ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )? )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:1: ( ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )? )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:2: ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) ) ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )?
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:1: ( ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) ) ( (lv_valued_1_0= '(' ) )? ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )? )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:2: ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) ) ( (lv_valued_1_0= '(' ) )? ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )?
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:2: ( ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:268:1: ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:267:2: ( (lv_name_0_0= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:268:1: (lv_name_0_0= RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:268:1: ( (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:269:1: (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:268:1: (lv_name_0_0= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:269:3: lv_name_0_0= RULE_ALPHANUMSPECIAL
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:269:1: (lv_name_0_1= RULE_ALPHA | lv_name_0_2= RULE_ALPHANUM | lv_name_0_3= RULE_ALPHANUMSPECIAL )
-            int alt7=3;
-            switch ( input.LA(1) ) {
-            case RULE_ALPHA:
-                {
-                alt7=1;
-                }
-                break;
-            case RULE_ALPHANUM:
-                {
-                alt7=2;
-                }
-                break;
-            case RULE_ALPHANUMSPECIAL:
-                {
-                alt7=3;
-                }
-                break;
-            default:
-                NoViableAltException nvae =
-                    new NoViableAltException("", 7, 0, input);
+            lv_name_0_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal544); 
 
-                throw nvae;
+            			newLeafNode(lv_name_0_0, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getSignalRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"name",
+                    		lv_name_0_0, 
+                    		"AlphaNumSpecial");
+            	    
+
             }
 
+
+            }
+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:285:2: ( (lv_valued_1_0= '(' ) )?
+            int alt7=2;
+            int LA7_0 = input.LA(1);
+
+            if ( (LA7_0==17) ) {
+                alt7=1;
+            }
             switch (alt7) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:270:3: lv_name_0_1= RULE_ALPHA
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:286:1: (lv_valued_1_0= '(' )
                     {
-                    lv_name_0_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulesignal546); 
-
-                    			newLeafNode(lv_name_0_1, grammarAccess.getSignalAccess().getNameAlphaTerminalRuleCall_0_0_0()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getSignalRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"name",
-                            		lv_name_0_1, 
-                            		"Alpha");
-                    	    
-
-                    }
-                    break;
-                case 2 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:285:8: lv_name_0_2= RULE_ALPHANUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:286:1: (lv_valued_1_0= '(' )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:287:3: lv_valued_1_0= '('
                     {
-                    lv_name_0_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulesignal566); 
+                    lv_valued_1_0=(Token)match(input,17,FOLLOW_17_in_rulesignal567); 
 
-                    			newLeafNode(lv_name_0_2, grammarAccess.getSignalAccess().getNameAlphaNumTerminalRuleCall_0_0_1()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getSignalRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"name",
-                            		lv_name_0_2, 
-                            		"AlphaNum");
-                    	    
-
-                    }
-                    break;
-                case 3 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:300:8: lv_name_0_3= RULE_ALPHANUMSPECIAL
-                    {
-                    lv_name_0_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal586); 
-
-                    			newLeafNode(lv_name_0_3, grammarAccess.getSignalAccess().getNameAlphaNumSpecialTerminalRuleCall_0_0_2()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getSignalRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"name",
-                            		lv_name_0_3, 
-                            		"AlphaNumSpecial");
-                    	    
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-
-            }
-
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:318:2: ( ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')' )?
-            int alt8=2;
-            int LA8_0 = input.LA(1);
-
-            if ( (LA8_0==18) ) {
-                alt8=1;
-            }
-            switch (alt8) {
-                case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:318:3: ( (lv_valued_1_0= '(' ) ) ( (lv_val_2_0= RULE_NUM ) ) otherlv_3= ')'
-                    {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:318:3: ( (lv_valued_1_0= '(' ) )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:319:1: (lv_valued_1_0= '(' )
-                    {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:319:1: (lv_valued_1_0= '(' )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:320:3: lv_valued_1_0= '('
-                    {
-                    lv_valued_1_0=(Token)match(input,18,FOLLOW_18_in_rulesignal613); 
-
-                            newLeafNode(lv_valued_1_0, grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0_0());
+                            newLeafNode(lv_valued_1_0, grammarAccess.getSignalAccess().getValuedLeftParenthesisKeyword_1_0());
                         
 
                     	        if (current==null) {
@@ -805,36 +731,170 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
                     }
+                    break;
 
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:333:2: ( (lv_val_2_0= RULE_NUM ) )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:334:1: (lv_val_2_0= RULE_NUM )
+            }
+
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:300:3: ( ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')' )?
+            int alt9=2;
+            int LA9_0 = input.LA(1);
+
+            if ( ((LA9_0>=RULE_INT && LA9_0<=RULE_BOOL)) ) {
+                alt9=1;
+            }
+            switch (alt9) {
+                case 1 :
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:300:4: ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) ) otherlv_3= ')'
                     {
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:334:1: (lv_val_2_0= RULE_NUM )
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:335:3: lv_val_2_0= RULE_NUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:300:4: ( ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) ) )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:301:1: ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) )
                     {
-                    lv_val_2_0=(Token)match(input,RULE_NUM,FOLLOW_RULE_NUM_in_rulesignal643); 
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:301:1: ( (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString ) )
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:302:1: (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString )
+                    {
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:302:1: (lv_val_2_1= ruleEsoInt | lv_val_2_2= ruleEsoFloat | lv_val_2_3= ruleEsoBool | lv_val_2_4= ruleEsoString )
+                    int alt8=4;
+                    switch ( input.LA(1) ) {
+                    case RULE_INT:
+                        {
+                        alt8=1;
+                        }
+                        break;
+                    case RULE_FLOAT:
+                        {
+                        alt8=2;
+                        }
+                        break;
+                    case RULE_BOOL:
+                        {
+                        alt8=3;
+                        }
+                        break;
+                    case RULE_STRING:
+                        {
+                        alt8=4;
+                        }
+                        break;
+                    default:
+                        NoViableAltException nvae =
+                            new NoViableAltException("", 8, 0, input);
 
-                    			newLeafNode(lv_val_2_0, grammarAccess.getSignalAccess().getValNumTerminalRuleCall_1_1_0()); 
-                    		
+                        throw nvae;
+                    }
 
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getSignalRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"val",
-                            		lv_val_2_0, 
-                            		"Num");
-                    	    
+                    switch (alt8) {
+                        case 1 :
+                            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:303:3: lv_val_2_1= ruleEsoInt
+                            {
+                             
+                            	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoIntParserRuleCall_2_0_0_0()); 
+                            	    
+                            pushFollow(FOLLOW_ruleEsoInt_in_rulesignal605);
+                            lv_val_2_1=ruleEsoInt();
+
+                            state._fsp--;
+
+
+                            	        if (current==null) {
+                            	            current = createModelElementForParent(grammarAccess.getSignalRule());
+                            	        }
+                                   		set(
+                                   			current, 
+                                   			"val",
+                                    		lv_val_2_1, 
+                                    		"EsoInt");
+                            	        afterParserOrEnumRuleCall();
+                            	    
+
+                            }
+                            break;
+                        case 2 :
+                            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:318:8: lv_val_2_2= ruleEsoFloat
+                            {
+                             
+                            	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoFloatParserRuleCall_2_0_0_1()); 
+                            	    
+                            pushFollow(FOLLOW_ruleEsoFloat_in_rulesignal624);
+                            lv_val_2_2=ruleEsoFloat();
+
+                            state._fsp--;
+
+
+                            	        if (current==null) {
+                            	            current = createModelElementForParent(grammarAccess.getSignalRule());
+                            	        }
+                                   		set(
+                                   			current, 
+                                   			"val",
+                                    		lv_val_2_2, 
+                                    		"EsoFloat");
+                            	        afterParserOrEnumRuleCall();
+                            	    
+
+                            }
+                            break;
+                        case 3 :
+                            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:333:8: lv_val_2_3= ruleEsoBool
+                            {
+                             
+                            	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoBoolParserRuleCall_2_0_0_2()); 
+                            	    
+                            pushFollow(FOLLOW_ruleEsoBool_in_rulesignal643);
+                            lv_val_2_3=ruleEsoBool();
+
+                            state._fsp--;
+
+
+                            	        if (current==null) {
+                            	            current = createModelElementForParent(grammarAccess.getSignalRule());
+                            	        }
+                                   		set(
+                                   			current, 
+                                   			"val",
+                                    		lv_val_2_3, 
+                                    		"EsoBool");
+                            	        afterParserOrEnumRuleCall();
+                            	    
+
+                            }
+                            break;
+                        case 4 :
+                            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:348:8: lv_val_2_4= ruleEsoString
+                            {
+                             
+                            	        newCompositeNode(grammarAccess.getSignalAccess().getValEsoStringParserRuleCall_2_0_0_3()); 
+                            	    
+                            pushFollow(FOLLOW_ruleEsoString_in_rulesignal662);
+                            lv_val_2_4=ruleEsoString();
+
+                            state._fsp--;
+
+
+                            	        if (current==null) {
+                            	            current = createModelElementForParent(grammarAccess.getSignalRule());
+                            	        }
+                                   		set(
+                                   			current, 
+                                   			"val",
+                                    		lv_val_2_4, 
+                                    		"EsoString");
+                            	        afterParserOrEnumRuleCall();
+                            	    
+
+                            }
+                            break;
 
                     }
 
 
                     }
 
-                    otherlv_3=(Token)match(input,19,FOLLOW_19_in_rulesignal660); 
 
-                        	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getRightParenthesisKeyword_1_2());
+                    }
+
+                    otherlv_3=(Token)match(input,18,FOLLOW_18_in_rulesignal677); 
+
+                        	newLeafNode(otherlv_3, grammarAccess.getSignalAccess().getRightParenthesisKeyword_2_1());
                         
 
                     }
@@ -863,7 +923,7 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "entryRulekvpair"
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:363:1: entryRulekvpair returns [EObject current=null] : iv_rulekvpair= rulekvpair EOF ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:378:1: entryRulekvpair returns [EObject current=null] : iv_rulekvpair= rulekvpair EOF ;
     public final EObject entryRulekvpair() throws RecognitionException {
         EObject current = null;
 
@@ -871,17 +931,17 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:364:2: (iv_rulekvpair= rulekvpair EOF )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:365:2: iv_rulekvpair= rulekvpair EOF
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:379:2: (iv_rulekvpair= rulekvpair EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:380:2: iv_rulekvpair= rulekvpair EOF
             {
              newCompositeNode(grammarAccess.getKvpairRule()); 
-            pushFollow(FOLLOW_rulekvpair_in_entryRulekvpair698);
+            pushFollow(FOLLOW_rulekvpair_in_entryRulekvpair715);
             iv_rulekvpair=rulekvpair();
 
             state._fsp--;
 
              current =iv_rulekvpair; 
-            match(input,EOF,FOLLOW_EOF_in_entryRulekvpair708); 
+            match(input,EOF,FOLLOW_EOF_in_entryRulekvpair725); 
 
             }
 
@@ -899,159 +959,110 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
 
     // $ANTLR start "rulekvpair"
-    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:372:1: rulekvpair returns [EObject current=null] : (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) ;
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:387:1: rulekvpair returns [EObject current=null] : ( () otherlv_1= '%%' ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) ) otherlv_3= ':' ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) ) ) ;
     public final EObject rulekvpair() throws RecognitionException {
         EObject current = null;
 
-        Token otherlv_0=null;
-        Token lv_key_1_1=null;
-        Token lv_key_1_2=null;
-        Token lv_key_1_3=null;
-        Token otherlv_2=null;
-        Token lv_value_3_1=null;
-        Token lv_value_3_2=null;
-        Token lv_value_3_3=null;
+        Token otherlv_1=null;
+        Token lv_key_2_0=null;
+        Token otherlv_3=null;
+        EObject lv_value_4_1 = null;
+
+        EObject lv_value_4_2 = null;
+
+        EObject lv_value_4_3 = null;
+
+        EObject lv_value_4_4 = null;
+
+        EObject lv_value_4_5 = null;
+
 
          enterRule(); 
             
         try {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:375:28: ( (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:390:28: ( ( () otherlv_1= '%%' ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) ) otherlv_3= ':' ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:391:1: ( () otherlv_1= '%%' ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) ) otherlv_3= ':' ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) ) )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:1: (otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:376:3: otherlv_0= '%%' ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) ) otherlv_2= ':' ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:391:1: ( () otherlv_1= '%%' ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) ) otherlv_3= ':' ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:391:2: () otherlv_1= '%%' ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) ) otherlv_3= ':' ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) )
             {
-            otherlv_0=(Token)match(input,20,FOLLOW_20_in_rulekvpair745); 
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:391:2: ()
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:392:5: 
+            {
 
-                	newLeafNode(otherlv_0, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_0());
+                    current = forceCreateModelElement(
+                        grammarAccess.getKvpairAccess().getKvpairAction_0(),
+                        current);
                 
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:380:1: ( ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) )
+
+            }
+
+            otherlv_1=(Token)match(input,19,FOLLOW_19_in_rulekvpair771); 
+
+                	newLeafNode(otherlv_1, grammarAccess.getKvpairAccess().getPercentSignPercentSignKeyword_1());
+                
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:401:1: ( (lv_key_2_0= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:402:1: (lv_key_2_0= RULE_ALPHANUMSPECIAL )
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:381:1: ( (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:402:1: (lv_key_2_0= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:403:3: lv_key_2_0= RULE_ALPHANUMSPECIAL
             {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:382:1: (lv_key_1_1= RULE_ALPHA | lv_key_1_2= RULE_ALPHANUM | lv_key_1_3= RULE_ALPHANUMSPECIAL )
-            int alt9=3;
+            lv_key_2_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair788); 
+
+            			newLeafNode(lv_key_2_0, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_2_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getKvpairRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"key",
+                    		lv_key_2_0, 
+                    		"AlphaNumSpecial");
+            	    
+
+            }
+
+
+            }
+
+            otherlv_3=(Token)match(input,16,FOLLOW_16_in_rulekvpair805); 
+
+                	newLeafNode(otherlv_3, grammarAccess.getKvpairAccess().getColonKeyword_3());
+                
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:423:1: ( ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:424:1: ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:424:1: ( (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:425:1: (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:425:1: (lv_value_4_1= ruleEsoJson | lv_value_4_2= ruleEsoString | lv_value_4_3= ruleEsoFloat | lv_value_4_4= ruleEsoBool | lv_value_4_5= ruleEsoInt )
+            int alt10=5;
             switch ( input.LA(1) ) {
-            case RULE_ALPHA:
-                {
-                alt9=1;
-                }
-                break;
-            case RULE_ALPHANUM:
-                {
-                alt9=2;
-                }
-                break;
             case RULE_ALPHANUMSPECIAL:
-                {
-                alt9=3;
-                }
-                break;
-            default:
-                NoViableAltException nvae =
-                    new NoViableAltException("", 9, 0, input);
-
-                throw nvae;
-            }
-
-            switch (alt9) {
-                case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:383:3: lv_key_1_1= RULE_ALPHA
-                    {
-                    lv_key_1_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair764); 
-
-                    			newLeafNode(lv_key_1_1, grammarAccess.getKvpairAccess().getKeyAlphaTerminalRuleCall_1_0_0()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"key",
-                            		lv_key_1_1, 
-                            		"Alpha");
-                    	    
-
-                    }
-                    break;
-                case 2 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:398:8: lv_key_1_2= RULE_ALPHANUM
-                    {
-                    lv_key_1_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair784); 
-
-                    			newLeafNode(lv_key_1_2, grammarAccess.getKvpairAccess().getKeyAlphaNumTerminalRuleCall_1_0_1()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"key",
-                            		lv_key_1_2, 
-                            		"AlphaNum");
-                    	    
-
-                    }
-                    break;
-                case 3 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:413:8: lv_key_1_3= RULE_ALPHANUMSPECIAL
-                    {
-                    lv_key_1_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804); 
-
-                    			newLeafNode(lv_key_1_3, grammarAccess.getKvpairAccess().getKeyAlphaNumSpecialTerminalRuleCall_1_0_2()); 
-                    		
-
-                    	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
-                    	        }
-                           		setWithLastConsumed(
-                           			current, 
-                           			"key",
-                            		lv_key_1_3, 
-                            		"AlphaNumSpecial");
-                    	    
-
-                    }
-                    break;
-
-            }
-
-
-            }
-
-
-            }
-
-            otherlv_2=(Token)match(input,17,FOLLOW_17_in_rulekvpair824); 
-
-                	newLeafNode(otherlv_2, grammarAccess.getKvpairAccess().getColonKeyword_2());
-                
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:435:1: ( ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) )
-            {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:436:1: ( (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL ) )
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL )
-            {
-            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:437:1: (lv_value_3_1= RULE_ALPHA | lv_value_3_2= RULE_ALPHANUM | lv_value_3_3= RULE_ALPHANUMSPECIAL )
-            int alt10=3;
-            switch ( input.LA(1) ) {
-            case RULE_ALPHA:
                 {
                 alt10=1;
                 }
                 break;
-            case RULE_ALPHANUM:
+            case RULE_STRING:
                 {
                 alt10=2;
                 }
                 break;
-            case RULE_ALPHANUMSPECIAL:
+            case RULE_FLOAT:
                 {
                 alt10=3;
+                }
+                break;
+            case RULE_BOOL:
+                {
+                alt10=4;
+                }
+                break;
+            case RULE_INT:
+                {
+                alt10=5;
                 }
                 break;
             default:
@@ -1063,61 +1074,126 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
             switch (alt10) {
                 case 1 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:438:3: lv_value_3_1= RULE_ALPHA
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:426:3: lv_value_4_1= ruleEsoJson
                     {
-                    lv_value_3_1=(Token)match(input,RULE_ALPHA,FOLLOW_RULE_ALPHA_in_rulekvpair843); 
+                     
+                    	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoJsonParserRuleCall_4_0_0()); 
+                    	    
+                    pushFollow(FOLLOW_ruleEsoJson_in_rulekvpair828);
+                    lv_value_4_1=ruleEsoJson();
 
-                    			newLeafNode(lv_value_3_1, grammarAccess.getKvpairAccess().getValueAlphaTerminalRuleCall_3_0_0()); 
-                    		
+                    state._fsp--;
+
 
                     	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
+                    	            current = createModelElementForParent(grammarAccess.getKvpairRule());
                     	        }
-                           		setWithLastConsumed(
+                           		set(
                            			current, 
                            			"value",
-                            		lv_value_3_1, 
-                            		"Alpha");
+                            		lv_value_4_1, 
+                            		"EsoJson");
+                    	        afterParserOrEnumRuleCall();
                     	    
 
                     }
                     break;
                 case 2 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:453:8: lv_value_3_2= RULE_ALPHANUM
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:441:8: lv_value_4_2= ruleEsoString
                     {
-                    lv_value_3_2=(Token)match(input,RULE_ALPHANUM,FOLLOW_RULE_ALPHANUM_in_rulekvpair863); 
+                     
+                    	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoStringParserRuleCall_4_0_1()); 
+                    	    
+                    pushFollow(FOLLOW_ruleEsoString_in_rulekvpair847);
+                    lv_value_4_2=ruleEsoString();
 
-                    			newLeafNode(lv_value_3_2, grammarAccess.getKvpairAccess().getValueAlphaNumTerminalRuleCall_3_0_1()); 
-                    		
+                    state._fsp--;
+
 
                     	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
+                    	            current = createModelElementForParent(grammarAccess.getKvpairRule());
                     	        }
-                           		setWithLastConsumed(
+                           		set(
                            			current, 
                            			"value",
-                            		lv_value_3_2, 
-                            		"AlphaNum");
+                            		lv_value_4_2, 
+                            		"EsoString");
+                    	        afterParserOrEnumRuleCall();
                     	    
 
                     }
                     break;
                 case 3 :
-                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:468:8: lv_value_3_3= RULE_ALPHANUMSPECIAL
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:456:8: lv_value_4_3= ruleEsoFloat
                     {
-                    lv_value_3_3=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair883); 
+                     
+                    	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoFloatParserRuleCall_4_0_2()); 
+                    	    
+                    pushFollow(FOLLOW_ruleEsoFloat_in_rulekvpair866);
+                    lv_value_4_3=ruleEsoFloat();
 
-                    			newLeafNode(lv_value_3_3, grammarAccess.getKvpairAccess().getValueAlphaNumSpecialTerminalRuleCall_3_0_2()); 
-                    		
+                    state._fsp--;
+
 
                     	        if (current==null) {
-                    	            current = createModelElement(grammarAccess.getKvpairRule());
+                    	            current = createModelElementForParent(grammarAccess.getKvpairRule());
                     	        }
-                           		setWithLastConsumed(
+                           		set(
                            			current, 
                            			"value",
-                            		lv_value_3_3, 
-                            		"AlphaNumSpecial");
+                            		lv_value_4_3, 
+                            		"EsoFloat");
+                    	        afterParserOrEnumRuleCall();
+                    	    
+
+                    }
+                    break;
+                case 4 :
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:471:8: lv_value_4_4= ruleEsoBool
+                    {
+                     
+                    	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoBoolParserRuleCall_4_0_3()); 
+                    	    
+                    pushFollow(FOLLOW_ruleEsoBool_in_rulekvpair885);
+                    lv_value_4_4=ruleEsoBool();
+
+                    state._fsp--;
+
+
+                    	        if (current==null) {
+                    	            current = createModelElementForParent(grammarAccess.getKvpairRule());
+                    	        }
+                           		set(
+                           			current, 
+                           			"value",
+                            		lv_value_4_4, 
+                            		"EsoBool");
+                    	        afterParserOrEnumRuleCall();
+                    	    
+
+                    }
+                    break;
+                case 5 :
+                    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:486:8: lv_value_4_5= ruleEsoInt
+                    {
+                     
+                    	        newCompositeNode(grammarAccess.getKvpairAccess().getValueEsoIntParserRuleCall_4_0_4()); 
+                    	    
+                    pushFollow(FOLLOW_ruleEsoInt_in_rulekvpair904);
+                    lv_value_4_5=ruleEsoInt();
+
+                    state._fsp--;
+
+
+                    	        if (current==null) {
+                    	            current = createModelElementForParent(grammarAccess.getKvpairRule());
+                    	        }
+                           		set(
+                           			current, 
+                           			"value",
+                            		lv_value_4_5, 
+                            		"EsoInt");
+                    	        afterParserOrEnumRuleCall();
                     	    
 
                     }
@@ -1150,6 +1226,466 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
     }
     // $ANTLR end "rulekvpair"
 
+
+    // $ANTLR start "entryRuleEsoInt"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:512:1: entryRuleEsoInt returns [EObject current=null] : iv_ruleEsoInt= ruleEsoInt EOF ;
+    public final EObject entryRuleEsoInt() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleEsoInt = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:513:2: (iv_ruleEsoInt= ruleEsoInt EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:514:2: iv_ruleEsoInt= ruleEsoInt EOF
+            {
+             newCompositeNode(grammarAccess.getEsoIntRule()); 
+            pushFollow(FOLLOW_ruleEsoInt_in_entryRuleEsoInt943);
+            iv_ruleEsoInt=ruleEsoInt();
+
+            state._fsp--;
+
+             current =iv_ruleEsoInt; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEsoInt953); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEsoInt"
+
+
+    // $ANTLR start "ruleEsoInt"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:521:1: ruleEsoInt returns [EObject current=null] : ( (lv_value_0_0= RULE_INT ) ) ;
+    public final EObject ruleEsoInt() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_value_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:524:28: ( ( (lv_value_0_0= RULE_INT ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:525:1: ( (lv_value_0_0= RULE_INT ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:525:1: ( (lv_value_0_0= RULE_INT ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:526:1: (lv_value_0_0= RULE_INT )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:526:1: (lv_value_0_0= RULE_INT )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:527:3: lv_value_0_0= RULE_INT
+            {
+            lv_value_0_0=(Token)match(input,RULE_INT,FOLLOW_RULE_INT_in_ruleEsoInt994); 
+
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoIntAccess().getValueINTTerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getEsoIntRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"value",
+                    		lv_value_0_0, 
+                    		"INT");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEsoInt"
+
+
+    // $ANTLR start "entryRuleEsoString"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:551:1: entryRuleEsoString returns [EObject current=null] : iv_ruleEsoString= ruleEsoString EOF ;
+    public final EObject entryRuleEsoString() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleEsoString = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:552:2: (iv_ruleEsoString= ruleEsoString EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:553:2: iv_ruleEsoString= ruleEsoString EOF
+            {
+             newCompositeNode(grammarAccess.getEsoStringRule()); 
+            pushFollow(FOLLOW_ruleEsoString_in_entryRuleEsoString1034);
+            iv_ruleEsoString=ruleEsoString();
+
+            state._fsp--;
+
+             current =iv_ruleEsoString; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEsoString1044); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEsoString"
+
+
+    // $ANTLR start "ruleEsoString"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:560:1: ruleEsoString returns [EObject current=null] : ( (lv_value_0_0= RULE_STRING ) ) ;
+    public final EObject ruleEsoString() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_value_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:563:28: ( ( (lv_value_0_0= RULE_STRING ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:564:1: ( (lv_value_0_0= RULE_STRING ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:564:1: ( (lv_value_0_0= RULE_STRING ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:565:1: (lv_value_0_0= RULE_STRING )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:565:1: (lv_value_0_0= RULE_STRING )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:566:3: lv_value_0_0= RULE_STRING
+            {
+            lv_value_0_0=(Token)match(input,RULE_STRING,FOLLOW_RULE_STRING_in_ruleEsoString1085); 
+
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoStringAccess().getValueSTRINGTerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getEsoStringRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"value",
+                    		lv_value_0_0, 
+                    		"STRING");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEsoString"
+
+
+    // $ANTLR start "entryRuleEsoFloat"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:590:1: entryRuleEsoFloat returns [EObject current=null] : iv_ruleEsoFloat= ruleEsoFloat EOF ;
+    public final EObject entryRuleEsoFloat() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleEsoFloat = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:591:2: (iv_ruleEsoFloat= ruleEsoFloat EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:592:2: iv_ruleEsoFloat= ruleEsoFloat EOF
+            {
+             newCompositeNode(grammarAccess.getEsoFloatRule()); 
+            pushFollow(FOLLOW_ruleEsoFloat_in_entryRuleEsoFloat1125);
+            iv_ruleEsoFloat=ruleEsoFloat();
+
+            state._fsp--;
+
+             current =iv_ruleEsoFloat; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEsoFloat1135); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEsoFloat"
+
+
+    // $ANTLR start "ruleEsoFloat"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:599:1: ruleEsoFloat returns [EObject current=null] : ( (lv_value_0_0= RULE_FLOAT ) ) ;
+    public final EObject ruleEsoFloat() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_value_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:602:28: ( ( (lv_value_0_0= RULE_FLOAT ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:603:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:603:1: ( (lv_value_0_0= RULE_FLOAT ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:604:1: (lv_value_0_0= RULE_FLOAT )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:604:1: (lv_value_0_0= RULE_FLOAT )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:605:3: lv_value_0_0= RULE_FLOAT
+            {
+            lv_value_0_0=(Token)match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleEsoFloat1176); 
+
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoFloatAccess().getValueFLOATTerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getEsoFloatRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"value",
+                    		lv_value_0_0, 
+                    		"FLOAT");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEsoFloat"
+
+
+    // $ANTLR start "entryRuleEsoBool"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:629:1: entryRuleEsoBool returns [EObject current=null] : iv_ruleEsoBool= ruleEsoBool EOF ;
+    public final EObject entryRuleEsoBool() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleEsoBool = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:630:2: (iv_ruleEsoBool= ruleEsoBool EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:631:2: iv_ruleEsoBool= ruleEsoBool EOF
+            {
+             newCompositeNode(grammarAccess.getEsoBoolRule()); 
+            pushFollow(FOLLOW_ruleEsoBool_in_entryRuleEsoBool1216);
+            iv_ruleEsoBool=ruleEsoBool();
+
+            state._fsp--;
+
+             current =iv_ruleEsoBool; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEsoBool1226); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEsoBool"
+
+
+    // $ANTLR start "ruleEsoBool"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:638:1: ruleEsoBool returns [EObject current=null] : ( (lv_value_0_0= RULE_BOOL ) ) ;
+    public final EObject ruleEsoBool() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_value_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:641:28: ( ( (lv_value_0_0= RULE_BOOL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:642:1: ( (lv_value_0_0= RULE_BOOL ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:642:1: ( (lv_value_0_0= RULE_BOOL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:643:1: (lv_value_0_0= RULE_BOOL )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:643:1: (lv_value_0_0= RULE_BOOL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:644:3: lv_value_0_0= RULE_BOOL
+            {
+            lv_value_0_0=(Token)match(input,RULE_BOOL,FOLLOW_RULE_BOOL_in_ruleEsoBool1267); 
+
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoBoolAccess().getValueBOOLTerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getEsoBoolRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"value",
+                    		lv_value_0_0, 
+                    		"BOOL");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEsoBool"
+
+
+    // $ANTLR start "entryRuleEsoJson"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:668:1: entryRuleEsoJson returns [EObject current=null] : iv_ruleEsoJson= ruleEsoJson EOF ;
+    public final EObject entryRuleEsoJson() throws RecognitionException {
+        EObject current = null;
+
+        EObject iv_ruleEsoJson = null;
+
+
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:669:2: (iv_ruleEsoJson= ruleEsoJson EOF )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:670:2: iv_ruleEsoJson= ruleEsoJson EOF
+            {
+             newCompositeNode(grammarAccess.getEsoJsonRule()); 
+            pushFollow(FOLLOW_ruleEsoJson_in_entryRuleEsoJson1307);
+            iv_ruleEsoJson=ruleEsoJson();
+
+            state._fsp--;
+
+             current =iv_ruleEsoJson; 
+            match(input,EOF,FOLLOW_EOF_in_entryRuleEsoJson1317); 
+
+            }
+
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "entryRuleEsoJson"
+
+
+    // $ANTLR start "ruleEsoJson"
+    // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:677:1: ruleEsoJson returns [EObject current=null] : ( (lv_value_0_0= RULE_ALPHANUMSPECIAL ) ) ;
+    public final EObject ruleEsoJson() throws RecognitionException {
+        EObject current = null;
+
+        Token lv_value_0_0=null;
+
+         enterRule(); 
+            
+        try {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:680:28: ( ( (lv_value_0_0= RULE_ALPHANUMSPECIAL ) ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:681:1: ( (lv_value_0_0= RULE_ALPHANUMSPECIAL ) )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:681:1: ( (lv_value_0_0= RULE_ALPHANUMSPECIAL ) )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:682:1: (lv_value_0_0= RULE_ALPHANUMSPECIAL )
+            {
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:682:1: (lv_value_0_0= RULE_ALPHANUMSPECIAL )
+            // ../de.cau.cs.kieler.sim.esi/src-gen/de/cau/cs/kieler/sim/esi/parser/antlr/internal/InternalEsi.g:683:3: lv_value_0_0= RULE_ALPHANUMSPECIAL
+            {
+            lv_value_0_0=(Token)match(input,RULE_ALPHANUMSPECIAL,FOLLOW_RULE_ALPHANUMSPECIAL_in_ruleEsoJson1358); 
+
+            			newLeafNode(lv_value_0_0, grammarAccess.getEsoJsonAccess().getValueAlphaNumSpecialTerminalRuleCall_0()); 
+            		
+
+            	        if (current==null) {
+            	            current = createModelElement(grammarAccess.getEsoJsonRule());
+            	        }
+                   		setWithLastConsumed(
+                   			current, 
+                   			"value",
+                    		lv_value_0_0, 
+                    		"AlphaNumSpecial");
+            	    
+
+            }
+
+
+            }
+
+
+            }
+
+             leaveRule(); 
+        }
+         
+            catch (RecognitionException re) { 
+                recover(input,re); 
+                appendSkippedTokens();
+            } 
+        finally {
+        }
+        return current;
+    }
+    // $ANTLR end "ruleEsoJson"
+
     // Delegated rules
 
 
@@ -1157,39 +1693,55 @@ public class InternalEsiParser extends AbstractInternalAntlrParser {
 
     public static final BitSet FOLLOW_ruletracelist_in_entryRuletracelist75 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletracelist85 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_ruletrace_in_ruletracelist130 = new BitSet(new long[]{0x0000000000001002L});
+    public static final BitSet FOLLOW_ruletrace_in_ruletracelist130 = new BitSet(new long[]{0x0000000000000802L});
     public static final BitSet FOLLOW_ruletrace_in_entryRuletrace166 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletrace176 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_12_in_ruletrace213 = new BitSet(new long[]{0x0000000000002000L});
-    public static final BitSet FOLLOW_13_in_ruletrace225 = new BitSet(new long[]{0x0000000000004000L});
-    public static final BitSet FOLLOW_14_in_ruletrace237 = new BitSet(new long[]{0x000000000010C070L});
-    public static final BitSet FOLLOW_ruletick_in_ruletrace258 = new BitSet(new long[]{0x000000000010C072L});
+    public static final BitSet FOLLOW_11_in_ruletrace213 = new BitSet(new long[]{0x0000000000001000L});
+    public static final BitSet FOLLOW_12_in_ruletrace225 = new BitSet(new long[]{0x0000000000002000L});
+    public static final BitSet FOLLOW_13_in_ruletrace237 = new BitSet(new long[]{0x0000000000086010L});
+    public static final BitSet FOLLOW_ruletick_in_ruletrace258 = new BitSet(new long[]{0x0000000000086012L});
     public static final BitSet FOLLOW_ruletick_in_entryRuletick295 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRuletick305 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick360 = new BitSet(new long[]{0x000000000010C070L});
-    public static final BitSet FOLLOW_15_in_ruletick374 = new BitSet(new long[]{0x0000000000010000L});
-    public static final BitSet FOLLOW_16_in_ruletick386 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_ruletick398 = new BitSet(new long[]{0x0000000000104070L});
-    public static final BitSet FOLLOW_rulesignal_in_ruletick419 = new BitSet(new long[]{0x0000000000104070L});
-    public static final BitSet FOLLOW_rulekvpair_in_ruletick443 = new BitSet(new long[]{0x0000000000104000L});
-    public static final BitSet FOLLOW_14_in_ruletick456 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick360 = new BitSet(new long[]{0x0000000000086010L});
+    public static final BitSet FOLLOW_14_in_ruletick374 = new BitSet(new long[]{0x0000000000008000L});
+    public static final BitSet FOLLOW_15_in_ruletick386 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_ruletick398 = new BitSet(new long[]{0x0000000000082010L});
+    public static final BitSet FOLLOW_rulesignal_in_ruletick419 = new BitSet(new long[]{0x0000000000082010L});
+    public static final BitSet FOLLOW_rulekvpair_in_ruletick443 = new BitSet(new long[]{0x0000000000082000L});
+    public static final BitSet FOLLOW_13_in_ruletick456 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_rulesignal_in_entryRulesignal492 = new BitSet(new long[]{0x0000000000000000L});
     public static final BitSet FOLLOW_EOF_in_entryRulesignal502 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rulesignal546 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulesignal566 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal586 = new BitSet(new long[]{0x0000000000040002L});
-    public static final BitSet FOLLOW_18_in_rulesignal613 = new BitSet(new long[]{0x0000000000000080L});
-    public static final BitSet FOLLOW_RULE_NUM_in_rulesignal643 = new BitSet(new long[]{0x0000000000080000L});
-    public static final BitSet FOLLOW_19_in_rulesignal660 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_rulekvpair_in_entryRulekvpair698 = new BitSet(new long[]{0x0000000000000000L});
-    public static final BitSet FOLLOW_EOF_in_entryRulekvpair708 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_20_in_rulekvpair745 = new BitSet(new long[]{0x0000000000000070L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rulekvpair764 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulekvpair784 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair804 = new BitSet(new long[]{0x0000000000020000L});
-    public static final BitSet FOLLOW_17_in_rulekvpair824 = new BitSet(new long[]{0x0000000000000070L});
-    public static final BitSet FOLLOW_RULE_ALPHA_in_rulekvpair843 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUM_in_rulekvpair863 = new BitSet(new long[]{0x0000000000000002L});
-    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair883 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulesignal544 = new BitSet(new long[]{0x00000000000201E2L});
+    public static final BitSet FOLLOW_17_in_rulesignal567 = new BitSet(new long[]{0x00000000000001E2L});
+    public static final BitSet FOLLOW_ruleEsoInt_in_rulesignal605 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_ruleEsoFloat_in_rulesignal624 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_ruleEsoBool_in_rulesignal643 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_ruleEsoString_in_rulesignal662 = new BitSet(new long[]{0x0000000000040000L});
+    public static final BitSet FOLLOW_18_in_rulesignal677 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_rulekvpair_in_entryRulekvpair715 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRulekvpair725 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_19_in_rulekvpair771 = new BitSet(new long[]{0x0000000000000010L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_rulekvpair788 = new BitSet(new long[]{0x0000000000010000L});
+    public static final BitSet FOLLOW_16_in_rulekvpair805 = new BitSet(new long[]{0x00000000000001F0L});
+    public static final BitSet FOLLOW_ruleEsoJson_in_rulekvpair828 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoString_in_rulekvpair847 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoFloat_in_rulekvpair866 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoBool_in_rulekvpair885 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoInt_in_rulekvpair904 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoInt_in_entryRuleEsoInt943 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEsoInt953 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_INT_in_ruleEsoInt994 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoString_in_entryRuleEsoString1034 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEsoString1044 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_STRING_in_ruleEsoString1085 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoFloat_in_entryRuleEsoFloat1125 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEsoFloat1135 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_FLOAT_in_ruleEsoFloat1176 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoBool_in_entryRuleEsoBool1216 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEsoBool1226 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_BOOL_in_ruleEsoBool1267 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_ruleEsoJson_in_entryRuleEsoJson1307 = new BitSet(new long[]{0x0000000000000000L});
+    public static final BitSet FOLLOW_EOF_in_entryRuleEsoJson1317 = new BitSet(new long[]{0x0000000000000002L});
+    public static final BitSet FOLLOW_RULE_ALPHANUMSPECIAL_in_ruleEsoJson1358 = new BitSet(new long[]{0x0000000000000002L});
 
 }

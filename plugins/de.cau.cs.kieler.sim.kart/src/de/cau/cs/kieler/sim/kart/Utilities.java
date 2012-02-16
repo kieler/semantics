@@ -14,25 +14,29 @@
 package de.cau.cs.kieler.sim.kart;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
+import de.cau.cs.kieler.sim.esi.ISignal;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl;
+import de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
-import de.cau.cs.kieler.synccharts.Scope;
 
 /**
  * Provides utility methods used by the validation component and the validation engine.
@@ -48,13 +52,63 @@ public class Utilities {
      *            the string of states to be converted into a List
      * @return a List of states
      */
-    public static List<EObject> getStates(DiagramEditor editor, String stateString) {
+    public static List<EObject> getStates(DiagramEditor editor, Object stateObject) {
         List<EObject> retval = new ArrayList<EObject>();
-        String[] states = stateString.replaceAll("\\s", "").split(",");
+        String[] states = stateObject.toString().replaceAll("\\s", "").split(",");
         for (String state : states) {
-            retval.add(editor.getDiagram().getElement().eResource().getEObject(state));
+            retval.add(editor.getDiagram().getElement().eResource().getEObject(state.trim()));
         }
         return retval;
+    }
+    
+    /**
+     * Convert the value of a signal from an ESO file to its actual, typed
+     * Java representation
+     * 
+     * @param signal the signal the value shall be extracted from
+     * @return the signal value
+     */
+    public static Object getEsoSignalValue(ISignal signal) {
+        if (signal.getValue() instanceof EsoIntImpl) {
+            return ((EsoIntImpl)signal.getValue()).getValue();
+        } else if (signal.getValue() instanceof EsoFloatImpl) {
+            return ((EsoFloatImpl)signal.getValue()).getValue();
+        } else if (signal.getValue() instanceof EsoBoolImpl) {
+            //return ((EsoBoolImpl)signal.getValue()).getValue();
+            return false;
+        } else if (signal.getValue() instanceof EsoStringImpl) {
+            return ((EsoStringImpl)signal.getValue()).getValue();
+        } else {
+            return null;
+        }
+    }
+    
+    /**
+     * Convert the value of a variable from an ESO file to its actual, typed
+     * Java representation
+     * 
+     * @param var the variable value which shall be converted
+     * @return the converted variable value
+     */
+    public static Object getEsoVarValue(Entry<String,Object> var) {
+        if (var.getValue() instanceof EsoIntImpl) {
+            return ((EsoIntImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoFloatImpl) {
+            return ((EsoFloatImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoBoolImpl) {
+            //return ((EsoBoolImpl)var.getValue()).getValue();
+            return false;
+        } else if (var.getValue() instanceof EsoStringImpl) {
+            return ((EsoStringImpl)var.getValue()).getValue();
+        } else if (var.getValue() instanceof EsoJsonImpl) {
+            try {
+                return new JSONObject(((EsoJsonImpl)var.getValue()).getValue());
+            } catch (JSONException e) {
+                return ((EsoJsonImpl)var.getValue()).getValue();
+            }
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -72,33 +126,31 @@ public class Utilities {
             EObject itemObject = states.get(0);
             states.remove(0);
 
-            if (itemObject instanceof Scope) {
-                boolean breakIf = false;
-                Scope item = (Scope) itemObject;
-                Tree itemTree = new Tree(item);
+            boolean breakIf = false;
+            EObject item = (EObject) itemObject;
+            Tree itemTree = new Tree(item);
 
-                while (item.eContainer() != null) {
-                    if (states.contains(item.eContainer())) {
-                        states.remove(item.eContainer());
-                        Tree parentTree = new Tree((Scope) item.eContainer());
+            while (item.eContainer() != null) {
+                if (states.contains(item.eContainer())) {
+                    states.remove(item.eContainer());
+                    Tree parentTree = new Tree((EObject) item.eContainer());
+                    parentTree.addChild(itemTree);
+                    itemTree = parentTree;
+                } else {
+                    Tree parentTree = root.findValue((EObject) item.eContainer());
+                    if (parentTree != null) {
                         parentTree.addChild(itemTree);
-                        itemTree = parentTree;
-                    } else {
-                        Tree parentTree = root.findValue((Scope) item.eContainer());
-                        if (parentTree != null) {
-                            parentTree.addChild(itemTree);
-                            breakIf = true;
-                            break;
-                        }
+                        breakIf = true;
+                        break;
                     }
-                    item = (Scope) item.eContainer();
                 }
-
-                if (!breakIf) {
-                    root.addChild(itemTree);
-                }
-
+                item = (EObject) item.eContainer();
             }
+
+            if (!breakIf) {
+                root.addChild(itemTree);
+            }
+
         }
 
         return root;
@@ -151,6 +203,67 @@ public class Utilities {
             }
         }
         
+        return retval;
+    }
+
+    /**
+     * Compare two values, normally one taken from an ESO file and one taken from the simulation.
+     * Value can be of any type and value b will be tried to be parsed according to that type.
+     * 
+     * @param a first value (from ESO)
+     * @param b second value (from simulation)
+     * @return true if both values are of the same type and represent the same value, false otherwise
+     */
+    public static boolean compareValues(DiagramEditor ed, Object a, String b) {
+        if (a instanceof Integer ) {
+            try {
+                return ((Integer)a).equals(Integer.parseInt((String) b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof Float) {
+            try {
+                return ((Float)a).equals(Float.parseFloat(b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof Boolean) {
+            try {
+                return ((Boolean)a).equals(Boolean.parseBoolean(b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof JSONObject) {
+            try {
+                return ((JSONObject)a).equals(new JSONObject(b));
+            } catch (JSONException e) {
+                return false;
+            }
+        } else if(a instanceof String) {
+            try {
+                List<String> aS = getStrings(getStates(ed, a));
+                List<String> bS = getStrings(getStates(ed, b));
+                Collections.sort(aS);
+                Collections.sort(bS);
+                return aS.equals(bS);
+            } catch (Exception e) {
+                return ((String)a).equals((String)b);
+            }
+        } else {
+            return a.equals(b);
+        }
+        
+    }
+
+    /**
+     * @param states
+     * @return
+     */
+    private static List<String> getStrings(List<EObject> states) throws Exception {
+        List<String> retval = new LinkedList<String>();
+        for(EObject s : states) {
+            retval.add(s.toString());
+        }
         return retval;
     }
 }

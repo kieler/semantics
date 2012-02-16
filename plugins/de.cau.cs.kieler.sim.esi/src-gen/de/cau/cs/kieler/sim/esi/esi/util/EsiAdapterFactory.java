@@ -103,6 +103,31 @@ public class EsiAdapterFactory extends AdapterFactoryImpl
         return createkvpairAdapter();
       }
       @Override
+      public Adapter caseEsoInt(EsoInt object)
+      {
+        return createEsoIntAdapter();
+      }
+      @Override
+      public Adapter caseEsoString(EsoString object)
+      {
+        return createEsoStringAdapter();
+      }
+      @Override
+      public Adapter caseEsoFloat(EsoFloat object)
+      {
+        return createEsoFloatAdapter();
+      }
+      @Override
+      public Adapter caseEsoBool(EsoBool object)
+      {
+        return createEsoBoolAdapter();
+      }
+      @Override
+      public Adapter caseEsoJson(EsoJson object)
+      {
+        return createEsoJsonAdapter();
+      }
+      @Override
       public Adapter defaultCase(EObject object)
       {
         return createEObjectAdapter();
@@ -195,6 +220,81 @@ public class EsiAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createkvpairAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.EsoInt <em>Eso Int</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoInt
+   * @generated
+   */
+  public Adapter createEsoIntAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.EsoString <em>Eso String</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoString
+   * @generated
+   */
+  public Adapter createEsoStringAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.EsoFloat <em>Eso Float</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoFloat
+   * @generated
+   */
+  public Adapter createEsoFloatAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.EsoBool <em>Eso Bool</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoBool
+   * @generated
+   */
+  public Adapter createEsoBoolAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.sim.esi.esi.EsoJson <em>Eso Json</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.sim.esi.esi.EsoJson
+   * @generated
+   */
+  public Adapter createEsoJsonAdapter()
   {
     return null;
   }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.4"?>
 <plugin>
+   <extension-point id="de.cau.cs.kieler.sim.kart.MessageDialog" name="KART Message Dialog" schema="schema/de.cau.cs.kieler.sim.kart.MessageDialog.exsd"/>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
       <content
@@ -16,6 +17,28 @@
             id="de.cau.cs.kieler.sim.kart.replay"
             name="KART - Replay/Record Input">
       </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kart.DataReplayComponent"
+            id="de.cau.cs.kieler.sim.kart.DataReplayComponent"
+            name="DataReplayComponent">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kart.DataValidationComponent"
+            id="de.cau.cs.kieler.sim.kart.DataValidationComponent"
+            name="DataValidationComponent">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/synccharts_sc_kart.execution">
+      </executionFile>
    </extension>
 
 </plugin>

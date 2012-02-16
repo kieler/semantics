@@ -71,6 +71,51 @@ public interface EsiFactory extends EFactory
   kvpair createkvpair();
 
   /**
+   * Returns a new object of class '<em>Eso Int</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eso Int</em>'.
+   * @generated
+   */
+  EsoInt createEsoInt();
+
+  /**
+   * Returns a new object of class '<em>Eso String</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eso String</em>'.
+   * @generated
+   */
+  EsoString createEsoString();
+
+  /**
+   * Returns a new object of class '<em>Eso Float</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eso Float</em>'.
+   * @generated
+   */
+  EsoFloat createEsoFloat();
+
+  /**
+   * Returns a new object of class '<em>Eso Bool</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eso Bool</em>'.
+   * @generated
+   */
+  EsoBool createEsoBool();
+
+  /**
+   * Returns a new object of class '<em>Eso Json</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Eso Json</em>'.
+   * @generated
+   */
+  EsoJson createEsoJson();
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

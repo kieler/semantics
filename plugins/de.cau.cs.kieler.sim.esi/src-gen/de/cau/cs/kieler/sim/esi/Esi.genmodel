@@ -23,11 +23,26 @@
     <genClasses ecoreClass="Esi.ecore#//signal">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/valued"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//signal/val"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//signal/val"/>
     </genClasses>
     <genClasses ecoreClass="Esi.ecore#//kvpair">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/key"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//kvpair/value"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esi.ecore#//kvpair/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//EsoInt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//EsoInt/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//EsoString">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//EsoString/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//EsoFloat">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//EsoFloat/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//EsoBool">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//EsoBool/value"/>
+    </genClasses>
+    <genClasses ecoreClass="Esi.ecore#//EsoJson">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Esi.ecore#//EsoJson/value"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

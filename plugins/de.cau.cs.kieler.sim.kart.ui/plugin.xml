@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.sim.kart.MessageDialog">
+      <content
+            class="de.cau.cs.kieler.sim.kart.ui.MessageDialog"
+            id="de.cau.cs.kieler.sim.kart.ui.MessageDialog"
+            name="MessageDialog">
+      </content>
+   </extension>
+
+</plugin>

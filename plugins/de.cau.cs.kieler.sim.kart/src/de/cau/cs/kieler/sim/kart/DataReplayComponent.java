@@ -13,10 +13,14 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.FileNotFoundException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -31,9 +35,11 @@ import de.cau.cs.kieler.sim.esi.ITrace;
 import de.cau.cs.kieler.sim.esi.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -49,9 +55,9 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * @kieler.rating 2011-11-24 red
  */
 public class DataReplayComponent extends JSONObjectSimulationDataComponent implements
-        IJSONObjectDataComponent {
+        IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
-    private long step;
+    private static volatile long step;
     
     /** Name of the ESO file to be replayed/recorded from/to. */
     private String filename;
@@ -121,6 +127,28 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(Constants.ERR_NOTRACE
                             + tracenum, true, e);
+                }
+            } catch(FileNotFoundException e) {
+                IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                        .getConfigurationElementsFor(
+                                "de.cau.cs.kieler.sim.kart.MessageDialog");
+
+                if(contributors.length > 0) {
+                    try {
+                        IMessageDialog msg = (IMessageDialog) (contributors[0]
+                                .createExecutableExtension("class"));
+                        if(msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
+                            trainingMode = true;
+                        } else {
+                            KiemPlugin.getDefault().cancelInitialization();
+                            KiemPlugin.getDefault().showError(Constants.ERR_NOTFOUND, Constants.PLUGINID, null, Constants.ERR_SILENT);
+                        }
+                    } catch (CoreException e0) {
+                        // TODO Auto-generated catch block
+                        e0.printStackTrace();
+                    }
+                } else {
+                    throw new KiemInitializationException(Constants.ERR_NOTFOUND, true, e);
                 }
             } catch(KiemInitializationException e) {
                 throw new KiemInitializationException(Constants.ERR_READ, true, e);
@@ -203,7 +231,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
-        System.out.println("Training mode: " + trainingMode);
         if(!trainingMode && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
@@ -233,8 +260,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (signals.hasNext()) {
                 ISignal signal = signals.next();
                 if (signal.isValued()) {
-                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
-                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(signal.getValue(), true));
+                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
+                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
                 }
                 else {
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
@@ -303,18 +330,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (outputSignals.hasNext()) {
                 ISignal outputSignal = outputSignals.next();
                 if (outputSignal.isValued()) {
-                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(outputSignal.getValue(), true));
+                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(outputSignal), true));
                 } else {
                     value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(true));
                 }
             }
         
             // Add variables
-            Iterator<Entry<String,String>> variables = curTick.getExtraInfos().entrySet().iterator();
+            Iterator<Entry<String,Object>> variables = curTick.getExtraInfos().entrySet().iterator();
             
             while (variables.hasNext()) {
-                    Entry<String,String> variable = variables.next();
-                    value.accumulate(variable.getKey(), variable.getValue());
+                    Entry<String,Object> variable = variables.next();
+                    value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
             }
             
             json.accumulate(outputVarName, value);
@@ -363,7 +390,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         String filename = null;
         try {
             /*
-             * Try creating a default file name.
+             * Try creating a default file name from the model name.
              * The try block is necessary to suppress NPEs and other exceptions when we are either
              * running in headless mode or there are no editor opened. Below, you will see that a
              * filename is only proposed if this try block succeeds. We have to use absolute file

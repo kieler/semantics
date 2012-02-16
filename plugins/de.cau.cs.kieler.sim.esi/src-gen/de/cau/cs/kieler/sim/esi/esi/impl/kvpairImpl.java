@@ -9,8 +9,11 @@ import de.cau.cs.kieler.sim.esi.esi.EsiPackage;
 import de.cau.cs.kieler.sim.esi.esi.kvpair;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
@@ -52,24 +55,14 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
   protected String key = KEY_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getValue() <em>Value</em>}' attribute.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getValue()
    * @generated
    * @ordered
    */
-  protected static final String VALUE_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getValue()
-   * @generated
-   * @ordered
-   */
-  protected String value = VALUE_EDEFAULT;
+  protected EObject value;
 
   /**
    * <!-- begin-user-doc -->
@@ -120,7 +113,7 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getValue()
+  public EObject getValue()
   {
     return value;
   }
@@ -130,12 +123,53 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setValue(String newValue)
+  public NotificationChain basicSetValue(EObject newValue, NotificationChain msgs)
   {
-    String oldValue = value;
+    EObject oldValue = value;
     value = newValue;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__VALUE, oldValue, value));
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__VALUE, oldValue, newValue);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(EObject newValue)
+  {
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - EsiPackage.KVPAIR__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - EsiPackage.KVPAIR__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, EsiPackage.KVPAIR__VALUE, newValue, newValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case EsiPackage.KVPAIR__VALUE:
+        return basicSetValue(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -170,7 +204,7 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
         setKey((String)newValue);
         return;
       case EsiPackage.KVPAIR__VALUE:
-        setValue((String)newValue);
+        setValue((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -190,7 +224,7 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
         setKey(KEY_EDEFAULT);
         return;
       case EsiPackage.KVPAIR__VALUE:
-        setValue(VALUE_EDEFAULT);
+        setValue((EObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -209,7 +243,7 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
       case EsiPackage.KVPAIR__KEY:
         return KEY_EDEFAULT == null ? key != null : !KEY_EDEFAULT.equals(key);
       case EsiPackage.KVPAIR__VALUE:
-        return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
+        return value != null;
     }
     return super.eIsSet(featureID);
   }
@@ -227,8 +261,6 @@ public class kvpairImpl extends MinimalEObjectImpl.Container implements kvpair
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (key: ");
     result.append(key);
-    result.append(", value: ");
-    result.append(value);
     result.append(')');
     return result.toString();
   }

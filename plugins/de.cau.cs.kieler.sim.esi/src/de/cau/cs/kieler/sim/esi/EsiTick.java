@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-//import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.kvpair;
 import de.cau.cs.kieler.sim.esi.esi.signal;
 import de.cau.cs.kieler.sim.esi.esi.tick;
@@ -46,7 +45,11 @@ public class EsiTick implements ITick {
     public List<ISignal> getInputs() {
         LinkedList<ISignal> res = new LinkedList<ISignal>();
         for (signal s : tick.getInput()) {
-            res.add(new EsiSignal(s.getName()));
+            if (s.isValued()) {
+                res.add(new EsiSignal(s.getName().trim(), s.getVal()));
+            } else {
+                res.add(new EsiSignal(s.getName().trim()));
+            }
         }
         return res;
     }
@@ -65,10 +68,10 @@ public class EsiTick implements ITick {
     /**
      * {@inheritDoc}
      */
-    public Map<String, String> getExtraInfos() {
-        HashMap<String, String> retval = new HashMap<String, String>();
+    public Map<String, Object> getExtraInfos() {
+        HashMap<String, Object> retval = new HashMap<String, Object>();
         for (kvpair kv : tick.getExtraInfos()) {
-            retval.put(kv.getKey(), kv.getValue());
+            retval.put(kv.getKey().trim(), kv.getValue());
         }
         
         return retval;
