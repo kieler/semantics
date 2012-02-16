@@ -342,9 +342,9 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	private EsoJsonElements pEsoJson;
 	private TerminalRule tSpecial;
 	private TerminalRule tBOOL;
-	private TerminalRule tAlphaNumSpecial;
 	private TerminalRule tFLOAT;
 	private TerminalRule tINT;
+	private TerminalRule tAlphaNumSpecial;
 	private TerminalRule tSTRING;
 	private TerminalRule tWS;
 	
@@ -478,12 +478,6 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 		return (tBOOL != null) ? tBOOL : (tBOOL = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOL"));
 	} 
 
-	//terminal AlphaNumSpecial:
-	//	("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | " " | Special)*;
-	public TerminalRule getAlphaNumSpecialRule() {
-		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
-	} 
-
 	//terminal FLOAT returns ecore::EFloat:
 	//	("+" | "-")? "0".."9"+ "." "0".."9"+;
 	public TerminalRule getFLOATRule() {
@@ -494,6 +488,12 @@ public class EsiGrammarAccess extends AbstractGrammarElementFinder {
 	//	"0".."9"+;
 	public TerminalRule getINTRule() {
 		return (tINT != null) ? tINT : (tINT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "INT"));
+	} 
+
+	//terminal AlphaNumSpecial:
+	//	"0".."9"* ("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | " " | Special)*;
+	public TerminalRule getAlphaNumSpecialRule() {
+		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 
 
 	//terminal STRING:

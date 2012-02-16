@@ -66,7 +66,7 @@ public class DefaultValidationEngine implements IValidationEngine {
      * 
      * {@inheritDoc}
      */
-    public void validateVariable(Pair<String,String> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval) {
+    public void validateVariable(Pair<String,String> variable, Object recValue, String simValue, boolean isHistoryStep, JSONObject retval) {
         if (simValue == null) {
             KiemPlugin.getDefault().showWarning(
                     "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
@@ -75,7 +75,7 @@ public class DefaultValidationEngine implements IValidationEngine {
             KiemPlugin.getDefault().showWarning(
                     "The trace file did not contain a variable \"" + variable.getFirst() + "\"."
                     + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
-        } else if(!Utilities.compareVariables(editor, recValue, simValue)){
+        } else if(!Utilities.compareValues(editor, recValue, simValue)){
             try {
                 if(!isHistoryStep) {
                     List<EObject> isStates = Utilities.getStates(editor, simValue);
@@ -128,7 +128,8 @@ public class DefaultValidationEngine implements IValidationEngine {
      * 
      * {@inheritDoc}
      */
-    public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
+    @Override
+    public void validateSignals(Map<String,Object> recSignals, Map<String,String> simSignals,
             boolean isHistoryStep, String errSignalVar, JSONObject retval) {
         
         Iterator<String> signals = recSignals.keySet().iterator();
@@ -137,7 +138,7 @@ public class DefaultValidationEngine implements IValidationEngine {
         while (signals.hasNext()) {
             String signal = signals.next();
             
-            if(!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || recSignals.get(signal).equals(simSignals.get(signal))))) {
+            if(!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || Utilities.compareValues(null, recSignals.get(signal), simSignals.get(signal))))) {
                 if(!errSignals.isEmpty()) {
                     errSignals += ", ";
                 }

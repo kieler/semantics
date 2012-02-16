@@ -1399,11 +1399,11 @@ RULE_SPECIAL : (','|'.'|'/'|'@'|'#'|'$'|'&'|'*'|'='|'+'|'-');
 
 RULE_BOOL : ('true'|'false');
 
-RULE_ALPHANUMSPECIAL : ('a'..'z'|'A'..'Z'|RULE_SPECIAL) ('a'..'z'|'A'..'Z'|'0'..'9'|' '|RULE_SPECIAL)*;
-
 RULE_FLOAT : ('+'|'-')? ('0'..'9')+ '.' ('0'..'9')+;
 
 RULE_INT : ('0'..'9')+;
+
+RULE_ALPHANUMSPECIAL : ('0'..'9')* ('a'..'z'|'A'..'Z'|RULE_SPECIAL) ('a'..'z'|'A'..'Z'|'0'..'9'|' '|RULE_SPECIAL)*;
 
 RULE_STRING : ('"' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'"')))* '"'|'\'' ('\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|'\''|'\\')|~(('\\'|'\'')))* '\'');
 

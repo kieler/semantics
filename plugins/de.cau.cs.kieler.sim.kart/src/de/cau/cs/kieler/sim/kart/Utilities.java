@@ -207,39 +207,52 @@ public class Utilities {
     }
 
     /**
-     * Compare two variables, normally one taken from an ESO file and one taken from the simulation.
+     * Compare two values, normally one taken from an ESO file and one taken from the simulation.
+     * Value can be of any type and value b will be tried to be parsed according to that type.
      * 
-     * @param recValue first value
-     * @param simValue second value
+     * @param a first value (from ESO)
+     * @param b second value (from simulation)
      * @return true if both values are of the same type and represent the same value, false otherwise
      */
-    public static boolean compareVariables(DiagramEditor ed, Object a, Object b) {
-        if(a.getClass().equals(b.getClass())) {
-            if (a instanceof Integer && b instanceof Integer) {
-                return ((Integer)a).equals((Integer)b);
-            } else if (a instanceof Float && b instanceof Float) {
-                return ((Float)a).equals((Float)b);
-            } else if (a instanceof Boolean && b instanceof Boolean) {
-                return ((Boolean)a).equals((Boolean)b);
-            } else if (a instanceof JSONObject && b instanceof JSONObject) {
-                return ((JSONObject)a).equals((JSONObject)b);
-            } else if(a instanceof String && b instanceof String) {
-                try {
-                    List<String> aS = getStrings(getStates(ed, a));
-                    List<String> bS = getStrings(getStates(ed, b));
-                    Collections.sort(aS);
-                    Collections.sort(bS);
-                    return aS.equals(bS);
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    return ((String)a).equals((String)b);
-                }
-            } else {
-                return a.equals(b);
+    public static boolean compareValues(DiagramEditor ed, Object a, String b) {
+        if (a instanceof Integer ) {
+            try {
+                return ((Integer)a).equals(Integer.parseInt((String) b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof Float) {
+            try {
+                return ((Float)a).equals(Float.parseFloat(b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof Boolean) {
+            try {
+                return ((Boolean)a).equals(Boolean.parseBoolean(b));
+            } catch(NumberFormatException e) {
+                return false;
+            }
+        } else if (a instanceof JSONObject) {
+            try {
+                return ((JSONObject)a).equals(new JSONObject(b));
+            } catch (JSONException e) {
+                return false;
+            }
+        } else if(a instanceof String) {
+            try {
+                List<String> aS = getStrings(getStates(ed, a));
+                List<String> bS = getStrings(getStates(ed, b));
+                Collections.sort(aS);
+                Collections.sort(bS);
+                return aS.equals(bS);
+            } catch (Exception e) {
+                return ((String)a).equals((String)b);
             }
         } else {
-            return false;
+            return a.equals(b);
         }
+        
     }
 
     /**

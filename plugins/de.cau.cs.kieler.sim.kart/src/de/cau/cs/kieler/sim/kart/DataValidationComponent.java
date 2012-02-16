@@ -74,7 +74,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     /** In training mode, this list will hold all simulated output signals and their values
      * for each step
      */
-    private List<HashMap<String, Object>> simOutputs;
+    private List<HashMap<String, String>> simOutputs;
     
     /** In training mode, this list will hold all simulated output variables and their values
      * for each step
@@ -145,13 +145,13 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
 
         esoOutputs = new LinkedList<HashMap<String, Object>>();
         esoVariables = new LinkedList<HashMap<String, Object>>();
-        simOutputs = new LinkedList<HashMap<String, Object>>();
+        simOutputs = new LinkedList<HashMap<String, String>>();
         simVariables = new LinkedList<HashMap<String,String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
 
         try {
             editor = (DiagramEditor) getActivePage().getActiveEditor();
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             editor = null;
         }
 
@@ -300,7 +300,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
-                        obj.opt(variable.getFirst()), isHistoryStep(), retval);
+                        obj.optString(variable.getFirst()), isHistoryStep(), retval);
             }
             
             valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
@@ -328,7 +328,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     
     private void recordDataPool(JSONObject json) throws KiemExecutionException {
         String[] fieldNames = JSONObject.getNames(json);
-        HashMap<String,Object> signals = new HashMap<String,Object>();
+        HashMap<String,String> signals = new HashMap<String,String>();
         HashMap<String,String> vars = new HashMap<String,String>();
         
         for(String field : fieldNames) {
@@ -337,7 +337,12 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                 if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)) {
                     // it's a signal
                     if(JSONSignalValues.isPresent(obj) && !recInputs.get((int) step - 1).containsKey(field)) {
-                        signals.put(field, JSONSignalValues.getSignalValue(obj));
+                        if(JSONSignalValues.getSignalValue(obj) == null) {
+                            signals.put(field, null);
+                        } else {
+                            signals.put(field, JSONSignalValues.getSignalValue(obj).toString());
+                        }
+                        
                     }
                 } else {
                     // we do not want to record our internal variables to the ESO file, that

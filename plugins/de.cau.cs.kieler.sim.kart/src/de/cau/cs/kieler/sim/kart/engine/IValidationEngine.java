@@ -38,7 +38,7 @@ public interface IValidationEngine {
      * @param isHistoryStep flag to indicate that the user is stepping through history
      * @param retval the JSON object that will be injected into the data pool
      */
-    public void validateVariable(Pair<String,String> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval);
+    public void validateVariable(Pair<String,String> variable, Object recValue, String simValue, boolean isHistoryStep, JSONObject retval);
 
     /**
      * Validate a set of signals. The lists only contain present signals and also their value,
@@ -50,6 +50,6 @@ public interface IValidationEngine {
      * @param errSignalVar the name of the variable informing about erroneous signals
      * @param retval the JSON object that will be injected into the simulation
      */
-    public void validateSignals(Map<String,Object> recSignals, Map<String,Object> simSignals,
+    public void validateSignals(Map<String,Object> recSignals, Map<String,String> simSignals,
             boolean isHistoryStep, String errSignalVar, JSONObject retval);
 }
