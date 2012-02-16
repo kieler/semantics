@@ -231,7 +231,7 @@ public class Utilities {
                     Collections.sort(bS);
                     return aS.equals(bS);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    //e.printStackTrace();
                     return ((String)a).equals((String)b);
                 }
             } else {
@@ -246,7 +246,7 @@ public class Utilities {
      * @param states
      * @return
      */
-    private static List<String> getStrings(List<EObject> states) {
+    private static List<String> getStrings(List<EObject> states) throws Exception {
         List<String> retval = new LinkedList<String>();
         for(EObject s : states) {
             retval.add(s.toString());

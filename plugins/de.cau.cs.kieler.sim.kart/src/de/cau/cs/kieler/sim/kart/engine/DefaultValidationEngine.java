@@ -68,11 +68,11 @@ public class DefaultValidationEngine implements IValidationEngine {
      */
     public void validateVariable(Pair<String,String> variable, Object recValue, Object simValue, boolean isHistoryStep, JSONObject retval) {
         if (simValue == null) {
-            KiemPlugin.getDefault().showError(
+            KiemPlugin.getDefault().showWarning(
                     "The simulation step did not generate a variable \"" + variable.getFirst() + "\". "
                             + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
         } else if (recValue == null) {
-            KiemPlugin.getDefault().showError(
+            KiemPlugin.getDefault().showWarning(
                     "The trace file did not contain a variable \"" + variable.getFirst() + "\"."
                     + "No validation for this variable will take place in this step!", Constants.PLUGINID, null, Constants.ERR_SILENT);
         } else if(!Utilities.compareVariables(editor, recValue, simValue)){
