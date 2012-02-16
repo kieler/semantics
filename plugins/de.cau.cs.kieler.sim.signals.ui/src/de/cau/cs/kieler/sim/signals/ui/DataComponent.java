@@ -157,6 +157,8 @@ public class DataComponent extends JSONObjectDataComponent implements
 	// -------------------------------------------------------------------------
 
 	public void wrapup() throws KiemInitializationException {
+		// Reset error signals
+		SignalsView.getInstance().getColors().resetSignalColor();
 		// SignalsView.getInstance().setSignalDataComponent(null);
 		signalList.clear();
 		// update signal list
