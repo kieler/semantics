@@ -3,7 +3,8 @@
       id="de.cau.cs.kieler.synccharts"
       label="KIELER SyncCharts Editing/Simulation/Code Gen"
       version="0.6.0.qualifier"
-      provider-name="Christian-Albrechts-University of Kiel">
+      provider-name="Christian-Albrechts-University of Kiel"
+      plugin="de.cau.cs.kieler.synccharts">
 
    <description url="http://www.informatik.uni-kiel.de/rtsys/kieler">
       KIELER SyncCharts feature contains the graphical Thin KIELER SyncCharts Editor (ThinKCharts) with automatic layout, structure-based editing and a graphics to text synchronization to the KIELER Textual Syntax for SyncCharts (KITS). The KIELER Esterel Editor (KIES) adds Esterel support with a textual editor and interactive Esterel to SyncCharts transformation. SyncCharts can be simulated with the Ptolemy II (UC Berkeley) simulation engine. Code generation to Synchronous C (SC) or Syncchronous Java (SJ) is also provided for target devices (e.g. for Lego NXT Mindstorms in the KIELER Lego Online Testing System (KLOTS)) or simulation. Graphical feedback during interactive simulation sessions is given by the KIELER View Management KIVi.
