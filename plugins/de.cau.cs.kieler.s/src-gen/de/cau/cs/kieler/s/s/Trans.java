@@ -9,14 +9,14 @@ package de.cau.cs.kieler.s.s;
 
 /**
  * <!-- begin-user-doc -->
- * A representation of the model object '<em><b>Abort</b></em>'.
+ * A representation of the model object '<em><b>Trans</b></em>'.
  * <!-- end-user-doc -->
  *
  *
- * @see de.cau.cs.kieler.s.s.SPackage#getAbort()
+ * @see de.cau.cs.kieler.s.s.SPackage#getTrans()
  * @model
  * @generated
  */
-public interface Abort extends Instruction
+public interface Trans extends Instruction
 {
-} // Abort
+} // Trans

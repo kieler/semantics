@@ -6,7 +6,6 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;
 
@@ -24,35 +23,35 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>State</b></em>'.
+ * An implementation of the model object '<em><b>Thread</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.StateImpl#getInstructions <em>Instructions</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ThreadImpl#getStates <em>States</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class StateImpl extends ContinuationImpl implements State
+public class ThreadImpl extends ContinuationImpl implements de.cau.cs.kieler.s.s.Thread
 {
   /**
-   * The cached value of the '{@link #getInstructions() <em>Instructions</em>}' containment reference list.
+   * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getInstructions()
+   * @see #getStates()
    * @generated
    * @ordered
    */
-  protected EList<Instruction> instructions;
+  protected EList<State> states;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected StateImpl()
+  protected ThreadImpl()
   {
     super();
   }
@@ -65,7 +64,7 @@ public class StateImpl extends ContinuationImpl implements State
   @Override
   protected EClass eStaticClass()
   {
-    return SPackage.Literals.STATE;
+    return SPackage.Literals.THREAD;
   }
 
   /**
@@ -73,13 +72,13 @@ public class StateImpl extends ContinuationImpl implements State
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Instruction> getInstructions()
+  public EList<State> getStates()
   {
-    if (instructions == null)
+    if (states == null)
     {
-      instructions = new EObjectContainmentEList<Instruction>(Instruction.class, this, SPackage.STATE__INSTRUCTIONS);
+      states = new EObjectContainmentEList<State>(State.class, this, SPackage.THREAD__STATES);
     }
-    return instructions;
+    return states;
   }
 
   /**
@@ -92,8 +91,8 @@ public class StateImpl extends ContinuationImpl implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__INSTRUCTIONS:
-        return ((InternalEList<?>)getInstructions()).basicRemove(otherEnd, msgs);
+      case SPackage.THREAD__STATES:
+        return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -108,8 +107,8 @@ public class StateImpl extends ContinuationImpl implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__INSTRUCTIONS:
-        return getInstructions();
+      case SPackage.THREAD__STATES:
+        return getStates();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -125,9 +124,9 @@ public class StateImpl extends ContinuationImpl implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__INSTRUCTIONS:
-        getInstructions().clear();
-        getInstructions().addAll((Collection<? extends Instruction>)newValue);
+      case SPackage.THREAD__STATES:
+        getStates().clear();
+        getStates().addAll((Collection<? extends State>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +142,8 @@ public class StateImpl extends ContinuationImpl implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__INSTRUCTIONS:
-        getInstructions().clear();
+      case SPackage.THREAD__STATES:
+        getStates().clear();
         return;
     }
     super.eUnset(featureID);
@@ -160,10 +159,10 @@ public class StateImpl extends ContinuationImpl implements State
   {
     switch (featureID)
     {
-      case SPackage.STATE__INSTRUCTIONS:
-        return instructions != null && !instructions.isEmpty();
+      case SPackage.THREAD__STATES:
+        return states != null && !states.isEmpty();
     }
     return super.eIsSet(featureID);
   }
 
-} //StateImpl
+} //ThreadImpl

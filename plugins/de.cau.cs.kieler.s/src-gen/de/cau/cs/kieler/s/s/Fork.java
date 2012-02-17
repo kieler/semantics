@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s;
 
@@ -34,12 +35,12 @@ public interface Fork extends Instruction
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>State</em>' reference.
-   * @see #setState(State)
+   * @see #setState(de.cau.cs.kieler.s.s.Thread)
    * @see de.cau.cs.kieler.s.s.SPackage#getFork_State()
    * @model
    * @generated
    */
-  State getState();
+  de.cau.cs.kieler.s.s.Thread getState();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}' reference.
@@ -49,7 +50,7 @@ public interface Fork extends Instruction
    * @see #getState()
    * @generated
    */
-  void setState(State value);
+  void setState(de.cau.cs.kieler.s.s.Thread value);
 
   /**
    * Returns the value of the '<em><b>Priority</b></em>' attribute.

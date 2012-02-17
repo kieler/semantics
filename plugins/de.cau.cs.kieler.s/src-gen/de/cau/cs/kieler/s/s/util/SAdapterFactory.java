@@ -2,10 +2,26 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s.util;
 
-import de.cau.cs.kieler.s.s.*;
+import de.cau.cs.kieler.s.s.Abort;
+import de.cau.cs.kieler.s.s.Await;
+import de.cau.cs.kieler.s.s.Continuation;
+import de.cau.cs.kieler.s.s.Emit;
+import de.cau.cs.kieler.s.s.Fork;
+import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.If;
+import de.cau.cs.kieler.s.s.Instruction;
+import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.Pause;
+import de.cau.cs.kieler.s.s.Prio;
+import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
+import de.cau.cs.kieler.s.s.Term;
+import de.cau.cs.kieler.s.s.Trans;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -88,9 +104,39 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createStateAdapter();
       }
       @Override
+      public Adapter caseThread(de.cau.cs.kieler.s.s.Thread object)
+      {
+        return createThreadAdapter();
+      }
+      @Override
+      public Adapter caseContinuation(Continuation object)
+      {
+        return createContinuationAdapter();
+      }
+      @Override
       public Adapter caseInstruction(Instruction object)
       {
         return createInstructionAdapter();
+      }
+      @Override
+      public Adapter casePrio(Prio object)
+      {
+        return createPrioAdapter();
+      }
+      @Override
+      public Adapter caseTrans(Trans object)
+      {
+        return createTransAdapter();
+      }
+      @Override
+      public Adapter caseFork(Fork object)
+      {
+        return createForkAdapter();
+      }
+      @Override
+      public Adapter caseJoin(Join object)
+      {
+        return createJoinAdapter();
       }
       @Override
       public Adapter casePause(Pause object)
@@ -108,9 +154,9 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createHaltAdapter();
       }
       @Override
-      public Adapter caseJoin(Join object)
+      public Adapter caseEmit(Emit object)
       {
-        return createJoinAdapter();
+        return createEmitAdapter();
       }
       @Override
       public Adapter caseAbort(Abort object)
@@ -123,34 +169,9 @@ public class SAdapterFactory extends AdapterFactoryImpl
         return createIfAdapter();
       }
       @Override
-      public Adapter caseGoto(Goto object)
-      {
-        return createGotoAdapter();
-      }
-      @Override
-      public Adapter caseFork(Fork object)
-      {
-        return createForkAdapter();
-      }
-      @Override
-      public Adapter caseForke(Forke object)
-      {
-        return createForkeAdapter();
-      }
-      @Override
-      public Adapter caseEmit(Emit object)
-      {
-        return createEmitAdapter();
-      }
-      @Override
       public Adapter caseAwait(Await object)
       {
         return createAwaitAdapter();
-      }
-      @Override
-      public Adapter casePrio(Prio object)
-      {
-        return createPrioAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -205,6 +226,36 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Thread <em>Thread</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Thread
+   * @generated
+   */
+  public Adapter createThreadAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Continuation <em>Continuation</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Continuation
+   * @generated
+   */
+  public Adapter createContinuationAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Instruction <em>Instruction</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -215,6 +266,66 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createInstructionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Prio
+   * @generated
+   */
+  public Adapter createPrioAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Trans <em>Trans</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Trans
+   * @generated
+   */
+  public Adapter createTransAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Fork <em>Fork</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Fork
+   * @generated
+   */
+  public Adapter createForkAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Join <em>Join</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see de.cau.cs.kieler.s.s.Join
+   * @generated
+   */
+  public Adapter createJoinAdapter()
   {
     return null;
   }
@@ -265,16 +376,16 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Join <em>Join</em>}'.
+   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Emit <em>Emit</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Join
+   * @see de.cau.cs.kieler.s.s.Emit
    * @generated
    */
-  public Adapter createJoinAdapter()
+  public Adapter createEmitAdapter()
   {
     return null;
   }
@@ -310,66 +421,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Goto <em>Goto</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Goto
-   * @generated
-   */
-  public Adapter createGotoAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Fork <em>Fork</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Fork
-   * @generated
-   */
-  public Adapter createForkAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Forke <em>Forke</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Forke
-   * @generated
-   */
-  public Adapter createForkeAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Emit <em>Emit</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Emit
-   * @generated
-   */
-  public Adapter createEmitAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Await <em>Await</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -380,21 +431,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAwaitAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.Prio
-   * @generated
-   */
-  public Adapter createPrioAdapter()
   {
     return null;
   }

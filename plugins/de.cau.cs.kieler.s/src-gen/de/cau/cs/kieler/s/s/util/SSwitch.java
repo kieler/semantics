@@ -2,10 +2,26 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s.util;
 
-import de.cau.cs.kieler.s.s.*;
+import de.cau.cs.kieler.s.s.Abort;
+import de.cau.cs.kieler.s.s.Await;
+import de.cau.cs.kieler.s.s.Continuation;
+import de.cau.cs.kieler.s.s.Emit;
+import de.cau.cs.kieler.s.s.Fork;
+import de.cau.cs.kieler.s.s.Halt;
+import de.cau.cs.kieler.s.s.If;
+import de.cau.cs.kieler.s.s.Instruction;
+import de.cau.cs.kieler.s.s.Join;
+import de.cau.cs.kieler.s.s.Pause;
+import de.cau.cs.kieler.s.s.Prio;
+import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.State;
+import de.cau.cs.kieler.s.s.Term;
+import de.cau.cs.kieler.s.s.Trans;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -86,6 +102,22 @@ public class SSwitch<T> extends Switch<T>
       {
         State state = (State)theEObject;
         T result = caseState(state);
+        if (result == null) result = caseContinuation(state);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.THREAD:
+      {
+        de.cau.cs.kieler.s.s.Thread thread = (de.cau.cs.kieler.s.s.Thread)theEObject;
+        T result = caseThread(thread);
+        if (result == null) result = caseContinuation(thread);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.CONTINUATION:
+      {
+        Continuation continuation = (Continuation)theEObject;
+        T result = caseContinuation(continuation);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -93,6 +125,38 @@ public class SSwitch<T> extends Switch<T>
       {
         Instruction instruction = (Instruction)theEObject;
         T result = caseInstruction(instruction);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.PRIO:
+      {
+        Prio prio = (Prio)theEObject;
+        T result = casePrio(prio);
+        if (result == null) result = caseInstruction(prio);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.TRANS:
+      {
+        Trans trans = (Trans)theEObject;
+        T result = caseTrans(trans);
+        if (result == null) result = caseInstruction(trans);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.FORK:
+      {
+        Fork fork = (Fork)theEObject;
+        T result = caseFork(fork);
+        if (result == null) result = caseInstruction(fork);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case SPackage.JOIN:
+      {
+        Join join = (Join)theEObject;
+        T result = caseJoin(join);
+        if (result == null) result = caseInstruction(join);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -120,11 +184,11 @@ public class SSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.JOIN:
+      case SPackage.EMIT:
       {
-        Join join = (Join)theEObject;
-        T result = caseJoin(join);
-        if (result == null) result = caseInstruction(join);
+        Emit emit = (Emit)theEObject;
+        T result = caseEmit(emit);
+        if (result == null) result = caseInstruction(emit);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -144,51 +208,11 @@ public class SSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case SPackage.GOTO:
-      {
-        Goto goto_ = (Goto)theEObject;
-        T result = caseGoto(goto_);
-        if (result == null) result = caseInstruction(goto_);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.FORK:
-      {
-        Fork fork = (Fork)theEObject;
-        T result = caseFork(fork);
-        if (result == null) result = caseInstruction(fork);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.FORKE:
-      {
-        Forke forke = (Forke)theEObject;
-        T result = caseForke(forke);
-        if (result == null) result = caseInstruction(forke);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.EMIT:
-      {
-        Emit emit = (Emit)theEObject;
-        T result = caseEmit(emit);
-        if (result == null) result = caseInstruction(emit);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case SPackage.AWAIT:
       {
         Await await = (Await)theEObject;
         T result = caseAwait(await);
         if (result == null) result = caseInstruction(await);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case SPackage.PRIO:
-      {
-        Prio prio = (Prio)theEObject;
-        T result = casePrio(prio);
-        if (result == null) result = caseInstruction(prio);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -229,6 +253,38 @@ public class SSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Thread</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Thread</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseThread(de.cau.cs.kieler.s.s.Thread object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Continuation</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Continuation</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseContinuation(Continuation object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Instruction</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -240,6 +296,70 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseInstruction(Instruction object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Prio</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Prio</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePrio(Prio object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Trans</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Trans</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTrans(Trans object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Fork</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Fork</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFork(Fork object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Join</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Join</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseJoin(Join object)
   {
     return null;
   }
@@ -293,17 +413,17 @@ public class SSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Join</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Emit</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Join</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Emit</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseJoin(Join object)
+  public T caseEmit(Emit object)
   {
     return null;
   }
@@ -341,70 +461,6 @@ public class SSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Goto</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Goto</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseGoto(Goto object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Fork</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Fork</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFork(Fork object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Forke</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Forke</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseForke(Forke object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Emit</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Emit</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseEmit(Emit object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Await</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -416,22 +472,6 @@ public class SSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseAwait(Await object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Prio</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Prio</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T casePrio(Prio object)
   {
     return null;
   }

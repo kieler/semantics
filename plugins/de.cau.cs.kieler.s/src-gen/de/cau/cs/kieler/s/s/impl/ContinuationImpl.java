@@ -8,9 +8,8 @@ package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
-import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
 
 import java.util.Collection;
 
@@ -30,21 +29,19 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Program</b></em>'.
+ * An implementation of the model object '<em><b>Continuation</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getName <em>Name</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getSignals <em>Signals</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getName <em>Name</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl#getSignals <em>Signals</em>}</li>
  * </ul>
  * </p>
  *
  * @generated
  */
-public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
+public class ContinuationImpl extends MinimalEObjectImpl.Container implements Continuation
 {
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
@@ -67,26 +64,6 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected String name = NAME_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected static final int PRIORITY_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getPriority() <em>Priority</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getPriority()
-   * @generated
-   * @ordered
-   */
-  protected int priority = PRIORITY_EDEFAULT;
-
-  /**
    * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -97,21 +74,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected EList<Signal> signals;
 
   /**
-   * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getStates()
-   * @generated
-   * @ordered
-   */
-  protected EList<State> states;
-
-  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected ProgramImpl()
+  protected ContinuationImpl()
   {
     super();
   }
@@ -124,7 +91,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   @Override
   protected EClass eStaticClass()
   {
-    return SPackage.Literals.PROGRAM;
+    return SPackage.Literals.CONTINUATION;
   }
 
   /**
@@ -147,30 +114,7 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     String oldName = name;
     name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__NAME, oldName, name));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public int getPriority()
-  {
-    return priority;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setPriority(int newPriority)
-  {
-    int oldPriority = priority;
-    priority = newPriority;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__PRIORITY, oldPriority, priority));
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.CONTINUATION__NAME, oldName, name));
   }
 
   /**
@@ -182,23 +126,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     if (signals == null)
     {
-      signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.PROGRAM__SIGNALS);
+      signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.CONTINUATION__SIGNALS);
     }
     return signals;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EList<State> getStates()
-  {
-    if (states == null)
-    {
-      states = new EObjectContainmentEList<State>(State.class, this, SPackage.PROGRAM__STATES);
-    }
-    return states;
   }
 
   /**
@@ -211,10 +141,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__SIGNALS:
+      case SPackage.CONTINUATION__SIGNALS:
         return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
-      case SPackage.PROGRAM__STATES:
-        return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -229,14 +157,10 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__NAME:
+      case SPackage.CONTINUATION__NAME:
         return getName();
-      case SPackage.PROGRAM__PRIORITY:
-        return getPriority();
-      case SPackage.PROGRAM__SIGNALS:
+      case SPackage.CONTINUATION__SIGNALS:
         return getSignals();
-      case SPackage.PROGRAM__STATES:
-        return getStates();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -252,19 +176,12 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__NAME:
+      case SPackage.CONTINUATION__NAME:
         setName((String)newValue);
         return;
-      case SPackage.PROGRAM__PRIORITY:
-        setPriority((Integer)newValue);
-        return;
-      case SPackage.PROGRAM__SIGNALS:
+      case SPackage.CONTINUATION__SIGNALS:
         getSignals().clear();
         getSignals().addAll((Collection<? extends Signal>)newValue);
-        return;
-      case SPackage.PROGRAM__STATES:
-        getStates().clear();
-        getStates().addAll((Collection<? extends State>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -280,17 +197,11 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__NAME:
+      case SPackage.CONTINUATION__NAME:
         setName(NAME_EDEFAULT);
         return;
-      case SPackage.PROGRAM__PRIORITY:
-        setPriority(PRIORITY_EDEFAULT);
-        return;
-      case SPackage.PROGRAM__SIGNALS:
+      case SPackage.CONTINUATION__SIGNALS:
         getSignals().clear();
-        return;
-      case SPackage.PROGRAM__STATES:
-        getStates().clear();
         return;
     }
     super.eUnset(featureID);
@@ -306,14 +217,10 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__NAME:
+      case SPackage.CONTINUATION__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
-      case SPackage.PROGRAM__PRIORITY:
-        return priority != PRIORITY_EDEFAULT;
-      case SPackage.PROGRAM__SIGNALS:
+      case SPackage.CONTINUATION__SIGNALS:
         return signals != null && !signals.isEmpty();
-      case SPackage.PROGRAM__STATES:
-        return states != null && !states.isEmpty();
     }
     return super.eIsSet(featureID);
   }
@@ -331,10 +238,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (name: ");
     result.append(name);
-    result.append(", priority: ");
-    result.append(priority);
     result.append(')');
     return result.toString();
   }
 
-} //ProgramImpl
+} //ContinuationImpl

@@ -2,12 +2,13 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.s.s.Continuation;
 import de.cau.cs.kieler.s.s.Instruction;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +41,7 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * @generated
    * @ordered
    */
-  protected State continuation;
+  protected Continuation continuation;
 
   /**
    * <!-- begin-user-doc -->
@@ -68,12 +69,12 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public State getContinuation()
+  public Continuation getContinuation()
   {
     if (continuation != null && continuation.eIsProxy())
     {
       InternalEObject oldContinuation = (InternalEObject)continuation;
-      continuation = (State)eResolveProxy(oldContinuation);
+      continuation = (Continuation)eResolveProxy(oldContinuation);
       if (continuation != oldContinuation)
       {
         if (eNotificationRequired())
@@ -88,7 +89,7 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public State basicGetContinuation()
+  public Continuation basicGetContinuation()
   {
     return continuation;
   }
@@ -98,9 +99,9 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setContinuation(State newContinuation)
+  public void setContinuation(Continuation newContinuation)
   {
-    State oldContinuation = continuation;
+    Continuation oldContinuation = continuation;
     continuation = newContinuation;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.INSTRUCTION__CONTINUATION, oldContinuation, continuation));
@@ -134,7 +135,7 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
     switch (featureID)
     {
       case SPackage.INSTRUCTION__CONTINUATION:
-        setContinuation((State)newValue);
+        setContinuation((Continuation)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -151,7 +152,7 @@ public class InstructionImpl extends MinimalEObjectImpl.Container implements Ins
     switch (featureID)
     {
       case SPackage.INSTRUCTION__CONTINUATION:
-        setContinuation((State)null);
+        setContinuation((Continuation)null);
         return;
     }
     super.eUnset(featureID);

@@ -7,7 +7,7 @@ import org.eclipse.emf.ecore.EPackage;
 import de.cau.cs.kieler.core.kexpressions.validation.KExpressionsJavaValidator;
 import org.eclipse.xtext.validation.ComposedChecks;
 
-@ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class, org.eclipse.xtext.validation.NamesAreUniqueValidator.class})
+@ComposedChecks(validators= {org.eclipse.xtext.validation.ImportUriValidator.class})
 public class AbstractSJavaValidator extends KExpressionsJavaValidator {
 
 	@Override

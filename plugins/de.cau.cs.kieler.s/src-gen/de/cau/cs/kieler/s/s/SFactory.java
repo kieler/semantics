@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s;
 
@@ -44,6 +45,24 @@ public interface SFactory extends EFactory
   State createState();
 
   /**
+   * Returns a new object of class '<em>Thread</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Thread</em>'.
+   * @generated
+   */
+  Thread createThread();
+
+  /**
+   * Returns a new object of class '<em>Continuation</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Continuation</em>'.
+   * @generated
+   */
+  Continuation createContinuation();
+
+  /**
    * Returns a new object of class '<em>Instruction</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -51,6 +70,42 @@ public interface SFactory extends EFactory
    * @generated
    */
   Instruction createInstruction();
+
+  /**
+   * Returns a new object of class '<em>Prio</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Prio</em>'.
+   * @generated
+   */
+  Prio createPrio();
+
+  /**
+   * Returns a new object of class '<em>Trans</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Trans</em>'.
+   * @generated
+   */
+  Trans createTrans();
+
+  /**
+   * Returns a new object of class '<em>Fork</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Fork</em>'.
+   * @generated
+   */
+  Fork createFork();
+
+  /**
+   * Returns a new object of class '<em>Join</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Join</em>'.
+   * @generated
+   */
+  Join createJoin();
 
   /**
    * Returns a new object of class '<em>Pause</em>'.
@@ -80,13 +135,13 @@ public interface SFactory extends EFactory
   Halt createHalt();
 
   /**
-   * Returns a new object of class '<em>Join</em>'.
+   * Returns a new object of class '<em>Emit</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Join</em>'.
+   * @return a new object of class '<em>Emit</em>'.
    * @generated
    */
-  Join createJoin();
+  Emit createEmit();
 
   /**
    * Returns a new object of class '<em>Abort</em>'.
@@ -107,42 +162,6 @@ public interface SFactory extends EFactory
   If createIf();
 
   /**
-   * Returns a new object of class '<em>Goto</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Goto</em>'.
-   * @generated
-   */
-  Goto createGoto();
-
-  /**
-   * Returns a new object of class '<em>Fork</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Fork</em>'.
-   * @generated
-   */
-  Fork createFork();
-
-  /**
-   * Returns a new object of class '<em>Forke</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Forke</em>'.
-   * @generated
-   */
-  Forke createForke();
-
-  /**
-   * Returns a new object of class '<em>Emit</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Emit</em>'.
-   * @generated
-   */
-  Emit createEmit();
-
-  /**
    * Returns a new object of class '<em>Await</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -150,15 +169,6 @@ public interface SFactory extends EFactory
    * @generated
    */
   Await createAwait();
-
-  /**
-   * Returns a new object of class '<em>Prio</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Prio</em>'.
-   * @generated
-   */
-  Prio createPrio();
 
   /**
    * Returns the package supported by this factory.

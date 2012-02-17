@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s;
 
@@ -115,6 +116,43 @@ public interface SPackage extends EPackage
   int PROGRAM_FEATURE_COUNT = 4;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl <em>Continuation</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.ContinuationImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getContinuation()
+   * @generated
+   */
+  int CONTINUATION = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTINUATION__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTINUATION__SIGNALS = 1;
+
+  /**
+   * The number of structural features of the '<em>Continuation</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTINUATION_FEATURE_COUNT = 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -131,7 +169,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__NAME = 0;
+  int STATE__NAME = CONTINUATION__NAME;
 
   /**
    * The feature id for the '<em><b>Signals</b></em>' containment reference list.
@@ -140,7 +178,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__SIGNALS = 1;
+  int STATE__SIGNALS = CONTINUATION__SIGNALS;
 
   /**
    * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
@@ -149,7 +187,7 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE__INSTRUCTIONS = 2;
+  int STATE__INSTRUCTIONS = CONTINUATION_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>State</em>' class.
@@ -158,7 +196,53 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int STATE_FEATURE_COUNT = 3;
+  int STATE_FEATURE_COUNT = CONTINUATION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ThreadImpl <em>Thread</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.ThreadImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getThread()
+   * @generated
+   */
+  int THREAD = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THREAD__NAME = CONTINUATION__NAME;
+
+  /**
+   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THREAD__SIGNALS = CONTINUATION__SIGNALS;
+
+  /**
+   * The feature id for the '<em><b>States</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THREAD__STATES = CONTINUATION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Thread</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int THREAD_FEATURE_COUNT = CONTINUATION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -168,7 +252,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 2;
+  int INSTRUCTION = 4;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -189,14 +273,14 @@ public interface SPackage extends EPackage
   int INSTRUCTION_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PauseImpl <em>Pause</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.PauseImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
+   * @see de.cau.cs.kieler.s.s.impl.PrioImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PAUSE = 3;
+  int PRIO = 5;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -205,26 +289,35 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PAUSE__CONTINUATION = INSTRUCTION__CONTINUATION;
+  int PRIO__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The number of structural features of the '<em>Pause</em>' class.
+   * The feature id for the '<em><b>Priority</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
+  int PRIO__PRIORITY = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.TermImpl <em>Term</em>}' class.
+   * The number of structural features of the '<em>Prio</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.TermImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
+   * @generated
+   * @ordered
+   */
+  int PRIO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.TransImpl <em>Trans</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.TransImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTrans()
    * @generated
    */
-  int TERM = 4;
+  int TRANS = 6;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -233,183 +326,16 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TERM__CONTINUATION = INSTRUCTION__CONTINUATION;
+  int TRANS__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The number of structural features of the '<em>Term</em>' class.
+   * The number of structural features of the '<em>Trans</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TERM_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.HaltImpl <em>Halt</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.HaltImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
-   * @generated
-   */
-  int HALT = 5;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HALT__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The number of structural features of the '<em>Halt</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HALT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.JoinImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
-   * @generated
-   */
-  int JOIN = 6;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JOIN__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The number of structural features of the '<em>Join</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int JOIN_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.AbortImpl <em>Abort</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.AbortImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
-   * @generated
-   */
-  int ABORT = 7;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ABORT__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The number of structural features of the '<em>Abort</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int ABORT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.IfImpl <em>If</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.IfImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
-   * @generated
-   */
-  int IF = 8;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>If</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IF_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.GotoImpl <em>Goto</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.GotoImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getGoto()
-   * @generated
-   */
-  int GOTO = 9;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The feature id for the '<em><b>State</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO__STATE = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Goto</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int GOTO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int TRANS_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ForkImpl <em>Fork</em>}' class.
@@ -419,7 +345,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 10;
+  int FORK = 7;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -458,14 +384,14 @@ public interface SPackage extends EPackage
   int FORK_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ForkeImpl <em>Forke</em>}' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.ForkeImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getForke()
+   * @see de.cau.cs.kieler.s.s.impl.JoinImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int FORKE = 11;
+  int JOIN = 8;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -474,25 +400,100 @@ public interface SPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FORKE__CONTINUATION = INSTRUCTION__CONTINUATION;
+  int JOIN__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' reference.
+   * The number of structural features of the '<em>Join</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FORKE__STATE = INSTRUCTION_FEATURE_COUNT + 0;
+  int JOIN_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Forke</em>' class.
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PauseImpl <em>Pause</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.PauseImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
+   * @generated
+   */
+  int PAUSE = 9;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FORKE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int PAUSE__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The number of structural features of the '<em>Pause</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PAUSE_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.TermImpl <em>Term</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.TermImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
+   * @generated
+   */
+  int TERM = 10;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The number of structural features of the '<em>Term</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TERM_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.HaltImpl <em>Halt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.HaltImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
+   * @generated
+   */
+  int HALT = 11;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HALT__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The number of structural features of the '<em>Halt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HALT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.EmitImpl <em>Emit</em>}' class.
@@ -532,6 +533,80 @@ public interface SPackage extends EPackage
   int EMIT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.AbortImpl <em>Abort</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.AbortImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
+   * @generated
+   */
+  int ABORT = 13;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABORT__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The number of structural features of the '<em>Abort</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ABORT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.IfImpl <em>If</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.IfImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
+   * @generated
+   */
+  int IF = 14;
+
+  /**
+   * The feature id for the '<em><b>Continuation</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF__CONTINUATION = INSTRUCTION__CONTINUATION;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF__EXPRESSION = INSTRUCTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Instructions</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF__INSTRUCTIONS = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>If</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IF_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.AwaitImpl <em>Await</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -539,7 +614,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 13;
+  int AWAIT = 15;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -567,43 +642,6 @@ public interface SPackage extends EPackage
    * @ordered
    */
   int AWAIT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see de.cau.cs.kieler.s.s.impl.PrioImpl
-   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
-   * @generated
-   */
-  int PRIO = 14;
-
-  /**
-   * The feature id for the '<em><b>Continuation</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIO__CONTINUATION = INSTRUCTION__CONTINUATION;
-
-  /**
-   * The feature id for the '<em><b>Priority</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIO__PRIORITY = INSTRUCTION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Prio</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PRIO_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
 
 
   /**
@@ -671,28 +709,6 @@ public interface SPackage extends EPackage
   EClass getState();
 
   /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.State#getName <em>Name</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Name</em>'.
-   * @see de.cau.cs.kieler.s.s.State#getName()
-   * @see #getState()
-   * @generated
-   */
-  EAttribute getState_Name();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getSignals <em>Signals</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.s.s.State#getSignals()
-   * @see #getState()
-   * @generated
-   */
-  EReference getState_Signals();
-
-  /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.State#getInstructions <em>Instructions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -702,6 +718,59 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getState_Instructions();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Thread <em>Thread</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Thread</em>'.
+   * @see de.cau.cs.kieler.s.s.Thread
+   * @generated
+   */
+  EClass getThread();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Thread#getStates <em>States</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>States</em>'.
+   * @see de.cau.cs.kieler.s.s.Thread#getStates()
+   * @see #getThread()
+   * @generated
+   */
+  EReference getThread_States();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Continuation <em>Continuation</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Continuation</em>'.
+   * @see de.cau.cs.kieler.s.s.Continuation
+   * @generated
+   */
+  EClass getContinuation();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Continuation#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see de.cau.cs.kieler.s.s.Continuation#getName()
+   * @see #getContinuation()
+   * @generated
+   */
+  EAttribute getContinuation_Name();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Continuation#getSignals <em>Signals</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Signals</em>'.
+   * @see de.cau.cs.kieler.s.s.Continuation#getSignals()
+   * @see #getContinuation()
+   * @generated
+   */
+  EReference getContinuation_Signals();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Instruction <em>Instruction</em>}'.
@@ -723,6 +792,79 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getInstruction_Continuation();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Prio</em>'.
+   * @see de.cau.cs.kieler.s.s.Prio
+   * @generated
+   */
+  EClass getPrio();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Prio#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.s.s.Prio#getPriority()
+   * @see #getPrio()
+   * @generated
+   */
+  EAttribute getPrio_Priority();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Trans <em>Trans</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Trans</em>'.
+   * @see de.cau.cs.kieler.s.s.Trans
+   * @generated
+   */
+  EClass getTrans();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Fork <em>Fork</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Fork</em>'.
+   * @see de.cau.cs.kieler.s.s.Fork
+   * @generated
+   */
+  EClass getFork();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>State</em>'.
+   * @see de.cau.cs.kieler.s.s.Fork#getState()
+   * @see #getFork()
+   * @generated
+   */
+  EReference getFork_State();
+
+  /**
+   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Priority</em>'.
+   * @see de.cau.cs.kieler.s.s.Fork#getPriority()
+   * @see #getFork()
+   * @generated
+   */
+  EAttribute getFork_Priority();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Join <em>Join</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Join</em>'.
+   * @see de.cau.cs.kieler.s.s.Join
+   * @generated
+   */
+  EClass getJoin();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Pause <em>Pause</em>}'.
@@ -755,14 +897,25 @@ public interface SPackage extends EPackage
   EClass getHalt();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Join <em>Join</em>}'.
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Emit <em>Emit</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Join</em>'.
-   * @see de.cau.cs.kieler.s.s.Join
+   * @return the meta object for class '<em>Emit</em>'.
+   * @see de.cau.cs.kieler.s.s.Emit
    * @generated
    */
-  EClass getJoin();
+  EClass getEmit();
+
+  /**
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Emit#getSignal <em>Signal</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Signal</em>'.
+   * @see de.cau.cs.kieler.s.s.Emit#getSignal()
+   * @see #getEmit()
+   * @generated
+   */
+  EReference getEmit_Signal();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Abort <em>Abort</em>}'.
@@ -807,101 +960,6 @@ public interface SPackage extends EPackage
   EReference getIf_Instructions();
 
   /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Goto <em>Goto</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Goto</em>'.
-   * @see de.cau.cs.kieler.s.s.Goto
-   * @generated
-   */
-  EClass getGoto();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Goto#getState <em>State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>State</em>'.
-   * @see de.cau.cs.kieler.s.s.Goto#getState()
-   * @see #getGoto()
-   * @generated
-   */
-  EReference getGoto_State();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Fork <em>Fork</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Fork</em>'.
-   * @see de.cau.cs.kieler.s.s.Fork
-   * @generated
-   */
-  EClass getFork();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>State</em>'.
-   * @see de.cau.cs.kieler.s.s.Fork#getState()
-   * @see #getFork()
-   * @generated
-   */
-  EReference getFork_State();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.s.s.Fork#getPriority()
-   * @see #getFork()
-   * @generated
-   */
-  EAttribute getFork_Priority();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Forke <em>Forke</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Forke</em>'.
-   * @see de.cau.cs.kieler.s.s.Forke
-   * @generated
-   */
-  EClass getForke();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Forke#getState <em>State</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>State</em>'.
-   * @see de.cau.cs.kieler.s.s.Forke#getState()
-   * @see #getForke()
-   * @generated
-   */
-  EReference getForke_State();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Emit <em>Emit</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Emit</em>'.
-   * @see de.cau.cs.kieler.s.s.Emit
-   * @generated
-   */
-  EClass getEmit();
-
-  /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Emit#getSignal <em>Signal</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Signal</em>'.
-   * @see de.cau.cs.kieler.s.s.Emit#getSignal()
-   * @see #getEmit()
-   * @generated
-   */
-  EReference getEmit_Signal();
-
-  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Await <em>Await</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -921,27 +979,6 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getAwait_Signal();
-
-  /**
-   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Prio <em>Prio</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Prio</em>'.
-   * @see de.cau.cs.kieler.s.s.Prio
-   * @generated
-   */
-  EClass getPrio();
-
-  /**
-   * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Prio#getPriority <em>Priority</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Priority</em>'.
-   * @see de.cau.cs.kieler.s.s.Prio#getPriority()
-   * @see #getPrio()
-   * @generated
-   */
-  EAttribute getPrio_Priority();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -1019,12 +1056,48 @@ public interface SPackage extends EPackage
     EClass STATE = eINSTANCE.getState();
 
     /**
+     * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference STATE__INSTRUCTIONS = eINSTANCE.getState_Instructions();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ThreadImpl <em>Thread</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.ThreadImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getThread()
+     * @generated
+     */
+    EClass THREAD = eINSTANCE.getThread();
+
+    /**
+     * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference THREAD__STATES = eINSTANCE.getThread_States();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl <em>Continuation</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.ContinuationImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getContinuation()
+     * @generated
+     */
+    EClass CONTINUATION = eINSTANCE.getContinuation();
+
+    /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STATE__NAME = eINSTANCE.getState_Name();
+    EAttribute CONTINUATION__NAME = eINSTANCE.getContinuation_Name();
 
     /**
      * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
@@ -1032,15 +1105,7 @@ public interface SPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STATE__SIGNALS = eINSTANCE.getState_Signals();
-
-    /**
-     * The meta object literal for the '<em><b>Instructions</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference STATE__INSTRUCTIONS = eINSTANCE.getState_Instructions();
+    EReference CONTINUATION__SIGNALS = eINSTANCE.getContinuation_Signals();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.InstructionImpl <em>Instruction</em>}' class.
@@ -1059,6 +1124,70 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference INSTRUCTION__CONTINUATION = eINSTANCE.getInstruction_Continuation();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.PrioImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
+     * @generated
+     */
+    EClass PRIO = eINSTANCE.getPrio();
+
+    /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PRIO__PRIORITY = eINSTANCE.getPrio_Priority();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.TransImpl <em>Trans</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.TransImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTrans()
+     * @generated
+     */
+    EClass TRANS = eINSTANCE.getTrans();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ForkImpl <em>Fork</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.ForkImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
+     * @generated
+     */
+    EClass FORK = eINSTANCE.getFork();
+
+    /**
+     * The meta object literal for the '<em><b>State</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference FORK__STATE = eINSTANCE.getFork_State();
+
+    /**
+     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FORK__PRIORITY = eINSTANCE.getFork_Priority();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.JoinImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
+     * @generated
+     */
+    EClass JOIN = eINSTANCE.getJoin();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PauseImpl <em>Pause</em>}' class.
@@ -1091,14 +1220,22 @@ public interface SPackage extends EPackage
     EClass HALT = eINSTANCE.getHalt();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.JoinImpl <em>Join</em>}' class.
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.EmitImpl <em>Emit</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.JoinImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
+     * @see de.cau.cs.kieler.s.s.impl.EmitImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
      * @generated
      */
-    EClass JOIN = eINSTANCE.getJoin();
+    EClass EMIT = eINSTANCE.getEmit();
+
+    /**
+     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.AbortImpl <em>Abort</em>}' class.
@@ -1137,86 +1274,6 @@ public interface SPackage extends EPackage
     EReference IF__INSTRUCTIONS = eINSTANCE.getIf_Instructions();
 
     /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.GotoImpl <em>Goto</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.GotoImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getGoto()
-     * @generated
-     */
-    EClass GOTO = eINSTANCE.getGoto();
-
-    /**
-     * The meta object literal for the '<em><b>State</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference GOTO__STATE = eINSTANCE.getGoto_State();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ForkImpl <em>Fork</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.ForkImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
-     * @generated
-     */
-    EClass FORK = eINSTANCE.getFork();
-
-    /**
-     * The meta object literal for the '<em><b>State</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FORK__STATE = eINSTANCE.getFork_State();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FORK__PRIORITY = eINSTANCE.getFork_Priority();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ForkeImpl <em>Forke</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.ForkeImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getForke()
-     * @generated
-     */
-    EClass FORKE = eINSTANCE.getForke();
-
-    /**
-     * The meta object literal for the '<em><b>State</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference FORKE__STATE = eINSTANCE.getForke_State();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.EmitImpl <em>Emit</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.EmitImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
-     * @generated
-     */
-    EClass EMIT = eINSTANCE.getEmit();
-
-    /**
-     * The meta object literal for the '<em><b>Signal</b></em>' reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
-
-    /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.AwaitImpl <em>Await</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1233,24 +1290,6 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference AWAIT__SIGNAL = eINSTANCE.getAwait_Signal();
-
-    /**
-     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.PrioImpl <em>Prio</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see de.cau.cs.kieler.s.s.impl.PrioImpl
-     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
-     * @generated
-     */
-    EClass PRIO = eINSTANCE.getPrio();
-
-    /**
-     * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute PRIO__PRIORITY = eINSTANCE.getPrio_Priority();
 
   }
 

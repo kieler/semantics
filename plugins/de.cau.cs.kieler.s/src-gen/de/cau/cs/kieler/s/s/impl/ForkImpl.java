@@ -2,12 +2,12 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s.impl;
 
 import de.cau.cs.kieler.s.s.Fork;
 import de.cau.cs.kieler.s.s.SPackage;
-import de.cau.cs.kieler.s.s.State;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -40,7 +40,7 @@ public class ForkImpl extends InstructionImpl implements Fork
    * @generated
    * @ordered
    */
-  protected State state;
+  protected de.cau.cs.kieler.s.s.Thread state;
 
   /**
    * The default value of the '{@link #getPriority() <em>Priority</em>}' attribute.
@@ -88,12 +88,12 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public State getState()
+  public de.cau.cs.kieler.s.s.Thread getState()
   {
     if (state != null && state.eIsProxy())
     {
       InternalEObject oldState = (InternalEObject)state;
-      state = (State)eResolveProxy(oldState);
+      state = (de.cau.cs.kieler.s.s.Thread)eResolveProxy(oldState);
       if (state != oldState)
       {
         if (eNotificationRequired())
@@ -108,7 +108,7 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public State basicGetState()
+  public de.cau.cs.kieler.s.s.Thread basicGetState()
   {
     return state;
   }
@@ -118,9 +118,9 @@ public class ForkImpl extends InstructionImpl implements Fork
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setState(State newState)
+  public void setState(de.cau.cs.kieler.s.s.Thread newState)
   {
-    State oldState = state;
+    de.cau.cs.kieler.s.s.Thread oldState = state;
     state = newState;
     if (eNotificationRequired())
       eNotify(new ENotificationImpl(this, Notification.SET, SPackage.FORK__STATE, oldState, state));
@@ -179,7 +179,7 @@ public class ForkImpl extends InstructionImpl implements Fork
     switch (featureID)
     {
       case SPackage.FORK__STATE:
-        setState((State)newValue);
+        setState((de.cau.cs.kieler.s.s.Thread)newValue);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority((Integer)newValue);
@@ -199,7 +199,7 @@ public class ForkImpl extends InstructionImpl implements Fork
     switch (featureID)
     {
       case SPackage.FORK__STATE:
-        setState((State)null);
+        setState((de.cau.cs.kieler.s.s.Thread)null);
         return;
       case SPackage.FORK__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);

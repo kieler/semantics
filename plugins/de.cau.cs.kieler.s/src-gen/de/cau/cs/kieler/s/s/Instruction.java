@@ -2,6 +2,7 @@
  * <copyright>
  * </copyright>
  *
+
  */
 package de.cau.cs.kieler.s.s;
 
@@ -34,12 +35,12 @@ public interface Instruction extends EObject
    * </p>
    * <!-- end-user-doc -->
    * @return the value of the '<em>Continuation</em>' reference.
-   * @see #setContinuation(State)
+   * @see #setContinuation(Continuation)
    * @see de.cau.cs.kieler.s.s.SPackage#getInstruction_Continuation()
    * @model
    * @generated
    */
-  State getContinuation();
+  Continuation getContinuation();
 
   /**
    * Sets the value of the '{@link de.cau.cs.kieler.s.s.Instruction#getContinuation <em>Continuation</em>}' reference.
@@ -49,6 +50,6 @@ public interface Instruction extends EObject
    * @see #getContinuation()
    * @generated
    */
-  void setContinuation(State value);
+  void setContinuation(Continuation value);
 
 } // Instruction

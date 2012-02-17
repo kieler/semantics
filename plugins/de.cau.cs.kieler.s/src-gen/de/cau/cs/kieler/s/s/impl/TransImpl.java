@@ -6,28 +6,28 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.SPackage;
+import de.cau.cs.kieler.s.s.Trans;
 
 import org.eclipse.emf.ecore.EClass;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Join</b></em>'.
+ * An implementation of the model object '<em><b>Trans</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * </p>
  *
  * @generated
  */
-public class JoinImpl extends InstructionImpl implements Join
+public class TransImpl extends InstructionImpl implements Trans
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected JoinImpl()
+  protected TransImpl()
   {
     super();
   }
@@ -40,7 +40,7 @@ public class JoinImpl extends InstructionImpl implements Join
   @Override
   protected EClass eStaticClass()
   {
-    return SPackage.Literals.JOIN;
+    return SPackage.Literals.TRANS;
   }
 
-} //JoinImpl
+} //TransImpl
