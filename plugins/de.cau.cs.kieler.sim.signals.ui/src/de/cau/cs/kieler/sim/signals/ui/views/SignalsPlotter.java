@@ -456,8 +456,8 @@ public class SignalsPlotter {
 			if (lastNode == null) {
 				lastNode = nodeE;
 			}
-			drawEdge(contents, lastNode, nodeS, timeLineColor);
-			drawEdge(contents, nodeS, nodeE, timeLineColor);
+			drawEdge(contents, lastNode, nodeS, timeLineColor, colors);
+			drawEdge(contents, nodeS, nodeE, timeLineColor, colors);
 			lastNode = nodeE;
 
 			Label labelFigure = new Label();
@@ -556,8 +556,8 @@ public class SignalsPlotter {
 				// get possibly adapted signal color
 				RGB drawColor = colors.getSignalColor(signal.getName(), tick, signalColor);
 
-				drawEdge(contents, lastNode, nodeS, drawColor);
-				drawEdge(contents, nodeS, nodeE, drawColor);
+				drawEdge(contents, lastNode, nodeS, drawColor, colors);
+				drawEdge(contents, nodeS, nodeE, drawColor, colors);
 				lastNode = nodeE;
 
 				// if this is the current tick then mark the node in the
@@ -646,9 +646,14 @@ public class SignalsPlotter {
 	 *            the signal color
 	 */
 	private void drawEdge(IFigure contents, Node node1, Node node2,
-			RGB signalColor) {
+			RGB signalColor, Colors colors) {
 		PolylineConnection wireFigure = new PolylineConnection();
 		wireFigure.setVisible(true);
+		
+		//if error signal then draw a thick line
+		if (signalColor == colors.getSignalColorError()) {
+			wireFigure.setLineWidth(2);
+		}
 		wireFigure.setForegroundColor(new Color(Display.getCurrent(),
 				signalColor));
 		// edge.source is the Node to the left of this edge

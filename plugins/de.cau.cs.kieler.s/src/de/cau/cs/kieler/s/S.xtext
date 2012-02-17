@@ -42,6 +42,14 @@ State:
 ;
 
 
+Thread:
+	name = ID '{'
+	('SIGNALS' (signals+=Signal)* ';')? 
+	(states+=State';')*
+	'}'
+;
+
+
 Signal returns expressions::Signal:
 (isInput?='input')?
 	(isOutput?='output')?
@@ -95,61 +103,72 @@ Signal returns expressions::Signal:
 //---------------------------------------------------------------------
 //----------------------- List of S-Instructions ----------------------
 //---------------------------------------------------------------------
-Instruction:
-   Halt | Abort | Join | Pause | Term | If | Goto | Fork | Forke | Emit | Await | Prio
-   ;
+Continuation:
+	 State | Thread
+;
 
+Instruction:
+   Halt | Abort | Join | Pause | Term | If | Trans | Fork | Emit | Await | Prio
+;
+
+// Change priority
+Prio:
+	'PRIO''('priority=INT (',' continuation=[Continuation])?')'
+;
+
+// Transition to anothe Thread or State   
+Trans :
+	'TRANS''(' continuation=[Continuation] ')'
+;
+  
+// Forking new Threads
+Fork :
+	'FORK''('state=[Thread] ',' priority=INT (',' continuation=[Continuation])?')'
+;
+
+
+// Joining Threads
+Join : 
+	{Join}
+	'JOIN''('continuation=[Continuation]?')'
+;
+   
+
+// Simple instructions
 Pause :
 	{Pause} 
-	'PAUSE''('continuation=[State]?')'
-  ;
+	'PAUSE''('continuation=[Continuation]?')'
+;
   
 Term : 
 	{Term}
-	'TERM''('continuation=[State]?')'
-  ;
+	'TERM''('continuation=[Continuation]?')'
+;
   
 Halt : 
 	{Halt}
-	'Halt''('continuation=[State]?')'
-  ;
+	'HALT''('continuation=[Continuation]?')'
+;
   
-Join : 
-	{Join}
-	'JOIN''('continuation=[State]?')'
-  ;
+
+Emit:
+	'EMIT''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
+;
   
 Abort : 
 	{Abort}
-	'ABORT''('continuation=[State]?')'
-  ;
-  
+	'ABORT''('continuation=[Continuation]?')'
+;
+
+// Conditioned execution of instructions  
 If : 
-	'IF''('expression = Expression (',' continuation=[State])?')' '{'
+	'IF''('expression = Expression (',' continuation=[Continuation])?')' '{'
 		(instructions += Instruction';')*
 	'}'
-  ;
-  
-Goto :
-	'GOTO''('state=[State] (',' continuation=[State])?')'
-  ;
-  
-Fork :
-	'FORK''('state=[State] ',' priority=INT (',' continuation=[State])?')'
-  ;
-  
-Forke :
-	'FORKE''('state=[State] (',' continuation=[State])?')'
-  ;
-  
-Emit:
-	'EMIT''('signal= [expressions::Signal] (',' continuation=[State])?')'
 ;
-
+  
+// Complex instruction
 Await:
-	'AWAIT''('signal= [expressions::Signal] (',' continuation=[State])?')'
+	'AWAIT''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
 ;
 
-Prio:
-	'PRIO''('priority=INT (',' continuation=[State])?')'
-;

@@ -12,9 +12,11 @@ var runtimeProject = "../${projectName}"
 Workflow {
     bean = StandaloneSetup {
 		platformUri = "${runtimeProject}/.."
-//			registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
-			registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
-			registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
+//		registerGeneratedEPackage = "de.cau.cs.kieler.synccharts.text.interfaces.interfaces.InterfacesPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.kexpressions.KExpressionsPackage"
+		registerGeneratedEPackage = "de.cau.cs.kieler.core.annotations.AnnotationsPackage" 
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel"
+		registerGenModelFile = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 	}
 
 	component = DirectoryCleaner {
@@ -30,6 +32,7 @@ Workflow {
 		pathUiProject = "${runtimeProject}.ui"
 		projectNameRt = projectName
 		projectNameUi = "${projectName}.ui"
+		
 		language = {
 			uri = grammarURI
 			fileExtensions = file.extensions
@@ -41,7 +44,7 @@ Workflow {
 			fragment = ecore.EcoreGeneratorFragment {
 			// referencedGenModels = "uri to genmodel, uri to next genmodel"
 //			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.genmodel, platform:/resource/de.cau.cs.kieler.core.expressions/model/expressions.genmodel"
-			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
+//			   referencedGenModels = "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel"
 			}
 
 			// the serialization component
@@ -56,7 +59,7 @@ Workflow {
 			}
 
 			// The antlr parser generator fragment.
-			fragment = parser.antlr.XtextAntlrGeneratorFragment {
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment  {
 			options = {
 					backtrack = true
 //					memoize = false
@@ -66,7 +69,7 @@ Workflow {
 			// java-based API for validation 
 			fragment = validation.JavaValidatorFragment {
 				composedCheck = "org.eclipse.xtext.validation.ImportUriValidator"
-				composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
+				//composedCheck = "org.eclipse.xtext.validation.NamesAreUniqueValidator"
 				// registerForImportedPackages = true
 			}
 
@@ -77,7 +80,9 @@ Workflow {
 			// scoping and exporting API 
 			fragment = scoping.ImportNamespacesScopingFragment {}
 			fragment = exporting.QualifiedNamesFragment {}
-			fragment = builder.BuilderIntegrationFragment {}
+			
+// CMOT: deactivated builder			
+//			fragment = builder.BuilderIntegrationFragment {}
 
 			// formatter API 
 			fragment = formatting.FormatterFragment {}
@@ -94,14 +99,18 @@ Workflow {
 
 			// content assist API  
 			fragment = contentAssist.JavaBasedContentAssistFragment {}
-
-			// generates a more lightweight Antlr parser and lexer tailored for content assist  
-			fragment = parser.antlr.XtextAntlrUiGeneratorFragment {
-			options = {
+			
+			// the following fragment tries to use the Antlr based content assist 
+			//     fragment which can be downloaded from http://www.itemis.com 
+			//     and will be ignored if it's not available. 
+			fragment = org.eclipse.xtext.generator.parser.antlr.XtextAntlrUiGeneratorFragment {
+				options = {
+				//					classSplitting = true
 					backtrack = true
-//					memoize = false
+				//					memoize = false
 				}
 			}
+		
 
 			// project wizard (optional) 
 			// fragment = projectWizard.SimpleProjectWizardFragment {
