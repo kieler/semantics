@@ -33,8 +33,8 @@ Export-Package: de.cau.cs.kieler.esterel,
  de.cau.cs.kieler.esterel.parser.antlr,
  de.cau.cs.kieler.esterel.parser.antlr.internal,
  de.cau.cs.kieler.esterel.scoping,
- de.cau.cs.kieler.esterel.serializer,
  de.cau.cs.kieler.esterel.services,
  de.cau.cs.kieler.esterel.validation,
- de.cau.cs.kieler.esterel.xtend
+ de.cau.cs.kieler.esterel.xtend,
+ de.cau.cs.kieler.esterel.parseTreeConstruction
 
