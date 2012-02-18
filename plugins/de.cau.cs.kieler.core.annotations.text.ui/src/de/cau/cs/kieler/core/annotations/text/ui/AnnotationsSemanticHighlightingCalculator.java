@@ -24,7 +24,8 @@ import com.google.inject.Inject;
 import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 /**
- * Custom {@link ISemanticHighlightingCalculator} contributing to the Kits editor.
+ * Custom {@link ISemanticHighlightingCalculator} contributed to Xtext editors encompassing Annotations.
+ * Must be registered in their «LanguageName»UiModules.
  * 
  * @author chsch
  */
@@ -35,7 +36,6 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
 
     public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
         Iterable<INode> allNodes = resource.getParseResult().getRootNode().getAsTreeIterable();
-                //NodeUtil.getAllContents(resource.getParseResult().getRootNode());
         for (INode node : allNodes) {
             provideHighlightingFor(node, acceptor);
         }
@@ -44,25 +44,9 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
     public void provideHighlightingFor(INode node, IHighlightedPositionAcceptor acceptor) {
         EObject grammarElement = node.getGrammarElement();
 
-        // colorize the whole annotations like '(@bool true)' or '/** comment */'
-        if (grammarElement == g.getAnnotationAccess().getTagAnnotationParserRuleCall_1()
-                || grammarElement == g.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()
-                || grammarElement == g.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()
-                || grammarElement == g.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()
-                || grammarElement == g.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()
-                || grammarElement == g.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()) {
-            acceptor.addPosition(node.getOffset(), node.getLength(),
-                    AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
-        }
-        
-        // overpaint the '@' keywords and annotation keys (names) like 'layouter' config
-        if (grammarElement == g.getTagAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getKeyIntValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getKeyFloatValueAnnotationAccess().getCommercialAtKeyword_0()
-                || grammarElement == g.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
+        // highlight the annotation keys (names) like 'layouter' according to
+        //   AnnotationsHighlightingConfiguration.ANNOTATION_KEY
+        if (grammarElement == g.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
                 || grammarElement == g.getKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
                 || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
                 || grammarElement == g.getKeyBooleanValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
@@ -70,6 +54,17 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
                 || grammarElement == g.getKeyFloatValueAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()) {
             acceptor.addPosition(node.getOffset(), node.getLength(),
                     AnnotationsHighlightingConfiguration.ANNOTATION_KEY);
+        }
+        
+        // highlight the annotation value according to
+        //   AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION
+        if (grammarElement == g.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()
+                || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()
+                || grammarElement == g.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()) {
+            acceptor.addPosition(node.getOffset(), node.getLength(),
+                    AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
         }
 
     }
