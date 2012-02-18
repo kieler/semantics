@@ -36,15 +36,16 @@ Program :
 
 
 State:
-	name = ID ':'
-	('SIGNALS' (signals+=Signal)* ';')? 
+	'State' '(' name = ID ')' '{'
+	('Signals' (signals+=Signal)* ';')? 
 	(instructions+=Instruction';')*
+	'}'
 ;
 
 
 Thread:
-	name = ID '{'
-	('SIGNALS' (signals+=Signal)* ';')? 
+	'Thread' '(' name = ID ')' '{'
+	('Signals' (signals+=Signal)* ';')? 
 	(states+=State';')*
 	'}'
 ;
@@ -113,62 +114,62 @@ Instruction:
 
 // Change priority
 Prio:
-	'PRIO''('priority=INT (',' continuation=[Continuation])?')'
+	'Prio' '('priority=INT (',' continuation=[Continuation])?')'
 ;
 
 // Transition to anothe Thread or State   
 Trans :
-	'TRANS''(' continuation=[Continuation] ')'
+	'Trans''(' continuation=[Continuation] ')'
 ;
   
 // Forking new Threads
 Fork :
-	'FORK''('state=[Thread] ',' priority=INT (',' continuation=[Continuation])?')'
+	'Fork''('thread=[Continuation] ',' priority=INT (',' continuation=[Continuation])?')'
 ;
 
 
 // Joining Threads
 Join : 
 	{Join}
-	'JOIN''('continuation=[Continuation]?')'
+	'Join' '('continuation=[Continuation]?')'
 ;
    
 
 // Simple instructions
 Pause :
 	{Pause} 
-	'PAUSE''('continuation=[Continuation]?')'
+	'Pause''('continuation=[Continuation]?')'
 ;
   
 Term : 
 	{Term}
-	'TERM''('continuation=[Continuation]?')'
+	'Term''('continuation=[Continuation]?')'
 ;
   
 Halt : 
 	{Halt}
-	'HALT''('continuation=[Continuation]?')'
+	'Halt''('continuation=[Continuation]?')'
 ;
   
 
 Emit:
-	'EMIT''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
+	'Emit''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
 ;
   
 Abort : 
 	{Abort}
-	'ABORT''('continuation=[Continuation]?')'
+	'Abort''('continuation=[Continuation]?')'
 ;
 
 // Conditioned execution of instructions  
 If : 
-	'IF''('expression = Expression (',' continuation=[Continuation])?')' '{'
+	'If''('expression = Expression (',' continuation=[Continuation])?')' '{'
 		(instructions += Instruction';')*
 	'}'
 ;
   
 // Complex instruction
 Await:
-	'AWAIT''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
+	'Await' '('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
 ;
 

@@ -33,7 +33,7 @@
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Trans"/>
     <genClasses ecoreClass="S.ecore#//Fork">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Fork/state"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference S.ecore#//Fork/thread"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Fork/priority"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//Join"/>

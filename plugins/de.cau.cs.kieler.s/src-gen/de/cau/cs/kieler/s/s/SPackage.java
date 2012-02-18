@@ -357,13 +357,13 @@ public interface SPackage extends EPackage
   int FORK__CONTINUATION = INSTRUCTION__CONTINUATION;
 
   /**
-   * The feature id for the '<em><b>State</b></em>' reference.
+   * The feature id for the '<em><b>Thread</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FORK__STATE = INSTRUCTION_FEATURE_COUNT + 0;
+  int FORK__THREAD = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Priority</b></em>' attribute.
@@ -835,15 +835,15 @@ public interface SPackage extends EPackage
   EClass getFork();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}'.
+   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Fork#getThread <em>Thread</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>State</em>'.
-   * @see de.cau.cs.kieler.s.s.Fork#getState()
+   * @return the meta object for the reference '<em>Thread</em>'.
+   * @see de.cau.cs.kieler.s.s.Fork#getThread()
    * @see #getFork()
    * @generated
    */
-  EReference getFork_State();
+  EReference getFork_Thread();
 
   /**
    * Returns the meta object for the attribute '{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}'.
@@ -1164,12 +1164,12 @@ public interface SPackage extends EPackage
     EClass FORK = eINSTANCE.getFork();
 
     /**
-     * The meta object literal for the '<em><b>State</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Thread</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference FORK__STATE = eINSTANCE.getFork_State();
+    EReference FORK__THREAD = eINSTANCE.getFork_Thread();
 
     /**
      * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.

@@ -404,7 +404,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getFork_State()
+  public EReference getFork_Thread()
   {
     return (EReference)forkEClass.getEStructuralFeatures().get(0);
   }
@@ -594,7 +594,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     transEClass = createEClass(TRANS);
 
     forkEClass = createEClass(FORK);
-    createEReference(forkEClass, FORK__STATE);
+    createEReference(forkEClass, FORK__THREAD);
     createEAttribute(forkEClass, FORK__PRIORITY);
 
     joinEClass = createEClass(JOIN);
@@ -690,7 +690,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(transEClass, Trans.class, "Trans", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(forkEClass, Fork.class, "Fork", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFork_State(), this.getThread(), null, "state", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFork_Thread(), this.getContinuation(), null, "thread", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFork_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Fork.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(joinEClass, Join.class, "Join", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

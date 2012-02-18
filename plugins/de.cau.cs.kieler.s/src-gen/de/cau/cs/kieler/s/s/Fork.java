@@ -15,7 +15,7 @@ package de.cau.cs.kieler.s.s;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Fork#getThread <em>Thread</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Fork#getPriority <em>Priority</em>}</li>
  * </ul>
  * </p>
@@ -27,30 +27,30 @@ package de.cau.cs.kieler.s.s;
 public interface Fork extends Instruction
 {
   /**
-   * Returns the value of the '<em><b>State</b></em>' reference.
+   * Returns the value of the '<em><b>Thread</b></em>' reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>State</em>' reference isn't clear,
+   * If the meaning of the '<em>Thread</em>' reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>State</em>' reference.
-   * @see #setState(de.cau.cs.kieler.s.s.Thread)
-   * @see de.cau.cs.kieler.s.s.SPackage#getFork_State()
+   * @return the value of the '<em>Thread</em>' reference.
+   * @see #setThread(Continuation)
+   * @see de.cau.cs.kieler.s.s.SPackage#getFork_Thread()
    * @model
    * @generated
    */
-  de.cau.cs.kieler.s.s.Thread getState();
+  Continuation getThread();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getState <em>State</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Fork#getThread <em>Thread</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>State</em>' reference.
-   * @see #getState()
+   * @param value the new value of the '<em>Thread</em>' reference.
+   * @see #getThread()
    * @generated
    */
-  void setState(de.cau.cs.kieler.s.s.Thread value);
+  void setThread(Continuation value);
 
   /**
    * Returns the value of the '<em><b>Priority</b></em>' attribute.
