@@ -9,16 +9,16 @@ extension org::eclipse::xtend::util::stdlib::tracing;     // create map between 
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
 /////////////// local imports //////////////
-extension helper;
-extension priorities;
+extension model::helper;
+extension model::priorities;
 ////////////////////////////////////////////
 
 List[Instruction] getForkInstructions(synccharts::State state):
 	let out = {}:
-	let forke = new Forke:
+	let forke = new Fork:
 			out.addAll(state.regions.transform()) ->
 		if !state.regions.isEmpty then (
-			forke.setState((s::State)state.getSingleTraceTarget("S_main_surface")) ->
+			forke.setThread((s::State)state.getSingleTraceTarget("S_main_surface")) ->
 			out.add(forke)
 		)
 		else
@@ -29,7 +29,7 @@ List[Instruction] getForkInstructions(synccharts::State state):
 
 create s::Fork this transform(Region region):
 //	let intValue = new s::IntValue:
-	this.setState((s::State)getInitialState(region).getSingleTraceTarget("S_surface")) ->
+	this.setThread((s::State)getInitialState(region).getSingleTraceTarget("S_surface")) ->
 //	intValue.setValue(getRealThreadPriority(getInitialState(region))) ->
 	this.setPriority(getRealThreadPriority(getInitialState(region)))
 ;

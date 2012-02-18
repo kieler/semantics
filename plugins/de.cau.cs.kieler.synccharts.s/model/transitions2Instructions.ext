@@ -9,10 +9,10 @@ extension org::eclipse::xtend::util::stdlib::tracing;     // create map between 
 extension org::eclipse::xtend::util::stdlib::issues;      // pass messages back to java (e.g. to UI)
 
 /////////////// local imports //////////////
-extension ifInstruction;
-extension gotoInstruction;
-extension emitInstruction;
-extension priorities;
+extension model::ifInstruction;
+extension model::transInstruction;
+extension model::emitInstruction;
+extension model::priorities;
 ////////////////////////////////////////////
 
 //TODO: maybe this already works for actions? (inner/(exit)/entry-actions)
