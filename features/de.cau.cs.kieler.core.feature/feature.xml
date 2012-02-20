@@ -3,7 +3,8 @@
       id="de.cau.cs.kieler.core"
       label="KIELER Core"
       version="0.6.0.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel">
+      provider-name="Christian-Albrechts-Universität zu Kiel"
+      plugin="de.cau.cs.kieler.core.ui">
 
    <description url="http://informatik.uni-kiel.de/rtsys/kieler">
       The KIELER core feature contains various classes and user interface

@@ -30,9 +30,13 @@ public class AnnotationsUiModule extends
         return AnnotationsHighlightingConfiguration.class;
     }
 
+    /* provides token based highlighting configurations */
+    public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper> bindAbstractAntlrTokenToAttributeIdMapper() {
+        return AnnotationsAntlrTokenToAttributeIdMapper.class;
+    }
+    
     /* provides a few additional highlighting rules */
     public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         return AnnotationsSemanticHighlightingCalculator.class;
     }
-
 }

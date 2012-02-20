@@ -3,7 +3,8 @@
       id="de.cau.cs.kieler.uml2"
       label="KIELER Bridge to UML2 tools"
       version="0.4.0.qualifier"
-      provider-name="Christian-Albrechts-Universität zu Kiel">
+      provider-name="Christian-Albrechts-Universität zu Kiel"
+      plugin="de.cau.cs.kieler.uml2">
 
    <description url="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/Projects/KIML">
       A bridge feature to connect other KIELER features such as automatic
