@@ -62,20 +62,23 @@ public class SFormatter extends AbstractDeclarativeFormatter {
         //c.setLinewrap(1).after(f.getProgramAccess().getSemicolonKeyword_5_2());
         
         // Linebreaks after STATE 
-        c.setLinewrap(2).before(f.getStateRule());
-        c.setLinewrap(1).after(f.getStateRule());
+        c.setIndentation(f.getStateAccess().getLeftCurlyBracketKeyword_4(), 
+        		         f.getStateAccess().getRightCurlyBracketKeyword_7());
+        c.setLinewrap().after(f.getStateAccess().getLeftCurlyBracketKeyword_4());
+        c.setLinewrap().before(f.getStateAccess().getRightCurlyBracketKeyword_7());
+        c.setLinewrap(2).before(f.getStateAccess().getStateKeyword_0());
 
         // Linebreaks after Instructions
         c.setLinewrap(1).before(f.getInstructionRule());
 
         // Indentation for Instructions
-        c.setIndentationIncrement().before(f.getInstructionRule());
-        c.setIndentationDecrement().after(f.getInstructionRule());
+//        c.setIndentationIncrement().before(f.getInstructionRule());
+//        c.setIndentationDecrement().after(f.getInstructionRule());
 
         // Indentation { } for IF Instruction
         c.setIndentation(f.getIfAccess().getLeftCurlyBracketKeyword_5(), 
                          f.getIfAccess().getRightCurlyBracketKeyword_7());
-        c.setLinewrap().after(f.getIfAccess().getLeftCurlyBracketKeyword_5());
+        //c.setLinewrap().after(f.getIfAccess().getLeftCurlyBracketKeyword_5());
         c.setLinewrap().before(f.getIfAccess().getRightCurlyBracketKeyword_7());
     }
 }
