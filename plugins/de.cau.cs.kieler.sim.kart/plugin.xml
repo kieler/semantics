@@ -38,6 +38,11 @@
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
             file="execution/synccharts_sc_kart.execution">
+         <editor
+               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+               name="SyncChart Diagram Editor"
+               priority="15">
+         </editor>
       </executionFile>
    </extension>
 
