@@ -25,5 +25,15 @@
             name="Refresh">
       </content>
    </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="de.cau.cs.kieler.sim.kart.ui.KartProxyEditor"
+            default="false"
+            extensions="eso"
+            id="de.cau.cs.kieler.sim.kart.ui.EsoEditor"
+            name="Validate with KART">
+      </editor>
+   </extension>
 
 </plugin>
