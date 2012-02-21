@@ -48,8 +48,8 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 
 /**
  * Implements a data component for KIEM that reads a ESI/ESO trace file and in each step of the
- * simulation replays the corresponding signals. This component also offers a training mode to
- * write ESO files in conjunction with the {@link DataValidationComponent}.
+ * simulation replays the corresponding signals. This component also offers a training mode to write
+ * ESO files in conjunction with the {@link DataValidationComponent}.
  * 
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
  * @kieler.rating 2011-11-24 red
@@ -58,30 +58,32 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         IJSONObjectDataComponent, IKiemEventListener {
     /** The number of the current step */
     private static volatile long step;
-    
+
     /** Name of the ESO file to be replayed/recorded from/to. */
     private String filename;
-    
+
     /** Name of the variable that will be used to communicate with the validation component */
     private String configVarName;
-    
-    /** Name of the variable that will be used to communicate the values of output signals and
+
+    /**
+     * Name of the variable that will be used to communicate the values of output signals and
      * variables to the validation component.
      */
     private String outputVarName;
-    
-    /** Name of the variable under which all signals injected into the simulation by components
-     * in front of this component will be saved. These will be regarded as input signals when
-     * writing an ESO file.
+
+    /**
+     * Name of the variable under which all signals injected into the simulation by components in
+     * front of this component will be saved. These will be regarded as input signals when writing
+     * an ESO file.
      */
     private String prevInputVarName;
 
     /** The single trace out of a ESI/ESO file that shall be replayed */
     private ITrace trace;
-    
+
     /** Are we in training mode, i. e. recording, or not */
     private boolean trainingMode;
-    
+
     /**
      * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
@@ -116,32 +118,31 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             }
         }
 
-        if(!trainingMode) {
-            //Read the file
+        if (!trainingMode) {
+            // Read the file
             ITraceProvider tracefile = new EsiFile();
             try {
                 List<ITrace> tracelist = tracefile.loadTrace(filename);
-        
+
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
-                    throw new KiemInitializationException(Constants.ERR_NOTRACE
-                            + tracenum, true, e);
+                    throw new KiemInitializationException(Constants.ERR_NOTRACE + tracenum, true, e);
                 }
-            } catch(FileNotFoundException e) {
+            } catch (FileNotFoundException e) {
                 IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                        .getConfigurationElementsFor(
-                                "de.cau.cs.kieler.sim.kart.MessageDialog");
+                        .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.MessageDialog");
 
-                if(contributors.length > 0) {
+                if (contributors.length > 0) {
                     try {
                         IMessageDialog msg = (IMessageDialog) (contributors[0]
                                 .createExecutableExtension("class"));
-                        if(msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
+                        if (msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
                             trainingMode = true;
                         } else {
                             KiemPlugin.getDefault().cancelInitialization();
-                            KiemPlugin.getDefault().showError(Constants.ERR_NOTFOUND, Constants.PLUGINID, null, Constants.ERR_SILENT);
+                            KiemPlugin.getDefault().showError(Constants.ERR_NOTFOUND,
+                                    Constants.PLUGINID, null, Constants.ERR_SILENT);
                         }
                     } catch (CoreException e0) {
                         // TODO Auto-generated catch block
@@ -150,7 +151,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 } else {
                     throw new KiemInitializationException(Constants.ERR_NOTFOUND, true, e);
                 }
-            } catch(KiemInitializationException e) {
+            } catch (KiemInitializationException e) {
                 throw new KiemInitializationException(Constants.ERR_READ, true, e);
             }
         }
@@ -163,9 +164,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      *             never thrown
      */
     public void wrapup() throws KiemInitializationException {
-        
+
     }
-    
+
     /**
      * Sets the step number according to the button the user pressed. This is needed to correctly
      * handle history steps or jumps.
@@ -208,7 +209,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public boolean isObserver() {
         return true;
     }
-    
+
     /**
      * Tell KIEM that we are a delta observer.
      * 
@@ -220,18 +221,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Take a step in the simulation by reading the internal state and providing the
-     * signals read from the ESI/ESO file to the simulation engine.
+     * Take a step in the simulation by reading the internal state and providing the signals read
+     * from the ESI/ESO file to the simulation engine.
      * 
      * @return data that shall be injected into the simulation
-     * @throws KiemExecutionException 
-     *          when the JSON object with signals from ESI/ESO file could not be built.
+     * @throws KiemExecutionException
+     *             when the JSON object with signals from ESI/ESO file could not be built.
      */
     @Override
     public JSONObject doStep(JSONObject obj) throws KiemExecutionException {
         JSONObject retval = new JSONObject();
 
-        if(!trainingMode && trace.getSize() > (step - 1)) {
+        if (!trainingMode && trace.getSize() > (step - 1)) {
             loadInputs(retval);
             loadOutputs(retval);
         }
@@ -247,7 +248,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      * Extract input signals from an ESO file and prepare them for injection into the simulation
      * 
      * @return the signals that shall be injected
-     * @throws KiemExecutionException when building the JSONObject fails
+     * @throws KiemExecutionException
+     *             when building the JSONObject fails
      */
     private void loadInputs(JSONObject retval) throws KiemExecutionException {
         JSONObject prevSignals = new JSONObject();
@@ -260,45 +262,50 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             while (signals.hasNext()) {
                 ISignal signal = signals.next();
                 if (signal.isValued()) {
-                    retval.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
-                    prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
-                }
-                else {
+                    retval.accumulate(signal.getName(),
+                            JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
+                    prevSignals.accumulate(signal.getName(),
+                            JSONSignalValues.newValue(Utilities.getEsoSignalValue(signal), true));
+                } else {
                     retval.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                     prevSignals.accumulate(signal.getName(), JSONSignalValues.newValue(true));
                 }
             }
             retval.accumulate(prevInputVarName, prevSignals);
         } catch (JSONException e) {
-            throw new KiemExecutionException(
-                    Constants.ERR_JSON, true, e);
+            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
         }
     }
-    
+
     /**
      * Gather the input signals generated by components which were executed prior to this and
      * prepare them for submission to the validation component. This information is needed to:
      * 
-     * (a) distinguish between input and output during validation
-     * (b) to generate a list of input signals when writing an ESO file
+     * (a) distinguish between input and output during validation (b) to generate a list of input
+     * signals when writing an ESO file
      * 
-     * @param json the data pool JSON object
-     * @param retval the JSON object that will be injected into the simulation
-     * @throws KiemExecutionException when adding to {@code retval} fails.
+     * @param json
+     *            the data pool JSON object
+     * @param retval
+     *            the JSON object that will be injected into the simulation
+     * @throws KiemExecutionException
+     *             when adding to {@code retval} fails.
      */
-    private void loadPreviousInputSignals(JSONObject json, JSONObject retval) throws KiemExecutionException {
+    private void loadPreviousInputSignals(JSONObject json, JSONObject retval)
+            throws KiemExecutionException {
         JSONObject prevSignals = retval.optJSONObject(prevInputVarName);
         retval.remove(prevInputVarName);
-        if(prevSignals == null) {
+        if (prevSignals == null) {
             prevSignals = new JSONObject();
         }
-        
+
         String[] fieldNames = JSONObject.getNames(json);
         for (String field : fieldNames) {
             try {
                 Object obj = json.get(field);
-                
-                if(obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj) && !retval.has(field)) {
+
+                if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)
+                        && !retval.has(field)) {
                     prevSignals.accumulate(field, obj);
                 }
             } catch (JSONException e) {
@@ -309,67 +316,74 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         try {
             retval.accumulate(prevInputVarName, prevSignals);
         } catch (JSONException e) {
-            throw new KiemExecutionException("Error during gathering previous input signals", true, e);
+            throw new KiemExecutionException("Error during gathering previous input signals", true,
+                    e);
         }
     }
-    
+
     /**
-     * Load output signals and variables from ESO trace and prepare them for injection into the
-     * data pool. This data will later on be used by the validation component.
+     * Load output signals and variables from ESO trace and prepare them for injection into the data
+     * pool. This data will later on be used by the validation component.
      * 
-     * @param json the JSON object the output data will be added to
-     * @throws KiemExecutionException when adding to the JSON object fails
+     * @param json
+     *            the JSON object the output data will be added to
+     * @throws KiemExecutionException
+     *             when adding to the JSON object fails
      */
     private void loadOutputs(JSONObject json) throws KiemExecutionException {
         ITick curTick = trace.get(step - 1);
         Iterator<ISignal> outputSignals = curTick.getOutputs().iterator();
         JSONObject value = new JSONObject();
-        
+
         // Add output signals
         try {
             while (outputSignals.hasNext()) {
                 ISignal outputSignal = outputSignals.next();
                 if (outputSignal.isValued()) {
-                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(Utilities.getEsoSignalValue(outputSignal), true));
+                    value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(
+                            Utilities.getEsoSignalValue(outputSignal), true));
                 } else {
                     value.accumulate(outputSignal.getName(), JSONSignalValues.newValue(true));
                 }
             }
-        
+
             // Add variables
-            Iterator<Entry<String,Object>> variables = curTick.getExtraInfos().entrySet().iterator();
-            
+            Iterator<Entry<String, Object>> variables = curTick.getExtraInfos().entrySet()
+                    .iterator();
+
             while (variables.hasNext()) {
-                    Entry<String,Object> variable = variables.next();
-                    value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
+                Entry<String, Object> variable = variables.next();
+                value.accumulate(variable.getKey(), Utilities.getEsoVarValue(variable));
             }
-            
+
             json.accumulate(outputVarName, value);
         } catch (JSONException e) {
             throw new KiemExecutionException(Constants.ERR_JSON, true, e);
         }
     }
-    
+
     /**
-     * Prepare the current configuration of the replay component for addition to the data pool.
-     * This configuration will be used by the validation component, so we save several properties there
+     * Prepare the current configuration of the replay component for addition to the data pool. This
+     * configuration will be used by the validation component, so we save several properties there
      * and most properties will always be in sync (e. g. training mode).
      * 
-     * @param json The JSONObject the configuration variables will be added to
-     * @throws KiemExecutionException when adding to the JSON object fails
+     * @param json
+     *            The JSONObject the configuration variables will be added to
+     * @throws KiemExecutionException
+     *             when adding to the JSON object fails
      */
     private void loadValConfigVars(JSONObject json) throws KiemExecutionException {
         JSONObject value = new JSONObject();
-        
+
         try {
             value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
             value.accumulate(Constants.VAR_ESOFILE, filename);
-            if(!trainingMode && trace.getSize() <= (step - 1)) {
+            if (!trainingMode && trace.getSize() <= (step - 1)) {
                 value.accumulate(Constants.VAR_EOT, true);
             } else {
                 value.accumulate(Constants.VAR_EOT, false);
             }
-            
+
             json.accumulate(configVarName, value);
         } catch (JSONException e) {
             throw new KiemExecutionException(Constants.ERR_JSON, true, e);
@@ -387,30 +401,26 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         fileProperty.setFilterExts(Constants.FILEEXTS);
         fileProperty.setFilterNames(Constants.FILEEXTNAMES);
         
-        String filename = null;
-        try {
-            /*
-             * Try creating a default file name from the model name.
-             * The try block is necessary to suppress NPEs and other exceptions when we are either
-             * running in headless mode or there are no editor opened. Below, you will see that a
-             * filename is only proposed if this try block succeeds. We have to use absolute file
-             * paths here, because the KiemPropertyTypeFile dialog only returns absolute paths. I do
-             * not want to change that for fear that something else breaks.
-             */
-            URI resource = ((DiagramEditor) getActivePage().getActiveEditor()).getDiagram()
-                    .eResource().getURI().trimFileExtension().appendFileExtension("eso");
-            URI absFile = CommonPlugin.resolve(resource);
-            filename = absFile.toFileString();
-        } catch(Exception e) {
-            // do nothing
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                .getConfigurationElementsFor(
+                        "de.cau.cs.kieler.sim.kart.NamingSuggestion");
+
+        String filename = "";
+        if(contributors.length > 0) {
+            INamingSuggestion nsg;
+            try {
+                nsg = (INamingSuggestion) (contributors[0]
+                        .createExecutableExtension("class"));
+                filename = nsg.suggestName();
+            } catch (CoreException e) {
+                // do nothing, auto suggestion will simply not work
+            }
         }
         
         KiemProperty[] properties = new KiemProperty[6];
         properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
-        if(filename != null) {
-            fileProperty.setValue(properties[0], filename);
-        }
-
+        fileProperty.setValue(properties[0], filename);
+        
         properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty(Constants.TRAINMODE, false);
         properties[3] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
@@ -421,8 +431,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     }
 
     /**
-     * Check whether the user actually selected an ESO file or messed up. This does not
-     * actually try to read the file, it just checks for the correct extension.
+     * Check whether the user actually selected an ESO file or messed up. This does not actually try
+     * to read the file, it just checks for the correct extension.
      * 
      * @throws KiemPropertyException
      *             when the user messed up and did not select an ESI or ESO file
@@ -433,8 +443,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             if (prop.getKey().equals(Constants.ESOFILE)) {
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
-                    throw new KiemPropertyException(
-                            Constants.ERR_NOTESO);
+                    throw new KiemPropertyException(Constants.ERR_NOTESO);
                 }
             }
         }

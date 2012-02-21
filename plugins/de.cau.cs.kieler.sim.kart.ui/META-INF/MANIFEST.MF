@@ -6,7 +6,9 @@ Bundle-Version: 0.1.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.sim.kart.ui.KartUIPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kart;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.kart;bundle-version="0.1.0",
+ org.eclipse.emf.common;bundle-version="2.7.0",
+ org.eclipse.gmf.runtime.diagram.ui;bundle-version="1.5.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
