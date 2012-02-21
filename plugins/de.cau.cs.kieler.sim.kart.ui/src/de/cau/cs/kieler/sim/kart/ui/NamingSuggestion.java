@@ -16,12 +16,7 @@ package de.cau.cs.kieler.sim.kart.ui;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.IWorkbenchWindow;
-import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.sim.kart.INamingSuggestion;
 
@@ -30,16 +25,13 @@ import de.cau.cs.kieler.sim.kart.INamingSuggestion;
  *
  */
 public class NamingSuggestion implements INamingSuggestion {
-    protected IWorkbenchPage activePage = null;
-    protected boolean activePageFlag = false;
-
     /**
      * {@inheritDoc}
      */
     public String suggestName() {
         String filename = "";
         try {
-            IEditorPart editor = getActivePage().getActiveEditor();
+            IEditorPart editor = KartUIPlugin.getDefault().getActivePage().getActiveEditor();
             
             IFile file = (IFile) editor.getEditorInput().getAdapter(IFile.class);
             URI resource = URI.createURI(file.getLocationURI().toString());
@@ -50,34 +42,5 @@ public class NamingSuggestion implements INamingSuggestion {
         }
         
         return filename;
-    }
-
-    /**
-     * Gets the active page (blocking) from the UI thread.
-     * 
-     * @return the active page
-     */
-    protected IWorkbenchPage getActivePage() {
-            activePageFlag = false;
-
-            Display.getDefault().syncExec(new Runnable() {
-                    public void run() {
-                            // get the active editor as a default case (if property is
-                            // empty)
-                            IWorkbenchWindow window = PlatformUI.getWorkbench()
-                                            .getActiveWorkbenchWindow();
-                            activePage = window.getActivePage();
-                            activePageFlag = true;
-                    }
-            });
-
-            while (!activePageFlag) {
-                    try {
-                            Thread.sleep(100);
-                    } catch (InterruptedException e) {
-                            e.printStackTrace();
-                    }
-            }
-            return activePage;
     }
 }

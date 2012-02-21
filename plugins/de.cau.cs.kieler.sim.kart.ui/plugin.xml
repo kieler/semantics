@@ -17,5 +17,13 @@
             name="NamingSuggestion">
       </content>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kart.Refresh">
+      <content
+            class="de.cau.cs.kieler.sim.kart.ui.Refresh"
+            id="de.cau.cs.kieler.sim.kart.ui.Refresh"
+            name="Refresh">
+      </content>
+   </extension>
 
 </plugin>

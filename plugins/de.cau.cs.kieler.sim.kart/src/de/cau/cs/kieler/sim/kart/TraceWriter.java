@@ -22,6 +22,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
+
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 
 /**
@@ -87,6 +91,21 @@ public class TraceWriter {
             }
             
             outWriter.close();
+            
+            IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                    .getConfigurationElementsFor(
+                            "de.cau.cs.kieler.sim.kart.Refresh");
+
+            if(contributors.length > 0) {
+                IRefresh ref;
+                try {
+                    ref = (IRefresh) (contributors[0]
+                            .createExecutableExtension("class"));
+                    ref.refreshProjectExplorer();
+                } catch (CoreException e) {
+                    // do nothing, refresh will simply not work
+                }
+            }
         } catch (IOException e) {
             throw new KiemInitializationException(Constants.ERR_WRITE, true, e);
         }
