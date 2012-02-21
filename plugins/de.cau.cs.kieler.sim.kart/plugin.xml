@@ -42,7 +42,7 @@
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                name="SyncChart Diagram Editor"
-               priority="15">
+               priority="7">
          </editor>
       </executionFile>
    </extension>
@@ -53,7 +53,7 @@
          <editor
                id="de.cau.cs.kieler.esterel.Esterel"
                name="Esterel Editor"
-               priority="15">
+               priority="7">
          </editor>
       </executionFile>
    </extension>
