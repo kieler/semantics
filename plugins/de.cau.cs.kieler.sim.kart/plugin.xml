@@ -45,5 +45,16 @@
          </editor>
       </executionFile>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/esterel_kart.execution">
+         <editor
+               id="de.cau.cs.kieler.esterel.Esterel"
+               name="Esterel Editor"
+               priority="15">
+         </editor>
+      </executionFile>
+   </extension>
 
 </plugin>
