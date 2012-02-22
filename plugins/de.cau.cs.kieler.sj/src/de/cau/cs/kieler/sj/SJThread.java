@@ -46,8 +46,7 @@ class SJThread<StateLabel extends Enum<?>> implements Comparable<SJThread<StateL
 
     /**
      * For some statements, for example await, it is important to do an initial await if this
-     * statement is reached the first time. For this there is that flag that tell you if a initial
-     * wait is already done.
+     * statement is reached the first time. This flag tells if a initial wait is already done.
      */
     private boolean initialPauseDone;
 

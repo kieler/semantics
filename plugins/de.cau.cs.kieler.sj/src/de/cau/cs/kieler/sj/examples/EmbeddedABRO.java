@@ -79,13 +79,13 @@ public class EmbeddedABRO extends EmbeddedSJProgram<StateLabel> {
                 break;
 
             case WaitA:
-                if (awaitDoneCB(a)) {
+                if (awaitCB(a)) {
                     termB();
                 }
                 break;
 
             case WaitB:
-                if (awaitDoneCB(b)) {
+                if (awaitCB(b)) {
                     termB();
                 }
                 break;
@@ -98,7 +98,7 @@ public class EmbeddedABRO extends EmbeddedSJProgram<StateLabel> {
                 break;
 
             case ABOMain:
-                if (awaitDoneCB(r)) {
+                if (awaitCB(r)) {
                     transB(ABO);
                 }
                 break;

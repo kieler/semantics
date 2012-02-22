@@ -67,7 +67,7 @@ public class Count2Suspend extends SJProgram<StateLabel> {
                 break;
 
             case Off0:
-                if (awaitDoneCB(t)) {
+                if (awaitCB(t)) {
                     gotoB(On0);
                 }
                 break;
@@ -86,7 +86,7 @@ public class Count2Suspend extends SJProgram<StateLabel> {
                 break;
 
             case Off1:
-                if (awaitDoneCB(c0)) {
+                if (awaitCB(c0)) {
                     gotoB(On1);
                 }
                 break;

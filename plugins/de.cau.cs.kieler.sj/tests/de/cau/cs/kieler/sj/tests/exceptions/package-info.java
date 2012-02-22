@@ -13,8 +13,7 @@
  */
 
 /**
- * JUnit test cases for the different functions of SJ. 
- * Especially by using the examples for SJ this package is testing the SJ implementation.
+ * JUnit test cases to control the behavior of the SJ implementation.
+ * This package tests if exceptions are thrown in situation they should be.
  */
-package sj.tests;
-
+package de.cau.cs.kieler.sj.tests.exceptions;

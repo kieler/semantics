@@ -564,10 +564,10 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
     }
 
     /**
-     * Waits for a signal after a initial pause. If the signal is present and a initial pause is
+     * Waits for a signal after an initial pause. If the signal is present and an initial pause is
      * already done this method will return <code>true</code>. Otherwise it will do a pause checked
-     * in the next tick again and return false. For the check of awaitDone in the next tick
-     * awaitDone has to be the first statement after a case so that we can return exactly to this
+     * in the next tick again and return false. For the check of await in the next tick
+     * await has to be the first statement after a case so that we can return exactly to this
      * statement in the next tick.
      * 
      * @param signal
@@ -576,11 +576,11 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
      *         <code>false</code>
      * 
      */
-    public boolean awaitDoneCB(final Signal signal) {
+    public boolean awaitCB(final Signal signal) {
 
         if (curThread == null) { // there must be a running thread
             throw new ThreadException(
-                    "You are not allowed to execute the awaitDone stement if no thread is running.");
+                    "You are not allowed to execute the await stement if no thread is running.");
 
         } else if (!signals.contains(signal)) { // and the given signal has to
             // be part of our signal list
@@ -657,7 +657,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             
             // creating JSON string
             if (logger != null) {
-                logger.log(INSTRUCTION, "\"awaitDone\":" + "{\"label\":\""
+                logger.log(INSTRUCTION, "\"await\":" + "{\"label\":\""
                         + curThread.getLabel().name() + "\",\"prio\":" + curThread.getPriority()
                         + ",\"initialExcecution\":" + ((initialExecution) ? "true" : "false")
                         + ",\"param\":[" + signal.toJSONString() + "],\"retval\":"

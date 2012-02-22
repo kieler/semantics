@@ -11,11 +11,11 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package sj.tests;
+package de.cau.cs.kieler.sj.tests;
 
 import junit.framework.TestCase;
-import static sj.Signal.*;
-import sj.examples.PrimeFactor;
+import static  de.cau.cs.kieler.sj.Signal.*;
+import  de.cau.cs.kieler.sj.examples.PrimeFactor;
 
 /**
  * JUnit test cases for the Program {@link sj.examples.PrimeFactor}.
