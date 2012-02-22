@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<plugin>
+
+  <extension point="org.eclipse.emf.ecore.generated_package">
+    <package 
+       uri = "http://www.cau.de/cs/kieler/sim/eso/Eso" 
+       class = "de.cau.cs.kieler.sim.eso.eso.EsoPackage"
+       genModel = "de/cau/cs/kieler/sim/eso/Eso.genmodel" /> 
+	
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
+     <content
+           class="de.cau.cs.kieler.sim.eso.EsoComponent"
+           id="de.cau.cs.kieler.sim.eso.eso"
+           name="Eso writer">
+     </content>
+  </extension>
+  <extension
+        point="de.cau.cs.kieler.sim.trace.traceprovider">
+     <provider
+           class="de.cau.cs.kieler.sim.eso.EsoFile"
+           id="de.cau.cs.kieler.sim.eso.provider">
+     </provider>
+  </extension>
+
+
+
+
+</plugin>

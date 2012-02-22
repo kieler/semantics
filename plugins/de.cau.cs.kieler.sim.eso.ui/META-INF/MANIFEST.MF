@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: KIELER ESO File Support (UI)
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Bundle-Version: 0.2.0.qualifier
+Bundle-SymbolicName: de.cau.cs.kieler.sim.eso.ui;singleton:=true
+Eclipse-RegisterBuddy: org.eclipse.xtext.log4j
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclipse.ui.editors;bundle-version="3.4.0",
+ org.eclipse.ui.ide;bundle-version="3.4.0",
+ org.eclipse.ui,
+ org.antlr.runtime,
+ org.eclipse.xtext.ui;bundle-version="1.0.0",
+ org.eclipse.xtext.ui.shared,
+ de.cau.cs.kieler.sim.eso;visibility:=reexport
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-Activator: de.cau.cs.kieler.sim.eso.ui.internal.EsoActivator
+Import-Package: org.apache.log4j
+Export-Package: de.cau.cs.kieler.sim.eso.ui,
+ de.cau.cs.kieler.sim.eso.ui.contentassist,
+ de.cau.cs.kieler.sim.eso.ui.contentassist.antlr,
+ de.cau.cs.kieler.sim.eso.ui.contentassist.antlr.internal,
+ de.cau.cs.kieler.sim.eso.ui.internal,
+ de.cau.cs.kieler.sim.eso.ui.labeling,
+ de.cau.cs.kieler.sim.eso.ui.outline

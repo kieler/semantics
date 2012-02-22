@@ -18,8 +18,8 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.sim.esi.ISignal;
-import de.cau.cs.kieler.sim.esi.ITick;
+import de.cau.cs.kieler.sim.eso.ISignal;
+import de.cau.cs.kieler.sim.eso.ITick;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;

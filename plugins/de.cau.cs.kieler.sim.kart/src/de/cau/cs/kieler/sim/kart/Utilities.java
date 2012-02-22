@@ -29,12 +29,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.sim.esi.ISignal;
-import de.cau.cs.kieler.sim.esi.esi.impl.EsoBoolImpl;
-import de.cau.cs.kieler.sim.esi.esi.impl.EsoFloatImpl;
-import de.cau.cs.kieler.sim.esi.esi.impl.EsoIntImpl;
-import de.cau.cs.kieler.sim.esi.esi.impl.EsoJsonImpl;
-import de.cau.cs.kieler.sim.esi.esi.impl.EsoStringImpl;
+import de.cau.cs.kieler.sim.eso.eso.impl.EsoBoolImpl;
+import de.cau.cs.kieler.sim.eso.eso.impl.EsoFloatImpl;
+import de.cau.cs.kieler.sim.eso.eso.impl.EsoIntImpl;
+import de.cau.cs.kieler.sim.eso.eso.impl.EsoJsonImpl;
+import de.cau.cs.kieler.sim.eso.eso.impl.EsoStringImpl;
+import de.cau.cs.kieler.sim.eso.ISignal;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 

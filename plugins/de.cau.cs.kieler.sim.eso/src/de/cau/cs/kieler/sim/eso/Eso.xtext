@@ -1,0 +1,83 @@
+grammar de.cau.cs.kieler.sim.eso.Eso
+//with org.eclipse.xtext.common.Terminals
+hidden(WS)
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+generate eso "http://www.cau.de/cs/kieler/sim/eso/Eso"
+
+tracelist:
+    (traces+=trace)+;
+
+trace:
+    '!' 'reset' ';'
+    (ticks+=tick)+;
+
+tick:
+    {tick}
+    (input+=signal)*
+    ('%' 'Output' ':' (output+=signal)*)?
+    (extraInfos+=kvpair)*
+    ';';
+
+/* From the Xtext documentation:
+ * The ?= sign (boolean assignment operator) expects a feature of type EBoolean and sets it to true if
+ * the right hand side was consumed independently from the concrete value of the right hand side.
+ * 
+ * I. e. 'valued' is set to true if a value could be read.
+ */
+signal:
+    name=(AlphaNumSpecial)
+    valued ?= '('? 
+    (val = (EsoInt | EsoFloat | EsoBool | EsoString) ')')?;
+
+kvpair:
+    {kvpair}
+    '%%'
+    key=(AlphaNumSpecial)
+    ':'
+    value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
+    
+EsoInt:
+    value = INT
+;
+
+EsoString:
+    value = STRING
+;
+
+EsoFloat:
+    value = FLOAT
+;
+
+EsoBool:
+    value = BOOL
+;
+
+EsoJson:
+    value = AlphaNumSpecial
+;
+
+terminal Special:
+    ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-';
+    
+terminal BOOL returns ecore::EBoolean:
+    ('true' | 'false');
+    
+terminal FLOAT returns ecore::EFloat:
+    ('+' | '-')? ('0'..'9')+ '.' ('0'..'9')+;
+
+terminal INT returns ecore::EInt: ('0'..'9')+;
+
+terminal AlphaNumSpecial:
+    ('0'..'9')* ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | ' ' | Special)*
+;
+    
+
+
+terminal STRING : 
+            '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
+            "'" ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|"'") )* "'"
+        ;
+        
+terminal WS         : (' '|'\t'|'\r'|'\n')+;

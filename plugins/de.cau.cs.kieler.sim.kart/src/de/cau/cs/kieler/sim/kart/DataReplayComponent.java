@@ -28,11 +28,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.sim.esi.EsiFile;
-import de.cau.cs.kieler.sim.esi.ISignal;
-import de.cau.cs.kieler.sim.esi.ITick;
-import de.cau.cs.kieler.sim.esi.ITrace;
-import de.cau.cs.kieler.sim.esi.ITraceProvider;
+import de.cau.cs.kieler.sim.eso.EsoFile;
+import de.cau.cs.kieler.sim.eso.ISignal;
+import de.cau.cs.kieler.sim.eso.ITick;
+import de.cau.cs.kieler.sim.eso.ITrace;
+import de.cau.cs.kieler.sim.eso.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
@@ -120,7 +120,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
         if (!trainingMode) {
             // Read the file
-            ITraceProvider tracefile = new EsiFile();
+            ITraceProvider tracefile = new EsoFile();
             try {
                 List<ITrace> tracelist = tracefile.loadTrace(filename);
 
