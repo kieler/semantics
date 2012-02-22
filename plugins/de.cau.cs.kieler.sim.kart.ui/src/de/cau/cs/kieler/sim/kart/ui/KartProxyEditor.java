@@ -82,7 +82,6 @@ public class KartProxyEditor extends MultiPageEditorPart {
             
             while (it.hasNext()) {
                 AbstractDataComponent comp = it.next();
-                System.out.println(comp.getClass().toString());
                 if(comp instanceof DataValidationComponent || comp instanceof DataReplayComponent) {
                     KiemPlugin.getDefault().addTodataComponentWrapperList(comp);
                 }
@@ -106,7 +105,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
         while(it.hasNext()) {
             DataComponentWrapper c = it.next();
 
-            if(c.getDataComponent().getClass().toString().equals("class de.cau.cs.kieler.sim.kart.DataReplayComponent")) {
+            if(c.getDataComponent().getClass().getName().equals("de.cau.cs.kieler.sim.kart.DataReplayComponent")) {
                 KiemProperty[] props = c.getProperties();
                 for(KiemProperty p : props) {
                     if(p.getKey().equals(Constants.ESOFILE)) {
