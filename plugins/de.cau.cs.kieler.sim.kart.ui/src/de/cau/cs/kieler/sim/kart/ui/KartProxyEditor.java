@@ -38,6 +38,7 @@ import de.cau.cs.kieler.sim.kart.Constants;
 import de.cau.cs.kieler.sim.kart.DataReplayComponent;
 import de.cau.cs.kieler.sim.kart.DataValidationComponent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
@@ -75,13 +76,19 @@ public class KartProxyEditor extends MultiPageEditorPart {
         boolean suc = updateProperty();
         
         // FIXME: A NPE is thrown by addTodataComponentWrapperList, I don't know why
-        /*if(!suc) {
-            DataReplayComponent replay = new DataReplayComponent();
-            DataValidationComponent val = new DataValidationComponent();
-            KiemPlugin.getDefault().addTodataComponentWrapperList(replay);
-            KiemPlugin.getDefault().addTodataComponentWrapperList(val);
+        if(!suc) {
+            List<AbstractDataComponent> allComps = KiemPlugin.getDefault().getRegisteredDataComponentList();
+            Iterator<AbstractDataComponent> it = allComps.iterator();
+            
+            while (it.hasNext()) {
+                AbstractDataComponent comp = it.next();
+                System.out.println(comp.getClass().toString());
+                if(comp instanceof DataValidationComponent || comp instanceof DataReplayComponent) {
+                    KiemPlugin.getDefault().addTodataComponentWrapperList(comp);
+                }
+            }
             updateProperty();
-        }*/
+        }
         
         
         KiemPlugin.getDefault().setDirty(true);
