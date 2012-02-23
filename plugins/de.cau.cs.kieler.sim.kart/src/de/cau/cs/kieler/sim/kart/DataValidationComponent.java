@@ -369,6 +369,13 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         }
     }
     
+    /**
+     * Save the contents of the data pool, i. e. signals and variables, for later use.
+     * This method automatically filters out KART-internal data pool variables.
+     * 
+     * @param json the data pool JSON object
+     * @throws KiemExecutionException when reading the data pool fails
+     */
     private void recordDataPool(JSONObject json) throws KiemExecutionException {
         String[] fieldNames = JSONObject.getNames(json);
         HashMap<String,String> signals = new HashMap<String,String>();
@@ -407,6 +414,13 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         simVariables.add(vars);
     }
     
+    /**
+     * Extract the data read from the ESO trace file by the Replay component from the
+     * data pool and save it for later use.
+     * 
+     * @param json the data pool JSON object
+     * @throws KiemExecutionException when reading the data pool fails
+     */
     private void getEsoData(JSONObject json) throws KiemExecutionException {
         try {
             /*

@@ -21,8 +21,10 @@ import org.eclipse.swt.widgets.Shell;
 import de.cau.cs.kieler.sim.kart.IMessageDialog;
 
 /**
- * @author ssc
+ * Provide an easy to use interface to KART to display message dialogs using an extension point.
  * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-02-23 red
  */
 public class MessageDialog implements IMessageDialog {
 
@@ -32,7 +34,7 @@ public class MessageDialog implements IMessageDialog {
      * 
      * @param title the title of the question dialog
      * @param message the message that will be displayed. Should be a question.
-     * @return {@code} true if the user answered with Yes, false if he answered with No or the dialog
+     * @return {@code true} if the user answered with Yes, {@code false} if he answered with No or the dialog
      *         could not be displayed.
      */
     public boolean question(String title, String message) {

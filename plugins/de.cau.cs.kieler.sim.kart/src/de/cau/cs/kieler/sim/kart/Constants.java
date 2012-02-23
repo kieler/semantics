@@ -14,8 +14,10 @@
 package de.cau.cs.kieler.sim.kart;
 
 /**
- * @author ssc
- *
+ * Contains nearly all Strings KART uses internally for configuration or to interact with the user
+ * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-02-23 red
  */
 public class Constants {
     public static final String PLUGINID = "de.cau.cs.kieler.sim.kart";
@@ -41,7 +43,7 @@ public class Constants {
     public static final String ERR_NOTFOUND_TITLE = "Trace file could not be found";
     public static final String ERR_NOTFOUND = "The trace file could not be found. Do you want to switch to training mode?";
     public static final String OVERWRITE_TITLE = "Overwrite trace file?";
-    public static final String OVERWRITE = "Do you want to replace the current trace file with this trace?";
+    public static final String OVERWRITE = "Do you want to replace the current trace file with this trace? If not, the current trace will be appended to the existing trace file";
     public static final boolean ERR_SILENT = true;
     
     public static final String VAL_TITLE = "Validation error";

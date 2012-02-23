@@ -44,8 +44,11 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 
 /**
- * @author ssc
+ * An editor to facilitate automatically changing the ESO file property
+ * in the current KIEM schedule.
  * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class KartProxyEditor extends MultiPageEditorPart {
     IEditorInput editorInput;
@@ -95,6 +98,12 @@ public class KartProxyEditor extends MultiPageEditorPart {
         this.closeEditor();
     }
     
+    /**
+     * Update the ESO file property of the Replay component to reflect the "opened" ESO file.
+     * 
+     * @return {@code true} if the Replay component was found in the current list of
+     * {@code DataComponent}s and the property was changed. {@code false} otherwise.
+     */
     private boolean updateProperty() {
         boolean success = false;
         
