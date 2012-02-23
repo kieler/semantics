@@ -856,11 +856,16 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (vglComponentId.equals(componentId)) {
                     // restore KIEM property type first
                     if (properties != null) {
+                    	KiemProperty[] defaultProperties = dataComponent.getProperties();
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
                                 if (ccc < dataComponent.getProperties().length)  {
-                                    properties[ccc].setType(dataComponent.getProperties()[ccc]
-                                                                                          .getType());
+                                    properties[ccc].setType(defaultProperties[ccc].getType());
+                                    // if a property asks for restoring its default value
+                                    // then omit the loaded value for this property
+                                    if (properties[ccc].isRestoreToDefaultOnLoad()) {
+                                    	properties[ccc].setValue(defaultProperties[ccc].getValue());
+                                    }
                                 }
                             } catch (Exception e) {
                                 // warnings with unusable properties can

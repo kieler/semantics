@@ -275,6 +275,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         properties[0] = new KiemProperty("state name", "ABRO state");
         properties[1] = new KiemProperty("some bool", true);
         properties[2] = new KiemProperty("an integer", 2);
+        // when loading this property, restore its value to default
+        properties[2].setRestoreToDefaultOnLoad(true);
         properties[3] = new KiemProperty("a file", new KiemPropertyTypeFile(), "c:/nothing.txt");
         String[] items = {"trace 1", "trace 2", "trace 3", "trace 4"};
         properties[4] = new KiemProperty("a choice", new KiemPropertyTypeChoice(items), items[2]);
