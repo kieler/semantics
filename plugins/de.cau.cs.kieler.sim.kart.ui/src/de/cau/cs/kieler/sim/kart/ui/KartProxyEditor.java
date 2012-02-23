@@ -75,7 +75,6 @@ public class KartProxyEditor extends MultiPageEditorPart {
 
         boolean suc = updateProperty();
         
-        // FIXME: A NPE is thrown by addTodataComponentWrapperList, I don't know why
         if(!suc) {
             List<AbstractDataComponent> allComps = KiemPlugin.getDefault().getRegisteredDataComponentList();
             Iterator<AbstractDataComponent> it = allComps.iterator();
