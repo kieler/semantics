@@ -20,6 +20,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,6 +35,8 @@ import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
@@ -191,6 +196,23 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         if (trainingMode) {
             TraceWriter writer = new TraceWriter(recInputs, simOutputs, simVariables, filename);
             writer.doWrite();
+            
+            // Set training mode flag to false
+            List<DataComponentWrapper> components = KiemPlugin.getDefault().getDataComponentWrapperList();
+            Iterator<DataComponentWrapper> it = components.iterator();
+            
+            while(it.hasNext()) {
+                DataComponentWrapper c = it.next();
+
+                if(c.getDataComponent().getClass().getName().equals("de.cau.cs.kieler.sim.kart.DataReplayComponent")) {
+                    KiemProperty[] props = c.getProperties();
+                    for(KiemProperty p : props) {
+                        if(p.getKey().equals(Constants.TRAINMODE)) {
+                            p.setValue("false");
+                        }
+                    }
+                }
+            }
         }
     }
 
