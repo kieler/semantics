@@ -56,7 +56,7 @@ import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
 
 /**
- * A KiVi Combination controlling the autoloading of execution files. While NO
+ * A KiVi Combination controlling the auto loading of execution files. While NO
  * execution is currently running when the user changes the editor the best
  * fitting execution schedule is selected.
  * 
@@ -65,7 +65,7 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  */
 public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 
-	private EditorIdWrapper lastEditorId = null;
+	private EditorIdWrapper lastValidEditorId = null;
 
 	public KIEMExecutionAutoloadCombination() {
 	}
@@ -98,9 +98,8 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 					editorId = new EditorIdWrapper(editor.getId());
 					editorName = editor.getRegisteredName();
 
-					// only if editor has been changed
-					if (editorId == null  || (!editorId.equals(lastEditorId))) {
-						lastEditorId = editorId;
+					// only if editor has been changed to a valid one
+					if (editorId == null  || (!editorId.equals(lastValidEditorId))) {
 						ScheduleManager scheduleManager = ScheduleManager
 								.getInstance();
 						List<ScheduleData> scheduleDataList = scheduleManager
@@ -108,6 +107,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 
 						// if at least one matching schedule, take the first one
 						if (scheduleDataList.size() > 0) {
+							lastValidEditorId = editorId;
 							ScheduleData scheduleData = scheduleDataList.get(0);
 							// open execution file
 							try {
