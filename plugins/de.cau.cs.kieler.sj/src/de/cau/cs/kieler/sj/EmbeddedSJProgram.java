@@ -226,7 +226,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
     public StateLabel state() {
         if (isTerminated()) {
             throw new ProgramAlreadyTerminatedException(
-                    "You can not get the next state of a already terminated program");
+                    "You can not get the next state of an already terminated program");
         } else if (curThread != null) {
             throw new ThreadException(
                     "You are not allowed to get the next thread. Threre is already the thread "
@@ -237,7 +237,6 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
             curThread = threadsCurTick.poll();
             return curThread.getLabel();
-
         }
     }
 
@@ -332,7 +331,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                         "You cannot go to the next tick before the current tick is done");
             }
 
-            // set all signals to absent an making sure that pre works.
+            // set all signals to absent and make sure that pre works.
             for (Signal s : signals) {
                 s.nextTick();
             }
