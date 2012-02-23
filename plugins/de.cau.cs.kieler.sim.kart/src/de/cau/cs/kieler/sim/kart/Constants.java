@@ -40,6 +40,8 @@ public class Constants {
     public static final String ERR_READ = "An error occurred when reading the ESO trace file, maybe the file is empty or corrupted. Please check the file and maybe record fresh.";
     public static final String ERR_NOTFOUND_TITLE = "Trace file could not be found";
     public static final String ERR_NOTFOUND = "The trace file could not be found. Do you want to switch to training mode?";
+    public static final String OVERWRITE_TITLE = "Overwrite trace file?";
+    public static final String OVERWRITE = "Do you want to replace the current trace file with this trace?";
     public static final boolean ERR_SILENT = true;
     
     public static final String VAL_TITLE = "Validation error";

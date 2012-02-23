@@ -20,9 +20,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.emf.common.CommonPlugin;
-import org.eclipse.emf.common.util.URI;
+import java.io.File;
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -194,6 +195,26 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
      */
     public void wrapup() throws KiemInitializationException {
         if (trainingMode) {
+            // Ask the user if he wants to overwrite the ESO file, if it exists
+            File file = new File(filename);
+            if(file.exists()) {
+                IConfigurationElement[] contributors = Platform.getExtensionRegistry()
+                        .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.MessageDialog");
+    
+                if (contributors.length > 0) {
+                    try {
+                        IMessageDialog msg = (IMessageDialog) (contributors[0]
+                                .createExecutableExtension("class"));
+                        if (msg.question(Constants.OVERWRITE_TITLE, Constants.OVERWRITE)) {
+                            file.delete();
+                        } 
+                    } catch (CoreException e0) {
+                        // TODO Auto-generated catch block
+                        e0.printStackTrace();
+                    }
+                }
+            }
+
             TraceWriter writer = new TraceWriter(recInputs, simOutputs, simVariables, filename);
             writer.doWrite();
             
