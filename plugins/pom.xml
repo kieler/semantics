@@ -172,6 +172,25 @@
     <module>org.ptolemy</module>
     <module>org.ptolemy.moml</module>
   </modules>
+
+  <repositories>
+    <repository>
+      <id>p2.eclipse.indigo</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/releases/indigo</url>
+    </repository>
+    <repository>
+      <id>p2.google.guava</id>
+      <layout>p2</layout>
+      <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
+    </repository>
+    <repository>
+      <id>p2.itemis.antlr</id>
+      <layout>p2</layout>
+      <url>http://download.itemis.com/updates/milestones/</url>
+    </repository>
+  </repositories>
+
   <build>
     <plugins>
       <plugin>
