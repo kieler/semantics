@@ -256,8 +256,11 @@ public class Utilities {
     }
 
     /**
-     * @param states
-     * @return
+     * Get names, or a close equivalent thereof, from a list of {@code EObject}s
+     * taken from a GMF editor.
+     * 
+     * @param states the list of objects
+     * @return the names of the objects
      */
     private static List<String> getStrings(List<EObject> states) throws Exception {
         List<String> retval = new LinkedList<String>();

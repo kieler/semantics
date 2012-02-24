@@ -21,8 +21,10 @@ import org.eclipse.ui.IEditorPart;
 import de.cau.cs.kieler.sim.kart.INamingSuggestion;
 
 /**
- * @author ssc
- *
+ * {@inheritDoc}
+ * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class NamingSuggestion implements INamingSuggestion {
     /**

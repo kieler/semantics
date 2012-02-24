@@ -23,8 +23,10 @@ import org.eclipse.swt.widgets.Display;
 import de.cau.cs.kieler.sim.kart.IRefresh;
 
 /**
- * @author ssc
+ * {@inheritDoc}
  * 
+ * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @kieler.rating 2012-01-24 red
  */
 public class Refresh implements IRefresh {
 

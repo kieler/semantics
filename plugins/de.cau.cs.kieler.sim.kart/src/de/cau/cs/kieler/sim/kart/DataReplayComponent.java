@@ -420,6 +420,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         KiemProperty[] properties = new KiemProperty[6];
         properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         fileProperty.setValue(properties[0], filename);
+        properties[0].setRestoreToDefaultOnLoad(true);
         
         properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
         properties[2] = new KiemProperty(Constants.TRAINMODE, false);
