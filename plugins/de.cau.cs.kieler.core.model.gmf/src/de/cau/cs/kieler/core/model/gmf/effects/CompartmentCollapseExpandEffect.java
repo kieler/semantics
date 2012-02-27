@@ -243,15 +243,24 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                     }
                     changed = true;
                     EditPart part = targetEditPart.getParent();
-                    if (n != null && part instanceof IAdvancedRenderingEditPart) {
-                        ((IAdvancedRenderingEditPart) part).handleNotificationEvent(n);
-                    }
+                    triggerEvents(part, n);
                 }
             }
         }
         return changed;
     }
 
+    private void triggerEvents(EditPart part, Notification n) {
+        if (n != null && part instanceof IAdvancedRenderingEditPart) {
+            ((IAdvancedRenderingEditPart) part).handleNotificationEvent(n);
+        }
+        for (Object o: part.getChildren()) {
+            if (o instanceof EditPart) {
+                triggerEvents((EditPart) o, n);
+            }
+        }
+    }
+    
     /**
      * Create a command to set the new collapse status.
      * 
