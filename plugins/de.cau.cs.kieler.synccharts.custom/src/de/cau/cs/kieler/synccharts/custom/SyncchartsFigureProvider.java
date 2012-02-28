@@ -346,6 +346,7 @@ public class SyncchartsFigureProvider implements IRenderingProvider {
         figure.setOpaque(false);
         figure.setLineWidth(1);
         figure.setForegroundColor(ColorConstants.black);
+        figure.setBackgroundColor(ColorConstants.white);
     }
 
     /**
