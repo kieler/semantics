@@ -110,12 +110,20 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		}
 		for (EObject statement : errorStatements) {
 			try {
-				// null == original backgroudn
+				// null == original background
 				setXtextSelection(statement, null);
 			} catch (KiemInitializationException e) {
 				// Hide any errors
 			}
 		}
+		eObjectMap.clear();
+		activeStatements.clear();
+		errorStatements.clear();
+		recoverStyleRangeMap.clear();
+		semanticResource = null;
+		esterelProgram = null;
+		esterelEditor = null;
+		specificBackgroundColor = null;
 	}
 
 	// -----------------------------------------------------------------------------
