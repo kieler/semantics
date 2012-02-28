@@ -86,8 +86,7 @@ public class HVLayoutConfig extends SemanticLayoutConfig {
     @Override
     protected Object getSemanticValue(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption) {
-        if (semanticElem instanceof Scope && layoutOption.getId()
-                .equals(LayoutOptions.DIRECTION_ID)) {
+        if (semanticElem instanceof Scope && layoutOption.equals(LayoutOptions.DIRECTION)) {
             int dist = getHVDistance((Scope) semanticElem);
             if (dist >= 0) {
                 if (dist % 2 == 0) {
