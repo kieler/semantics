@@ -46,7 +46,7 @@ public class ActionLayoutConfig extends SemanticLayoutConfig {
     @Override
     protected Object getSemanticValue(final EObject semanticElem,
             final LayoutOptionData<?> layoutOption) {
-        if (layoutOption.getId().equals(LayoutOptions.NO_LAYOUT_ID)
+        if (layoutOption.getId().equals(LayoutOptions.NO_LAYOUT.getId())
                 && !(semanticElem instanceof Transition)) {
             return true;
         }
