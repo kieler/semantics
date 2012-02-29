@@ -16,7 +16,6 @@ package de.cau.cs.kieler.core.model.gmf;
 import java.util.List;
 
 import org.eclipse.core.runtime.IAdaptable;
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
@@ -231,22 +230,6 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
     /**
      * {@inheritDoc}
      */
-    public IFigure getDrawingLayer(final EditPart editPart) {
-        DiagramEditPart diagramEditPart = getDiagramEditPart(editPart);
-        if (diagramEditPart != null) {
-            // figures on the connection layer are not printed out somehow... return a connection figure
-            IFigure layer = diagramEditPart.getLayer(DiagramRootEditPart.CONNECTION_LAYER);
-            if (layer != null && layer.getChildren().size() > 0) {
-                return (IFigure) layer.getChildren().get(0);
-            }
-            return layer;
-        }
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public ZoomManager getZoomManager(final EditPart editPart) {
         DiagramEditPart diagramEditPart = getDiagramEditPart(editPart);
         if (diagramEditPart != null) {
@@ -263,6 +246,15 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
             return ((DiagramEditor) workbenchPart).getDiagramGraphicalViewer().getSelection();
         }
         return null;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void setSelection(final EditPart editPart) {
+        if (editPart instanceof IGraphicalEditPart) {
+            ((IGraphicalEditPart) editPart).getViewer().select(editPart);
+        }
     }
 
 }
