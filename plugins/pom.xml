@@ -6,6 +6,11 @@
   <artifactId>plugins</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <properties>
+    <tycho-version>0.14.0</tycho-version>
+  </properties>
+
   <modules>
     <module>de.cau.cs.kieler.core</module>
     <module>de.cau.cs.kieler.core.annotations</module>
@@ -182,12 +187,51 @@
     <repository>
       <id>p2.google.guava</id>
       <layout>p2</layout>
-      <url>http://guava-osgi.googlecode.com/svn/trunk/repository/</url>
+      <url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
     </repository>
     <repository>
       <id>p2.itemis.antlr</id>
       <layout>p2</layout>
-      <url>http://download.itemis.com/updates/milestones/</url>
+      <url>http://download.itemis.com/updates/</url>
+    </repository>
+    <repository>
+      <id>p2.graphiti</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/graphiti/updates/0.8.1</url>
+    </repository>
+    <repository>
+      <id>p2.eclipse.updates</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/eclipse/updates/3.7</url>
+    </repository>
+    <repository>
+      <id>p2.papyrus</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo</url>
+    </repository>
+    <repository>
+      <id>p2.ptolemy2</id>
+      <layout>p2</layout>
+      <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</url>
+    </repository>
+    <repository>
+      <id>p2.orbit</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository</url>
+    </repository>
+    <repository>
+      <id>p2.xpandd</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/modeling/m2t/xpand/updates/milestones</url>
+    </repository>
+    <repository>
+      <id>p2.xtextt</id>
+      <layout>p2</layout>
+      <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
+    </repository>
+    <repository>
+      <id>xtend</id>
+      <url>http://build.eclipse.org/common/xtend/maven</url>
     </repository>
   </repositories>
 
@@ -196,9 +240,55 @@
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-maven-plugin</artifactId>
-        <version>0.14.0</version>
+        <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>target-platform-configuration</artifactId>
+        <version>${tycho-version}</version>
+        <configuration>
+          <environments>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>linux</os>
+              <ws>gtk</ws>
+              <arch>x86_64</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>macosx</os>
+              <ws>cocoa</ws>
+              <arch>x86_64</arch>
+            </environment>
+          </environments>
+        </configuration>
+      </plugin>
     </plugins>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.eclipse.xtend2</groupId>
+          <artifactId>xtend-maven-plugin</artifactId>
+          <version>2.2.1</version>
+          <configuration>
+            <outputDirectory>${basedir}/xtend-gen</outputDirectory>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 </project>
