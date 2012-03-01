@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.core.model;
 
-import org.eclipse.draw2d.IFigure;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.gef.EditPart;
@@ -88,15 +87,6 @@ public interface IGraphicalFrameworkBridge {
     EditingDomain getEditingDomain(Object object);
     
     /**
-     * Returns a layer figure for the associated diagram that can be used to draw
-     * additional information.
-     * 
-     * @param editPart an edit part from a graphical diagram
-     * @return a drawing layer
-     */
-    IFigure getDrawingLayer(EditPart editPart);
-    
-    /**
      * Returns a zoom manager for the associated diagram.
      * 
      * @param editPart an edit part from a graphical diagram
@@ -112,5 +102,12 @@ public interface IGraphicalFrameworkBridge {
      *     be determined
      */
     ISelection getSelection(IWorkbenchPart workbenchPart);
+    
+    /**
+     * Set the current selection to the given edit part.
+     * 
+     * @param editPart an edit part
+     */
+    void setSelection(final EditPart editPart);
     
 }
