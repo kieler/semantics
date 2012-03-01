@@ -35,6 +35,7 @@ public class Constants {
     public static final String[] FILEEXTNAMES = { "ESO", "ESI" };
     
     public static final String ERR_NOTESO = "The replay file provided is not an .esi or .eso file";
+    public static final String ERR_NEEDESO = "You must set an ESO filename!";
     public static final String ERR_NOTRACE = "The trace file does not contain a trace number ";
     public static final String ERR_JSON = "Could not build JSON object with signals read from ESO file";
     public static final String ERR_EMPTYESO = "Trace file is empty or does not exist.";

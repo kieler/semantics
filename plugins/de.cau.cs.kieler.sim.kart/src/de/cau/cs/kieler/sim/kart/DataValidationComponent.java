@@ -37,6 +37,7 @@ import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
@@ -203,6 +204,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     
                 if (contributors.length > 0) {
                     try {
+                        TimeoutThread.setAwaitUserRepsonse(true);
                         IMessageDialog msg = (IMessageDialog) (contributors[0]
                                 .createExecutableExtension("class"));
                         if (msg.question(Constants.OVERWRITE_TITLE, Constants.OVERWRITE)) {
@@ -211,6 +213,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
                     } catch (CoreException e0) {
                         // TODO Auto-generated catch block
                         e0.printStackTrace();
+                    } finally {
+                        // MUST enable timeout again
+                        TimeoutThread.setAwaitUserRepsonse(false);
                     }
                 }
             }
@@ -337,9 +342,8 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             recordDataPool(obj);
         }
         
-        JSONObject retval = null;
+        JSONObject retval = new JSONObject();
         if (!trainingMode && !eot) {
-            retval = new JSONObject();
             for (Pair<String, String> variable : variables) {
                 valEngine.validateVariable(variable,
                         esoVariables.get((int) step - 1).get(variable.getFirst()),
@@ -347,6 +351,20 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             }
             
             valEngine.validateSignals(esoOutputs.get((int) step - 1), simOutputs.get((int) step - 1), isHistoryStep(), errSignalVar, retval);
+        } else {
+            for (Pair<String, String> variable : variables) {
+                try {
+                    retval.accumulate(variable.getSecond(), "");
+                } catch (JSONException e) {
+                    // Nothing
+                }
+            }
+            
+            try {
+                retval.accumulate(errSignalVar, "");
+            } catch (JSONException e) {
+                // Nothing
+            }
         }
         return retval;
     }
@@ -365,7 +383,9 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
             trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
             eot = ((Boolean) config.get(Constants.VAR_EOT)).booleanValue();
         } catch (JSONException e) {
-            throw new KiemExecutionException("Could not update configuration", true, e);
+            throw new KiemExecutionException("Could not update configuration. Are the KART components positioned correctly in the schedule? " +
+                                            "I. e., the Replay component directly before the simulator and the Validation component " +
+                                            "directly after the simulator.", true, e);
         }
     }
     
