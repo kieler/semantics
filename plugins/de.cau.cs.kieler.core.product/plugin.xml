@@ -43,11 +43,11 @@
          </property>
          <property
                name="windowImages"
-               value="icons/kiel_16.gif,icons/kiel_32.gif,icons/kiel_48.gif,icons/kiel_64.gif,icons/kiel_128.gif">
+               value="icons/kieler_16.gif,icons/kieler_32.gif,icons/kieler_48.gif,icons/kieler_64.gif,icons/kieler_128.gif">
          </property>
          <property
                name="introBrandingImage"
-               value="product:icons/kiel_64.gif">
+               value="product:icons/kieler_64.gif">
          </property>
          <property
                name="introBrandingImageText"
