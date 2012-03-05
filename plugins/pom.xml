@@ -98,12 +98,12 @@
     <module>de.cau.cs.kieler.ksbase.ui</module>
     <module>de.cau.cs.kieler.kvid</module>
     <module>de.cau.cs.kieler.kvid.ui</module>
-    <module>de.cau.cs.kieler.kwebs</module>
+    <!--    <module>de.cau.cs.kieler.kwebs</module>
     <module>de.cau.cs.kieler.kwebs.client</module>
     <module>de.cau.cs.kieler.kwebs.client.jaxws</module>
     <module>de.cau.cs.kieler.kwebs.client.jeti</module>
     <module>de.cau.cs.kieler.kwebs.jaxws</module>
-    <module>de.cau.cs.kieler.kwebs.server</module>
+    <module>de.cau.cs.kieler.kwebs.server</module> -->
     <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.papyrus</module>
     <module>de.cau.cs.kieler.s</module>
@@ -229,11 +229,16 @@
       <layout>p2</layout>
       <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
     </repository>
-    <repository>
-      <id>xtend</id>
-      <url>http://build.eclipse.org/common/xtend/maven</url>
-    </repository>
   </repositories>
+
+  <pluginRepositories>
+    <pluginRepository>
+      <id>xtend</id>
+      <layout>default</layout>
+      <url>http://build.eclipse.org/common/xtend/maven</url>
+    </pluginRepository>
+  </pluginRepositories>
+    
 
   <build>
     <plugins>
@@ -288,6 +293,29 @@
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
           </configuration>
         </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.3</version>
+          <executions>
+            <execution>
+              <id>add-source</id>
+              <phase>generate-sources</phase>
+              <goals>
+                <goal>add-source</goal>
+              </goals>
+              <configuration>
+                <sources>
+                  <source>src-gen</source>
+                </sources>
+                <sources>
+                  <source>${project.build.directory}/xtend-gen</source>
+                </sources>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
       </plugins>
     </pluginManagement>
   </build>

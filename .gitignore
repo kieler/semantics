@@ -3,3 +3,4 @@ bin/
 .checkstyle
 .svn/
 xtend-gen/
+target/
