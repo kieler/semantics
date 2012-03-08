@@ -6,6 +6,15 @@
   <artifactId>features</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <parent>
+    <groupId>de.cau.cs.kieler</groupId>
+    <artifactId>parent</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <!-- all features are listed as modules -->
+
   <modules>
     <module>de.cau.cs.kieler.core.annotations.feature</module>
     <module>de.cau.cs.kieler.core.feature</module>
@@ -22,21 +31,12 @@
     <module>de.cau.cs.kieler.kwebs.client.jaxws.feature</module>
     <module>de.cau.cs.kieler.kwebs.client.jeti.feature</module>
     <module>de.cau.cs.kieler.kwebs.server.feature</module>
-    <module>de.cau.cs.kieler.sdk.feature</module>
+    <!--    <module>de.cau.cs.kieler.sdk.feature</module> -->
     <module>de.cau.cs.kieler.synccharts.feature</module>
     <module>de.cau.cs.kieler.uml2.feature</module>
     <module>de.unido.ls5.eti.toolserver.feature</module>
     <module>net.ogdf.bin.feature</module>
     <module>org.ptolemy.feature</module>
   </modules>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.eclipse.tycho</groupId>
-        <artifactId>tycho-maven-plugin</artifactId>
-        <version>0.14.0</version>
-        <extensions>true</extensions>
-      </plugin>
-    </plugins>
-  </build>
+
 </project>

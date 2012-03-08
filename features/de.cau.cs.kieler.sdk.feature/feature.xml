@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.sdk"
+      id="de.cau.cs.kieler.sdk.feature"
       label="KIELER SDK"
       version="0.6.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">

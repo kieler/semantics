@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.synccharts"
+      id="de.cau.cs.kieler.synccharts.feature"
       label="KIELER SyncCharts Editing/Simulation/Code Gen"
       version="0.6.0.qualifier"
       provider-name="Christian-Albrechts-University of Kiel"
@@ -724,14 +724,14 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.esi"
+         id="de.cau.cs.kieler.sim.eso"
          download-size="0"
          install-size="0"
          version="0.0.0"
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.sim.esi.ui"
+         id="de.cau.cs.kieler.sim.eso.ui"
          download-size="0"
          install-size="0"
          version="0.0.0"
