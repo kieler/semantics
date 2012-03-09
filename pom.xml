@@ -91,6 +91,22 @@
         <version>${tycho-version}</version>
         <extensions>true</extensions>
       </plugin>
+
+      <plugin>
+        <groupId>org.eclipse.tycho</groupId>
+        <artifactId>tycho-source-plugin</artifactId>
+	<version>${tycho-version}</version>
+        <executions>
+          <execution>
+            <id>plugin-source</id>
+            <goals>
+              <goal>plugin-source</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+
+    
       <!-- as we have platform specific fragments we need to tell tycho about target platforms -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
