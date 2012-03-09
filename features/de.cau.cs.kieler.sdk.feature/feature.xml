@@ -218,67 +218,67 @@ litigation.
    </url>
 
    <includes
-         id="de.cau.cs.kieler.synccharts"
+         id="de.cau.cs.kieler.synccharts.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.synccharts.source"
+         id="de.cau.cs.kieler.synccharts.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kaom"
+         id="de.cau.cs.kieler.kaom.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kaom.source"
+         id="de.cau.cs.kieler.kaom.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.uml2"
+         id="de.cau.cs.kieler.uml2.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.uml2.source"
+         id="de.cau.cs.kieler.uml2.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.keg"
+         id="de.cau.cs.kieler.keg.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.keg.source"
+         id="de.cau.cs.kieler.keg.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kiml.gmf"
+         id="de.cau.cs.kieler.kiml.gmf.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kiml.gmf.source"
+         id="de.cau.cs.kieler.kiml.gmf.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kiml.graphiti"
+         id="de.cau.cs.kieler.kiml.graphiti.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kiml.graphiti.source"
+         id="de.cau.cs.kieler.kiml.graphiti.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.klots"
+         id="de.cau.cs.kieler.klots.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.klots.source"
+         id="de.cau.cs.kieler.klots.feature.source"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kwebs.client.jaxws"
+         id="de.cau.cs.kieler.kwebs.client.jaxws.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kwebs.client.jaxws.source"
+         id="de.cau.cs.kieler.kwebs.client.jaxws.feature.source"
          version="0.0.0"/>
 
 </feature>
