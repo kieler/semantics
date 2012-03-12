@@ -223,7 +223,7 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.synccharts.feature.source"
-         version="0.0.0"/>
+	 version="0.0.0"/>
 
    <includes
          id="de.cau.cs.kieler.kaom.feature"
@@ -231,7 +231,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.kaom.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.uml2.feature"
@@ -239,7 +240,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.uml2.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.keg.feature"
@@ -247,7 +249,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.keg.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.kiml.gmf.feature"
@@ -255,7 +258,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.kiml.gmf.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.kiml.graphiti.feature"
@@ -263,7 +267,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.kiml.graphiti.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.klots.feature"
@@ -271,7 +276,8 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.klots.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
    <includes
          id="de.cau.cs.kieler.kwebs.client.jaxws.feature"
@@ -279,6 +285,7 @@ litigation.
 
    <includes
          id="de.cau.cs.kieler.kwebs.client.jaxws.feature.source"
-         version="0.0.0"/>
+         version="0.0.0"
+	 optional="true"/>
 
 </feature>
