@@ -16,6 +16,7 @@
   <modules>
     <module>plugins</module>
     <module>features</module>
+    <module>de.cau.cs.kieler.repository</module>
   </modules>
 
 <!-- p2 and maven repositories to resolve plugin dependencies -->
