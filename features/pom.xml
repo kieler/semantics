@@ -31,7 +31,7 @@
     <module>de.cau.cs.kieler.kwebs.client.jaxws.feature</module>
     <module>de.cau.cs.kieler.kwebs.client.jeti.feature</module>
     <module>de.cau.cs.kieler.kwebs.server.feature</module>
-    <module>de.cau.cs.kieler.sdk.feature</module>
+    <!--    <module>de.cau.cs.kieler.sdk.feature</module> -->
     <module>de.cau.cs.kieler.synccharts.feature</module>
     <module>de.cau.cs.kieler.uml2.feature</module>
     <module>de.unido.ls5.eti.toolserver.feature</module>
