@@ -22,6 +22,7 @@ Export-Package: de.cau.cs.kieler.core.annotations.text,
  de.cau.cs.kieler.core.annotations.text.parser.antlr.internal,
  de.cau.cs.kieler.core.annotations.text.scoping,
  de.cau.cs.kieler.core.annotations.text.services,
- de.cau.cs.kieler.core.annotations.text.validation
+ de.cau.cs.kieler.core.annotations.text.validation,
+ de.cau.cs.kieler.core.annotations.text.serializer
 Import-Package: org.eclipse.xtext.common.ui.contentassist,
  org.apache.log4j
