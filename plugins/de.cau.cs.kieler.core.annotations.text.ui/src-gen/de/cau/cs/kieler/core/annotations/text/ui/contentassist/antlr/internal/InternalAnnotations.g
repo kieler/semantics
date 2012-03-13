@@ -5,7 +5,6 @@ grammar InternalAnnotations;
 
 options {
 	superClass=AbstractInternalContentAssistParser;
-	backtrack=true;
 	
 }
 

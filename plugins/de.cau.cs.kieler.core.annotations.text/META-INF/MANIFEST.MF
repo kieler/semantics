@@ -17,11 +17,11 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.core.annotations
 Export-Package: de.cau.cs.kieler.core.annotations.text,
  de.cau.cs.kieler.core.annotations.text.formatting,
+ de.cau.cs.kieler.core.annotations.text.parseTreeConstruction,
  de.cau.cs.kieler.core.annotations.text.parser.antlr,
  de.cau.cs.kieler.core.annotations.text.parser.antlr.internal,
  de.cau.cs.kieler.core.annotations.text.scoping,
  de.cau.cs.kieler.core.annotations.text.services,
- de.cau.cs.kieler.core.annotations.text.validation,
- de.cau.cs.kieler.core.annotations.text.serializer
+ de.cau.cs.kieler.core.annotations.text.validation
 Import-Package: org.eclipse.xtext.common.ui.contentassist,
  org.apache.log4j

@@ -13,44 +13,57 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+
+import org.eclipse.xtext.ui.shared.SharedStateModule;
 
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class AnnotationsActivator extends AbstractUIPlugin {
-
-	private Map<String,Injector> injectors = new HashMap<String,Injector>();
+	
+	private static final Logger logger = Logger.getLogger(AnnotationsActivator.class);
+	
+	private Cache<String, Injector> injectors = CacheBuilder.newBuilder().build(new CacheLoader<String, Injector>() {
+		@Override
+		public Injector load(String language) throws Exception {
+			Module runtimeModule = getRuntimeModule(language);
+			Module sharedStateModule = getSharedStateModule();
+			Module uiModule = getUiModule(language);
+			Module mergedModule = override(override(runtimeModule).with(sharedStateModule)).with(uiModule);
+			return createInjector(mergedModule);
+		}
+	});
+	
 	private static AnnotationsActivator INSTANCE;
-
+	
+	public static final String DE_CAU_CS_KIELER_CORE_ANNOTATIONS_TEXT_ANNOTATIONS = "de.cau.cs.kieler.core.annotations.text.Annotations";
+	
 	public Injector getInjector(String languageName) {
-		return injectors.get(languageName);
+		try {
+			return injectors.get(languageName);
+		} catch(ExecutionException e) {
+			logger.error("Failed to create injector for " + languageName);
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException("Failed to create injector for " + languageName, e);
+		}
 	}
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
-		try {
-			registerInjectorFor("de.cau.cs.kieler.core.annotations.text.Annotations");
-			
-		} catch (Exception e) {
-			Logger.getLogger(getClass()).error(e.getMessage(), e);
-			throw e;
-		}
-	}
-	
-	protected void registerInjectorFor(String language) throws Exception {
-		injectors.put(language, createInjector(
-		  override(override(getRuntimeModule(language)).with(getSharedStateModule())).with(getUiModule(language))));
 	}
 	
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		injectors.clear();
+		injectors.invalidateAll();
+		injectors.cleanUp();
 		INSTANCE = null;
 		super.stop(context);
 	}
@@ -60,23 +73,23 @@ public class AnnotationsActivator extends AbstractUIPlugin {
 	}
 	
 	protected Module getRuntimeModule(String grammar) {
-		if ("de.cau.cs.kieler.core.annotations.text.Annotations".equals(grammar)) {
-		  return new de.cau.cs.kieler.core.annotations.text.AnnotationsRuntimeModule();
+		if (DE_CAU_CS_KIELER_CORE_ANNOTATIONS_TEXT_ANNOTATIONS.equals(grammar)) {
+			return new de.cau.cs.kieler.core.annotations.text.AnnotationsRuntimeModule();
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
-		if ("de.cau.cs.kieler.core.annotations.text.Annotations".equals(grammar)) {
-		  return new de.cau.cs.kieler.core.annotations.text.ui.AnnotationsUiModule(this);
+		if (DE_CAU_CS_KIELER_CORE_ANNOTATIONS_TEXT_ANNOTATIONS.equals(grammar)) {
+			return new de.cau.cs.kieler.core.annotations.text.ui.AnnotationsUiModule(this);
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getSharedStateModule() {
-		return new org.eclipse.xtext.ui.shared.SharedStateModule();
+		return new SharedStateModule();
 	}
 	
 }

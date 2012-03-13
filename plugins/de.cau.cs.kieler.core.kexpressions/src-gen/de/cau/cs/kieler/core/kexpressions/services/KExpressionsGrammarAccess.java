@@ -54,10 +54,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	BooleanExpression | ValuedExpression;
 		public ParserRule getRule() { return rule; }
 
-		//BooleanExpression | ValuedExpression
+		//=> BooleanExpression | ValuedExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//BooleanExpression
+		//=> BooleanExpression
 		public RuleCall getBooleanExpressionParserRuleCall_0() { return cBooleanExpressionParserRuleCall_0; }
 
 		//ValuedExpression
@@ -179,15 +179,15 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	subExpressions+=NotOrValuedExpression) | NotExpression;
 		public ParserRule getRule() { return rule; }
 
-		//NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+		//=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 		//subExpressions+=NotOrValuedExpression) | NotExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
+		//=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator
 		//subExpressions+=NotOrValuedExpression)
 		public Group getGroup_0() { return cGroup_0; }
 
-		//NotOrValuedExpression
+		//=> NotOrValuedExpression
 		public RuleCall getNotOrValuedExpressionParserRuleCall_0_0() { return cNotOrValuedExpressionParserRuleCall_0_0; }
 
 		//{OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression
@@ -223,10 +223,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//	ValuedExpression | NotExpression;
 		public ParserRule getRule() { return rule; }
 
-		//ValuedExpression | NotExpression
+		//=> ValuedExpression | NotExpression
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//ValuedExpression
+		//=> ValuedExpression
 		public RuleCall getValuedExpressionParserRuleCall_0() { return cValuedExpressionParserRuleCall_0; }
 
 		//NotExpression
@@ -607,10 +607,10 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//FloatValue
 		public RuleCall getFloatValueParserRuleCall_1() { return cFloatValueParserRuleCall_1; }
 
-		//"(" ValuedExpression ")"
+		//=> "(" ValuedExpression ")"
 		public Group getGroup_2() { return cGroup_2; }
 
-		//"("
+		//=> "("
 		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 
 		//ValuedExpression
