@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.uml2"
+      id="de.cau.cs.kieler.uml2.feature"
       label="KIELER Bridge to UML2 tools"
       version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
