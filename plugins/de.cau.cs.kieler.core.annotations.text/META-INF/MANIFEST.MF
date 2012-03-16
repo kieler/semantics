@@ -17,6 +17,7 @@ Require-Bundle: org.eclipse.xtext;bundle-version="2.1.0",
  de.cau.cs.kieler.core.annotations
 Export-Package: de.cau.cs.kieler.core.annotations.text,
  de.cau.cs.kieler.core.annotations.text.formatting,
+ de.cau.cs.kieler.core.annotations.text.parseTreeConstruction,
  de.cau.cs.kieler.core.annotations.text.parser.antlr,
  de.cau.cs.kieler.core.annotations.text.parser.antlr.internal,
  de.cau.cs.kieler.core.annotations.text.scoping,

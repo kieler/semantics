@@ -50,9 +50,10 @@
     <extension
             point="org.eclipse.ui.preferencePages">
         <page
-            class="de.cau.cs.kieler.sim.eso.ui.EsoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-            id="de.cau.cs.kieler.sim.eso.Eso"
-            name="Eso">
+              category="de.cau.cs.kieler"
+              class="de.cau.cs.kieler.sim.eso.ui.EsoExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+              id="de.cau.cs.kieler.sim.eso.Eso"
+              name="ESO">
             <keywordReference id="de.cau.cs.kieler.sim.eso.ui.keyword_Eso"/>
         </page>
         <page

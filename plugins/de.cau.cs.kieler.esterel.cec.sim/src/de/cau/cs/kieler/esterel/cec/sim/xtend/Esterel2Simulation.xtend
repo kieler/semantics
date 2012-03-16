@@ -17,7 +17,7 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
 import org.eclipse.xtend.util.stdlib.TraceComponent
 
 
-// Transformation of Esterel code into Esterelcode that is
+// Transformation of Esterel code into Esterel code that is
 // enriched with additional signals for each statement.
 
 // These signals, here HP, are generated in the following fashion for a 

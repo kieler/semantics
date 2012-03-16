@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
@@ -135,6 +136,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
                 if (contributors.length > 0) {
                     try {
+                        TimeoutThread.setAwaitUserRepsonse(true);
                         IMessageDialog msg = (IMessageDialog) (contributors[0]
                                 .createExecutableExtension("class"));
                         if (msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
@@ -147,6 +149,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                     } catch (CoreException e0) {
                         // TODO Auto-generated catch block
                         e0.printStackTrace();
+                    } finally {
+                        TimeoutThread.setAwaitUserRepsonse(false);
                     }
                 } else {
                     throw new KiemInitializationException(Constants.ERR_NOTFOUND, true, e);
@@ -442,6 +446,9 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.ESOFILE)) {
+                if (prop.getValue().isEmpty()) {
+                    throw new KiemPropertyException(Constants.ERR_NEEDESO);
+                }
                 if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
                         .toLowerCase().endsWith(".eso"))) {
                     throw new KiemPropertyException(Constants.ERR_NOTESO);

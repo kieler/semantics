@@ -19,7 +19,7 @@ Root returns ecore::EObject:
 // --------------------------
 
 Expression returns Expression:
-	BooleanExpression
+	=> BooleanExpression
 	| ValuedExpression
 	;
 
@@ -41,14 +41,14 @@ AndExpression returns Expression:
 
 // Example: 42 <= ?A
 CompareOperation returns Expression:
-	NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
+	=> NotOrValuedExpression ({OperatorExpression.subExpressions+=current} operator=CompareOperator subExpressions+=NotOrValuedExpression)
 	| NotExpression
 	;
 
 
 // order IS IMPORTANT
 NotOrValuedExpression returns Expression:
-	ValuedExpression
+	=> ValuedExpression
 	| NotExpression
     ;
 
@@ -115,7 +115,7 @@ AtomicValuedExpression returns Expression:
     IntValue
     | FloatValue
 //    | '(' DivExpression ')'
-    | '(' ValuedExpression ')'
+    | => '(' ValuedExpression ')'
     | AtomicExpression 
     ;
 

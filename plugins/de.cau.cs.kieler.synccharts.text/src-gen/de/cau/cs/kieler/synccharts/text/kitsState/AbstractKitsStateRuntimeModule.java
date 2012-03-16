@@ -39,19 +39,9 @@ public abstract class AbstractKitsStateRuntimeModule extends DefaultRuntimeModul
 		return de.cau.cs.kieler.synccharts.text.kitsState.services.KitsStateGrammarAccess.class;
 	}
 
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.sequencer.ISemanticSequencer> bindISemanticSequencer() {
-		return de.cau.cs.kieler.synccharts.text.kitsState.serializer.KitsStateSemanticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.sequencer.ISyntacticSequencer> bindISyntacticSequencer() {
-		return de.cau.cs.kieler.synccharts.text.kitsState.serializer.KitsStateSyntacticSequencer.class;
-	}
-
-	// contributed by org.eclipse.xtext.generator.serializer.SerializerFragment
-	public Class<? extends org.eclipse.xtext.serializer.ISerializer> bindISerializer() {
-		return org.eclipse.xtext.serializer.impl.Serializer.class;
+	// contributed by org.eclipse.xtext.generator.parseTreeConstructor.ParseTreeConstructorFragment
+	public Class<? extends org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor> bindIParseTreeConstructor() {
+		return de.cau.cs.kieler.synccharts.text.kitsState.parseTreeConstruction.KitsStateParsetreeConstructor.class;
 	}
 
 	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment

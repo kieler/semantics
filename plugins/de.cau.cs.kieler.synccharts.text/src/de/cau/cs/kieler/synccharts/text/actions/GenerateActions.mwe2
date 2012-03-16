@@ -45,9 +45,9 @@ Workflow {
 
 			// the serialization component
 			// Old serializer			
-			// fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
+			fragment = parseTreeConstructor.ParseTreeConstructorFragment {}
 			// New Serializer 2.0
-			fragment = serializer.SerializerFragment {}
+			// fragment = serializer.SerializerFragment {}
 
 			// a custom ResourceFactory for use with EMF 
 			fragment = resourceFactory.ResourceFactoryFragment {
