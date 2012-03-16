@@ -13,44 +13,57 @@ import org.osgi.framework.BundleContext;
 
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
 
-import java.util.Map;
-import java.util.HashMap;
+import java.util.concurrent.ExecutionException;
+
+import org.eclipse.xtext.ui.shared.SharedStateModule;
 
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
  */
 public class ActionsActivator extends AbstractUIPlugin {
-
-	private Map<String,Injector> injectors = new HashMap<String,Injector>();
+	
+	private static final Logger logger = Logger.getLogger(ActionsActivator.class);
+	
+	private Cache<String, Injector> injectors = CacheBuilder.newBuilder().build(new CacheLoader<String, Injector>() {
+		@Override
+		public Injector load(String language) throws Exception {
+			Module runtimeModule = getRuntimeModule(language);
+			Module sharedStateModule = getSharedStateModule();
+			Module uiModule = getUiModule(language);
+			Module mergedModule = override(override(runtimeModule).with(sharedStateModule)).with(uiModule);
+			return createInjector(mergedModule);
+		}
+	});
+	
 	private static ActionsActivator INSTANCE;
-
+	
+	public static final String DE_CAU_CS_KIELER_SYNCCHARTS_TEXT_ACTIONS_ACTIONS = "de.cau.cs.kieler.synccharts.text.actions.Actions";
+	
 	public Injector getInjector(String languageName) {
-		return injectors.get(languageName);
+		try {
+			return injectors.get(languageName);
+		} catch(ExecutionException e) {
+			logger.error("Failed to create injector for " + languageName);
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException("Failed to create injector for " + languageName, e);
+		}
 	}
 	
 	@Override
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		INSTANCE = this;
-		try {
-			registerInjectorFor("de.cau.cs.kieler.synccharts.text.actions.Actions");
-			
-		} catch (Exception e) {
-			Logger.getLogger(getClass()).error(e.getMessage(), e);
-			throw e;
-		}
-	}
-	
-	protected void registerInjectorFor(String language) throws Exception {
-		injectors.put(language, createInjector(
-		  override(override(getRuntimeModule(language)).with(getSharedStateModule())).with(getUiModule(language))));
 	}
 	
 	@Override
 	public void stop(BundleContext context) throws Exception {
-		injectors.clear();
+		injectors.invalidateAll();
+		injectors.cleanUp();
 		INSTANCE = null;
 		super.stop(context);
 	}
@@ -60,23 +73,23 @@ public class ActionsActivator extends AbstractUIPlugin {
 	}
 	
 	protected Module getRuntimeModule(String grammar) {
-		if ("de.cau.cs.kieler.synccharts.text.actions.Actions".equals(grammar)) {
-		  return new de.cau.cs.kieler.synccharts.text.actions.ActionsRuntimeModule();
+		if (DE_CAU_CS_KIELER_SYNCCHARTS_TEXT_ACTIONS_ACTIONS.equals(grammar)) {
+			return new de.cau.cs.kieler.synccharts.text.actions.ActionsRuntimeModule();
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getUiModule(String grammar) {
-		if ("de.cau.cs.kieler.synccharts.text.actions.Actions".equals(grammar)) {
-		  return new de.cau.cs.kieler.synccharts.text.actions.ui.ActionsUiModule(this);
+		if (DE_CAU_CS_KIELER_SYNCCHARTS_TEXT_ACTIONS_ACTIONS.equals(grammar)) {
+			return new de.cau.cs.kieler.synccharts.text.actions.ui.ActionsUiModule(this);
 		}
 		
 		throw new IllegalArgumentException(grammar);
 	}
 	
 	protected Module getSharedStateModule() {
-		return new org.eclipse.xtext.ui.shared.SharedStateModule();
+		return new SharedStateModule();
 	}
 	
 }

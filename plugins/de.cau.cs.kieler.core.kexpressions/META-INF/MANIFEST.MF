@@ -10,13 +10,13 @@ Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.core.kexpressions,
  de.cau.cs.kieler.core.kexpressions.formatting,
  de.cau.cs.kieler.core.kexpressions.impl,
+ de.cau.cs.kieler.core.kexpressions.parseTreeConstruction,
  de.cau.cs.kieler.core.kexpressions.parser.antlr,
  de.cau.cs.kieler.core.kexpressions.parser.antlr.internal,
  de.cau.cs.kieler.core.kexpressions.scoping,
  de.cau.cs.kieler.core.kexpressions.services,
  de.cau.cs.kieler.core.kexpressions.util,
- de.cau.cs.kieler.core.kexpressions.validation,
- de.cau.cs.kieler.core.kexpressions.serializer
+ de.cau.cs.kieler.core.kexpressions.validation
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext;bundle-version="2.1.0",
