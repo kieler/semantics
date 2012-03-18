@@ -16,6 +16,7 @@
 <!-- all plugins need to be listed as module -->
 
   <modules>
+    <module>../test</module>
     <module>de.cau.cs.kieler.core</module>
     <module>de.cau.cs.kieler.core.annotations</module>
     <module>de.cau.cs.kieler.core.annotations.edit</module>
