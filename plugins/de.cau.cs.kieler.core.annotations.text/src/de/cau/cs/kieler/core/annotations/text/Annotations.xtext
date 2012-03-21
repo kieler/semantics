@@ -21,6 +21,15 @@ Annotation returns Annotation:
 	| KeyFloatValueAnnotation
 	;
 
+ValuedAnnotation returns Annotation:
+	CommentAnnotation
+	| KeyStringValueAnnotation
+	| TypedKeyStringValueAnnotation
+	| KeyBooleanValueAnnotation
+	| KeyIntValueAnnotation
+	| KeyFloatValueAnnotation
+	;
+
 
 // e.g.: /** semantic comment */
 CommentAnnotation returns StringAnnotation:
@@ -86,7 +95,7 @@ EString returns ecore::EString:
 
 
 ExtendedID returns ecore::EString:
-  ID("."ID)*;
+  ID ("."ID)*;
   
   
 // --------------------------
