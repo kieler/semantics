@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 
+import de.cau.cs.kieler.core.kivi.AbstractCompoundEffect;
 import de.cau.cs.kieler.core.kivi.IEffectCompound;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
@@ -61,7 +62,7 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
  * @author haf
  * 
  */
-public class FocusContextEffect implements IEffectCompound {
+public class FocusContextEffect extends AbstractCompoundEffect {
 
     private Set<EObject> focus;
     private Set<EObject> context;
