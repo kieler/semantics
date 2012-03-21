@@ -161,7 +161,9 @@ Boolean isRegionState(State state):
 
 //Sets the object that should be selected after the transformation is executed
 Void setSelection(Object object):
- JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.setPostTransformationSelection(java.lang.Object)
+JAVA de.cau.cs.kieler.ksbase.ui.kivi.KSBasECombination.selectObject(java.lang.Object)
+//JAVA de.cau.cs.kieler.ksbase.ui.kivi.KSBasECombination.select(java.lang.Object)
+ //JAVA de.cau.cs.kieler.ksbase.ui.utils.TransformationUtils.setPostTransformationSelection(java.lang.Object)
 ;
 
 //Checks if the state is the root state.
