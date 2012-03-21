@@ -72,6 +72,26 @@ public class FocusContextEffect extends AbstractCompoundEffect {
 
     private IWorkbenchPart theEditor;
 
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isMergeable() {
+        return true;
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    public IEffect merge(IEffect otherEffect) {
+        if (otherEffect instanceof FocusContextEffect) {
+            return this;
+        }
+        
+        return null;
+    }
+    
     /**
      * Construct a FocusContextEffect at a given diagram (Editor or View). The WorkbenchPart is
      * required to be supported by the registered GraphicalFrameworkService. If not, this will throw
