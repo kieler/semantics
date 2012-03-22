@@ -19,7 +19,7 @@
 
   <modules>
     <module>de.cau.cs.kieler.klay.layered.test</module>
-    <!--    <module>de.cau.cs.kieler.core.kivi.test</module> -->
+    <module>de.cau.cs.kieler.core.kivi.test</module>
     <module>de.cau.cs.kieler.core.test</module>
   </modules>
 
