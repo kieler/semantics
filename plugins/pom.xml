@@ -11,6 +11,7 @@
     <groupId>de.cau.cs.kieler</groupId>
     <artifactId>parent</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <relativePath>../build/de.cau.cs.kieler.parent/pom.xml</relativePath>
   </parent>
 
 <!-- all plugins need to be listed as module -->
@@ -79,6 +80,7 @@
     <module>de.cau.cs.kieler.kiml.export</module>
     <module>de.cau.cs.kieler.kiml.formats</module>
     <module>de.cau.cs.kieler.kiml.formats.gml</module>
+    <module>de.cau.cs.kieler.kiml.formats.svg</module>
     <module>de.cau.cs.kieler.kiml.gmf</module>
     <module>de.cau.cs.kieler.kiml.grana</module>
     <module>de.cau.cs.kieler.kiml.graphiti</module>
