@@ -457,6 +457,7 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 	let ifT = new Transition:
 	parent.states.add(ifS) ->
 	ifS.setIsFinal(true) ->
+	ifT.setIsImmediate(true) ->
 	
 	// setup transition
 	if (e != null) then
