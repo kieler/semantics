@@ -599,7 +599,6 @@ Void rule(State s, Present p):
 		// handle present ... then ... form
 		(let event = ((PresentEventBody)p.body).event.expression:
 		 let thenPart = ((PresentEventBody)p.body).thenPart:  
-		 info(((ValuedObjectReference)event).valuedObject.name) ->
     //cmot: added implicit nothing if thenPart == null	
 		 handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : nothing) 
 		)
