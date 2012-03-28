@@ -13,75 +13,75 @@
    <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.source" version="0.4.0.qualifier">
+      <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kaom_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kaom.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.source" version="0.4.0.qualifier">
+      <feature url="features/de.cau.cs.kieler.kaom.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature> 
    <feature url="features/de.cau.cs.kieler.keg_0.4.0.qualifier.jar" id="de.cau.cs.kieler.keg.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.keg.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.keg.source" version="0.4.0.qualifier">
+      <feature url="features/de.cau.cs.kieler.keg.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.keg.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kiml.gmf_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.gmf.feature" version="0.6.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kiml.gmf.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.gmf.source" version="0.65.0.qualifier">
+      <feature url="features/de.cau.cs.kieler.kiml.gmf.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.gmf.feature.source" version="0.6.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kiml.graphiti_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphiti.feature" version="0.6.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kiml.graphiti.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphiti.source" version="0.6.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kiml.graphiti.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphiti.feature.source" version="0.6.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.synccharts_0.6.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature" version="0.6.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.synccharts.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.source" version="0.6.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.synccharts.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.synccharts.feature.source" version="0.6.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.klots_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.feature" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.source" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.feature.source" version="0.1.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.source" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.feature.source" version="0.1.0.qualifier">
       <category name="KIELER Development"/>
    </feature> -->
    <feature url="features/de.cau.cs.kieler.kwebs.client.jeti_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature" version="0.1.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.source" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature.source" version="0.1.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.core.annotations_0.3.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.feature" version="0.3.0.qualifier">
       <category name="KIELER Development"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.core.annotations.source_0.3.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.source" version="0.3.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.core.annotations.source_0.3.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.feature.source" version="0.3.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kiml.graphviz_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz.feature" version="0.6.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kiml.graphviz.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz.source" version="0.6.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kiml.graphviz.source_0.6.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz.feature.source" version="0.6.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <feature url="features/de.cau.cs.kieler.kiml.ogdf_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <!--   <feature url="features/de.cau.cs.kieler.kiml.ogdf.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.source" version="0.4.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kiml.ogdf.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
-   </feature> -->
+   </feature>
    <category-def name="KIELER" label="KIELER">
       <description>
          Kiel Integrated Environment for Layout Eclipse RichClient, Nightly Build
