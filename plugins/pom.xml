@@ -7,6 +7,10 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
+  <properties>
+    <targetJdk>1.5</targetJdk>
+  </properties>
+
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
     <artifactId>parent</artifactId>
@@ -184,5 +188,20 @@
     <module>org.ptolemy</module>
     <module>org.ptolemy.moml</module>
   </modules>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+	<version>2.7.1</version>
+        <configuration>
+          <targetJdk>1.5</targetJdk>
+          <format>xml</format>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+
 
 </project>
