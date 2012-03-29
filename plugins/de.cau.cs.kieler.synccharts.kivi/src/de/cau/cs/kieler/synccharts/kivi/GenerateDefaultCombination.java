@@ -120,7 +120,11 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
             lastEditor = sde;
             EObject object = diagram.getSemanticModel();
             Region r = (Region) object;
-            sde.getEditingDomain().addResourceSetListener(this);
+            try {
+                sde.getEditingDomain().addResourceSetListener(this);
+            } catch (NullPointerException npe) {
+                //we can't register ourself now. Nothing to do about it, try again later
+            }
             EList<State> states = r.getStates();
             EList<Signal> signals = r.getSignals();
             if (states.isEmpty() && signals.isEmpty()) {
