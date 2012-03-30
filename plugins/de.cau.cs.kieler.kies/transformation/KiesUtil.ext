@@ -162,6 +162,11 @@ Expression convertEsterelExpressionRec(Expression e):
 	if ComplexExpression.isInstance(e) then
 		((ComplexExpression) e).subExpressions.convertEsterelExpression()
 ;
+//ValuedObjectReference - added by cmot for handleIfSingle() function (present tests of simple triggers)
+Expression convertEsterelExpressionRec(ValuedObjectReference e):
+	if ValuedObjectReference.isInstance(e) then
+		e
+;
 // Function expression
 Expression convertEsterelExpressionRec(FunctionExpression fe):
 	let textExpr = new TextExpression:
