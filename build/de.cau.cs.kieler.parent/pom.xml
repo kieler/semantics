@@ -16,9 +16,8 @@
   <modules>
     <module>../../plugins</module>
     <module>../../features</module>
-    <!--    <module>../de.cau.cs.kieler.repository</module>
-    <module>../de.cau.cs.kieler.rca</module>
-    <module>../de.cau.cs.kieler.kwebs.repository</module> -->
+    <module>../de.cau.cs.kieler.repository</module>
+    <module>../de.cau.cs.kieler.kwebs.repository</module>
   </modules>
 
 <!-- p2 and maven repositories to resolve plugin dependencies -->

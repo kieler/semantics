@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="de.cau.cs.kieler.dependencies.feature"
+      label="Dependencies"
+      version="0.3.0.qualifier"
+      provider-name="Christian-Albrechts-Universität zu Kiel">
+
+   <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">
+      Dependencies of the KIELER project used for building a Rich Client Application.
+   </description>
+
+   <copyright>
+      The plug-ins and features included in this feature originate from different projects.
+   </copyright>
+
+   <includes
+         id="org.eclipse.emf.common"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.common.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.ecore"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.ecore.edit"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.edit.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.transaction"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.validation"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.workspace"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.gmf"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.gmf.runtime.notation"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.gmf.runtime.thirdparty"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.gef"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.edit"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.xtend"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.xtext.runtime"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.xtext.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.xpand"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.ocl"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.platform"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.zest"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.draw2d"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.xpand.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.codegen.ecore"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.codegen"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.ecore.editor"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe2.runtime.sdk"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe.core"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.uml2"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mapping"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mapping.ecore"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.ocl.uml"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.query.ocl"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.query"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.converter"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.codegen.ecore.ui"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.mwe2.language.sdk"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.ecoretools"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.compare"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.emf.validation.ocl"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.amalgam.discovery"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="com.google.guava.runtime.feature"
+         version="0.0.0"
+         search-location="self"/>
+
+   <includes
+         id="org.eclipse.jdt"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.xtext.xbase"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.xtext.xtend2.sdk"
+         version="0.0.0"/>
+
+   <plugin
+         id="org.eclipse.ui.views.log"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclipse.xtend.util.stdlib"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.log4j"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="org.apache.commons.lang"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="javax.jws"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+   <plugin
+         id="de.cau.cs.kieler.core.product"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
+</feature>

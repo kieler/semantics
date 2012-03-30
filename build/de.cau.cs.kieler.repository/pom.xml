@@ -14,7 +14,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <relativePath>../de.cau.cs.kieler.parent/pom.xml</relativePath>
   </parent>
-  <!--
+
   <build>
     <plugins>
       <plugin>
@@ -37,5 +37,5 @@
         </executions>
       </plugin>
     </plugins>
-  </build> -->
+  </build> 
 </project>

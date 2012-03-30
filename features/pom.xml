@@ -18,26 +18,42 @@
 
   <modules>
     <module>de.cau.cs.kieler.core.annotations.feature</module>
+    <module>de.cau.cs.kieler.core.annotations.feature.source</module>
     <module>de.cau.cs.kieler.core.feature</module>
+    <module>de.cau.cs.kieler.core.feature.source</module>
     <module>de.cau.cs.kieler.dependencies.feature</module>
     <module>de.cau.cs.kieler.esterel.feature</module>
     <module>de.cau.cs.kieler.kaom.feature</module>
+    <module>de.cau.cs.kieler.kaom.feature.source</module>
     <module>de.cau.cs.kieler.keg.feature</module>
+    <module>de.cau.cs.kieler.keg.feature.source</module>
     <module>de.cau.cs.kieler.kiml.gmf.feature</module>
+    <module>de.cau.cs.kieler.kiml.gmf.feature.source</module>
     <module>de.cau.cs.kieler.kiml.graphiti.feature</module>
+    <module>de.cau.cs.kieler.kiml.graphiti.feature.source</module>
     <module>de.cau.cs.kieler.kiml.graphviz.feature</module>
+    <module>de.cau.cs.kieler.kiml.graphviz.feature.source</module>
     <module>de.cau.cs.kieler.kiml.ogdf.feature</module>
+    <module>de.cau.cs.kieler.kiml.ogdf.feature.source</module>
     <module>de.cau.cs.kieler.klighd.feature</module>
+    <!--    <module>de.cau.cs.kieler.klighd.feature.source</module> -->
     <module>de.cau.cs.kieler.klots.feature</module>
+    <module>de.cau.cs.kieler.klots.feature.source</module>
     <module>de.cau.cs.kieler.kwebs.client.jaxws.feature</module>
+    <module>de.cau.cs.kieler.kwebs.client.jaxws.feature.source</module>
     <module>de.cau.cs.kieler.kwebs.client.jeti.feature</module>
+    <module>de.cau.cs.kieler.kwebs.client.jeti.feature.source</module>
     <module>de.cau.cs.kieler.kwebs.server.feature</module>
-    <!--    <module>de.cau.cs.kieler.sdk.feature</module> -->
+    <module>de.cau.cs.kieler.sdk.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature</module>
+    <module>de.cau.cs.kieler.synccharts.feature.source</module>
     <module>de.cau.cs.kieler.uml2.feature</module>
+    <module>de.cau.cs.kieler.uml2.feature.source</module>
     <module>de.unido.ls5.eti.toolserver.feature</module>
     <module>net.ogdf.bin.feature</module>
+    <module>net.ogdf.bin.feature.source</module>
     <module>org.ptolemy.feature</module>
+    <module>org.ptolemy.feature.source</module>
   </modules>
 
 </project>
