@@ -1,0 +1,16 @@
+module test_await1:
+input A;
+input B;
+input C;
+input D;
+
+await A;
+await
+  case B do
+    nothing
+  case C
+  case D do
+    pause
+end await
+
+end module

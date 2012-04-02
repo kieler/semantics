@@ -1,0 +1,99 @@
+module stest:
+input A;
+input B;
+input C;
+output D;
+output X;
+output Y;
+output Z;
+output W;
+output T;
+output E;
+
+loop
+    abort
+      [
+        loop
+          trap TT in
+            abort
+              pause;
+              trap T in
+                [
+                  abort
+                    [
+                      loop
+                        emit B;
+                        pause;
+                        emit B;
+                        present W then
+                          exit T
+                        end present
+                      end loop
+                    ||
+                      loop
+                          present [X and Y] then
+                            exit T
+                          end present;
+                          pause;
+                          emit A
+                        ||
+                          loop
+                            present [X and Z] then
+                              exit TT
+                            end present;
+                            pause
+                          end loop
+                      end loop
+                    ]
+                  when [Z and Y];
+                  emit B
+                ||
+                  loop
+                    present T then
+                      pause;
+                      exit TT
+                    end present;
+                    pause;
+                    present [X and B] then
+                      emit A
+                    else
+                      pause;
+                      pause
+                    end present
+                  end loop
+                ]
+              end trap
+            when 3 Y;
+            emit C
+          end trap;
+          emit A
+        end loop
+      ||
+        loop
+          await 5 tick;
+          emit X
+        end loop
+      ||
+        loop
+          await 11 tick;
+          emit Y
+        end loop
+      ||
+        loop
+          await 17 tick;
+          emit W
+        end loop
+      ]
+    when 100 T;
+    pause;
+    emit E
+  ||
+    abort
+      loop
+        await 100 tick;
+        emit T
+      end loop
+    when E
+end loop
+
+end module

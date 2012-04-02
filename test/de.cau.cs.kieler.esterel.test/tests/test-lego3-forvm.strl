@@ -1,0 +1,26 @@
+% From Martin Richard's Esterel on Lego website
+% These programs were written by two students from the Ãcole Centrale de
+% Nantes.
+
+% Follow a line using one light sensor
+
+module example2 :
+      input TOUCH_1,TOUCH_2;
+      output MOTOR_A_SPEED(integer),MOTOR_C_SPEED(integer), MOTOR_A_DIR(integer),MOTOR_C_DIR(integer);
+
+      constant MOTOR_FWD, MOTOR_REV : integer;
+      constant TICKS_PER_SECOND = 1000 : integer;
+
+emit MOTOR_A_DIR(MOTOR_FWD);
+emit MOTOR_C_DIR(MOTOR_FWD);
+loop
+   emit MOTOR_A_SPEED(20);
+   emit MOTOR_C_SPEED(100);
+   await TOUCH_1;
+   await TOUCH_2;
+   emit MOTOR_A_SPEED(100);
+   emit MOTOR_C_SPEED(20);
+   await TOUCH_1;
+   await TOUCH_2;
+end loop.
+

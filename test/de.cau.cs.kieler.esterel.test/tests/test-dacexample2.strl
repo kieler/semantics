@@ -1,0 +1,35 @@
+module test_dacexample2:
+input I;
+input S;
+output O;
+output Q;
+
+signal R,
+       A in
+  every S do
+      await I;
+      weak abort
+        sustain R
+      when immediate A;
+      emit O
+    ||
+      loop
+        pause;
+        pause;
+        present R then
+          emit A
+        end present
+      end loop
+    ||
+      loop
+        present R then
+          pause;
+          emit Q
+        else
+          pause
+        end present
+      end loop
+  end every
+end signal
+
+end module

@@ -1,0 +1,16 @@
+module test_loopeach1:
+input A;
+input B;
+
+loop
+  nothing;
+  pause
+each A;
+loop
+  loop
+    nothing;
+    halt
+  each B
+each A
+
+end module

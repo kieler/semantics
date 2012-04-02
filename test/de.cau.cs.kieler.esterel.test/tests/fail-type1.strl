@@ -1,0 +1,6 @@
+module fail_type1:
+type a;
+type a; % Redefinition of external type
+
+nothing
+end module

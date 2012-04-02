@@ -1,0 +1,9 @@
+module test_string1:
+constant c1 = "A string constant" : string;
+constant c2 = "  leading and trailing spaces    " : string;
+constant c3 = "   "" double quotes ""   " : string;
+constant c4 = " !""#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\]^_`abcdefghijklmnopqrstuvwxyz{|}~" : string;
+
+nothing
+
+end module

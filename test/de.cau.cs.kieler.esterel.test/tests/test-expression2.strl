@@ -1,0 +1,7 @@
+module test_expression2:
+
+var v : boolean in
+  v := 5 = 3
+end var
+
+end module

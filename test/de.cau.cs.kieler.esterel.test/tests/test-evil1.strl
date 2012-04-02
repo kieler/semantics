@@ -1,0 +1,31 @@
+module test_evil1:
+input A;
+input B;
+input C;
+output D;
+output E;
+output F;
+output G;
+output H;
+output I;
+
+loop
+  present A then
+    emit D
+  else 
+    emit E
+  end present;
+  present B then
+    emit F
+  else
+    emit G
+  end present;
+  present C then
+    emit H
+  else
+    emit I
+  end present;
+  pause
+end loop
+
+end module

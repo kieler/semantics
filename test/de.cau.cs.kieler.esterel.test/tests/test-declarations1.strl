@@ -1,0 +1,65 @@
+module test_declarations:
+type t1;
+type t2;
+type t3;
+type t4;
+constant c1 : t1;
+constant c2 : boolean;
+constant c4 = 1 : integer;
+constant c5 = - 5 : integer;
+constant c6 = true : boolean;
+constant c7 = false : boolean;
+constant c8 = "A string constant with ""double quotes""" : string;
+constant c9 : t2;
+function f1() : t1;
+function f2(t1, boolean, integer) : boolean;
+function f3() : integer;
+function f4(t3, t3) : t4;
+function f5(t1, t1) : t1;
+procedure p1()();
+procedure p2(t1)();
+procedure p3(integer, boolean, t2)();
+procedure p4(t1, t2)(t2, t2);
+procedure p5(integer, boolean)(integer, boolean, t1);
+task ta1()();
+task ta2(integer)();
+task ta3(integer, boolean, t2)();
+task ta4(t1, t2)(t2, t2);
+task ta5(integer, boolean)(boolean, integer, integer);
+input s01;
+input s02 : boolean;
+input s03 : combine integer with +;
+input s04 : combine integer with *;
+input s05 : combine boolean with and;
+input s06 : combine boolean with or;
+input s07 : combine t1 with f5;
+input s08 := 3 : integer;
+input s09 := 5 : combine integer with +;
+output s10;
+output s11;
+output s12 : boolean;
+output s13 : integer;
+output s14 : t1;
+inputoutput s15;
+inputoutput s16 : integer;
+inputoutput s17 : combine integer with *;
+return s18;
+return s19 : combine t1 with f5;
+return s20;
+return s21;
+return s22;
+return s23;
+sensor se1 : boolean;
+sensor se2 : integer;
+sensor se3 : t1;
+relation s01 # s02;
+relation s01 # s02 # s03;
+relation s03 => s04;
+relation s02 # s04;
+        
+nothing;
+var v1 : integer in
+  v1 := 5
+end var
+
+end module

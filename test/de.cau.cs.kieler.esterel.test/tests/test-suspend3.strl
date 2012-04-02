@@ -1,0 +1,39 @@
+module test_suspend3:
+input A;
+input B;
+output C;
+output D;
+output E;
+output F;
+
+loop
+  suspend
+    emit C;
+    pause;
+    emit C;
+    emit D;
+    pause;
+    emit C;
+    emit D;
+    emit E;
+    pause
+  ||
+    repeat 3 times
+      emit F;
+      pause;
+      pause
+    end repeat
+  when A
+  ||
+  suspend
+    emit D;
+    pause;
+    emit D;
+    emit E;
+    pause;
+    emit E;
+    pause
+  when B
+end loop
+
+end module

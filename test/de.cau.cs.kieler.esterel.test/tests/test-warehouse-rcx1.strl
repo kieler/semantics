@@ -1,0 +1,345 @@
+% Part of a case study for testing an API that allows database access within Esterel
+% by David White
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%  ROBOT CONTROL
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+module warehouse_rcx1:
+
+	constant MAX_SPEED : integer;
+	constant OFF = 0 : integer;
+	constant FWD = 1 : integer;
+	constant REV = 2 : integer;
+	constant BRAKE = 3 : integer;
+
+	output MOTOR_A_DIR := OFF : integer;
+	output MOTOR_A_SPEED := 0 : integer;
+
+	output MOTOR_B_DIR := OFF : integer;
+	output MOTOR_B_SPEED := 0 : integer;
+
+	output MOTOR_C_DIR := OFF : integer;
+	output MOTOR_C_SPEED := 0 : integer;
+
+	output LCD_INT : integer;
+	output CPUTS : string;
+
+	sensor LIGHT_1 : integer;
+	sensor LIGHT_2 : integer;
+	sensor LIGHT_3 : integer;
+
+	function get_op(string, integer) : integer;
+	function get_param(string, integer) : integer;
+	function get_num_ops(string) : integer;
+	
+%	procedure appstr()(string, string);
+%	procedure appint()(string, integer);
+	
+	constant MOVE_FORWARD = 102 : integer;
+	constant TURN_LEFT = 108 : integer;
+	constant TURN_RIGHT = 114 : integer;	
+	constant PICKUP_ITEM = 112 : integer;
+	constant DROP_ITEM = 100 : integer;
+
+	input execute_route : string;	
+	output route_complete;
+	
+	output pickup_item : integer;
+	output drop_item : integer;	
+	input forklift_op_complete;
+	
+	signal move_forward : integer,
+				 turn_left : integer,
+				 turn_right : integer,
+				 movement_op_complete in
+		[
+			loop
+				await execute_route;
+				var op_num : integer,
+						op_type : integer,
+						op_param : integer in
+					op_num := 0;
+
+					repeat get_num_ops(?execute_route) times
+
+						op_type := get_op(?execute_route, op_num);
+						op_param := get_param(?execute_route, op_num);
+
+						if (op_type = MOVE_FORWARD) then
+							emit CPUTS("for");
+							emit LCD_INT(op_param);							
+							emit move_forward(op_param);
+							await movement_op_complete;							
+						elsif (op_type = TURN_LEFT) then
+							emit CPUTS("left");
+							emit LCD_INT(op_param);											
+							emit turn_left(op_param);
+							await movement_op_complete;
+						elsif (op_type = TURN_RIGHT) then
+							emit CPUTS("right");
+							emit LCD_INT(op_param);											
+							emit turn_right(op_param);
+							await movement_op_complete;
+						elsif (op_type = PICKUP_ITEM) then
+							emit CPUTS("pick");
+							emit LCD_INT(op_param);									
+							emit pickup_item(op_param);							
+							await forklift_op_complete;
+						elsif (op_type = DROP_ITEM) then
+							emit CPUTS("drop");
+							emit LCD_INT(op_param);
+							emit drop_item(op_param);
+							await forklift_op_complete;														
+						end if;
+
+						op_num := op_num+1;
+						pause;
+					end repeat;
+					pause;
+					emit route_complete;
+				end var;
+			end loop;
+		||
+			loop
+				await 
+
+					case immediate move_forward do
+						run move_forward;
+
+					case immediate turn_left do
+						signal num_turns : integer, direction : integer in
+							emit num_turns(?turn_left/90);
+							emit direction(1); %left turn - primary sensor: light 1
+							run turn_robot [signal LIGHT_1 / light_sensor;
+															signal LIGHT_3 / secondary_light_sensor];					
+						end signal;
+
+					case immediate turn_right do
+						signal num_turns : integer, direction : integer in
+							emit num_turns(?turn_right/90);
+							emit direction(2); %right turn - primary sensor: light 3
+							run turn_robot [signal LIGHT_3 / light_sensor;
+															signal LIGHT_1 / secondary_light_sensor];
+						end signal;						
+
+				end await;				
+				pause;
+				emit movement_op_complete;
+
+			end loop;
+		];
+	end signal;
+end module
+
+%%% MOVE ROBOT FORWARD
+%%%%%%%%%%%%%%%%%%%%%%%%
+module move_forward:
+
+	constant MAX_SPEED : integer;
+	constant OFF = 0 : integer;
+	constant FWD = 1 : integer;
+	constant REV = 2 : integer;
+	constant BRAKE = 3 : integer;
+
+	output MOTOR_A_DIR : integer;
+	output MOTOR_A_SPEED : integer;
+
+	output MOTOR_B_DIR : integer;
+	output MOTOR_B_SPEED : integer;
+	
+	output LCD_INT : integer;
+
+	sensor LIGHT_1 : integer;
+	sensor LIGHT_2 : integer;
+	sensor LIGHT_3 : integer;
+	
+	constant grey = 43 : integer;
+	constant black = 33 : integer;
+
+	input move_forward : integer;
+
+	trap dest_reached in
+		signal dest_reached in
+			emit MOTOR_A_SPEED(120);
+			emit MOTOR_B_SPEED(30);
+			emit MOTOR_A_DIR(FWD);
+			emit MOTOR_B_DIR(OFF);		
+			[
+				loop
+					if (?LIGHT_1 < grey or ?LIGHT_3 < black) then		
+					%turning too far left
+						emit MOTOR_B_DIR(FWD);
+						trap on_line in
+							loop
+								if (?LIGHT_1 > grey or ?LIGHT_3 > black) then 
+									exit on_line;
+								end if;
+								pause;
+							end loop
+						end trap;
+						emit MOTOR_B_DIR(OFF);
+					end if;
+
+					if (?LIGHT_3 < grey or ?LIGHT_1 < black) then	
+					%turning too far right
+						emit MOTOR_B_DIR(REV);
+						trap on_line in
+							loop
+								if (?LIGHT_3 > grey or ?LIGHT_1 > black) then
+									exit on_line;
+								end if;
+								pause;
+							end loop
+						end trap;
+						emit MOTOR_B_DIR(OFF);
+					end if;
+					pause;
+				end loop;
+			||
+				var count : integer in
+				
+					count := 0;	
+					
+					await 40 tick;
+					
+					trap off_white in
+						loop
+							if (?LIGHT_2 < 49) then %so light2 is over a black square...
+								exit off_white;
+							end if;
+							pause;
+						end loop
+					end trap;	
+									
+					loop
+						trap on_white in
+							loop
+								if (?LIGHT_2 > 49) then %so light2 is over a white square...
+									exit on_white;
+								end if;
+								pause;
+							end loop
+						end trap;
+
+						trap on_dark_colour in
+							loop
+								if (?LIGHT_2 < 49) then %so light2 is over a black square...
+									exit on_dark_colour;
+								end if;
+								pause;
+							end loop
+						end trap;
+
+						count:= count+1;
+						if (count = ?move_forward) then
+							exit dest_reached;
+						end if;
+						pause;
+					end loop;
+				end var;
+			]
+		end signal
+	handle dest_reached do
+		pause;
+		emit MOTOR_A_DIR(BRAKE);
+		emit MOTOR_B_DIR(BRAKE);				
+	end trap;
+	
+end module
+
+
+
+
+%%% TURN ROBOT
+%%%%%%%%%%%%%%%%%%%%%%%%
+
+module turn_robot:
+
+	constant MAX_SPEED : integer;
+	constant OFF = 0 : integer;
+	constant FWD = 1 : integer;
+	constant REV = 2 : integer;
+	constant BRAKE = 3 : integer;
+
+	output MOTOR_A_DIR : integer;
+	output MOTOR_A_SPEED : integer;
+
+	output MOTOR_B_DIR : integer;
+	output MOTOR_B_SPEED : integer;
+	
+	output LCD_INT : integer;
+	
+	constant grey = 43 : integer;
+	constant black = 33 : integer;
+
+	input direction : integer;
+	input num_turns : integer;
+	sensor light_sensor : integer;
+	sensor secondary_light_sensor : integer;
+	
+
+	emit MOTOR_B_DIR(?direction);
+
+	repeat ?num_turns times
+	
+		emit MOTOR_B_SPEED(200);	
+		
+		%on black > test, move to white execute the rest
+		%on white > the rest (wait for grey first)
+		%on grey > pass through first trap instantly, continue as normal
+		if (?light_sensor < black) then
+			trap on_white in
+				loop
+					if (?light_sensor > grey) then
+						exit on_white;
+					end if;
+					pause;
+				end loop
+			end trap;
+		end if;	
+	
+		trap moved_off_line in
+			loop
+				if (?light_sensor < grey) then
+					exit moved_off_line;
+				end if;
+				pause;
+			end loop
+		end trap;
+
+		trap hit_white_line in
+			loop
+				if (?light_sensor > grey) then
+					exit hit_white_line;
+				end if;
+				pause;
+			end loop
+		end trap;
+
+		trap moved_off_line in
+			loop
+				if (?light_sensor < grey) then
+					exit moved_off_line;
+				end if;
+				pause;
+			end loop
+		end trap;
+
+		emit MOTOR_B_SPEED(50);	
+
+		trap hit_both_white_lines in
+			loop
+				if (?light_sensor > grey and ?secondary_light_sensor > grey) then
+					exit hit_both_white_lines;
+				end if;
+				pause;
+			end loop
+		end trap;
+
+		pause;
+	end repeat;	
+	emit MOTOR_B_DIR(BRAKE);	
+
+end module
+

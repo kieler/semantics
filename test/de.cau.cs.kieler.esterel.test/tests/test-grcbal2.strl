@@ -1,0 +1,25 @@
+module test_grcbal2:
+input A;
+input B;
+output C;
+output D;
+output E;
+
+loop
+  present A then
+    emit C
+  ||
+    present D then
+      nothing
+    else
+      emit E
+    end present
+  else
+    present [B or C] then
+      emit D
+    end present
+  end present;
+  pause
+end loop
+
+end module

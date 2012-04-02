@@ -1,0 +1,37 @@
+module test_scfg4:
+input B;
+input F;
+output C;
+output D;
+output E;
+output K;
+output H;
+output I;
+
+loop
+  trap T in
+    [
+      present B then
+        emit C
+      else
+        present F then
+          present E then
+            emit K;
+            exit T
+          end present
+        end present;
+        emit I;
+        present I then
+          emit H
+        end present
+      end present
+    ||
+      present C then
+        emit E
+      end present
+    ]
+  end trap;
+  pause
+end loop
+
+end module
