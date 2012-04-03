@@ -7,10 +7,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <properties>
-    <targetJdk>1.5</targetJdk>
-  </properties>
-
   <parent>
     <groupId>de.cau.cs.kieler</groupId>
     <artifactId>parent</artifactId>
@@ -188,37 +184,5 @@
     <module>org.ptolemy</module>
     <module>org.ptolemy.moml</module>
   </modules>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-pmd-plugin</artifactId>
-	<version>2.7.1</version>
-        <configuration>
-          <targetJdk>1.5</targetJdk>
-          <format>xml</format>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.codehaus.mojo</groupId>
-        <artifactId>findbugs-maven-plugin</artifactId>
-        <version>2.4.0</version>
-        <configuration>
-          <findbugsXmlOutput>true</findbugsXmlOutput>
-	  <failOnError>false</failOnError>
-	  <maxHeap>1024</maxHeap>
-        </configuration>
-        <executions>
-          <execution>
-            <goals>
-              <goal>check</goal>
-            </goals>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
-
 
 </project>
