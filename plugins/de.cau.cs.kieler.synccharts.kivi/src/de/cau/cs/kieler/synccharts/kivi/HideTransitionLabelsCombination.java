@@ -13,6 +13,11 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
@@ -20,6 +25,10 @@ import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
+import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.VisibilityManagerShowHideEffect;
+import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
+import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * This combination hides or shows transition labels upon the press of a button.
@@ -86,6 +95,36 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
      * @param diagram listen to DiagramTriggers.
      */
     public void execute(final ButtonState buttonState, final DiagramState diagram) {
-        // TODO: Implement.
+        // Check what actually triggered this combination
+        if (this.latestState() != buttonState) {
+            // We only react to button presses
+            return;
+        }
+        
+        // Check whether to show or to hide everything
+        boolean hide = buttonState.getButtonId().equals(HIDE_BUTTON_ID);
+        
+        // Get the editor and all of its edit parts
+        SyncchartsDiagramEditor editor = (SyncchartsDiagramEditor) diagram.getDiagramPart();
+        DiagramEditPart editPart = editor.getDiagramEditPart();
+        Collection<?> editParts = editPart.getViewer().getEditPartRegistry().values();
+        List<Object> list = new LinkedList<Object>();
+        for (Object ep : editParts) {
+            list.add(ep);
+        }
+        
+        // Iterate over all the edit parts in the diagram and show / hide those representing
+        // transition labels.
+        for (Object ep : list) {
+            if (ep instanceof TransitionLabelEditPart) {
+                this.schedule(new VisibilityManagerShowHideEffect(
+                        editor,
+                        (TransitionLabelEditPart) ep,
+                        hide));
+            }
+        }
+        
+        // Finally, schedule automatic layout
+        this.schedule(new LayoutEffect(diagram.getDiagramPart(), null, false, false, true));
     }
 }
