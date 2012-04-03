@@ -9,6 +9,7 @@
 
   <properties>
     <tycho-version>0.14.0</tycho-version>
+    <targetJdk>1.5</targetJdk>
   </properties>
 
 <!-- all plugins need to be listed as module -->
@@ -108,6 +109,98 @@
         </executions>
       </plugin>
 
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-checkstyle-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+          <configLocation>checks.xml</configLocation>
+	  <sourceDirectory>src</sourceDirectory>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-pmd-plugin</artifactId>
+        <version>2.7.1</version>
+        <configuration>
+          <targetJdk>1.5</targetJdk>
+          <format>xml</format>
+	  <!--  <aggregate>true</aggregate> -->
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>findbugs-maven-plugin</artifactId>
+        <version>2.4.0</version>
+        <configuration>
+          <xmlOutput>true</xmlOutput>
+          <failOnError>false</failOnError>
+          <maxHeap>1024</maxHeap>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+ 
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.8.1</version>
+        <configuration>
+          <taglets>
+            <taglet>
+              <tagletClass>de.cau.cs.kieler.taglets.GeneratedTaglet</tagletClass>
+              <tagletArtifact>
+                <groupId>de.cau.cs.kieler</groupId>
+                <artifactId>de.cau.cs.kieler.taglets</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+              </tagletArtifact>
+            </taglet>
+            <taglet>
+              <tagletClass>de.cau.cs.kieler.taglets.ModelTaglet</tagletClass>
+              <tagletArtifact>
+                <groupId>de.cau.cs.kieler</groupId>
+                <artifactId>de.cau.cs.kieler.taglets</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+              </tagletArtifact>
+            </taglet>
+            <taglet>
+              <tagletClass>de.cau.cs.kieler.taglets.OrderedTaglet</tagletClass>
+              <tagletArtifact>
+                <groupId>de.cau.cs.kieler</groupId>
+                <artifactId>de.cau.cs.kieler.taglets</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+              </tagletArtifact>
+            </taglet>
+            <taglet>
+              <tagletClass>de.cau.cs.kieler.taglets.RatingTaglet</tagletClass>
+              <tagletArtifact>
+                <groupId>de.cau.cs.kieler</groupId>
+                <artifactId>de.cau.cs.kieler.taglets</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+              </tagletArtifact>
+            </taglet>
+          </taglets>
+        </configuration>
+
+	<!--        <executions>
+          <execution>
+            <id>aggregate</id>
+            <goals>
+              <goal>aggregate</goal>
+            </goals>
+            <phase>integration-test</phase>
+          </execution>
+	</executions> -->
+      </plugin>
+
     
       <!-- as we have platform specific fragments we need to tell tycho about target platforms -->
       <plugin>
@@ -130,6 +223,11 @@
               <os>win32</os>
               <ws>win32</ws>
               <arch>x86</arch>
+            </environment>
+            <environment>
+              <os>win32</os>
+              <ws>win32</ws>
+              <arch>x86_64</arch>
             </environment>
             <environment>
               <os>macosx</os>
@@ -194,8 +292,6 @@
             </filesets>
           </configuration>
         </plugin>
-
-
       </plugins>
     </pluginManagement>
   </build>

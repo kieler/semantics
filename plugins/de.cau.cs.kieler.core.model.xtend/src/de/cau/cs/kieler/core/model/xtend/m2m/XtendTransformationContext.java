@@ -80,7 +80,7 @@ public class XtendTransformationContext implements ITransformationContext {
      */
     public void execute(final TransformationDescriptor descriptor) {
 
-        if (editingDomain != null) {
+        if (editingDomain != null && editingDomain.getCommandStack() != null) {
             // FIXME workaround to avoid deadlock with FireOnceTriggerListener
             MonitoredOperation.runInUI(new Runnable() {
 

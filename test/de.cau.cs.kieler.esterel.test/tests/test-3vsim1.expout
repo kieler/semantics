@@ -1,0 +1,27 @@
+module test_3vsim1:
+input A;
+input B;
+input C;
+output X;
+output Y;
+output W;
+output V;
+
+loop
+  present A then
+    present B then
+      emit X
+    else
+      emit Y
+    end present
+  else
+    present C then
+      emit W
+    else
+      emit V
+    end present
+  end present;
+  pause
+end loop
+
+end module

@@ -1,0 +1,19 @@
+module test_emit5:
+function identity(integer) : integer;
+output A : integer;
+
+signal B : integer in
+  var x := 1 : integer in
+    loop
+      [
+        emit B(x)
+      ||
+        emit A(identity(?B))
+      ];
+      pause;
+      x := x + 7
+    end loop
+  end var
+end signal
+
+end module

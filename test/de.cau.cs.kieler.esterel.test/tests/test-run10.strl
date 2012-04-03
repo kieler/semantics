@@ -1,0 +1,28 @@
+module Test_Run10:
+constant c1 = 5 : integer;
+
+var v1 : integer in
+  run Foo [
+    constant c1 / c2,
+             42 / c3,
+             5 / c4 ]
+end var
+
+end module
+
+module Foo:
+constant c1 = 5 : integer;
+constant c2 : integer;
+constant c3 : integer;
+constant c4 : integer;
+constant c5 = 8 : integer;
+
+var a : integer in
+  a := c1;
+  a := c2;
+  a := c3;
+  a := c4;
+  a := c5
+end var
+
+end module

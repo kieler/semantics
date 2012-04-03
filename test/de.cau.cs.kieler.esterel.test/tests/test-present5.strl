@@ -1,0 +1,16 @@
+module test_present5:
+input A;
+input B;
+input C;
+output D;
+output E;
+
+present
+  case A do
+     emit D
+  case B
+  case C do
+     emit E
+end present
+
+end module

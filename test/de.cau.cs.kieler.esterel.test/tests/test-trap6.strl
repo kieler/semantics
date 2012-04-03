@@ -1,0 +1,23 @@
+module test_trap6:
+output A;
+output B;
+
+trap T1 : integer,
+     T2 := 3 : integer,
+     T3 in
+    pause
+  ||
+    exit T1(5)
+  ||
+    exit T2(8)
+  ||
+    exit T3
+handle T1 do
+  emit A
+handle T2 do
+  emit B
+handle T3 do
+  nothing
+end trap
+
+end module

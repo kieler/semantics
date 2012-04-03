@@ -1,0 +1,18 @@
+module Top:
+input A;
+output B;
+
+run Emitter;
+pause
+
+end module
+
+module Emitter:
+input A;
+output B;
+
+present A then
+  emit B
+end present
+
+end module

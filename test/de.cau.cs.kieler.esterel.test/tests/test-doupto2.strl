@@ -1,0 +1,12 @@
+module test_doupto2:
+input A;
+input B;
+
+do
+ do
+   nothing;
+   pause
+ upto B
+upto A
+
+end module

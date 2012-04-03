@@ -1,0 +1,42 @@
+module lego1:
+constant MOTOR_FWD : integer;
+constant MOTOR_REV : integer;
+constant MAX_SPEED : integer;
+input TOUCH_1;
+input TOUCH_3;
+output MOTOR_A_SPEED : integer;
+output MOTOR_C_SPEED : integer;
+output MOTOR_A_DIR : integer;
+output MOTOR_C_DIR : integer;
+output CPUTS : integer;
+relation TOUCH_1 # TOUCH_3;
+
+var t : integer in
+  emit MOTOR_A_SPEED(MAX_SPEED / 2);
+  emit MOTOR_C_SPEED(MAX_SPEED / 2);
+  loop
+    emit MOTOR_A_DIR(MOTOR_FWD);
+    emit MOTOR_C_DIR(MOTOR_FWD);
+    emit CPUTS(1);
+    await [TOUCH_1 or TOUCH_3];
+    present TOUCH_1 then
+      t := 1
+    else
+      t := 3
+    end present;
+    emit MOTOR_A_DIR(MOTOR_REV);
+    emit MOTOR_C_DIR(MOTOR_REV);
+    emit CPUTS(2);
+    await 100 tick;
+    if t = 1 then
+      emit MOTOR_A_DIR(MOTOR_FWD);
+      emit CPUTS(4)
+    else
+      emit MOTOR_C_DIR(MOTOR_FWD);
+      emit CPUTS(3)
+    end if;
+    await 100 tick
+  end loop
+end var
+
+end module

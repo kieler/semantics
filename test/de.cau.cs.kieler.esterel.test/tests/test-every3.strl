@@ -1,0 +1,14 @@
+module test_every3:
+output A;
+output B;
+
+  every 5 tick do
+    emit A;
+    emit B
+  end every
+||
+  every 3 tick do
+    emit B
+  end every
+
+end module
