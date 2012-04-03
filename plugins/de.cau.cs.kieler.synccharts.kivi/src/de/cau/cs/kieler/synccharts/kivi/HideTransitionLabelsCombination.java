@@ -18,6 +18,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
+import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
@@ -60,12 +61,18 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
      * Creates a new instance and registers the two toolbar buttons associated with this combination.
      */
     public HideTransitionLabelsCombination() {
+        ImageDescriptor iconHide = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/labelsHide.png");
+        ImageDescriptor iconShow = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
+                "icons/labelsShow.png");
+        
+        
         KiviMenuContributionService.INSTANCE.addToolbarButton(
                 this,
                 SHOW_BUTTON_ID,
                 "Show Transition Labels",
                 "Shows all transition labels and triggers automatic layout.",
-                null,  // ICON!
+                iconShow,
                 SWT.PUSH,
                 LocationScheme.TOOLBAR,
                 null,
@@ -78,7 +85,7 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
                 HIDE_BUTTON_ID,
                 "Hide Transition Labels",
                 "Hides all transition labels and triggers automatic layout.",
-                null,  // ICON!
+                iconHide,
                 SWT.PUSH,
                 LocationScheme.TOOLBAR,
                 null,
