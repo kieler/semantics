@@ -109,8 +109,9 @@ public class SyncChartsCombination extends AbstractCombination {
     }
     
     private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
-        	new CombinationParameter<RGB>(ERROR_HIGHLIGHT_COLOR, getPreferenceStore(), "Error Highlight Color",
-                "The color to use for highlighting erroneous states", new RGB(255, 0, 255)),
+            new CombinationParameter<RGB>(ERROR_HIGHLIGHT_COLOR, getPreferenceStore(),
+                    "Error Highlight Color", "The color to use for highlighting erroneous states",
+                    new RGB(255, 0, 255)),
             new CombinationParameter<RGB>(HIGHLIGHT_COLOR, getPreferenceStore(), "Highlight Color",
                     "The color to use for highlighting active states", ColorConstants.red.getRGB()),
             new CombinationParameter<RGB>(HIGHLIGHT_BGCOLOR, getPreferenceStore(),
@@ -157,8 +158,8 @@ public class SyncChartsCombination extends AbstractCombination {
         undoRecordedEffects();
         // if there are no active states, the simulation has finished.
         if ((activeStates.getActiveStates().isEmpty()
-                || activeStates.getActiveStates().get(0).isEmpty()) && 
-                (activeStates.getErrorStates().isEmpty()
+                || activeStates.getActiveStates().get(0).isEmpty())
+                && (activeStates.getErrorStates().isEmpty()
                 || activeStates.getErrorStates().get(0).isEmpty())) {
             // schedule layout effect to ensure that layout is triggered after simulation is
             //completed and all undos are executed
@@ -194,7 +195,7 @@ public class SyncChartsCombination extends AbstractCombination {
         // highlight history states
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
-        	//Active states
+            //Active states
             List<EObject> currentEObjectList = activeStates.getActiveStates().get(i);
             for (EObject eObject : currentEObjectList) {
                 if (getPreferenceStore().getBoolean(BW_MODE) && i != 0) {
@@ -209,13 +210,15 @@ public class SyncChartsCombination extends AbstractCombination {
             }
             //Error states
             List<EObject> errorEObjectList = activeStates.getErrorStates().get(i);
-            Color errorColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(), ERROR_HIGHLIGHT_COLOR));
+            Color errorColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                    ERROR_HIGHLIGHT_COLOR));
             for (EObject eObject : errorEObjectList) {
                 if (getPreferenceStore().getBoolean(BW_MODE) && i != 0) {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor, getBackgroundColor(i, activeStates.getErrorStates().size()), SWT.LINE_DOT));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor,
+                            getBackgroundColor(i, activeStates.getErrorStates().size()), SWT.LINE_DOT));
                 } else {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor, getBackgroundColor(i,
-                            activeStates.getErrorStates().size())));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor,
+                            getBackgroundColor(i, activeStates.getErrorStates().size())));
                 }
             }
         }

@@ -21,9 +21,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.util.Maybe;
-import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
-import de.cau.cs.kieler.sim.kivi.StateActivityTrigger;
 
 /**
  * A data component that observes the activity of syncchart states during simulation.
