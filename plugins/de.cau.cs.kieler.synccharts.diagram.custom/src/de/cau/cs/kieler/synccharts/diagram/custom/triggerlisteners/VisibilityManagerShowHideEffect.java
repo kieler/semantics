@@ -21,8 +21,7 @@ import de.cau.cs.kieler.core.model.effects.ShowHideEffect;
 /**
  * Uses the {@link VisibilityManager} to show or hide edit parts. Doing it this way ensures that
  * this modification survives a layout effect. Beware, however: this is pretty much a hack that
- * will become obsolete once KLighD arrives. Undo isn't properly supported, for instance. All hail
- * KLighD!
+ * will become obsolete once KLighD arrives. All hail KLighD!
  * 
  * @author cds
  */
@@ -55,8 +54,8 @@ public class VisibilityManagerShowHideEffect extends ShowHideEffect {
      */
     @Override
     public void execute() {
-        // TODO: Remember if the edit part is currently visible
-        originalVisible = editPart.getFigure().isVisible();
+        // Remember if the edit part is currently visible
+        originalVisible = !VisibilityManager.hasHidden(editor, editPart);
         
         if (hide) {
             VisibilityManager.hide(editor, editPart);
