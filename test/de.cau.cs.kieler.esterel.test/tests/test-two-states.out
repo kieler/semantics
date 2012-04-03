@@ -1,0 +1,16 @@
+module TWO_STATES:
+input On;
+input Off;
+output IsOn;
+output IsOff;
+
+loop
+  abort
+    sustain IsOff
+  when On;
+  abort
+    sustain IsOn
+  when Off
+end loop
+
+end module

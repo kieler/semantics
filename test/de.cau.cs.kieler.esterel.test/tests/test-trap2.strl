@@ -1,0 +1,7 @@
+module test_trap2:
+
+trap T in
+  exit T
+end trap
+
+end module

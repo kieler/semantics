@@ -1,0 +1,12 @@
+module test_signal6:
+constant A = 3 : integer;
+constant B : integer;
+constant C : integer;
+input A;
+input B;
+
+signal C in
+  nothing
+end signal
+
+end module

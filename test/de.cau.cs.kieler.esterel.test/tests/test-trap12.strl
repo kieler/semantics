@@ -1,0 +1,18 @@
+module test_trap12:
+output A;
+output B;
+output C;
+output D;
+
+trap T in
+  emit A;
+  pause;
+  emit B;
+  exit T
+handle T do
+  emit C;
+  pause;
+  emit D
+end trap
+
+end module

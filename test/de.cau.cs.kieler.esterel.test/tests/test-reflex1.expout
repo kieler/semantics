@@ -1,0 +1,84 @@
+module REFLEX_GAME:
+constant LIMIT_TIME : integer;
+constant MEASURE_NUMBER : integer;
+constant PAUSE_LENGTH : integer;
+function RANDOM() : integer;
+input MS;
+input COIN;
+input READY;
+input STOP;
+output DISPLAY : integer;
+output GO_ON;
+output GO_OFF;
+output GAME_OVER_ON;
+output GAME_OVER_OFF;
+output TILT_ON;
+output TILT_OFF;
+output RING_BELL;
+relation MS # COIN # READY;
+relation COIN # STOP;
+relation READY # STOP;
+
+emit DISPLAY(0);
+emit GO_OFF;
+emit GAME_OVER_ON;
+emit TILT_OFF;
+every COIN do
+  emit DISPLAY(0);
+  emit GO_OFF;
+  emit GAME_OVER_OFF;
+  emit TILT_OFF;
+  trap ERROR in
+    var TOTAL_TIME := 0 : integer in
+      repeat MEASURE_NUMBER times
+        do
+          do
+            every STOP do
+              emit RING_BELL
+            end every
+          upto READY
+        watching LIMIT_TIME MS timeout
+          exit ERROR
+        end timeout;
+        trap END_MEASURE in
+          [
+            every READY do
+              emit RING_BELL
+            end every
+          ||
+            do
+              await RANDOM() MS
+            watching STOP timeout
+              exit ERROR
+            end timeout;
+            emit GO_ON;
+            do
+              var TIME := 0 : integer in
+                do
+                  every MS do
+                    TIME := TIME + 1
+                  end every
+                upto STOP;
+                emit DISPLAY(TIME);
+                TOTAL_TIME := TOTAL_TIME + TIME
+              end var
+            watching LIMIT_TIME MS timeout
+              exit ERROR
+            end timeout;
+            emit GO_OFF;
+            exit END_MEASURE
+          ]
+        end trap
+      end repeat;
+      await PAUSE_LENGTH MS do
+        emit DISPLAY(TOTAL_TIME / MEASURE_NUMBER)
+      end await
+    end var
+  handle ERROR do
+    emit TILT_ON;
+    emit GO_OFF
+  end trap;
+  emit GAME_OVER_ON
+end every
+
+end module

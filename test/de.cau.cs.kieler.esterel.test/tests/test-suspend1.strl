@@ -1,0 +1,20 @@
+module test_suspend1:
+input A;
+output B;
+output C;
+output D;
+output E;
+output F;
+
+suspend
+  emit B;
+  pause;
+  emit C;
+  pause;
+  emit D
+when A;
+emit E;
+pause;
+emit F
+
+end module

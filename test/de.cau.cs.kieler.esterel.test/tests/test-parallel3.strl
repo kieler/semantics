@@ -1,0 +1,18 @@
+module test_parallel3:
+output A;
+output B;
+output C;
+output D;
+
+  loop
+    emit A;
+    pause;
+    emit B;
+    pause
+  end loop
+||
+  emit C;
+  pause;
+  emit D
+
+end module

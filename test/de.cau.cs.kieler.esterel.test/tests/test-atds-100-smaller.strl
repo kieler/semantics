@@ -1,0 +1,606 @@
+module atds:
+input modeT;
+input modeC;
+input modeE;
+input add_vme;
+input data_vme;
+input cmd_vme;
+input adem_vme;
+input dem_vme;
+input stop;
+input add_in;
+input dem_in;
+input data_in;
+input add_clk;
+input data_clk;
+input err;
+input egal;
+input sout;
+output raz_reg;
+output raz_bit;
+output raz_stop;
+output it_data_T;
+output it_data_C;
+output it_add;
+output it_err;
+output it_adem;
+output it_dem;
+output sin;
+output sclk;
+output ld1;
+output ld2;
+output mem_clk;
+output paren;
+output dem;
+output data_out;
+output data_clk_out;
+output add_out;
+output add_clk_out;
+output L1;
+output L2;
+relation modeT # modeC # modeE;
+relation cmd_vme # adem_vme # dem_vme # stop;
+relation add_in # data_in;
+relation add_clk # data_clk;
+relation add_in # data_clk;
+relation data_in # add_clk;
+relation add_vme # data_vme # adem_vme # dem_vme # cmd_vme # stop;
+
+signal IS_DATA in
+loop
+  await 
+    case modeT do
+      trap MODE in
+        loop
+          await 
+            case immediate cmd_vme do
+              repeat 6 times
+                emit dem;
+                await tick
+              end repeat;
+              emit raz_reg;
+              repeat 2 times
+                emit ld1;
+                await tick;
+                emit ld1;
+                emit sclk;
+                repeat 26 times
+                  await data_clk;
+                  present sout then
+                    repeat 6 times
+                      emit data_out;
+                      await tick
+                    end repeat
+                  end present;
+                  emit sclk;
+                  await immediate [not data_clk]
+                end repeat
+              end repeat;
+              await 
+                case err do
+                  emit it_err
+                case cmd_vme
+                case adem_vme
+                case [not modeT]
+              end await
+            case immediate adem_vme do
+              await immediate adem_vme do
+                [
+                  repeat 6 times
+                    emit dem;
+                    await tick
+                  end repeat
+                ||
+                  repeat 6 times
+                    emit data_out;
+                    await tick
+                  end repeat
+                ]
+              end await;
+              trap ACQADD,
+                   DEM_VME in
+                [
+                  await immediate add_clk;
+                  exit ACQADD
+                ||
+                  await immediate add_in;
+                  exit ACQADD
+                ||
+                  await immediate dem_vme;
+                  exit DEM_VME
+                ]
+              handle ACQADD do
+                trap EndAddress in
+                  [
+                    loop
+                      trap DATA in
+                          [
+                            await immediate add_clk;
+                            await tick;
+%                            present IS_DATA then
+                              emit sin;
+                              await tick;
+                              emit sin;
+%                            end present;
+                            exit DATA
+                          ||
+                            await immediate add_in;
+                            sustain IS_DATA
+                          ]
+                      end trap;
+                      emit sclk;
+                      await immediate [not add_clk]
+                    end loop
+                  ||
+                    await 7 sclk;
+                    exit EndAddress
+                  ]
+                end trap;
+                signal NULL in
+                  emit paren;
+                  await tick;
+                  emit paren;
+                  emit mem_clk;
+                  emit NULL
+                end signal;
+                emit it_add
+              end trap;
+              trap ACQDATA in
+                loop
+                  await 
+                    case immediate dem_vme do
+                      repeat 6 times
+                        emit dem;
+                        await tick
+                      end repeat;
+                      emit raz_bit;
+                      trap EndData in
+                        [
+                          loop
+                            trap DATA in
+                                [
+                                  await immediate data_clk;
+                                  await tick;
+%                                  present IS_DATA then
+                                    emit sin;
+                                    await tick;
+                                    emit sin;
+%                                  end present;
+                                  exit DATA
+                                ||
+                                  await immediate data_in;
+                                  sustain IS_DATA
+                                ]
+                            end trap;
+                            emit sclk;
+                            await immediate [not data_clk]
+                          end loop
+                        ||
+                          await 26 sclk;
+                          exit EndData
+                        ]
+                      end trap;
+                      signal NULL in
+                        emit paren;
+                        await tick;
+                        emit paren;
+                        emit mem_clk;
+                        emit NULL
+                      end signal;
+                      emit it_data_T;
+                      emit ld2;
+                      await tick;
+                      emit ld2;
+                      emit sclk;
+                      repeat 26 times
+                        await data_clk;
+                        present sout then
+                          repeat 6 times
+                            emit data_out;
+                            await tick
+                          end repeat
+                        end present;
+                        emit sclk;
+                        await immediate [not data_clk]
+                      end repeat
+                    case stop do
+                      emit raz_stop;
+                      exit ACQDATA
+                    case err do
+                      emit it_err;
+                      exit ACQDATA
+                    case cmd_vme do
+                      exit ACQDATA
+                    case [not modeT] do
+                      exit ACQDATA
+                  end await
+                end loop
+              end trap
+            case immediate [not modeT] do
+              exit MODE
+          end await
+        end loop
+      end trap
+    case modeC do
+      trap MODE in
+        loop
+            trap ADVDEM in
+                await 
+                  case immediate data_in do
+                    sustain IS_DATA
+                  case immediate [not modeC] do
+                    exit MODE
+                end await
+              ||
+                await immediate dem_in;
+                await tick;
+                await tick;
+                await tick;
+                present tick then
+                  emit it_adem;
+                  trap STOP in
+                    loop
+                      await 
+                        case add_vme do
+                          emit raz_reg;
+                          trap ADRESSE in
+                            [
+                              emit ld1;
+                              await tick;
+                              emit ld1;
+                              emit sclk;
+                              await tick;
+                              loop
+                                await tick;
+                                present sout then
+                                  [
+                                    repeat 2 times
+                                      emit add_clk_out;
+                                      await tick
+                                    end repeat
+                                  ||
+                                    repeat 2 times
+                                      emit add_out;
+                                      await tick
+                                    end repeat
+                                  ]
+                                else
+                                  repeat 2 times
+                                    emit add_clk_out;
+                                    await tick
+                                  end repeat
+                                end present;
+                                emit sclk;
+                                await 31 tick
+                              end loop
+                            ||
+                              await 7 add_clk_out;
+                              await tick;
+                              exit ADRESSE
+                            ]
+                          end trap
+                        case dem_in do
+                          emit it_dem;
+                          await data_vme;
+                          emit raz_reg;
+                          trap DONNEES in
+                            [
+                              emit ld1;
+                              await tick;
+                              emit ld1;
+                              emit sclk;
+                              await tick;
+                              loop
+                                await tick;
+                                present sout then
+                                  [
+                                    repeat 2 times
+                                      emit data_clk_out;
+                                      await tick
+                                    end repeat
+                                  ||
+                                    repeat 2 times
+                                      emit data_out;
+                                      await tick
+                                    end repeat
+                                  ]
+                                else
+                                  repeat 2 times
+                                    emit data_clk_out;
+                                    await tick
+                                  end repeat
+                                end present;
+                                emit sclk;
+                                await 31 tick
+                              end loop
+                            ||
+                              await 26 data_clk_out;
+                              await tick;
+                              exit DONNEES
+                            ]
+                          end trap;
+                          await 46 tick;
+                          repeat 26 times
+                            await 22 tick;
+                            repeat 2 times
+                              emit data_clk_out;
+                              await tick
+                            end repeat;
+                              trap DATA in
+                                [
+                                  await immediate data_in do
+                                    sustain IS_DATA
+                                  end await
+                                ||
+                                  await 8 tick;
+                                  present tick then
+                                    emit sin;
+                                    await tick;
+                                    emit sin
+                                  end present;
+                                  exit DATA
+                                ]
+                              end trap;
+                            emit sclk;
+                            await tick
+                          end repeat;
+                          await 57 tick;
+                          emit paren;
+                          await tick;
+                          emit paren;
+                          emit mem_clk;
+                          emit L2;
+                          await tick;
+                          present egal else
+                            repeat 2 times
+                              emit data_out;
+                              await tick
+                            end repeat;
+                            exit STOP
+                          end present
+                        case stop do
+                          emit raz_stop;
+                          exit STOP
+                        case [not modeC] do
+                          exit STOP
+                      end await
+                    end loop
+                  end trap
+                else
+                  trap RECDATA in
+                    signal fin_1,
+                           first in
+                      [
+                        repeat 2 times
+                          repeat 26 times
+                            await 22 tick;
+                            repeat 2 times
+                              emit data_clk_out;
+                              await tick
+                            end repeat;
+                              trap DATA in
+                                [
+                                  await immediate data_in do
+                                    sustain IS_DATA
+                                  end await
+                                ||
+                                  await 8 tick;
+                                  present tick then
+                                    emit sin;
+                                    await tick;
+                                    emit sin
+                                  end present;
+                                  exit DATA
+                                ]
+                              end trap;
+                            emit sclk;
+                            await tick
+                          end repeat;
+                          await 57 tick;
+                          emit fin_1;
+                          present first then
+                            emit paren;
+                            await tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit L1;
+                            emit it_data_C;
+                            await tick
+                          else
+                            emit paren;
+                            await tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit L2;
+                            exit RECDATA
+                          end present
+                        end repeat
+                      ||
+                        await fin_1 do
+                          emit first
+                        end await
+                      ]
+                    end signal
+                  end trap;
+                  await tick;
+                  present egal else
+                    repeat 2 times
+                      emit data_out;
+                      await tick
+                    end repeat
+                  end present
+                end present;
+                exit ADVDEM
+            end trap
+        end loop
+      end trap
+    case modeE do
+      trap MODE in
+        loop
+            trap ADVDEM in
+                await 
+                  case immediate data_in do
+                    sustain IS_DATA
+                  case immediate [not modeE] do
+                    exit MODE
+                end await
+              ||
+                await immediate dem_in;
+                await tick;
+                await tick;
+                await tick;
+                present tick then
+                  emit it_adem;
+                  trap ACQADD,
+                       DEM_VME in
+                    [
+                      await  add_clk;
+                      exit ACQADD
+                    ||
+                      await  add_in;
+                      exit ACQADD
+                    ||
+                      await  dem_in;
+                      exit DEM_VME
+                    ]
+                  handle ACQADD do
+                    trap EndAddress in
+                      [
+                        loop
+                          trap DATA in
+                              [
+                                await immediate add_clk;
+                                await tick;
+                                present tick then
+                                  emit sin;
+                                  await tick;
+                                  emit sin
+                                end present;
+                                exit DATA
+                              ||
+                                await immediate add_in;
+                                sustain IS_DATA
+                              ]
+                          end trap;
+                          emit sclk;
+                          await immediate [not add_clk]
+                        end loop
+                      ||
+                        await 7 sclk;
+                        exit EndAddress
+                      ]
+                    end trap;
+                    signal NULL in
+                      emit paren;
+                      await tick;
+                      emit paren;
+                      emit mem_clk;
+                      emit NULL
+                    end signal;
+                    emit it_add
+                  end trap;
+                  trap ACQDATA in
+                    loop
+                      await 
+                        case immediate dem_in do
+                          emit it_dem;
+                          trap EndData in
+                            [
+                              loop
+                                trap DATA in
+                                    [
+                                      await immediate data_clk;
+                                      await tick;
+                                      present tick then
+                                        emit sin;
+                                        await tick;
+                                        emit sin
+                                      end present;
+                                      exit DATA
+                                    ||
+                                      await immediate data_in;
+                                      sustain IS_DATA
+                                    ]
+                                end trap;
+                                emit sclk;
+                                await immediate [not data_clk]
+                              end loop
+                            ||
+                              await 26 sclk;
+                              exit EndData
+                            ]
+                          end trap;
+                          signal NULL in
+                            emit paren;
+                            await tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit NULL
+                          end signal;
+                          emit it_data_T
+                        case stop do
+                          emit raz_stop;
+                          exit ACQDATA
+                        case err do
+                          emit it_err;
+                          exit ACQDATA
+                      end await
+                    end loop
+                  end trap
+                else
+                  trap ACQDATA in
+                    loop
+                      await 
+                        case immediate dem_in do
+                          trap EndData in
+                            [
+                              loop
+                                trap DATA in
+                                    [
+                                      await immediate data_clk;
+                                      await tick;
+                                      present tick then
+                                        emit sin;
+                                        await tick;
+                                        emit sin
+                                      end present;
+                                      exit DATA
+                                    ||
+                                      await immediate data_in;
+                                      sustain IS_DATA
+                                    ]
+                                end trap;
+                                emit sclk;
+                                await immediate [not data_clk]
+                              end loop
+                            ||
+                              await 26 sclk;
+                              exit EndData
+                            ]
+                          end trap;
+                          signal NULL in
+                            emit paren;
+                            await tick;
+                            emit paren;
+                            emit mem_clk;
+                            emit NULL
+                          end signal;
+                          emit it_data_T
+                        case stop do
+                          emit raz_stop;
+                          exit ACQDATA
+                        case err do
+                          emit it_err;
+                          exit ACQDATA
+                      end await
+                    end loop
+                  end trap
+                end present
+            end trap
+        end loop
+      end trap
+  end await
+end loop
+end signal
+
+end module

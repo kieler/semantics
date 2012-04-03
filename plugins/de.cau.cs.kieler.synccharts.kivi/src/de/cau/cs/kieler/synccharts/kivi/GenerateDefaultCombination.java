@@ -20,8 +20,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
@@ -33,11 +31,9 @@ import org.eclipse.emf.transaction.NotificationFilter;
 import org.eclipse.emf.transaction.ResourceSetChangeEvent;
 import org.eclipse.emf.transaction.ResourceSetListener;
 import org.eclipse.emf.transaction.RollbackException;
-import org.eclipse.gmf.runtime.diagram.core.DiagramEditingDomainFactory;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
 import de.cau.cs.kieler.core.model.xtend.m2m.XtendTransformationContext;
@@ -49,17 +45,23 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
  * 
- * This combination is used for creating a default state on empty SyscchartsDiagrams.
+ * This combination is used for creating a default state on empty synccharts regions.
  * 
  * @author ckru
  * 
  */
 public class GenerateDefaultCombination extends AbstractCombination implements ResourceSetListener {
 
-    String absolutePath = null;
+    private String absolutePath = null;
 
-    SyncchartsDiagramEditor lastEditor = null;
+    private SyncchartsDiagramEditor lastEditor = null;
 
+    /**
+     * Constructor, will create a copy of the transformation file and save it to the resources plugin.
+     * Reason for this is that it normally would be packed to the jar along with the classes and thus
+     * would not exist as a real file on the filesystem. The xtend transformation framework however
+     * only works with real files.
+     */
     public GenerateDefaultCombination() {
         InputStream inStream;
         StringBuffer contentBuffer = new StringBuffer();
@@ -109,11 +111,13 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
                 absolutePath = file.getAbsolutePath();
             }
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public void execute(final DiagramState diagram) {
         if (diagram.getDiagramPart() instanceof SyncchartsDiagramEditor) {
             SyncchartsDiagramEditor sde = (SyncchartsDiagramEditor) diagram.getDiagramPart();
@@ -123,7 +127,7 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
             try {
                 sde.getEditingDomain().addResourceSetListener(this);
             } catch (NullPointerException npe) {
-                //we can't register ourself now. Nothing to do about it, try again later
+                // we can't register ourself now. Nothing to do about it, try again later
             }
             EList<State> states = r.getStates();
             EList<Signal> signals = r.getSignals();
@@ -146,17 +150,25 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public NotificationFilter getFilter() {
-        // TODO Auto-generated method stub
         return null;
     }
 
-    public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
-        // TODO Auto-generated method stub
+    /**
+     * {@inheritDoc}
+     */
+    public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
+            throws RollbackException {
         return null;
     }
 
-    public void resourceSetChanged(ResourceSetChangeEvent event) {
+    /**
+     * {@inheritDoc}
+     */
+    public void resourceSetChanged(final ResourceSetChangeEvent event) {
         LayoutEffect layout = null;
         XtendTransformationEffect effect = null;
         for (Notification n : event.getNotifications()) {
@@ -202,18 +214,24 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isAggregatePrecommitListener() {
-        // TODO Auto-generated method stub
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isPrecommitOnly() {
-        // TODO Auto-generated method stub
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     public boolean isPostcommitOnly() {
-        // TODO Auto-generated method stub
         return true;
     }
 
