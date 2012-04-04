@@ -108,6 +108,11 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
             return;
         }
         
+        // Check if the editor is a SyncChartsEditor
+        if (!(diagram.getDiagramPart() instanceof SyncchartsDiagramEditor)) {
+            return;
+        }
+        
         // Check whether to show or to hide everything
         boolean hide = buttonState.getButtonId().equals(HIDE_BUTTON_ID);
         
