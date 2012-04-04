@@ -13,11 +13,14 @@
  */
 package de.cau.cs.kieler.esterel.test;
 
+import static org.junit.Assert.*;
+
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -35,7 +38,9 @@ import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.validation.IConcreteSyntaxValidator.InvalidConcreteSyntaxException;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.google.inject.Injector;
 
@@ -51,7 +56,7 @@ import de.cau.cs.kieler.esterel.EsterelStandaloneSetup;
  * @author uru
  * 
  */
-public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
+public class TestEsterelGrammar { // CHSCH: extends AbstractXtextTests {
 
     /** in ms. */
     private static final int SERIALIZATION_TIME_LIMIT = 4000;
@@ -108,6 +113,10 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
         filesRest = dir.listFiles(fileFilterRest);
     }
 
+    /** modified by wah */
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     /**
      * test all available files which are supposed to be successful.
      * 
@@ -116,10 +125,17 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
      */
     @Test
     public void testSuccFiles() throws Exception {
-        if (filesTest == null) {
-            throw new Exception("No files to test!");
-        }
+
+        // if (filesTest == null) {
+        // throw new Exception("No files to test!");
+        // }
         // store errors for each file
+        /** modified by wah */
+        if (filesTest == null) {
+            thrown.expect(FileNotFoundException.class);
+            thrown.expectMessage("No files to test!");
+        }
+
         HashMap<String, String> errors = new HashMap<String, String>();
         for (File f : filesTest) {
 
@@ -157,14 +173,29 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
         }
 
         // print each error in a readable way
+        // if (errors.size() >= 1) {
+        // int i = 0;
+        // for (String name : errors.keySet()) {
+        // System.out.println(i++ + ". Error in " + name + ":");
+        // System.out.println(errors.get(name));
+        // System.out.println("-----------------------------------------------------\n");
+        // }
+        // throw new Exception("Of " + filesTest.length + " were " + errors.size() + " erroneous");
+        // }
+        /** modified by wah */
+        // exception messages for errors
         if (errors.size() >= 1) {
+            String errormsg = "******";
             int i = 0;
             for (String name : errors.keySet()) {
-                System.out.println(i++ + ". Error in " + name + ":");
-                System.out.println(errors.get(name));
-                System.out.println("-----------------------------------------------------\n");
+                errormsg  = "-----";
+                errormsg += i++ + ". Error in " + name + ":";
+                errormsg += errors.get(name) + "";
+                errormsg += "-----";
             }
-            throw new Exception("Of " + filesTest.length + " were " + errors.size() + " erroneous");
+            errormsg += "Of " + filesTest.length + " were " + errors.size() + " erroneous";
+            errormsg = "******";
+            thrown.expectMessage(errormsg);
         }
     }
 
@@ -177,8 +208,13 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
      */
     @Test
     public void testFailFiles() throws Exception {
+        // if (filesFail == null) {
+        // throw new Exception("No files to test!");
+        // }
+        /** modified by wah */
         if (filesFail == null) {
-            throw new Exception("No files to test!");
+            thrown.expect(FileNotFoundException.class);
+            thrown.expectMessage("No files to test!");
         }
         // store all files that succeed
         HashMap<String, String> errors = new HashMap<String, String>();
@@ -202,16 +238,30 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
         }
 
         // print readable information
+        // if (errors.size() >= 1) {
+        // int i = 0;
+        // for (String name : errors.keySet()) {
+        // System.out.println(i++ + ". Error in " + name + ":");
+        // System.out.println(errors.get(name));
+        // System.out.println();
+        // System.out.println("-----------------------------------------------------\n");
+        // }
+        // throw new Exception("Of " + filesFail.length + " were " + errors.size() + " erroneous");
+        // }
+        /** modified by wah */
+        // exception messages for errors
         if (errors.size() >= 1) {
+            String errormsg = "******";
             int i = 0;
             for (String name : errors.keySet()) {
-                System.out.println(i++ + ". Error in " + name + ":");
-                System.out.println(errors.get(name));
-                System.out.println();
-                System.out.println("-----------------------------------------------------\n");
+                errormsg += i++ + ". Error in " + name + ":\n";
+                errormsg += errors.get(name) + "\n";
+                errormsg += "-----------------------------------------------------\n";
             }
-            throw new Exception("Of " + filesFail.length + " were " + errors.size() + " erroneous");
+            errormsg += "Of " + filesFail.length + " were " + errors.size() + " erroneous\n";
+            thrown.expectMessage(errormsg);
         }
+       
 
     }
 
@@ -289,7 +339,10 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
             }
 
         } catch (Exception e) {
-            System.out.println("Some Thread error");
+            // System.out.println("Some Thread error");
+            /** modified by wah */
+            thrown.expectMessage("Some Thread error");
+
         }
         return possibleException.get();
     }
@@ -325,25 +378,25 @@ public class TestEsterelGrammar { //CHSCH: extends AbstractXtextTests {
     /**
      * 
      */
-    public TestEsterelGrammar() {
-        try {
-            setup();
-            // testFailFiles();
-            testSuccFiles();
+    // public TestEsterelGrammar() {
+    // try {
+    // setup();
+    // // testFailFiles();
+    // testSuccFiles();
+    //
+    // } catch (Exception e) {
+    // e.printStackTrace();
+    //
+    // } finally {
+    // System.out.println(times);
+    //
+    // // needed due to thread hack
+    // System.exit(0);
+    // }
+    // }
 
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        } finally {
-            System.out.println(times);
-
-            // needed due to thread hack
-            System.exit(0);
-        }
-    }
-
-    public static void main(String[] args) {
-        new TestEsterelGrammar();
-    }
+    // public static void main(String[] args) {
+    // new TestEsterelGrammar();
+    // }
 
 }

@@ -41,14 +41,29 @@ import org.eclipse.ui.IWorkbenchPart;
 public final class VisibilityManager {
 
     /** Map containing all highlighting effects and highlighted edit parts. */
-    private final HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>> map;
+    private final HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>> map =
+            new HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>>();
 
     /** singleton instance. */
     private static VisibilityManager instance = new VisibilityManager();
 
     /** singleton pattern. */
     private VisibilityManager() {
-        map = new HashMap<IWorkbenchPart, HashMap<GraphicalEditPart, Boolean>>();
+    }
+    
+    /**
+     * Checks if the visibility manager was used to hide the given edit part of the given editor.
+     * 
+     * @param editor the editor containing the given edit part.
+     * @param editPart the edit part to check for.
+     * @return {@code true} if the edit part was hidden through the visibility manager.
+     */
+    public static boolean hasHidden(final IDiagramWorkbenchPart editor,
+            final GraphicalEditPart editPart) {
+        
+        HashMap<GraphicalEditPart, Boolean> parts = instance.map.get(editor);
+        
+        return parts != null && parts.containsKey(editPart);
     }
 
     /**
