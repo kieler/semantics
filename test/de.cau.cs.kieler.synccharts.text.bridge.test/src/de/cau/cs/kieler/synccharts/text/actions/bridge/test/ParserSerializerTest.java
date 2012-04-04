@@ -123,8 +123,8 @@ public class ParserSerializerTest {
         // serializerUtil = injector.getInstance(SerializerUtil.class);
         parser = injector.getInstance(IParser.class);
     }
-
-    // modified by wah 
+    
+    /** modified by wah */
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -137,13 +137,8 @@ public class ParserSerializerTest {
      *             internal parser error
      */
     @Test
-    public void testParser1() {
-        try {
-            this.parse("A/B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
-
+    public void testParser1() throws KielerModelException, IOException {
+        this.parse("A/B");
     }
 
     /**
@@ -155,22 +150,14 @@ public class ParserSerializerTest {
      *             internal parser error
      */
     @Test
-    public void testParser2() {
-        try {
-            this.parse("A and B and C or D and not D or (43<?D) or (varA = 103) and "
-                    + "not (B and (C or D)) / G, H(23), I, varB:=104");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testParser2() throws KielerModelException, IOException {
+        this.parse("A and B and C or D and not D or (43<?D) or (varA = 103) and "
+                + "not (B and (C or D)) / G, H(23), I, varB:=104");
     }
 
     @Test
-    public void testParser3() {
-        try {
-            this.parse("A and B and C or D and not D or  " + "not (B and (C or D))");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testParser3() throws KielerModelException, IOException {
+        this.parse("A and B and C or D and not D or  " + "not (B and (C or D))");
     }
 
     /**
@@ -181,12 +168,8 @@ public class ParserSerializerTest {
      * @throws IOException
      *             internal parser error
      */
-    public void testParserInvalid() {
-        try {
-            this.parse("A and B and InvalidSignal or D");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testParserInvalid() throws KielerModelException, IOException {
+        this.parse("A and B and InvalidSignal or D");
     }
 
     /**
@@ -196,12 +179,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerA1() {
-        try {
-            this.parseAndSerialize("A / B(5)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerA1() throws Exception {
+        this.parseAndSerialize("A / B(5)");
     }
 
     /**
@@ -211,12 +190,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerA2() {
-        try {
-            this.parseAndSerialize("# 2 A / B(5)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerA2() throws Exception {
+        this.parseAndSerialize("# 2 A / B(5)");
     }
 
     /**
@@ -226,12 +201,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerA3() {
-        try {
-            this.parseAndSerialize("A / B(5)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerA3() throws Exception {
+        this.parseAndSerialize("A / B(5)");
     }
 
     /**
@@ -241,12 +212,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerEmission() {
-        try {
-            this.parseAndSerialize("A / B(5)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerEmission() throws Exception {
+        this.parseAndSerialize("A / B(5)");
     }
 
     /**
@@ -256,33 +223,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparison() {
-        try {
-            this.parseAndSerialize("varA = 5");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
-    }
-
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    // @Test
-    // public void testSerializerComparison2() throws Exception {
-    // this.parseAndSerialize("5 = varA");
-    // }
-    // modified by wah
-    @Test
-    public void testSerializerComparison2() {
-        try {
-            this.parseAndSerialize("5 = varA");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
-
+    public void testSerializerComparison() throws Exception {
+        this.parseAndSerialize("varA = 5");
     }
 
     /**
@@ -292,12 +234,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparison3() {
-        try {
-            this.parseAndSerialize("?A = 5");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerComparison2() throws Exception {
+        this.parseAndSerialize("5 = varA");
     }
 
     /**
@@ -307,12 +245,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparisonValue() {
-        try {
-            this.parseAndSerialize("3 < ?A");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerComparison3() throws Exception {
+        this.parseAndSerialize("?A = 5");
     }
 
     /**
@@ -322,12 +256,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerValue() {
-        try {
-            this.parseAndSerialize("?A = true");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerComparisonValue() throws Exception {
+        this.parseAndSerialize("3 < ?A");
     }
 
     /**
@@ -337,21 +267,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerEmissionValue() {
-        try {
-            this.parseAndSerialize("/ A(3)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
-    }
-
-    @Test
-    public void testSerializerEmissionComplexValue() {
-        try {
-            this.parseAndSerialize("/ A(?B + 100)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerValue() throws Exception {
+        this.parseAndSerialize("?A = true");
     }
 
     /**
@@ -361,12 +278,13 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerEmissionBoolean() {
-        try {
-            this.parseAndSerialize("/ A(3 < varA and B)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerEmissionValue() throws Exception {
+        this.parseAndSerialize("/ A(3)");
+    }
+
+    @Test
+    public void testSerializerEmissionComplexValue() throws Exception {
+        this.parseAndSerialize("/ A(?B + 100)");
     }
 
     /**
@@ -376,12 +294,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerHostCode() {
-        try {
-            this.parseAndSerialize("/ \'This is some host code\'");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerEmissionBoolean() throws Exception {
+        this.parseAndSerialize("/ A(3 < varA and B)");
     }
 
     /**
@@ -391,12 +305,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerHostCodeType() {
-        try {
-            this.parseAndSerialize("/ \'This is some host code\'(Natural)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerHostCode() throws Exception {
+        this.parseAndSerialize("/ \'This is some host code\'");
     }
 
     /**
@@ -406,13 +316,20 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerHostCodeEverywhere() {
-        try {
-            this.parseAndSerialize("A and \'HostCode\' and 4 < \'Hooooost\' /"
-                    + " \'This is some host code\'");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerHostCodeType() throws Exception {
+        this.parseAndSerialize("/ \'This is some host code\'(Natural)");
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerHostCodeEverywhere() throws Exception {
+        this.parseAndSerialize("A and \'HostCode\' and 4 < \'Hooooost\' /"
+                + " \'This is some host code\'");
         // this.parseAndSerialize("(A and \"HostCode\"(host)) and (4 < \"Hooooost\") /"
         // + " \"This is some host code\"(Natural)");
     }
@@ -424,12 +341,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAssignment() {
-        try {
-            this.parseAndSerialize("/ varA:=5");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAssignment() throws Exception {
+        this.parseAndSerialize("/ varA:=5");
     }
 
     /**
@@ -439,12 +352,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAssignmentBoolean() {
-        try {
-            this.parseAndSerialize("/ varA:=42 = varB or not C");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAssignmentBoolean() throws Exception {
+        this.parseAndSerialize("/ varA:=42 = varB or not C");
     }
 
     /**
@@ -454,12 +363,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerBoolExpressionAllEffects() {
-        try {
-            this.parseAndSerialize("A and B / C(3), varA:=5, \'host code\'(Esterel)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerBoolExpressionAllEffects() throws Exception {
+        this.parseAndSerialize("A and B / C(3), varA:=5, \'host code\'(Esterel)");
     }
 
     /**
@@ -469,12 +374,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerImmediate() {
-        try {
-            this.parseAndSerialize("# A / B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerImmediate() throws Exception {
+        this.parseAndSerialize("# A / B");
     }
 
     /**
@@ -484,12 +385,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerImmediateSimple() {
-        try {
-            this.parseAndSerialize("#");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerImmediateSimple() throws Exception {
+        this.parseAndSerialize("#");
     }
 
     /**
@@ -499,12 +396,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayedPlain() {
-        try {
-            this.parseAndSerialize("3 tick");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayedPlain() throws Exception {
+        this.parseAndSerialize("3 tick");
     }
 
     /**
@@ -514,12 +407,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayedConst() {
-        try {
-            this.parseAndSerialize("3 true");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayedConst() throws Exception {
+        this.parseAndSerialize("3 true");
     }
 
     /**
@@ -529,12 +418,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayedTrigger() {
-        try {
-            this.parseAndSerialize("3 A");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayedTrigger() throws Exception {
+        this.parseAndSerialize("3 A");
     }
 
     /**
@@ -544,12 +429,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayedEffect() {
-        try {
-            this.parseAndSerialize("3 tick / B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayedEffect() throws Exception {
+        this.parseAndSerialize("3 tick / B");
     }
 
     /**
@@ -559,12 +440,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayedBoth() {
-        try {
-            this.parseAndSerialize("3 A / B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayedBoth() throws Exception {
+        this.parseAndSerialize("3 A / B");
     }
 
     /**
@@ -574,12 +451,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDelayComparison() {
-        try {
-            this.parseAndSerialize("3 5 < ?A / B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDelayComparison() throws Exception {
+        this.parseAndSerialize("3 5 < ?A / B");
     }
 
     /**
@@ -589,12 +462,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndOr() {
-        try {
-            this.parseAndSerialize("A and B or C");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAndOr() throws Exception {
+        this.parseAndSerialize("A and B or C");
     }
 
     /**
@@ -604,12 +473,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndOr2() {
-        try {
-            this.parseAndSerialize("A and (B or C)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAndOr2() throws Exception {
+        this.parseAndSerialize("A and (B or C)");
     }
 
     /**
@@ -619,12 +484,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndNot() {
-        try {
-            this.parseAndSerialize("not A and B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAndNot() throws Exception {
+        this.parseAndSerialize("not A and B");
     }
 
     /**
@@ -634,12 +495,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndNot2() {
-        try {
-            this.parseAndSerialize("not (A and B)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerAndNot2() throws Exception {
+        this.parseAndSerialize("not (A and B)");
     }
 
     /**
@@ -649,12 +506,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPlus() {
-        try {
-            this.parseAndSerialize("?A + 4 > 3");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerPlus() throws Exception {
+        this.parseAndSerialize("?A + 4 > 3");
     }
 
     /**
@@ -664,12 +517,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerMult() {
-        try {
-            this.parseAndSerialize("5 * varA > 3");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerMult() throws Exception {
+        this.parseAndSerialize("5 * varA > 3");
     }
 
     /**
@@ -679,12 +528,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDiv() {
-        try {
-            this.parseAndSerialize("varA : ?B > varB");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerDiv() throws Exception {
+        this.parseAndSerialize("varA : ?B > varB");
     }
 
     /**
@@ -694,12 +539,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPlusMult() {
-        try {
-            this.parseAndSerialize("5 * varA - ?B mod 2> 3");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerPlusMult() throws Exception {
+        this.parseAndSerialize("5 * varA - ?B mod 2> 3");
     }
 
     /**
@@ -709,12 +550,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPlusDiv() {
-        try {
-            this.parseAndSerialize("5 : varA - ?B : 2 > 3");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerPlusDiv() throws Exception {
+        this.parseAndSerialize("5 : varA - ?B : 2 > 3");
     }
 
     /**
@@ -724,12 +561,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerMultDiv() {
-        try {
-            this.parseAndSerialize("varA * ?B : 2 < 2");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerMultDiv() throws Exception {
+        this.parseAndSerialize("varA * ?B : 2 < 2");
     }
 
     /**
@@ -739,12 +572,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPre() {
-        try {
-            this.parseAndSerialize("(pre(A) or pre(?B) > 3) and pre(C)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerPre() throws Exception {
+        this.parseAndSerialize("(pre(A) or pre(?B) > 3) and pre(C)");
     }
 
     /**
@@ -754,12 +583,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNotPre() {
-        try {
-            this.parseAndSerialize("not pre(B)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerNotPre() throws Exception {
+        this.parseAndSerialize("not pre(B)");
     }
 
     /**
@@ -769,12 +594,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNotNot() {
-        try {
-            this.parseAndSerialize("not not B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerNotNot() throws Exception {
+        this.parseAndSerialize("not not B");
     }
 
     /**
@@ -784,12 +605,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr1() {
-        try {
-            this.parseAndSerialize("5 * ?A : 5 = ?A / B");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerCtr1() throws Exception {
+        this.parseAndSerialize("5 * ?A : 5 = ?A / B");
     }
 
     /**
@@ -799,12 +616,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr2() {
-        try {
-            this.parseAndSerialize("/ A(pre(?A) - 1)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerCtr2() throws Exception {
+        this.parseAndSerialize("/ A(pre(?A) - 1)");
     }
 
     /**
@@ -814,12 +627,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr3() {
-        try {
-            this.parseAndSerialize("pre(?A) = -100 / A(-100)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerCtr3() throws Exception {
+        this.parseAndSerialize("pre(?A) = -100 / A(-100)");
     }
 
     /**
@@ -829,12 +638,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr4() {
-        try {
-            this.parseAndSerialize("/ A(pre(?A) + 1)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerCtr4() throws Exception {
+        this.parseAndSerialize("/ A(pre(?A) + 1)");
     }
 
     /**
@@ -845,12 +650,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testParserFloat() {
-        try {
-            this.parse("/ A(1.1), B(-23e-3), C(34f)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testParserFloat() throws Exception {
+        this.parse("/ A(1.1), B(-23e-3), C(34f)");
     }
 
     /**
@@ -860,12 +661,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerFloat() {
-        try {
-            this.parseAndSerialize("/ A(1.1), B(-2.3E-15), C(34.0)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerFloat() throws Exception {
+        this.parseAndSerialize("/ A(1.1), B(-2.3E-15), C(34.0)");
     }
 
     /**
@@ -875,12 +672,8 @@ public class ParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerBoolean() {
-        try {
-            this.parseAndSerialize("true or false / A(true), B(false)");
-        } catch (Exception e) {
-            thrown.expectMessage(e.getMessage());
-        }
+    public void testSerializerBoolean() throws Exception {
+        this.parseAndSerialize("true or false / A(true), B(false)");
     }
 
     /**
@@ -913,8 +706,7 @@ public class ParserSerializerTest {
         return outputStream.toString();
     }
 
-    private void parseAndSerialize(final String inputString) throws KielerModelException,
-            IOException {
+    private void parseAndSerialize(final String inputString) throws KielerModelException, IOException {
         parse(inputString);
         // Our Inofficial simple custom Serializer
         // String serializedString = ActionLabelSerializer.toString(transition);
@@ -923,12 +715,8 @@ public class ParserSerializerTest {
         if (inputString.equals(serializedString)) {
             return;
         } else {
-            // throw new IllegalStateException("Serialization failed. Input and output"
-            // + "are not the same: Input: " + inputString + " Output: " + serializedString);
-            /** modified by wah */
-            thrown.expectMessage("Serialization failed. Input and output"
+            throw new IllegalStateException("Serialization failed. Input and output"
                     + "are not the same: Input: " + inputString + " Output: " + serializedString);
-
         }
     }
 }
