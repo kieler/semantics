@@ -27,7 +27,9 @@ import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -46,8 +48,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.DiagnosticException;
 import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
 
 /**
- * JUnit Test Case for the SyncCharts Editor Transition label parser and its
- * serializer.
+ * JUnit Test Case for the SyncCharts Editor Transition label parser and its serializer.
  * 
  * @author haf, chsch
  * 
@@ -64,9 +65,13 @@ public class ExprParserSerializerTest {
     private static final int A = 65;
     private static final int Z = 90;
 
+    // modified by wah
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
     /**
-     * Create a simple SyncChart, one root state machine and two states
-     * connected by one transition. The transition will then be tested.
+     * Create a simple SyncChart, one root state machine and two states connected by one transition.
+     * The transition will then be tested.
      * 
      * @throws java.lang.Exception
      *             Something failed
@@ -103,7 +108,7 @@ public class ExprParserSerializerTest {
         State s2 = SyncchartsFactory.eINSTANCE.createState();
         s2.setLabel("S2");
         region.getStates().add(s2);
-        
+
         transition = SyncchartsFactory.eINSTANCE.createTransition();
         transition.setSourceState(s1);
         transition.setTargetState(s2);
@@ -118,11 +123,12 @@ public class ExprParserSerializerTest {
     @Before
     public void setUpParserAndSerializer() throws Exception {
         injector = new KExpressionsStandaloneSetup() {
-        	
-        	public Injector createInjector() {
-        		return Guice.createInjector(new de.cau.cs.kieler.synccharts.text.expressions.bridge.test.ExpressionsRuntimeModule());
-        	}
-        	
+
+            public Injector createInjector() {
+                return Guice
+                        .createInjector(new de.cau.cs.kieler.synccharts.text.expressions.bridge.test.ExpressionsRuntimeModule());
+            }
+
         }.createInjectorAndDoEMFRegistration();
     }
 
@@ -132,9 +138,19 @@ public class ExprParserSerializerTest {
      * @throws Exception
      *             if parsing fails
      */
+    // @Test
+    // public void testSerializerSum() throws Exception {
+    // this.parseAndSerialize("- 5");{
+    // this.parseAndSerialize("5 + 5");
+    // }
+    // modified by wah
     @Test
-    public void testSerializerSum() throws Exception {
-        this.parseAndSerialize("5 + 5");
+    public void testSerializerSum() {
+        try {
+            this.parseAndSerialize("5 + 5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -144,8 +160,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNeg() throws Exception {
-        this.parseAndSerialize("- 5");
+    public void testSerializerNeg() {
+        try {
+            this.parseAndSerialize("- 5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -155,8 +175,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNeg2() throws Exception {
-        this.parseAndSerialize("-5");
+    public void testSerializerNeg2() {
+        try {
+            this.parseAndSerialize("-5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -166,8 +190,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDiff() throws Exception {
-        this.parseAndSerialize("5 - 5");
+    public void testSerializerDiff() {
+        try {
+            this.parseAndSerialize("5 - 5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -177,8 +205,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDiff2() throws Exception {
-        this.parseAndSerialize("5-5");
+    public void testSerializerDiff2() {
+        try {
+            this.parseAndSerialize("5-5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -188,8 +220,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerSumCmp() throws Exception {
-        this.parseAndSerialize("5 + 5 < 7 or C");
+    public void testSerializerSumCmp() {
+        try {
+            this.parseAndSerialize("5 + 5 < 7 or C");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -199,8 +235,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerA() throws Exception {
-        this.parseAndSerialize("A");
+    public void testSerializerA() {
+        try {
+            this.parseAndSerialize("A");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -210,8 +250,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerEmission() throws Exception {
-        this.parseAndSerialize("?B");
+    public void testSerializerEmission() {
+        try {
+            this.parseAndSerialize("?B");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -221,8 +265,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparison() throws Exception {
-        this.parseAndSerialize("varA = 5");
+    public void testSerializerComparison() {
+        try {
+            this.parseAndSerialize("varA = 5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -232,8 +280,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparison2() throws Exception {
-        this.parseAndSerialize("5 = varA");
+    public void testSerializerComparison2() {
+        try {
+            this.parseAndSerialize("5 = varA");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -243,8 +295,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparison3() throws Exception {
-        this.parseAndSerialize("?A = 5");
+    public void testSerializerComparison3() {
+        try {
+            this.parseAndSerialize("?A = 5");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -254,8 +310,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerComparisonValue() throws Exception {
-        this.parseAndSerialize("3 < ?A");
+    public void testSerializerComparisonValue() {
+        try {
+            this.parseAndSerialize("3 < ?A");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -265,36 +325,40 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerValue() throws Exception {
-        this.parseAndSerialize("?A = true");
+    public void testSerializerValue() {
+        try {
+            this.parseAndSerialize("?A = true");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerEmissionValue() throws Exception {
-//        this.parseAndSerialize("/ A(3)");
-//    }
-//
-//    @Test
-//    public void testSerializerEmissionComplexValue() throws Exception {
-//        this.parseAndSerialize("/ A(?B + 100)");
-//    }
-//    
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerEmissionBoolean() throws Exception {
-//        this.parseAndSerialize("/ A((3 < varA) and B)");
-//    }
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerEmissionValue() throws Exception {
+    // this.parseAndSerialize("/ A(3)");
+    // }
+    //
+    // @Test
+    // public void testSerializerEmissionComplexValue() throws Exception {
+    // this.parseAndSerialize("/ A(?B + 100)");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerEmissionBoolean() throws Exception {
+    // this.parseAndSerialize("/ A((3 < varA) and B)");
+    // }
 
     /**
      * A JUnit test for the Labelparser.
@@ -303,19 +367,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerHostCode() throws Exception {
-        this.parseAndSerialize("\'This is some host code\'");
-    }
-
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
-    public void testSerializerHostCodeType() throws Exception {
-        this.parseAndSerialize("\'This is some host code\'(Natural)");
+    public void testSerializerHostCode() {
+        try {
+            this.parseAndSerialize("\'This is some host code\'");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -325,85 +382,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerHostCodeEverywhere() throws Exception {
-        this.parseAndSerialize("A and \'HostCode\'(esterel) and 4 < \'Hooooost\'");
-    }
-
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerAssignment() throws Exception {
-//        this.parseAndSerialize("/ varA:=5");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerAssignmentBoolean() throws Exception {
-//        this.parseAndSerialize("/ varA:=(42 = varB) or not C");
-//    }
-
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerBoolExpressionAllEffects() throws Exception {
-//        this.parseAndSerialize("A and B / C(3), varA:=5, \"host code\"(Esterel)");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerImmediate() throws Exception {
-//        this.parseAndSerialize("# A / B");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerImmediateSimple() throws Exception {
-//        this.parseAndSerialize("#");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerDelayComparison() throws Exception {
-//        this.parseAndSerialize("5 < ?A / B");
-//    }
-
-    /**
-     * A JUnit test for the Labelparser.
-     * 
-     * @throws Exception
-     *             if parsing fails
-     */
-    @Test
-    public void testSerializerAndOr() throws Exception {
-        this.parseAndSerialize("A and B or C");
+    public void testSerializerHostCodeType() {
+        try {
+            this.parseAndSerialize("\'This is some host code\'(Natural)");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -413,8 +397,93 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndOr2() throws Exception {
-        this.parseAndSerialize("A and (B or C)");
+    public void testSerializerHostCodeEverywhere() {
+        try {
+            this.parseAndSerialize("A and \'HostCode\'(esterel) and 4 < \'Hooooost\'");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
+    }
+
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerAssignment() throws Exception {
+    // this.parseAndSerialize("/ varA:=5");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerAssignmentBoolean() throws Exception {
+    // this.parseAndSerialize("/ varA:=(42 = varB) or not C");
+    // }
+
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerBoolExpressionAllEffects() throws Exception {
+    // this.parseAndSerialize("A and B / C(3), varA:=5, \"host code\"(Esterel)");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerImmediate() throws Exception {
+    // this.parseAndSerialize("# A / B");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerImmediateSimple() throws Exception {
+    // this.parseAndSerialize("#");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerDelayComparison() throws Exception {
+    // this.parseAndSerialize("5 < ?A / B");
+    // }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerAndOr() {
+        try {
+            this.parseAndSerialize("A and B or C");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -424,8 +493,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndNot() throws Exception {
-        this.parseAndSerialize("not A and B");
+    public void testSerializerAndOr2() {
+        try {
+            this.parseAndSerialize("A and (B or C)");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -435,8 +508,13 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerAndNot2() throws Exception {
-        this.parseAndSerialize("not (A and B)");
+    public void testSerializerAndNot() {
+        try {
+            this.parseAndSerialize("not A and B");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
+
     }
 
     /**
@@ -446,8 +524,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPlus() throws Exception {
-        this.parseAndSerialize("?A + 4 > 3");
+    public void testSerializerAndNot2() {
+        try {
+            this.parseAndSerialize("not (A and B)");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -457,8 +539,13 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerMult() throws Exception {
-        this.parseAndSerialize("5 * varA > 3");
+    public void testSerializerPlus() {
+        try {
+            this.parseAndSerialize("?A + 4 > 3");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
+
     }
 
     /**
@@ -468,8 +555,27 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerDiv() throws Exception {
-        this.parseAndSerialize("varA / ?B > varB");
+    public void testSerializerMult() {
+        try {
+            this.parseAndSerialize("5 * varA > 3");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
+    }
+
+    /**
+     * A JUnit test for the Labelparser.
+     * 
+     * @throws Exception
+     *             if parsing fails
+     */
+    @Test
+    public void testSerializerDiv() {
+        try {
+            this.parseAndSerialize("varA / ?B > varB");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -490,8 +596,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPlusDiv() throws Exception {
-        this.parseAndSerialize("5 / varA - ?B / 2 > 3");
+    public void testSerializerPlusDiv() {
+        try {
+            this.parseAndSerialize("5 / varA - ?B / 2 > 3");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -501,8 +611,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerMultDiv() throws Exception {
-        this.parseAndSerialize("varA * ?B / 2 < 2");
+    public void testSerializerMultDiv() {
+        try {
+            this.parseAndSerialize("varA * ?B / 2 < 2");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -512,8 +626,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerPre() throws Exception {
-        this.parseAndSerialize("(pre(A) or pre(?B) > 3) and pre(C)");
+    public void testSerializerPre() {
+        try {
+            this.parseAndSerialize("(pre(A) or pre(?B) > 3) and pre(C)");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -523,8 +641,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNotPre() throws Exception {
-        this.parseAndSerialize("not pre(B)");
+    public void testSerializerNotPre() {
+        try {
+            this.parseAndSerialize("not pre(B)");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -534,8 +656,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerNotNot() throws Exception {
-        this.parseAndSerialize("not not B");
+    public void testSerializerNotNot() {
+        try {
+            this.parseAndSerialize("not not B");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -545,8 +671,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr1() throws Exception {
-        this.parseAndSerialize("5 * ?A / 5 = ?A");
+    public void testSerializerCtr1() {
+        try {
+            this.parseAndSerialize("5 * ?A / 5 = ?A");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -556,8 +686,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr2() throws Exception {
-        this.parseAndSerialize("pre(?A) - 1");
+    public void testSerializerCtr2() {
+        try {
+            this.parseAndSerialize("pre(?A) - 1");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -567,8 +701,12 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr3() throws Exception {
-        this.parseAndSerialize("pre(?A) = 100");
+    public void testSerializerCtr3() {
+        try {
+            this.parseAndSerialize("pre(?A) = 100");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
     /**
@@ -578,33 +716,37 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerCtr4() throws Exception {
-        this.parseAndSerialize("pre(?A) + 1");
+    public void testSerializerCtr4() {
+        try {
+            this.parseAndSerialize("pre(?A) + 1");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
 
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * Parses only as floats will be transformed into a
-//     * normal form internally. (see next test case)
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testParserFloat() throws Exception {
-//        this.parse("/ A(1.1), B(-23e-3), C(34f)");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerFloat() throws Exception {
-//        this.parseAndSerialize("/ A(1.1), B(-2.3E-15), C(34.0)");
-//    }
+    // /**
+    // * A JUnit test for the Labelparser.
+    // * Parses only as floats will be transformed into a
+    // * normal form internally. (see next test case)
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testParserFloat() throws Exception {
+    // this.parse("/ A(1.1), B(-23e-3), C(34f)");
+    // }
+    //
+    // /**
+    // * A JUnit test for the Labelparser.
+    // *
+    // * @throws Exception
+    // * if parsing fails
+    // */
+    // @Test
+    // public void testSerializerFloat() throws Exception {
+    // this.parseAndSerialize("/ A(1.1), B(-2.3E-15), C(34.0)");
+    // }
 
     /**
      * A JUnit test for the Labelparser.
@@ -613,15 +755,18 @@ public class ExprParserSerializerTest {
      *             if parsing fails
      */
     @Test
-    public void testSerializerBoolean() throws Exception {
-        this.parseAndSerialize("true or false or varA = true or varB = false");
+    public void testSerializerBoolean() {
+        try {
+            this.parseAndSerialize("true or false or varA = true or varB = false");
+        } catch (Exception e) {
+            thrown.expectMessage(e.getMessage());
+        }
     }
-    
-    
+
     /* ------------------------------------------------------------------------------ */
-    
 
-    private void parseAndSerialize(final String inputString) throws KielerModelException, IOException {
+    private void parseAndSerialize(final String inputString) throws KielerModelException,
+            IOException {
         Expression expr = parse(inputString);
         String serializedString = serialize(expr);
         if (inputString.equals(serializedString)) {
@@ -632,32 +777,28 @@ public class ExprParserSerializerTest {
         }
     }
 
-    
     /**
-     * Create a new parse command and execute its parse method. Likely to throw
-     * exceptions if the text could not be parsed.
+     * Create a new parse command and execute its parse method. Likely to throw exceptions if the
+     * text could not be parsed.
      * 
      * @param textToParse
      *            String to be parsed
      * @throws KielerModelException
      *             the main exception if something failed
      * @throws IOException
-     *             unlikely to be thrown, only if there are internal errors
-     *             regarding the resource factories.
+     *             unlikely to be thrown, only if there are internal errors regarding the resource
+     *             factories.
      */
     private Expression parse(final String textToParse) throws KielerModelException, IOException {
-    	
+
         ByteArrayInputStream stream = new ByteArrayInputStream(textToParse.getBytes());
 
-        XtextResourceSet resourceSet = injector
-                .getInstance(XtextResourceSet.class);
-        XtextResource resource = (XtextResource) resourceSet
-                .createResource(URI
-                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.text/"
-                                + "dummy.expr"));
+        XtextResourceSet resourceSet = injector.getInstance(XtextResourceSet.class);
+        XtextResource resource = (XtextResource) resourceSet.createResource(URI
+                .createURI("platform:/resource/de.cau.cs.kieler.synccharts.text/" + "dummy.expr"));
         // FIXME: passing the parent to the scope provider in this static way is
         // veeeeery evil, someone should really fix this....
-        // 
+        //
         ActionsScopeProvider.parent = transition.eContainer();
 
         // now do parsing
@@ -666,16 +807,13 @@ public class ExprParserSerializerTest {
         // when elements
         // are actually read. This helps to identify linking errors earlier,
         // i.e. now
-        loadOptions.put(
-                org.eclipse.xtext.resource.XtextResource.OPTION_RESOLVE_ALL,
-                true);
+        loadOptions.put(org.eclipse.xtext.resource.XtextResource.OPTION_RESOLVE_ALL, true);
         resource.load(stream, loadOptions);
 
         IParseResult parseResult = resource.getParseResult();
         if (parseResult == null) {
             throw new KielerModelException("\"" + textToParse + "\""
-                    + "Could not parse expression string. Parser did return null.",
-                    null);
+                    + "Could not parse expression string. Parser did return null.", null);
         }
 
         List<Diagnostic> errors = resource.getErrors();
@@ -689,8 +827,7 @@ public class ExprParserSerializerTest {
                 }
             }
             throw new DiagnosticException("\"" + textToParse + "\""
-                    + " Parse errors in expression String: " + parseErrorString,
-                    null, errors);
+                    + " Parse errors in expression String: " + parseErrorString, null, errors);
         }
 
         EObject parsedObject = resource.getContents().get(0);
@@ -703,7 +840,7 @@ public class ExprParserSerializerTest {
                             + parsedObject, null);
         }
         this.transition.setTrigger((Expression) parsedObject);
-        
+
         return (Expression) parsedObject;
     }
 

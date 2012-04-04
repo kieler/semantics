@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.esterel.test;
 
-import static org.junit.Assert.*;
-
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -188,13 +186,13 @@ public class TestEsterelGrammar { // CHSCH: extends AbstractXtextTests {
             String errormsg = "******";
             int i = 0;
             for (String name : errors.keySet()) {
-                errormsg  = "-----";
+                errormsg += "-----";
                 errormsg += i++ + ". Error in " + name + ":";
                 errormsg += errors.get(name) + "";
                 errormsg += "-----";
             }
             errormsg += "Of " + filesTest.length + " were " + errors.size() + " erroneous";
-            errormsg = "******";
+            errormsg += "******";
             thrown.expectMessage(errormsg);
         }
     }
@@ -254,11 +252,13 @@ public class TestEsterelGrammar { // CHSCH: extends AbstractXtextTests {
             String errormsg = "******";
             int i = 0;
             for (String name : errors.keySet()) {
-                errormsg += i++ + ". Error in " + name + ":\n";
-                errormsg += errors.get(name) + "\n";
-                errormsg += "-----------------------------------------------------\n";
+                errormsg += "-----";
+                errormsg += i++ + ". Error in " + name + ":";
+                errormsg += errors.get(name) + "";
+                errormsg += "-----";
             }
-            errormsg += "Of " + filesFail.length + " were " + errors.size() + " erroneous\n";
+            errormsg += "Of " + filesFail.length + " were " + errors.size() + " erroneous";
+            errormsg += "******";
             thrown.expectMessage(errormsg);
         }
        
@@ -287,7 +287,7 @@ public class TestEsterelGrammar { // CHSCH: extends AbstractXtextTests {
         FileInputStream fis = new FileInputStream(f);
         resource.load(fis, null);
         EcoreUtil.resolveAll(resource);
-
+        
         return resource;
     }
 
