@@ -11,7 +11,7 @@
             style-id="content-group">
             <link 
                 label="KIELER Project"
-                url="http://rtsys.informatik.uni-kiel.de/trac/kieler/"
+                url="http://informatik.uni-kiel.de/rtsys/kieler/"
                 id="kieler-overview-link"
                 style-id="content-link">
                 <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design.</text>
@@ -28,7 +28,7 @@
             label="KIELER Examples"
             id="group"
             style-id="content-group">
-	        <text> The following examples help you to become familiar with in KIELER.</text>
+	        <text> The following examples help you to become familiar with KIELER.</text>
 		 	<anchor id="import-wizard"/>
  		    <group
 	            label="Quick Starts"

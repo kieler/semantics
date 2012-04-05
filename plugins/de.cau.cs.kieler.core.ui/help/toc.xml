@@ -2,8 +2,6 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="KIELER Guide">
-   <topic href="http://rtsys.informatik.uni-kiel.de/trac/kieler/wiki/" label="Online Documentation">
+   <topic href="http://rtsys.informatik.uni-kiel.de/confluence/display/KIELER/Home" label="Online Documentation">
    </topic>
-	<topic label="API Reference"  href="http://rtsys.informatik.uni-kiel.de/~kieler/doc/overview-summary.html"> 
-	</topic>
 </toc>
