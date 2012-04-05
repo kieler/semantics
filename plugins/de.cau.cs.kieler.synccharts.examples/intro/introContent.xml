@@ -2,12 +2,12 @@
 	  <extensionContent
         id="de.cau.cs.kieler.intro.synccharts"
         name="SyncCharts Quick Start"
-        path="samples/@de.cau.cs.kieler.intro.samples/group/quickstarts/quickstarts.anchor">
+        path="samples/@de.cau.cs.kieler.intro.samples/quickstarts/quickstarts.anchor">
 
         <link
             label="SyncCharts Quick Start"
             url="http://org.eclipse.ui.intro/runAction?pluginId=de.cau.cs.kieler.kex.ui&amp;class=de.cau.cs.kieler.kex.ui.actions.QuickStartAction&amp;id=de.cau.cs.kieler.kex.ui&amp;exampleId=de.cau.cs.kieler.synccharts.abro&amp;sourceType=KIELER&amp;projectName=synccharts_quickstart&amp;autoLayout=true"
-            id="synccharts-quick-start"
+            id="kieler-samples-link"
             style-id="content-link">
 			<text>Creates a project with the SyncCharts standard example ABRO.</text>
         </link>
