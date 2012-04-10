@@ -59,7 +59,7 @@ import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;
 public class TransformationRulesTest {
 
     // FIXME
-    private String pathToWS = "/../HELIOS/";
+    private String pathToWS = "/../kieler/git/mainline/plugins/";
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
 
