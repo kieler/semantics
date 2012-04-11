@@ -325,7 +325,7 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                 getShell(),
                 currentContainer,
                 true,
-                Messages.WorkspaceResourcesPage_containerSelectionDialog_message);
+                getBrowseMessage());
         dialog.setTitle(Messages.WorkspaceResourcesPage_containerSelectionDialog_title);
         dialog.showClosedProjects(false);
         
@@ -337,6 +337,16 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
                 targetComboHistoryManager.recordAndDisplay(newPath.makeRelative().toString());
             }
         }
+    }
+    
+    /**
+     * Returns the message displayed in the target browse dialog. May be overriden
+     * by subclasses.
+     * 
+     * @return message to be displayed in the target browse dialog.
+     */
+    protected String getBrowseMessage() {
+        return Messages.WorkspaceResourcesPage_containerSelectionDialog_message;
     }
     
     
