@@ -7,16 +7,17 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
 import org.eclipse.xtext.ui.editor.contentassist.ICompletionProposalAcceptor;
 
 import de.cau.cs.kieler.kiml.LayoutDataService;
 import de.cau.cs.kieler.kiml.LayoutOptionData;
+import de.cau.cs.kieler.kiml.LayoutOptionData.Type;
 
 import de.cau.cs.kieler.core.annotations.Annotation;
 import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
-
 
 /**
  * see
@@ -25,123 +26,151 @@ import de.cau.cs.kieler.core.annotations.impl.AnnotationImpl;
  */
 public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProvider {
 
-	/** the layout option data associated with this property descriptor. */
-	private LayoutOptionData<?> optionData;
-
 	public void nameProposal(ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// declare the plain proposal and get the option list
-		String displayString = null, proposal = null;
-		LayoutDataService layoutServices = LayoutDataService.getInstance();
-		Collection<LayoutOptionData<?>> optionDataList = layoutServices.getOptionData();
+		try {
+			if (Class.forName("de.cau.cs.kieler.kiml.LayoutDataService") != null) {
 
-		// create and register the completion proposal for every element in the
-		// list
-		for (Iterator<LayoutOptionData<?>> i = optionDataList.iterator(); i.hasNext();) {
-			optionData = i.next();
-			proposal = optionData.getId();
-			displayString = optionData.toString() + " -- " + optionData.getType().toString();
-			acceptor.accept(createCompletionProposal(proposal, displayString, null /* getImage() */, context));
+				/* declare the plain proposal and get the option list */
+				String proposal = null;
+				StyledString.Styler theStyle; 
+				StyledString displayString;
+				LayoutDataService layoutServices = LayoutDataService.getInstance();
+				Collection<LayoutOptionData<?>> optionDataList = layoutServices.getOptionData();
+
+				/*
+				 * create and register the completion proposal for every element
+				 * in the list
+				 */
+				LayoutOptionData<?> optionData;
+				for (Iterator<LayoutOptionData<?>> i = optionDataList.iterator(); i.hasNext();) {
+					optionData = i.next();
+					theStyle = (optionData.isAdvanced()) ? StyledString.COUNTER_STYLER : null;
+					proposal = optionData.getId();
+					displayString = new StyledString(optionData.toString(),theStyle);
+					displayString.append(" - " + optionData.getType().toString(), StyledString.QUALIFIER_STYLER);
+					acceptor.accept(createCompletionProposal(proposal, displayString, null, getPriorityHelper().getDefaultPriority(), "de.cau.cs.kieler."
+							+ context.getPrefix(), context));
+					acceptor.accept(createCompletionProposal(proposal, displayString, null, context));
+				}
+			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
 		}
 	}
 
 	public void valueProposal(ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// check if the prefix is an kieler annotation
-		if (context.getCurrentModel() instanceof Annotation && context.getCurrentModel().getClass() == AnnotationImpl.class) {
+		try {
+			if (Class.forName("de.cau.cs.kieler.kiml.LayoutDataService") != null) {
 
-			String annotationName = ((Annotation) context.getCurrentModel()).getName();
+				/* check if the prefix is an kieler annotation */
+				if (context.getCurrentModel() instanceof Annotation && context.getCurrentModel().getClass() == AnnotationImpl.class) {
 
-			// get the option list
-			LayoutDataService layoutServices = LayoutDataService.getInstance();
-			Collection<LayoutOptionData<?>> optionDataList = layoutServices.getOptionData();
+					String annotationName = ((Annotation) context.getCurrentModel()).getName();
 
-			// find the specific option an display all possible values
-			for (Iterator<LayoutOptionData<?>> i = optionDataList.iterator(); i.hasNext();) {
-				optionData = i.next();
-				String iD = optionData.getId();
+					if (annotationName != null) {
 
-				if (annotationName.equals(iD)) {
-					String proposal = null;
-					
-					switch (optionData.getType()) {
-					
-					//show the available choices for boolean and enum
-					case BOOLEAN:
-					case REMOTE_ENUM:
-					case ENUM:
-						for (int j = 0; j < optionData.getChoices().length; j++) {
-							proposal = optionData.getChoices()[j];
-							acceptor.accept(createCompletionProposal(proposal, context));
-						}
-						break;
-						
-					// for string, float, integer and object show the type of the value and give a corresponding default value
-					case STRING:
-					case FLOAT:
-					case INT:
-					case OBJECT:
-						
-						//chose the corresponding default value
-						switch (optionData.getType()) {
-						
-						case STRING:
-							proposal = "\"\"";
-							break;
-							
-						case FLOAT:
-							proposal = "0.0";
-							break;
-							
-						case INT:
-							proposal = "0";
-							break;
-							
-						case OBJECT:
-							try {
-								proposal = "\"" + optionData.getOptionClass().newInstance().toString() + "\"";
-							} catch (InstantiationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IllegalAccessException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+						/* get the option list */
+						LayoutDataService layoutServices = LayoutDataService.getInstance();
+
+						/*
+						 * find the specific option an display all possible
+						 * values
+						 */
+						LayoutOptionData<?> optionData;
+						optionData = layoutServices.getOptionData(annotationName);
+
+						String proposal = null;
+
+						Type theType = (optionData != null) ? optionData.getType() : Type.UNDEFINED;
+
+						switch (theType) {
+
+						/* show the available choices for boolean and enum */
+						case BOOLEAN:
+						case REMOTE_ENUM:
+						case ENUM:
+							for (int j = 0; j < optionData.getChoices().length; j++) {
+								proposal = optionData.getChoices()[j];
+								acceptor.accept(createCompletionProposal(proposal, context));
 							}
 							break;
-							
+
+						/*
+						 * for string, float, integer and object show the type
+						 * of the value and give a corresponding default value
+						 */
+						case STRING:
+						case FLOAT:
+						case INT:
+						case OBJECT:
+
+							/* chose the corresponding default value */
+							switch (theType) {
+
+							case STRING:
+								proposal = "\"\"";
+								break;
+
+							case FLOAT:
+								proposal = "0.0";
+								break;
+
+							case INT:
+								proposal = "0";
+								break;
+
+							case OBJECT:
+								try {
+									proposal = "\"" + optionData.getOptionClass().newInstance().toString() + "\"";
+								} catch (InstantiationException e) {
+									/* TODO Auto-generated catch block */
+									e.printStackTrace();
+								} catch (IllegalAccessException e) {
+									/* TODO Auto-generated catch block */
+									e.printStackTrace();
+								}
+								break;
+
+							default:
+								break;
+
+							}
+							acceptor.accept(createCompletionProposal(proposal, optionData.getType().toString(), null, context));
+							break;
+
 						default:
 							break;
-							
+
 						}
-						acceptor.accept(createCompletionProposal(proposal, optionData.getType().toString(), null /* getImage() */, context));
-						break;
-						
-					default:
-						break;
-						
 					}
 				}
 			}
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			// e.printStackTrace();
 		}
 	}
 
 	@Override
 	public void completeTagAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeTagAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyStringValueAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyStringValueAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
@@ -149,60 +178,60 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
 	public void completeTypedKeyStringValueAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeTypedKeyStringValueAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyBooleanValueAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeTagAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyIntValueAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyIntValueAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyFloatValueAnnotation_Name(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyFloatValueAnnotation_Name(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		nameProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeCommentAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeCommentAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyStringValueAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyStringValueAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 
@@ -210,40 +239,40 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
 	public void completeTypedKeyStringValueAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context,
 			ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeTypedKeyStringValueAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyBooleanValueAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyBooleanValueAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyIntValueAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyIntValueAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 
 	@Override
 	public void completeKeyFloatValueAnnotation_Value(EObject model, Assignment assignment, ContentAssistContext context, ICompletionProposalAcceptor acceptor) {
 
-		// call implementation of superclass
+		/* call implementation of superclass */
 		super.completeKeyFloatValueAnnotation_Value(model, assignment, context, acceptor);
 
-		// call modified completion
+		/* call modified completion */
 		valueProposal(context, acceptor);
 	}
 }
