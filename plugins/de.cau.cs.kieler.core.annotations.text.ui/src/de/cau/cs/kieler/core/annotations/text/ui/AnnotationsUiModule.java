@@ -39,4 +39,17 @@ public class AnnotationsUiModule extends
     public Class<? extends org.eclipse.xtext.ui.editor.syntaxcoloring.ISemanticHighlightingCalculator> bindISemanticHighlightingCalculator() {
         return AnnotationsSemanticHighlightingCalculator.class;
     }
+    
+    @Override
+	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
+		try {
+			if (Class.forName("de.cau.cs.kieler.kiml.LayoutDataService") != null) {
+				return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AnnotationsProposalProvider.class;
+			} else {
+				return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AbstractAnnotationsProposalProvider.class;
+			}
+		} catch (ClassNotFoundException e) {
+			return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AbstractAnnotationsProposalProvider.class;
+		}			
+	}
 }
