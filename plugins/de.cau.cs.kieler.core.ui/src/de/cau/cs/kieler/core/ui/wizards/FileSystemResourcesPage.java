@@ -34,6 +34,8 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
@@ -444,6 +446,17 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         sourceComboHistoryManager = new ComboHistoryHandler(getSourceGroupCombo(), HISTORY_SIZE);
         
+        getSourceGroupCombo().addFocusListener(new FocusAdapter() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void focusLost(final FocusEvent e) {
+                // Manage history
+                sourceComboHistoryManager.recordAndDisplay(getSourceGroupCombo().getText());
+            }
+        });
+        
         // Prepare the directory dialog used by the browse button
         directoryDialog = new DirectoryDialog(parent.getShell(), SWT.SAVE | SWT.SHEET);
         directoryDialog.setText(Messages.FileSystemResourcesPage_selectDirectoryDialog_title);
@@ -457,7 +470,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      */
     @Override
     protected void applyNewSource(final String text) {
-        applyNewRootDir(text);
+        applyNewRootDir(text, false);
     }
 
     /**
@@ -465,7 +478,7 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      */
     @Override
     protected void doBrowseSource() {
-        applyNewRootDir(directoryDialog.open());
+        applyNewRootDir(directoryDialog.open(), true);
     }
     
     /**
@@ -473,8 +486,11 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
      * it to the combo box's history.
      * 
      * @param newDir the new root directory.
+     * @param displayInCombo {@code true} if the directory was not entered into the combo box, but
+     *                       through the browse dialog. In that case we need to record and display
+     *                       the new directory in the combo box history.
      */
-    private void applyNewRootDir(final String newDir) {
+    private void applyNewRootDir(final String newDir, final boolean displayInCombo) {
         if (newDir == null || newDir.trim().length() == 0) {
             return;
         }
@@ -485,8 +501,10 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
             // Create a new ExtendedFileSystemElement
             ExtendedFileSystemElement newRoot = new ExtendedFileSystemElement(folder, true);
             
-            // Update the combo box history and set its text
-            sourceComboHistoryManager.recordAndDisplay(newDir);
+            if (displayInCombo) {
+                // Update the combo box history and set its text
+                sourceComboHistoryManager.recordAndDisplay(newDir);
+            }
             
             setResourceTreeInput(newRoot);
         } else {
@@ -514,16 +532,18 @@ public class FileSystemResourcesPage extends ResourceTreeAndListPage {
         
         targetComboHistoryManager = new ComboHistoryHandler(getTargetGroupCombo(), HISTORY_SIZE);
         
+        getTargetGroupCombo().addFocusListener(new FocusAdapter() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void focusLost(final FocusEvent e) {
+                // Manage history
+                targetComboHistoryManager.recordAndDisplay(getTargetGroupCombo().getText());
+            }
+        });
+        
         return targetGroup;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void applyNewTarget(final String text) {
-        // Manage history
-        targetComboHistoryManager.recordAndDisplay(text);
     }
 
     /**
