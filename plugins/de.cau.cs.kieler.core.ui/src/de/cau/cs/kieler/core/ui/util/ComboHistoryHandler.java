@@ -74,8 +74,11 @@ public class ComboHistoryHandler {
      * @param item the item to add.
      */
     public void recordAndDisplay(final String item) {
-        if (item == null || item.trim().length() == 0) {
-            combo.setText("");
+        if ((item == null || item.trim().length() == 0)) {
+            if (combo.getText().trim().length() > 0) {
+                combo.setText("");
+            }
+            
             return;
         }
         
@@ -83,11 +86,14 @@ public class ComboHistoryHandler {
         List<String> items = new ArrayList<String>(Arrays.asList(combo.getItems()));
         int index = items.indexOf(item);
         
-        if (index >= 0) {
+        // Modify the list of items, if necessary
+        if (index > 0) {
             // The item is in the list; move it to the top
             items.remove(index);
             items.add(0, item);
-        } else {
+            
+            combo.setItems(items.toArray(new String[items.size()]));
+        } else if (index < 0) {
             // The item is not in the list; insert it at the top
             items.add(0, item);
             
@@ -95,10 +101,14 @@ public class ComboHistoryHandler {
             if (items.size() > historySize) {
                 items.remove(items.size() - 1);
             }
+
+            combo.setItems(items.toArray(new String[items.size()]));
         }
         
-        combo.setItems(items.toArray(new String[items.size()]));
-        combo.setText(items.get(0));
+        // Modify the text, if necessary
+        if (!combo.getText().equals(item)) {
+            combo.setText(item);
+        }
     }
     
     /**

@@ -32,6 +32,8 @@ import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerFilter;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.dialogs.ContainerSelectionDialog;
 
@@ -290,16 +292,18 @@ public class WorkspaceResourcesPage extends ResourceTreeAndListPage {
         
         targetComboHistoryManager = new ComboHistoryHandler(getTargetGroupCombo(), HISTORY_SIZE);
         
+        getTargetGroupCombo().addFocusListener(new FocusAdapter() {
+            /**
+             * {@inheritDoc}
+             */
+            @Override
+            public void focusLost(final FocusEvent e) {
+                // Manage history
+                targetComboHistoryManager.recordAndDisplay(getTargetGroupCombo().getText());
+            }
+        });
+        
         return targetGroup;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    protected void applyNewTarget(final String text) {
-        // Manage history
-        targetComboHistoryManager.recordAndDisplay(text);
     }
 
     /**
