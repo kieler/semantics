@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.jface.text.contentassist.ICompletionProposal;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.xtext.Assignment;
 import org.eclipse.xtext.ui.editor.contentassist.ContentAssistContext;
@@ -32,26 +33,28 @@ public class AnnotationsProposalProvider extends AbstractAnnotationsProposalProv
 			if (Class.forName("de.cau.cs.kieler.kiml.LayoutDataService") != null) {
 
 				/* declare the plain proposal and get the option list */
-				String proposal = null;
-				StyledString.Styler theStyle; 
+				String proposal;
+				StyledString.Styler theStyle;
 				StyledString displayString;
+				ICompletionProposal completeProposal;
+
 				LayoutDataService layoutServices = LayoutDataService.getInstance();
 				Collection<LayoutOptionData<?>> optionDataList = layoutServices.getOptionData();
+				LayoutOptionData<?> optionData;
 
 				/*
 				 * create and register the completion proposal for every element
 				 * in the list
 				 */
-				LayoutOptionData<?> optionData;
 				for (Iterator<LayoutOptionData<?>> i = optionDataList.iterator(); i.hasNext();) {
 					optionData = i.next();
 					theStyle = (optionData.isAdvanced()) ? StyledString.COUNTER_STYLER : null;
-					proposal = optionData.getId();
-					displayString = new StyledString(optionData.toString(),theStyle);
+					displayString = new StyledString(optionData.toString(), theStyle);
 					displayString.append(" - " + optionData.getType().toString(), StyledString.QUALIFIER_STYLER);
-					acceptor.accept(createCompletionProposal(proposal, displayString, null, getPriorityHelper().getDefaultPriority(), "de.cau.cs.kieler."
-							+ context.getPrefix(), context));
-					acceptor.accept(createCompletionProposal(proposal, displayString, null, context));
+					proposal = optionData.getId();
+					completeProposal = createCompletionProposal(proposal, displayString, null, getPriorityHelper().getDefaultPriority(), "de.cau.cs.kieler."
+							+ context.getPrefix(), context);
+					acceptor.accept((completeProposal != null) ? completeProposal : createCompletionProposal(proposal, displayString, null, context));
 				}
 			}
 		} catch (ClassNotFoundException e) {
