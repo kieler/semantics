@@ -57,7 +57,6 @@ openFile</programArgsMac>
       </win>
    </launcher>
 
-
    <vm>
    </vm>
 
@@ -173,6 +172,7 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </features>
 
    <configurations>
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="2" />
       <property name="osgi.instance.area.default" value="@user.home/kieler-workspace" />
    </configurations>
 
