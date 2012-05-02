@@ -32,7 +32,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.Activator;
 import de.cau.cs.kieler.kies.util.TransformationUtil;
 import de.cau.cs.kieler.kies.util.TransformationUtil.TransformationType;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
+import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 
 /**
  * @author uru

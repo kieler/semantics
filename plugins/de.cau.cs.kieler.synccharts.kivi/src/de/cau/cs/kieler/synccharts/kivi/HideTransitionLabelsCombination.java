@@ -26,7 +26,7 @@ import de.cau.cs.kieler.core.kivi.menu.ButtonTrigger.ButtonState;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService;
 import de.cau.cs.kieler.core.kivi.menu.KiviMenuContributionService.LocationScheme;
 import de.cau.cs.kieler.core.model.triggers.DiagramTrigger.DiagramState;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
+import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 import de.cau.cs.kieler.synccharts.diagram.custom.triggerlisteners.VisibilityManagerShowHideEffect;
 import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionLabelEditPart;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;

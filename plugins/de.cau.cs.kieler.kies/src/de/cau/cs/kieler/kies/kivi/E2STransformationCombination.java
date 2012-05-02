@@ -54,7 +54,7 @@ import de.cau.cs.kieler.kies.Activator;
 import de.cau.cs.kieler.kies.EsterelToSyncChartDataComponent;
 import de.cau.cs.kieler.kies.SyncChartsOptimizationDataComponent;
 import de.cau.cs.kieler.kies.util.TransformationUtil;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
+import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.synccharts.Region;

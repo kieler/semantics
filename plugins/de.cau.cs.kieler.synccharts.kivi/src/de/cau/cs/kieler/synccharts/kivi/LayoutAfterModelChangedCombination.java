@@ -23,8 +23,8 @@ import org.eclipse.jface.preference.IPreferenceStore;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.triggers.ModelChangeTrigger.ModelChangeState;
+import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
-import de.cau.cs.kieler.kiml.ui.diagram.LayoutEffect;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
