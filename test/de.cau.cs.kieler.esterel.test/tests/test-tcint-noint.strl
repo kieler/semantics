@@ -1,0 +1,684 @@
+% Toplevel module for turbochannel - pam communication
+
+module tcint :
+
+% inputs from TurboChannel
+
+input SEL;
+input WRITE;
+input ACK;
+input ERR;
+input RESET;
+
+input ADB22;  % address bits used as op codes
+input ADB23;
+input ADB24;
+
+% output to TurboChannel
+
+output RDY;
+output RREQ;
+output WREQ;
+%output INT;    % BEWARE! INT is reserved word for pollux!!!!!!  
+output CONFLICT;
+
+% input from PAM (p2h)
+
+input Fi_FF;   % input fifo full flag
+input Fi_PAF;  % input fifo programmable almost full flag
+input Fi_HF;   % input fifo half full flag
+input Fo_EF;   % output fifo empty flag
+input Fo_PAE;  % output fifo programmable almost empty flag
+input Fo_HF;   % output fifo half full flag
+
+input PomIoDone;  % pom io done
+
+% output to PAM (h2Pam)
+
+output WPomAdCyc; % active in adress cycle pom
+output RPomAdCyc; % active in adress cycle pom
+
+output WFifo;     % pre write fifo
+output PopRFifo;  % pop the read Fifo
+output pOEnRFifo; % pre output enable of read fifo
+output TagFlag;   % to generate the tag
+
+% output to data path
+
+output TCRegInOE;     % turbo channel input register output enable
+output TCRegInCkE;    % turbo channel input register clock enable
+output TCRegOutOE;    % turbo channel output register output enable
+output TCRegOutCkDis; % turbo channel output register clock disable
+
+output ExtBufDir;   % external buffer direction (1 = towards PAM)
+output ExtBufOE;    % external buffer output enable
+
+% output to ROM
+
+output RomAD;  % latches adresses for the prom
+output RomCE;  % prom chip enable
+output RomOE;  % prom output enable
+
+output LcaOE;  % lca output enable
+
+
+input SetDMAReadAddressReady;   % from LCA, normally sent after a WLCA sequence
+input DMAReadOver;  % from DMA length counter
+
+input SetDMAWriteAddressReady;
+input DMAWriteOver; % from DMA length counter
+
+signal pHostDrives, pRomDrives, pPamDrives, pLcaDrives,
+      pDriveTBC,
+      pRREQ, pWREQ,
+      DMAReadAddressReady,
+      DMAWriteAddressReady,
+      ConflictOnSEL, AcceptSEL
+                               % WIntAdCyc, RIntAdCyc
+in
+
+% generating RREQ and WREQ from their p versions
+   run DELAY [signal pRREQ / I, RREQ / O ]
+||
+   run DELAY [signal pWREQ / I, WREQ / O ]
+||
+
+   % internal buses control
+   run DRIVE
+
+||
+
+   run DMA_MEMO  % memorize presence of DMA read and write addresses
+                 % by sustaining DMAReadAddressReady and  DMAWriteAddressReady
+
+||
+
+   run CONFLICT % reject SEL by sending CONFLICT, used during DMA
+
+||
+
+   await tick;  % to avoid problems at boot time!
+   loop
+
+      % First of all, wait for DMA request or SEL
+
+      await 
+
+         % DMA write request
+         case immediate [ Fo_HF and DMAWriteAddressReady ] do
+
+            % DMA_WRITE: pam to host
+            run DMA_WRITE;
+
+         % DMA read request
+         case immediate [ not Fi_HF and DMAReadAddressReady ] do 
+            % DMA_READ : host to pam
+            run DMA_READ;
+
+         % SEL
+         case immediate SEL do
+            emit TagFlag;
+            
+            trap ReadSharedEnd, WriteSharedEnd in
+
+               % when SEL occurs, decode opcode
+                
+               % WPOM
+               present [ SEL and WRITE and not ADB24 and ADB23 and not ADB22 ] then
+                  run WPOM
+                   
+               % RPOM
+               else present [ SEL and not WRITE and not ADB24 and ADB23 and not ADB22 ] then
+                  run RPOM; exit ReadSharedEnd
+         
+               % WPAM
+               else present [ SEL and WRITE and ADB24 ] then
+                  run WPAM
+         
+               % RPAM
+               else present [ SEL and not WRITE and ADB24 ] then
+                  run RPAM; exit ReadSharedEnd
+         
+               % WFIFO
+               else present [ SEL and WRITE and not ADB24 and ADB23 and ADB22 ] then
+                  run WFIFO
+         
+               % RFIFO
+               else present [ SEL and not WRITE and not ADB24 and ADB23 and ADB22 ] then
+                  run RFIFO; exit ReadSharedEnd
+         
+               % RROM
+               else present [ SEL and not WRITE and not ADB24 and not ADB23 and not ADB22 ] then
+                  run RROM; exit ReadSharedEnd
+         
+               % WLCA
+               else present [ SEL and WRITE and not ADB24 and not ADB23 and ADB22 ] then
+                  run WLCA
+         
+               % RLCA
+               else present [ SEL and not WRITE and not ADB24 and not ADB23 and ADB22 ] then
+                  run RLCA; exit ReadSharedEnd
+         
+               else
+                  halt
+         
+               end end end end end end end end end
+
+           handle ReadSharedEnd do
+              % drive final data word on next cycle
+              emit pDriveTBC;
+              await tick;
+              % send RDY and pHostDrives and wait one cycle
+              emit RDY;
+              emit pHostDrives;
+              await tick
+           end trap
+      end await
+   end loop
+end signal
+
+end module
+
+
+% module CONFLICT :
+%
+% After receiving ConflictOnSEL,
+% reject SEL by sending CONFLICT and RDY on next clock cycle;
+% stop doing this when receiving AcceptSEL.
+%
+% BEWARE : if AcceptSEL is received just after SEL, CONFLICT should be sent
+%          on next cycle
+
+module CONFLICT :
+
+input SEL;
+output RDY;
+output CONFLICT;
+
+input ConflictOnSEL; % once received, CONFLICT should be sent on SEL
+input AcceptSEL;     % once received, SEL should be handled normally
+
+signal RejectSEL in  % to guarantee unconditional sending of
+                     % RDY + CONFLICT when SEL rejected
+   loop
+      await ConflictOnSEL;
+      do
+         every immediate SEL do
+            emit RejectSEL
+         end
+      watching AcceptSEL
+   end
+||
+   loop
+      present RejectSEL then
+         await tick;
+         emit RDY;
+         emit CONFLICT
+      else
+         await tick
+      end present
+   end 
+end signal
+
+end module % module DELAY
+% output is input delayed by one
+
+module DELAY :
+
+input I;
+output O;
+
+loop
+   present I then
+      await tick; emit O
+   else
+      await tick
+   end
+end loop
+
+end module
+% module DMA_MEMO : memorizes the presence of a dma read or write address
+
+module DMA_MEMO :
+
+input SetDMAReadAddressReady;  % signals presence of read address
+output DMAReadAddressReady;    % the sustained output signal
+input DMAReadOver;             % signals end of read dma
+
+input SetDMAWriteAddressReady; % signals presence of write address
+input DMAWriteOver;            % the sustained output signal
+output DMAWriteAddressReady;   % signals end of write dma
+
+
+   % memorize presence of DMA read address
+   loop
+      await SetDMAReadAddressReady;
+      do
+         sustain DMAReadAddressReady
+      watching DMAReadOver
+   end
+
+||
+   
+   % memorize presence of DMA write address
+   loop
+      await SetDMAWriteAddressReady;
+      do
+         sustain DMAWriteAddressReady
+      watching DMAWriteOver
+   end
+
+end module% module DMA_READ : dma from host to pam
+
+module DMA_READ :
+
+input ACK;
+output pRREQ;
+
+output ConflictOnSEL;
+output AcceptSEL;
+
+output pHostDrives;
+output pLcaDrives;
+output pDriveTBC;
+
+output TCRegOutCkDis;
+output WFifo;
+
+% reject SEL upto next ACK
+
+emit ConflictOnSEL;
+
+% during first cycle :  * start sustaining pRREQ: on the next cycle, we shall
+%                         have RREQ and DMA address ready cycle after
+%                       * prepare Lca drive for next cycle
+
+trap EndOfDmaRead in
+
+   % request DMA.  Length of DMA is unary encoded by duration of RREQ 
+   % after first ACK is received.  
+
+   % split here into two independent controllers.
+   % First part sustains RREQ after first ACK
+   % to encode length of request
+   trap WordCount in
+      sustain pRREQ
+   ||
+      await ACK;
+      % repeat for the rest of the data words
+      await tick;
+      await tick;
+      await tick;
+      exit WordCount
+   end trap
+
+||
+
+   % Second part fo controller: transfer address, wait for ACK, wait for data.
+
+   emit pLcaDrives;
+
+   await tick;
+
+   % setup data path from host to pam
+   emit pHostDrives;
+
+   % wait for acknowledge
+   trap AckReceived in
+      await tick;
+      sustain TCRegOutCkDis
+   ||
+      await immediate ACK do exit AckReceived end
+   end trap;
+
+   % ACK received, SEL impossible from now on, stop worrying
+   emit AcceptSEL;
+
+   % we are still on ACK; drive DMA address onto TBC on next cycle
+   emit pDriveTBC;
+
+   % wait for second ACK signaling start of data words
+   await ACK;
+   % store received data into fifo
+   trap NotAck in
+      await tick;
+      sustain WFifo
+   ||
+      await [ not ACK ] do exit NotAck end
+   end trap;
+   exit EndOfDmaRead
+
+end trap;
+
+end module% module DMA_WRITE : dma from pam to host
+
+module DMA_WRITE :
+
+input ACK;
+output pWREQ;
+
+output ConflictOnSEL;
+output AcceptSEL;
+
+output pHostDrives;
+output pLcaDrives;
+output pPamDrives;
+
+output pDriveTBC;
+
+output TCRegOutCkDis;
+output PopRFifo;
+output pOEnRFifo;
+
+% reject SEL upto next ACK
+
+emit ConflictOnSEL;
+
+% during first cycle :  * start sustaining pWREQ: on the next cycle, we shall
+%                         have WREQ and DMA address ready cycle after
+%                       * prepare Lca drive for next cycle
+
+trap AlmostEndOfDmaWrite in
+
+   % request DMA.  Length of DMA is unary encoded by duration of WREQ after ACK
+   % is received.  pWREQ is killed after we have popped the correct number of
+   % words from output fifo.
+   sustain pWREQ
+
+||
+
+   emit pLcaDrives;
+
+   await tick;
+
+   % setup data path from pam to host
+   emit pPamDrives;
+ 
+   [
+      % enable output fifo
+      sustain pOEnRFifo;
+   ||
+      % prepare first data word
+      emit PopRFifo;
+
+      % wait for acknowledge
+      trap AckReceived in
+         await tick;
+         sustain TCRegOutCkDis
+      ||
+         await immediate ACK do exit AckReceived end
+      end trap;
+
+      % ACK received, SEL impossible from now on, stop worrying
+      emit AcceptSEL;
+
+      % drive DMA address onto TBC on next cycle
+      emit pDriveTBC;
+
+      await tick;
+      emit PopRFifo;
+      emit pDriveTBC;
+      exit AlmostEndOfDmaWrite
+   ]
+
+end trap;
+
+% reset host as IntDAB driver
+
+emit pHostDrives;
+
+await tick;
+% drive final data word on next cycle
+emit pDriveTBC;
+await tick
+end module
+
+module DRIVE :
+
+input pHostDrives;
+input pPamDrives;
+input pRomDrives;
+input pLcaDrives;
+
+% to drive the turbochannel
+
+input pDriveTBC;
+
+% clock enables
+
+output TCRegInCkE;
+output RomCE;
+
+% output enables
+
+output TCRegInOE;
+output TCRegOutOE;
+
+output ExtBufDir;
+output ExtBufOE;
+
+output  RomOE;
+
+output LcaOE;
+
+[
+   sustain TCRegInCkE % always 1 !
+||
+   sustain RomCE % always 1 !
+
+||
+
+   % Turbochannel driving logic
+
+   run DELAY [ signal pDriveTBC / I, TCRegOutOE / O ]
+
+||
+
+   loop
+      trap EndOfHostDrives in
+         await tick;
+         [
+            sustain TCRegInOE
+         ||
+            sustain ExtBufDir
+         || 
+            sustain ExtBufOE
+         ]
+      ||
+         await [ pPamDrives or pRomDrives or pLcaDrives ] do 
+            exit EndOfHostDrives 
+         end
+      end trap;
+
+      present pPamDrives then
+         trap EndOfPamDrives in
+            await tick;
+            sustain ExtBufOE
+         ||
+            await pHostDrives do exit EndOfPamDrives end
+         end trap
+
+      else present pRomDrives then
+         trap EndOfRomDrives in
+            await tick;
+            sustain RomOE
+         ||
+            await pHostDrives do exit EndOfRomDrives end
+         end trap
+
+      else present pLcaDrives then
+         trap EndOfLcaDrives in
+            await tick;
+            sustain LcaOE
+         ||
+            await pHostDrives do exit EndOfLcaDrives end
+         end trap
+
+      end end end present
+   end loop
+]
+
+end module
+% module RFIFO : read one word from output fifo
+
+module RFIFO :
+
+output pPamDrives;
+
+output pOEnRFifo;
+output PopRFifo;
+
+await tick; 
+emit pPamDrives;
+emit pOEnRFifo;
+emit PopRFifo;
+
+await tick;
+
+end module
+% module RLCA : read one word from lca according to address
+
+module RLCA :
+
+output pLcaDrives;
+
+await tick; 
+emit pLcaDrives;
+
+await tick;
+
+await tick;
+
+end module% module RPAM : put address in fifo in and take data in fifo out,
+%               INDEPENDENTLY OF EACH OTHER
+
+module RPAM :
+
+output pPamDrives;
+
+output pOEnRFifo;
+output PopRFifo;
+output WFifo;
+
+await tick; 
+emit pPamDrives;
+emit pOEnRFifo;
+emit PopRFifo;
+emit WFifo;
+
+await tick;
+
+end module% module RPOM : read data in pom according to address
+
+module RPOM :
+
+input PomIoDone;
+
+output pPamDrives;
+
+output RPomAdCyc;
+
+await tick;
+emit pPamDrives;
+emit RPomAdCyc;
+
+await PomIoDone;
+
+await tick;
+
+end module% module RROM : read turbochannel identification ROM
+
+module RROM :
+
+% constant RomDelay : integer;
+
+output pRomDrives;
+
+output RomAD;
+output RomOE;
+
+await tick; 
+emit pRomDrives;
+emit RomAD;
+
+await tick;
+do
+   sustain RomOE
+% watching RomDelay tick;
+watching tick;
+
+emit RomOE;
+
+end module
+
+
+% module WFIFO : write one word of data in input fifo
+
+module WFIFO :
+
+output RDY;
+
+output WFifo;
+
+await tick; 
+emit RDY;
+
+await tick;
+emit WFifo;
+
+await tick;
+
+end module% module WLCA : write lca
+
+module WLCA :
+
+output RDY;
+
+await tick; 
+emit RDY;
+
+await tick;
+
+end module% module WPAM : put address and data in input fifo
+
+module WPAM :
+
+output RDY;
+
+output WFifo;
+
+await tick; 
+emit RDY;
+emit WFifo;
+
+await tick;
+emit WFifo;
+
+await tick;
+
+end module% module WPOM : write data in pom according to address
+
+module WPOM :
+
+input PomIoDone;
+
+output RDY;
+
+output  WPomAdCyc;
+
+await tick;
+emit WPomAdCyc;
+
+await PomIoDone;
+
+await tick;
+
+await tick;
+emit RDY;
+
+await tick;
+
+end module
+
+
+

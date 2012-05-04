@@ -5,7 +5,6 @@ grammar InternalAnnotations;
 
 options {
 	superClass=AbstractInternalContentAssistParser;
-	backtrack=true;
 	
 }
 
@@ -82,6 +81,8 @@ ruleAnnotation
 finally {
 	restoreStackSize(stackSize);
 }
+
+
 
 
 
@@ -391,6 +392,7 @@ rule__Annotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__EString__Alternatives
     @init {

@@ -20,7 +20,7 @@
       <combination
             class="de.cau.cs.kieler.synccharts.kivi.SignalFlowCombination"
             description="Visualizes the flow of signals in a SyncChart diagram."
-            name="SyncCharts Signal Flow Combination"
+            name="SyncCharts Signal Flow Visualization"
             active="true">
       </combination>
   <!--    <combination
@@ -36,17 +36,23 @@
             name="SyncCharts Layout After Model Changed"
             active="true">
       </combination>
-       <combination
+      <combination
             active="true"
             class="de.cau.cs.kieler.synccharts.kivi.ManualFocusCombination"
-            description="Focus&amp;Context by manual selection of elements in the focus or hierarchy levels that should be visible."
+            description="Focus&amp;Context by manual selection of elements in the focus, or by selecting hierarchy levels that should be visible."
             name="Manual Focus (Semantic Zoom)">
       </combination>
-       <combination
-             active="true"
-             class="de.cau.cs.kieler.synccharts.kivi.GenerateDefaultCombination"
-             description="If this combination is activated a default state and region will be added to any empty syncchart"
-             name="SyncchartsDefaultCombination">
-       </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.synccharts.kivi.GenerateDefaultCombination"
+            description="Adds a default state and region to any empty SyncChart."
+            name="SyncCharts Add Default State to Empty Diagrams">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.synccharts.kivi.HideTransitionLabelsCombination"
+            description="Adds buttons to the toolbar to show or hide the labels of transitions in a SyncChart."
+            name="SyncCharts Hide / Show Transition Labels">
+      </combination>
    </extension>
 </plugin>

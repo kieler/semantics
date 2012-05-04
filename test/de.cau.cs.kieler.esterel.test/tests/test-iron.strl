@@ -1,0 +1,22 @@
+module IRON:
+
+input SWITCH_ON,SWITCH_OFF,SECOND;
+output HEAT_ON,HEAT_OFF;
+
+loop
+   await immediate SWITCH_ON do
+	abort
+	    loop
+		abort
+		   sustain HEAT_ON
+		when 3 SECOND;
+		abort
+		   sustain HEAT_OFF
+		when 2 SECOND;
+	    end loop
+	when SWITCH_OFF
+   end await
+each SWITCH_OFF
+
+end module
+

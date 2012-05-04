@@ -323,6 +323,8 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                     return this;
                 }
             }
+        } else if (otherEffect instanceof CompartmentCollapseExpandEffect) {
+           // return otherEffect;
         }
         return null;
     }

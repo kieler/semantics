@@ -54,6 +54,11 @@ public abstract class AbstractAnnotationsRuntimeModule extends DefaultRuntimeMod
 		return org.eclipse.xtext.serializer.impl.Serializer.class;
 	}
 
+	// contributed by org.eclipse.xtext.generator.parseTreeConstructor.ParseTreeConstructorFragment
+	public Class<? extends org.eclipse.xtext.parsetree.reconstr.IParseTreeConstructor> bindIParseTreeConstructor() {
+		return de.cau.cs.kieler.core.annotations.text.parseTreeConstruction.AnnotationsParsetreeConstructor.class;
+	}
+
 	// contributed by org.eclipse.xtext.generator.parser.antlr.XtextAntlrGeneratorFragment
 	public Class<? extends org.eclipse.xtext.parser.IParser> bindIParser() {
 		return de.cau.cs.kieler.core.annotations.text.parser.antlr.AnnotationsParser.class;

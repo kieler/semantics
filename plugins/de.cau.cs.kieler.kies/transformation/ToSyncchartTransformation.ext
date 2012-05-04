@@ -8,6 +8,7 @@ import esterel;
 extension KiesUtil;
 extension feature;
 extension org::eclipse::xtend::util::stdlib::cloning;
+extension org::eclipse::xtend::util::stdlib::io;
  
  
 /**
@@ -456,13 +457,15 @@ Void handleIfSingle(Region parent, State previous, Integer prio, Expression e, S
 	let ifT = new Transition:
 	parent.states.add(ifS) ->
 	ifS.setIsFinal(true) ->
+	ifT.setIsImmediate(true) ->
 	
 	// setup transition
 	if (e != null) then
 		(ifT.setTrigger(
-		  let clone = ((Expression) clone(e)).convertEsterelExpression():
+		  let clone = ((Expression) clone(e)):
+		  let cloneConverted = clone.convertEsterelExpression():
           // this is an ugly hack needed with the Indigo release
-		  {clone}.flatten().first()
+          {cloneConverted}.flatten().first()
 		 )) ->
 	
 	ifT.connectTransition(previous, ifS) ->
@@ -585,6 +588,7 @@ Void ruleParallelRecursive(State parent, List[Statement] statements):
 Void rule(State s, Present p):
 	let r = new Region:
 	let pS = new State:
+	let nothing = new Nothing:
 	initializeRule(s, p) ->
 	// setup
 	s.regions.add(r) ->
@@ -595,17 +599,18 @@ Void rule(State s, Present p):
 		// handle present ... then ... form
 		(let event = ((PresentEventBody)p.body).event.expression:
 		 let thenPart = ((PresentEventBody)p.body).thenPart:  
-		 handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : null) 
+    //cmot: added implicit nothing if thenPart == null	
+		 handleIfSingle(r, pS, 1, event, thenPart != null ? thenPart.statement : nothing) 
 		)
 		:
 		// handle present cases
 		handlePresentCases(r, pS, 1, ((PresentCaseList)p.body).cases)
 	) ->
-	
-	if p.elsePart != null then
+
+    //cmot: added implicit nothing if elsePart == null	
 		// calculate the maximal priority. for a PresentEventBody this is 2 as no more cases can occur.
 		(let maxprio = (PresentCaseList.isInstance(p.body) ? ((PresentCaseList)p.body).cases.size + 1 : 2):
-		 handleIfSingle(r, pS, maxprio, null, p.elsePart.statement))
+		 handleIfSingle(r, pS, maxprio, null, p.elsePart != null ? p.elsePart.statement : nothing ))
 ;
 
 Void handlePresentCases(Region parent, State previous, Integer prio, List[PresentCase] cases):

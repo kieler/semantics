@@ -20,7 +20,9 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.kiml.ui,
  de.cau.cs.kieler.core.model.gmf,
  de.cau.cs.kieler.core.model.xtend,
- de.cau.cs.kieler.synccharts.editor
+ de.cau.cs.kieler.synccharts.editor,
+ de.cau.cs.kieler.ksbase.ui,
+ de.cau.cs.kieler.synccharts.diagram.custom
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.synccharts.kivi

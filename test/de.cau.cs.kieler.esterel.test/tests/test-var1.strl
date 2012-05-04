@@ -1,0 +1,9 @@
+module test_var1:
+
+var a : integer in
+  var b : integer in
+    nothing
+  end var
+end var
+
+end module

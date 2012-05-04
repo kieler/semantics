@@ -1,0 +1,555 @@
+module CONTROLE:
+
+
+
+constant ADRESSES,LONG_MIN : integer;
+
+
+input  DEMANDE_EMISSION(integer),
+       DEBUT_CYCLE,                      
+       TOP,DD,DF,ADRESSE,CRC_OK,ERR,PERTE_DF,                
+       TIMEOUT;
+
+
+relation DEMANDE_EMISSION # TIMEOUT # PERTE_DF,
+         DD # DF # ADRESSE # ERR,
+         DD       => TOP,
+         DF       => TOP,
+         ADRESSE  => TOP,
+         CRC_OK   => TOP,
+         ERR      => TOP,
+         PERTE_DF => TOP;
+
+
+output CONFIRMATION_pos,CONFIRMATION_neg,
+       INDICATION_RECEPTION,SYNCHRONISATION,
+       MAC_PRET(integer),
+       STOPPE_RECEPTION,
+       ARME_TEMPORISATION,DESARME_TEMPORISATION;
+
+
+
+
+%
+% procedure CONTROLE         
+%
+
+
+signal AD_SOURCE,AD_DEST,ATTEND_DF,DF_VALIDE,ERR_RECEPTION in
+
+
+
+  loop
+
+
+    await DEMANDE_EMISSION do                % demande d'emission 
+      emit MAC_PRET(?DEMANDE_EMISSION)         % mac pret a fonctionner
+    end;
+
+    await DEBUT_CYCLE;                       % attente DEBUT CYCLE (EMISSION)
+                                             %     ( DD sur le bus E)
+
+    trap CYCLE in                            % debut cycle en cours
+
+                                             % attente DD
+
+      present DD else                          % DD sur le bus R ?
+        emit ARME_TEMPORISATION; 
+        do                                       % attente DD sur le bus R
+          await DD do
+            emit DESARME_TEMPORISATION             % DD arrive
+          end
+        watching TIMEOUT           
+        timeout                                    % DD perdu 
+          emit CONFIRMATION_neg;
+          do
+            await DF do                              % attente fin cycle 
+              emit DESARME_TEMPORISATION 
+            end
+          watching TIMEOUT;                                      
+          exit CYCLE
+        end
+      end; 
+
+
+      [                                      % supervision 
+
+        [                                      % synchronisation interne
+         do
+           await (ADRESSES) TOP do emit AD_SOURCE end;
+           await TOP do emit AD_DEST end;
+           await (LONG_MIN - ADRESSES - 1) TOP do emit ATTEND_DF end
+         watching ERR_RECEPTION
+        ]
+
+        ||
+
+        [                                      % confirmation d'emission
+         do
+           await AD_SOURCE do                    % attente AS
+             present ADRESSE then                
+               emit CONFIRMATION_pos
+             else                               
+               emit CONFIRMATION_neg 
+             end
+           end
+         watching ERR_RECEPTION
+         timeout
+           emit CONFIRMATION_neg 
+         end
+        ] 
+            
+        ||
+            
+        [                                      % reception des trames
+         do
+           await AD_DEST do                      % attente AD
+             present ADRESSE then
+               await DF do                       % attente DF
+                 present CRC_OK then               % verification CRC
+                   emit INDICATION_RECEPTION 
+                 end
+               end
+             end
+           end
+         watching ERR_RECEPTION;
+         emit STOPPE_RECEPTION
+        ]
+ 
+        ||
+
+        [                                      % sortie cycle
+         await case ATTEND_DF case ERR_RECEPTION end;
+         do
+           await DF 
+         watching PERTE_DF 
+         timeout emit ERR_RECEPTION end;
+         exit CYCLE 
+        ]
+  
+        ||                                     % detection d'erreurs
+
+        
+        trap DETEC_ERR in
+          await ERR do emit ERR_RECEPTION end
+          ||
+          await DD do emit ERR_RECEPTION end
+          ||
+          await
+            case DF do emit ERR_RECEPTION  
+            case ATTEND_DF 
+          end
+          ||
+          await ERR_RECEPTION do exit DETEC_ERR end
+        end
+
+      ]
+
+
+    end;                                     % fin cycle en cours 
+                                     
+    emit SYNCHRONISATION                     % synchronisation
+ 
+
+  end % loop
+
+
+end.
+module EMISSION :
+
+
+constant DD,DF,IDLE,RIEN : integer;
+
+
+function LONG_TRAME(integer):integer,
+         DONNEE_TRAME(integer,integer):integer;
+
+
+input  MAC_PRET(integer),CONFIRMATION_neg,SYNCHRONISATION,
+       EE(integer);                         
+
+relation MAC_PRET # CONFIRMATION_neg # SYNCHRONISATION;
+
+output DEBUT_CYCLE,                        
+       SE(integer);                           
+
+
+
+%
+% procedure EMISSION
+%
+
+
+var ID_TRAME,
+    LONG,PRIORITE_H,PRIORITE_L,
+    DONNEE,CRC,INDEX : integer in
+
+signal ST,EM_ACTIF,EM_INACTIF in
+
+
+
+
+
+ [
+
+  loop
+
+
+    await MAC_PRET do                          % attente MAC_PRET (CONTROL)
+      emit EM_ACTIF;                             % station prete
+      ID_TRAME   := ?MAC_PRET;            
+      INDEX      := 0;
+      LONG       := LONG_TRAME(ID_TRAME);
+      PRIORITE_H := DONNEE_TRAME(ID_TRAME,0);
+      PRIORITE_L := DONNEE_TRAME(ID_TRAME,1);
+      CRC        := 0;
+    end;
+
+
+    trap ATT_DD in                             % attente DD
+      every EE do
+        if ?EE = DD then                         % DD arrive
+          exit ATT_DD    
+        else
+          if ?EE = RIEN then                     % ST 
+            emit ST;          
+            exit ATT_DD
+          else
+            emit SE(?EE)
+          end
+        end
+      end
+    end;
+    emit SE(DD);                                 % emission DD      
+    emit DEBUT_CYCLE;
+
+
+    trap EMISSION in                           % emission        
+
+      [
+        present ST else 
+          await EE do                            % competition locale 
+            if ?EE > PRIORITE_H then               % comparaison de priorites
+              emit SE(?EE);
+              exit EMISSION
+            else
+              emit SE(PRIORITE_H);
+              CRC   := CRC + PRIORITE_H;
+              INDEX := INDEX + 1;
+              LONG  := LONG - 1;
+              if ?EE = PRIORITE_H then
+                await EE do
+                  if ?EE >= PRIORITE_L then
+                    emit SE(?EE);
+                    exit EMISSION
+                  else
+                    emit SE(PRIORITE_L);
+                    CRC   := CRC + PRIORITE_L;
+                    INDEX := INDEX + 1;
+                    LONG  := LONG - 1 
+                  end
+                end
+              end
+            end
+          end
+        end;                                     % fin competition locale
+
+        repeat LONG times                         % competition locale 
+          DONNEE := DONNEE_TRAME(ID_TRAME,INDEX); % gagnee ( ou ST ),
+          await EE do                             
+            emit SE(DONNEE);                      % emission octets trame
+            INDEX := INDEX + 1;
+            CRC := CRC + DONNEE                 
+          end
+        end; 
+        repeat 2 times
+          await EE do
+            emit SE(CRC)                          % emission CRC
+          end 
+        end;
+        await EE do
+          emit SE(DF)                             % emission DF
+        end;
+        exit EMISSION 
+      ]
+
+      ||
+
+      await CONFIRMATION_neg do exit EMISSION end   % aborte emission
+
+      ||
+
+      await SYNCHRONISATION do exit EMISSION end    % fin cycle en cours
+ 
+    end;            
+    emit EM_INACTIF                            % fin emission
+
+  end % loop
+
+ ]
+
+
+ ||
+
+
+ [
+
+  loop                                         % tache de repetition
+    trap INACTIVITE in                         %    (EM inactive)
+         await EM_ACTIF do exit INACTIVITE end
+      ||
+         every EE do
+           if ?EE = RIEN then                    
+             emit SE(IDLE)                       % padding 
+           else                                  % ou 
+             emit SE(?EE)                        % repetition E-> S
+           end
+         end
+    end
+  each EM_INACTIF
+
+ ]
+
+
+end
+
+end. 
+module GESTION_PRIORITES :
+
+constant POSITIVE,NEGATIVE,
+         NB_TRAMES_STATION : integer;
+
+function QUELLE_TRAME(integer,integer,integer):integer;
+
+sensor ID(integer);    
+
+
+input  TOP,
+       CONFIRMATION_pos,CONFIRMATION_neg,SYNCHRONISATION;
+
+relation CONFIRMATION_pos # CONFIRMATION_neg # SYNCHRONISATION;
+
+output DEMANDE_EMISSION(integer);
+
+
+var X,CONFIRMATION : integer in
+
+
+
+
+
+  X := ((?ID - 1) * NB_TRAMES_STATION) + 1;
+  CONFIRMATION := POSITIVE;
+
+
+  loop
+    await TOP do         
+      X := QUELLE_TRAME(?ID,X,CONFIRMATION);
+      emit DEMANDE_EMISSION(X)
+    end;
+    await 
+      case CONFIRMATION_pos do
+        CONFIRMATION := POSITIVE
+      case CONFIRMATION_neg do
+        CONFIRMATION := NEGATIVE
+    end;
+    await SYNCHRONISATION       
+  end
+
+end.
+module RECEPTION : 
+
+
+
+constant RIEN,DD,DF,ERR,
+         DIFFUSION,LONG_MAX : integer;
+
+
+sensor ID(integer);       
+
+
+input  DEBUT_CYCLE,
+       STOPPE_RECEPTION,
+       SYNCHRONISATION,
+       ER(integer),SE(integer);
+
+
+relation  DEBUT_CYCLE # STOPPE_RECEPTION # SYNCHRONISATION;
+
+
+output DD,DF,ERR,TOP, 
+       ADRESSE,CRC_OK,PERTE_DF,
+       SR(integer);
+       
+       
+
+
+
+%
+% procedure RECEPTION          
+%
+
+
+var CRC,DERNIER : integer in
+
+
+  
+ [                                          % analyse des octets recus  
+
+  every ER do    
+    emit TOP;
+    if ?ER = RIEN then
+      emit SR(?SE)                            % bouclage
+    else
+      emit SR(?ER)                            % repetition E -> S
+    end;
+    if ?SR = DF then                          % detection des mots
+      emit DF                                 % de code speciaux 
+    else if ?SR = DD then                     % et d'adresses
+      emit DD
+    else if ?SR = ERR then
+      emit ERR
+    else if (?SR = ?ID or ?SR = DIFFUSION) then
+      emit ADRESSE
+    end end end end
+  end
+
+ ]
+
+ ||
+
+ [                                         % reception trame
+ 
+  loop
+
+    await DEBUT_CYCLE;                       % attente DEBUT_CYCLE (EM)
+    trap CYCLE in
+
+      [
+
+       await immediate DD;                   % attente DD
+
+       [
+                                             % reception
+        trap REC_TRAME in
+          [
+           CRC := 0;                           % reception trame 
+           DERNIER := 1;
+           every TOP do       
+             if ( CRC = 3 * DERNIER ) then
+               emit CRC_OK
+             end; 
+             CRC := CRC + ?SR;                 % calcul crc  
+             DERNIER := ?SR
+           end
+          ]
+          ||
+          await STOPPE_RECEPTION do exit REC_TRAME end 
+        end
+          
+        ||
+         
+        await (LONG_MAX + 2) TOP do            % protection perte DF
+          emit PERTE_DF
+        end 
+         
+       ]
+
+      ]
+
+      ||
+
+      await SYNCHRONISATION do exit CYCLE end  % attente fin cycle          
+
+    end % cycle
+ 
+  end % loop 
+               
+ ]
+
+
+end.
+module STATION :
+
+sensor ID(integer);                            % adresse station
+
+
+input  EE(integer),ER(integer);                % entrees bus E et bus R
+
+      
+output DEMANDE_EMISSION(integer),              % demande d'emission
+       CONFIRMATION_pos,                       % confirmation d'emission
+       CONFIRMATION_neg,     
+       INDICATION_RECEPTION,                   % indication de reception
+       SYNCHRONISATION,                        % synchronisation
+
+       SE(integer),SR(integer);                % sorties bus E et bus R
+
+
+
+signal MAC_PRET(integer),                       
+       DEBUT_CYCLE,
+       STOPPE_RECEPTION,
+       TOP,DD,DF,ERR,ADRESSE,CRC_OK,PERTE_DF,
+       ARME_TEMPORISATION,DESARME_TEMPORISATION,TIMEOUT in 
+       
+
+
+ 
+  [
+    copymodule GESTION_PRIORITES
+    ||
+    copymodule CONTROLE
+    ||
+    copymodule EMISSION 
+    ||
+    copymodule RECEPTION 
+    || 
+    copymodule TEMPORISATEUR
+  ]
+
+end.
+
+module TEMPORISATEUR :
+
+
+constant T1,T2 : integer;        
+
+
+input TOP,                                                         
+      ARME_TEMPORISATION,
+      DESARME_TEMPORISATION;
+
+relation ARME_TEMPORISATION # DESARME_TEMPORISATION;
+
+output TIMEOUT;                        
+
+
+%
+% procedure TEMPORISATEUR
+%
+
+
+
+  every ARME_TEMPORISATION do
+
+    trap ATTENTE in
+
+        await DESARME_TEMPORISATION do  exit ATTENTE end
+       
+     ||
+
+       [
+         await T1 TOP do                      % temps maximum traversee bus
+           emit TIMEOUT                       % perte DD
+         end;
+         await T2 TOP do                      % temps maximum emission
+           emit TIMEOUT                       % perte DF
+         end;
+         exit ATTENTE
+       ]
+
+    end
+
+  end.
+

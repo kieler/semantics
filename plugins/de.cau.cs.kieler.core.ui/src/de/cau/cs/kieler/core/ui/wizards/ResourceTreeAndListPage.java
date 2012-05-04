@@ -40,8 +40,8 @@ import org.eclipse.jface.viewers.ViewerFilter;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
-import org.eclipse.swt.events.FocusAdapter;
-import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.GridData;
@@ -665,23 +665,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         
         // Event handlers
-        sourceGroupSourceCombo.addFocusListener(new FocusAdapter() {
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusLost(final FocusEvent e) {
-                applyNewSource(sourceGroupSourceCombo.getText());
-                validate();
-            }
-        });
-        
-        sourceGroupSourceCombo.addSelectionListener(new SelectionAdapter() {
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
+        sourceGroupSourceCombo.addModifyListener(new ModifyListener() {
+            public void modifyText(final ModifyEvent e) {
                 applyNewSource(sourceGroupSourceCombo.getText());
                 validate();
             }
@@ -704,7 +689,9 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     /**
      * Called when the source group combo loses focus. If a subclass created the
      * default source group, it should implement this method to react to the user
-     * entering a new source. The default implementation does nothing.
+     * entering a new source. The default implementation does nothing. Subclasses
+     * overriding this method must make sure not to modify the text of the source
+     * combo box to avoid endless loops and stack overflows.
      * 
      * <p>After this method was called, {@link validate()} is called automatically.</p>
      * 
@@ -865,23 +852,8 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
                 new GridData(SWT.BEGINNING, SWT.CENTER, false, false));
         
         // Event handlers
-        targetGroupTargetCombo.addFocusListener(new FocusAdapter() {
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void focusLost(final FocusEvent e) {
-                applyNewTarget(targetGroupTargetCombo.getText());
-                validate();
-            }
-        });
-        
-        targetGroupTargetCombo.addSelectionListener(new SelectionAdapter() {
-            /**
-             * {@inheritDoc}
-             */
-            @Override
-            public void widgetSelected(final SelectionEvent e) {
+        targetGroupTargetCombo.addModifyListener(new ModifyListener() {
+            public void modifyText(final ModifyEvent e) {
                 applyNewTarget(targetGroupTargetCombo.getText());
                 validate();
             }
@@ -904,7 +876,9 @@ public abstract class ResourceTreeAndListPage extends WizardPage {
     /**
      * Called when the target group combo loses focus. If a subclass created the
      * default target group, it should implement this method to react to the user
-     * entering a new target. The default implementation does nothing.
+     * entering a new target. The default implementation does nothing. Subclasses
+     * overriding this method must make sure not to modify the text of the target
+     * combo box to avoid endless loops and stack overflows.
      * 
      * <p>After this method was called, {@link validate()} is called automatically.</p>
      * 

@@ -1,0 +1,24 @@
+module test_if1:
+
+if true then
+  if false then
+    pause
+  elsif true and false then
+    halt  
+  else
+    nothing
+  end if
+else
+  if true then
+    pause
+  else
+    nothing
+  end if
+end if;
+if true or false then
+  pause
+else
+  nothing
+end if
+
+end module

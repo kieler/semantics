@@ -1,0 +1,120 @@
+module Counter:
+input T;
+input S;
+input S0;
+input S1;
+input S2;
+input S3;
+output B0;
+output B1;
+output B2;
+output B3;
+output ALARM;
+
+signal R,
+       T5,
+       C0,
+       C1,
+       C2,
+       A0,
+       A1,
+       A2 in
+    every 5 T do
+      emit T5
+    end every
+  ||
+    run Bit [
+      signal T5 / CLK,
+             B0 / B,
+             C0 / CY ]
+  ||
+    run Bit [
+      signal C0 / CLK,
+             B1 / B,
+             C1 / CY ]
+  ||
+    run Bit [
+      signal C1 / CLK,
+             B2 / B,
+             C2 / CY ]
+  ||
+    run BitAlarm [
+      signal B0 / B,
+             S0 / SX,
+             tick / ACI,
+             A0 / ACO ]
+  ||
+    run BitAlarm [
+      signal B1 / B,
+             S1 / SX,
+             A0 / ACI,
+             A1 / ACO ]
+  ||
+    run BitAlarm [
+      signal B2 / B,
+             S2 / SX,
+             A1 / ACI,
+             A2 / ACO ]
+end signal
+
+end module
+
+module Bit:
+input R;
+input CLK;
+output B;
+output CY;
+
+loop
+  loop
+    await CLK;
+    abort
+      sustain B
+    when CLK;
+    emit CY;
+    abort
+      sustain B
+    when CLK;
+    await CLK;
+    emit CY
+  end loop
+each R
+
+end module
+
+module BitAlarm:
+input B;
+input S;
+input SX;
+input ACI;
+output ACO;
+
+signal SMEM,
+       SMEM1 in
+    loop
+      present SMEM then
+        pause;
+        emit SMEM1
+      else
+        pause
+      end present
+    end loop
+  ||
+    loop
+      present S then
+        present SX then
+          emit SMEM
+        end present
+      else
+        present SMEM1 then
+          emit SMEM
+        end present
+      end present;
+      present [ACI and (SMEM and B or not SMEM and not B)] then
+        emit ACO
+      end present;
+      pause
+    end loop
+end signal
+
+end module

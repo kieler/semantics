@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.model.CoreModelPlugin;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
+import de.cau.cs.kieler.core.model.m2m.TransformationObserver;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
@@ -83,12 +84,14 @@ public class TransformationEffect extends AbstractEffect {
                     @Override
                     protected IStatus execute(final IProgressMonitor monitor) {
                         context.execute(descriptor);
+                        TransformationObserver.getInstance().notifyListeners(context, descriptor);
                         return null;
                     }
                 };
                 operation.runMonitored();
             } else {
                 context.execute(descriptor);
+                TransformationObserver.getInstance().notifyListeners(context, descriptor);
             }
         } else {
             Status status = new Status(

@@ -1,0 +1,156 @@
+module Counter:
+input T;
+input S;
+input S0;
+input S1;
+input S2;
+input S3;
+output B0;
+output B1;
+output B2;
+output B3;
+output ALARM;
+
+signal R,
+       T5,
+       C0,
+       C1,
+       C2,
+       A0,
+       A1,
+       A2 in
+    every T do
+      emit T5
+    end every
+  ||
+    loop
+      loop
+        await T5;
+        abort
+          sustain B0
+        when T5;
+        emit C0;
+        abort
+          sustain B0
+        when T5;
+        await T5;
+        emit C0
+      end loop
+    each R
+  ||
+    loop
+      loop
+        await C0;
+        abort
+          sustain B1
+        when C0;
+        emit C1;
+        abort
+          sustain B1
+        when C0;
+        await C0;
+        emit C1
+      end loop
+    each R
+  ||
+    loop
+      loop
+        await C1;
+        abort
+          sustain B2
+        when C1;
+        emit C2;
+        abort
+          sustain B2
+        when C1;
+        await C1;
+        emit C2
+      end loop
+    each R
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          present SMEM then
+            pause;
+            emit SMEM1
+          else
+            pause
+          end present
+        end loop
+      ||
+        loop
+          present S then
+            present S0 then
+              emit SMEM
+            end present
+          else
+            present SMEM1 then
+              emit SMEM
+            end present
+          end present;
+          present [tick and (SMEM and B0 or not SMEM and not B0)] then
+            emit A0
+          end present;
+          pause
+        end loop
+    end signal
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          present SMEM then
+            pause;
+            emit SMEM1
+          else
+            pause
+          end present
+        end loop
+      ||
+        loop
+          present S then
+            present S1 then
+              emit SMEM
+            end present
+          else
+            present SMEM1 then
+              emit SMEM
+            end present
+          end present;
+          present [A0 and (SMEM and B1 or not SMEM and not B1)] then
+            emit A1
+          end present;
+          pause
+        end loop
+    end signal
+  ||
+    signal SMEM,
+           SMEM1 in
+        loop
+          present SMEM then
+            pause;
+            emit SMEM1
+          else
+            pause
+          end present
+        end loop
+      ||
+        loop
+          present S then
+            present S2 then
+              emit SMEM
+            end present
+          else
+            present SMEM1 then
+              emit SMEM
+            end present
+          end present;
+          present [A1 and (SMEM and B2 or not SMEM and not B2)] then
+            emit A2
+          end present;
+          pause
+        end loop
+    end signal
+end signal
+
+end module

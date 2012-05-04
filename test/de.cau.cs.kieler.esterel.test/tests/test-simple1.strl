@@ -1,0 +1,7 @@
+module test_simple1:
+
+nothing;
+pause;
+halt
+
+end module

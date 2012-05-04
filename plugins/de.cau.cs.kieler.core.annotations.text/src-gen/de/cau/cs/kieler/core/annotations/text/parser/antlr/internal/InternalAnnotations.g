@@ -5,7 +5,6 @@ grammar InternalAnnotations;
 
 options {
 	superClass=AbstractInternalAntlrParser;
-	backtrack=true;
 	
 }
 
@@ -35,11 +34,6 @@ import de.cau.cs.kieler.core.annotations.text.services.AnnotationsGrammarAccess;
 
 @parser::members {
 
-/*
-  This grammar contains a lot of empty actions to work around a bug in ANTLR.
-  Otherwise the ANTLR tool will create synpreds that cannot be compiled in some rare cases.
-*/
- 
  	private AnnotationsGrammarAccess grammarAccess;
  	
     public InternalAnnotationsParser(TokenStream input, AnnotationsGrammarAccess grammarAccess) {
@@ -84,9 +78,6 @@ ruleAnnotation returns [EObject current=null]
     }
     @after { leaveRule(); }:
 (
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getCommentAnnotationParserRuleCall_0()); 
     }
@@ -97,9 +88,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getTagAnnotationParserRuleCall_1()); 
     }
@@ -110,9 +98,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getKeyStringValueAnnotationParserRuleCall_2()); 
     }
@@ -123,9 +108,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getTypedKeyStringValueAnnotationParserRuleCall_3()); 
     }
@@ -136,9 +118,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getKeyBooleanValueAnnotationParserRuleCall_4()); 
     }
@@ -149,9 +128,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getKeyIntValueAnnotationParserRuleCall_5()); 
     }
@@ -162,9 +138,6 @@ ruleAnnotation returns [EObject current=null]
     }
 
     |
-	{ 
-	  /* */ 
-	}
     { 
         newCompositeNode(grammarAccess.getAnnotationAccess().getKeyFloatValueAnnotationParserRuleCall_6()); 
     }
@@ -175,6 +148,8 @@ ruleAnnotation returns [EObject current=null]
     }
 )
 ;
+
+
 
 
 

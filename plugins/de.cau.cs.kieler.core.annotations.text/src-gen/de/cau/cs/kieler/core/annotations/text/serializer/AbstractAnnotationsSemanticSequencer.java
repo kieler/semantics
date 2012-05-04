@@ -57,14 +57,16 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 				else break;
 			case AnnotationsPackage.BOOLEAN_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getKeyBooleanValueAnnotationRule()) {
+				   context == grammarAccess.getKeyBooleanValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyBooleanValueAnnotation(context, (BooleanAnnotation) semanticObject); 
 					return; 
 				}
 				else break;
 			case AnnotationsPackage.FLOAT_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getKeyFloatValueAnnotationRule()) {
+				   context == grammarAccess.getKeyFloatValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyFloatValueAnnotation(context, (FloatAnnotation) semanticObject); 
 					return; 
 				}
@@ -77,7 +79,8 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 				else break;
 			case AnnotationsPackage.INT_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getKeyIntValueAnnotationRule()) {
+				   context == grammarAccess.getKeyIntValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_KeyIntValueAnnotation(context, (IntAnnotation) semanticObject); 
 					return; 
 				}
@@ -95,10 +98,15 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 					sequence_KeyStringValueAnnotation(context, (StringAnnotation) semanticObject); 
 					return; 
 				}
+				else if(context == grammarAccess.getValuedAnnotationRule()) {
+					sequence_ValuedAnnotation(context, (StringAnnotation) semanticObject); 
+					return; 
+				}
 				else break;
 			case AnnotationsPackage.TYPED_STRING_ANNOTATION:
 				if(context == grammarAccess.getAnnotationRule() ||
-				   context == grammarAccess.getTypedKeyStringValueAnnotationRule()) {
+				   context == grammarAccess.getTypedKeyStringValueAnnotationRule() ||
+				   context == grammarAccess.getValuedAnnotationRule()) {
 					sequence_TypedKeyStringValueAnnotation(context, (TypedStringAnnotation) semanticObject); 
 					return; 
 				}
@@ -184,6 +192,15 @@ public class AbstractAnnotationsSemanticSequencer extends AbstractSemanticSequen
 	 *     (name=ExtendedID type=ExtendedID value=EString annotations+=Annotation*)
 	 */
 	protected void sequence_TypedKeyStringValueAnnotation(EObject context, TypedStringAnnotation semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Constraint:
+	 *     (value=COMMENT_ANNOTATION | (name=ExtendedID value=EString annotations+=Annotation*))
+	 */
+	protected void sequence_ValuedAnnotation(EObject context, StringAnnotation semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 }

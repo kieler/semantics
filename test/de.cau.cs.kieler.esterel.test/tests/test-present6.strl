@@ -1,0 +1,24 @@
+module test_present6:
+input A;
+input B;
+output C;
+output D;
+
+loop
+  present A then
+    emit C
+  end present;
+  present B then
+    emit D
+  end present;
+  pause;
+  present A then
+    emit D
+  end present;
+  present B then
+    emit C
+  end present;
+  pause
+end loop
+
+end module  

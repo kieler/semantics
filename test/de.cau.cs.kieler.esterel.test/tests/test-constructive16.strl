@@ -1,0 +1,13 @@
+module P16:
+output S;
+
+loop
+  emit S;
+  [
+    nothing
+  ||
+    pause
+  ]
+end loop
+
+end module  

@@ -39,12 +39,9 @@ public class ModelingPerspective implements IPerspectiveFactory {
     /* To find view IDs, see cookbook in project trac */
     /* IDs of views */
     private static final String VIEW_KEV = "de.cau.cs.kieler.kev.views.KevView"; //$NON-NLS-1$
-    private static final String VIEW_KIML_EXECUTION = "de.cau.cs.kieler.kiml.viewer.execution"; //$NON-NLS-1$
-    private static final String VIEW_KIML_LAYOUTGRAPH = "de.cau.cs.kieler.kiml.viewer.layoutGraph"; //$NON-NLS-1$
     private static final String VIEW_KIML_LAYOUT = "de.cau.cs.kieler.kiml.views.layout"; //$NON-NLS-1$
     private static final String VIEW_KIEM = "de.cau.cs.kieler.sim.kiem.view"; //$NON-NLS-1$
     private static final String VIEW_KIEM_TABLE = "de.cau.cs.kieler.sim.table.view"; //$NON-NLS-1$
-    //private static final String VIEW_VIEWMANAGEMENT = "de.cau.cs.kieler.viewmanagement.VMControl"; //$NON-NLS-1$
     private static final String VIEW_KITS = "de.cau.cs.kieler.synccharts.synchronizer.kitsView"; //$NON-NLS-1$
 
     /* IDs of New-Wizards */
@@ -87,12 +84,9 @@ public class ModelingPerspective implements IPerspectiveFactory {
      */
     protected void createViewShortcuts(final IPageLayout layout) {
         layout.addShowViewShortcut(VIEW_KEV);
-        layout.addShowViewShortcut(VIEW_KIML_EXECUTION);
-        layout.addShowViewShortcut(VIEW_KIML_LAYOUTGRAPH);
         layout.addShowViewShortcut(VIEW_KIML_LAYOUT);
         layout.addShowViewShortcut(VIEW_KIEM);
         layout.addShowViewShortcut(VIEW_KIEM_TABLE);
-        // layout.addShowViewShortcut(VIEW_VIEWMANAGEMENT);
         layout.addShowViewShortcut(VIEW_KITS);
         layout.addShowViewShortcut(IPageLayout.ID_OUTLINE);
         layout.addShowViewShortcut(IPageLayout.ID_PROBLEM_VIEW);
@@ -138,11 +132,8 @@ public class ModelingPerspective implements IPerspectiveFactory {
 
         // add Kieler views to bottom folder
         addViewIfExists(bottom, VIEW_KEV);
-        addViewIfExists(bottom, VIEW_KIML_EXECUTION);
-        addViewIfExists(bottom, VIEW_KIML_LAYOUTGRAPH);
         addViewIfExists(bottom, VIEW_KIML_LAYOUT);
         addViewIfExists(bottom, VIEW_KIEM);
-        // addViewIfExists(bottom, VIEW_VIEWMANAGEMENT);
         addViewIfExists(bottom, VIEW_KITS);
 
         layout.setEditorAreaVisible(true);

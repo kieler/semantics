@@ -1,0 +1,20 @@
+module Test_Run6:
+constant c1 = 2 : integer;
+
+run Foo [
+  constant c1 / c2 ]
+
+end module
+
+module Foo:
+constant c1 = 2 : integer;
+constant c2 : integer;
+constant c3 : integer;
+
+var a := c1 : integer,
+    b := c2 : integer in
+ a := 5;
+ b := 4
+end var
+
+end module

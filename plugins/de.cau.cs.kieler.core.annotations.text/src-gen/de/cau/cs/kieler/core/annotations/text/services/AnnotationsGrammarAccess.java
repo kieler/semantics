@@ -64,6 +64,44 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		public RuleCall getKeyFloatValueAnnotationParserRuleCall_6() { return cKeyFloatValueAnnotationParserRuleCall_6; }
 	}
 
+	public class ValuedAnnotationElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ValuedAnnotation");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cCommentAnnotationParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cKeyStringValueAnnotationParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cTypedKeyStringValueAnnotationParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cKeyBooleanValueAnnotationParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
+		private final RuleCall cKeyIntValueAnnotationParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
+		private final RuleCall cKeyFloatValueAnnotationParserRuleCall_5 = (RuleCall)cAlternatives.eContents().get(5);
+		
+		//ValuedAnnotation returns Annotation:
+		//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+		//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+		public ParserRule getRule() { return rule; }
+
+		//CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+		//KeyIntValueAnnotation | KeyFloatValueAnnotation
+		public Alternatives getAlternatives() { return cAlternatives; }
+
+		//CommentAnnotation
+		public RuleCall getCommentAnnotationParserRuleCall_0() { return cCommentAnnotationParserRuleCall_0; }
+
+		//KeyStringValueAnnotation
+		public RuleCall getKeyStringValueAnnotationParserRuleCall_1() { return cKeyStringValueAnnotationParserRuleCall_1; }
+
+		//TypedKeyStringValueAnnotation
+		public RuleCall getTypedKeyStringValueAnnotationParserRuleCall_2() { return cTypedKeyStringValueAnnotationParserRuleCall_2; }
+
+		//KeyBooleanValueAnnotation
+		public RuleCall getKeyBooleanValueAnnotationParserRuleCall_3() { return cKeyBooleanValueAnnotationParserRuleCall_3; }
+
+		//KeyIntValueAnnotation
+		public RuleCall getKeyIntValueAnnotationParserRuleCall_4() { return cKeyIntValueAnnotationParserRuleCall_4; }
+
+		//KeyFloatValueAnnotation
+		public RuleCall getKeyFloatValueAnnotationParserRuleCall_5() { return cKeyFloatValueAnnotationParserRuleCall_5; }
+	}
+
 	public class CommentAnnotationElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "CommentAnnotation");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
@@ -483,6 +521,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private AnnotationElements pAnnotation;
+	private ValuedAnnotationElements pValuedAnnotation;
 	private CommentAnnotationElements pCommentAnnotation;
 	private TagAnnotationElements pTagAnnotation;
 	private KeyStringValueAnnotationElements pKeyStringValueAnnotation;
@@ -535,6 +574,17 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
+	}
+
+	//ValuedAnnotation returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public ValuedAnnotationElements getValuedAnnotationAccess() {
+		return (pValuedAnnotation != null) ? pValuedAnnotation : (pValuedAnnotation = new ValuedAnnotationElements());
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
 	}
 
 	//// e.g.: / ** semantic comment * /

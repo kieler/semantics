@@ -11,7 +11,7 @@
             style-id="content-group">
             <link 
                 label="KIELER Project"
-                url="http://rtsys.informatik.uni-kiel.de/trac/kieler/"
+                url="http://informatik.uni-kiel.de/rtsys/kieler/"
                 id="kieler-overview-link"
                 style-id="content-link">
                 <text>The KIELER project aims at enhancing the pragmatics of graphical model-based system design.</text>
@@ -24,19 +24,19 @@
         name="KIELER Examples"
         path="samples/@"
         style="css/intro.css">
+         <group
+            label="KIELER Quick Start"
+            id="quickstarts"
+            style-id="content-group">
+            <text style-id="group-description">Quickstart examples create a project with at least one example.</text>
+            <anchor id="quickstarts.anchor"/>
+         </group>
         <group
             label="KIELER Examples"
-            id="group"
+            id="examples"
             style-id="content-group">
-	        <text> The following examples help you to become familiar with in KIELER.</text>
+	        <text style-id="group-description">The following examples help you become familiar with KIELER.</text>
 		 	<anchor id="import-wizard"/>
- 		    <group
-	            label="Quick Starts"
-	            id="quickstarts"
-	            style-id="content-group">
-			 	<text> Quickstart examples create a project with at least one example.</text>
-			<anchor id="quickstarts.anchor"/>
-	        </group>
     	 </group>
     </extensionContent>
 

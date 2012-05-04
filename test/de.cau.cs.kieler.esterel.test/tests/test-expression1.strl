@@ -1,0 +1,11 @@
+module test_expression1:
+constant a = 1 : integer;
+constant b = 1.0f : float;
+constant c = "Hello" : string;
+constant d = true : boolean;
+constant e = false : boolean;
+constant f = 2.0 : double;
+
+nothing
+
+end module

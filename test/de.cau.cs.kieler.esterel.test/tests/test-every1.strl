@@ -1,0 +1,13 @@
+module test_every1:
+input A;
+input B;
+input C;
+
+every A do
+  every B do
+    pause;
+    halt
+  end every
+end every
+
+end module

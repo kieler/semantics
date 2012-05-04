@@ -13,7 +13,9 @@ Require-Bundle: org.eclipse.ui,
  org.antlr.runtime,
  de.cau.cs.kieler.core.annotations;visibility:=reexport,
  de.cau.cs.kieler.core.annotations.edit,
- de.cau.cs.kieler.core.annotations.text;visibility:=reexport
+ de.cau.cs.kieler.core.annotations.text;visibility:=reexport,
+ de.cau.cs.kieler.core;bundle-version="0.7.0";resolution:=optional,
+ de.cau.cs.kieler.kiml;bundle-version="0.10.0";resolution:=optional
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.apache.log4j
@@ -23,3 +25,4 @@ Export-Package: de.cau.cs.kieler.core.annotations.text.ui,
  de.cau.cs.kieler.core.annotations.text.ui.labeling,
  de.cau.cs.kieler.core.annotations.text.ui.outline,
  de.cau.cs.kieler.core.annotations.text.ui.quickfix
+Bundle-Activator: de.cau.cs.kieler.core.annotations.text.ui.internal.AnnotationsActivator

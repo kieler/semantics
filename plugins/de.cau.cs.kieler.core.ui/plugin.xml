@@ -102,7 +102,7 @@
          point="org.eclipse.ui.perspectives">
       <perspective
             class="de.cau.cs.kieler.core.ui.ModelingPerspective"
-            icon="icons/kiel_16.gif"
+            icon="icons/kieler_16.gif"
             id="de.cau.cs.kieler.Modeling"
             name="KIELER Modeling">
       </perspective>

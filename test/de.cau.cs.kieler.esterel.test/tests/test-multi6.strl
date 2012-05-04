@@ -1,0 +1,113 @@
+module stest:
+input A;
+input B;
+input C;
+input D;
+input E;
+input F;
+output X;
+output Y;
+output Z;
+output W;
+output X1;
+output X2;
+output X3;
+output X4;
+output X5;
+output X6;
+output X7;
+output X8;
+output WW;
+
+  loop
+    [
+      [
+        await A;
+        pause;
+        pause;
+        pause;
+        emit X1
+      ||
+        await B;
+        pause;
+        pause;
+        pause;
+        emit X1;
+        pause;
+        emit X2
+      ||
+        [
+          await C;
+          pause;
+          pause;
+          pause;
+          emit X3;
+          emit X4
+        ||
+          await [E and F];
+          pause;
+          pause;
+          pause;
+          emit X2
+        ];
+        emit X5
+      ];
+      emit X
+    ||
+      [
+        await D;
+        pause;
+        pause;
+        pause;
+        emit X3;
+        pause;
+        emit X4
+      ||
+        [
+          await E;
+          await F;
+          pause;
+          pause;
+          pause;
+          emit X5
+        ||
+          await [C or D];
+          pause;
+          pause;
+          pause;
+          emit X1
+        ||
+          await [A and B];
+          pause;
+          pause;
+          pause;
+          emit X3
+        ];
+        emit X2
+      ||
+        await F;
+        emit X7;
+        pause;
+        emit X8;
+        pause;
+        emit X7;
+        pause;
+        emit X6
+      ];
+      emit Y
+    ];
+    emit W
+  end loop
+||
+  loop
+    present [W and X1 and X2 and X6] then
+      emit WW
+    end present;
+    pause;
+    present [not W and X3 and X4 and X5] then
+      emit WW
+    end present;
+    pause
+  end loop
+
+end module

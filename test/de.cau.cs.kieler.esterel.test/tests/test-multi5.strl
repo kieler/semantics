@@ -1,0 +1,163 @@
+module stest:
+input A;
+input B;
+input C;
+input D;
+input E;
+input F;
+input G;
+output X;
+output Y;
+output Z;
+output W;
+output M;
+output N;
+output P;
+
+loop
+  abort
+    [
+      abort
+        loop
+          [
+            emit X;
+            pause;
+            abort
+              pause;
+              await B;
+              pause;
+              pause;
+              await C;
+              pause
+            when D;
+            emit Y;
+            pause;
+            emit M
+          ||
+            abort
+              pause;
+              await D;
+              pause;
+              pause;
+              present M then
+                emit N
+              end present;
+              pause
+            when C;
+            await C;
+            pause;
+            pause;
+            await D;
+            pause;
+            await D;
+            pause;
+            pause;
+            abort
+              pause;
+              present N then
+                emit P
+              end present;
+              await C;
+              pause;
+              pause
+            when E;
+            emit X;
+            pause
+          ||
+            pause;
+            emit Y;
+            pause;
+            pause;
+            emit X
+          ]
+        end loop
+      when A;
+      emit Y;
+      pause
+    ||
+      abort
+        loop
+          pause;
+          present Y then
+            emit Z
+          end present;
+          pause;
+          present X then
+            emit Y
+          end present;
+          pause;
+          pause;
+          emit N;
+          await C;
+          present X then
+            emit Y;
+            emit Z
+          end present;
+          present M then
+            emit N
+          end present;
+          pause;
+          pause;
+          present [X and Y] then
+            emit Z
+          end present;
+          pause;
+          pause;
+          present N then
+            emit P
+          end present;
+          await C;
+          await C;
+          pause;
+          emit M;
+          pause
+        end loop
+      when B;
+      emit Z;
+      pause;
+      pause;
+      await A
+    ||
+      abort
+        loop
+          pause;
+          pause;
+          present X then
+            emit Z
+          end present;
+          await Y;
+          present M then
+            emit N
+          end present;
+          pause;
+          pause;
+          present M then
+            emit P
+          end present;
+          pause;
+          present X then
+            emit N
+          end present;
+          pause;
+          pause;
+          await Z;
+          present M then
+            emit P
+          end present;
+          pause;
+          pause;
+          await C;
+          present X then
+            emit Z
+          end present
+        end loop
+      when C;
+      emit M;
+      pause;
+      pause
+    ]
+  when E;
+  emit W
+end loop
+
+end module

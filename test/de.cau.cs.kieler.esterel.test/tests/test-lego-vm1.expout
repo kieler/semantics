@@ -1,0 +1,14 @@
+module testlego1:
+input TOUCH_1;
+output CPUTS : integer;
+output MOTOR_A_DIR : integer;
+output MOTOR_A_SPEED : integer;
+
+loop
+  emit CPUTS(1);
+  emit MOTOR_A_DIR(1);
+  emit MOTOR_A_SPEED(20);
+  pause
+end loop
+
+end module

@@ -1,0 +1,16 @@
+module test_trap4:
+output A;
+output B;
+
+trap T1,
+     T2 in
+  nothing;
+  pause;
+  exit T2
+handle T1 do
+   emit A
+handle T2 do
+   emit B
+end trap
+
+end module

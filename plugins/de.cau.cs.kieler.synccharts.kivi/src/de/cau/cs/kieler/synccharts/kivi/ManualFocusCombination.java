@@ -121,8 +121,10 @@ public class ManualFocusCombination extends AbstractCombination {
 
         // if enabled, do something
         if (this.enabled) {
-            //if bridge is null the DiagramState is uninitialized so don't do anything as it will fail anyway
-            //if the workbenchparts are different we are likely in the transition between diagrams don't do anything then
+            // if bridge is null the DiagramState is uninitialized so don't do
+            // anything as it will fail anyway
+            // if the workbenchparts are different we are likely in the transition
+            // between diagrams don't do anything then
             if ((diagram.getGraphicalFrameworkBridge() != null) 
                     && (diagram.getDiagramPart() == selection.getWorkbenchPart())) {
                 int level = zoomLevel;

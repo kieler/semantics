@@ -2446,7 +2446,7 @@ ruleExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+(((	ruleBooleanExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -2458,7 +2458,7 @@ ruleExpression returns [EObject current=null]
         $current = $this_BooleanExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-
+)
     |
 	{ 
 	  /* */ 
@@ -2681,7 +2681,7 @@ ruleCompareOperation returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+((((	ruleNotOrValuedExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -2693,7 +2693,7 @@ ruleCompareOperation returns [EObject current=null]
         $current = $this_NotOrValuedExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-((
+)((
 	{ 
 	  /* */ 
 	}
@@ -2772,7 +2772,7 @@ ruleNotOrValuedExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+(((	ruleValuedExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -2784,7 +2784,7 @@ ruleNotOrValuedExpression returns [EObject current=null]
         $current = $this_ValuedExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-
+)
     |
 	{ 
 	  /* */ 
@@ -3505,11 +3505,12 @@ ruleAtomicValuedExpression returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
-    |(	otherlv_2='(' 
+    |(((	'(' 
+)=>	otherlv_2='(' 
     {
     	newLeafNode(otherlv_2, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
     }
-
+)
 	{ 
 	  /* */ 
 	}

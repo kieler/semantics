@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
-      id="de.cau.cs.kieler.sdk"
+      id="de.cau.cs.kieler.sdk.feature"
       label="KIELER SDK"
       version="0.6.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
@@ -218,67 +218,74 @@ litigation.
    </url>
 
    <includes
-         id="de.cau.cs.kieler.synccharts"
+         id="de.cau.cs.kieler.synccharts.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.synccharts.source"
+         id="de.cau.cs.kieler.synccharts.feature.source"
+	 version="0.0.0"/>
+
+   <includes
+         id="de.cau.cs.kieler.kaom.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kaom"
+         id="de.cau.cs.kieler.kaom.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.uml2.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kaom.source"
+         id="de.cau.cs.kieler.uml2.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.keg.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.uml2"
+         id="de.cau.cs.kieler.keg.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.kiml.gmf.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.uml2.source"
+         id="de.cau.cs.kieler.kiml.gmf.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.kiml.graphiti.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.keg"
+         id="de.cau.cs.kieler.kiml.graphiti.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.klots.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.keg.source"
+         id="de.cau.cs.kieler.klots.feature.source"
+         version="0.0.0"
+	 optional="true"/>
+
+   <includes
+         id="de.cau.cs.kieler.kwebs.client.jaxws.feature"
          version="0.0.0"/>
 
    <includes
-         id="de.cau.cs.kieler.kiml.gmf"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.gmf.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.graphiti"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kiml.graphiti.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.klots"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.klots.source"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kwebs.client.jaxws"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.kwebs.client.jaxws.source"
-         version="0.0.0"/>
+         id="de.cau.cs.kieler.kwebs.client.jaxws.feature.source"
+         version="0.0.0"
+	 optional="true"/>
 
 </feature>

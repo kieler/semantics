@@ -1,0 +1,11 @@
+module Test_Run6:
+constant c1 = 2 : integer;
+constant c3 : integer;
+
+var a := c1 : integer,
+    b := c1 : integer in
+  a := 5;
+  b := 4
+end var
+
+end module
