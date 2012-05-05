@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/de.cau.cs.kieler.synccharts.codegen.dependencies/src"
+    modelPluginID="de.cau.cs.kieler.synccharts.codegen.dependencies" modelName="Dependency"
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
+    usedGenPackages="../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions ../../de.cau.cs.kieler.synccharts/model/synccharts.genmodel#//synccharts">
+  <foreignModel>dependency.ecore</foreignModel>
+  <genPackages prefix="Dependency" basePackage="de.cau.cs.kieler.synccharts.codegen.dependencies"
+      disposableProviderFactory="true" ecorePackage="dependency.ecore#/">
+    <genClasses ecoreClass="dependency.ecore#//StateAndTransition">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//StateAndTransition/state"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//StateAndTransition/transition"/>
+    </genClasses>
+    <genClasses ecoreClass="dependency.ecore#//Dependency">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dependency.ecore#//Dependency/source"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dependency.ecore#//Dependency/destination"/>
+    </genClasses>
+    <genClasses ecoreClass="dependency.ecore#//SignalDependency"/>
+    <genClasses ecoreClass="dependency.ecore#//HierarchyDependency"/>
+    <genClasses ecoreClass="dependency.ecore#//ControlflowDependency"/>
+    <genClasses ecoreClass="dependency.ecore#//TransitionDependency"/>
+  </genPackages>
+</genmodel:GenModel>

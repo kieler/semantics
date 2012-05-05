@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="de.cau.cs.kieler.klighd.modelTransformations">
+      <xtendBasedTransformation
+            extFile="transformation.ext"
+            extension="visualizeDependencies"
+            id="de.cau.cs.kieler.synccharts.codegen.dependencies.xtendBasedTransformation2">
+         <EPackage
+               EPackageClass="de.cau.cs.kieler.synccharts.SyncchartsPackage">
+         </EPackage>
+         <EPackage
+               EPackageClass="org.eclipse.graphiti.mm.MmPackage">
+         </EPackage>
+      </xtendBasedTransformation>
+   </extension>
+
+</plugin>

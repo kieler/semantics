@@ -1,0 +1,69 @@
+import ecore;
+import mm;
+import mm::pictograms;
+import mm::algorithms;
+import mm::algorithms::styles;
+
+import annotations;
+import synccharts;
+
+extension org::eclipse::xtend::util::stdlib::io;
+extension de::cau::cs::kieler::klighd::graphiti::transformations::DiagramUtil;
+
+// White diagram on some transformation error
+create Diagram onError():
+ this.setDiagramTypeId("compodiag")
+;
+
+
+Diagram visualizeDependencies(Region region, String name):
+  let diagram = getDiagram():
+  
+    diagram.setName(name) ->
+
+  diagram.setLink(
+    let link = new PictogramLink:
+    link.businessObjects.add(region.toEObject()) ->
+    link
+  ) ->
+  
+  //samples
+  (let s1 = new Region.createShape():
+   let s2 = new Region.createShape():
+   let s3 = new Region.createShape():
+   let a1 = s1.createAnchor():
+   let a2 = s2.createAnchor():
+   let a3 = s3.createAnchor():
+   let con1 = createConnection(3):
+   let con2 = createConnection(3): 
+   let c1 = s1.createCircle(0,0,30,getStyle("black_white")):
+   let c2 =  s2.createRoundedRectangleText(0,0,"blwwwwwwww", getFont("bold12"), getStyle("black_black")):
+   //let c3 = s3.createCircle(0,0,30,getStyle("black_white")):
+   let c3 = s3.createRoundedRectangleText(0,0,"blaasdfsdfsdfsd sdfsdfsdf iiiiiiiiiiiiiiiiiiiiiiiiiiiiiddfgdftwerwerwerwerwera", getFont("bold12"), getStyle("black_black")):
+   con1.setStart(a1) ->
+   con1.setEnd(a2) ->
+   con1.addArrowHead(2) ->
+   con2.setStart(a2) ->
+   con2.setEnd(a3) ->
+   con2.addArrowHead(2)
+  ) ->
+  
+  
+  
+  diagram
+;
+
+
+
+
+
+
+
+
+
+
+
+// Hack (to eliminiate erronous editor error message)
+EObject toEObject(Scope scope) :
+ scope
+;
