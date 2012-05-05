@@ -37,7 +37,7 @@ Program :
 
 State:
 	'State' '(' name = ID ')' '{'
-	('Signals' (signals+=Signal)* ';')? 
+	('Signals' (signals+=Signal)+ ';')? 
 	(instructions+=Instruction';')*
 	'}'
 ;
@@ -45,14 +45,14 @@ State:
 
 Thread:
 	'Thread' '(' name = ID ')' '{'
-	('Signals' (signals+=Signal)* ';')? 
+	('Signals' (signals+=Signal)+ ';')? 
 	(states+=State';')*
 	'}'
 ;
 
 
 Signal returns expressions::Signal:
-(isInput?='input')?
+    (isInput?='input')?
 	(isOutput?='output')?
 	'signal'
 	(name=EString)

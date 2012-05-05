@@ -7,7 +7,7 @@
     updateClasspath="false" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     complianceLevel="5.0" copyrightFields="false" editPluginID="de.cau.cs.kieler.esterel.edit"
     editorPluginID="de.cau.cs.kieler.esterel.editor" usedGenPackages="../../../../../../../de.cau.cs.kieler.core.annotations/model/annotations.genmodel#//annotations ../../../../../../../de.cau.cs.kieler.core.kexpressions/model/kexpressions.genmodel#//kexpressions">
-  <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler.esterel" disposableProviderFactory="true"
+  <genPackages prefix="Esterel" basePackage="de.cau.cs.kieler" disposableProviderFactory="true"
       ecorePackage="Esterel.ecore#/">
     <genClasses ecoreClass="Esterel.ecore#//Program">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Esterel.ecore#//Program/modules"/>

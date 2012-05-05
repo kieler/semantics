@@ -108,10 +108,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		////Annotatable returns annotations::Annotatable:
 		//// 	State | Instruction;
 		//State:
-		//	"State" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (instructions+=Instruction ";")* "}";
+		//	"State" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (instructions+=Instruction ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"State" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (instructions+=Instruction ";")* "}"
+		//"State" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (instructions+=Instruction ";")* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"State"
@@ -132,13 +132,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 
-		//("Signals" signals+=Signal* ";")?
+		//("Signals" signals+=Signal+ ";")?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//"Signals"
 		public Keyword getSignalsKeyword_5_0() { return cSignalsKeyword_5_0; }
 
-		//signals+=Signal*
+		//signals+=Signal+
 		public Assignment getSignalsAssignment_5_1() { return cSignalsAssignment_5_1; }
 
 		//Signal
@@ -184,10 +184,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
 		//Thread:
-		//	"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (states+=State ";")* "}";
+		//	"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (states+=State ";")* "}";
 		public ParserRule getRule() { return rule; }
 
-		//"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (states+=State ";")* "}"
+		//"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (states+=State ";")* "}"
 		public Group getGroup() { return cGroup; }
 
 		//"Thread"
@@ -208,13 +208,13 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//"{"
 		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
 
-		//("Signals" signals+=Signal* ";")?
+		//("Signals" signals+=Signal+ ";")?
 		public Group getGroup_5() { return cGroup_5; }
 
 		//"Signals"
 		public Keyword getSignalsKeyword_5_0() { return cSignalsKeyword_5_0; }
 
-		//signals+=Signal*
+		//signals+=Signal+
 		public Assignment getSignalsAssignment_5_1() { return cSignalsAssignment_5_1; }
 
 		//Signal
@@ -1086,7 +1086,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	////Annotatable returns annotations::Annotatable:
 	//// 	State | Instruction;
 	//State:
-	//	"State" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (instructions+=Instruction ";")* "}";
+	//	"State" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (instructions+=Instruction ";")* "}";
 	public StateElements getStateAccess() {
 		return (pState != null) ? pState : (pState = new StateElements());
 	}
@@ -1096,7 +1096,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Thread:
-	//	"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal* ";")? (states+=State ";")* "}";
+	//	"Thread" "(" name=ID ")" "{" ("Signals" signals+=Signal+ ";")? (states+=State ";")* "}";
 	public ThreadElements getThreadAccess() {
 		return (pThread != null) ? pThread : (pThread = new ThreadElements());
 	}
@@ -1812,6 +1812,17 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getAnnotationRule() {
 		return getAnnotationAccess().getRule();
+	}
+
+	//ValuedAnnotation returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaKExpressions.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
 	}
 
 	//// e.g.: / ** semantic comment * /

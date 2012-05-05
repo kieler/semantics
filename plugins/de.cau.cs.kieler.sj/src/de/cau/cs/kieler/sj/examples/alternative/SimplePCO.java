@@ -1,14 +1,13 @@
 package de.cau.cs.kieler.sj.examples.alternative;
 
 public class SimplePCO {
-	public static final int LOOPS = 5;
+	public static int numberOfLoops;
 	public static Data data;
+	public static boolean finishedC = false;
+	public static boolean finishedP = false;
 
-	public static void main(String[] args) {
-		SimplePCO simplePCO = new SimplePCO();
-	}
-
-	public SimplePCO() {
+	public SimplePCO(int numberOfLoops) {
+		SimplePCO.numberOfLoops = numberOfLoops;
 		SimplePCO.data = new Data();
 		new Thread(new ConsumerThread()).start();
 		new Thread(new ProducerThread()).start();
@@ -39,18 +38,45 @@ public class SimplePCO {
 	class ProducerThread implements Runnable {
 		public void run() {
 			int i = 0;
-			for (int c = 0; c < SimplePCO.LOOPS; c++) {
+			for (int c = 0; c < SimplePCO.numberOfLoops; c++) {
 				data.putData(i++);
-				System.out.println("P(" + i + ")");
+//				System.out.println("P(" + i + ")");
 			}
+			finishedP = true;
 		}
 	}
 	class ConsumerThread implements Runnable {
 		public void run() {
-			for (int c = 0; c < SimplePCO.LOOPS; c++) {
+			for (int c = 0; c < SimplePCO.numberOfLoops; c++) {
 				int i = data.popData();
-				System.out.println("C(" + i + ")");
+//				System.out.println("C(" + i + ")");
 			}
+			finishedC = true;
 		}
 	}
+	
+	
+    /**
+     * Main for the Producer-Consumer-Observer example.
+     * 
+     * @param args
+     *            not used
+     * 
+     */
+    public static void main(final String[] args) {
+    	int numberOfLoops = 5;
+    	try {
+    		numberOfLoops = Integer.parseInt(args[0]);
+    	}
+    	catch(Exception e) {}
+    	main(numberOfLoops);
+    }
+    public static void main(int numberOfLoops) {
+    	SimplePCO pco = new SimplePCO(numberOfLoops);
+    	while (!(finishedP && finishedC)) {
+    	}
+    	finishedP = false;
+    	finishedC = false;
+    }
+	
 }

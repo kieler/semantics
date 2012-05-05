@@ -955,6 +955,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation 
 :
@@ -1881,6 +1883,7 @@ rule__Annotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__EString__Alternatives
     @init {

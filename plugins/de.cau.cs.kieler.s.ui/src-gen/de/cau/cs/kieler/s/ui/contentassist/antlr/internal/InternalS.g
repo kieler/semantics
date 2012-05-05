@@ -1379,6 +1379,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation 
 :
@@ -2020,7 +2022,7 @@ rule__Expression__Alternatives
 :
 (
 { before(grammarAccess.getExpressionAccess().getBooleanExpressionParserRuleCall_0()); }
-	ruleBooleanExpression
+(	ruleBooleanExpression)
 { after(grammarAccess.getExpressionAccess().getBooleanExpressionParserRuleCall_0()); }
 )
 
@@ -2064,7 +2066,7 @@ rule__NotOrValuedExpression__Alternatives
 :
 (
 { before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-	ruleValuedExpression
+(	ruleValuedExpression)
 { after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
 )
 
@@ -2405,6 +2407,7 @@ rule__Annotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__EString__Alternatives
     @init {
@@ -3149,9 +3152,16 @@ rule__State__Group_5__1__Impl
     }
 :
 (
+(
+{ before(grammarAccess.getStateAccess().getSignalsAssignment_5_1()); }
+(rule__State__SignalsAssignment_5_1)
+{ after(grammarAccess.getStateAccess().getSignalsAssignment_5_1()); }
+)
+(
 { before(grammarAccess.getStateAccess().getSignalsAssignment_5_1()); }
 (rule__State__SignalsAssignment_5_1)*
 { after(grammarAccess.getStateAccess().getSignalsAssignment_5_1()); }
+)
 )
 
 ;
@@ -3565,9 +3575,16 @@ rule__Thread__Group_5__1__Impl
     }
 :
 (
+(
+{ before(grammarAccess.getThreadAccess().getSignalsAssignment_5_1()); }
+(rule__Thread__SignalsAssignment_5_1)
+{ after(grammarAccess.getThreadAccess().getSignalsAssignment_5_1()); }
+)
+(
 { before(grammarAccess.getThreadAccess().getSignalsAssignment_5_1()); }
 (rule__Thread__SignalsAssignment_5_1)*
 { after(grammarAccess.getThreadAccess().getSignalsAssignment_5_1()); }
+)
 )
 
 ;
@@ -6788,7 +6805,7 @@ rule__CompareOperation__Group_0__0__Impl
 :
 (
 { before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
-	ruleNotOrValuedExpression
+(	ruleNotOrValuedExpression)
 { after(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
 )
 
@@ -8002,9 +8019,9 @@ rule__AtomicValuedExpression__Group_2__0__Impl
 :
 (
 { before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); }
-
+(
 	'(' 
-
+)
 { after(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); }
 )
 

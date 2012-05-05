@@ -2323,6 +2323,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//ValuedAnnotation returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaAnnotations.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
