@@ -109,20 +109,22 @@ class Synccharts2Dependenies {
 		var orderedTransitions = state.outgoingTransitions.filter(e|e.isImmediate).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
 		var i = 1;
 		for (transition : orderedTransitions) {
-			var nextTransition = orderedTransitions.get(i);
-			if (nextTransition != null) {
-				var sourceNode = dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
-				var targetNode = dependencies.getNode(state, nextTransition, DEPENDENCYTYPE::STRONG);
-				dependencies.getTransitionDependency(sourceNode, targetNode);
-				if (state.hierarchical) {
-					var sourceNodeW = dependencies.getNode(state, transition, DEPENDENCYTYPE::WEAK);
-					var targetNodeW = dependencies.getNode(state, nextTransition, DEPENDENCYTYPE::WEAK);
-					dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
-					dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
-					dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
+ 			if (i < orderedTransitions.size) {
+				var nextTransition = orderedTransitions.get(i);
+				if (nextTransition != null) {
+					var sourceNode = dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
+					var targetNode = dependencies.getNode(state, nextTransition, DEPENDENCYTYPE::STRONG);
+					dependencies.getTransitionDependency(sourceNode, targetNode);
+					if (state.hierarchical) {
+						var sourceNodeW = dependencies.getNode(state, transition, DEPENDENCYTYPE::WEAK);
+						var targetNodeW = dependencies.getNode(state, nextTransition, DEPENDENCYTYPE::WEAK);
+						dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
+						dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
+						dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
+					}
 				}
+				i=i+1;
 			}
-			i=i+1;
 		}
 	}
 		
@@ -137,7 +139,8 @@ class Synccharts2Dependenies {
 					//
 					// (effect as Emission).signal; == emitted signal
 					//
-					var triggeredTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).filter(e | 
+					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition));
+					var triggeredTransitions = allTransitions.filter(e | e.trigger != null && 
 						   e.trigger.eAllContents().toIterable().filter(e2 |
 						   	        e2.equals( (effect as Emission).signal )
 						   ).size > 0); 
@@ -198,7 +201,7 @@ class Synccharts2Dependenies {
 			&& e.sourceNode == sourceNode
 			&& e.targetNode == targetNode);
 		
-		if (dependency != null) {
+		if (dependency.size > 0) {
 			return dependency.head;
 		}
 		// not yet found newDependency => add it
@@ -212,7 +215,7 @@ class Synccharts2Dependenies {
 
 	def Node getNode(Dependencies dependencies, State state, Transition transition, DEPENDENCYTYPE type) {
 		var node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state) && (e.transition == transition));
-		if (node != null) {
+		if (node.size > 0) {
 			return node.head;
 		}
 		// not yet found newNode => add it
