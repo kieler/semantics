@@ -9,15 +9,18 @@ package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.HierarchyDependency;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency;
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -30,13 +33,6 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
  * @generated
  */
 public class DependencyPackageImpl extends EPackageImpl implements DependencyPackage {
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	private EClass stateAndTransitionEClass = null;
-
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -71,6 +67,27 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * @generated
 	 */
 	private EClass transitionDependencyEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass dependenciesEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EClass nodeEClass = null;
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	private EEnum dependencytypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -141,33 +158,6 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EClass getStateAndTransition() {
-		return stateAndTransitionEClass;
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getStateAndTransition_State() {
-		return (EReference)stateAndTransitionEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
-	public EReference getStateAndTransition_Transition() {
-		return (EReference)stateAndTransitionEClass.getEStructuralFeatures().get(1);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EClass getDependency() {
 		return dependencyEClass;
 	}
@@ -177,7 +167,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependency_Source() {
+	public EReference getDependency_TargetState() {
 		return (EReference)dependencyEClass.getEStructuralFeatures().get(0);
 	}
 
@@ -186,8 +176,17 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getDependency_Destination() {
+	public EReference getDependency_SourceNode() {
 		return (EReference)dependencyEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependency_TargetNode() {
+		return (EReference)dependencyEClass.getEStructuralFeatures().get(2);
 	}
 
 	/**
@@ -231,6 +230,105 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EClass getDependencies() {
+		return dependenciesEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependencies_Dependencies() {
+		return (EReference)dependenciesEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getDependencies_Nodes() {
+		return (EReference)dependenciesEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EClass getNode() {
+		return nodeEClass;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNode_Type() {
+		return (EAttribute)nodeEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNode_Transition() {
+		return (EReference)nodeEClass.getEStructuralFeatures().get(1);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EAttribute getNode_Priority() {
+		return (EAttribute)nodeEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNode_OutgoingDependencies() {
+		return (EReference)nodeEClass.getEStructuralFeatures().get(3);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNode_IncomingDependencies() {
+		return (EReference)nodeEClass.getEStructuralFeatures().get(4);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getNode_State() {
+		return (EReference)nodeEClass.getEStructuralFeatures().get(5);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EEnum getDEPENDENCYTYPE() {
+		return dependencytypeEEnum;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public DependencyFactory getDependencyFactory() {
 		return (DependencyFactory)getEFactoryInstance();
 	}
@@ -254,13 +352,10 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		isCreated = true;
 
 		// Create classes and their features
-		stateAndTransitionEClass = createEClass(STATE_AND_TRANSITION);
-		createEReference(stateAndTransitionEClass, STATE_AND_TRANSITION__STATE);
-		createEReference(stateAndTransitionEClass, STATE_AND_TRANSITION__TRANSITION);
-
 		dependencyEClass = createEClass(DEPENDENCY);
-		createEReference(dependencyEClass, DEPENDENCY__SOURCE);
-		createEReference(dependencyEClass, DEPENDENCY__DESTINATION);
+		createEReference(dependencyEClass, DEPENDENCY__TARGET_STATE);
+		createEReference(dependencyEClass, DEPENDENCY__SOURCE_NODE);
+		createEReference(dependencyEClass, DEPENDENCY__TARGET_NODE);
 
 		signalDependencyEClass = createEClass(SIGNAL_DEPENDENCY);
 
@@ -269,6 +364,21 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		controlflowDependencyEClass = createEClass(CONTROLFLOW_DEPENDENCY);
 
 		transitionDependencyEClass = createEClass(TRANSITION_DEPENDENCY);
+
+		dependenciesEClass = createEClass(DEPENDENCIES);
+		createEReference(dependenciesEClass, DEPENDENCIES__DEPENDENCIES);
+		createEReference(dependenciesEClass, DEPENDENCIES__NODES);
+
+		nodeEClass = createEClass(NODE);
+		createEAttribute(nodeEClass, NODE__TYPE);
+		createEReference(nodeEClass, NODE__TRANSITION);
+		createEAttribute(nodeEClass, NODE__PRIORITY);
+		createEReference(nodeEClass, NODE__OUTGOING_DEPENDENCIES);
+		createEReference(nodeEClass, NODE__INCOMING_DEPENDENCIES);
+		createEReference(nodeEClass, NODE__STATE);
+
+		// Create enums
+		dependencytypeEEnum = createEEnum(DEPENDENCYTYPE);
 	}
 
 	/**
@@ -308,13 +418,10 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		transitionDependencyEClass.getESuperTypes().add(this.getDependency());
 
 		// Initialize classes and features; add operations and parameters
-		initEClass(stateAndTransitionEClass, StateAndTransition.class, "StateAndTransition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getStateAndTransition_State(), theSyncchartsPackage.getState(), null, "state", null, 0, 1, StateAndTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getStateAndTransition_Transition(), theSyncchartsPackage.getTransition(), null, "transition", null, 0, 1, StateAndTransition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
 		initEClass(dependencyEClass, Dependency.class, "Dependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getDependency_Source(), this.getStateAndTransition(), null, "source", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEReference(getDependency_Destination(), this.getStateAndTransition(), null, "destination", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependency_TargetState(), theSyncchartsPackage.getState(), null, "targetState", null, 0, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependency_SourceNode(), this.getNode(), this.getNode_OutgoingDependencies(), "sourceNode", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependency_TargetNode(), this.getNode(), this.getNode_IncomingDependencies(), "targetNode", null, 1, 1, Dependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(signalDependencyEClass, SignalDependency.class, "SignalDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -323,6 +430,23 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		initEClass(controlflowDependencyEClass, ControlflowDependency.class, "ControlflowDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(transitionDependencyEClass, TransitionDependency.class, "TransitionDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+		initEClass(dependenciesEClass, Dependencies.class, "Dependencies", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEReference(getDependencies_Dependencies(), this.getDependency(), null, "dependencies", null, 0, -1, Dependencies.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getDependencies_Nodes(), this.getNode(), null, "nodes", null, 0, -1, Dependencies.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getNode_Type(), this.getDEPENDENCYTYPE(), "type", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNode_Transition(), theSyncchartsPackage.getTransition(), null, "transition", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNode_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNode_OutgoingDependencies(), this.getDependency(), this.getDependency_SourceNode(), "outgoingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNode_IncomingDependencies(), this.getDependency(), this.getDependency_TargetNode(), "incomingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getNode_State(), theSyncchartsPackage.getState(), null, "state", null, 1, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+		// Initialize enums and add enum literals
+		initEEnum(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.class, "DEPENDENCYTYPE");
+		addEEnumLiteral(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.STRONG);
+		addEEnumLiteral(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.WEAK);
 
 		// Create resource
 		createResource(eNS_URI);

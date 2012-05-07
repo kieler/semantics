@@ -72,10 +72,6 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
 	protected DependencySwitch<Adapter> modelSwitch =
 		new DependencySwitch<Adapter>() {
 			@Override
-			public Adapter caseStateAndTransition(StateAndTransition object) {
-				return createStateAndTransitionAdapter();
-			}
-			@Override
 			public Adapter caseDependency(Dependency object) {
 				return createDependencyAdapter();
 			}
@@ -96,6 +92,14 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
 				return createTransitionDependencyAdapter();
 			}
 			@Override
+			public Adapter caseDependencies(Dependencies object) {
+				return createDependenciesAdapter();
+			}
+			@Override
+			public Adapter caseNode(Node object) {
+				return createNodeAdapter();
+			}
+			@Override
 			public Adapter defaultCase(EObject object) {
 				return createEObjectAdapter();
 			}
@@ -114,20 +118,6 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
 		return modelSwitch.doSwitch((EObject)target);
 	}
 
-
-	/**
-	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition <em>State And Transition</em>}'.
-	 * <!-- begin-user-doc -->
-	 * This default implementation returns null so that we can easily ignore cases;
-	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
-	 * <!-- end-user-doc -->
-	 * @return the new adapter.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition
-	 * @generated
-	 */
-	public Adapter createStateAndTransitionAdapter() {
-		return null;
-	}
 
 	/**
 	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency <em>Dependency</em>}'.
@@ -196,6 +186,34 @@ public class DependencyAdapterFactory extends AdapterFactoryImpl {
 	 * @generated
 	 */
 	public Adapter createTransitionDependencyAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies <em>Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
+	 * @generated
+	 */
+	public Adapter createDependenciesAdapter() {
+		return null;
+	}
+
+	/**
+	 * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * This default implementation returns null so that we can easily ignore cases;
+	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
+	 * <!-- end-user-doc -->
+	 * @return the new adapter.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
+	 * @generated
+	 */
+	public Adapter createNodeAdapter() {
 		return null;
 	}
 

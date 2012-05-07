@@ -9,6 +9,7 @@ package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.*;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -60,12 +61,13 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case DependencyPackage.STATE_AND_TRANSITION: return createStateAndTransition();
 			case DependencyPackage.DEPENDENCY: return createDependency();
 			case DependencyPackage.SIGNAL_DEPENDENCY: return createSignalDependency();
 			case DependencyPackage.HIERARCHY_DEPENDENCY: return createHierarchyDependency();
 			case DependencyPackage.CONTROLFLOW_DEPENDENCY: return createControlflowDependency();
 			case DependencyPackage.TRANSITION_DEPENDENCY: return createTransitionDependency();
+			case DependencyPackage.DEPENDENCIES: return createDependencies();
+			case DependencyPackage.NODE: return createNode();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -76,9 +78,29 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public StateAndTransition createStateAndTransition() {
-		StateAndTransitionImpl stateAndTransition = new StateAndTransitionImpl();
-		return stateAndTransition;
+	@Override
+	public Object createFromString(EDataType eDataType, String initialValue) {
+		switch (eDataType.getClassifierID()) {
+			case DependencyPackage.DEPENDENCYTYPE:
+				return createDEPENDENCYTYPEFromString(eDataType, initialValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	@Override
+	public String convertToString(EDataType eDataType, Object instanceValue) {
+		switch (eDataType.getClassifierID()) {
+			case DependencyPackage.DEPENDENCYTYPE:
+				return convertDEPENDENCYTYPEToString(eDataType, instanceValue);
+			default:
+				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
+		}
 	}
 
 	/**
@@ -129,6 +151,46 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	public TransitionDependency createTransitionDependency() {
 		TransitionDependencyImpl transitionDependency = new TransitionDependencyImpl();
 		return transitionDependency;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Dependencies createDependencies() {
+		DependenciesImpl dependencies = new DependenciesImpl();
+		return dependencies;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public Node createNode() {
+		NodeImpl node = new NodeImpl();
+		return node;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public DEPENDENCYTYPE createDEPENDENCYTYPEFromString(EDataType eDataType, String initialValue) {
+		DEPENDENCYTYPE result = DEPENDENCYTYPE.get(initialValue);
+		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+		return result;
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public String convertDEPENDENCYTYPEToString(EDataType eDataType, Object instanceValue) {
+		return instanceValue == null ? null : instanceValue.toString();
 	}
 
 	/**

@@ -6,6 +6,8 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency;
 
+import de.cau.cs.kieler.synccharts.State;
+import de.cau.cs.kieler.synccharts.Transition;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,8 +18,9 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSource <em>Source</em>}</li>
- *   <li>{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getDestination <em>Destination</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetState <em>Target State</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSourceNode <em>Source Node</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetNode <em>Target Node</em>}</li>
  * </ul>
  * </p>
  *
@@ -27,55 +30,85 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface Dependency extends EObject {
 	/**
-	 * Returns the value of the '<em><b>Source</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Source</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Target State</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Source</em>' containment reference.
-	 * @see #setSource(StateAndTransition)
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependency_Source()
-	 * @model containment="true"
+	 * @return the value of the '<em>Target State</em>' reference.
+	 * @see #setTargetState(State)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependency_TargetState()
+	 * @model
 	 * @generated
 	 */
-	StateAndTransition getSource();
+	State getTargetState();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSource <em>Source</em>}' containment reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetState <em>Target State</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Source</em>' containment reference.
-	 * @see #getSource()
+	 * @param value the new value of the '<em>Target State</em>' reference.
+	 * @see #getTargetState()
 	 * @generated
 	 */
-	void setSource(StateAndTransition value);
+	void setTargetState(State value);
 
 	/**
-	 * Returns the value of the '<em><b>Destination</b></em>' containment reference.
+	 * Returns the value of the '<em><b>Source Node</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getOutgoingDependencies <em>Outgoing Dependencies</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Destination</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Source Node</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Destination</em>' containment reference.
-	 * @see #setDestination(StateAndTransition)
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependency_Destination()
-	 * @model containment="true"
+	 * @return the value of the '<em>Source Node</em>' reference.
+	 * @see #setSourceNode(Node)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependency_SourceNode()
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getOutgoingDependencies
+	 * @model opposite="outgoingDependencies" required="true"
 	 * @generated
 	 */
-	StateAndTransition getDestination();
+	Node getSourceNode();
 
 	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getDestination <em>Destination</em>}' containment reference.
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSourceNode <em>Source Node</em>}' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Destination</em>' containment reference.
-	 * @see #getDestination()
+	 * @param value the new value of the '<em>Source Node</em>' reference.
+	 * @see #getSourceNode()
 	 * @generated
 	 */
-	void setDestination(StateAndTransition value);
+	void setSourceNode(Node value);
+
+	/**
+	 * Returns the value of the '<em><b>Target Node</b></em>' reference.
+	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getIncomingDependencies <em>Incoming Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Target Node</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Target Node</em>' reference.
+	 * @see #setTargetNode(Node)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getDependency_TargetNode()
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getIncomingDependencies
+	 * @model opposite="incomingDependencies" required="true"
+	 * @generated
+	 */
+	Node getTargetNode();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetNode <em>Target Node</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Target Node</em>' reference.
+	 * @see #getTargetNode()
+	 * @generated
+	 */
+	void setTargetNode(Node value);
 
 } // Dependency

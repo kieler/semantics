@@ -26,15 +26,6 @@ public interface DependencyFactory extends EFactory {
 	DependencyFactory eINSTANCE = de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyFactoryImpl.init();
 
 	/**
-	 * Returns a new object of class '<em>State And Transition</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>State And Transition</em>'.
-	 * @generated
-	 */
-	StateAndTransition createStateAndTransition();
-
-	/**
 	 * Returns a new object of class '<em>Dependency</em>'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -78,6 +69,24 @@ public interface DependencyFactory extends EFactory {
 	 * @generated
 	 */
 	TransitionDependency createTransitionDependency();
+
+	/**
+	 * Returns a new object of class '<em>Dependencies</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Dependencies</em>'.
+	 * @generated
+	 */
+	Dependencies createDependencies();
+
+	/**
+	 * Returns a new object of class '<em>Node</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>Node</em>'.
+	 * @generated
+	 */
+	Node createNode();
 
 	/**
 	 * Returns the package supported by this factory.

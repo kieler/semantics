@@ -6,7 +6,9 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -59,43 +61,6 @@ public interface DependencyPackage extends EPackage {
 	DependencyPackage eINSTANCE = de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.StateAndTransitionImpl <em>State And Transition</em>}' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.StateAndTransitionImpl
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getStateAndTransition()
-	 * @generated
-	 */
-	int STATE_AND_TRANSITION = 0;
-
-	/**
-	 * The feature id for the '<em><b>State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATE_AND_TRANSITION__STATE = 0;
-
-	/**
-	 * The feature id for the '<em><b>Transition</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATE_AND_TRANSITION__TRANSITION = 1;
-
-	/**
-	 * The number of structural features of the '<em>State And Transition</em>' class.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int STATE_AND_TRANSITION_FEATURE_COUNT = 2;
-
-	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyImpl <em>Dependency</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -103,25 +68,34 @@ public interface DependencyPackage extends EPackage {
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDependency()
 	 * @generated
 	 */
-	int DEPENDENCY = 1;
+	int DEPENDENCY = 0;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY__SOURCE = 0;
+	int DEPENDENCY__TARGET_STATE = 0;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' containment reference.
+	 * The feature id for the '<em><b>Source Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY__DESTINATION = 1;
+	int DEPENDENCY__SOURCE_NODE = 1;
+
+	/**
+	 * The feature id for the '<em><b>Target Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCY__TARGET_NODE = 2;
 
 	/**
 	 * The number of structural features of the '<em>Dependency</em>' class.
@@ -130,7 +104,7 @@ public interface DependencyPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int DEPENDENCY_FEATURE_COUNT = 2;
+	int DEPENDENCY_FEATURE_COUNT = 3;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.SignalDependencyImpl <em>Signal Dependency</em>}' class.
@@ -140,25 +114,34 @@ public interface DependencyPackage extends EPackage {
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getSignalDependency()
 	 * @generated
 	 */
-	int SIGNAL_DEPENDENCY = 2;
+	int SIGNAL_DEPENDENCY = 1;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SIGNAL_DEPENDENCY__SOURCE = DEPENDENCY__SOURCE;
+	int SIGNAL_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' containment reference.
+	 * The feature id for the '<em><b>Source Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int SIGNAL_DEPENDENCY__DESTINATION = DEPENDENCY__DESTINATION;
+	int SIGNAL_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
+
+	/**
+	 * The feature id for the '<em><b>Target Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SIGNAL_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
 	/**
 	 * The number of structural features of the '<em>Signal Dependency</em>' class.
@@ -177,25 +160,34 @@ public interface DependencyPackage extends EPackage {
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getHierarchyDependency()
 	 * @generated
 	 */
-	int HIERARCHY_DEPENDENCY = 3;
+	int HIERARCHY_DEPENDENCY = 2;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HIERARCHY_DEPENDENCY__SOURCE = DEPENDENCY__SOURCE;
+	int HIERARCHY_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' containment reference.
+	 * The feature id for the '<em><b>Source Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int HIERARCHY_DEPENDENCY__DESTINATION = DEPENDENCY__DESTINATION;
+	int HIERARCHY_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
+
+	/**
+	 * The feature id for the '<em><b>Target Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int HIERARCHY_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
 	/**
 	 * The number of structural features of the '<em>Hierarchy Dependency</em>' class.
@@ -214,25 +206,34 @@ public interface DependencyPackage extends EPackage {
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getControlflowDependency()
 	 * @generated
 	 */
-	int CONTROLFLOW_DEPENDENCY = 4;
+	int CONTROLFLOW_DEPENDENCY = 3;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_DEPENDENCY__SOURCE = DEPENDENCY__SOURCE;
+	int CONTROLFLOW_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' containment reference.
+	 * The feature id for the '<em><b>Source Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_DEPENDENCY__DESTINATION = DEPENDENCY__DESTINATION;
+	int CONTROLFLOW_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
+
+	/**
+	 * The feature id for the '<em><b>Target Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROLFLOW_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
 	/**
 	 * The number of structural features of the '<em>Controlflow Dependency</em>' class.
@@ -251,25 +252,34 @@ public interface DependencyPackage extends EPackage {
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getTransitionDependency()
 	 * @generated
 	 */
-	int TRANSITION_DEPENDENCY = 5;
+	int TRANSITION_DEPENDENCY = 4;
 
 	/**
-	 * The feature id for the '<em><b>Source</b></em>' containment reference.
+	 * The feature id for the '<em><b>Target State</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION_DEPENDENCY__SOURCE = DEPENDENCY__SOURCE;
+	int TRANSITION_DEPENDENCY__TARGET_STATE = DEPENDENCY__TARGET_STATE;
 
 	/**
-	 * The feature id for the '<em><b>Destination</b></em>' containment reference.
+	 * The feature id for the '<em><b>Source Node</b></em>' reference.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int TRANSITION_DEPENDENCY__DESTINATION = DEPENDENCY__DESTINATION;
+	int TRANSITION_DEPENDENCY__SOURCE_NODE = DEPENDENCY__SOURCE_NODE;
+
+	/**
+	 * The feature id for the '<em><b>Target Node</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int TRANSITION_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
 	/**
 	 * The number of structural features of the '<em>Transition Dependency</em>' class.
@@ -280,38 +290,126 @@ public interface DependencyPackage extends EPackage {
 	 */
 	int TRANSITION_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
 
-
 	/**
-	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition <em>State And Transition</em>}'.
+	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependenciesImpl <em>Dependencies</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for class '<em>State And Transition</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependenciesImpl
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDependencies()
 	 * @generated
 	 */
-	EClass getStateAndTransition();
+	int DEPENDENCIES = 5;
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition#getState <em>State</em>}'.
+	 * The feature id for the '<em><b>Dependencies</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>State</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition#getState()
-	 * @see #getStateAndTransition()
 	 * @generated
+	 * @ordered
 	 */
-	EReference getStateAndTransition_State();
+	int DEPENDENCIES__DEPENDENCIES = 0;
 
 	/**
-	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition#getTransition <em>Transition</em>}'.
+	 * The feature id for the '<em><b>Nodes</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the reference '<em>Transition</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition#getTransition()
-	 * @see #getStateAndTransition()
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCIES__NODES = 1;
+
+	/**
+	 * The number of structural features of the '<em>Dependencies</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int DEPENDENCIES_FEATURE_COUNT = 2;
+
+	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.NodeImpl <em>Node</em>}' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.NodeImpl
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getNode()
 	 * @generated
 	 */
-	EReference getStateAndTransition_Transition();
+	int NODE = 6;
+
+	/**
+	 * The feature id for the '<em><b>Type</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__TYPE = 0;
+
+	/**
+	 * The feature id for the '<em><b>Transition</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__TRANSITION = 1;
+
+	/**
+	 * The feature id for the '<em><b>Priority</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__PRIORITY = 2;
+
+	/**
+	 * The feature id for the '<em><b>Outgoing Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__OUTGOING_DEPENDENCIES = 3;
+
+	/**
+	 * The feature id for the '<em><b>Incoming Dependencies</b></em>' reference list.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__INCOMING_DEPENDENCIES = 4;
+
+	/**
+	 * The feature id for the '<em><b>State</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__STATE = 5;
+
+	/**
+	 * The number of structural features of the '<em>Node</em>' class.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE_FEATURE_COUNT = 6;
+
+	/**
+	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDEPENDENCYTYPE()
+	 * @generated
+	 */
+	int DEPENDENCYTYPE = 7;
+
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency <em>Dependency</em>}'.
@@ -324,26 +422,37 @@ public interface DependencyPackage extends EPackage {
 	EClass getDependency();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSource <em>Source</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetState <em>Target State</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Source</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSource()
+	 * @return the meta object for the reference '<em>Target State</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetState()
 	 * @see #getDependency()
 	 * @generated
 	 */
-	EReference getDependency_Source();
+	EReference getDependency_TargetState();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getDestination <em>Destination</em>}'.
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSourceNode <em>Source Node</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Destination</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getDestination()
+	 * @return the meta object for the reference '<em>Source Node</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getSourceNode()
 	 * @see #getDependency()
 	 * @generated
 	 */
-	EReference getDependency_Destination();
+	EReference getDependency_SourceNode();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetNode <em>Target Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Target Node</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency#getTargetNode()
+	 * @see #getDependency()
+	 * @generated
+	 */
+	EReference getDependency_TargetNode();
 
 	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency <em>Signal Dependency</em>}'.
@@ -386,6 +495,124 @@ public interface DependencyPackage extends EPackage {
 	EClass getTransitionDependency();
 
 	/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies <em>Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Dependencies</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
+	 * @generated
+	 */
+	EClass getDependencies();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies#getDependencies <em>Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Dependencies</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies#getDependencies()
+	 * @see #getDependencies()
+	 * @generated
+	 */
+	EReference getDependencies_Dependencies();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies#getNodes <em>Nodes</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Nodes</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies#getNodes()
+	 * @see #getDependencies()
+	 * @generated
+	 */
+	EReference getDependencies_Nodes();
+
+	/**
+	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node <em>Node</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for class '<em>Node</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
+	 * @generated
+	 */
+	EClass getNode();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getType <em>Type</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Type</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getType()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_Type();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getTransition <em>Transition</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>Transition</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getTransition()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_Transition();
+
+	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getPriority <em>Priority</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Priority</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getPriority()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_Priority();
+
+	/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getOutgoingDependencies <em>Outgoing Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Outgoing Dependencies</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getOutgoingDependencies()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_OutgoingDependencies();
+
+	/**
+	 * Returns the meta object for the reference list '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getIncomingDependencies <em>Incoming Dependencies</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference list '<em>Incoming Dependencies</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getIncomingDependencies()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_IncomingDependencies();
+
+	/**
+	 * Returns the meta object for the reference '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getState <em>State</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the reference '<em>State</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getState()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EReference getNode_State();
+
+	/**
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for enum '<em>DEPENDENCYTYPE</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
+	 * @generated
+	 */
+	EEnum getDEPENDENCYTYPE();
+
+	/**
 	 * Returns the factory that creates the instances of the model.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -408,32 +635,6 @@ public interface DependencyPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.StateAndTransitionImpl <em>State And Transition</em>}' class.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.StateAndTransitionImpl
-		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getStateAndTransition()
-		 * @generated
-		 */
-		EClass STATE_AND_TRANSITION = eINSTANCE.getStateAndTransition();
-
-		/**
-		 * The meta object literal for the '<em><b>State</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STATE_AND_TRANSITION__STATE = eINSTANCE.getStateAndTransition_State();
-
-		/**
-		 * The meta object literal for the '<em><b>Transition</b></em>' reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference STATE_AND_TRANSITION__TRANSITION = eINSTANCE.getStateAndTransition_Transition();
-
-		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyImpl <em>Dependency</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -444,20 +645,28 @@ public interface DependencyPackage extends EPackage {
 		EClass DEPENDENCY = eINSTANCE.getDependency();
 
 		/**
-		 * The meta object literal for the '<em><b>Source</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Target State</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEPENDENCY__SOURCE = eINSTANCE.getDependency_Source();
+		EReference DEPENDENCY__TARGET_STATE = eINSTANCE.getDependency_TargetState();
 
 		/**
-		 * The meta object literal for the '<em><b>Destination</b></em>' containment reference feature.
+		 * The meta object literal for the '<em><b>Source Node</b></em>' reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
 		 */
-		EReference DEPENDENCY__DESTINATION = eINSTANCE.getDependency_Destination();
+		EReference DEPENDENCY__SOURCE_NODE = eINSTANCE.getDependency_SourceNode();
+
+		/**
+		 * The meta object literal for the '<em><b>Target Node</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCY__TARGET_NODE = eINSTANCE.getDependency_TargetNode();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.SignalDependencyImpl <em>Signal Dependency</em>}' class.
@@ -498,6 +707,100 @@ public interface DependencyPackage extends EPackage {
 		 * @generated
 		 */
 		EClass TRANSITION_DEPENDENCY = eINSTANCE.getTransitionDependency();
+
+		/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependenciesImpl <em>Dependencies</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependenciesImpl
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDependencies()
+		 * @generated
+		 */
+		EClass DEPENDENCIES = eINSTANCE.getDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Dependencies</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCIES__DEPENDENCIES = eINSTANCE.getDependencies_Dependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Nodes</b></em>' containment reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference DEPENDENCIES__NODES = eINSTANCE.getDependencies_Nodes();
+
+		/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.NodeImpl <em>Node</em>}' class.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.NodeImpl
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getNode()
+		 * @generated
+		 */
+		EClass NODE = eINSTANCE.getNode();
+
+		/**
+		 * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__TYPE = eINSTANCE.getNode_Type();
+
+		/**
+		 * The meta object literal for the '<em><b>Transition</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__TRANSITION = eINSTANCE.getNode_Transition();
+
+		/**
+		 * The meta object literal for the '<em><b>Priority</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__PRIORITY = eINSTANCE.getNode_Priority();
+
+		/**
+		 * The meta object literal for the '<em><b>Outgoing Dependencies</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__OUTGOING_DEPENDENCIES = eINSTANCE.getNode_OutgoingDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>Incoming Dependencies</b></em>' reference list feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__INCOMING_DEPENDENCIES = eINSTANCE.getNode_IncomingDependencies();
+
+		/**
+		 * The meta object literal for the '<em><b>State</b></em>' reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference NODE__STATE = eINSTANCE.getNode_State();
+
+		/**
+		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDEPENDENCYTYPE()
+		 * @generated
+		 */
+		EEnum DEPENDENCYTYPE = eINSTANCE.getDEPENDENCYTYPE();
 
 	}
 
