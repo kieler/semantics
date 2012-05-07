@@ -55,6 +55,8 @@ import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies;
 
 // Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
 import com.google.common.base.Predicate;
@@ -136,13 +138,30 @@ public class SGenerator implements IHandler {
 			inputResource.load(null);
 			Region rootRegion = (Region) inputResource.getContents().get(0);
 
+			
+			// Generate dependencies
+			Synccharts2Dependenies dependenciesTransform = Guice.createInjector().getInstance(Synccharts2Dependenies.class);
+			Dependencies dependencies = dependenciesTransform.transform(rootRegion);
+			{// Debug output
+			Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
+			String text = EmfFormatter.objToStr(dependencies, ignoredFeatures);
+			output2 = URI.createURI(input.toString());
+			output2 = output2.trimFragment();
+			output2 = output2.trimFileExtension().appendFileExtension("dependencies.txt");
+			String outputFileString =  getFileStringFromUri(output2);
+			FileWriter fw = new FileWriter(outputFileString);
+		    BufferedWriter bw = new BufferedWriter(fw);
+		    bw.write(text);
+		    bw.close();}
+
+			
 			// Apply transformation
 			// Because for @Inject tags we cannot use the standard NEW keyword
 			//    Synccharts2S transform = new Synccharts2S();
 			Synccharts2S transform = Guice.createInjector().getInstance(Synccharts2S.class);
 			Program program = transform.transform(rootRegion);
 
-			// Debug output
+			{// Debug output
 			Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
 			String text = EmfFormatter.objToStr(program, ignoredFeatures);
 			output2 = URI.createURI(input.toString());
@@ -152,7 +171,7 @@ public class SGenerator implements IHandler {
 			FileWriter fw = new FileWriter(outputFileString);
 		    BufferedWriter bw = new BufferedWriter(fw);
 		    bw.write(text);
-		    bw.close();
+		    bw.close();}
 
 			// Calculate outout path
 			output = URI.createURI(input.toString());
