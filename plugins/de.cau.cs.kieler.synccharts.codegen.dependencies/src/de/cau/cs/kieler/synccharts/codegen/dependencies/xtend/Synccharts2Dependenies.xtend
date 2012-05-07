@@ -9,6 +9,8 @@ import java.util.*
 import com.google.inject.Inject
 import org.eclipse.emf.ecore.EClass
 //import org.eclipse.xtend.util.stdlib.TraceComponent
+import org.eclipse.xtend.util.stdlib.*
+import org.eclipse.emf.common.util.BasicEList
 
 
 class Synccharts2Dependenies {
@@ -133,10 +135,27 @@ class Synccharts2Dependenies {
 	}
 	
 	
+	def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
+		return false;
+	}
+	def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
+		var returnValue = false;
+		for (expression : trigger.subExpressions) {
+			returnValue = returnValue || expression.triggerContainingSignal(signal);
+		}
+		return returnValue;
+	}
+	def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
+		var returnValue = trigger.valuedObject == signal;
+		for (expression : trigger.subExpressions) {
+			returnValue = returnValue || expression.triggerContainingSignal(signal);
+		}
+		return returnValue;
+	}
 		
 	
 	def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
-				for (effect : transition.effects.filter(typeof(Emission))) {
+				for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
 					
 					// get other states that test for this signal in out going transition triggers
 					// (the scope of the signal should be respected because we a
@@ -145,18 +164,28 @@ class Synccharts2Dependenies {
 					//
 					// (effect as Emission).signal; == emitted signal
 					//
-					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition));
-					var triggeredTransitions = allTransitions.filter(e | e.trigger != null && 
-						   e.trigger.eAllContents().toIterable().filter(e2 |
-						   	        e2.equals( (effect as Emission).signal )
-						   ).size > 0); 
+//					var signal = (effect as Emission).signal;
+//					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition));
+//					var triggeredTransitions = allTransitions.filter(e | e.trigger != null).toList;
+//					var triggeredTransitions2 = new BasicEList<Transition>();
+//					
+//					for (triggeredTransition : triggeredTransitions) {
+//						if (triggeredTransition.trigger.triggerContainingSignal(signal)) {
+//							triggeredTransitions2.add(triggeredTransition);
+//						}
+//					}
+					
+					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
+					var triggeredTransitions =  allTransitions.filter (e |
+						 	e.trigger != null &&
+						    e.trigger.triggerContainingSignal((effect as Emission).signal)); 
 						
 					for (triggeredTransition : triggeredTransitions) {
 						var emitterState = transition.sourceState;
-						var triggerState = triggeredTransition.sourceState;
+						var triggerState = (triggeredTransition as Transition).sourceState;
 						
 						var emitterNode = dependencies.getNode(emitterState, transition, DEPENDENCYTYPE::STRONG);
-						var triggerNode = dependencies.getNode(triggerState, transition, DEPENDENCYTYPE::STRONG);
+						var triggerNode = dependencies.getNode(triggerState, triggeredTransition, DEPENDENCYTYPE::STRONG);
 						dependencies.getSignalDependency(emitterNode, triggerNode);
 						//TODO: all the following necessary/correct???
 						if (emitterState.hierarchical) {
@@ -164,12 +193,12 @@ class Synccharts2Dependenies {
 							dependencies.getSignalDependency(emitterNodeW, triggerNode);
 						}
 						if (triggerState.hierarchical) {
-							var triggerNodeW = dependencies.getNode(triggerState, transition, DEPENDENCYTYPE::WEAK);
+							var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DEPENDENCYTYPE::WEAK);
 							dependencies.getSignalDependency(emitterNode, triggerNodeW);
 						}
 						if (emitterState.hierarchical && triggerState.hierarchical) {
 							var emitterNodeW = dependencies.getNode(emitterState, transition, DEPENDENCYTYPE::WEAK);
-							var triggerNodeW = dependencies.getNode(triggerState, transition, DEPENDENCYTYPE::WEAK);
+							var triggerNodeW = dependencies.getNode(triggerState, triggeredTransition, DEPENDENCYTYPE::WEAK);
 							dependencies.getSignalDependency(emitterNodeW, triggerNodeW);
 						}
 					}										
