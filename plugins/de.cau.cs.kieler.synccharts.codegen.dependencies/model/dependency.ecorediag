@@ -145,6 +145,10 @@
         <element xmi:type="ecore:EAttribute" href="dependency.ecore#//Node/priority"/>
         <layoutConstraint xmi:type="notation:Location" xmi:id="_bJmecZguEeGyNZhCLN9U8w"/>
       </children>
+      <children xmi:type="notation:Node" xmi:id="_CyyT4ZiXEeGG4bkxT-b5XA" type="2001">
+        <element xmi:type="ecore:EAttribute" href="dependency.ecore#//Node/id"/>
+        <layoutConstraint xmi:type="notation:Location" xmi:id="_CyyT4piXEeGG4bkxT-b5XA"/>
+      </children>
       <styles xmi:type="notation:DrawerStyle" xmi:id="_rTlrtZgsEeGyNZhCLN9U8w"/>
       <styles xmi:type="notation:SortingStyle" xmi:id="_rTlrtpgsEeGyNZhCLN9U8w"/>
       <styles xmi:type="notation:FilteringStyle" xmi:id="_rTlrt5gsEeGyNZhCLN9U8w"/>
@@ -156,7 +160,7 @@
     </children>
     <styles xmi:type="notation:ShapeStyle" xmi:id="_rTlrsZgsEeGyNZhCLN9U8w" fontColor="4210752" fontHeight="10" fillColor="13761016" lineColor="8421504"/>
     <element xmi:type="ecore:EClass" href="dependency.ecore#//Node"/>
-    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rTlrspgsEeGyNZhCLN9U8w" x="384" y="-144" width="189" height="73"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_rTlrspgsEeGyNZhCLN9U8w" x="384" y="-144" width="189" height="87"/>
   </children>
   <children xmi:type="notation:Node" xmi:id="_aOevcJgtEeGyNZhCLN9U8w" type="1001">
     <eAnnotations xmi:type="ecore:EAnnotation" xmi:id="_aO3J8JgtEeGyNZhCLN9U8w" source="Shortcut">

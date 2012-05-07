@@ -32,6 +32,7 @@
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//Node/outgoingDependencies"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//Node/incomingDependencies"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//Node/state"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependency.ecore#//Node/id"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

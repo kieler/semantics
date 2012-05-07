@@ -392,13 +392,22 @@ public interface DependencyPackage extends EPackage {
 	int NODE__STATE = 5;
 
 	/**
+	 * The feature id for the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int NODE__ID = 6;
+
+	/**
 	 * The number of structural features of the '<em>Node</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int NODE_FEATURE_COUNT = 6;
+	int NODE_FEATURE_COUNT = 7;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.
@@ -603,6 +612,17 @@ public interface DependencyPackage extends EPackage {
 	EReference getNode_State();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getId <em>Id</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Id</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getId()
+	 * @see #getNode()
+	 * @generated
+	 */
+	EAttribute getNode_Id();
+
+	/**
 	 * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -791,6 +811,14 @@ public interface DependencyPackage extends EPackage {
 		 * @generated
 		 */
 		EReference NODE__STATE = eINSTANCE.getNode_State();
+
+		/**
+		 * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute NODE__ID = eINSTANCE.getNode_Id();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.

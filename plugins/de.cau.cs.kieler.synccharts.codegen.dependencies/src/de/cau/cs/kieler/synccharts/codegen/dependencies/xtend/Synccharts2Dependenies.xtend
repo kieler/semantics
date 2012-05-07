@@ -246,6 +246,12 @@ class Synccharts2Dependenies {
 		// not yet found newNode => add it
 		var newNode = DependencyFactory::eINSTANCE.createNode();
 		newNode.setState(state);
+		if (type == DEPENDENCYTYPE::STRONG) {
+			newNode.setId(state.id + "_S");
+		}
+		else {
+			newNode.setId(state.id + "_W");
+		} 
 		newNode.setTransition(transition);
 		newNode.setType(type);
 		dependencies.nodes.add(newNode);

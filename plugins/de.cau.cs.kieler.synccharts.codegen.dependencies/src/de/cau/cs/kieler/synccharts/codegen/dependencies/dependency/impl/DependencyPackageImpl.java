@@ -320,6 +320,15 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getNode_Id() {
+		return (EAttribute)nodeEClass.getEStructuralFeatures().get(6);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EEnum getDEPENDENCYTYPE() {
 		return dependencytypeEEnum;
 	}
@@ -376,6 +385,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		createEReference(nodeEClass, NODE__OUTGOING_DEPENDENCIES);
 		createEReference(nodeEClass, NODE__INCOMING_DEPENDENCIES);
 		createEReference(nodeEClass, NODE__STATE);
+		createEAttribute(nodeEClass, NODE__ID);
 
 		// Create enums
 		dependencytypeEEnum = createEEnum(DEPENDENCYTYPE);
@@ -442,6 +452,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		initEReference(getNode_OutgoingDependencies(), this.getDependency(), this.getDependency_SourceNode(), "outgoingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNode_IncomingDependencies(), this.getDependency(), this.getDependency_TargetNode(), "incomingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNode_State(), theSyncchartsPackage.getState(), null, "state", null, 1, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNode_Id(), ecorePackage.getEString(), "id", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
 		initEEnum(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.class, "DEPENDENCYTYPE");
