@@ -12,22 +12,17 @@ import org.eclipse.emf.ecore.EClass
 
 
 class Synccharts2Dependenies {
-
-
+	
 	def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (Region root) {
 		var rootState = root.states.head();
 
 		// create nodes for all states 
 		for (state : root.getAllStates(dependencies)) {
+			if (state.outgoingTransitions.size == 0) {
+				dependencies.createSimpleOrStrongAndWeakNoedes(state, null);
+			}
 			for (transition : state.outgoingTransitions) {
-				// create simple or (strong and weak) nodes
-				if (state.hierarchical) {
-					dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
-					dependencies.getNode(state, transition, DEPENDENCYTYPE::WEAK);
-				}
-				else {
-					dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
-				}
+				dependencies.createSimpleOrStrongAndWeakNoedes(state, transition);
 			}
 		}
 
@@ -37,17 +32,13 @@ class Synccharts2Dependenies {
 			dependencies.handleTransitionDependency(state);
 			
 			for (transition : state.outgoingTransitions) {
-				
 				var firstNode  = dependencies.getNode(transition.sourceState, transition, DEPENDENCYTYPE::STRONG);
-				var secondNode = dependencies.getNode(transition.targetState, transition, DEPENDENCYTYPE::STRONG);
-				dependencies.getControlFlowDependency(firstNode, secondNode)
 				
-				if (state.hierarchical) {
-					var firstNodeW  = dependencies.getNode(transition.sourceState, transition, DEPENDENCYTYPE::WEAK);
-					var secondNodeW = dependencies.getNode(transition.targetState, transition, DEPENDENCYTYPE::WEAK);
-					dependencies.getControlFlowDependency(firstNodeW, secondNodeW)
-					dependencies.getControlFlowDependency(firstNodeW, secondNode)  //TODO: necessary or correct???
-					dependencies.getControlFlowDependency(firstNode, secondNodeW)  //TODO: necessary or correct???
+				if (transition.targetState.outgoingTransitions.size == 0) {
+					dependencies.handleControlFlowDependency(firstNode, state, transition, null);
+				}
+				for (targetTransition: transition.targetState.outgoingTransitions) {
+					dependencies.handleControlFlowDependency(firstNode, state, transition, targetTransition);
 				}
 				
 				dependencies.handleSignalDependency(transition, rootState);
@@ -106,7 +97,7 @@ class Synccharts2Dependenies {
 	
 	
 	def handleTransitionDependency(Dependencies dependencies, State state) {
-		var orderedTransitions = state.outgoingTransitions.filter(e|e.isImmediate).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+		var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
 		var i = 1;
 		for (transition : orderedTransitions) {
  			if (i < orderedTransitions.size) {
@@ -127,6 +118,21 @@ class Synccharts2Dependenies {
 			}
 		}
 	}
+	
+	def handleControlFlowDependency(Dependencies dependencies, Node firstNode, State state, Transition transition, Transition targetTransition) {
+					var secondNode = dependencies.getNode(transition.targetState, targetTransition, DEPENDENCYTYPE::STRONG);
+					dependencies.getControlFlowDependency(firstNode, secondNode)
+				
+					if (state.hierarchical) {
+						var firstNodeW  = dependencies.getNode(transition.sourceState, transition, DEPENDENCYTYPE::WEAK);
+						var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, DEPENDENCYTYPE::WEAK);
+						dependencies.getControlFlowDependency(firstNodeW, secondNodeW)
+						dependencies.getControlFlowDependency(firstNodeW, secondNode)  //TODO: necessary or correct???
+						dependencies.getControlFlowDependency(firstNode, secondNodeW)  //TODO: necessary or correct???
+					}
+	}
+	
+	
 		
 	
 	def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
@@ -212,6 +218,16 @@ class Synccharts2Dependenies {
 	}
 	
 	// ======================================================================================================
+
+	def void createSimpleOrStrongAndWeakNoedes(Dependencies dependencies, State state, Transition transition) {
+		if (state.hierarchical) {
+				dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
+				dependencies.getNode(state, transition, DEPENDENCYTYPE::WEAK);
+		}
+		else {
+				dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
+		}
+	}
 
 	def Node getNode(Dependencies dependencies, State state, Transition transition, DEPENDENCYTYPE type) {
 		var node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state) && (e.transition == transition));
