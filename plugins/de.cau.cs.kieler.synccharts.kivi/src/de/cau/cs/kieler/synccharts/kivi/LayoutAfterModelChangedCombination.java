@@ -25,6 +25,7 @@ import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.triggers.ModelChangeTrigger.ModelChangeState;
 import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
 import de.cau.cs.kieler.kiml.ui.KimlUiPlugin;
+import de.cau.cs.kieler.kiml.ui.diagram.LayoutHandler;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 
 /**
@@ -82,9 +83,11 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
      *            model changed
      */
     public void execute(final ModelChangeState modelState) {
-        IPreferenceStore preferenceStore = getPreferenceStore();
-        boolean animate = preferenceStore.getBoolean(ANIMATE);
-        boolean zoom = preferenceStore.getBoolean(ZOOM_TO_FIT);
+        IPreferenceStore preferenceStore = KimlUiPlugin.getDefault().getPreferenceStore();
+        boolean animation = preferenceStore.getBoolean(LayoutHandler.PREF_ANIMATION);
+        boolean zoomToFit = preferenceStore.getBoolean(LayoutHandler.PREF_ZOOM);
+        boolean progressDialog = preferenceStore.getBoolean(LayoutHandler.PREF_PROGRESS);
+        
         // Create a copy of the notifications list, since the transaction could still be active,
         // which could lead to concurrent modification exceptions.
         List<Notification> list = modelState.getChange().getNotifications();
@@ -94,18 +97,10 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
             // KiVi to avoid too many effects and to guarantee that the right parent is layouted
             if (modelFilter.matches(notification) && notification.getNotifier() instanceof EObject) {
                 schedule(new LayoutEffect(modelState.getWorkbenchPart(),
-                        (EObject) notification.getNotifier(), zoom, false, true, animate));
+                        (EObject) notification.getNotifier(), zoomToFit, progressDialog, true,
+                        animation));
             }
         }
-    }
-    
-    /**
-     * Return the preference store for the KIML UI plugin.
-     * 
-     * @return the preference store
-     */
-    private static IPreferenceStore getPreferenceStore() {
-        return KimlUiPlugin.getDefault().getPreferenceStore();
     }
     
 }
