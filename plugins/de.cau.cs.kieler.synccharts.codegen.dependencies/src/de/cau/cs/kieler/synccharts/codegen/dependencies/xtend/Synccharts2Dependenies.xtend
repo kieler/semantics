@@ -15,6 +15,10 @@ import org.eclipse.emf.common.util.BasicEList
 
 class Synccharts2Dependenies {
 	
+	// ======================================================================================================
+	// ==                                 T R A V E R S E    S Y N C C H A R T                             ==
+	// ======================================================================================================
+	
 	def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (Region root) {
 		var rootState = root.states.head();
 
@@ -47,6 +51,9 @@ class Synccharts2Dependenies {
 			}
 		}
 		
+		// topological sort
+		dependencies.topologicalSort();
+		
 	}		
 	
 	// -----------------------------------------------------------------------------------------------------
@@ -74,7 +81,9 @@ class Synccharts2Dependenies {
 		state.regions
 	}
 	
+	
 	// ======================================================================================================
+	// ==                                 H A N D L E    D E P E N D E N C Y                               ==
 	// ======================================================================================================
 	
 	// Weak dependencies from parentWeak to (childWeak and childStrong)
@@ -96,7 +105,6 @@ class Synccharts2Dependenies {
 		}
 		
 	}
-	
 	
 	def handleTransitionDependency(Dependencies dependencies, State state) {
 		var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
@@ -134,26 +142,6 @@ class Synccharts2Dependenies {
 					}
 	}
 	
-	
-	def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
-		return false;
-	}
-	def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
-		var returnValue = false;
-		for (expression : trigger.subExpressions) {
-			returnValue = returnValue || expression.triggerContainingSignal(signal);
-		}
-		return returnValue;
-	}
-	def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
-		var returnValue = trigger.valuedObject == signal;
-		for (expression : trigger.subExpressions) {
-			returnValue = returnValue || expression.triggerContainingSignal(signal);
-		}
-		return returnValue;
-	}
-		
-	
 	def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
 				for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
 					
@@ -164,17 +152,6 @@ class Synccharts2Dependenies {
 					//
 					// (effect as Emission).signal; == emitted signal
 					//
-//					var signal = (effect as Emission).signal;
-//					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition));
-//					var triggeredTransitions = allTransitions.filter(e | e.trigger != null).toList;
-//					var triggeredTransitions2 = new BasicEList<Transition>();
-//					
-//					for (triggeredTransition : triggeredTransitions) {
-//						if (triggeredTransition.trigger.triggerContainingSignal(signal)) {
-//							triggeredTransitions2.add(triggeredTransition);
-//						}
-//					}
-					
 					var allTransitions = rootState.eAllContents().toIterable().filter(typeof(Transition)).toList;
 					var triggeredTransitions =  allTransitions.filter (e |
 						 	e.trigger != null &&
@@ -205,7 +182,9 @@ class Synccharts2Dependenies {
 				}
 	}
 
+
 	// ======================================================================================================
+	// ==                      R E T R I E V E    C R E A T E D    D E P E N D E N C Y                     ==
 	// ======================================================================================================
 
 	def Dependency getSignalDependency(Dependencies dependencies, Node emitterNode, Node triggerNode) {
@@ -228,6 +207,9 @@ class Synccharts2Dependenies {
 		dependencies.getDependency(targetNode, sourceNode, newDependency);
 	}
 	
+	
+	// ======================================================================================================
+	// ==                                         C R E A T I O N                                          ==
 	// ======================================================================================================
 
 	def Dependency getDependency(Dependencies dependencies, Node sourceNode, Node targetNode, Dependency newDependency) {
@@ -246,8 +228,6 @@ class Synccharts2Dependenies {
 		return newDependency;
 	}
 	
-	// ======================================================================================================
-
 	def void createSimpleOrStrongAndWeakNoedes(Dependencies dependencies, State state, Transition transition) {
 		if (state.hierarchical) {
 				dependencies.getNode(state, transition, DEPENDENCYTYPE::STRONG);
@@ -272,10 +252,74 @@ class Synccharts2Dependenies {
 		return newNode;
 	}
 
+
+	// ======================================================================================================
+	// ==                                          H E L P E R                                             ==
 	// ======================================================================================================
 	
 	def boolean isHierarchical(State state) {
 		state.regions.size > 0;
+	}
+
+	def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
+		return false;
+	}
+	def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
+		var returnValue = false;
+		for (expression : trigger.subExpressions) {
+			returnValue = returnValue || expression.triggerContainingSignal(signal);
+		}
+		return returnValue;
+	}
+	def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
+		var returnValue = trigger.valuedObject == signal;
+		for (expression : trigger.subExpressions) {
+			returnValue = returnValue || expression.triggerContainingSignal(signal);
+		}
+		return returnValue;
+	}
+	
+	// ======================================================================================================
+	// ==                                   T O P O L O G I C A L    S O R T                               ==
+	// ======================================================================================================
+	
+	//	L <- Empty list that will contain the sorted nodes
+	//	S <- Set of all nodes with no outgoing edges
+	//	for each node n in S do
+	//  	  visit(n) 
+	//	function visit(node n)
+	// 	   if n has not been visited yet then
+	// 	       mark n as visited
+	// 	       for each node m with an edge from m to n do
+	// 	           visit(m)
+	// 	       add n to L	
+	
+	def topologicalSort(Dependencies dependencies) {
+		// reset dependencies
+		for (node : dependencies.nodes) {
+			node.setPriority(-1);
+		}
+		
+		var nodesWithoutOutgoingEdges = dependencies.nodes.filter(e | e.outgoingDependencies == null || e.outgoingDependencies.size == 0);
+		var tmpPrio = 1;
+		for (node : nodesWithoutOutgoingEdges) {
+			tmpPrio = node.visit(tmpPrio);
+		}
+	}
+	
+	
+	def int visit(Node node, int priority) {
+		if (node.priority == -1) {
+			node.setPriority(priority);
+			var tmpPrio = priority + 1;
+			for (incomingDependency : node.incomingDependencies) {
+				tmpPrio = incomingDependency.sourceNode.visit(tmpPrio);
+			}
+			return tmpPrio;
+		}
+		else {
+			return priority;
+		}
 	}
 	
 }
