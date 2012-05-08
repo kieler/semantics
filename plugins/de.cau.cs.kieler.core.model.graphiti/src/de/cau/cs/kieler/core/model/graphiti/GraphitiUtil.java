@@ -96,25 +96,5 @@ public final class GraphitiUtil {
         }
         return changed;
     }
-
-    /**
-     * Given a graphics algorithm, find the first child that is not invisible. If the GA itself
-     * is visible, it is returned.
-     * 
-     * @param graphicsAlgorithm the parent graphics algorithm
-     * @return a visible graphics algorithm
-     */
-    public static GraphicsAlgorithm findVisibleGa(final GraphicsAlgorithm graphicsAlgorithm) {
-        if (graphicsAlgorithm.getLineVisible() || graphicsAlgorithm.getFilled()) {
-            return graphicsAlgorithm;
-        }
-        for (GraphicsAlgorithm ga : graphicsAlgorithm.getGraphicsAlgorithmChildren()) {
-            GraphicsAlgorithm result = findVisibleGa(ga);
-            if (result != null) {
-                return result;
-            }
-        }
-        return null;
-    }
     
 }
