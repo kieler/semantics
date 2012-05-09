@@ -152,8 +152,8 @@ class Synccharts2Dependenies {
 						var sourceNodeW = dependencies.getNode(state, transition, DEPENDENCYTYPE::WEAK);
 						var targetNodeW = dependencies.getNode(state, nextTransition, DEPENDENCYTYPE::WEAK);
 						dependencies.getTransitionDependency(sourceNodeW, targetNodeW);
-						dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
-						dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
+						//dependencies.getTransitionDependency(sourceNodeW, targetNode)  //TODO: necessary or correct???
+						//dependencies.getTransitionDependency(sourceNode, targetNodeW)  //TODO: necessary or correct???
 					}
 				}
 				i=i+1;
@@ -281,11 +281,15 @@ class Synccharts2Dependenies {
 		// not yet found newNode => add it
 		var newNode = DependencyFactory::eINSTANCE.createNode();
 		newNode.setState(state);
+		var stateId = state.id;
+		if (transition != null) {
+			stateId = stateId + transition.priority;
+		}
 		if (type == DEPENDENCYTYPE::WEAK) {
-			newNode.setId(state.id + "_W");
+			newNode.setId(stateId + "_W");
 		}
 		else {
-			newNode.setId(state.id + "_S");
+			newNode.setId(stateId + "_S");
 		} 
 		newNode.setTransition(transition);
 		newNode.setType(type);
