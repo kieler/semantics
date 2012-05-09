@@ -342,7 +342,8 @@ class Synccharts2Dependenies {
 		}
 		
 		var nodesWithoutOutgoingEdges = dependencies.nodes.filter(e | e.outgoingDependencies == null || e.outgoingDependencies.size == 0);
-		var tmpPrio = 1;
+		System::out.println("nodesWithoutOutgoingEdges:" +  nodesWithoutOutgoingEdges.toString);
+		var tmpPrio = 0;
 		for (node : nodesWithoutOutgoingEdges) {
 			tmpPrio = node.visit(tmpPrio);
 		}
@@ -351,12 +352,15 @@ class Synccharts2Dependenies {
 	
 	def int visit(Node node, int priority) {
 		if (node.priority == -1) {
-			node.setPriority(priority);
-			var tmpPrio = priority + 1;
+			System::out.println("Visit "+ node.id + " (" + priority + ")");
+			var tmpPrio = priority;
 			for (incomingDependency : node.incomingDependencies) {
-				tmpPrio = incomingDependency.sourceNode.visit(tmpPrio);
+				val nextNode = incomingDependency.sourceNode;
+				System::out.println("Next Node:" +  nextNode.id.toString + " (" + priority + ")");
+				tmpPrio = nextNode.visit(tmpPrio);
 			}
-			return tmpPrio;
+			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));
+			return tmpPrio + 1;
 		}
 		else {
 			return priority;
