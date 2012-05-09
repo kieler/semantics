@@ -25,6 +25,7 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 		val rootNode = KimlUtil::createInitializedNode;
 		rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("15.0"));
 	    rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
+	    rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
 		
 		val nodes = model.nodes;
 		for (node : nodes) {
