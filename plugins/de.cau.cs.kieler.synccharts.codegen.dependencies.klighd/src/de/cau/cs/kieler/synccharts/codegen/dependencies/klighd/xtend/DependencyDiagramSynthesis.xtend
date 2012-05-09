@@ -62,9 +62,9 @@ def createNodeFigure(Node node, KNode rootNode) {
 				color.setGreen(0);
 			}
 			else {
-				color.setRed(150);
-				color.setBlue(150);
-				color.setGreen(150);
+				color.setRed(200);
+				color.setBlue(200);
+				color.setGreen(200);
 			}
 			kNode.KRendering.add(color);
 			val nodeText = node.id.substring(0,node.id.length - 2);
