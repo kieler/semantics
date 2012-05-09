@@ -359,7 +359,8 @@ class Synccharts2Dependenies {
 				System::out.println("Next Node:" +  nextNode.id.toString + " (" + priority + ")");
 				tmpPrio = nextNode.visit(tmpPrio);
 			}
-			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));
+//			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));
+			node.setPriority((tmpPrio + 1));
 			return tmpPrio + 1;
 		}
 		else {
