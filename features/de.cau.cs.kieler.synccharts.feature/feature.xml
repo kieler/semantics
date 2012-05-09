@@ -770,4 +770,11 @@ litigation.
          install-size="0"
          version="0.0.0"/>
 
+   <plugin
+         id="de.cau.cs.kieler.kiml.kivi"
+         download-size="0"
+         install-size="0"
+         version="0.0.0"
+         unpack="false"/>
+
 </feature>
