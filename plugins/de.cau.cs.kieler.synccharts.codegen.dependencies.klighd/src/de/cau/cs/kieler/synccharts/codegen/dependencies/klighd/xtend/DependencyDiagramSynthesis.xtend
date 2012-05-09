@@ -11,6 +11,9 @@ import de.cau.cs.kieler.kiml.options.Direction
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
 
 class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KNode> {
 	
@@ -50,7 +53,23 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 def createNodeFigure(Node node, KNode rootNode) {
 			val kNode = node.createRoundedRectangulareNode(25, 85);
 			kNode.KRendering.add(factory.createKLineWidth.of(2));
-			kNode.KRendering.add(factory.createKText.of(node.id + "(" + node.priority + ")"));
+			
+			val color = factory.createKForegroundColor();
+			if (node.id.endsWith("_S")) {
+				color.setRed(0);
+				color.setBlue(0);
+				color.setGreen(0);
+			}
+			else {
+				color.setRed(150);
+				color.setBlue(150);
+				color.setGreen(150);
+			}
+			kNode.KRendering.add(color);
+			val nodeText = node.id.substring(0,node.id.length - 2);
+			
+			
+			kNode.KRendering.add(factory.createKText.of(nodeText + " (" + node.priority + ")"));
 			rootNode.children.add(kNode)
 			return kNode
 }
@@ -79,6 +98,23 @@ def createDependencyFigure(Dependency dependency, KNode rootNode) {
 		val kEdge = dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
 		val ellipse = factory.createKEllipse;
+		
+		if (dependency instanceof SignalDependency) {
+			val color = factory.createKForegroundColor();
+			color.setRed(255);
+			kEdge.KRendering.add(color);
+		}
+		else if (dependency instanceof ControlflowDependency) {
+			val color = factory.createKForegroundColor();
+			color.setBlue(255);
+			kEdge.KRendering.add(color);
+		}
+		else if (dependency instanceof TransitionDependency) {
+			val color = factory.createKForegroundColor();
+			color.setGreen(255);
+			kEdge.KRendering.add(color);
+		}
+		
 		val dpd = factory.createKDecoratorPlacementData;
 		dpd.location = Float::valueOf("0.95");
 		dpd.height = 7;
