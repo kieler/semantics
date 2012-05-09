@@ -1,0 +1,22 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Dependency KLighD Visualization
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.DependenciesKLighDPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.core.kivi;bundle-version="0.3.0",
+ de.cau.cs.kieler.core.krendering;bundle-version="0.1.0",
+ de.cau.cs.kieler.core.model;bundle-version="0.6.0",
+ de.cau.cs.kieler.kiml;bundle-version="0.10.0",
+ de.cau.cs.kieler.klighd;bundle-version="0.1.0",
+ org.eclipse.xtend2.lib,
+ com.google.inject,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.emf.ecoretools.diagram;bundle-version="1.0.0",
+ de.cau.cs.kieler.synccharts.codegen.dependencies;bundle-version="0.1.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
