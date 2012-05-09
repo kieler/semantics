@@ -69,7 +69,6 @@ def createNodeFigure(Node node, KNode rootNode) {
 			kNode.KRendering.add(color);
 			val nodeText = node.id.substring(0,node.id.length - 2);
 			
-			
 			kNode.KRendering.add(factory.createKText.of(nodeText + " (" + node.priority + ")"));
 			rootNode.children.add(kNode)
 			return kNode
@@ -77,25 +76,6 @@ def createNodeFigure(Node node, KNode rootNode) {
 	
 	
 def createDependencyFigure(Dependency dependency, KNode rootNode) {
-	    	
-//		val edge = ref.createPolyLineEdge;
-//		edge.KRendering.add(factory.createKLineWidth.of(2));
-//		val ellipse = factory.createKEllipse;
-//
-//		val dpd = factory.createKDecoratorPlacementData;
-//		dpd.location = Float::valueOf("0.99");
-//		dpd.height = 10;
-//		dpd.width = 10;
-//		dpd.XOffset = -10;
-//		dpd.YOffset = -5;
-//		ellipse.placementData = dpd;
-//		 
-//		edge.KRendering.add(ellipse);
-//		edge.source = ref.eContainer.node;
-//		edge.target = ref.EType.node;
-//		ref.eContainer.node.outgoingEdges.add(edge);
-	    	
-	    	
 		val kEdge = dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
 		val ellipse = factory.createKEllipse;
@@ -134,31 +114,4 @@ def createDependencyFigure(Dependency dependency, KNode rootNode) {
 		return kEdge
 	}	
 	
-//	def createAssociationConnections(Iterable<EClassifier> classes) {
-//		val list = classes.toList;
-//		list.filter(typeof(EClass)).forEach[
-//			it.EStructuralFeatures.filter(typeof(EReference))
-//			    .filter[list.contains(it.EType)]
-//		        .forEach[it.createAssociationConnection]
-//		]
-//	}
-//	
-//	def createAssociationConnection(EReference ref) {
-//		val edge = ref.createPolyLineEdge;
-//		edge.KRendering.add(factory.createKLineWidth.of(2));
-//		val ellipse = factory.createKEllipse;
-//
-//		val dpd = factory.createKDecoratorPlacementData;
-//		dpd.location = Float::valueOf("0.99");
-//		dpd.height = 10;
-//		dpd.width = 10;
-//		dpd.XOffset = -10;
-//		dpd.YOffset = -5;
-//		ellipse.placementData = dpd;
-//		 
-//		edge.KRendering.add(ellipse);
-//		edge.source = ref.eContainer.node;
-//		edge.target = ref.EType.node;
-//		ref.eContainer.node.outgoingEdges.add(edge);
-//	}
 }
