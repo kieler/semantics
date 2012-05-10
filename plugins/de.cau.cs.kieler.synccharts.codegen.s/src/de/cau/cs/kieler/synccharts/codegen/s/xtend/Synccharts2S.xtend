@@ -10,18 +10,28 @@ import com.google.inject.Inject
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import com.google.inject.Guice
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
 
 class Synccharts2S {
 
 	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
 	extension de.cau.cs.kieler.synccharts.codegen.s.xtend.Helper Helper = Guice::createInjector().getInstance(typeof(Helper));
-//	@Inject extension Helper helper
 
-	def create target : SFactory::eINSTANCE.createProgram() transform (Region root) {
-		var rootState = root.states.head();
+
+	def create target : SFactory::eINSTANCE.createProgram() transform (Region rootRegion) {
+		var rootState = rootRegion.states.head();
 
 		// clear traces
 		TraceComponent::clearTrace();
+		
+		// dependency analysis
+		var dependencies = DependencyFactory::eINSTANCE.createDependencies();
+		Synccharts2Dependenies.transform(dependencies, rootRegion);
+		
+		// create mapping from syncchart states to dependency nodes
+		for (node : dependencies.nodes) {
+			TraceComponent::createTrace(node.state, node, "Dependency");
+		}
 		
 		// set s program name (as the root state's name)
 		target.setName(rootState.id)
@@ -30,7 +40,7 @@ class Synccharts2S {
 		target.signals.addAll(rootState.getStateSignals);
 		
 		// create all states and their mapping
-		for (state : root.getAllStates) {
+		for (state : rootRegion.getAllStates) {
 			var sStateSurface = state.state2SStateSurface(state.isRootState, false);
 			var sStateDepth   = state.state2SStateDepth(state.isRootState, false);
 			// possibly parallel regions
@@ -54,7 +64,7 @@ class Synccharts2S {
 		}
 		
 		// handle transitions (as states are created now and gotos can be mapped)
-		for (state : root.getAllStates) {
+		for (state : rootRegion.getAllStates) {
 			var sStateSurface = TraceComponent::getSingleTraceTarget(state, "Surface") as de.cau.cs.kieler.s.s.State
 			var sStateDepth = TraceComponent::getSingleTraceTarget(state, "Depth") as de.cau.cs.kieler.s.s.State
 			state.fillSStateSurface(sStateSurface);
@@ -109,18 +119,14 @@ class Synccharts2S {
 		}
 	}	
 	
-	def fillSStateDepth (State state, de.cau.cs.kieler.s.s.State sState) {
-		var regardedTransitionList = state.outgoingTransitions.filter(e|!e.isImmediate).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
-		var noTransitions = regardedTransitionList.isEmpty;
-		var isFinal = state.isFinal;
-		
-		for (transition : regardedTransitionList) {
+	
+	def void handleTransition(Transition transition, de.cau.cs.kieler.s.s.State sState) {
 			var sif = SFactory::eINSTANCE.createIf();
 			var strans = SFactory::eINSTANCE.createTrans();
 			var scontinuation = TraceComponent::getSingleTraceTarget(transition.targetState, "Surface") as de.cau.cs.kieler.s.s.State
 			
 			if (transition.trigger != null) {
-				sif.setExpression(transition.trigger.convertToSExpression());
+				sif.setExpression(transition.trigger.convertToSExpression);
 			}
 			else {
 				sif.setExpression(getTrueBooleanValue());
@@ -131,9 +137,21 @@ class Synccharts2S {
 			
 			//sif.setContinuation(scontinuation);
 			sState.instructions.add(sif);
+	}
+	
+	def fillSStateDepth (State state, de.cau.cs.kieler.s.s.State sState) {
+		var regardedTransitionListStrong = state.outgoingTransitions.filter(e|e.type == TransitionType::STRONGABORT).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+		var regardedTransitionListWeak = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+		
+		for (transition : regardedTransitionListStrong) {
+			transition.handleTransition(sState);
+		}
+		// lower priority
+		for (transition : regardedTransitionListWeak) {
+			transition.handleTransition(sState);
 		}
 		
-		if (!(noTransitions || isFinal)) {
+		if (!state.isFinal && !(regardedTransitionListStrong.empty || regardedTransitionListWeak.empty)) {
 			var strans = SFactory::eINSTANCE.createTrans();
 			strans.setContinuation(sState);
 			sState.instructions.add(strans);

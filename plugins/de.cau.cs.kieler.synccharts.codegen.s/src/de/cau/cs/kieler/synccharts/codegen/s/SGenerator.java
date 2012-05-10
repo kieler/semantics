@@ -207,7 +207,7 @@ public class SGenerator implements IHandler {
 				Resource resource = resSet.createResource(output);
 				resource.getContents().add(program);
 				resource.save(Collections.EMPTY_MAP);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				throw new ExecutionException("Cannot write output file.");
 			}
 		} catch (IOException e) {
