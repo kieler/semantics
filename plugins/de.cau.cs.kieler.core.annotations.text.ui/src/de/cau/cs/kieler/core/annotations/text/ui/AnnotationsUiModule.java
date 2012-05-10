@@ -21,6 +21,10 @@ package de.cau.cs.kieler.core.annotations.text.ui;
 public class AnnotationsUiModule extends
         de.cau.cs.kieler.core.annotations.text.ui.AbstractAnnotationsUiModule {
 
+    //CHECKSTYLEOFF Parameter
+    //CHECKSTYLEOFF JavadocMethod
+    //CHECKSTYLEOFF LineLength
+    
     public AnnotationsUiModule(org.eclipse.ui.plugin.AbstractUIPlugin plugin) {
         super(plugin);
     }
@@ -40,16 +44,7 @@ public class AnnotationsUiModule extends
         return AnnotationsSemanticHighlightingCalculator.class;
     }
     
-    @Override
-	public Class<? extends org.eclipse.xtext.ui.editor.contentassist.IContentProposalProvider> bindIContentProposalProvider() {
-		try {
-			if (Class.forName("de.cau.cs.kieler.kiml.LayoutDataService") != null) {
-				return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AnnotationsProposalProvider.class;
-			} else {
-				return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AbstractAnnotationsProposalProvider.class;
-			}
-		} catch (ClassNotFoundException e) {
-			return de.cau.cs.kieler.core.annotations.text.ui.contentassist.AbstractAnnotationsProposalProvider.class;
-		}			
-	}
+    //CHECKSTYLEON Parameter
+    //CHECKSTYLEON JavadocMethod
+    //CHECKSTYLEON LineLength
 }

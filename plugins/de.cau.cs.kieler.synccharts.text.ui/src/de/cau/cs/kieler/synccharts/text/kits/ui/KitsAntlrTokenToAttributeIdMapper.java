@@ -13,36 +13,26 @@
  */
 package de.cau.cs.kieler.synccharts.text.kits.ui;
 
-import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper;
 import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
 
+import de.cau.cs.kieler.synccharts.text.actions.ui.ActionsAntlrTokenToAttributeIdMapper;
+
 /**
- * Custom {@link AbstractAntlrTokenToAttributeIdMapper} contributing to the Kits editor.
- * Defines custom mappings of keywords and terminals to highlighting configurations.  
+ * Custom {@link AbstractAntlrTokenToAttributeIdMapper} contributing to the Kits editor. Defines
+ * custom mappings of keywords and terminals to highlighting configurations.
  * 
  * @author chsch
  */
-public class KitsAntlrTokenToAttributeIdMapper extends
-		DefaultAntlrTokenToAttributeIdMapper {
-	
-	protected String calculateId(String tokenName, int tokenType) {
-		if ("'-->'".equals(tokenName)) {
-			return DefaultHighlightingConfiguration.KEYWORD_ID;
-		}
-		if ("'>->'".equals(tokenName)) {
-			return DefaultHighlightingConfiguration.KEYWORD_ID;
-		}
-		if ("RULE_TRANSITION_LABEL".equals(tokenName)) {
-			return DefaultHighlightingConfiguration.COMMENT_ID;
-		}
-		if ("RULE_COMMENT_ANNOTATION".equals(tokenName)) {
-			return KitsHighlightingConfiguration.COMMENT_ANNOTATION;
-		}
-		if ("RULE_ANNOTATION_KEY".equals(tokenName)) {
-			return KitsHighlightingConfiguration.ANNOTATION_KEY;
-		}
-		
-		return super.calculateId(tokenName, tokenType);
-	}
+public class KitsAntlrTokenToAttributeIdMapper extends ActionsAntlrTokenToAttributeIdMapper {
 
+    protected String calculateId(String tokenName, int tokenType) {
+        if ("'-->'".equals(tokenName)) {
+            return DefaultHighlightingConfiguration.KEYWORD_ID;
+        }
+        if ("'>->'".equals(tokenName)) {
+            return DefaultHighlightingConfiguration.KEYWORD_ID;
+        }
+
+        return super.calculateId(tokenName, tokenType);
+    }
 }

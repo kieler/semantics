@@ -34,16 +34,25 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
     @Inject
     private AnnotationsGrammarAccess g;
 
-    public void provideHighlightingFor(XtextResource resource, IHighlightedPositionAcceptor acceptor) {
+    /**
+     * {@inheritDoc}
+     */
+    public void provideHighlightingFor(final XtextResource resource,
+            final IHighlightedPositionAcceptor acceptor) {
         Iterable<INode> allNodes = resource.getParseResult().getRootNode().getAsTreeIterable();
         for (INode node : allNodes) {
             provideHighlightingFor(node, acceptor);
         }
     }
 
-    public void provideHighlightingFor(INode node, IHighlightedPositionAcceptor acceptor) {
+    /**
+     * {@inheritDoc}
+     */
+    public void provideHighlightingFor(final INode node, final IHighlightedPositionAcceptor acceptor) {
         EObject grammarElement = node.getGrammarElement();
 
+        // CHECKSTYLEOFF LineLength
+        
         // highlight the annotation keys (names) like 'layouter' according to
         //   AnnotationsHighlightingConfiguration.ANNOTATION_KEY
         if (grammarElement == g.getTagAnnotationAccess().getNameExtendedIDParserRuleCall_1_0()
@@ -67,5 +76,6 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
                     AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
         }
 
+        // CHECKSTYLEON LineLength
     }
 }

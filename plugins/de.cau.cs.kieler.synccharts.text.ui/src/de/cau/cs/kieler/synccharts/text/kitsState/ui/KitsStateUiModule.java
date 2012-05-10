@@ -35,10 +35,7 @@ public class KitsStateUiModule extends
         return de.cau.cs.kieler.synccharts.text.kits.ui.KitsSemanticHighlightingCalculator.class;
     }
 
-    /*
-     * the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here
-     * again
-     */
+    /* the registration in KitsRuntimeModule will be overwritten by DefaultUIModule so it is here again */
     public Class<? extends org.eclipse.xtext.formatting.IIndentationInformation> bindIIndentationInformation() {
         return de.cau.cs.kieler.synccharts.text.kits.formatting.KitsIndentionInformation.class;
     }
