@@ -13,32 +13,21 @@
  */
 package de.cau.cs.kieler.synccharts.text.actions.ui;
 
-import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultAntlrTokenToAttributeIdMapper;
-import org.eclipse.xtext.ui.editor.syntaxcoloring.DefaultHighlightingConfiguration;
+import de.cau.cs.kieler.core.annotations.text.ui.AnnotationsAntlrTokenToAttributeIdMapper;
 
 /**
- * Custom {@link AbstractAntlrTokenToAttributeIdMapper} contributing to the Kits editor.
- * Defines custom mappings of keywords and terminals to highlighting configurations.  
+ * Custom {@link org.eclipse.xtext.ui.editor.syntaxcoloring.AbstractAntlrTokenToAttributeIdMapper}
+ * contributing to the Kits editor. Defines custom mappings of keywords and terminals to
+ * highlighting configurations.
  * 
  * The Actions specific stuff is used in the KITS-View, a plain actions editor is not provided.
  * 
  * @author chsch
  */
-public class ActionsAntlrTokenToAttributeIdMapper extends
-		DefaultAntlrTokenToAttributeIdMapper {
-	
-	protected String calculateId(String tokenName, int tokenType) {
-		if ("RULE_TRANSITION_LABEL".equals(tokenName)) {
-			return DefaultHighlightingConfiguration.COMMENT_ID;
-		}
-		if ("RULE_COMMENT_ANNOTATION".equals(tokenName)) {
-			return ActionsHighlightingConfiguration.COMMENT_ANNOTATION;
-		}
-		if ("RULE_ANNOTATION_KEY".equals(tokenName)) {
-			return ActionsHighlightingConfiguration.ANNOTATION_KEY;
-		}
-		
-		return super.calculateId(tokenName, tokenType);
-	}
+public class ActionsAntlrTokenToAttributeIdMapper extends AnnotationsAntlrTokenToAttributeIdMapper {
+
+//    protected String calculateId(String tokenName, int tokenType) {
+//        return super.calculateId(tokenName, tokenType);
+//    }
 
 }
