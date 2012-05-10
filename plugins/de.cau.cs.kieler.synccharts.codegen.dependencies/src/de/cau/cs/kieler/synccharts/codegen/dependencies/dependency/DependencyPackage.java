@@ -236,13 +236,22 @@ public interface DependencyPackage extends EPackage {
 	int CONTROLFLOW_DEPENDENCY__TARGET_NODE = DEPENDENCY__TARGET_NODE;
 
 	/**
+	 * The feature id for the '<em><b>Immediate</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int CONTROLFLOW_DEPENDENCY__IMMEDIATE = DEPENDENCY_FEATURE_COUNT + 0;
+
+	/**
 	 * The number of structural features of the '<em>Controlflow Dependency</em>' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 * @ordered
 	 */
-	int CONTROLFLOW_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 0;
+	int CONTROLFLOW_DEPENDENCY_FEATURE_COUNT = DEPENDENCY_FEATURE_COUNT + 1;
 
 	/**
 	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.TransitionDependencyImpl <em>Transition Dependency</em>}' class.
@@ -494,6 +503,17 @@ public interface DependencyPackage extends EPackage {
 	EClass getControlflowDependency();
 
 	/**
+	 * Returns the meta object for the attribute '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency#isImmediate <em>Immediate</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the attribute '<em>Immediate</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency#isImmediate()
+	 * @see #getControlflowDependency()
+	 * @generated
+	 */
+	EAttribute getControlflowDependency_Immediate();
+
+	/**
 	 * Returns the meta object for class '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency <em>Transition Dependency</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -717,6 +737,14 @@ public interface DependencyPackage extends EPackage {
 		 * @generated
 		 */
 		EClass CONTROLFLOW_DEPENDENCY = eINSTANCE.getControlflowDependency();
+
+		/**
+		 * The meta object literal for the '<em><b>Immediate</b></em>' attribute feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EAttribute CONTROLFLOW_DEPENDENCY__IMMEDIATE = eINSTANCE.getControlflowDependency_Immediate();
 
 		/**
 		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.TransitionDependencyImpl <em>Transition Dependency</em>}' class.

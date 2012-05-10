@@ -167,19 +167,21 @@ class Synccharts2Dependenies {
 	}
 	
 	def handleControlFlowDependency(Dependencies dependencies, Node firstNode, State state, Transition transition, Transition targetTransition) {
-					var secondNode = dependencies.getNode(transition.targetState, targetTransition, DEPENDENCYTYPE::STRONG);
-					dependencies.getControlFlowDependency(firstNode, secondNode)
+			var secondNode = dependencies.getNode(transition.targetState, targetTransition, DEPENDENCYTYPE::STRONG);
+			if (firstNode != secondNode) {
+					dependencies.getControlFlowDependency(firstNode, secondNode, transition.isImmediate)
 				
 					if (transition.sourceState.hierarchical) {
 						var firstNodeW  = dependencies.getNode(transition.sourceState, transition, DEPENDENCYTYPE::WEAK);
-						dependencies.getControlFlowDependency(firstNodeW, secondNode)  //TODO: necessary or correct???
+						dependencies.getControlFlowDependency(firstNodeW, secondNode, transition.isImmediate)  //TODO: necessary or correct???
 						
 						if (transition.targetState.hierarchical) {
 							var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, DEPENDENCYTYPE::WEAK);
-							dependencies.getControlFlowDependency(firstNodeW, secondNodeW)
-							dependencies.getControlFlowDependency(firstNode, secondNodeW)  //TODO: necessary or correct???
+							dependencies.getControlFlowDependency(firstNodeW, secondNodeW, transition.isImmediate)
+							dependencies.getControlFlowDependency(firstNode, secondNodeW, transition.isImmediate)  //TODO: necessary or correct???
 						}
 					}
+			}
 	}
 	
 	def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
@@ -232,8 +234,9 @@ class Synccharts2Dependenies {
 		dependencies.getDependency(triggerNode, emitterNode, newDependency);
 	}
 
-	def Dependency getControlFlowDependency(Dependencies dependencies, Node firstNode, Node secondNode) {
+	def Dependency getControlFlowDependency(Dependencies dependencies, Node firstNode, Node secondNode, boolean isImmediate) {
 		var newDependency = DependencyFactory::eINSTANCE.createControlflowDependency();
+		newDependency.setImmediate(isImmediate);
 		dependencies.getDependency(secondNode, firstNode, newDependency);
 	}
 
@@ -360,10 +363,14 @@ class Synccharts2Dependenies {
 	
 	def int visit(Node node, int priority) {
 		if (node.priority == -1) {
+			node.setPriority(-2);
 			var tmpPrio = priority;
 			for (incomingDependency : node.incomingDependencies) {
 				val nextNode = incomingDependency.sourceNode;
-				tmpPrio = nextNode.visit(tmpPrio);
+				if (nextNode != node) {
+//					System::out.println("At "+ node.id + " visit next " + nextNode.id);
+					tmpPrio = nextNode.visit(tmpPrio);
+				}
 			}
 //			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));
 			node.setPriority((tmpPrio + 1));

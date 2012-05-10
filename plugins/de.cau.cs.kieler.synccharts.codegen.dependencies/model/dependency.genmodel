@@ -19,7 +19,9 @@
     </genClasses>
     <genClasses ecoreClass="dependency.ecore#//SignalDependency"/>
     <genClasses ecoreClass="dependency.ecore#//HierarchyDependency"/>
-    <genClasses ecoreClass="dependency.ecore#//ControlflowDependency"/>
+    <genClasses ecoreClass="dependency.ecore#//ControlflowDependency">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dependency.ecore#//ControlflowDependency/immediate"/>
+    </genClasses>
     <genClasses ecoreClass="dependency.ecore#//TransitionDependency"/>
     <genClasses ecoreClass="dependency.ecore#//Dependencies">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference dependency.ecore#//Dependencies/dependencies"/>

@@ -12,7 +12,9 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SignalDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="HierarchyDependency" eSuperTypes="#//Dependency"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ControlflowDependency" eSuperTypes="#//Dependency"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ControlflowDependency" eSuperTypes="#//Dependency">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="immediate" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TransitionDependency" eSuperTypes="#//Dependency"/>
   <eClassifiers xsi:type="ecore:EClass" name="Dependencies">
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
