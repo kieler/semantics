@@ -13,7 +13,7 @@
       <combination
             active="true"
             class="de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.DependencyDiagramSynthesisCombination"
-            name="Visualize chosen Dependency classes">
+            name="Visualize chosen Dependency files and SyncCharts dependencies">
       </combination>
    </extension>
 
