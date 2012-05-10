@@ -368,7 +368,7 @@ class Synccharts2Dependenies {
 			for (incomingDependency : node.incomingDependencies) {
 				val nextNode = incomingDependency.sourceNode;
 				if (nextNode != node) {
-					System::out.println("At "+ node.id + " visit next " + nextNode.id);
+//					System::out.println("At "+ node.id + " visit next " + nextNode.id);
 					tmpPrio = nextNode.visit(tmpPrio);
 				}
 			}
