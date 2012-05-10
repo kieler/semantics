@@ -362,6 +362,7 @@ class Synccharts2Dependenies {
 	
 	def int visit(Node node, int priority) {
 		if (node.priority == -1) {
+			node.setPriority(-2);
 			var tmpPrio = priority;
 			for (incomingDependency : node.incomingDependencies) {
 				val nextNode = incomingDependency.sourceNode;
