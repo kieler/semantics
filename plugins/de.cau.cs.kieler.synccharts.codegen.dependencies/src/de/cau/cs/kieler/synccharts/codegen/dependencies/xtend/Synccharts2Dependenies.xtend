@@ -22,6 +22,10 @@ class Synccharts2Dependenies {
 	// ======================================================================================================
 	
 	def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (Region root) {
+		dependencies.transform(root);
+	}		
+	
+	def Dependencies transform( Dependencies dependencies, Region root) {
 		var rootState = root.states.head();
 		//System::out.println("Hierarchical8 "+ state.id + ", ");
 
@@ -56,8 +60,9 @@ class Synccharts2Dependenies {
 		
 		// topological sort
 		dependencies.topologicalSort();
-		
-	}		
+
+		return dependencies;
+	}
 	
 	// -----------------------------------------------------------------------------------------------------
 
@@ -346,7 +351,6 @@ class Synccharts2Dependenies {
 		}
 		
 		var nodesWithoutOutgoingEdges = dependencies.nodes.filter(e | e.outgoingDependencies == null || e.outgoingDependencies.size == 0);
-		System::out.println("nodesWithoutOutgoingEdges:" +  nodesWithoutOutgoingEdges.toString);
 		var tmpPrio = 0;
 		for (node : nodesWithoutOutgoingEdges) {
 			tmpPrio = node.visit(tmpPrio);
@@ -356,11 +360,9 @@ class Synccharts2Dependenies {
 	
 	def int visit(Node node, int priority) {
 		if (node.priority == -1) {
-			System::out.println("Visit "+ node.id + " (" + priority + ")");
 			var tmpPrio = priority;
 			for (incomingDependency : node.incomingDependencies) {
 				val nextNode = incomingDependency.sourceNode;
-				System::out.println("Next Node:" +  nextNode.id.toString + " (" + priority + ")");
 				tmpPrio = nextNode.visit(tmpPrio);
 			}
 //			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));

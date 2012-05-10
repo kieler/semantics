@@ -38,15 +38,6 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	    	dependency.createDependencyFigure(rootNode);	
 	    }
 
-		
-//		classifier.createAssociationConnections;
-//		
-//		model.filter(typeof(EPackage)).forEach[
-//			val classifiers = it.EClassifiers;
-//			classifiers.createClassifierFigures(rootNode);
-//			classifiers.createAssociationConnections;
-//		];
-		
 		return rootNode;
 	}
 	
