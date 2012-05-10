@@ -58,11 +58,12 @@ import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies;
 
-// Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
+
+// Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
+//import com.google.inject.AbstractModule;
+//import com.google.inject.Guice;
 
 /**
  * @author cmot
@@ -138,28 +139,47 @@ public class SGenerator implements IHandler {
 			inputResource.load(null);
 			Region rootRegion = (Region) inputResource.getContents().get(0);
 
-			
-			// Generate dependencies
-			Synccharts2Dependenies dependenciesTransform = Guice.createInjector().getInstance(Synccharts2Dependenies.class);
-			Dependencies dependencies = dependenciesTransform.transform(rootRegion);
-			{// Debug output
-			Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
-			String text = EmfFormatter.objToStr(dependencies, ignoredFeatures);
-			output2 = URI.createURI(input.toString());
-			output2 = output2.trimFragment();
-			output2 = output2.trimFileExtension().appendFileExtension("dependencies.txt");
-			String outputFileString =  getFileStringFromUri(output2);
-			FileWriter fw = new FileWriter(outputFileString);
-		    BufferedWriter bw = new BufferedWriter(fw);
-		    bw.write(text);
-		    bw.close();}
+//			// Generate dependencies
+//			Synccharts2Dependenies dependenciesTransform = Guice.createInjector().getInstance(Synccharts2Dependenies.class);
+//			Dependencies dependencies = dependenciesTransform.transform(rootRegion);
+//			{// Debug output
+//			Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
+//			String text = EmfFormatter.objToStr(dependencies, ignoredFeatures);
+//			output2 = URI.createURI(input.toString());
+//			output2 = output2.trimFragment();
+//			output2 = output2.trimFileExtension().appendFileExtension("dependencies.txt");
+//			String outputFileString =  getFileStringFromUri(output2);
+//			FileWriter fw = new FileWriter(outputFileString);
+//		    BufferedWriter bw = new BufferedWriter(fw);
+//		    bw.write(text);
+//		    bw.close();
+//		    
+//			// Calculate outout path
+//			output = URI.createURI(input.toString());
+//			output = output.trimFragment();
+//			output = output.trimFileExtension().appendFileExtension("dependency");
+//
+//			try {
+//				// Write out Dependency program
+//				Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+//				Map<String, Object> m = reg.getExtensionToFactoryMap();
+//				m.put("daform", new XMIResourceFactoryImpl());
+//				ResourceSet resSet = new ResourceSetImpl();
+//				Resource resource = resSet.createResource(output);
+//				resource.getContents().add(dependencies);
+//				resource.save(Collections.EMPTY_MAP);
+//			} catch (IOException e) {
+//				throw new ExecutionException("Cannot write output file.");
+//			}
+//			}
 
 			
 			// Apply transformation
 			// Because for @Inject tags we cannot use the standard NEW keyword
 			//    Synccharts2S transform = new Synccharts2S();
-			Synccharts2S transform = Guice.createInjector().getInstance(Synccharts2S.class);
-			Program program = transform.transform(rootRegion);
+//			Synccharts2S transform = Guice.createInjector().getInstance(Synccharts2S.class);
+//			Program program = transform.transform(rootRegion);
+			Program program = new Synccharts2S().transform(rootRegion);
 
 			{// Debug output
 			Predicate<EStructuralFeature> ignoredFeatures = Predicates.alwaysFalse();
@@ -187,7 +207,7 @@ public class SGenerator implements IHandler {
 				Resource resource = resSet.createResource(output);
 				resource.getContents().add(program);
 				resource.save(Collections.EMPTY_MAP);
-			} catch (IOException e) {
+			} catch (Exception e) {
 				throw new ExecutionException("Cannot write output file.");
 			}
 		} catch (IOException e) {

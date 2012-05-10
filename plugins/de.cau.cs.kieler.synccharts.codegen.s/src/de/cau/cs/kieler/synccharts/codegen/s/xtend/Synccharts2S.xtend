@@ -8,11 +8,14 @@ import de.cau.cs.kieler.core.kexpressions.*
 import java.util.*
 import com.google.inject.Inject
 import org.eclipse.xtend.util.stdlib.TraceComponent
-
+import com.google.inject.Guice
+import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
 
 class Synccharts2S {
 
-	@Inject extension Helper helper
+	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
+	extension de.cau.cs.kieler.synccharts.codegen.s.xtend.Helper Helper = Guice::createInjector().getInstance(typeof(Helper));
+//	@Inject extension Helper helper
 
 	def create target : SFactory::eINSTANCE.createProgram() transform (Region root) {
 		var rootState = root.states.head();
