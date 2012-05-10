@@ -221,6 +221,15 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	public EAttribute getControlflowDependency_Immediate() {
+		return (EAttribute)controlflowDependencyEClass.getEStructuralFeatures().get(0);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
 	public EClass getTransitionDependency() {
 		return transitionDependencyEClass;
 	}
@@ -371,6 +380,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		hierarchyDependencyEClass = createEClass(HIERARCHY_DEPENDENCY);
 
 		controlflowDependencyEClass = createEClass(CONTROLFLOW_DEPENDENCY);
+		createEAttribute(controlflowDependencyEClass, CONTROLFLOW_DEPENDENCY__IMMEDIATE);
 
 		transitionDependencyEClass = createEClass(TRANSITION_DEPENDENCY);
 
@@ -438,6 +448,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		initEClass(hierarchyDependencyEClass, HierarchyDependency.class, "HierarchyDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
 		initEClass(controlflowDependencyEClass, ControlflowDependency.class, "ControlflowDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getControlflowDependency_Immediate(), ecorePackage.getEBoolean(), "immediate", null, 0, 1, ControlflowDependency.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(transitionDependencyEClass, TransitionDependency.class, "TransitionDependency", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 

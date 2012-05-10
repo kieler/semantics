@@ -78,7 +78,12 @@ def createDependencyFigure(Dependency dependency, KNode rootNode) {
 		}
 		else if (dependency instanceof ControlflowDependency) {
 			val color = factory.createKForegroundColor();
-			color.setBlue(255);
+			color.setBlue(230);
+			if ((dependency as ControlflowDependency).immediate) {
+					color.setBlue(255);
+					color.setGreen(150);
+//					color.setRed(155);
+			}
 			kEdge.KRendering.add(color);
 		}
 		else if (dependency instanceof TransitionDependency) {
