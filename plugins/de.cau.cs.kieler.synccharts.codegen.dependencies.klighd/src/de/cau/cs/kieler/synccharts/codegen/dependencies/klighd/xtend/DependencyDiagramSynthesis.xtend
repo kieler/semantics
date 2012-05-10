@@ -8,6 +8,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.KRenderingU
 import com.google.inject.Inject
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.Direction
+import de.cau.cs.kieler.kiml.options.EdgeRouting
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
@@ -23,9 +24,10 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	override KNode transform(Dependencies model, TransformationContext<Dependencies, KNode> transformationContext) {
 		
 		val rootNode = KimlUtil::createInitializedNode;
-		rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("15.0"));
+		rootNode.KShapeLayout.setProperty(LayoutOptions::SPACING, Float::valueOf("10.0"));
 	    rootNode.KShapeLayout.setProperty(LayoutOptions::DIRECTION, Direction::DOWN);
-	    rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.graphviz.dot");
+	    rootNode.KShapeLayout.setProperty(LayoutOptions::EDGE_ROUTING, EdgeRouting::ORTHOGONAL);
+	    rootNode.KShapeLayout.setProperty(LayoutOptions::ALGORITHM, "de.cau.cs.kieler.klay.layered");
 		
 		val nodes = model.nodes;
 		for (node : nodes) {
