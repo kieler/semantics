@@ -114,7 +114,7 @@ class Synccharts2S {
 	
 
 	// ======================================================================================================
-	// ==                             H A N D L E   S   S T A T E   F I L L I N G                          ==
+	// ==                             H A N D L E   S   S T A T E   S U R F A C E                          ==
 	// ======================================================================================================
 	
 	def fillSStateSurface (State state, de.cau.cs.kieler.s.s.State sState) {
@@ -152,16 +152,25 @@ class Synccharts2S {
 			
 		}
 	}	
+
 	
+	// ======================================================================================================
+	// ==                              H A N D L E   S   S T A T E   D E P T H                             ==
 	// ======================================================================================================
 	
 	def fillSStateDepth (State state, de.cau.cs.kieler.s.s.State sState) {
 		val regardedTransitionListStrong = state.strongTransitionsOrdered
 		val regardedTransitionListWeak = state.weakTransitionsOrdered
+		
+		// optimization: of halt or term before then exit
+		if (    !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Halt)).empty 
+		     || !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Term)).empty) {
+			return null;
+		}
 
 	    // before the pause statement possibly raise priority
-	    // optimization: do this only if the priority might be lowered (weak prio exist)
 	    if (state.getDependencyWeakNode != null) {
+		    // optimization: do this only if the priority might be lowered (weak prio exist)
 		    sState.addStrongPrio(state);
 	    } 
 	    
@@ -187,7 +196,7 @@ class Synccharts2S {
 		}
 		
 		// if this a final state wait for join otherwise continue in the next tick to possibly handle strong and weak transitions
-		if (!state.isFinal) {
+		if (!state.finalState) {
 			var strans = SFactory::eINSTANCE.createTrans();
 			strans.setContinuation(sState);
 			sState.instructions.add(strans);
