@@ -184,11 +184,22 @@ def String getStatePathAsName(State state) {
 	}	
 
 
+	// get the highest priority for all strong nodes of this state
 	def Node getDependencyStrongNode(State state) {
-		TraceComponent::getSingleTraceTarget(state, "DependencyStrong") as Node		
+		val nodes = (TraceComponent::getTraceTargets(state, "DependencyStrong") as List<Node>);
+		if (nodes.empty) {
+			return null;
+		}
+		nodes.sort(e1, e2 | compareDependencyPriority(e1,e2)).get(0);
 	}
+	
+	// get the highest priority for all weak nodes of this state
 	def Node getDependencyWeakNode(State state) {
-		TraceComponent::getSingleTraceTarget(state, "DependencyWeak") as Node		
+		val nodes = (TraceComponent::getTraceTargets(state, "DependencyWeak") as List<Node>);
+		if (nodes.empty) {
+			return null;
+		}
+		nodes.sort(e1, e2 | compareDependencyPriority(e1,e2)).get(0);
 	}
 
 
@@ -201,6 +212,9 @@ def String getStatePathAsName(State state) {
 		if (e1.priority < e2.priority) {-1} else {1}	
 	}
 
+	def int compareDependencyPriority(Node e1, Node e2) {
+		if (e1.priority < e2.priority) {-1} else {1}	
+	}
 
 
 

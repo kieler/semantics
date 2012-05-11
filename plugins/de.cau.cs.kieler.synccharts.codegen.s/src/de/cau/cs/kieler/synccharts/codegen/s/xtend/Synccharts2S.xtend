@@ -34,6 +34,9 @@ class Synccharts2S {
 		val dependencies = DependencyFactory::eINSTANCE.createDependencies();
 		Synccharts2Dependenies.transform(dependencies, rootRegion);
 		
+		// set highest priority
+		target.setPriority(dependencies.nodes.size);
+		
 		// create mapping from SyncChart states to dependency nodes
 		for (node : dependencies.nodes) {
 			if (node.type == DependencyType::WEAK) {
