@@ -8,6 +8,7 @@ import com.google.inject.Inject
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
+import de.cau.cs.kieler.s.s.Prio
 
 
 class Helper {
@@ -127,7 +128,55 @@ def String getStatePathAsName(State state) {
 	}
 }
 
+
+   def State getInitialState(Region region) {
+   	  region.states.filter(e | e.isInitial).toList.get(0);   	
+   }
+
+
+   def de.cau.cs.kieler.s.s.State getSurfaceSState(State state) {
+   	 TraceComponent::getSingleTraceTarget(state, "Surface") as de.cau.cs.kieler.s.s.State
+   }
+   def de.cau.cs.kieler.s.s.State getDepthSState(State state) {
+   	 TraceComponent::getSingleTraceTarget(state, "Depth") as de.cau.cs.kieler.s.s.State
+   }
+
 // ======================================================================================================
+	
+	def List<Transition> getWeakTransitionsOrdered(State state) {
+		state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT).sort(e1, e2 | compareTransitionPriority(e1,e2));
+	}
+	def List<Transition> getStrongTransitionsOrdered(State state) {
+		state.outgoingTransitions.filter(e|e.type == TransitionType::STRONGABORT).sort(e1, e2 | compareTransitionPriority(e1,e2));
+	}
+	
+	def boolean finalState(State state) {
+		return (state.outgoingTransitions.filter(e|!e.isImmediate).nullOrEmpty || state.isFinal);
+	}
+
+
+// ======================================================================================================
+
+	def void addWeakPrio(de.cau.cs.kieler.s.s.State sState, State state) {
+		val prioStatement = SFactory::eINSTANCE.createPrio();
+		val dependencyNode = state.dependencyWeakNode
+		if (dependencyNode != null) {
+			val priority = dependencyNode.priority;
+			prioStatement.setPriority(priority);
+			sState.instructions.add(prioStatement)
+		}
+	}
+	
+	def void addStrongPrio(de.cau.cs.kieler.s.s.State sState, State state) {
+		var prioStatement = SFactory::eINSTANCE.createPrio();
+		val dependencyNode = state.dependencyStrongNode
+		if (dependencyNode != null) {
+			var priority = dependencyNode.priority;
+			prioStatement.setPriority(priority);
+			sState.instructions.add(prioStatement)
+		}
+	}	
+
 
 	def Node getDependencyStrongNode(State state) {
 		TraceComponent::getSingleTraceTarget(state, "DependencyStrong") as Node		
@@ -135,6 +184,7 @@ def String getStatePathAsName(State state) {
 	def Node getDependencyWeakNode(State state) {
 		TraceComponent::getSingleTraceTarget(state, "DependencyWeak") as Node		
 	}
+
 
 	def int compareTraceDependencyPriority(State e1, State e2) {
 		if (e1.getDependencyStrongNode.priority > 
