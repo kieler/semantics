@@ -140,6 +140,12 @@ def String getStatePathAsName(State state) {
    def de.cau.cs.kieler.s.s.State getDepthSState(State state) {
    	 TraceComponent::getSingleTraceTarget(state, "Depth") as de.cau.cs.kieler.s.s.State
    }
+   def de.cau.cs.kieler.s.s.State getMainSurfaceSState(State state) {
+   	 TraceComponent::getSingleTraceTarget(state, "MainSurface") as de.cau.cs.kieler.s.s.State
+   }
+   def de.cau.cs.kieler.s.s.State getMainDepthSState(State state) {
+   	 TraceComponent::getSingleTraceTarget(state, "MainDepth") as de.cau.cs.kieler.s.s.State
+   }
 
 // ======================================================================================================
 	
