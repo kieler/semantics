@@ -13,6 +13,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.HierarchyDependency;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency;
@@ -87,7 +88,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	private EEnum dependencytypeEEnum = null;
+	private EEnum dependencyTypeEEnum = null;
 
 	/**
 	 * Creates an instance of the model <b>Package</b>, registered with
@@ -338,8 +339,8 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EEnum getDEPENDENCYTYPE() {
-		return dependencytypeEEnum;
+	public EEnum getDependencyType() {
+		return dependencyTypeEEnum;
 	}
 
 	/**
@@ -398,7 +399,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		createEAttribute(nodeEClass, NODE__ID);
 
 		// Create enums
-		dependencytypeEEnum = createEEnum(DEPENDENCYTYPE);
+		dependencyTypeEEnum = createEEnum(DEPENDENCY_TYPE);
 	}
 
 	/**
@@ -457,7 +458,7 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		initEReference(getDependencies_Nodes(), this.getNode(), null, "nodes", null, 0, -1, Dependencies.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(nodeEClass, Node.class, "Node", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getNode_Type(), this.getDEPENDENCYTYPE(), "type", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getNode_Type(), this.getDependencyType(), "type", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNode_Transition(), theSyncchartsPackage.getTransition(), null, "transition", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getNode_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getNode_OutgoingDependencies(), this.getDependency(), this.getDependency_SourceNode(), "outgoingDependencies", null, 0, -1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -466,9 +467,9 @@ public class DependencyPackageImpl extends EPackageImpl implements DependencyPac
 		initEAttribute(getNode_Id(), ecorePackage.getEString(), "id", null, 0, 1, Node.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Initialize enums and add enum literals
-		initEEnum(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.class, "DEPENDENCYTYPE");
-		addEEnumLiteral(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.STRONG);
-		addEEnumLiteral(dependencytypeEEnum, de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE.WEAK);
+		initEEnum(dependencyTypeEEnum, DependencyType.class, "DependencyType");
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.STRONG);
+		addEEnumLiteral(dependencyTypeEEnum, DependencyType.WEAK);
 
 		// Create resource
 		createResource(eNS_URI);

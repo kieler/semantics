@@ -10,6 +10,7 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 
 import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -37,7 +38,7 @@ import org.eclipse.emf.ecore.EObject;
 public interface Node extends EObject {
 	/**
 	 * Returns the value of the '<em><b>Type</b></em>' attribute.
-	 * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE}.
+	 * The literals are from the enumeration {@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType}.
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Type</em>' attribute isn't clear,
@@ -45,76 +46,24 @@ public interface Node extends EObject {
 	 * </p>
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
-	 * @see #setType(DEPENDENCYTYPE)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+	 * @see #setType(DependencyType)
 	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getNode_Type()
 	 * @model
 	 * @generated
 	 */
-	DEPENDENCYTYPE getType();
+	DependencyType getType();
 
 	/**
 	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getType <em>Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Type</em>' attribute.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
 	 * @see #getType()
 	 * @generated
 	 */
-	void setType(DEPENDENCYTYPE value);
-
-	/**
-	 * Returns the value of the '<em><b>State</b></em>' reference.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>State</em>' reference isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>State</em>' reference.
-	 * @see #setState(State)
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getNode_State()
-	 * @model required="true"
-	 * @generated
-	 */
-	State getState();
-
-	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getState <em>State</em>}' reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>State</em>' reference.
-	 * @see #getState()
-	 * @generated
-	 */
-	void setState(State value);
-
-	/**
-	 * Returns the value of the '<em><b>Id</b></em>' attribute.
-	 * <!-- begin-user-doc -->
-	 * <p>
-	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
-	 * there really should be more of a description here...
-	 * </p>
-	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Id</em>' attribute.
-	 * @see #setId(String)
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getNode_Id()
-	 * @model
-	 * @generated
-	 */
-	String getId();
-
-	/**
-	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getId <em>Id</em>}' attribute.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @param value the new value of the '<em>Id</em>' attribute.
-	 * @see #getId()
-	 * @generated
-	 */
-	void setId(String value);
+	void setType(DependencyType value);
 
 	/**
 	 * Returns the value of the '<em><b>Transition</b></em>' reference.
@@ -203,5 +152,57 @@ public interface Node extends EObject {
 	 * @generated
 	 */
 	EList<Dependency> getIncomingDependencies();
+
+	/**
+	 * Returns the value of the '<em><b>State</b></em>' reference.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>State</em>' reference isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>State</em>' reference.
+	 * @see #setState(State)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getNode_State()
+	 * @model required="true"
+	 * @generated
+	 */
+	State getState();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getState <em>State</em>}' reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>State</em>' reference.
+	 * @see #getState()
+	 * @generated
+	 */
+	void setState(State value);
+
+	/**
+	 * Returns the value of the '<em><b>Id</b></em>' attribute.
+	 * <!-- begin-user-doc -->
+	 * <p>
+	 * If the meaning of the '<em>Id</em>' attribute isn't clear,
+	 * there really should be more of a description here...
+	 * </p>
+	 * <!-- end-user-doc -->
+	 * @return the value of the '<em>Id</em>' attribute.
+	 * @see #setId(String)
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage#getNode_Id()
+	 * @model
+	 * @generated
+	 */
+	String getId();
+
+	/**
+	 * Sets the value of the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getId <em>Id</em>}' attribute.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @param value the new value of the '<em>Id</em>' attribute.
+	 * @see #getId()
+	 * @generated
+	 */
+	void setId(String value);
 
 } // Node

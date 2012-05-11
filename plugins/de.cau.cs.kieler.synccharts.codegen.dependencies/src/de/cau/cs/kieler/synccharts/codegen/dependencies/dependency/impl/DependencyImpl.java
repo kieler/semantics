@@ -7,12 +7,10 @@
 package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
 
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
+
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency;
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyNode;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node;
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.StateAndTransition;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;

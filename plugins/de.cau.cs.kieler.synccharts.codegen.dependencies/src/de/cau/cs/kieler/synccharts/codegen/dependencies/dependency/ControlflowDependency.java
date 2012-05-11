@@ -24,7 +24,6 @@ package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency;
  * @generated
  */
 public interface ControlflowDependency extends Dependency {
-
 	/**
 	 * Returns the value of the '<em><b>Immediate</b></em>' attribute.
 	 * <!-- begin-user-doc -->
@@ -50,4 +49,5 @@ public interface ControlflowDependency extends Dependency {
 	 * @generated
 	 */
 	void setImmediate(boolean value);
+
 } // ControlflowDependency

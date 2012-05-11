@@ -81,8 +81,8 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	@Override
 	public Object createFromString(EDataType eDataType, String initialValue) {
 		switch (eDataType.getClassifierID()) {
-			case DependencyPackage.DEPENDENCYTYPE:
-				return createDEPENDENCYTYPEFromString(eDataType, initialValue);
+			case DependencyPackage.DEPENDENCY_TYPE:
+				return createDependencyTypeFromString(eDataType, initialValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -96,8 +96,8 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	@Override
 	public String convertToString(EDataType eDataType, Object instanceValue) {
 		switch (eDataType.getClassifierID()) {
-			case DependencyPackage.DEPENDENCYTYPE:
-				return convertDEPENDENCYTYPEToString(eDataType, instanceValue);
+			case DependencyPackage.DEPENDENCY_TYPE:
+				return convertDependencyTypeToString(eDataType, instanceValue);
 			default:
 				throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
 		}
@@ -178,8 +178,8 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DEPENDENCYTYPE createDEPENDENCYTYPEFromString(EDataType eDataType, String initialValue) {
-		DEPENDENCYTYPE result = DEPENDENCYTYPE.get(initialValue);
+	public DependencyType createDependencyTypeFromString(EDataType eDataType, String initialValue) {
+		DependencyType result = DependencyType.get(initialValue);
 		if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
 		return result;
 	}
@@ -189,7 +189,7 @@ public class DependencyFactoryImpl extends EFactoryImpl implements DependencyFac
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public String convertDEPENDENCYTYPEToString(EDataType eDataType, Object instanceValue) {
+	public String convertDependencyTypeToString(EDataType eDataType, Object instanceValue) {
 		return instanceValue == null ? null : instanceValue.toString();
 	}
 

@@ -7,7 +7,7 @@
 package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency;
 
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.Transition;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -60,7 +60,7 @@ public interface Dependency extends EObject {
 	 * It is bidirectional and its opposite is '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node#getOutgoingDependencies <em>Outgoing Dependencies</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <p>
-	 * If the meaning of the '<em>Source Node</em>' containment reference isn't clear,
+	 * If the meaning of the '<em>Source Node</em>' reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->

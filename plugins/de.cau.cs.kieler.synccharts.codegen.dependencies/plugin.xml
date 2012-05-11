@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.emf.ecore.generated_package">
       <package
-            class="de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage"
+            class="de.cau.cs.kieler.synccharts.codegen.dependencies.DependencyPackage"
             uri="http://kieler.cs.cau.de/dependency/0.1.0">
       </package>
    </extension>

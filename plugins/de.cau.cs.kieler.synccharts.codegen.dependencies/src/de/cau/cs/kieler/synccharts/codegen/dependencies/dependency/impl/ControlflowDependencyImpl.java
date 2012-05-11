@@ -10,7 +10,9 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDe
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+
 import org.eclipse.emf.ecore.EClass;
+
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 /**
@@ -36,6 +38,7 @@ public class ControlflowDependencyImpl extends DependencyImpl implements Control
 	 * @ordered
 	 */
 	protected static final boolean IMMEDIATE_EDEFAULT = false;
+
 	/**
 	 * The cached value of the '{@link #isImmediate() <em>Immediate</em>}' attribute.
 	 * <!-- begin-user-doc -->

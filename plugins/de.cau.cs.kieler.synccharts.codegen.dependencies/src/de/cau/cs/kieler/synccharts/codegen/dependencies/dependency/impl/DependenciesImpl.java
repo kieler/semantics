@@ -9,21 +9,21 @@ package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
-
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node;
+
 import java.util.Collection;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
-
 import org.eclipse.emf.ecore.InternalEObject;
+
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
-import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 
 /**
  * <!-- begin-user-doc -->

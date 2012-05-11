@@ -419,14 +419,14 @@ public interface DependencyPackage extends EPackage {
 	int NODE_FEATURE_COUNT = 7;
 
 	/**
-	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.
+	 * The meta object id for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType <em>Type</em>}' enum.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDEPENDENCYTYPE()
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDependencyType()
 	 * @generated
 	 */
-	int DEPENDENCYTYPE = 7;
+	int DEPENDENCY_TYPE = 7;
 
 
 	/**
@@ -643,14 +643,14 @@ public interface DependencyPackage extends EPackage {
 	EAttribute getNode_Id();
 
 	/**
-	 * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}'.
+	 * Returns the meta object for enum '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType <em>Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for enum '<em>DEPENDENCYTYPE</em>'.
-	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
+	 * @return the meta object for enum '<em>Type</em>'.
+	 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
 	 * @generated
 	 */
-	EEnum getDEPENDENCYTYPE();
+	EEnum getDependencyType();
 
 	/**
 	 * Returns the factory that creates the instances of the model.
@@ -849,14 +849,14 @@ public interface DependencyPackage extends EPackage {
 		EAttribute NODE__ID = eINSTANCE.getNode_Id();
 
 		/**
-		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE <em>DEPENDENCYTYPE</em>}' enum.
+		 * The meta object literal for the '{@link de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType <em>Type</em>}' enum.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE
-		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDEPENDENCYTYPE()
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+		 * @see de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl.DependencyPackageImpl#getDependencyType()
 		 * @generated
 		 */
-		EEnum DEPENDENCYTYPE = eINSTANCE.getDEPENDENCYTYPE();
+		EEnum DEPENDENCY_TYPE = eINSTANCE.getDependencyType();
 
 	}
 

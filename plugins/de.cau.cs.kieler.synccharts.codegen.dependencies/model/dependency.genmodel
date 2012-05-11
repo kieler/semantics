@@ -8,9 +8,9 @@
   <foreignModel>dependency.ecore</foreignModel>
   <genPackages prefix="Dependency" basePackage="de.cau.cs.kieler.synccharts.codegen.dependencies"
       disposableProviderFactory="true" ecorePackage="dependency.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dependency.ecore#//DEPENDENCYTYPE">
-      <genEnumLiterals ecoreEnumLiteral="dependency.ecore#//DEPENDENCYTYPE/STRONG"/>
-      <genEnumLiterals ecoreEnumLiteral="dependency.ecore#//DEPENDENCYTYPE/WEAK"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="dependency.ecore#//DependencyType">
+      <genEnumLiterals ecoreEnumLiteral="dependency.ecore#//DependencyType/STRONG"/>
+      <genEnumLiterals ecoreEnumLiteral="dependency.ecore#//DependencyType/WEAK"/>
     </genEnums>
     <genClasses ecoreClass="dependency.ecore#//Dependency">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dependency.ecore#//Dependency/targetState"/>

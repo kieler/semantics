@@ -7,12 +7,11 @@
 package de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
 
 import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.Transition;
 
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DEPENDENCYTYPE;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyPackage;
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node;
 
 import java.util.Collection;
@@ -59,7 +58,7 @@ public class NodeImpl extends EObjectImpl implements Node {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final DEPENDENCYTYPE TYPE_EDEFAULT = DEPENDENCYTYPE.STRONG;
+	protected static final DependencyType TYPE_EDEFAULT = DependencyType.STRONG;
 
 	/**
 	 * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
@@ -69,7 +68,7 @@ public class NodeImpl extends EObjectImpl implements Node {
 	 * @generated
 	 * @ordered
 	 */
-	protected DEPENDENCYTYPE type = TYPE_EDEFAULT;
+	protected DependencyType type = TYPE_EDEFAULT;
 
 	/**
 	 * The cached value of the '{@link #getTransition() <em>Transition</em>}' reference.
@@ -175,7 +174,7 @@ public class NodeImpl extends EObjectImpl implements Node {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public DEPENDENCYTYPE getType() {
+	public DependencyType getType() {
 		return type;
 	}
 
@@ -184,8 +183,8 @@ public class NodeImpl extends EObjectImpl implements Node {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setType(DEPENDENCYTYPE newType) {
-		DEPENDENCYTYPE oldType = type;
+	public void setType(DependencyType newType) {
+		DependencyType oldType = type;
 		type = newType == null ? TYPE_EDEFAULT : newType;
 		if (eNotificationRequired())
 			eNotify(new ENotificationImpl(this, Notification.SET, DependencyPackage.NODE__TYPE, oldType, type));
@@ -404,7 +403,7 @@ public class NodeImpl extends EObjectImpl implements Node {
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
 			case DependencyPackage.NODE__TYPE:
-				setType((DEPENDENCYTYPE)newValue);
+				setType((DependencyType)newValue);
 				return;
 			case DependencyPackage.NODE__TRANSITION:
 				setTransition((Transition)newValue);

@@ -15,7 +15,6 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Export-Package: de.cau.cs.kieler.synccharts.codegen.dependencies,
- de.cau.cs.kieler.synccharts.codegen.dependencies.dependency,
  de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl,
  de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.util,
  de.cau.cs.kieler.synccharts.codegen.dependencies.xtend
