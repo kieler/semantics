@@ -54,11 +54,11 @@ def Expression getTrueBooleanValue() {
 
 
 	// convert transition effects
-	def dispatch void convertToSEffect(Emission effect, de.cau.cs.kieler.s.s.State sState) {
+	def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
 		val sEmit = SFactory::eINSTANCE.createEmit;
 		val sSignal = TraceComponent::getSingleTraceTarget(effect.signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
 		sEmit.setSignal(sSignal);
-		sState.instructions.add(sEmit);
+		instructions.add(sEmit);
 	}
 	def dispatch void convertToSEffect(Assignment effect, de.cau.cs.kieler.s.s.State sState) {
 		// todo

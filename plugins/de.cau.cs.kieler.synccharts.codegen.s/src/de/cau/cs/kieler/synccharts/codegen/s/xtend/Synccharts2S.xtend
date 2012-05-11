@@ -66,6 +66,9 @@ class Synccharts2S {
 				TraceComponent::createTrace(sStateMainSurface, state, "MainSurfaceBack" );
 				TraceComponent::createTrace(state, sStateMainDepth, "MainDepth" );
 				TraceComponent::createTrace(sStateMainDepth, state, "MainDepthBack" );
+				// add new s states to program
+				target.states.add(sStateMainSurface);
+				target.states.add(sStateMainDepth);
 			}
 			// create traces for all created surface and depth s states
 			TraceComponent::createTrace(state, sStateSurface, "Surface" );
@@ -228,7 +231,7 @@ class Synccharts2S {
 			// handle transition effect - convert to s-effect
 			if (!transition.effects.nullOrEmpty) {
 				for (effect : transition.effects) {
-					effect.convertToSEffect(sState);
+					effect.convertToSEffect(sif.instructions);
 				}
 			}
 			
