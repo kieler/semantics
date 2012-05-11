@@ -55,7 +55,6 @@ import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies;
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies;
 
 import com.google.common.base.Predicate;

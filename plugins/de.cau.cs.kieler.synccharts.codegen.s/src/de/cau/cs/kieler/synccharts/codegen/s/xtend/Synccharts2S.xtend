@@ -11,6 +11,9 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 import com.google.inject.Guice
 import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 
 class Synccharts2S {
 
@@ -28,9 +31,14 @@ class Synccharts2S {
 		var dependencies = DependencyFactory::eINSTANCE.createDependencies();
 		Synccharts2Dependenies.transform(dependencies, rootRegion);
 		
-		// create mapping from syncchart states to dependency nodes
+		// create mapping from SyncChart states to dependency nodes
 		for (node : dependencies.nodes) {
-			TraceComponent::createTrace(node.state, node, "Dependency");
+			if (node.type == DependencyType::WEAK) {
+				TraceComponent::createTrace(node.state, node, "DependencyWeak");
+			}
+			else {
+				TraceComponent::createTrace(node.state, node, "DependencyStrong");
+			}
 		}
 		
 		// set s program name (as the root state's name)
@@ -39,8 +47,10 @@ class Synccharts2S {
 		// add interface signals to s program (as the root state's signals)
 		target.signals.addAll(rootState.getStateSignals);
 		
+		val dependencyPrioritySortedStates = rootRegion.getAllStates.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
+		
 		// create all states and their mapping
-		for (state : rootRegion.getAllStates) {
+		for (state : dependencyPrioritySortedStates) {
 			var sStateSurface = state.state2SStateSurface(state.isRootState, false);
 			var sStateDepth   = state.state2SStateDepth(state.isRootState, false);
 			// possibly parallel regions
@@ -98,7 +108,7 @@ class Synccharts2S {
 	// HANDLE S STATE FILLING
 	
 	def fillSStateSurface (State state, de.cau.cs.kieler.s.s.State sState) {
-		var regardedTransitionList = state.outgoingTransitions.filter(e|e.isImmediate).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+		var regardedTransitionList = state.outgoingTransitions.filter(e|e.isImmediate).sort(e1, e2 | compareTransitionPriority(e1,e2));
 		var noTransitions = regardedTransitionList.isEmpty;
 		var finalState = state.isFinal;
 
@@ -120,11 +130,15 @@ class Synccharts2S {
 	}	
 	
 	
+	
+
+	
 	def void handleTransition(Transition transition, de.cau.cs.kieler.s.s.State sState) {
 			var sif = SFactory::eINSTANCE.createIf();
 			var strans = SFactory::eINSTANCE.createTrans();
 			var scontinuation = TraceComponent::getSingleTraceTarget(transition.targetState, "Surface") as de.cau.cs.kieler.s.s.State
 			
+			// handle transition trigger - convert to s-expression
 			if (transition.trigger != null) {
 				sif.setExpression(transition.trigger.convertToSExpression);
 			}
@@ -132,16 +146,22 @@ class Synccharts2S {
 				sif.setExpression(getTrueBooleanValue());
 			}
 			
+			// handle transition effect - convert to s-effect
+			if (!transition.effects.nullOrEmpty) {
+				for (effect : transition.effects) {
+					effect.convertToSEffect(sState);
+				}
+			}
+			
 			strans.setContinuation(scontinuation);
 			sif.instructions.add(strans);
 			
-			//sif.setContinuation(scontinuation);
 			sState.instructions.add(sif);
 	}
 	
 	def fillSStateDepth (State state, de.cau.cs.kieler.s.s.State sState) {
-		var regardedTransitionListStrong = state.outgoingTransitions.filter(e|e.type == TransitionType::STRONGABORT).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
-		var regardedTransitionListWeak = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
+		var regardedTransitionListStrong = state.outgoingTransitions.filter(e|e.type == TransitionType::STRONGABORT).sort(e1, e2 | compareTransitionPriority(e1,e2));
+		var regardedTransitionListWeak = state.outgoingTransitions.filter(e|e.type == TransitionType::WEAKABORT).sort(e1, e2 | compareTransitionPriority(e1,e2));
 		
 		for (transition : regardedTransitionListStrong) {
 			transition.handleTransition(sState);

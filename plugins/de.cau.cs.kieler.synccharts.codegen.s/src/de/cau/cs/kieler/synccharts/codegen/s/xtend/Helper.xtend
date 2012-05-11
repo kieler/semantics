@@ -7,6 +7,7 @@ import java.util.*
 import com.google.inject.Inject
 import org.eclipse.xtend.util.stdlib.TraceComponent
 import org.eclipse.xtend.util.stdlib.CloningExtensions
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 
 
 class Helper {
@@ -39,8 +40,8 @@ def dispatch Expression convertToSExpression(Expression expression) {
 
 //ValuedObjectReference - added by cmot for handleIfSingle() function (present tests of simple triggers)
 def dispatch Expression convertToSExpression(ValuedObjectReference expression) {
- 	var ssignal = TraceComponent::getSingleTraceTarget(expression.valuedObject, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
-	expression.setValuedObject(ssignal);
+ 	var sSignal = TraceComponent::getSingleTraceTarget(expression.valuedObject, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+	expression.setValuedObject(sSignal);
  	expression; 
 }
 
@@ -50,6 +51,23 @@ def Expression getTrueBooleanValue() {
 	 booleanValue	
 }
 
+
+	// convert transition effects
+	def dispatch void convertToSEffect(Emission effect, de.cau.cs.kieler.s.s.State sState) {
+		val sEmit = SFactory::eINSTANCE.createEmit;
+		val sSignal = TraceComponent::getSingleTraceTarget(effect.signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+		sEmit.setSignal(sSignal);
+		sState.instructions.add(sEmit);
+	}
+	def dispatch void convertToSEffect(Assignment effect, de.cau.cs.kieler.s.s.State sState) {
+		// todo
+	}
+	def dispatch void convertToSEffect(TextEffect effect, de.cau.cs.kieler.s.s.State sState) {
+		// todo
+	}
+	def dispatch void convertToSEffect(Effect effect, de.cau.cs.kieler.s.s.State sState) {
+		// todo
+	}
 
 	// ======================================================================================================
 	
@@ -61,7 +79,7 @@ def Expression getTrueBooleanValue() {
 			var ssignal = signal.transform;
 			signalList.add(ssignal)
 			// 	create traces for all created signals
-			TraceComponent::createTrace(signal, ssignal, "Ssignal" );
+			TraceComponent::createTrace(signal, ssignal, "Signal" );
 			TraceComponent::createTrace(ssignal, signal, "SignalBack" );
 		}
 		signalList 
@@ -108,6 +126,26 @@ def String getStatePathAsName(State state) {
 		getStatePathAsName(state.parentRegion.parentState) + regionString + "_" + state.id
 	}
 }
+
+// ======================================================================================================
+
+	def Node getDependencyStrongNode(State state) {
+		TraceComponent::getSingleTraceTarget(state, "DependencyStrong") as Node		
+	}
+	def Node getDependencyWeakNode(State state) {
+		TraceComponent::getSingleTraceTarget(state, "DependencyWeak") as Node		
+	}
+
+	def int compareTraceDependencyPriority(State e1, State e2) {
+		if (e1.getDependencyStrongNode.priority > 
+		    e2.getDependencyStrongNode.priority) {-1} else {1}
+	}
+
+	def int compareTransitionPriority(Transition e1, Transition e2) {
+		if (e1.priority < e2.priority) {-1} else {1}	
+	}
+
+
 
 
 
