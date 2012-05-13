@@ -36,6 +36,15 @@ public interface SFactory extends EFactory
   Program createProgram();
 
   /**
+   * Returns a new object of class '<em>Program Interface</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Program Interface</em>'.
+   * @generated
+   */
+  ProgramInterface createProgramInterface();
+
+  /**
    * Returns a new object of class '<em>State</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

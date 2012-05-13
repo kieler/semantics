@@ -18,6 +18,7 @@ import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.ProgramInterface;
 import de.cau.cs.kieler.s.s.SFactory;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;
@@ -85,6 +86,7 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
     switch (eClass.getClassifierID())
     {
       case SPackage.PROGRAM: return createProgram();
+      case SPackage.PROGRAM_INTERFACE: return createProgramInterface();
       case SPackage.STATE: return createState();
       case SPackage.THREAD: return createThread();
       case SPackage.CONTINUATION: return createContinuation();
@@ -114,6 +116,17 @@ public class SFactoryImpl extends EFactoryImpl implements SFactory
   {
     ProgramImpl program = new ProgramImpl();
     return program;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ProgramInterface createProgramInterface()
+  {
+    ProgramInterfaceImpl programInterface = new ProgramInterfaceImpl();
+    return programInterface;
   }
 
   /**

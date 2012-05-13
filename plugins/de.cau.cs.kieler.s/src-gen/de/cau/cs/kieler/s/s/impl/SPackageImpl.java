@@ -20,6 +20,7 @@ import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.ProgramInterface;
 import de.cau.cs.kieler.s.s.SFactory;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;
@@ -47,6 +48,13 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * @generated
    */
   private EClass programEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass programInterfaceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -254,7 +262,7 @@ public class SPackageImpl extends EPackageImpl implements SPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getProgram_IntSignalDecls()
+  public EReference getProgram_ProgramInterface()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(2);
   }
@@ -267,6 +275,26 @@ public class SPackageImpl extends EPackageImpl implements SPackage
   public EReference getProgram_States()
   {
     return (EReference)programEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getProgramInterface()
+  {
+    return programInterfaceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getProgramInterface_InterfaceSignalDecls()
+  {
+    return (EReference)programInterfaceEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -572,8 +600,11 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     programEClass = createEClass(PROGRAM);
     createEAttribute(programEClass, PROGRAM__NAME);
     createEAttribute(programEClass, PROGRAM__PRIORITY);
-    createEReference(programEClass, PROGRAM__INT_SIGNAL_DECLS);
+    createEReference(programEClass, PROGRAM__PROGRAM_INTERFACE);
     createEReference(programEClass, PROGRAM__STATES);
+
+    programInterfaceEClass = createEClass(PROGRAM_INTERFACE);
+    createEReference(programInterfaceEClass, PROGRAM_INTERFACE__INTERFACE_SIGNAL_DECLS);
 
     stateEClass = createEClass(STATE);
     createEReference(stateEClass, STATE__INSTRUCTIONS);
@@ -668,8 +699,11 @@ public class SPackageImpl extends EPackageImpl implements SPackage
     initEClass(programEClass, Program.class, "Program", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProgram_Name(), ecorePackage.getEString(), "name", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProgram_Priority(), ecorePackage.getEInt(), "priority", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getProgram_IntSignalDecls(), theKExpressionsPackage.getInterfaceSignalDecl(), null, "intSignalDecls", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getProgram_ProgramInterface(), this.getProgramInterface(), null, "programInterface", null, 0, 1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProgram_States(), this.getState(), null, "states", null, 0, -1, Program.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(programInterfaceEClass, ProgramInterface.class, "ProgramInterface", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getProgramInterface_InterfaceSignalDecls(), theKExpressionsPackage.getInterfaceSignalDecl(), null, "interfaceSignalDecls", null, 0, -1, ProgramInterface.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(stateEClass, State.class, "State", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getState_Instructions(), this.getInstruction(), null, "instructions", null, 0, -1, State.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

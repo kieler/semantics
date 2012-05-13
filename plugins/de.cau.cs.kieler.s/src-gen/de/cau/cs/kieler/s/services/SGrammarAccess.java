@@ -28,8 +28,8 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cPriorityAssignment_3 = (Assignment)cGroup.eContents().get(3);
 		private final RuleCall cPriorityINTTerminalRuleCall_3_0 = (RuleCall)cPriorityAssignment_3.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		private final Assignment cIntSignalDeclsAssignment_5 = (Assignment)cGroup.eContents().get(5);
-		private final RuleCall cIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0 = (RuleCall)cIntSignalDeclsAssignment_5.eContents().get(0);
+		private final Assignment cProgramInterfaceAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cProgramInterfaceProgramInterfaceParserRuleCall_5_0 = (RuleCall)cProgramInterfaceAssignment_5.eContents().get(0);
 		private final Assignment cStatesAssignment_6 = (Assignment)cGroup.eContents().get(6);
 		private final RuleCall cStatesStateParserRuleCall_6_0 = (RuleCall)cStatesAssignment_6.eContents().get(0);
 		
@@ -37,14 +37,14 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 		//	//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 		//	//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-		//	intSignalDecls+=InterfaceSignalDecl //	(signals += Signal)*
+		//	programInterface=ProgramInterface? //	(signals += Signal)*
 		//	states+=State+;
 		public ParserRule getRule() { return rule; }
 
 		//"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 		////	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 		////	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-		//intSignalDecls+=InterfaceSignalDecl //	(signals += Signal)*
+		//programInterface=ProgramInterface? //	(signals += Signal)*
 		//states+=State+
 		public Group getGroup() { return cGroup; }
 
@@ -69,20 +69,33 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//")"
 		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
 
-		////	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
-		////	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
-		////	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-		//intSignalDecls+=InterfaceSignalDecl
-		public Assignment getIntSignalDeclsAssignment_5() { return cIntSignalDeclsAssignment_5; }
+		//programInterface=ProgramInterface?
+		public Assignment getProgramInterfaceAssignment_5() { return cProgramInterfaceAssignment_5; }
 
-		//InterfaceSignalDecl
-		public RuleCall getIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0() { return cIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0; }
+		//ProgramInterface
+		public RuleCall getProgramInterfaceProgramInterfaceParserRuleCall_5_0() { return cProgramInterfaceProgramInterfaceParserRuleCall_5_0; }
 
 		//states+=State+
 		public Assignment getStatesAssignment_6() { return cStatesAssignment_6; }
 
 		//State
 		public RuleCall getStatesStateParserRuleCall_6_0() { return cStatesStateParserRuleCall_6_0; }
+	}
+
+	public class ProgramInterfaceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ProgramInterface");
+		private final Assignment cInterfaceSignalDeclsAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cInterfaceSignalDeclsInterfaceSignalDeclParserRuleCall_0 = (RuleCall)cInterfaceSignalDeclsAssignment.eContents().get(0);
+		
+		//ProgramInterface:
+		//	interfaceSignalDecls+=InterfaceSignalDecl+;
+		public ParserRule getRule() { return rule; }
+
+		//interfaceSignalDecls+=InterfaceSignalDecl+
+		public Assignment getInterfaceSignalDeclsAssignment() { return cInterfaceSignalDeclsAssignment; }
+
+		//InterfaceSignalDecl
+		public RuleCall getInterfaceSignalDeclsInterfaceSignalDeclParserRuleCall_0() { return cInterfaceSignalDeclsInterfaceSignalDeclParserRuleCall_0; }
 	}
 
 	public class StateElements extends AbstractParserRuleElementFinder {
@@ -1032,6 +1045,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	
 	private ProgramElements pProgram;
+	private ProgramInterfaceElements pProgramInterface;
 	private StateElements pState;
 	private ThreadElements pThread;
 	private SignalElements pSignal;
@@ -1074,7 +1088,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 	//	//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 	//	//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-	//	intSignalDecls+=InterfaceSignalDecl //	(signals += Signal)*
+	//	programInterface=ProgramInterface? //	(signals += Signal)*
 	//	states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
@@ -1082,6 +1096,16 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	
 	public ParserRule getProgramRule() {
 		return getProgramAccess().getRule();
+	}
+
+	//ProgramInterface:
+	//	interfaceSignalDecls+=InterfaceSignalDecl+;
+	public ProgramInterfaceElements getProgramInterfaceAccess() {
+		return (pProgramInterface != null) ? pProgramInterface : (pProgramInterface = new ProgramInterfaceElements());
+	}
+	
+	public ParserRule getProgramInterfaceRule() {
+		return getProgramInterfaceAccess().getRule();
 	}
 
 	////Annotation:

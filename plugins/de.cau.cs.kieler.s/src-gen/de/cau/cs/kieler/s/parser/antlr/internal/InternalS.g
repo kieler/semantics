@@ -135,22 +135,22 @@ ruleProgram returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getProgramAccess().getProgramInterfaceProgramInterfaceParserRuleCall_5_0()); 
 	    }
-		lv_intSignalDecls_5_0=ruleInterfaceSignalDecl		{
+		lv_programInterface_5_0=ruleProgramInterface		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
-       		add(
+       		set(
        			$current, 
-       			"intSignalDecls",
-        		lv_intSignalDecls_5_0, 
-        		"InterfaceSignalDecl");
+       			"programInterface",
+        		lv_programInterface_5_0, 
+        		"ProgramInterface");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)(
+)?(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getProgramAccess().getStatesStateParserRuleCall_6_0()); 
@@ -169,6 +169,45 @@ ruleProgram returns [EObject current=null]
 
 )
 )+)
+;
+
+
+
+
+
+// Entry rule entryRuleProgramInterface
+entryRuleProgramInterface returns [EObject current=null] 
+	:
+	{ newCompositeNode(grammarAccess.getProgramInterfaceRule()); }
+	 iv_ruleProgramInterface=ruleProgramInterface 
+	 { $current=$iv_ruleProgramInterface.current; } 
+	 EOF 
+;
+
+// Rule ProgramInterface
+ruleProgramInterface returns [EObject current=null] 
+    @init { enterRule(); 
+    }
+    @after { leaveRule(); }:
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getProgramInterfaceAccess().getInterfaceSignalDeclsInterfaceSignalDeclParserRuleCall_0()); 
+	    }
+		lv_interfaceSignalDecls_0_0=ruleInterfaceSignalDecl		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getProgramInterfaceRule());
+	        }
+       		add(
+       			$current, 
+       			"interfaceSignalDecls",
+        		lv_interfaceSignalDecls_0_0, 
+        		"InterfaceSignalDecl");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)+
 ;
 
 

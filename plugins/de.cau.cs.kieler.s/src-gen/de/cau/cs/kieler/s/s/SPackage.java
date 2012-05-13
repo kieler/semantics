@@ -89,13 +89,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Int Signal Decls</b></em>' containment reference list.
+   * The feature id for the '<em><b>Program Interface</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__INT_SIGNAL_DECLS = 2;
+  int PROGRAM__PROGRAM_INTERFACE = 2;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -116,6 +116,34 @@ public interface SPackage extends EPackage
   int PROGRAM_FEATURE_COUNT = 4;
 
   /**
+   * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ProgramInterfaceImpl <em>Program Interface</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see de.cau.cs.kieler.s.s.impl.ProgramInterfaceImpl
+   * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getProgramInterface()
+   * @generated
+   */
+  int PROGRAM_INTERFACE = 1;
+
+  /**
+   * The feature id for the '<em><b>Interface Signal Decls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROGRAM_INTERFACE__INTERFACE_SIGNAL_DECLS = 0;
+
+  /**
+   * The number of structural features of the '<em>Program Interface</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROGRAM_INTERFACE_FEATURE_COUNT = 1;
+
+  /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.ContinuationImpl <em>Continuation</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -123,7 +151,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getContinuation()
    * @generated
    */
-  int CONTINUATION = 3;
+  int CONTINUATION = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -160,7 +188,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getState()
    * @generated
    */
-  int STATE = 1;
+  int STATE = 2;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -206,7 +234,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getThread()
    * @generated
    */
-  int THREAD = 2;
+  int THREAD = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -252,7 +280,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getInstruction()
    * @generated
    */
-  int INSTRUCTION = 4;
+  int INSTRUCTION = 5;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -280,7 +308,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPrio()
    * @generated
    */
-  int PRIO = 5;
+  int PRIO = 6;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -317,7 +345,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTrans()
    * @generated
    */
-  int TRANS = 6;
+  int TRANS = 7;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -345,7 +373,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getFork()
    * @generated
    */
-  int FORK = 7;
+  int FORK = 8;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -391,7 +419,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getJoin()
    * @generated
    */
-  int JOIN = 8;
+  int JOIN = 9;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -419,7 +447,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getPause()
    * @generated
    */
-  int PAUSE = 9;
+  int PAUSE = 10;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -447,7 +475,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getTerm()
    * @generated
    */
-  int TERM = 10;
+  int TERM = 11;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -475,7 +503,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getHalt()
    * @generated
    */
-  int HALT = 11;
+  int HALT = 12;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -503,7 +531,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getEmit()
    * @generated
    */
-  int EMIT = 12;
+  int EMIT = 13;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -540,7 +568,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAbort()
    * @generated
    */
-  int ABORT = 13;
+  int ABORT = 14;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -568,7 +596,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getIf()
    * @generated
    */
-  int IF = 14;
+  int IF = 15;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -614,7 +642,7 @@ public interface SPackage extends EPackage
    * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getAwait()
    * @generated
    */
-  int AWAIT = 15;
+  int AWAIT = 16;
 
   /**
    * The feature id for the '<em><b>Continuation</b></em>' reference.
@@ -677,15 +705,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getIntSignalDecls <em>Int Signal Decls</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Program#getProgramInterface <em>Program Interface</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Int Signal Decls</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getIntSignalDecls()
+   * @return the meta object for the containment reference '<em>Program Interface</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getProgramInterface()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_IntSignalDecls();
+  EReference getProgram_ProgramInterface();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}'.
@@ -697,6 +725,27 @@ public interface SPackage extends EPackage
    * @generated
    */
   EReference getProgram_States();
+
+  /**
+   * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.ProgramInterface <em>Program Interface</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Program Interface</em>'.
+   * @see de.cau.cs.kieler.s.s.ProgramInterface
+   * @generated
+   */
+  EClass getProgramInterface();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.ProgramInterface#getInterfaceSignalDecls <em>Interface Signal Decls</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Interface Signal Decls</em>'.
+   * @see de.cau.cs.kieler.s.s.ProgramInterface#getInterfaceSignalDecls()
+   * @see #getProgramInterface()
+   * @generated
+   */
+  EReference getProgramInterface_InterfaceSignalDecls();
 
   /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.State <em>State</em>}'.
@@ -1030,12 +1079,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Int Signal Decls</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Program Interface</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__INT_SIGNAL_DECLS = eINSTANCE.getProgram_IntSignalDecls();
+    EReference PROGRAM__PROGRAM_INTERFACE = eINSTANCE.getProgram_ProgramInterface();
 
     /**
      * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.
@@ -1044,6 +1093,24 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference PROGRAM__STATES = eINSTANCE.getProgram_States();
+
+    /**
+     * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.ProgramInterfaceImpl <em>Program Interface</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see de.cau.cs.kieler.s.s.impl.ProgramInterfaceImpl
+     * @see de.cau.cs.kieler.s.s.impl.SPackageImpl#getProgramInterface()
+     * @generated
+     */
+    EClass PROGRAM_INTERFACE = eINSTANCE.getProgramInterface();
+
+    /**
+     * The meta object literal for the '<em><b>Interface Signal Decls</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROGRAM_INTERFACE__INTERFACE_SIGNAL_DECLS = eINSTANCE.getProgramInterface_InterfaceSignalDecls();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.StateImpl <em>State</em>}' class.

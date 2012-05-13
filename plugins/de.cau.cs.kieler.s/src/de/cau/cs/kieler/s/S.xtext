@@ -19,11 +19,14 @@ Program :
 //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 //	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 //	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-	intSignalDecls+=InterfaceSignalDecl
+	(programInterface=ProgramInterface)?
 //	(signals += Signal)*
 	(states += State)+
 ;
 
+
+ProgramInterface:
+	(interfaceSignalDecls+=InterfaceSignalDecl)+;
 
 
 //Annotation:
