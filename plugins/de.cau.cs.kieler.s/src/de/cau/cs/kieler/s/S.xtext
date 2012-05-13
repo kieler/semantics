@@ -19,7 +19,8 @@ Program :
 //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 //	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 //	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-	(signals += Signal)*
+	intSignalDecls+=InterfaceSignalDecl
+//	(signals += Signal)*
 	(states += State)+
 ;
 

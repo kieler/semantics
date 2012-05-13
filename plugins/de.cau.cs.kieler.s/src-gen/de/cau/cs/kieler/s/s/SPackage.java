@@ -89,13 +89,13 @@ public interface SPackage extends EPackage
   int PROGRAM__PRIORITY = 1;
 
   /**
-   * The feature id for the '<em><b>Signals</b></em>' containment reference list.
+   * The feature id for the '<em><b>Int Signal Decls</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PROGRAM__SIGNALS = 2;
+  int PROGRAM__INT_SIGNAL_DECLS = 2;
 
   /**
    * The feature id for the '<em><b>States</b></em>' containment reference list.
@@ -677,15 +677,15 @@ public interface SPackage extends EPackage
   EAttribute getProgram_Priority();
 
   /**
-   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getSignals <em>Signals</em>}'.
+   * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getIntSignalDecls <em>Int Signal Decls</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Signals</em>'.
-   * @see de.cau.cs.kieler.s.s.Program#getSignals()
+   * @return the meta object for the containment reference list '<em>Int Signal Decls</em>'.
+   * @see de.cau.cs.kieler.s.s.Program#getIntSignalDecls()
    * @see #getProgram()
    * @generated
    */
-  EReference getProgram_Signals();
+  EReference getProgram_IntSignalDecls();
 
   /**
    * Returns the meta object for the containment reference list '{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}'.
@@ -1030,12 +1030,12 @@ public interface SPackage extends EPackage
     EAttribute PROGRAM__PRIORITY = eINSTANCE.getProgram_Priority();
 
     /**
-     * The meta object literal for the '<em><b>Signals</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Int Signal Decls</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference PROGRAM__SIGNALS = eINSTANCE.getProgram_Signals();
+    EReference PROGRAM__INT_SIGNAL_DECLS = eINSTANCE.getProgram_IntSignalDecls();
 
     /**
      * The meta object literal for the '<em><b>States</b></em>' containment reference list feature.

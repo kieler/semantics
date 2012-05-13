@@ -101,14 +101,16 @@ protected class ThisRootNode extends RootToken {
  * 	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
  * 	//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
  * 	//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
- * 	signals+=Signal* states+=State+;
+ * 	intSignalDecls+=InterfaceSignalDecl //	(signals += Signal)*
+ * 	states+=State+;
  *
  **/
 
 // "Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
 // //	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
 // //	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-// signals+=Signal* states+=State+
+// intSignalDecls+=InterfaceSignalDecl //	(signals += Signal)*
+// states+=State+
 protected class Program_Group extends GroupToken {
 	
 	public Program_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -270,35 +272,38 @@ protected class Program_RightParenthesisKeyword_4 extends KeywordToken  {
 
 }
 
-// signals+=Signal*
-protected class Program_SignalsAssignment_5 extends AssignmentToken  {
+// //	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
+// //	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
+// //	('Signals' (signals += Signal) (',' signals += Signal)*';')?
+// intSignalDecls+=InterfaceSignalDecl
+protected class Program_IntSignalDeclsAssignment_5 extends AssignmentToken  {
 	
-	public Program_SignalsAssignment_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Program_IntSignalDeclsAssignment_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getProgramAccess().getSignalsAssignment_5();
+		return grammarAccess.getProgramAccess().getIntSignalDeclsAssignment_5();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Signal_Group(this, this, 0, inst);
+			case 0: return new InterfaceSignalDecl_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}
 
     @Override	
 	public IEObjectConsumer tryConsume() {
-		if((value = eObjectConsumer.getConsumable("signals",false)) == null) return null;
-		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("signals");
+		if((value = eObjectConsumer.getConsumable("intSignalDecls",true)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("intSignalDecls");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getSignalRule().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getInterfaceSignalDeclRule().getType().getClassifier())) {
 				type = AssignmentType.PARSER_RULE_CALL;
-				element = grammarAccess.getProgramAccess().getSignalsSignalParserRuleCall_5_0(); 
+				element = grammarAccess.getProgramAccess().getIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0(); 
 				consumed = obj;
 				return param;
 			}
@@ -310,8 +315,7 @@ protected class Program_SignalsAssignment_5 extends AssignmentToken  {
 	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
-			case 0: return new Program_SignalsAssignment_5(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new Program_RightParenthesisKeyword_4(lastRuleCallOrigin, next, actIndex, consumed);
+			case 0: return new Program_RightParenthesisKeyword_4(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	
@@ -358,8 +362,7 @@ protected class Program_StatesAssignment_6 extends AssignmentToken  {
 		if(value == inst.getEObject() && !inst.isConsumed()) return null;
 		switch(index) {
 			case 0: return new Program_StatesAssignment_6(lastRuleCallOrigin, next, actIndex, consumed);
-			case 1: return new Program_SignalsAssignment_5(lastRuleCallOrigin, next, actIndex, consumed);
-			case 2: return new Program_RightParenthesisKeyword_4(lastRuleCallOrigin, next, actIndex, consumed);
+			case 1: return new Program_IntSignalDeclsAssignment_5(lastRuleCallOrigin, next, actIndex, consumed);
 			default: return null;
 		}	
 	}	

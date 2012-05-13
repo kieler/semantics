@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.s.SPackage;
@@ -37,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -87,14 +87,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected int priority = PRIORITY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
+   * The cached value of the '{@link #getIntSignalDecls() <em>Int Signal Decls</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSignals()
+   * @see #getIntSignalDecls()
    * @generated
    * @ordered
    */
-  protected EList<Signal> signals;
+  protected EList<InterfaceSignalDecl> intSignalDecls;
 
   /**
    * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
@@ -178,13 +178,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<Signal> getSignals()
+  public EList<InterfaceSignalDecl> getIntSignalDecls()
   {
-    if (signals == null)
+    if (intSignalDecls == null)
     {
-      signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.PROGRAM__SIGNALS);
+      intSignalDecls = new EObjectContainmentEList<InterfaceSignalDecl>(InterfaceSignalDecl.class, this, SPackage.PROGRAM__INT_SIGNAL_DECLS);
     }
-    return signals;
+    return intSignalDecls;
   }
 
   /**
@@ -211,8 +211,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__SIGNALS:
-        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
+      case SPackage.PROGRAM__INT_SIGNAL_DECLS:
+        return ((InternalEList<?>)getIntSignalDecls()).basicRemove(otherEnd, msgs);
       case SPackage.PROGRAM__STATES:
         return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
     }
@@ -233,8 +233,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SPackage.PROGRAM__PRIORITY:
         return getPriority();
-      case SPackage.PROGRAM__SIGNALS:
-        return getSignals();
+      case SPackage.PROGRAM__INT_SIGNAL_DECLS:
+        return getIntSignalDecls();
       case SPackage.PROGRAM__STATES:
         return getStates();
     }
@@ -258,9 +258,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority((Integer)newValue);
         return;
-      case SPackage.PROGRAM__SIGNALS:
-        getSignals().clear();
-        getSignals().addAll((Collection<? extends Signal>)newValue);
+      case SPackage.PROGRAM__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
+        getIntSignalDecls().addAll((Collection<? extends InterfaceSignalDecl>)newValue);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -286,8 +286,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
-      case SPackage.PROGRAM__SIGNALS:
-        getSignals().clear();
+      case SPackage.PROGRAM__INT_SIGNAL_DECLS:
+        getIntSignalDecls().clear();
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -310,8 +310,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.PROGRAM__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
-      case SPackage.PROGRAM__SIGNALS:
-        return signals != null && !signals.isEmpty();
+      case SPackage.PROGRAM__INT_SIGNAL_DECLS:
+        return intSignalDecls != null && !intSignalDecls.isEmpty();
       case SPackage.PROGRAM__STATES:
         return states != null && !states.isEmpty();
     }

@@ -135,22 +135,22 @@ ruleProgram returns [EObject current=null]
 (
 (
 		{ 
-	        newCompositeNode(grammarAccess.getProgramAccess().getSignalsSignalParserRuleCall_5_0()); 
+	        newCompositeNode(grammarAccess.getProgramAccess().getIntSignalDeclsInterfaceSignalDeclParserRuleCall_5_0()); 
 	    }
-		lv_signals_5_0=ruleSignal		{
+		lv_intSignalDecls_5_0=ruleInterfaceSignalDecl		{
 	        if ($current==null) {
 	            $current = createModelElementForParent(grammarAccess.getProgramRule());
 	        }
        		add(
        			$current, 
-       			"signals",
-        		lv_signals_5_0, 
-        		"Signal");
+       			"intSignalDecls",
+        		lv_intSignalDecls_5_0, 
+        		"InterfaceSignalDecl");
 	        afterParserOrEnumRuleCall();
 	    }
 
 )
-)*(
+)(
 (
 		{ 
 	        newCompositeNode(grammarAccess.getProgramAccess().getStatesStateParserRuleCall_6_0()); 

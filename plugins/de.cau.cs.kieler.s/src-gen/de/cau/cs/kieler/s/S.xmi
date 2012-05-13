@@ -21,8 +21,8 @@
           <terminal xsi:type="xtext:RuleCall" rule="/2/@rules.14"/>
         </elements>
         <elements xsi:type="xtext:Keyword" value=")"/>
-        <elements xsi:type="xtext:Assignment" cardinality="*" feature="signals" operator="+=">
-          <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.3"/>
+        <elements xsi:type="xtext:Assignment" feature="intSignalDecls" operator="+=">
+          <terminal xsi:type="xtext:RuleCall" rule="/1/@rules.26"/>
         </elements>
         <elements xsi:type="xtext:Assignment" cardinality="+" feature="states" operator="+=">
           <terminal xsi:type="xtext:RuleCall" rule="/0/@rules.1"/>

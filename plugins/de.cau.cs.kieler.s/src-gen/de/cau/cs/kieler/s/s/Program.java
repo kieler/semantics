@@ -6,7 +6,7 @@
  */
 package de.cau.cs.kieler.s.s;
 
-import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 
 import org.eclipse.emf.common.util.EList;
 
@@ -22,7 +22,7 @@ import org.eclipse.emf.ecore.EObject;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.Program#getSignals <em>Signals</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.Program#getIntSignalDecls <em>Int Signal Decls</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.Program#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -86,20 +86,20 @@ public interface Program extends EObject
   void setPriority(int value);
 
   /**
-   * Returns the value of the '<em><b>Signals</b></em>' containment reference list.
-   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.Signal}.
+   * Returns the value of the '<em><b>Int Signal Decls</b></em>' containment reference list.
+   * The list contents are of type {@link de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl}.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Signals</em>' containment reference list isn't clear,
+   * If the meaning of the '<em>Int Signal Decls</em>' containment reference list isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Signals</em>' containment reference list.
-   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_Signals()
+   * @return the value of the '<em>Int Signal Decls</em>' containment reference list.
+   * @see de.cau.cs.kieler.s.s.SPackage#getProgram_IntSignalDecls()
    * @model containment="true"
    * @generated
    */
-  EList<Signal> getSignals();
+  EList<InterfaceSignalDecl> getIntSignalDecls();
 
   /**
    * Returns the value of the '<em><b>States</b></em>' containment reference list.

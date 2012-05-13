@@ -12,7 +12,7 @@
     <genClasses ecoreClass="S.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/priority"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/signals"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/intSignalDecls"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//State">
