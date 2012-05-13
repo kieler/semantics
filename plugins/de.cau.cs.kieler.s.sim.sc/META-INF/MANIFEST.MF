@@ -1,0 +1,24 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SC Simulator for S
+Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sc;singleton:=true
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ de.cau.cs.kieler.sim.kiem;bundle-version="0.5.1",
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent;bundle-version="0.3.0",
+ de.cau.cs.kieler.sim.kiem.config;bundle-version="0.4.0",
+ org.eclipse.xtend2.lib;bundle-version="2.3.0",
+ org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
+ de.cau.cs.kieler.s;bundle-version="0.2.0",
+ de.cau.cs.kieler.core.kexpressions;bundle-version="0.3.0",
+ org.eclipse.emf;bundle-version="2.6.0",
+ de.cau.cs.kieler.sim.signals;bundle-version="0.1.0",
+ org.eclipse.ui.ide,
+ org.eclipse.emf.mwe.core;bundle-version="1.2.1",
+ com.google.inject;bundle-version="3.0.0",
+ de.cau.cs.kieler.core.annotations;bundle-version="0.3.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
