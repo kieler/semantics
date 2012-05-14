@@ -115,9 +115,6 @@
     <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.papyrus</module>
     <module>de.cau.cs.kieler.s</module>
-    <module>de.cau.cs.kieler.s.codegen</module>
-    <module>de.cau.cs.kieler.s.sc</module>
-    <module>de.cau.cs.kieler.s.sj</module>
     <module>de.cau.cs.kieler.s.ui</module>
     <module>de.cau.cs.kieler.sim.abro</module>
     <module>de.cau.cs.kieler.sim.eso</module>
@@ -152,7 +149,6 @@
     <module>de.cau.cs.kieler.synccharts.examples</module>
     <module>de.cau.cs.kieler.synccharts.kivi</module>
     <module>de.cau.cs.kieler.synccharts.ksbase</module>
-    <module>de.cau.cs.kieler.synccharts.s</module>
     <module>de.cau.cs.kieler.synccharts.sim.ptolemy</module>
     <module>de.cau.cs.kieler.synccharts.sim.sc</module>
     <module>de.cau.cs.kieler.synccharts.synchronizer</module>
