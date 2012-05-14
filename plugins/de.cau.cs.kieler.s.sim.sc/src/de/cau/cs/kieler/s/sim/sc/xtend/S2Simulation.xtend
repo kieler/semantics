@@ -38,18 +38,18 @@ class S2Simulation {
    	def Program transform2Simulation (Program program) {
    		var AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
    		
-		// Clone the complete S program
+		// Clone the complete S program 
    		var target = CloningExtensions::clone(program) as Program;
 
 		var originalInstructions = program.eAllContents().toIterable().filter(typeof(Instruction));
 		var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction));
 		var targetInstructionsCopy = targetInstructions.toList;
 		
-		// Ensure an interface declaration
-		if (program.programInterface == null) {
-			var programInterface = SFactory::eINSTANCE.createProgramInterface(); 
-			program.setProgramInterface(programInterface);
-		} 
+//		// Ensure an interface declaration
+//		if (program.programInterface == null) {
+//			var programInterface = SFactory::eINSTANCE.createProgramInterface(); 
+//			program.setProgramInterface(programInterface);
+//		} 
 		
 		// For every instruction in the S program do the transformation
 		// Iterate over a copy of the list	
@@ -86,33 +86,32 @@ class S2Simulation {
 		)) {
 			
 		// auxiliary signal
-				// Must be linked in Output
-		var auxiliarySignalISignal = KExpressionsFactory::eINSTANCE.createISignal();
-				// Must be linked in ModuleBody->interface
-		var auxiliarySignalOutput = KExpressionsFactory::eINSTANCE.createOutput();
+		var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
 		var auxiliaryEmitInstruction = SFactory::eINSTANCE.createEmit
 			
 		// Setup the auxiliarySignal as an OUTPUT to the module
-		auxiliarySignalISignal.setName(UID);
-		auxiliarySignalISignal.setIsInput(false);
-		auxiliarySignalISignal.setIsOutput(false);
-		auxiliarySignalISignal.setType(ValueType::PURE);
-		// Add auxiliarySignal to module
-		auxiliarySignalOutput.signals.add(auxiliarySignalISignal);
-		program.programInterface.interfaceSignalDecls.add(auxiliarySignalOutput);
-		// Set the auxliiarySignal for emission and for sustain
-		auxiliaryEmitInstruction.setSignal(auxiliarySignalISignal);
+		auxiliarySignal.setName(UID);
+		auxiliarySignal.setIsInput(false);
+		auxiliarySignal.setIsOutput(true);
+		auxiliarySignal.setType(ValueType::PURE);
+		// Set the auxliiarySignal for emission 
+		auxiliaryEmitInstruction.setSignal(auxiliarySignal);
 		
 		// get the container of the instruction
 		var container = instruction.eContainer;
 		
 		if (container instanceof State) {
+			// Add auxiliarySignal to program
+			program.signals.add(auxiliarySignal);
 			val stateInstruction = container as State;
 			val instructionList = stateInstruction.instructions;
 			val index = instructionList.indexOf(instruction);
+			System::out.println(index.toString + ":"+  stateInstruction.name.toString);
 			instructionList.add(index, auxiliaryEmitInstruction);
 		}
-		if (container instanceof If) {
+		else if (container instanceof If) {
+			// Add auxiliarySignal to program
+			program.signals.add(auxiliarySignal);
 			val ifInstruction = container as If
 			val instructionList = ifInstruction.instructions;
 			val index = instructionList.indexOf(instruction);

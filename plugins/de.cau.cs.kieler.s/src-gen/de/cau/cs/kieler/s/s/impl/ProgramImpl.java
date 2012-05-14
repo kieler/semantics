@@ -6,8 +6,9 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Signal;
+
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.s.ProgramInterface;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;
 
@@ -36,7 +37,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getName <em>Name</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getPriority <em>Priority</em>}</li>
- *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getProgramInterface <em>Program Interface</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getSignals <em>Signals</em>}</li>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.ProgramImpl#getStates <em>States</em>}</li>
  * </ul>
  * </p>
@@ -86,14 +87,14 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   protected int priority = PRIORITY_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getProgramInterface() <em>Program Interface</em>}' containment reference.
+   * The cached value of the '{@link #getSignals() <em>Signals</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getProgramInterface()
+   * @see #getSignals()
    * @generated
    * @ordered
    */
-  protected ProgramInterface programInterface;
+  protected EList<Signal> signals;
 
   /**
    * The cached value of the '{@link #getStates() <em>States</em>}' containment reference list.
@@ -177,47 +178,13 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
    * <!-- end-user-doc -->
    * @generated
    */
-  public ProgramInterface getProgramInterface()
+  public EList<Signal> getSignals()
   {
-    return programInterface;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetProgramInterface(ProgramInterface newProgramInterface, NotificationChain msgs)
-  {
-    ProgramInterface oldProgramInterface = programInterface;
-    programInterface = newProgramInterface;
-    if (eNotificationRequired())
+    if (signals == null)
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__PROGRAM_INTERFACE, oldProgramInterface, newProgramInterface);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
+      signals = new EObjectContainmentEList<Signal>(Signal.class, this, SPackage.PROGRAM__SIGNALS);
     }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setProgramInterface(ProgramInterface newProgramInterface)
-  {
-    if (newProgramInterface != programInterface)
-    {
-      NotificationChain msgs = null;
-      if (programInterface != null)
-        msgs = ((InternalEObject)programInterface).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.PROGRAM__PROGRAM_INTERFACE, null, msgs);
-      if (newProgramInterface != null)
-        msgs = ((InternalEObject)newProgramInterface).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.PROGRAM__PROGRAM_INTERFACE, null, msgs);
-      msgs = basicSetProgramInterface(newProgramInterface, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.PROGRAM__PROGRAM_INTERFACE, newProgramInterface, newProgramInterface));
+    return signals;
   }
 
   /**
@@ -244,8 +211,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
   {
     switch (featureID)
     {
-      case SPackage.PROGRAM__PROGRAM_INTERFACE:
-        return basicSetProgramInterface(null, msgs);
+      case SPackage.PROGRAM__SIGNALS:
+        return ((InternalEList<?>)getSignals()).basicRemove(otherEnd, msgs);
       case SPackage.PROGRAM__STATES:
         return ((InternalEList<?>)getStates()).basicRemove(otherEnd, msgs);
     }
@@ -266,8 +233,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return getName();
       case SPackage.PROGRAM__PRIORITY:
         return getPriority();
-      case SPackage.PROGRAM__PROGRAM_INTERFACE:
-        return getProgramInterface();
+      case SPackage.PROGRAM__SIGNALS:
+        return getSignals();
       case SPackage.PROGRAM__STATES:
         return getStates();
     }
@@ -291,8 +258,9 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority((Integer)newValue);
         return;
-      case SPackage.PROGRAM__PROGRAM_INTERFACE:
-        setProgramInterface((ProgramInterface)newValue);
+      case SPackage.PROGRAM__SIGNALS:
+        getSignals().clear();
+        getSignals().addAll((Collection<? extends Signal>)newValue);
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -318,8 +286,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
       case SPackage.PROGRAM__PRIORITY:
         setPriority(PRIORITY_EDEFAULT);
         return;
-      case SPackage.PROGRAM__PROGRAM_INTERFACE:
-        setProgramInterface((ProgramInterface)null);
+      case SPackage.PROGRAM__SIGNALS:
+        getSignals().clear();
         return;
       case SPackage.PROGRAM__STATES:
         getStates().clear();
@@ -342,8 +310,8 @@ public class ProgramImpl extends MinimalEObjectImpl.Container implements Program
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
       case SPackage.PROGRAM__PRIORITY:
         return priority != PRIORITY_EDEFAULT;
-      case SPackage.PROGRAM__PROGRAM_INTERFACE:
-        return programInterface != null;
+      case SPackage.PROGRAM__SIGNALS:
+        return signals != null && !signals.isEmpty();
       case SPackage.PROGRAM__STATES:
         return states != null && !states.isEmpty();
     }

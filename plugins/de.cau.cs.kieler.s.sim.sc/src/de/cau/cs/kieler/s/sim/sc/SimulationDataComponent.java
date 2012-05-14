@@ -45,7 +45,7 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
-import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.s.Program; 
 import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -472,10 +472,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						"Cannot write output S file.", true, null);
 			}
 
-			// Compile Esterel to C
-			URL output = this.compileSToSC(sOutput,
-					null, esterelSimulationProgressMonitor)
-					.toURL();
+//			// Compile Esterel to C
+//			URL output = this.compileSToSC(sOutput,
+//					null, esterelSimulationProgressMonitor)
+//					.toURL();
 
 			
 			// Cannot be done before because otherwise the new model cannot be serialized (24.01.2012)
@@ -576,32 +576,23 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 		outputSignalList = new LinkedList<String>();
 		JSONObject res = new JSONObject();
 		try {
-			if (myModel != null && myModel.getProgramInterface() != null) {
-				// only do this for the first module as it is the main module
-				
-					if (myModel.getProgramInterface().getInterfaceSignalDecls() != null) {
-						for (InterfaceSignalDecl sig : myModel.getProgramInterface().getInterfaceSignalDecls()) {
-							if (sig instanceof Input) {
-								for (Signal s : sig.getSignals()) {
-									res.accumulate(s.getName(),
-											JSONSignalValues.newValue(false));
-								}
-							}
-							if (sig instanceof Output) {
-								for (Signal signal : sig.getSignals()) {
-									String signalName = signal.getName();
-									if (!signalName
-											.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
-										res.accumulate(signalName,
-												JSONSignalValues
-														.newValue(false));
-										outputSignalList.add(signalName);
-									}
-								}
-							}
-
+			if (myModel != null && myModel.getSignals() != null) {
+				for (Signal signal : myModel.getSignals()) {
+					if (signal.isIsInput()) {
+						res.accumulate(signal.getName(),
+								JSONSignalValues.newValue(false));
+					}
+					if (signal.isIsOutput()) {
+						String signalName = signal.getName();
+						if (!signalName
+								.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+							res.accumulate(signalName,
+									JSONSignalValues
+											.newValue(false));
+							outputSignalList.add(signalName);
 						}
 					}
+				}
 			}
 		} catch (JSONException e) {
 			// ignore

@@ -18,7 +18,6 @@ import de.cau.cs.kieler.s.s.Join;
 import de.cau.cs.kieler.s.s.Pause;
 import de.cau.cs.kieler.s.s.Prio;
 import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.s.s.ProgramInterface;
 import de.cau.cs.kieler.s.s.SPackage;
 import de.cau.cs.kieler.s.s.State;
 import de.cau.cs.kieler.s.s.Term;
@@ -98,11 +97,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
       public Adapter caseProgram(Program object)
       {
         return createProgramAdapter();
-      }
-      @Override
-      public Adapter caseProgramInterface(ProgramInterface object)
-      {
-        return createProgramInterfaceAdapter();
       }
       @Override
       public Adapter caseState(State object)
@@ -212,21 +206,6 @@ public class SAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createProgramAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link de.cau.cs.kieler.s.s.ProgramInterface <em>Program Interface</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see de.cau.cs.kieler.s.s.ProgramInterface
-   * @generated
-   */
-  public Adapter createProgramInterfaceAdapter()
   {
     return null;
   }

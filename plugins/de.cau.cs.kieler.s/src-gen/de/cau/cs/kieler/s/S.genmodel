@@ -12,11 +12,8 @@
     <genClasses ecoreClass="S.ecore#//Program">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute S.ecore#//Program/priority"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/programInterface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/signals"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//Program/states"/>
-    </genClasses>
-    <genClasses ecoreClass="S.ecore#//ProgramInterface">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//ProgramInterface/interfaceSignalDecls"/>
     </genClasses>
     <genClasses ecoreClass="S.ecore#//State">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference S.ecore#//State/instructions"/>

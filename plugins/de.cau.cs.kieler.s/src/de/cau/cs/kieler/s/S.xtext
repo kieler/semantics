@@ -16,17 +16,18 @@ generate s "http://www.cau.de/cs/kieler/s"
 
 Program :
 	'Synchronous Program' name = ID '(' priority=INT ')'
-//	('Inputs' (signals += Signal) (',' signals += Signal)*';')?
-//	('Outputs' (signals += Signal) (',' signals += Signal)*';')?
-//	('Signals' (signals += Signal) (',' signals += Signal)*';')?
-	(programInterface=ProgramInterface)?
+//	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
+//	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
+//	(programInterface=ProgramInterface)? 
 //	(signals += Signal)*
+//	((signals += Signal) (',' signals += Signal)*';')?
+	((signals += Signal) (signals += Signal)*)?
 	(states += State)+
 ;
 
 
-ProgramInterface:
-	(interfaceSignalDecls+=InterfaceSignalDecl)+;
+//ProgramInterface:
+//	(interfaceSignalDecls+=InterfaceSignalDecl)+;
 
 
 //Annotation:
@@ -41,7 +42,7 @@ ProgramInterface:
 
 State:
 	'State' '(' name = ID ')' '{'
-	('Signals' (signals+=Signal)+ ';')? 
+	((signals+=Signal)+ ';')? 
 	(instructions+=Instruction';')*
 	'}'
 ;
@@ -49,7 +50,7 @@ State:
 
 Thread:
 	'Thread' '(' name = ID ')' '{'
-	('Signals' (signals+=Signal)+ ';')? 
+	((signals+=Signal)+ ';')? 
 	(states+=State';')*
 	'}'
 ;
