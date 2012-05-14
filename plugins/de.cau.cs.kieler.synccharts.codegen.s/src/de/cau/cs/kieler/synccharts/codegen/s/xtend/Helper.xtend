@@ -10,6 +10,7 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
 
 
 class Helper {
@@ -82,11 +83,16 @@ def Expression getTrueBooleanValue() {
 	def List<Signal> getStateSignals (State state){
 		var List<Signal> signalList = new ArrayList()
 		for (signal : state.signals) {
+//			val isignal = KExpressionsFactory::eINSTANCE.createISignal();
 			var ssignal = signal.transform;
-			signalList.add(ssignal)
-			// 	create traces for all created signals
-			TraceComponent::createTrace(signal, ssignal, "Signal" );
-			TraceComponent::createTrace(ssignal, signal, "SignalBack" );
+//				isignal.setName(ssignal.name);
+//				isignal.setIsInput(signal.isInput);
+//				isignal.setIsOutput(signal.isOutput);
+//				isignal.setType(ValueType::PURE);
+				signalList.add(ssignal)
+				// 	create traces for all created signals
+				TraceComponent::createTrace(signal, ssignal, "Signal" );
+				TraceComponent::createTrace(ssignal, signal, "SignalBack" );
 		}
 		signalList 
 	}		

@@ -51,8 +51,38 @@ class Synccharts2S {
 		// set s program name (as the root state's name)
 		target.setName(rootState.id)
 
-		// add interface signals to s program (as the root state's signals)
-		target.signals.addAll(rootState.getStateSignals);
+//		// add interface signals to s program (as the root state's signals)
+//		val programInterface = SFactory::eINSTANCE.createProgramInterface;
+	//	target.setProgramInterface(programInterface);
+//		val signalOutput = KExpressionsFactory::eINSTANCE.createOutput();			
+//		val signalInput = KExpressionsFactory::eINSTANCE.createInput();			
+//		val signalLocal = SFactory::eINSTANCE.create
+		for (signal : rootState.getStateSignals) {
+			target.signals.add(signal);
+		}
+//			if (signal.isInput) {
+////				signalInput.signals.add(signal);
+//				target.inputSignals.add(signal);
+//			}
+//			else if (signal.isOutput) {
+////				signalOutput.signals.add(signal);
+//				target.outputSignals.add(signal);
+//			}
+//			else {
+////				signalLocal.signals.add(signal);
+//				target.signals.add(signal);
+//			}
+//		}
+//		if (signalInput.signals.size > 0) {
+//			programInterface.interfaceSignalDecls.add(signalInput);
+//		}
+//		if (signalOutput.signals.size > 0) {
+//			programInterface.interfaceSignalDecls.add(signalOutput);
+//		}
+//		if (signalLocal.signals.size > 0) {
+//			programInterface.interfaceSignalDecls.add(signalLocal);
+//		}
+		
 		
 		// order SyncChart states according to their dependency priority  (strong nodes)
 		val dependencyPrioritySortedStates = rootRegion.getAllStates.sort(e1, e2 | compareTraceDependencyPriority(e1, e2));
