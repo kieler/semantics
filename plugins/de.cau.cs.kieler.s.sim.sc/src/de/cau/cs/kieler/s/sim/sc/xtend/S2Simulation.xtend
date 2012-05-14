@@ -42,8 +42,7 @@ class S2Simulation {
    		var target = CloningExtensions::clone(program) as Program;
 
 		var originalInstructions = program.eAllContents().toIterable().filter(typeof(Instruction));
-		var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction));
-		var targetInstructionsCopy = targetInstructions.toList;
+		var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction)).toList();
 		
 //		// Ensure an interface declaration
 //		if (program.programInterface == null) {
@@ -55,12 +54,12 @@ class S2Simulation {
 		// Iterate over a copy of the list	
 		var i = 0;	
 		var originalInstructionsList = originalInstructions.toList;
-		for(targetInstruction : targetInstructionsCopy) {
+		for(targetInstruction : targetInstructions) {
 			var originalInstruction = originalInstructionsList.get(i);
 			i = i + 1;
 			var statementUID = AUXILIARY_VARIABLE_TAG + originalInstruction.eResource.getURIFragment(originalInstruction).hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			targetInstruction.transformInstruction(program, statementUID);
+			targetInstruction.transformInstruction(target, statementUID);
 		}
 		
 		target;
