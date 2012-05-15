@@ -2,13 +2,14 @@ package de.cau.cs.kieler.s.sc.xtend
 
 import de.cau.cs.kieler.synccharts.*
 import de.cau.cs.kieler.s.s.SFactory
-import de.cau.cs.kieler.core.kexpressions.*
+//import de.cau.cs.kieler.core.kexpressions.
 import java.util.*
 
 import org.eclipse.xtend2.lib.StringConcatenation
 import de.cau.cs.kieler.s.s.Program
 import org.eclipse.emf.ecore.EObject
 import de.cau.cs.kieler.s.s.State
+import de.cau.cs.kieler.s.s.Thread
 import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Pause
 import de.cau.cs.kieler.s.s.Term
@@ -20,6 +21,15 @@ import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.s.s.Await
 import de.cau.cs.kieler.s.s.Prio
 import de.cau.cs.kieler.s.s.Emit
+import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.core.kexpressions.ValuedObject
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 // Transformation of S code to SC code.
 //
@@ -60,13 +70,13 @@ class S2SC {
    def scHeader(String outputFolderm, Program program) {
    	'''
     /*****************************************************************************/
-    /* Generated SC-code                                                         */
+    /*                 G E N E R A T E D     S C    C O D E                      */
     /*****************************************************************************/
     /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
     /*                                                                           */
     /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
     /*                                                                           */
-    /* Copyright 2009 by                                                         */
+    /* Copyright 2012 by                                                         */
     /* + Christian-Albrechts-University of Kiel                                  */
     /*   + Department of Computer Science                                        */
     /*     + Real-Time and Embedded Systems Group                                */
@@ -221,7 +231,7 @@ void setInputs(){
    // Define output functions to return JSON for each s signal 
    def sSimpleOutputs(Program program) {
 '''	   «'''«FOR signal : program.signals.filter(e | e.isOutput)»
-       void «(((signal as EObject).eContainer) as Program).name»_OUTPUT_«signal.name»(int status){
+       void simple_OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 		«IF signal.type == ValueType::INT»
@@ -236,16 +246,6 @@ void setInputs(){
    // -------------------------------------------------------------------------   
    
    // Call input functions for each JSON s signal that is present
-
-	//	child = cJSON_GetObjectItem(object, "S");
-	//	if (child != NULL) {
-	//		present = cJSON_GetObjectItem(child, "present");
-	//		value = cJSON_GetObjectItem(child, "value");
-	//		if (present != NULL && present->type) {
-	//			simple_I_S();
-	//		}
-	//	}   
-   
    def callInputs(Signal signal) {
    	'''child = cJSON_GetObjectItem(object, "«signal.name»");
 		if (child != NULL) {
@@ -257,54 +257,183 @@ void setInputs(){
 		}   
    	   
    	'''
-//	'''void «(((signal as EObject).eContainer) as Program).name»_INPUT_«signal.name»(«IF signal.type!="ValueType::PURE"»int val«ENDIF») {
-//		signals = signals | (1 << sig_«signal.name»);
-//		«IF signal.type!="ValueType::PURE"»valSigInt[sig_«signal.name»]=val;«ENDIF»
-//	}'''
    }
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
    
-   def expand(State state) {
-   		'''«FOR instruction : state.instructions»
+   def dispatch expand(State state) {
+   		'''«state.name»: 
+   		«FOR instruction : state.instructions»
    		«instruction.expand»
    		«ENDFOR»
    		'''
    }
    
-   def dispatch expand(Pause pause) {
+   def dispatch expand(If ifInstruction) {
+   	'''if («ifInstruction.expression.expand») { 
+   		«FOR instruction : ifInstruction.instructions»
+   			«instruction.expand»
+   		«ENDFOR»
+         }'''
+   }   
+   def dispatch expand(Pause pauseInstruction) {
    	'''PAUSE;'''
    }   
-   def dispatch expand(Term term) {
+   def dispatch expand(Term termInstruction) {
    	'''TERM;'''
    }   
-   def dispatch expand(Halt halt) {
+   def dispatch expand(Halt haltInstruction) {
    	'''HALT;'''
    }   
-   def dispatch expand(Join join) {
-   	'''JOIN;'''
+   def dispatch expand(Join joinInstruction) {
+   	'''JOINELSE(«joinInstruction.continuation.name»);'''
    }   
-   def dispatch expand(Abort abort) {
+   def dispatch expand(Abort abortInstruction) {
    	'''ABORT;'''
    }   
-   def dispatch expand(Fork fork) {
-   	'''FORK;'''
+   
+   def getLastFork(Fork forkInstruction) {
+   	 val instructionListContainer = ((forkInstruction).eContainer);
+//   	 if (instructionListContainer instanceof Thread) {
+//   	 	(instructionListContainer as Thread).
+//   	 }
+   	 if (instructionListContainer instanceof State) {
+   	 	return (instructionListContainer as State).instructions.filter(typeof(Fork)).toList.last;
+   	 }
+   	 if (instructionListContainer instanceof If) {
+   	 	return (instructionListContainer as If).instructions.filter(typeof(Fork)).toList.last;
+   	 }
+   }
+   def dispatch expand(Fork forkInstruction) {
+   	'''«IF forkInstruction.getLastFork == forkInstruction» 
+   	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
+   	   «ENDIF»
+   	   «IF forkInstruction.getLastFork != forkInstruction» 
+   	      FORKE(«forkInstruction.thread.name»);
+   	   «ENDIF»
+   	'''
    }   
-   def dispatch expand(Trans trans) {
-   	'''TRANS;'''
+
+   def dispatch expand(Trans transInstruction) {
+   	'''GOTO(«transInstruction.continuation.name»);'''
    }   
-   def dispatch expand(Await await) {
+   def dispatch expand(Await awaitInstruction) {
    	'''AWAIT;'''
    }   
-   def dispatch expand(Prio prio) {
-   	'''PRIO;'''
+   def dispatch expand(Prio prioInstruction) {
+   	'''PRIO(«prioInstruction.priority»);'''
    }   
-   def dispatch expand(Emit emit) {
-   	'''EMIT(sig_«emit.signal.name»);'''
+   def dispatch expand(Emit emitInstruction) {
+   	'''EMIT(sig_«emitInstruction.signal.name»);'''
    }   
    def dispatch expand(Instruction instruction) {
    }   
+   
+   // -------------------------------------------------------------------------   
+   // -------------------------------------------------------------------------
+   
+   //Consider complex expression 
+   def dispatch expand(OperatorExpression expression) {
+   	 '''
+	«IF expression.operator  == OperatorType::EQ»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " == "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::LT»
+		(«FOR subexpression : expression.subExpressions SEPARATOR "  <  "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::LEQ»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " <= "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::GT»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " > "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::GEQ»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " >= "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::NOT»
+	    (!(«expression.subExpressions.toList.head.expand»))
+	«ENDIF»
+	«IF expression.operator  == OperatorType::VAL»
+	    (VAL(«expression.subExpressions.toList.head.expand»))
+	«ENDIF»
+	«IF expression.operator  == OperatorType::PRE»
+	    (PRE(«expression.subExpressions.toList.head.expand»))
+	«ENDIF»
+	«IF expression.operator  == OperatorType::NE»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " != "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::AND»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " && "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::OR»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " || "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::ADD»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " + "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::SUB»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " - "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::MULT»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " * "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::DIV»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " / "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	«IF expression.operator  == OperatorType::MOD»
+		(«FOR subexpression : expression.subExpressions SEPARATOR " % "»
+			«subexpression.expand»
+		«ENDFOR»)
+	«ENDIF»
+	   	 '''
+   }
 
+   def dispatch expand(Signal signal) {
+   	 '''PRESENT(sig_«signal.name»)'''
+   }
+
+   def dispatch expand(BooleanValue expression) {
+   	 '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
+   }
+
+   
+   def dispatch expand(ValuedObjectReference valuedObjectReference) {
+   	 '''«valuedObjectReference.valuedObject.expand»'''
+   }
+   
+   def dispatch expand(ValuedObject valuedObject) {
+   	 ''''''
+   }
+
+   
+//«DEFINE expandedExpression FOR ValuedObjectReference-»«EXPAND expandedExpression FOR valuedObject-»«ENDDEFINE»
+//«DEFINE expandedExpression FOR Signal-»PRESENT(«this.name-»)«ENDDEFINE»
+//«DEFINE expandedExpression FOR ValuedObject-»«ENDDEFINE»
+//«DEFINE expandedExpression FOR Expression-»«ENDDEFINE»   
 
 }
