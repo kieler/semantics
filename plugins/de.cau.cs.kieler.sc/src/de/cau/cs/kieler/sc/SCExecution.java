@@ -37,6 +37,8 @@ import org.osgi.framework.Bundle;
  * 
  */
 public class SCExecution {
+	
+	private final String COMPILER_DEFAULT = "gcc";
 
 	private Process executionProcess = null;
 	private PrintWriter executionInterfaceToSC;
@@ -59,6 +61,7 @@ public class SCExecution {
 	 * @throws IOException 
 	 */
 	public SCExecution() throws IOException {
+		setCompiler(COMPILER_DEFAULT);
 		setCompiled(false);
 		setStarted(false);
 		setOutputPath(SCExecution.generateRandomTempOutputFolder());
@@ -68,6 +71,7 @@ public class SCExecution {
 	 * Instantiates a new SCExecution with a concrete outputPath.
 	 */
 	public SCExecution(String outputPath) {
+		setCompiler(COMPILER_DEFAULT);
 		setCompiled(false);
 		setStarted(false);
 		setOutputPath(outputPath);
