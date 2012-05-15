@@ -93,7 +93,7 @@ public class SCExecution {
 
 		// building path to bundle
 		Bundle bundle = Platform
-				.getBundle("de.cau.cs.kieler.synccharts.codegen.sc");
+				.getBundle(SCPlugin.PLUGIN_ID);
 
 		URL url = null;
 		try {
@@ -269,8 +269,7 @@ public class SCExecution {
 	 */
 	public static String generateRandomTempOutputFolder() throws IOException {
 		String folderName = System.getProperty("java.io.tmpdir") + SCExecution.randomString() + File.separator;
-		File folder = new File(folderName);
-		if (folder.createNewFile()) {
+		if (new File(folderName).mkdir()) {
 			return (folderName);
 		}
 		throw new IOException("Could not create folder '"+folderName+"'.");
