@@ -539,7 +539,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
 		} catch (Exception e) {
 			throw new KiemInitializationException(
-					"Error compiling Esterel file:\n\n " + e.getMessage() + "\n\n" + compile,
+					"Error compiling S program:\n\n " + e.getMessage() + "\n\n" + compile,
 					true, e);
 		}
 	}
