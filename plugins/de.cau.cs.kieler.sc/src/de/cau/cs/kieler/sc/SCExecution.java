@@ -383,7 +383,7 @@ public class SCExecution {
 	}
 
 	public boolean isCompiled() {
-		return started;
+		return compiled;
 	}
 
 	private void setCompiled(boolean compiled) {
