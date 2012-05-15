@@ -256,6 +256,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						
 						// retrieve jsonSignal
 						JSONObject jsonSignal = sSignalOutput.getJSONObject(outputSignal);
+						boolean sSignalIsPresent = JSONSignalValues.isPresent(jsonSignal);
 						
 						if (jsonSignal.has("value")) {
 							Object value = jsonSignal.get("value");
@@ -266,7 +267,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						else {
 							// pure signals
 							returnObj.accumulate(outputSignal,
-									JSONSignalValues.newValue(true));
+									JSONSignalValues.newValue(sSignalIsPresent));
 						}
 					} else {
 						returnObj.accumulate(outputSignal,
