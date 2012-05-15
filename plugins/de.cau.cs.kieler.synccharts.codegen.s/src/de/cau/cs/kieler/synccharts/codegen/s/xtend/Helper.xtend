@@ -181,11 +181,18 @@ def String getStatePathAsName(State state) {
  // Only add the prio statement if the last one was not the same
  def void addOptimized(List<Instruction> instructions, Prio prioStatement) {
  	val lastPrioStatementList = instructions.filter(typeof(Prio)).toList()
+ 	// check if PRIO has not changed
  	if (!lastPrioStatementList.nullOrEmpty) {
  		val lastPrioStatement = lastPrioStatementList.last;
 	 	if (lastPrioStatement.priority == prioStatement.priority) {
  			return
  		}
+ 	}
+ 	// check if a PRIO instruction just before is higher or equal
+ 	if ((instructions.tail instanceof Prio) && ((instructions.tail as Prio).priority > prioStatement.priority)) {
+ 		// lower last prio statement
+ 		(instructions.tail as Prio).setPriority(prioStatement.priority);
+ 		return;
  	}
 	instructions.add(prioStatement);
  }

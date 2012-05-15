@@ -117,10 +117,10 @@ class Synccharts2S {
 			val sStateDepth = state.depthSState
 			val sStateJoin = state.joinSState
 			state.fillSStateSurface(sStateSurface);
-			state.fillSStateDepth(sStateDepth);
 			if (sStateJoin != null) {
 				state.fillSStateJoin(sStateJoin);
 			} 
+			state.fillSStateDepth(sStateDepth);
 		}
 		 
 		
@@ -232,7 +232,10 @@ class Synccharts2S {
 	def fillSStateDepth (State state, de.cau.cs.kieler.s.s.State sState) {
 		val regardedTransitionListStrong = state.strongTransitionsOrdered
 		val regardedTransitionListWeak = state.weakTransitionsOrdered
-		
+
+		// is a join instruction present? if this is the case do not generate a pause here!	
+		val joinInstruction = (state.getJoinSState != null)
+				
 		// optimization: of halt or term before then exit
 		if (    !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Halt)).empty 
 		     || !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Term)).empty) {
@@ -248,7 +251,7 @@ class Synccharts2S {
 	    // create a pause instruction only iff no HALT or TERM instruction
 	    // halt == no outgoing transition
 	    // term == final state
-		if (!state.finalState) {
+		if (!state.finalState && !joinInstruction) {
 			sState.instructions.add(SFactory::eINSTANCE.createPause());
 		}
 
