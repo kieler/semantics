@@ -405,26 +405,6 @@ litigation.
          unpack="false"/>
 
    <plugin
-         id="de.cau.cs.kieler.s.codegen.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sc.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sj.source"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
-
-   <plugin
          id="de.cau.cs.kieler.s.ui.source"
          download-size="0"
          install-size="0"
