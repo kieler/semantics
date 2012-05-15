@@ -12,11 +12,11 @@
    <extension
          point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
       <executionFile
-            file="execution/s_sc.execution">
+            file="execution/s_sc_no_visualization.execution">
          <editor
                id="de.cau.cs.kieler.s.S"
-               name="S Editor"
-               priority="1">
+               name="KIELER S Editor"
+               priority="2">
          </editor>
       </executionFile>
    </extension>

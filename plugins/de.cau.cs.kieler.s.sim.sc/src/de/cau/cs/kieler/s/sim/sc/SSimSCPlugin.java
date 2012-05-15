@@ -15,9 +15,6 @@ public class SSimSCPlugin extends AbstractUIPlugin {
      *  This TAG is also defined in S2Simulation.xtend. Both TAGs must match */
     public static final String AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
-	/** The Constant S_LANGUAGE points to the S Xtext Editor. */
-	public static final String S_LANGUAGE = "de.cau.cs.kieler.s.S";
-
 
 	// The shared instance
 	private static SSimSCPlugin plugin;
