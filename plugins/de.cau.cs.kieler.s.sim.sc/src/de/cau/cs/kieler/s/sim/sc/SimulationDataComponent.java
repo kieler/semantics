@@ -67,6 +67,7 @@ import de.cau.cs.kieler.s.sc.S2SCPlugin;
 import de.cau.cs.kieler.s.sc.xtend.S2SC;
 import de.cau.cs.kieler.s.sc.xtend.S2SC;
 import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
+import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -148,12 +149,8 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	
 
 	private Program myModel = null;
-	private Process process = null;
-	private PrintWriter toS = null;
-	private BufferedReader fromS = null;
-	private BufferedReader error = null;
 
-	private File simFile = null;
+	private SCExecution scExecution = null;
 
 	private LinkedList<String> outputSignalList = null;
 
@@ -184,7 +181,6 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	 * {@inheritDoc}
 	 */
 	public void initialize() throws KiemInitializationException {
-
 	}
 
 	// -------------------------------------------------------------------------
@@ -200,19 +196,19 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 		// Collect active statements
 		String activeStatements = "";
 
-		if (process == null) {
+		if (!scExecution.isStarted()) {
 			throw new KiemExecutionException(
 					"No s simulation is running", true, null);
 		}
 		try {
 
-			toS.write(jSONObject.toString() + "\n");
-			toS.flush();
-			while (error.ready()) {
-				System.out.print(error.read());
+			scExecution.getExecutionInterfaceToSC().write(jSONObject.toString() + "\n");
+			scExecution.getExecutionInterfaceToSC().flush();
+			while (scExecution.getExecutionInterfaceError().ready()) {
+				System.out.print(scExecution.getExecutionInterfaceError().read());
 			}
 
-			String receivedMessage = fromS.readLine();
+			String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
 
 			if (receivedMessage != null) {
 				JSONObject esterelOutput = new JSONObject(receivedMessage);
@@ -290,10 +286,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
 		} catch (IOException e) {
 			System.err.println(e.getMessage());
-			process.destroy();
+			scExecution.stopExecution();
 		} catch (JSONException e) {
 			e.printStackTrace();
-			process.destroy();
+			scExecution.stopExecution();
 		}
 
 		return returnObj;
@@ -338,28 +334,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	 * {@inheritDoc}
 	 */
 	public void wrapup() throws KiemInitializationException {
-		if (process != null) {
-			process.destroy();
-		}
-		// boolean ok = true;
-		//
-		// if (strlFile != null && strlFile.exists()) {
-		// ok &= strlFile.delete();
-		// }
-		// if (dataFile != null && dataFile.exists()) {
-		// ok &= dataFile.delete();
-		// }
-		// if (simFile != null && simFile.exists()) {
-		// ok &= simFile.delete();
-		// }
-		// strlFile = null;
-		// dataFile = null;
-		// simFile = null;
-		//
-		// if (!ok) {
-		// throw new KiemInitializationException(
-		// "Could not delete temp files", false, null);
-		// }
+		scExecution.stopExecution();
 	}
 
 	// -------------------------------------------------------------------------
@@ -387,41 +362,8 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Compile S to SC using the s.codegen.sc plugin.
-	 * 
-	 * @param strlFile
-	 *            the strl file
-	 * @param outFile
-	 *            the out file
-	 * @param monitor
-	 *            the monitor
-	 * @return the java.net. uri
-	 * @throws IOException
-	 *             Signals that an I/O exception has occurred.
-	 * @throws URISyntaxException
-	 *             the uRI syntax exception
+	 * {@inheritDoc}
 	 */
-	private java.net.URI compileSToSC(final URI strlFile,
-			final File outFile, SSimulationProgressMonitor monitor)
-			throws IOException, URISyntaxException {
-
-		monitor.subTask("Reading Esterel file");
-		java.net.URI inputURI = convertURI(strlFile);
-		monitor.worked(1);
-		if (monitor.isCanceled()) {
-			return null;
-		}
-		
-		//TODO: sc code generation and c code compilation here
-
-		monitor.subTask("Generating C code");
-		java.net.URI uri = null; 
-		monitor.worked(1);
-		return uri;
-	}
-
-	// -------------------------------------------------------------------------
-
 	public void doModel2ModelTransform(final KielerProgressMonitor monitor)
 			throws KiemInitializationException {
 		monitor.begin("S Simulation", 10);
@@ -498,76 +440,18 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						"Cannot write output S file.", true, null);
 			}
 
+			// Set a random output folder for the compiled files
+			String outputFolder = SCExecution.generateRandomTempOutputFolder();
 			
 			// Genereate SC code
 			String scOutputString =	getFileStringFromUri(scOutput);
-			S2SCPlugin.generateSCCode(transformedProgram, scOutputString);
+			S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
 			
-//			// Compile Esterel to C
-//			URL output = this.compileSToSC(sOutput,
-//					null, esterelSimulationProgressMonitor)
-//					.toURL();
-
-			
-			// Cannot be done before because otherwise the new model cannot be serialized (24.01.2012)
-			// Do this on a copy to not destroy original program;
-			// Make Esterel Interface delcration consistent
-//			InterfaceDeclarationFix interfaceDeclarationFix = Guice.createInjector()
-//					.getInstance(InterfaceDeclarationFix.class);
-//			Program fixedTransformedProgram = (Program) CloningExtensions.clone(transformedProgram); 
-//			interfaceDeclarationFix.fix(fixedTransformedProgram);
-			
-			
-//			// Generate data.c
-//			URL data = generateCSimulationInterface(transformedProgram,
-//					sOutput);
-
-//			// Compile C code
-//			Bundle bundle = Platform
-//					.getBundle("de.cau.cs.kieler.s.sim.sc");
-//
-//			URL fileUrl = FileLocator.find(bundle,
-//					new Path("simulation"), null);
-//			URL bundleLocation = FileLocator.toFileURL(fileUrl);
-//
-//			executable = File.createTempFile("sim", "");
-//			String compiler = (getProperties()[2]).getValue();
-//			compile = compiler + " " + output.getPath() + " "
-//					+ data.getPath() + " " + bundleLocation.getPath()
-//					+ "cJSON.c " + "-I " + bundleLocation.getPath() + " "
-//					+ "-lm -o " + executable;
-//
-//			if (isWindows()) {
-//				executable = File.createTempFile("sim", ".exe");
-//				compile = compiler + " " + output.getPath().substring(1) + " "
-//						+ data.getPath().substring(1) + " "
-//						+ bundleLocation.getPath().substring(1) + "cJSON.c "
-//						+ "-I " + bundleLocation.getPath().substring(1) + " "
-//						+ "-lm -o " + executable;
-//			}
-//
-//			simFile = executable;
-//
-//			System.out.println(compile);
-//
-//			process = Runtime.getRuntime().exec(compile);
-//			InputStream stderr = process.getErrorStream();
-//			InputStreamReader isr = new InputStreamReader(stderr);
-//			BufferedReader br = new BufferedReader(isr);
-//			String line = null;
-//			StringBuilder errorString = new StringBuilder();
-//			while ((line = br.readLine()) != null) {
-//				errorString.append("\n" + line);
-//
-//			}
-//
-//			int exitValue = process.waitFor();
-//
-//			if (exitValue != 0) {
-//				throw new KiemInitializationException("could not compile",
-//						true, new Exception(errorString.toString()));
-//			}
-
+			// Compile
+			scExecution = new SCExecution(outputFolder);
+			LinkedList<String> generatedSCFiles = new LinkedList<String>();
+			generatedSCFiles.add(scOutputString);
+			scExecution.compile(generatedSCFiles);	
 		} catch (Exception e) {
 			throw new KiemInitializationException(
 					"Error compiling S program:\n\n " + e.getMessage() + "\n\n" + compile,
@@ -578,31 +462,36 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	
 	// -------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JSONObject doProvideInitialVariables()
 			throws KiemInitializationException {
+		
+		// start execution of compiled program
+		if (scExecution.isCompiled()) {
+			try {
+				scExecution.startExecution();
+			} catch (IOException e) {
+	    		throw new KiemInitializationException(
+	                    "S program could not be started sucessfully.\n\n",
+	                    true, e);
+			}
+		}
+		else {
+    		throw new KiemInitializationException(
+                    "S program was not compiled sucessfully.\n\n",
+                    true, null);
+		}
+		
 
-		if ((simFile == null) || (!simFile.exists())) {
+		if (!scExecution.isStarted()) {
 			throw new KiemInitializationException(
 					"Error running S program. Compiled simulation does not exist.\n",
 					true, null);
 		}
 
-		try {
-			// Execute the compiled C program (asynchronously)
-			String executablePath = simFile.getPath();
-			process = Runtime.getRuntime().exec(executablePath);
-
-			toS = new PrintWriter(new OutputStreamWriter(
-					process.getOutputStream()));
-			fromS = new BufferedReader(new InputStreamReader(
-					process.getInputStream()));
-			error = new BufferedReader(new InputStreamReader(
-					process.getErrorStream()));
-		} catch (IOException e) {
-			throw new KiemInitializationException(
-					"Error running S program:\n\n" + e.getMessage(), true, e);
-		}
 
 		// Build the list of interface output signals
 		outputSignalList = new LinkedList<String>();
@@ -647,7 +536,12 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
-
+	/**
+	 * Transform a URI into a file string.
+	 *
+	 * @param uri the uri
+	 * @return the file string from uri
+	 */
 	protected String getFileStringFromUri(URI uri) {
 
 		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
