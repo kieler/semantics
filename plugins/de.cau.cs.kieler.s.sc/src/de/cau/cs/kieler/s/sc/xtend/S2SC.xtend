@@ -135,12 +135,12 @@ void simple_INPUT_«signal.name»() {
    // Generate simple signal outputs
    def sSetOutputFunction(Program program) {
    	'''
+	void callOutputs() {
 	«FOR signal : program.getSignals().filter(e|e.isOutput)»
-void callOutputs() {
-	simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
-	signals=0;
-}
+		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
 	«ENDFOR»
+		signals=0;
+	}
    	'''
    }
    
@@ -185,7 +185,7 @@ void setInputs(){
 			callOutputs();
 			char* outString = cJSON_Print(output);
 			strip_white_spaces(outString);
-			printf("DEBUGEND%s\n", outString);
+			printf("%s\n", outString);
 			fflush(stdout);
 			//reset();
 			output = cJSON_CreateObject();

@@ -211,14 +211,15 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 			String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
 
 			if (receivedMessage != null) {
-				JSONObject esterelOutput = new JSONObject(receivedMessage);
-				JSONArray esterelOutputArray = esterelOutput.names();
+				JSONObject sSignalOutput = new JSONObject(receivedMessage);
+				JSONArray sSignalOutputArray = sSignalOutput.names();
 
-				if (esterelOutputArray != null) {
+				if (sSignalOutputArray != null) {
 					// First add auxiliary signals
-					for (int i = 0; i < esterelOutputArray.length(); i++) {
-						String esterelOutputName = esterelOutputArray
+					for (int i = 0; i < sSignalOutputArray.length(); i++) {
+						String sSignalOutputName = sSignalOutputArray
 								.getString(i);
+						boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput.getJSONObject(sSignalOutputName));
 
 						// Test if the output variable is an auxiliary signal
 						// that is only there to mark the current S
@@ -227,10 +228,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						// These auxiliary signals must be encapsulated in a
 						// state
 						// variable.
-						if (esterelOutputName
-								.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+						if (sSignalOutputName
+								.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG) && sSignalIsPresent) {
 							try {
-								String statementWithoutAuxiliaryVariableTag = esterelOutputName
+								String statementWithoutAuxiliaryVariableTag = sSignalOutputName
 										.substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG
 												.length());
 
@@ -239,7 +240,6 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 									activeStatements += ",";
 								}
 
-								// Add active statement to string.
 								activeStatements += statementWithoutAuxiliaryVariableTag;
 
 							} catch (Exception e) {
@@ -252,10 +252,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
 				// Then add normal output signals
 				for (String outputSignal : outputSignalList) {
-					if (esterelOutput.has(outputSignal)) {
+					if (sSignalOutput.has(outputSignal)) {
 						
 						// retrieve jsonSignal
-						JSONObject jsonSignal = esterelOutput.getJSONObject(outputSignal);
+						JSONObject jsonSignal = sSignalOutput.getJSONObject(outputSignal);
 						
 						if (jsonSignal.has("value")) {
 							Object value = jsonSignal.get("value");
@@ -422,8 +422,8 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 					.appendFileExtension("simulation.s");
 			
 			scOutput = URI.createURI(input.toString());
-			scOutput = sOutput.trimFragment();
-			scOutput = sOutput.trimFileExtension()
+			scOutput = scOutput.trimFragment();
+			scOutput = scOutput.trimFileExtension()
 					.appendFileExtension("c");
 
 			try {
