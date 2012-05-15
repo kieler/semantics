@@ -22,6 +22,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
+import java.util.List;
 import java.util.Random;
 
 import org.eclipse.core.runtime.FileLocator;
@@ -82,7 +83,7 @@ public class SCExecution {
 	 * 
 	 * {@inheritDoc}
 	 */
-	public void compile(String[] filePaths) throws IOException,
+	public void compile(List<String> filePaths) throws IOException,
 			InterruptedException {
 		// reset successful compiled flag
 		setCompiled(false);
