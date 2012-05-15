@@ -56,8 +56,9 @@ public class SCExecution {
 
 	/**
 	 * Instantiates a new SCExecution with a random outputPath.
+	 * @throws IOException 
 	 */
-	public SCExecution() {
+	public SCExecution() throws IOException {
 		setCompiled(false);
 		setStarted(false);
 		setOutputPath(SCExecution.generateRandomTempOutputFolder());
@@ -264,10 +265,15 @@ public class SCExecution {
 	 * Generate a random temporary output folder in the java tempdir directory.
 	 * 
 	 * @return the string
+	 * @throws IOException 
 	 */
-	public static String generateRandomTempOutputFolder() {
-		return (System.getProperty("java.io.tmpdir") + File.separator
-				+ SCExecution.randomString() + File.separator);
+	public static String generateRandomTempOutputFolder() throws IOException {
+		String folderName = System.getProperty("java.io.tmpdir") + SCExecution.randomString() + File.separator;
+		File folder = new File(folderName);
+		if (folder.createNewFile()) {
+			return (folderName);
+		}
+		throw new IOException("Could not create folder '"+folderName+"'.");
 	}
 
 	// -------------------------------------------------------------------------
