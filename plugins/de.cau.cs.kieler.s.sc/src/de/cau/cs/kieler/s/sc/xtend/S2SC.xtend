@@ -306,10 +306,10 @@ void setInputs(){
    	 }
    }
    def dispatch expand(Fork forkInstruction) {
-   	'''«IF forkInstruction.getLastFork == forkInstruction» 
+   	'''«IF forkInstruction.getLastFork != forkInstruction» 
    	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
    	   «ENDIF»
-   	   «IF forkInstruction.getLastFork != forkInstruction» 
+   	   «IF forkInstruction.getLastFork == forkInstruction» 
    	      FORKE(«forkInstruction.thread.name»);
    	   «ENDIF»
    	'''
