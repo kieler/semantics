@@ -404,25 +404,6 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="de.cau.cs.kieler.s.codegen"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sc"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
-
-   <plugin
-         id="de.cau.cs.kieler.s.sj"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"/>
 
    <plugin
          id="de.cau.cs.kieler.s.ui"
@@ -605,12 +586,6 @@ litigation.
          version="0.0.0"
          unpack="false"/>
 
-   <plugin
-         id="de.cau.cs.kieler.synccharts.s"
-         download-size="0"
-         install-size="0"
-         version="0.0.0"
-         unpack="false"/>
 
    <plugin
          id="de.cau.cs.kieler.synccharts.sim.ptolemy"
