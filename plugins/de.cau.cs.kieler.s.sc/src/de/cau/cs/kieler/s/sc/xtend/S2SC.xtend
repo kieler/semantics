@@ -27,10 +27,10 @@ import de.cau.cs.kieler.s.s.Emit
 class S2SC { 
     
     // Generale method to create the c simulation interface
-	def transform (Program program) {
+	def transform (Program program, String outputFolder) {
        '''
 	   «/* Generate the C header */»
-       «scHeader()»
+       «scHeader(outputFolder)»
 
 	   «/* Generate output functions for each Esterel signal */» 
 	   «'''«FOR signal : program.signals.filter(e | e.isOutput)»
@@ -50,7 +50,7 @@ class S2SC {
    // -------------------------------------------------------------------------   
    
    // Generate the C header
-   def scHeader() {
+   def scHeader(String outputFolder) {
    	'''
     /*****************************************************************************/
     /* Generated SC-code                                                         */
@@ -67,8 +67,8 @@ class S2SC {
     /* This code is provided under the terms of the Eclipse Public License (EPL).*/
     /*****************************************************************************/
 
-    #include "misc.h"
-    #include "sc.h"
+    #include «outputFolder»"misc.h"
+    #include «outputFolder»"sc.h"
 	''' 
    }
    

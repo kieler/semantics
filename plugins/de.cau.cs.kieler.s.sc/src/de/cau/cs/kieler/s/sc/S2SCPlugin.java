@@ -48,9 +48,9 @@ public class S2SCPlugin extends AbstractUIPlugin {
 	}
 	
 	
-	public static void generateSCCode(Program program, String outputFile) throws IOException {
+	public static void generateSCCode(Program program, String outputFile, String outputFolder) throws IOException {
 		S2SC s2SC = new S2SC();
-		String ccode = s2SC.transform(program).toString(); 
+		String ccode = s2SC.transform(program, outputFolder).toString(); 
 
 		// Write out c program
 			FileWriter fileWriter = new FileWriter(outputFile);
