@@ -19,6 +19,7 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.ui.ide,
  org.eclipse.emf.mwe.core;bundle-version="1.2.1",
  com.google.inject;bundle-version="3.0.0",
- de.cau.cs.kieler.core.annotations;bundle-version="0.3.0"
+ de.cau.cs.kieler.core.annotations;bundle-version="0.3.0",
+ de.cau.cs.kieler.s.sc;bundle-version="0.1.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy

@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
@@ -17,14 +18,30 @@ import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import com.google.inject.Guice;
 
 import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IFileState;
+import org.eclipse.core.resources.IMarker;
+import org.eclipse.core.resources.IPathVariableManager;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IProjectDescription;
+import org.eclipse.core.resources.IResourceProxy;
+import org.eclipse.core.resources.IResourceProxyVisitor;
+import org.eclipse.core.resources.IResourceVisitor;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourceAttributes;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.QualifiedName;
+import org.eclipse.core.runtime.content.IContentDescription;
+import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -46,6 +63,9 @@ import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.s.s.Program; 
+import de.cau.cs.kieler.s.sc.S2SCPlugin;
+import de.cau.cs.kieler.s.sc.xtend.S2SC;
+import de.cau.cs.kieler.s.sc.xtend.S2SC;
 import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -432,6 +452,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 			// an active Editor
 
 			URI sOutput = URI.createURI("");
+			URI scOutput = URI.createURI("");
 			// By default there is no additional transformation necessary
 			Program transformedProgram = myModel;
 			
@@ -457,6 +478,11 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 			sOutput = sOutput.trimFragment();
 			sOutput = sOutput.trimFileExtension()
 					.appendFileExtension("simulation.s");
+			
+			scOutput = URI.createURI(input.toString());
+			scOutput = sOutput.trimFragment();
+			scOutput = sOutput.trimFileExtension()
+					.appendFileExtension("c");
 
 			try {
 				// Write out copy/transformation of Esterel program
@@ -472,6 +498,11 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						"Cannot write output S file.", true, null);
 			}
 
+			
+			// Genereate SC code
+			String scOutputString =	getFileStringFromUri(scOutput);
+			S2SCPlugin.generateSCCode(transformedProgram, scOutputString);
+			
 //			// Compile Esterel to C
 //			URL output = this.compileSToSC(sOutput,
 //					null, esterelSimulationProgressMonitor)
@@ -543,7 +574,8 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 					true, e);
 		}
 	}
-
+	
+	
 	// -------------------------------------------------------------------------
 
 	@Override
@@ -613,36 +645,41 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 	}
 
 	// -------------------------------------------------------------------------
+	// -------------------------------------------------------------------------
 
-//	/**
-//	 * Generate the CSimulationInterface.
-//	 * 
-//	 * @param esterelProgram
-//	 *            the esterel program
-//	 * @param esterelProgramURI
-//	 *            the esterel program uri
-//	 * @return the uRL
-//	 * @throws KiemInitializationException
-//	 *             the kiem initialization exception
-//	 */
-//	private URL generateCSimulationInterface(Program esterelProgram,
-//			URI esterelProgramURI) throws KiemInitializationException {
-//		File data;
-//		try {
-//			data = File.createTempFile("data", ".c");
-//			CSimulationInterfaceGenerator cSimulationInterfaceGenerator = new CSimulationInterfaceGenerator(
-//					esterelProgram, esterelProgramURI);
-//			cSimulationInterfaceGenerator.execute(data.getPath());
-//			return data.toURI().toURL();
-//		} catch (IOException e) {
-//			throw new KiemInitializationException("Error creating data file",
-//					true, e);
-//		} catch (ExecutionException e) {
-//			throw new KiemInitializationException("Error creating data file",
-//					true, e);
-//		}
-//	}
 
+	protected String getFileStringFromUri(URI uri) {
+
+		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
+				.getRoot();
+
+		IPath path = new Path(uri.toPlatformString(false));
+		IFile file = myWorkspaceRoot.getFile(path);
+
+		IPath fullPath = file.getLocation();
+
+		// If we have spaces, try it like this...
+		if (fullPath == null
+				&& file instanceof org.eclipse.core.internal.resources.Resource) {
+			org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) file;
+			fullPath = resource.getLocalManager().locationFor(resource);
+		}
+
+		// Ensure it is absolute
+		fullPath.makeAbsolute();
+
+		java.io.File javaFile = new java.io.File(fullPath.toString().replaceAll("%20",
+				" "));
+
+		if (javaFile != null) {
+			String fileString = javaFile.getAbsolutePath();
+			return fileString;
+		}
+
+		// Something went wrong, we could not resolve the file location
+		return null;
+	}		
+	
 	// -------------------------------------------------------------------------
 
 }
