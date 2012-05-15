@@ -27,7 +27,7 @@ import de.cau.cs.kieler.s.s.Emit
 class S2SC { 
     
     // Generale method to create the c simulation interface
-	def createS2SC (Program program) {
+	def transform (Program program) {
        '''
 	   «/* Generate the C header */»
        «scHeader()»

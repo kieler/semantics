@@ -1,7 +1,16 @@
 package de.cau.cs.kieler.s.sc;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import org.eclipse.core.commands.ExecutionException;
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
+
+import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.sc.xtend.S2SC;
 
 /**
  * The activator class controls the plug-in life cycle
@@ -36,6 +45,22 @@ public class S2SCPlugin extends AbstractUIPlugin {
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
+	}
+	
+	
+	public static void generateSCCode(Program program, String outputFile) throws IOException {
+		S2SC s2SC = new S2SC();
+		String ccode = s2SC.transform(program).toString(); 
+
+		// Write out c program
+			FileWriter fileWriter = new FileWriter(outputFile);
+			if (fileWriter != null) {
+				BufferedWriter out = new BufferedWriter(fileWriter);
+				if (out != null) {
+					out.write(ccode);
+					out.close();
+				}
+			}
 	}
 
 	/**

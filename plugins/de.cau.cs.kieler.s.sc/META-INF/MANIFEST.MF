@@ -19,3 +19,5 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.annotations;bundle-version="0.3.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.s.sc,
+ de.cau.cs.kieler.s.sc.xtend
