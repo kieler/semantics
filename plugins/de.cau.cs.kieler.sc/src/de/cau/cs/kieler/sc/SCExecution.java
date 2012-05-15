@@ -168,7 +168,7 @@ public class SCExecution {
 
 			if (exitValue != 0) {
 				throw new IOException(
-						"Could not compile the generated SC code.\n\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n");
+						"Could not compile the generated C code.\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n\n" + getCompileError());
 			}
 
 		} catch (IOException e) {
