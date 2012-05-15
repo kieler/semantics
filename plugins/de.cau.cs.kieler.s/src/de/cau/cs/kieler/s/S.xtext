@@ -16,18 +16,10 @@ generate s "http://www.cau.de/cs/kieler/s"
 
 Program :
 	'Synchronous Program' name = ID '(' priority=INT ')'
-//	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
-//	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
-//	(programInterface=ProgramInterface)? 
-//	(signals += Signal)*
-//	((signals += Signal) (',' signals += Signal)*';')?
 	((signals += Signal) (signals += Signal)*)?
 	(states += State)+
 ;
 
-
-//ProgramInterface:
-//	(interfaceSignalDecls+=InterfaceSignalDecl)+;
 
 
 //Annotation:
@@ -67,44 +59,6 @@ Signal returns expressions::Signal:
      (':' 'combine' type=ValueType 'with' (combineOperator=CombineOperator|hostCombineOperator=EString) )
     )? ";";
     
-//Signal returns expressions::Signal :
-//	name=ID ':' 
-//	type = SignalType
-//	('combine' combineFunction = [CombineFunction])?
-//;
-
-//CombineFunction:
-//	name=ID
-//	type=[expressions::ValueType]
-//	type=ValueType
-//;
-
-
-//SignalType:
-//	PrimitiveSignalType | CustomSignalType;
-  
-//CustomSignalType:
-//  'CUSTOM' customType = STRING;
-
-//enum PrimitiveType:
-//	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
-	
-//PrimitiveSignalType:
-//	primitiveType = PrimitiveType
-//	;
-  
-//IntValue: 
-//	value=IntValue;
-//FloatValue:
-//    value=Float; 
-//BooleanValue:
-//    value=Boolean;
-    
-//terminal Float: 
-//	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-//terminal Boolean: 
-//	"true" | "false";
-	
 
 //---------------------------------------------------------------------
 //----------------------- List of S-Instructions ----------------------
