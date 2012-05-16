@@ -169,17 +169,22 @@ class Synccharts2Dependenies {
 	def handleControlFlowDependency(Dependencies dependencies, Node firstNode, State state, Transition transition, Transition targetTransition) {
 			var secondNode = dependencies.getNode(transition.targetState, targetTransition, DependencyType::STRONG);
 			if (firstNode != secondNode) {
-					dependencies.getControlFlowDependency(firstNode, secondNode, transition.isImmediate)
+				 	if (transition.isImmediate) {
+						dependencies.getControlFlowDependency(firstNode, secondNode, transition.isImmediate)
+				 	}
 				
 					if (transition.sourceState.hierarchical) {
 						var firstNodeW  = dependencies.getNode(transition.sourceState, transition, DependencyType::WEAK);
-						dependencies.getControlFlowDependency(firstNodeW, secondNode, transition.isImmediate)  //TODO: necessary or correct???
-						
-						if (transition.targetState.hierarchical) {
-							var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, DependencyType::WEAK);
-							dependencies.getControlFlowDependency(firstNodeW, secondNodeW, transition.isImmediate)
-							dependencies.getControlFlowDependency(firstNode, secondNodeW, transition.isImmediate)  //TODO: necessary or correct???
+						if (transition.isImmediate) {
+							dependencies.getControlFlowDependency(firstNodeW, secondNode, transition.isImmediate)  //TODO: necessary or correct???
+
+							if (transition.targetState.hierarchical) {
+								var secondNodeW = dependencies.getNode(transition.targetState, targetTransition, DependencyType::WEAK);
+								dependencies.getControlFlowDependency(firstNodeW, secondNodeW, transition.isImmediate)
+								dependencies.getControlFlowDependency(firstNode, secondNodeW, transition.isImmediate)  //TODO: necessary or correct???
+							}
 						}
+						
 					}
 			}
 	}
