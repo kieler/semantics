@@ -236,45 +236,41 @@ class Synccharts2S {
 		// is a join instruction present? if this is the case do not generate a pause here!	
 		val joinInstruction = (state.getJoinSState != null)
 				
-		// optimization: of halt or term before then exit
-		if (    !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Halt)).empty 
-		     || !sState.instructions.filter(typeof(de.cau.cs.kieler.s.s.Term)).empty) {
-			return null;
-		}
-
-	    // before the pause statement possibly raise priority
-	    if (state.highestDependencyWeakNode != null) {
-		    // optimization: do this only if the priority might be lowered (weak prio exist)
-		    sState.addHighestStrongPrio(state);
-	    } 
-	    
-	    // create a pause instruction only iff no HALT or TERM instruction
-	    // halt == no outgoing transition
-	    // term == final state
-		if (!state.finalState && !joinInstruction) {
-			sState.instructions.add(SFactory::eINSTANCE.createPause());
-		}
-
-
-		// first handle all strong preemptions
-		for (transition : regardedTransitionListStrong) {
-			sState.addStrongPrio(state, transition);
-			transition.handleTransition(sState);
-		}
-		
-		// lower priority (to allow a possible body to be executed)
-		sState.addHighestWeakPrio(state);
-		
-		// then handle all weak preemptions
-		for (transition : regardedTransitionListWeak) {
-			sState.addWeakPrio(state, transition);
-			transition.handleTransition(sState);
-		}
-		
-		// if this a final state wait for join otherwise continue 
-		// in the next tick to possibly handle strong and weak transitions
-		// again in the depth of this sState
+		// if not a final state then process normally otherwise add halt or term 
 		if (!state.finalState) {
+			
+	 	   	// before the pause statement possibly raise priority
+	 	   	if (state.highestDependencyWeakNode != null) {
+			    // optimization: do this only if the priority might be lowered (weak prio exist)
+			    sState.addHighestStrongPrio(state);
+	  		} 
+	    
+	  		// create a pause instruction only iff no HALT or TERM instruction
+	  		// halt == no outgoing transition
+	  	  	// term == final state
+			if (!state.finalState && !joinInstruction) {
+				sState.instructions.add(SFactory::eINSTANCE.createPause());
+			}
+
+			// first handle all strong preemptions
+			for (transition : regardedTransitionListStrong) {
+				sState.addStrongPrio(state, transition);
+				transition.handleTransition(sState);
+			}
+		
+			// lower priority (to allow a possible body to be executed)
+			sState.addHighestWeakPrio(state);
+		
+			// then handle all weak preemptions
+			for (transition : regardedTransitionListWeak) {
+				sState.addWeakPrio(state, transition);
+				transition.handleTransition(sState);
+			}
+		
+			// if this a final state wait for join otherwise continue 
+			// in the next tick to possibly handle strong and weak transitions
+			// again in the depth of this sState
+
 			var strans = SFactory::eINSTANCE.createTrans();
 			// if state is hierarchical instead of the depth continue with join
 			// for handling possible normal terminations
@@ -286,7 +282,15 @@ class Synccharts2S {
 				strans.setContinuation(sState);
 			}
 			sState.instructions.add(strans);
-			
+
+		} else {
+			// add halt or term because this is a final state
+			if (state.isFinal) {
+				sState.instructions.add(SFactory::eINSTANCE.createTerm)
+			} 
+			else if (!state.isFinal) {
+				sState.instructions.add(SFactory::eINSTANCE.createHalt)
+			}
 		}
 		
 	}	
@@ -382,12 +386,6 @@ class Synccharts2S {
 			target.signals.addAll(state.getStateSignals)
 		}
 
-		val noTransitions = state.outgoingTransitions.filter(e|!e.isImmediate).isEmpty;
-		if (noTransitions && state.isFinal) 
-			target.instructions.addAll(SFactory::eINSTANCE.createTerm)
-		if (noTransitions && !state.isFinal)
-			target.instructions.addAll(SFactory::eINSTANCE.createHalt)
-			
 		target;
 	}
 

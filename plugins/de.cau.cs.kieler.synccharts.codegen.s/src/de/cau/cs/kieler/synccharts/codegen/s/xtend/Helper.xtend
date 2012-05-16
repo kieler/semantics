@@ -172,7 +172,7 @@ def String getStatePathAsName(State state) {
 	}
 	
 	def boolean finalState(State state) {
-		return (state.outgoingTransitions.filter(e|!e.isImmediate).nullOrEmpty || state.isFinal);
+		return (state.outgoingTransitions.nullOrEmpty || state.isFinal);
 	}
 
 
