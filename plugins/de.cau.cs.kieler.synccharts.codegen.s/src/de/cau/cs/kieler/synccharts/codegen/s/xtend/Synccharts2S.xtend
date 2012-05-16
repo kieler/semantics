@@ -208,7 +208,7 @@ class Synccharts2S {
 		val regardedTransitionNormalTermination = state.normalTerminationTransition
 
 		// lower priority (to allow a possible body to be executed)
-		sState.addHighestStrongPrio(state);
+		sState.addLowestWeakPrio(state);
 		
 		// then handle possible normal termination
 		if (regardedTransitionNormalTermination != null) {
