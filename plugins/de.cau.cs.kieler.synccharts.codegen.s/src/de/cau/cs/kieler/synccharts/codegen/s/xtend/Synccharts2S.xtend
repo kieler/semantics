@@ -15,6 +15,7 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.s.s.Join
 
 class Synccharts2S {
 
@@ -233,8 +234,8 @@ class Synccharts2S {
 		val regardedTransitionListStrong = state.strongTransitionsOrdered
 		val regardedTransitionListWeak = state.weakTransitionsOrdered
 
-		// is a join instruction present? if this is the case do not generate a pause here!	
-		val joinInstruction = (state.getJoinSState != null)
+		// is a join instruction present? if this is the case do not generate a pause here!
+		val joinInstruction = (state.getJoinSState != null && state.joinSState.instructions.filter(typeof(Join)).toList.size > 0)
 				
 		// if not a final state then process normally otherwise add halt or term 
 		if (!state.finalState) {
