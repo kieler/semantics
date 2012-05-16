@@ -298,6 +298,7 @@ class Synccharts2S {
 	def void handleTransition(Transition transition, de.cau.cs.kieler.s.s.State sState) {
 			val sif = SFactory::eINSTANCE.createIf();
 			val strans = SFactory::eINSTANCE.createTrans();
+			val sabort = SFactory::eINSTANCE.createAbort();
 			
 			// handle transition trigger - convert to s-expression
 			if (transition.type == TransitionType::NORMALTERMINATION) {
@@ -321,9 +322,17 @@ class Synccharts2S {
 				}
 			}
 			
+			// if leaving a macro state, first abort it
+			// for weak abortions we know because of the lowered priority that
+			// all internal behavior (of this tick!) has already executed and
+			// we can safely abort the state.
+			if (transition.sourceState.hierarchical) {
+				sif.instructions.add(sabort);
+			}	
+
+			// add transition to if-branch and add if-branch to sState
 			strans.setContinuation(transition.targetState.surfaceSState);
 			sif.instructions.add(strans);
-			
 			sState.instructions.add(sif);
 	}	
 
