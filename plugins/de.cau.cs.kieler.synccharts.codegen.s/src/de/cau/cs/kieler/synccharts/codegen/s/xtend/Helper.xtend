@@ -37,19 +37,22 @@ def Boolean isHierarchical(State state) {
 
 // apply conversion on children
 def dispatch Expression convertToSExpression(Expression expression) {
+	var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
 	if (expression instanceof ComplexExpression) {
+		newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
 		for (subExpression : (expression as ComplexExpression).subExpressions) {
-			subExpression.convertToSExpression();
+			(newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
 		} 
 	}
-	expression;
+	newExpression;
 }
 
 //ValuedObjectReference - added by cmot for handleIfSingle() function (present tests of simple triggers)
 def dispatch Expression convertToSExpression(ValuedObjectReference expression) {
- 	var sSignal = TraceComponent::getSingleTraceTarget(expression.valuedObject, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
-	expression.setValuedObject(sSignal);
- 	expression; 
+ 	val sSignal = TraceComponent::getSingleTraceTarget(expression.valuedObject, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+	val newExpression = KExpressionsFactory::eINSTANCE.createValuedObjectReference;
+	newExpression.setValuedObject(sSignal);
+ 	newExpression; 
 }
 
 def Expression getTrueBooleanValue() {
@@ -172,7 +175,7 @@ def String getStatePathAsName(State state) {
 	}
 	
 	def boolean finalState(State state) {
-		return (state.outgoingTransitions.filter(e|!e.isImmediate).nullOrEmpty || state.isFinal);
+		return (state.outgoingTransitions.nullOrEmpty || state.isFinal);
 	}
 
 
