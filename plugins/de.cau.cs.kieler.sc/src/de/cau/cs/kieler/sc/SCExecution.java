@@ -39,6 +39,7 @@ import org.osgi.framework.Bundle;
 public class SCExecution {
 	
 	private final String COMPILER_DEFAULT = "gcc";
+	private final String EXECUTABLE_PREFIX = "SC-GENERATED-EXECUTABLE-";
 
 	private Process executionProcess = null;
 	private PrintWriter executionInterfaceToSC;
@@ -93,7 +94,7 @@ public class SCExecution {
 		// reset successful compiled flag
 		setCompiled(false);
 		// choose a random name for the compiled executable
-		executableName = SCExecution.randomString();
+		executableName = EXECUTABLE_PREFIX + SCExecution.randomString();
 
 		// building path to bundle
 		Bundle bundle = Platform
