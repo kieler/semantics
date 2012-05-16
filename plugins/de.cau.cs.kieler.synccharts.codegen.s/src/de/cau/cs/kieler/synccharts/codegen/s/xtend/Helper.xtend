@@ -189,9 +189,10 @@ def String getStatePathAsName(State state) {
  		}
  	}
  	// check if a PRIO instruction just before is higher or equal
- 	if ((instructions.tail instanceof Prio) && ((instructions.tail as Prio).priority > prioStatement.priority)) {
+ 	val lastInstruction = instructions.toList.last;
+ 	if ((lastInstruction instanceof Prio) && ((lastInstruction as Prio).priority > prioStatement.priority)) {
  		// lower last prio statement
- 		(instructions.tail as Prio).setPriority(prioStatement.priority);
+ 		(lastInstruction as Prio).setPriority(prioStatement.priority);
  		return;
  	}
 	instructions.add(prioStatement);
