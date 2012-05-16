@@ -103,7 +103,9 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
      */
     public void execute(final ButtonState buttonState, final DiagramState diagram) {
         // Check what actually triggered this combination
-        if (this.latestState() != buttonState) {
+        boolean hide = buttonState.getButtonId().equals(HIDE_BUTTON_ID);
+        boolean show = buttonState.getButtonId().equals(SHOW_BUTTON_ID);
+        if (this.latestState() != buttonState || (!hide && !show)) {
             // We only react to button presses
             return;
         }
@@ -112,9 +114,6 @@ public class HideTransitionLabelsCombination extends AbstractCombination {
         if (!(diagram.getDiagramPart() instanceof SyncchartsDiagramEditor)) {
             return;
         }
-        
-        // Check whether to show or to hide everything
-        boolean hide = buttonState.getButtonId().equals(HIDE_BUTTON_ID);
         
         // Get the editor and all of its edit parts
         SyncchartsDiagramEditor editor = (SyncchartsDiagramEditor) diagram.getDiagramPart();
