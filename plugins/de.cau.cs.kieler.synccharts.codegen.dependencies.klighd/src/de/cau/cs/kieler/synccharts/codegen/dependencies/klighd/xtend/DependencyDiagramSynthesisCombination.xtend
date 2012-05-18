@@ -71,15 +71,20 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 			var allSelectedStates = new ArrayList<State>();
 			
 			for (selectionItem : selection) {
-				allSelectedStates.addStatesToList(selection);
+				if (selection != null) {
+					if (selection instanceof ArrayList || selection instanceof State || selection instanceof Region) {
+						allSelectedStates.addStatesToList(selection);
+					}
+				}
 			}
 			
+			if (allSelectedStates.size > 0) {
 			allSelectedStates.tranfromSycChartRegionAndScheduleKlightEffect
+			}
 		}
 	}
 	
 	// ------------------------------------------------------------------------------
-	
 	
 	// Adds states of state to the stateList
 	def dispatch addStatesToList(List<State> stateList, State state) {
@@ -107,6 +112,12 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 		}
 		stateList;
 	}
+
+	// Ignores objects when adding something to the stateList
+	def dispatch addStatesToList(List<State> stateList, Object object) {
+		stateList;
+	}	
+	
 	
 	// Return the root region of a region.
 	def Region findRootRegion(Region region) {
