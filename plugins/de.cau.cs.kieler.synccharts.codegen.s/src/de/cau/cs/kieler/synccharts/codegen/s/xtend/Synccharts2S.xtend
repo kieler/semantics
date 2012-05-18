@@ -81,32 +81,31 @@ class Synccharts2S {
 			val sStateDepth   = state.createSStateDepth(state.isRootState);
 			val sStateJoin = state.createSStateJoin(state.isRootState);
 			val sStateExtraSurface = state.createSStateExtraSurface(state.isRootState);
-			val needsExtraSurface = state.weakTransitionsOrdered.filter(e|e.isImmediate).size > 0;
-			// possibly parallel regions
-			if (state.hierarchical) {
+
+			// possibly normal termination (for parallel regions)
+			if (state.needsJoinSState) {
 				// create traces for all created join states
 				TraceComponent::createTrace(state, sStateJoin, "Join" );
 				TraceComponent::createTrace(sStateJoin, state, "JoinBack" );
-				if (needsExtraSurface) {
+			}
+			// possibly weak immediate transition (for hierarchical states with inner actions)
+			if (state.needsExtraSurfaceSState) {
 					// create traces for all created extra surface states (weak immediate transitions out of a macro state)
 					TraceComponent::createTrace(state, sStateExtraSurface, "ExtraSurface" );
 					TraceComponent::createTrace(sStateExtraSurface, state, "ExtraSurfaceBack" );
-				}
 			}
 			// create traces for all created surface and depth s states
 			TraceComponent::createTrace(state, sStateSurface, "Surface" );
 			TraceComponent::createTrace(sStateSurface, state, "SurfaceBack" );
 			TraceComponent::createTrace(state, sStateDepth, "Depth" );
 			TraceComponent::createTrace(sStateDepth, state, "DepthBack" );
-			// add new s states to program
+			// add new s states to program in the order surface -> [surface2] -> [join] -> depth
 			target.states.add(sStateSurface);
-			if (state.hierarchical) {
-				if (needsExtraSurface) {
-					target.states.add(sStateExtraSurface);
-				}
-				if (state.needsJoinSState) {
-					target.states.add(sStateJoin);
-				}
+			if (state.needsExtraSurfaceSState) {
+				target.states.add(sStateExtraSurface);
+			}
+			if (state.needsJoinSState) {
+				target.states.add(sStateJoin);
 			}
 			target.states.add(sStateDepth);
 		}
@@ -115,9 +114,13 @@ class Synccharts2S {
 		for (state : rootRegion.getAllStates) {
 			val sStateSurface = state.surfaceSState
 			val sStateDepth = state.depthSState
-			val sStateJoin = state.joinSState
-			state.fillSStateSurface(sStateSurface);
-			if (sStateJoin != null && state.needsJoinSState) {
+			state.fillSStateSurface(sStateSurface); 
+			if (state.needsExtraSurfaceSState) {
+				val sStateExtraSurface = state.extraSurfaceSState;
+				state.fillSStateExtraSurface(sStateExtraSurface);
+			} 
+			if (state.needsJoinSState) {
+				val sStateJoin = state.joinSState
 				state.fillSStateJoin(sStateJoin);
 			} 
 			state.fillSStateDepth(sStateDepth);
@@ -174,9 +177,9 @@ class Synccharts2S {
 				sfork.setPriority(initialState.highestDependencyStrongNode.priority);
 				sState.instructions.add(sfork);
 			}
-			// if there is no immediate weak transition, we do not need a second surface!
-			if (regardedTransitionListWeak.size < 1) {
-				// fork join thread with same priority as current thread
+			// if there is no immediate weak transition, we do not need an extra surface!
+			if (!state.needsExtraSurfaceSState) {
+				// fork join thread with same priority as current thread or proceed with depth
 				val sfork = SFactory::eINSTANCE.createFork();
 				if (state.needsJoinSState) {
 					sfork.setThread(state.joinSState)
@@ -186,38 +189,6 @@ class Synccharts2S {
 				}
 				sfork.setPriority(state.highestDependencyStrongNode.priority);
 				sState.instructions.add(sfork);
-			}
-			else {
-				// we have a hierarchical state with an outgoing immediate transition
-				// which means that it must be allowed to execute all internal immediate
-				// behavior. Because of this we need a second surface state_surface2.
-				
-				// Put code for weak immediate transitions inside this second extra surface
-				val extraSurfaceSState = state.extraSurfaceSState
-					// lower priority (to allow a possible body to be executed)
-					extraSurfaceSState.addHighestWeakPrio(state);
-					// 	then handle all immediate weak preemptions
-					for (transition : regardedTransitionListWeak) {
-						extraSurfaceSState.addWeakPrio(state, transition);
-						transition.handleTransition(extraSurfaceSState);
-					}
-				
-				// Transition from extra surface to normal join node
-				val sTrans = SFactory::eINSTANCE.createTrans
-				if (state.needsJoinSState) {
-					sTrans.setContinuation(state.joinSState);
-				}
-				else {
-					sTrans.setContinuation(state.depthSState);
-				}
-				extraSurfaceSState.instructions.add(sTrans);
-
-				// fork extra surface thread (instead of join thread!) with same priority as current thread
-				val sfork = SFactory::eINSTANCE.createFork();
-				sfork.setThread(extraSurfaceSState)
-				sfork.setPriority(state.highestDependencyStrongNode.priority);
-				sState.instructions.add(sfork);
-				
 			}
 		}
 
@@ -239,7 +210,50 @@ class Synccharts2S {
 		}
 		
 	}	
+	
+	
+	// ======================================================================================================
+	// ==                      H A N D L E   S   S T A T E   E X T R A    S U R F A C E                    ==
+	// ======================================================================================================
+	
+	def fillSStateExtraSurface (State state, de.cau.cs.kieler.s.s.State sState) {
+			// we have a hierarchical state with an outgoing immediate transition
+			// which means that it must be allowed to execute all internal immediate
+			// behavior. Because of this we need a second surface state_surface2.
+			
+			val regardedTransitionListWeak = state.weakTransitionsOrdered.filter(e|e.isImmediate);
+			
+			// Put code for weak immediate transitions inside this second extra surface
+			val extraSurfaceSState = state.extraSurfaceSState
+			
+			// lower priority (to allow a possible body to be executed)
+			extraSurfaceSState.addHighestWeakPrio(state);
+			
+			// then handle all immediate weak preemptions 
+			// (strong transitions were handled before any FORK in the surface already)
+			for (transition : regardedTransitionListWeak) {
+					extraSurfaceSState.addWeakPrio(state, transition);
+					transition.handleTransition(extraSurfaceSState);
+			}
+			
+			// Transition from extra surface to normal join or depth node
+			val sTrans = SFactory::eINSTANCE.createTrans
+			if (state.needsJoinSState) {
+				sTrans.setContinuation(state.joinSState);
+			}
+			else {
+				sTrans.setContinuation(state.depthSState);
+			}
+			extraSurfaceSState.instructions.add(sTrans);
 
+			// fork extra surface thread (instead of join thread!) with same priority as current thread
+			val sfork = SFactory::eINSTANCE.createFork();
+			sfork.setThread(extraSurfaceSState)
+			sfork.setPriority(state.highestDependencyStrongNode.priority);
+			sState.instructions.add(sfork);
+			
+	}
+	
 	
 	// ======================================================================================================
 	// ==                               H A N D L E   S   S T A T E   J O I N                              ==

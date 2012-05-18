@@ -56,6 +56,11 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 		state.regions.size > 0;
 	}
 
+	// Returns true iff the state is hierarchical and has a weak immediate transition (so it needs an extra surface state).
+	def Boolean needsExtraSurfaceSState(State state) {
+		(state.hierarchical && (state.weakTransitionsOrdered.filter(e|e.isImmediate).size > 0));
+	}
+
 	// Returns true iff the state is hierarchical and has a normal termination (so it needs an extra join state).
 	def Boolean needsJoinSState(State state) {
 		(state.hierarchical && (state.getNormalTerminationTransition != null));
