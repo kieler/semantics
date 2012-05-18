@@ -190,6 +190,13 @@ class Synccharts2S {
 				sfork.setPriority(state.highestDependencyStrongNode.priority);
 				sState.instructions.add(sfork);
 			}
+			else {
+				// fork extra surface thread (instead of join/depth thread!) with same priority as current thread
+				val sfork = SFactory::eINSTANCE.createFork();
+				sfork.setThread(state.extraSurfaceSState);
+				sfork.setPriority(state.highestDependencyStrongNode.priority);
+				sState.instructions.add(sfork);
+			}
 		}
 
 		if (!state.hierarchical) {
@@ -246,12 +253,6 @@ class Synccharts2S {
 			}
 			extraSurfaceSState.instructions.add(sTrans);
 
-			// fork extra surface thread (instead of join thread!) with same priority as current thread
-			val sfork = SFactory::eINSTANCE.createFork();
-			sfork.setThread(extraSurfaceSState)
-			sfork.setPriority(state.highestDependencyStrongNode.priority);
-			sState.instructions.add(sfork);
-			
 	}
 	
 	
