@@ -33,7 +33,6 @@ import org.osgi.framework.Bundle;
  * This class is intended to compile and execute SC code.
  * 
  * @author cmot
- * 
  */
 public class SCExecution {
 	
@@ -93,7 +92,7 @@ public class SCExecution {
 		// reset successful compiled flag
 		setCompiled(false);
 		// choose a random name for the compiled executable
-		executableName = EXECUTABLE_PREFIX + SCExecution.randomString();
+		setExecutableName(EXECUTABLE_PREFIX + SCExecution.randomString());
 
 		// building path to bundle
 		Bundle bundle = Platform
@@ -146,7 +145,7 @@ public class SCExecution {
 					+ " "
 					+ "-o "
 					+ outputPath
-					+ executableName
+					+ getExecutableName()
 					// -m32 = 32 bit compatibility mode to prevent compiler errors on
 					// 64bit machines/architectures.
 					+ " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -m32";
@@ -209,7 +208,7 @@ public class SCExecution {
 		}
 
 		// start compiled sc code
-		String executable = outputPath + executableName + " ";
+		String executable = outputPath + getExecutableName() + " ";
 		executionProcess = Runtime.getRuntime().exec(executable);
 
 		setExecutionInterfaceToSC(new PrintWriter(new OutputStreamWriter(
@@ -322,70 +321,180 @@ public class SCExecution {
 	// -------------------------------------------------------------------------
 	// -------------------------------------------------------------------------
 
+	/**
+	 * Sets the executable name.
+	 *
+	 * @param executableName the new executable name
+	 */
+	public void setExecutableName(String executableName) {
+		this.executableName = executableName;
+	}
+
+	/**
+	 * Gets the executable name.
+	 *
+	 * @return the executable name
+	 */
 	public String getExecutableName() {
 		return executableName;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the compiler.
+	 *
+	 * @return the compiler
+	 */
 	public String getCompiler() {
 		return compiler;
 	}
 
+	/**
+	 * Sets the compiler.
+	 *
+	 * @param compiler the new compiler
+	 */
 	public void setCompiler(String compiler) {
 		this.compiler = compiler;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the output path.
+	 *
+	 * @return the output path
+	 */
 	public String getOutputPath() {
 		return outputPath;
 	}
 
+	/**
+	 * Sets the output path.
+	 *
+	 * @param outputPath the new output path
+	 */
 	public void setOutputPath(String outputPath) {
 		this.outputPath = outputPath;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the execution interface to sc.
+	 *
+	 * @return the execution interface to sc
+	 */
 	public PrintWriter getExecutionInterfaceToSC() {
 		return executionInterfaceToSC;
 	}
 
+	/**
+	 * Sets the execution interface to sc.
+	 *
+	 * @param toSC the new execution interface to sc
+	 */
 	private void setExecutionInterfaceToSC(PrintWriter toSC) {
 		this.executionInterfaceToSC = toSC;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the execution interface from sc.
+	 *
+	 * @return the execution interface from sc
+	 */
 	public BufferedReader getExecutionInterfaceFromSC() {
 		return executionInterfaceFromSC;
 	}
 
+	/**
+	 * Sets the execution interface from sc.
+	 *
+	 * @param fromSC the new execution interface from sc
+	 */
 	private void setExecutionInterfaceFromSC(BufferedReader fromSC) {
 		this.executionInterfaceFromSC = fromSC;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the execution interface error.
+	 *
+	 * @return the execution interface error
+	 */
 	public BufferedReader getExecutionInterfaceError() {
 		return executionInterfaceError;
 	}
 
+	/**
+	 * Sets the execution interface error.
+	 *
+	 * @param error the new execution interface error
+	 */
 	private void setExecutionInterfaceError(BufferedReader error) {
 		this.executionInterfaceError = error;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Gets the compile error.
+	 *
+	 * @return the compile error
+	 */
 	public String getCompileError() {
 		return compileError;
 	}
 
+	/**
+	 * Sets the compile error.
+	 *
+	 * @param compileError the new compile error
+	 */
 	private void setCompileError(String compileError) {
 		this.compileError = compileError;
 	}
-
+	
+	// -------------------------------------------------------------------------
+	
+	/**
+	 * Checks if is started.
+	 *
+	 * @return true, if is started
+	 */
 	public boolean isStarted() {
 		return started;
 	}
 
+	/**
+	 * Sets the started.
+	 *
+	 * @param started the new started
+	 */
 	private void setStarted(boolean started) {
 		this.started = started;
 	}
 
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Checks if is compiled.
+	 *
+	 * @return true, if is compiled
+	 */
 	public boolean isCompiled() {
 		return compiled;
 	}
 
+	/**
+	 * Sets the compiled.
+	 *
+	 * @param compiled the new compiled
+	 */
 	private void setCompiled(boolean compiled) {
 		this.compiled = compiled;
 	}

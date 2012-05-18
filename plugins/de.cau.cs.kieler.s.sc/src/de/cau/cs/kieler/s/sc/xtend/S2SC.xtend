@@ -13,43 +13,36 @@
  */
  package de.cau.cs.kieler.s.sc.xtend
 
-import de.cau.cs.kieler.synccharts.*
-import de.cau.cs.kieler.s.s.SFactory
-//import de.cau.cs.kieler.core.kexpressions.
-import java.util.*
-
-import org.eclipse.xtend2.lib.StringConcatenation
-import de.cau.cs.kieler.s.s.Program
-import org.eclipse.emf.ecore.EObject
-import de.cau.cs.kieler.s.s.State
-import de.cau.cs.kieler.s.s.Thread
-import de.cau.cs.kieler.s.s.Instruction
-import de.cau.cs.kieler.s.s.Pause
-import de.cau.cs.kieler.s.s.Term
-import de.cau.cs.kieler.s.s.Halt
-import de.cau.cs.kieler.s.s.Join
-import de.cau.cs.kieler.s.s.Abort
-import de.cau.cs.kieler.s.s.Fork
-import de.cau.cs.kieler.s.s.Trans
-import de.cau.cs.kieler.s.s.Await
-import de.cau.cs.kieler.s.s.Prio
-import de.cau.cs.kieler.s.s.Emit
-import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.ValueType
-import de.cau.cs.kieler.core.kexpressions.Expression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.core.kexpressions.ValuedObject
-import de.cau.cs.kieler.core.kexpressions.BooleanValue
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.s.s.Abort
+import de.cau.cs.kieler.s.s.Await
+import de.cau.cs.kieler.s.s.Emit
+import de.cau.cs.kieler.s.s.Fork
+import de.cau.cs.kieler.s.s.Halt
+import de.cau.cs.kieler.s.s.If
+import de.cau.cs.kieler.s.s.Instruction
+import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.Pause
+import de.cau.cs.kieler.s.s.Prio
+import de.cau.cs.kieler.s.s.Program
+import de.cau.cs.kieler.s.s.State
+import de.cau.cs.kieler.s.s.Term
+import de.cau.cs.kieler.s.s.Trans
 
-// Transformation of S code to SC code.
-//
-// author: cmot
+/**
+ * Transformation of S code into SS code that can be executed using the GCC.
+ * 
+ * @author cmot
+ */
 class S2SC { 
     
-    // Generale method to create the c simulation interface
+    // General method to create the c simulation interface.
 	def transform (Program program, String outputFolder) {
        '''
 	   «/* Generate the C header */»
@@ -79,7 +72,7 @@ class S2SC {
 
    // -------------------------------------------------------------------------   
    
-   // Generate the C header
+   // Generate the C header.
    def scHeader(String outputFolderm, Program program) {
    	'''
     /*****************************************************************************/
@@ -122,13 +115,14 @@ class S2SC {
    
    // -------------------------------------------------------------------------
    
+   // Generate signal constants.
    def sSignalConstant(Program program) {
    	'''typedef enum {«FOR signal : program.getSignals() SEPARATOR ", "»sig_«signal.name»«ENDFOR»} signaltype;
    	
    	const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", "»"sig_«signal.name»"«ENDFOR»};'''
    }
    
-   // Generate simple reset
+   // Generate simple reset.
    def sSimpleReset(Program program) {
    	   	''' 
    	int simple_reset() {
@@ -142,7 +136,7 @@ class S2SC {
    	'''
    }
    
-   // Generate simple signal inputs
+   // Generate simple signal inputs.
    def sSimpleInputs(Program program) {
    	''' 
 	«FOR signal : program.getSignals().filter(e|e.isInput||e.isOutput)»
@@ -155,7 +149,7 @@ void simple_INPUT_«signal.name»() {
    
    // -------------------------------------------------------------------------
    
-   // Generate simple signal outputs
+   // Generate simple signal outputs.
    def sSetOutputFunction(Program program) {
    	'''
 	void callOutputs() {
@@ -168,7 +162,7 @@ void simple_INPUT_«signal.name»() {
    }
    
    // Generate input functions that are then called my the main function's
-   // tick function of the module
+   // tick function of the module.
    def sSetInputsFunction(Program program) {
 '''
 void setInputs(){
@@ -196,7 +190,7 @@ void setInputs(){
    
    // -------------------------------------------------------------------------
 
-   // Generate the main function
+   // Generate the main function.
    def mainFunction(Program program) {
    	'''int main(int argc, const char* argv[]) {
 		simple_reset();
@@ -225,7 +219,7 @@ void setInputs(){
       
    // -------------------------------------------------------------------------   
    
-   // Generate the  tick function
+   // Generate the  tick function.
    def tickFunction(Program program) {
    	'''    int tick(){
        TICKSTART(«program.priority»);
@@ -241,7 +235,7 @@ void setInputs(){
    
    // -------------------------------------------------------------------------   
 
-   // Define output functions to return JSON for each s signal 
+   // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
 '''	   «'''«FOR signal : program.signals.filter(e | e.isOutput)»
        void simple_OUTPUT_«signal.name»(int status){
@@ -258,7 +252,7 @@ void setInputs(){
    
    // -------------------------------------------------------------------------   
    
-   // Call input functions for each JSON s signal that is present
+   // Call input functions for each JSON s signal that is present.
    def callInputs(Signal signal) {
    	'''child = cJSON_GetObjectItem(object, "«signal.name»");
 		if (child != NULL) {
@@ -275,6 +269,7 @@ void setInputs(){
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
    
+   // Expand a state traversing all instructions of that state.
    def dispatch expand(State state) {
    		'''«state.name»: 
    		«FOR instruction : state.instructions»
@@ -283,6 +278,7 @@ void setInputs(){
    		'''
    }
    
+   // Expand an IF instruction traversing all instructions of that IF instruction.
    def dispatch expand(If ifInstruction) {
    	'''if («ifInstruction.expression.expand») { 
    		«FOR instruction : ifInstruction.instructions»
@@ -290,27 +286,36 @@ void setInputs(){
    		«ENDFOR»
          }'''
    }   
+   
+   // Expand a PAUS instruction.
    def dispatch expand(Pause pauseInstruction) {
    	'''PAUSE;'''
    }   
+   
+   // Expand a TERM instruction.
    def dispatch expand(Term termInstruction) {
    	'''TERM;'''
    }   
+   
+   // Expand a HALT instruction.
    def dispatch expand(Halt haltInstruction) {
    	'''HALT;'''
    }   
+   
+   // Expand a JOIN instruction.
    def dispatch expand(Join joinInstruction) {
    	'''JOINELSE(«joinInstruction.continuation.name»);'''
-   }   
+   } 
+   
+   // Expand an ABORT instruction.  
    def dispatch expand(Abort abortInstruction) {
    	'''ABORT;'''
    }   
    
+   // Retrieve the last FORK instruction because in SC the last fork
+   // will become an FORKE statement.
    def getLastFork(Fork forkInstruction) {
    	 val instructionListContainer = ((forkInstruction).eContainer);
-//   	 if (instructionListContainer instanceof Thread) {
-//   	 	(instructionListContainer as Thread).
-//   	 }
    	 if (instructionListContainer instanceof State) {
    	 	return (instructionListContainer as State).instructions.filter(typeof(Fork)).toList.last;
    	 }
@@ -318,6 +323,8 @@ void setInputs(){
    	 	return (instructionListContainer as If).instructions.filter(typeof(Fork)).toList.last;
    	 }
    }
+   
+   // Expand a FORK instruction.
    def dispatch expand(Fork forkInstruction) {
    	'''«IF forkInstruction.getLastFork != forkInstruction» 
    	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
@@ -328,25 +335,34 @@ void setInputs(){
    	'''
    }   
 
+   // Expand a TRANS instruction.	
    def dispatch expand(Trans transInstruction) {
    	'''GOTO(«transInstruction.continuation.name»);'''
    }   
+   
+   // Expand an AWAIT instruction.
    def dispatch expand(Await awaitInstruction) {
    	'''AWAIT;'''
    }   
+   
+   // Expand a PRIO instruction.
    def dispatch expand(Prio prioInstruction) {
    	'''PRIO(«prioInstruction.priority»);'''
    }   
+   
+   // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
    	'''EMIT(sig_«emitInstruction.signal.name»);'''
    }   
+   
+   // Expand fall back for other instructions do nothing.
    def dispatch expand(Instruction instruction) {
    }   
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
    
-   //Consider complex expression 
+   //Expand a complex expression.
    def dispatch expand(OperatorExpression expression) {
    	 '''
 	«IF expression.operator  == OperatorType::EQ»
@@ -425,28 +441,27 @@ void setInputs(){
 	«ENDIF»
 	   	 '''
    }
-
+	
+   // Expand a signal.
    def dispatch expand(Signal signal) {
    	 '''PRESENT(sig_«signal.name»)'''
    }
 
+   // Expand a boolean expression value (true or false).
    def dispatch expand(BooleanValue expression) {
    	 '''«IF expression.value == true »1«ENDIF»«IF expression.value == false»0«ENDIF»'''
    }
 
    
+   // Expand an object reference.
    def dispatch expand(ValuedObjectReference valuedObjectReference) {
    	 '''«valuedObjectReference.valuedObject.expand»'''
    }
    
+   // Expand a valued object.
    def dispatch expand(ValuedObject valuedObject) {
    	 ''''''
    }
 
-   
-//«DEFINE expandedExpression FOR ValuedObjectReference-»«EXPAND expandedExpression FOR valuedObject-»«ENDDEFINE»
-//«DEFINE expandedExpression FOR Signal-»PRESENT(«this.name-»)«ENDDEFINE»
-//«DEFINE expandedExpression FOR ValuedObject-»«ENDDEFINE»
-//«DEFINE expandedExpression FOR Expression-»«ENDDEFINE»   
-
+   // -------------------------------------------------------------------------   
 }

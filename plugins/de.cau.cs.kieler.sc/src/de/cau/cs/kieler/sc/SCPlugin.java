@@ -17,40 +17,48 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
+ * 
+ * @author cmot
  */
 public class SCPlugin extends AbstractUIPlugin {
 
-	// The plug-in ID
+	/** The Constant PLUGIN_ID. */
 	public static final String PLUGIN_ID = "de.cau.cs.kieler.sc"; //$NON-NLS-1$
 
-	// The shared instance
+	/** The plugin. */
 	private static SCPlugin plugin;
 	
+	// -------------------------------------------------------------------------
+
 	/**
 	 * The constructor
 	 */
 	public SCPlugin() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
+	// -------------------------------------------------------------------------
+	
 	/**
 	 * Returns the shared instance
 	 *
@@ -59,5 +67,7 @@ public class SCPlugin extends AbstractUIPlugin {
 	public static SCPlugin getDefault() {
 		return plugin;
 	}
+
+	// -------------------------------------------------------------------------
 
 }

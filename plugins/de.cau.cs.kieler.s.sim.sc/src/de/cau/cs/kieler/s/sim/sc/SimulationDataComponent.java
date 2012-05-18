@@ -13,76 +13,37 @@
  */
 package de.cau.cs.kieler.s.sim.sc;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Reader;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
-import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 
-import com.google.inject.Guice;
-
-import org.eclipse.core.commands.ExecutionException;
-import org.eclipse.core.resources.IContainer;
 import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IFileState;
-import org.eclipse.core.resources.IMarker;
-import org.eclipse.core.resources.IPathVariableManager;
-import org.eclipse.core.resources.IProject;
-import org.eclipse.core.resources.IProjectDescription;
-import org.eclipse.core.resources.IResourceProxy;
-import org.eclipse.core.resources.IResourceProxyVisitor;
-import org.eclipse.core.resources.IResourceVisitor;
-import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourceAttributes;
 import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.QualifiedName;
-import org.eclipse.core.runtime.content.IContentDescription;
-import org.eclipse.core.runtime.jobs.ISchedulingRule;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.xtend.util.stdlib.CloningExtensions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.kexpressions.Input;
-import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
-import de.cau.cs.kieler.core.kexpressions.Output;
+import com.google.inject.Guice;
+
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
-import de.cau.cs.kieler.s.s.Program; 
+import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
-import de.cau.cs.kieler.s.sc.xtend.S2SC;
-import de.cau.cs.kieler.s.sc.xtend.S2SC;
 import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
 import de.cau.cs.kieler.sc.SCExecution;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -90,92 +51,28 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
+/**
+ * The SimulationDataComponent for simulating S code with and without visualization.
+ * 
+ * @author cmot
+ */
 public class SimulationDataComponent extends JSONObjectSimulationDataComponent implements
 		IJSONObjectDataComponent {
 	
-	// -----------------------------------------------------------------------------
-	// -----------------------------------------------------------------------------
-
-	class SSimulationProgressMonitor implements ProgressMonitor {
-
-		private KielerProgressMonitor kielerProgressMonitor;
-		private int numberOfComponents = 1;
-		private int numberOfComponentsDone = 0;
-
-		public SSimulationProgressMonitor(
-				final KielerProgressMonitor kielerProgressMonitorParam,
-				final int numberOfComponentsParam) {
-			kielerProgressMonitor = kielerProgressMonitorParam;
-			numberOfComponents = numberOfComponentsParam;
-			numberOfComponentsDone = 0;
-		}
-
-		public void beginTask(final String name, final int totalWork) {
-			kielerProgressMonitor.begin(name, numberOfComponents);
-		}
-
-		public void done() {
-			// is called by the workflow wrapper
-		}
-
-		public void finished(final Object element, final Object context) {
-		}
-
-		public void internalWorked(final double work) {
-		}
-
-		public boolean isCanceled() {
-			return (kielerProgressMonitor.isCanceled());
-		}
-
-		public void postTask(final Object element, final Object context) {
-			kielerProgressMonitor.worked(numberOfComponentsDone);
-			numberOfComponentsDone++;
-		}
-
-		public void preTask(final Object element, final Object context) {
-			// kielerProgressMonitor.begin(element.toString(), 1);
-			kielerProgressMonitor.worked(numberOfComponentsDone);
-		}
-
-		public void setCanceled(final boolean value) {
-		}
-
-		public void setTaskName(final String name) {
-		}
-
-		public void started(final Object element, final Object context) {
-		}
-
-		public void subTask(final String name) {
-			kielerProgressMonitor.subTask(UNKNOWN);
-		}
-
-		public void worked(final int work) {
-			kielerProgressMonitor.worked(work);
-		}
-
-	}
-
-	// -----------------------------------------------------------------------------
-	// -----------------------------------------------------------------------------
-	
-
+	/** The S program is the considered model to simulate. */
 	private Program myModel = null;
 
+	/** The SC execution object for concurrent execution. */
 	private SCExecution scExecution = null;
 
+	/** The list of output signals including the ones used for the visualization. */
 	private LinkedList<String> outputSignalList = null;
-
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
-     */
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
         if (!(rootEObject instanceof Program)) {
@@ -235,12 +132,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 						boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput.getJSONObject(sSignalOutputName));
 
 						// Test if the output variable is an auxiliary signal
-						// that is only there to mark the current S
-						// statement
+						// that is only there to mark the current S statement
 						// in full_simulation mode of the simulator.
-						// These auxiliary signals must be encapsulated in a
-						// state
-						// variable.
+						//
+						// These auxiliary signals must be encapsulated in a state variable.
 						if (sSignalOutputName
 								.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG) && sSignalIsPresent) {
 							try {
@@ -329,6 +224,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public KiemProperty[] doProvideProperties() {
 		final int nProperties = 3;
@@ -353,25 +251,25 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
 	// -------------------------------------------------------------------------
 
-	/**
-	 * Convert an EMF URI to a Java.net.URI.
-	 * 
-	 * @param uri
-	 *            the uri
-	 * @return the java.net. uri
-	 * @throws URISyntaxException
-	 *             the uRI syntax exception
-	 */
-	private java.net.URI convertURI(URI uri) throws URISyntaxException {
-		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
-				.getRoot();
-
-		IPath path = new Path(uri.toPlatformString(false));
-		IFile file = myWorkspaceRoot.getFile(path);
-		IPath fullPath = file.getLocation();
-
-		return new java.net.URI(fullPath.toString());
-	}
+//	/**
+//	 * Convert an EMF URI to a Java.net.URI.
+//	 * 
+//	 * @param uri
+//	 *            the uri
+//	 * @return the java.net. uri
+//	 * @throws URISyntaxException
+//	 *             the uRI syntax exception
+//	 */
+//	private java.net.URI convertURI(URI uri) throws URISyntaxException {
+//		IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
+//				.getRoot();
+//
+//		IPath path = new Path(uri.toPlatformString(false));
+//		IFile file = myWorkspaceRoot.getFile(path);
+//		IPath fullPath = file.getLocation();
+//
+//		return new java.net.URI(fullPath.toString());
+//	}
 
 	// -------------------------------------------------------------------------
 
@@ -382,10 +280,6 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 			throws KiemInitializationException {
 		monitor.begin("S Simulation", 10);
 
-		SSimulationProgressMonitor esterelSimulationProgressMonitor = new SSimulationProgressMonitor(
-				monitor, 10);
-
-		File executable = null;
 		String compile = "";
 		
 		try {
@@ -441,7 +335,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 					.appendFileExtension("c");
 
 			try {
-				// Write out copy/transformation of Esterel program
+				// Write out copy/transformation of S program
 				Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
 				Map<String, Object> m = reg.getExtensionToFactoryMap();
 				m.put("daform", new XMIResourceFactoryImpl());

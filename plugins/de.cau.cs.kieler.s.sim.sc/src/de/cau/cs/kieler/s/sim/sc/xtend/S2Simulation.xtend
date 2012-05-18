@@ -32,22 +32,24 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 
-
-// Transformation of S code into S code that is
-// enriched with additional signals for each s statement.
-
-// These signals, here HP, are generated in the following fashion for a 
-// statement P:
-// 
-// Emit HP; P 
-//
-// As names for the signals are randomly generated and must be unique
-// there must be a mapping that keeps track which signal (name) belongs to
-// which original S statement.
-
+/**
+ * Transformation of S code into S code that is
+ * enriched with additional signals for each s statement.
+ * 
+ * These signals, here HP, are generated in the following fashion for a 
+ * statement P:
+ * 
+ * Emit HP; P
+ * 
+ * As names for the signals are randomly generated and must be unique
+ * there must be a mapping that keeps track which signal (name) belongs to
+ * which original S statement.
+ * 
+ * @author cmot
+ */
 class S2Simulation {
     
-    // Generale method to create the enriched Esterel simulation code
+    // General method to create the enriched S simulation code.
    	def Program transform2Simulation (Program program) {
    		var AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
    		
@@ -56,12 +58,6 @@ class S2Simulation {
 
 		var originalInstructions = program.eAllContents().toIterable().filter(typeof(Instruction));
 		var targetInstructions = target.eAllContents().toIterable().filter(typeof(Instruction)).toList();
-		
-//		// Ensure an interface declaration
-//		if (program.programInterface == null) {
-//			var programInterface = SFactory::eINSTANCE.createProgramInterface(); 
-//			program.setProgramInterface(programInterface);
-//		} 
 		
 		// For every instruction in the S program do the transformation
 		// Iterate over a copy of the list	
@@ -78,9 +74,7 @@ class S2Simulation {
 		target;
 	}	
 	
-	
-
-	// Instruction transformation in the fashion like described at the top
+	// Instruction transformation in the fashion like described at the top.
 	def void transformInstruction(Instruction instruction, Program program, String UID) {
 		//SIMPLE TEST
 		if ((

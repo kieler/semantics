@@ -17,7 +17,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
+ * 
+ * @author cmot
  */
 public class SSimSCPlugin extends AbstractUIPlugin {
 	
@@ -28,36 +30,41 @@ public class SSimSCPlugin extends AbstractUIPlugin {
      *  This TAG is also defined in S2Simulation.xtend. Both TAGs must match */
     public static final String AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
-
-	// The shared instance
+	/** The shared instance. */
 	private static SSimSCPlugin plugin;
 	
+	// -------------------------------------------------------------------------
+
 	/**
 	 * The constructor
 	 */
 	public SSimSCPlugin() {
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#start(org.osgi.framework.BundleContext)
+	// -------------------------------------------------------------------------
+
+	/**
+	 * {@inheritDoc}
 	 */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.eclipse.ui.plugin.AbstractUIPlugin#stop(org.osgi.framework.BundleContext)
+	// -------------------------------------------------------------------------
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
 		super.stop(context);
 	}
 
+	// -------------------------------------------------------------------------
+
 	/**
-	 * Returns the shared instance
+	 * Returns the shared instance.
 	 *
 	 * @return the shared instance
 	 */
