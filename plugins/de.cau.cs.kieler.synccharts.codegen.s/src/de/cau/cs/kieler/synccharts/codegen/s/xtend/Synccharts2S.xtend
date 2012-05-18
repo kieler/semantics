@@ -104,7 +104,9 @@ class Synccharts2S {
 				if (needsExtraSurface) {
 					target.states.add(sStateExtraSurface);
 				}
-				target.states.add(sStateJoin);
+				if (state.needsJoinSState) {
+					target.states.add(sStateJoin);
+				}
 			}
 			target.states.add(sStateDepth);
 		}
@@ -115,7 +117,7 @@ class Synccharts2S {
 			val sStateDepth = state.depthSState
 			val sStateJoin = state.joinSState
 			state.fillSStateSurface(sStateSurface);
-			if (sStateJoin != null) {
+			if (sStateJoin != null && state.needsJoinSState) {
 				state.fillSStateJoin(sStateJoin);
 			} 
 			state.fillSStateDepth(sStateDepth);
@@ -176,7 +178,12 @@ class Synccharts2S {
 			if (regardedTransitionListWeak.size < 1) {
 				// fork join thread with same priority as current thread
 				val sfork = SFactory::eINSTANCE.createFork();
-				sfork.setThread(state.joinSState)
+				if (state.needsJoinSState) {
+					sfork.setThread(state.joinSState)
+				}
+				else {
+					sfork.setThread(state.depthSState)
+				}
 				sfork.setPriority(state.highestDependencyStrongNode.priority);
 				sState.instructions.add(sfork);
 			}
@@ -197,7 +204,12 @@ class Synccharts2S {
 				
 				// Transition from extra surface to normal join node
 				val sTrans = SFactory::eINSTANCE.createTrans
-				sTrans.setContinuation(state.joinSState);
+				if (state.needsJoinSState) {
+					sTrans.setContinuation(state.joinSState);
+				}
+				else {
+					sTrans.setContinuation(state.depthSState);
+				}
 				extraSurfaceSState.instructions.add(sTrans);
 
 				// fork extra surface thread (instead of join thread!) with same priority as current thread
@@ -301,9 +313,10 @@ class Synccharts2S {
 			// again in the depth of this sState
 
 			var strans = SFactory::eINSTANCE.createTrans();
-			// if state is hierarchical instead of the depth continue with join
+			// if state is hierarchical instead of the depth continue with join (if join state is needed
+			// that is the state has an outgoing normal termination)
 			// for handling possible normal terminations
-			if (state.hierarchical) {
+			if (state.needsJoinSState) {
 				val sStateJoin = state.joinSState;
 				strans.setContinuation(sStateJoin);
 			}

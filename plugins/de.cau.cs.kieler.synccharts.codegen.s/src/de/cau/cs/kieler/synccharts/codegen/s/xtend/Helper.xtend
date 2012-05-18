@@ -56,6 +56,11 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 		state.regions.size > 0;
 	}
 
+	// Returns true iff the state is hierarchical and has a normal termination (so it needs an extra join state).
+	def Boolean needsJoinSState(State state) {
+		(state.hierarchical && (state.getNormalTerminationTransition != null));
+	}
+
 	// Get the initial state of a region.
    	def State getInitialState(Region region) {
    	  	region.states.filter(e | e.isInitial).toList.get(0);   	
