@@ -83,19 +83,29 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 	
 	// Adds states of state to the stateList
 	def dispatch addStatesToList(List<State> stateList, State state) {
-		addStatesToList(stateList, state.eAllContents.toIterable().filter(typeof(State)))
+		val statesToAdd = state.eAllContents.toIterable().filter(typeof(State)).toList;
+		stateList.add(state);
+		if (statesToAdd.size > 0) {
+			addStatesToList(stateList, statesToAdd);
+		}
+		stateList;
 	}
 
 	// Adds states of region to the stateList
 	def dispatch addStatesToList(List<State> stateList, Region region) {
-		addStatesToList(stateList, region.eAllContents.toIterable().filter(typeof(State)))
+		val statesToAdd = region.eAllContents.toIterable().filter(typeof(State)).toList;
+		if (statesToAdd.size > 0) {
+			addStatesToList(stateList, statesToAdd);
+		}
+		stateList;
 	}
 	
 	// Adds statesToAdd to the stateList
-	def dispatch addStatesToList(List<State> stateList, List<State> statesToAdd) {
-		for (state : statesToAdd) {
-			stateList.add(state);
+	def dispatch addStatesToList(List<State> stateList, List statesOrRegionsToAdd) {
+		for (stateOrRegion : statesOrRegionsToAdd) {
+			stateList.addStatesToList(stateOrRegion);
 		}
+		stateList;
 	}
 	
 	// Return the root region of a region.
