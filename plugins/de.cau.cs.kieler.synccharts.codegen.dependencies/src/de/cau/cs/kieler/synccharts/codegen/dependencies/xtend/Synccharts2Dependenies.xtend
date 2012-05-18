@@ -13,37 +13,47 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.dependencies.xtend
 
-import de.cau.cs.kieler.synccharts.*
-import de.cau.cs.kieler.synccharts.codegen.dependencies.*
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.*
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.core.kexpressions.*
-import java.util.*
-import com.google.inject.Inject
-import org.eclipse.emf.ecore.EClass
-//import org.eclipse.xtend.util.stdlib.TraceComponent
-import org.eclipse.xtend.util.stdlib.*
-import org.eclipse.emf.common.util.BasicEList
-import java.lang.System
+import de.cau.cs.kieler.core.kexpressions.ComplexExpression
+import de.cau.cs.kieler.core.kexpressions.Expression
+import de.cau.cs.kieler.core.kexpressions.Signal
+import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
+import de.cau.cs.kieler.synccharts.Emission
+import de.cau.cs.kieler.synccharts.Region
+import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.Transition
-import com.google.common.collect.Lists
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependencies
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
+import java.util.ArrayList
+import java.util.List
 
-class Synccharts2Dependenies {
+/**
+ * Build a dependency graph for a SynChart. Consider control flow dependencies (immediate transitions),
+ * transition dependencies (transition priorities), hierarchy dependencies (hierarchical states) and
+ * signal dependencies (emitters and triggers).
+ * 
+ * @author cmot
+ */
+ class Synccharts2Dependenies {
 	 
 	// ======================================================================================================
 	// ==                                 T R A V E R S E    S Y N C C H A R T                             ==
 	// ======================================================================================================
 	
+	// Main transform method as create extension.
 	def create dependencies : DependencyFactory::eINSTANCE.createDependencies() transform (Region root) {
 		dependencies.transform(root);
 	}		
 	
+	// Main transform method for a given dependencies object.
 	def Dependencies transform( Dependencies dependencies, Region root) {
 		var rootState = root.states.head();
 		//System::out.println("Hierarchical8 "+ state.id + ", ");
 
 		// create nodes for all states 
-		for (state : root.getAllStates(dependencies)) {
+		for (state : root.allStatesOfRegion) {
 			if (state.outgoingTransitions.size == 0) {
 				dependencies.createSimpleOrStrongAndWeakNoedes(state, null);
 			}
@@ -52,9 +62,8 @@ class Synccharts2Dependenies {
 			}
 		}
 
-
 		// create dependencies between nodes
-		for (state : root.getAllStates(dependencies)) {
+		for (state : root.getAllStatesAndHandleHiearchyDependency(dependencies)) {
 			dependencies.handleTransitionDependency(state);
 			
 			for (transition : state.outgoingTransitions) {
@@ -79,12 +88,14 @@ class Synccharts2Dependenies {
 	
 	// -----------------------------------------------------------------------------------------------------
 
-	def List<State> getAllStates(Region region, Dependencies dependencies) {
+
+	// Retrieve all states of a region and create hierarchy dependencies.
+	def List<State> getAllStatesAndHandleHiearchyDependency(Region region, Dependencies dependencies) {
 		var List<State> stateList = new ArrayList()
 		for (state : region.states) {
 			stateList.add(state)
 			for (regionsOfState : state.regions) {
-				var childStates = regionsOfState.getAllStates(dependencies);
+				var childStates = regionsOfState.getAllStatesAndHandleHiearchyDependency(dependencies);
 				for (childState : childStates) {
 					dependencies.handleHierarchyDependency(childState, state);
 				}
@@ -94,10 +105,12 @@ class Synccharts2Dependenies {
 		stateList
 	}
 
+	// Retrieve all states of a region.
 	def List<State> getAllStatesOfRegion (Region region) {
 		region.states
 	}
 
+	// Retrieve all region of a state.
 	def List<Region> getAllRegionsOfState (State state) {
 		state.regions
 	}
@@ -107,6 +120,7 @@ class Synccharts2Dependenies {
 	// ==                                 H A N D L E    D E P E N D E N C Y                               ==
 	// ======================================================================================================
 
+	// Helper function for creating hierarchy dependencies.
 	def handleHierarchyDependencyHelper(Dependencies dependencies, State childState, Node PW, Node PS, Transition childStateTransition) {
 			val CS = dependencies.getNode(childState, childStateTransition, DependencyType::STRONG);
 			dependencies.getHierarchyDependency(PW, CS);
@@ -118,6 +132,7 @@ class Synccharts2Dependenies {
 			}
 	}
 	
+	// Helper function for creating hierarchy dependencies.
 	def handleHierarchyDependencyHelper(Dependencies dependencies, State childState, State state, Transition stateTransition) {
 		val PS = dependencies.getNode(state, stateTransition, DependencyType::STRONG);
 		var PW = PS;
@@ -139,9 +154,9 @@ class Synccharts2Dependenies {
 		}
 	}
 	
-	
-	// Weak dependencies from parentWeak to (childWeak and childStrong)
-	// Strong dependencies from (childWeak and childStrong) to parentStrong
+	// Create hierarchy dependencies:
+	// parent weak -> child strong -> parent strong
+	// parent weak -> child weak   -> parent strong (if child is hierarchical)
 	def handleHierarchyDependency(Dependencies dependencies, State childState, State state) {
 		var stateTransitions = state.outgoingTransitions.toList();
 		if (stateTransitions.empty) {
@@ -156,6 +171,7 @@ class Synccharts2Dependenies {
 		
 	}
 	
+	// Create transition dependencies for prioritized transitions in the order of their priority.
 	def handleTransitionDependency(Dependencies dependencies, State state) {
 		var orderedTransitions = state.outgoingTransitions.filter(e|true).sort(e1, e2 | if (e1.priority < e2.priority) {-1} else {1});
 		var i = 1;
@@ -179,6 +195,7 @@ class Synccharts2Dependenies {
 		}
 	}
 	
+	// Create control flow dependencies for immediate transitions only.
 	def handleControlFlowDependency(Dependencies dependencies, Node firstNode, State state, Transition transition, Transition targetTransition) {
 			var secondNode = dependencies.getNode(transition.targetState, targetTransition, DependencyType::STRONG);
 			if (firstNode != secondNode) {
@@ -202,6 +219,8 @@ class Synccharts2Dependenies {
 			}
 	}
 	
+	// Create signal dependencies for states emitting signals and other states testing for these signals in triggers of
+	// their outgoing transitions.
 	def handleSignalDependency(Dependencies dependencies, Transition transition, State rootState) {
 				for (effect : transition.eAllContents().toIterable().filter(typeof(Emission))) {
 					
@@ -246,23 +265,27 @@ class Synccharts2Dependenies {
 	// ======================================================================================================
 	// ==                      R E T R I E V E    C R E A T E D    D E P E N D E N C Y                     ==
 	// ======================================================================================================
-
+	
+	// Create a new signal dependency.
 	def Dependency getSignalDependency(Dependencies dependencies, Node emitterNode, Node triggerNode) {
 		var newDependency = DependencyFactory::eINSTANCE.createSignalDependency();
 		dependencies.getDependency(triggerNode, emitterNode, newDependency);
 	}
 
+	// Create a new control flow dependency.
 	def Dependency getControlFlowDependency(Dependencies dependencies, Node firstNode, Node secondNode, boolean isImmediate) {
 		var newDependency = DependencyFactory::eINSTANCE.createControlflowDependency();
 		newDependency.setImmediate(isImmediate);
 		dependencies.getDependency(secondNode, firstNode, newDependency);
 	}
 
+	// Create a new hiearchy dependency.
 	def Dependency getHierarchyDependency(Dependencies dependencies, Node sourceNode, Node targetNode) {
 		var newDependency = DependencyFactory::eINSTANCE.createHierarchyDependency();
 		dependencies.getDependency(sourceNode, targetNode, newDependency);
 	}
 
+	// Create a new transition dependency.
 	def Dependency getTransitionDependency(Dependencies dependencies, Node sourceNode, Node targetNode) {
 		var newDependency = DependencyFactory::eINSTANCE.createTransitionDependency();
 		dependencies.getDependency(targetNode, sourceNode, newDependency);
@@ -273,6 +296,7 @@ class Synccharts2Dependenies {
 	// ==                                         C R E A T I O N                                          ==
 	// ======================================================================================================
 
+	// Create a new dependency transition only if this does not exist yet and add it to dependencies.
 	def Dependency getDependency(Dependencies dependencies, Node sourceNode, Node targetNode, Dependency newDependency) {
 		var dependency = dependencies.dependencies.filter(e|
 			   e.eClass.toString.equalsIgnoreCase(newDependency.eClass.toString())
@@ -289,6 +313,7 @@ class Synccharts2Dependenies {
 		return newDependency;
 	}
 	
+	// Create dependency nodes according to a node type.
 	def void createSimpleOrStrongAndWeakNoedes(Dependencies dependencies, State state, Transition transition) {
 		if (state.hierarchical) {
 				dependencies.getNode(state, transition, DependencyType::STRONG);
@@ -299,6 +324,8 @@ class Synccharts2Dependenies {
 		}
 	}
 
+	// Retrieve a dependency node according to the dependency tupe (weak or strong), if this node cannot
+	// be found than create it and add it.
 	def Node getNode(Dependencies dependencies, State state, Transition transition, DependencyType type) {
 		var node = dependencies.nodes.filter(e|(e.type == type) && (e.state == state) && (e.transition == transition));
 		if (node.size > 0) {
@@ -328,13 +355,17 @@ class Synccharts2Dependenies {
 	// ==                                          H E L P E R                                             ==
 	// ======================================================================================================
 	
+	// Returns true iff the state contains regions.
 	def boolean isHierarchical(State state) {
 		state.regions.size > 0;
 	}
 
+	// Returns true iff the expression is referencing the signal.
 	def dispatch Boolean triggerContainingSignal(Expression trigger, Signal signal) {
 		return false;
 	}
+	
+	// Returns true iff the complex expression is referencing the signal.
 	def dispatch Boolean triggerContainingSignal(ComplexExpression trigger, Signal signal) {
 		var returnValue = false;
 		for (expression : trigger.subExpressions) {
@@ -342,6 +373,8 @@ class Synccharts2Dependenies {
 		}
 		return returnValue;
 	}
+	
+	// Returns true iff the object reference is referencing the signal.
 	def dispatch Boolean triggerContainingSignal(ValuedObjectReference trigger, Signal signal) {
 		var returnValue = trigger.valuedObject == signal;
 		for (expression : trigger.subExpressions) {
@@ -365,6 +398,7 @@ class Synccharts2Dependenies {
 	// 	           visit(m)
 	// 	       add n to L	
 	
+	// Starting the topological sort.
 	def topologicalSort(Dependencies dependencies) {
 		// reset dependencies
 		for (node : dependencies.nodes) {
@@ -378,7 +412,7 @@ class Synccharts2Dependenies {
 		}
 	}
 	
-	
+	// Visit helper function for topological sorting the dependency nodes.
 	def int visit(Node node, int priority) {
 		if (node.priority == -1) {
 			node.setPriority(-2);
@@ -386,11 +420,10 @@ class Synccharts2Dependenies {
 			for (incomingDependency : node.incomingDependencies) {
 				val nextNode = incomingDependency.sourceNode;
 				if (nextNode != node) {
-//					System::out.println("At "+ node.id + " visit next " + nextNode.id);
 					tmpPrio = nextNode.visit(tmpPrio);
 				}
 			}
-//			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1));
+//			node.setPriority(1 + (node.eContainer as Dependencies).nodes.size - (tmpPrio + 1)); // REVERSE ORDERING
 			node.setPriority((tmpPrio + 1));
 			return tmpPrio + 1;
 		}
@@ -399,6 +432,7 @@ class Synccharts2Dependenies {
 		}
 	}
 	
+	// ======================================================================================================
 }
 
 
