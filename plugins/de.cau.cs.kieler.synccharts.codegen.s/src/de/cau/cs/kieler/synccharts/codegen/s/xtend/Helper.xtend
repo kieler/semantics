@@ -229,6 +229,10 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
    	 	TraceComponent::getSingleTraceTarget(state, "Join") as de.cau.cs.kieler.s.s.State
    	}
 
+   	// Get a possibly second ExtraSurface of a State.
+   	def de.cau.cs.kieler.s.s.State getExtraSurfaceSState(State state) {
+   	 	TraceComponent::getSingleTraceTarget(state, "ExtraSurface") as de.cau.cs.kieler.s.s.State
+   	}
 
 	// ======================================================================================================
 	// ==                         P R I O   S T A T E M E N T   H E L P E R S                              ==
