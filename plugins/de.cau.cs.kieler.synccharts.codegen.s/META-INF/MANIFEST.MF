@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: S
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.s;singleton:=true
 Bundle-Version: 1.0.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.s.Activator
+Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.s.CodegenSPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
