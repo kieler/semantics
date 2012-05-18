@@ -25,6 +25,11 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.kgraph.KEdge
 
+/**
+ * KRendering Utility class for KLighD visualization.
+ * 
+ * @author chsch
+ */
 class KRenderingUtil {
 	
 	def KRenderingFactory factory() {

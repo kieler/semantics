@@ -13,23 +13,25 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.s.xtend
 
-import de.cau.cs.kieler.synccharts.*
-//import de.cau.cs.kieler.s.s.*
-import de.cau.cs.kieler.s.*
-import de.cau.cs.kieler.s.s.SFactory
-import de.cau.cs.kieler.core.kexpressions.*
-import java.util.*
-import com.google.inject.Inject
-import org.eclipse.xtend.util.stdlib.TraceComponent
 import com.google.inject.Guice
-import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
-import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
-import de.cau.cs.kieler.s.s.Instruction
 import de.cau.cs.kieler.s.s.Join
+import de.cau.cs.kieler.s.s.SFactory
+import de.cau.cs.kieler.synccharts.Region
+import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.Transition
+import de.cau.cs.kieler.synccharts.TransitionType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyFactory
+import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.DependencyType
+import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies
+import java.util.ArrayList
+import java.util.List
+import org.eclipse.xtend.util.stdlib.TraceComponent
 
+/**
+ * Converts a SyncChart into an S program.
+ * 
+ * @author cmot
+ */
 class Synccharts2S {
 
 	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
@@ -375,11 +377,6 @@ class Synccharts2S {
 		target;
 	}
 
-	
-	// ======================================================================================================
-	// ==                                XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX                             ==
-	// ======================================================================================================
-	
 	// ======================================================================================================
 	
 }
