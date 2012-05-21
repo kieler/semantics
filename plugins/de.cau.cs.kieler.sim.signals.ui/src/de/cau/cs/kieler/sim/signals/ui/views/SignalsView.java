@@ -201,6 +201,7 @@ public class SignalsView extends ViewPart {
 		toolBarManager.add(getActionZoomOut());
 		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionDelete());
+		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionSaveAs());
 		toolBarManager.add(getActionSaveAsEso());
 		toolBarManager.add(new Separator());
