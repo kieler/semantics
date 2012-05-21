@@ -10,7 +10,8 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.draw2d,
  org.json,
  de.cau.cs.kieler.sim.signals,
- de.cau.cs.kieler.sim.kiem
+ de.cau.cs.kieler.sim.kiem,
+ org.eclipse.core.resources;bundle-version="3.7.101"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
 Import-Package: org.eclipse.ui.dialogs

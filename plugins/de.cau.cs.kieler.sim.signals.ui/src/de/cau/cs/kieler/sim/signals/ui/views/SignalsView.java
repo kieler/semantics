@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -35,6 +36,7 @@ import de.cau.cs.kieler.sim.signals.Signal;
 import de.cau.cs.kieler.sim.signals.SignalASCIIChartPlotter;
 import de.cau.cs.kieler.sim.signals.SignalASCIITimeLinePlotter;
 import de.cau.cs.kieler.sim.signals.SignalList;
+import de.cau.cs.kieler.sim.signals.ui.SelectInputOutputSignalDialog;
 import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
 
 /**
@@ -59,6 +61,9 @@ public class SignalsView extends ViewPart {
 
 	/** The action to save as. */
 	private Action actionSaveAs;
+
+	/** The action to save as eso. */
+	private Action actionSaveAsEso;
 
 	/** The action to toggle colors. */
 	private Action actionToggleColors;
@@ -197,6 +202,7 @@ public class SignalsView extends ViewPart {
 		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionDelete());
 		toolBarManager.add(getActionSaveAs());
+		toolBarManager.add(getActionSaveAsEso());
 		toolBarManager.add(new Separator());
 		toolBarManager.add(getActionToggleMode());
 		toolBarManager.add(getActionToggleColors());
@@ -318,6 +324,48 @@ public class SignalsView extends ViewPart {
 		actionSaveAs.setImageDescriptor(SignalsUIPlugin
 				.getImageDescriptor("icons/saveas.png"));
 		return actionSaveAs;
+	}
+
+	// -------------------------------------------------------------------------
+	/**
+	 * Gets the action to save as eso.
+	 * 
+	 * @return the action save as eso
+	 */
+	private Action getActionSaveAsEso() {
+		if (actionSaveAsEso != null) {
+			return actionSaveAsEso;
+		}
+		actionSaveAsEso = new Action() {
+			public void run() {
+				Shell shell = Display.getDefault().getActiveShell();
+				if (shell != null) {
+					// first ask the user to select input signals
+	                SelectInputOutputSignalDialog signalsDialog = new SelectInputOutputSignalDialog(shell);
+	                
+	                signalsDialog.setSignalList(signalList);
+	                if (signalsDialog.open() == 0) {
+	                    List<Signal> inputSignalList = signalsDialog.getInputSignals();
+	                    List<Signal> outputSignalList = signalsDialog.getOutputSignals();
+	                    if (inputSignalList.size()> 0 || outputSignalList.size() > 0) {
+	                    	// do the export and ask the user where to write the file to
+	    					SaveAsDialog dlg = new SaveAsDialog(shell);
+	    					dlg.setBlockOnOpen(true);
+	    					dlg.setOriginalName(KiemPlugin.getDefault()
+	    							.getActiveProjectName() + ".eso");
+	    					if (dlg.open() == SaveAsDialog.OK) {
+	    						new SignalASCIIChartPlotter().plotToEsoFile(dlg.getResult(), signalList, inputSignalList, outputSignalList);
+	    					}
+	                    }
+	                }
+				}
+			}
+		};
+		actionSaveAsEso.setText("Save As ESO");
+		actionSaveAsEso.setToolTipText("Save as ESO File for validation.");
+		actionSaveAsEso.setImageDescriptor(SignalsUIPlugin
+				.getImageDescriptor("icons/saveaseso.png"));
+		return actionSaveAsEso;
 	}
 
 	// -------------------------------------------------------------------------
