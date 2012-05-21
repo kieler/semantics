@@ -18,7 +18,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.eclipse.jface.dialogs.Dialog;
-import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
@@ -37,11 +36,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
-import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.signals.Signal;
 
-// TODO: Auto-generated Javadoc
 /**
  * The Class SelectInputOutputSignalDialog.
  * 
