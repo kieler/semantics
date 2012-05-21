@@ -303,10 +303,7 @@ abstract public class SignalASCIIPlotter {
 			
 			PrintWriter out = new PrintWriter(stringPath);
 
-			if (newFile) {
-				out.println("! reset;");
-			}
-			else {
+			if (!newFile) {
 				// restore old contents
 				for (String line : oldFileContent) {
 					out.println(line);
