@@ -304,17 +304,19 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         }
 
         String[] fieldNames = JSONObject.getNames(json);
-        for (String field : fieldNames) {
-            try {
-                Object obj = json.get(field);
+        if (fieldNames != null) {
+            for (String field : fieldNames) {
+                try {
+                    Object obj = json.get(field);
 
-                if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)
-                        && !retval.has(field)) {
-                    prevSignals.accumulate(field, obj);
+                    if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)
+                            && !retval.has(field)) {
+                        prevSignals.accumulate(field, obj);
+                    }
+                } catch (JSONException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
             }
         }
         try {
@@ -384,6 +386,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             value.accumulate(Constants.VAR_ESOFILE, filename);
             if (!trainingMode && trace.getSize() <= (step - 1)) {
                 value.accumulate(Constants.VAR_EOT, true);
+            	if (this.getProperties()[7].getValueAsBoolean()) {
+            		// stop execution if this property is set to true and the EOT is reached
+            		KiemPlugin.getDefault().getExecution().stopExecutionSync();
+            	}
             } else {
                 value.accumulate(Constants.VAR_EOT, false);
             }
@@ -421,7 +427,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             }
         }
         
-        KiemProperty[] properties = new KiemProperty[6];
+        KiemProperty[] properties = new KiemProperty[7];
         properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
         fileProperty.setValue(properties[0], filename);
         properties[0].setRestoreToDefaultOnLoad(true);
@@ -431,6 +437,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         properties[3] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
         properties[4] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
         properties[5] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
+        properties[6] = new KiemProperty(Constants.STOPEXECUTION, true);
+
 
         return properties;
     }

@@ -321,7 +321,6 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         properties[3] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
         properties[4] = new KiemProperty(Constants.SIGNALVAR, Constants.DEF_SIGNALVAR);
         properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
-
         return properties;
     }
 
