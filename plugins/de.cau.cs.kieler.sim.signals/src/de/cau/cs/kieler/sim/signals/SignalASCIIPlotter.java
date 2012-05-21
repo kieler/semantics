@@ -13,9 +13,15 @@
  */
 package de.cau.cs.kieler.sim.signals;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IResource;
@@ -258,6 +264,83 @@ abstract public class SignalASCIIPlotter {
 			e.printStackTrace();
 		}
 	}
+	
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Export to ESO ASCII text file appending a new execution run if the file already exists.
+	 * 
+	 * @param path
+	 *            the path
+	 */
+	public void plotToEsoFile(IPath path, SignalList signalList, List<Signal> inputSignalList,  List<Signal> outputSignalList) {
+		IWorkspace workspace = ResourcesPlugin.getWorkspace();
+		IWorkspaceRoot root = workspace.getRoot();
+		IFile file = root.getFile(path);
+		boolean newFile = false;
+		LinkedList<String> oldFileContent = new LinkedList<String>();
+		
+		try {
+			if (!file.exists()) {
+				file.create(null, IResource.NONE, null);
+				newFile = true;
+			}
+
+			String stringPath = file.getRawLocation().toString();
+			
+			if (!newFile) {
+				// copy old contents
+			    FileInputStream fis = new FileInputStream(stringPath);
+			    BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+			    String line;
+			    while ((line = br.readLine()) != null)   {
+			    	  oldFileContent.add(line);
+			    }
+			    br.close();
+			    fis.close();
+			}
+			
+			PrintWriter out = new PrintWriter(stringPath);
+
+			if (newFile) {
+				out.println("! reset;");
+			}
+			else {
+				// restore old contents
+				for (String line : oldFileContent) {
+					out.println(line);
+				}
+			}
+			
+			long maxTick = signalList.getMaxTick();
+			
+			out.println("! reset;");
+			for (long tick = 0; tick < maxTick; tick++) {
+				for (Signal inputSignal: inputSignalList) {
+					if (inputSignal.isPresent(tick)) {
+						out.print(inputSignal.getName() + " ");
+					}
+				}
+				out.println("");
+				out.print("% Output: ");
+				for (Signal outputSignal: outputSignalList) {
+					if (outputSignal.isPresent(tick)) {
+						out.print(outputSignal.getName() + " ");
+					}
+				}
+				out.println("");
+				out.println(";");
+			}
+
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (CoreException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	// -------------------------------------------------------------------------
 
