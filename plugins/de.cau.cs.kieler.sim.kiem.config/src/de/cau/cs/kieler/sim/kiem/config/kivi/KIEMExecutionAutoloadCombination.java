@@ -71,6 +71,11 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 	}
 
 	public void execute(final EditorState editorState) {
+		// to prevent UI thread deadlocks (editorIsActivePart) because during initialization
+		// components may require UI access, do not execution at this point
+		if (KiemPlugin.getDefault().isInitializingExecution()) {
+			return;
+		}
 
 		// if currently active editor is also the active part
 		if (editorState != null && editorState.editorIsActivePart()) {
