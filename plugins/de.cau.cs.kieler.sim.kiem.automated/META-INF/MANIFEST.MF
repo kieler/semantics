@@ -21,3 +21,4 @@ Export-Package: de.cau.cs.kieler.sim.kiem.automated,
  de.cau.cs.kieler.sim.kiem.automated.data,
  de.cau.cs.kieler.sim.kiem.automated.execution,
  de.cau.cs.kieler.sim.kiem.automated.extension
+Import-Package: org.eclipse.ui.part
