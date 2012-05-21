@@ -73,6 +73,10 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * ATTENTION: Be sure to uncheck the run in UI thread option in the run configuration 
  * of the JUnit test case ([ ] run in UI thread).  
  * 
+ * ATTENTION: The Kiem.UI Plugin should not be part of the run configuration because
+ * the executions may be too fast done and the Kiem.UI Plugin may get problems handling
+ * already closed widgets.
+ * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * 
  */
