@@ -388,7 +388,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 value.accumulate(Constants.VAR_EOT, true);
             	if (this.getProperties()[7].getValueAsBoolean()) {
             		// stop execution if this property is set to true and the EOT is reached
-            		KiemPlugin.getDefault().getExecution().stopExecutionSync();
+                    throw new KiemExecutionException("End of ESO file reached", true, true, true, null);
+//            		KiemPlugin.getDefault().getExecution().stopExecutionSync();
             	}
             } else {
                 value.accumulate(Constants.VAR_EOT, false);
