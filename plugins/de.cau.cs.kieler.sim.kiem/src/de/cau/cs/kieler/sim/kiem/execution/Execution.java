@@ -916,6 +916,7 @@ public class Execution extends Job {
 		wrapupComponents(true);
 		// try to stop all components, no blocking stopExecution() call
 		for (int c = 0; c < this.dataComponentWrapperList.size(); c++) {
+			dataComponentWrapperList.get(c).setDeltaIndex(0);
 			if (this.observerExecutionArray[c] != null) {
 				this.observerExecutionArray[c].stopExecution();
 			}
@@ -1321,11 +1322,12 @@ public class Execution extends Job {
 								try {
 									// make a step
 									if (!makeStepObserverProducer(dataComponentWrapper)) {
+										errorTerminate();
 										isStarted = false;
 										return Status.CANCEL_STATUS;
 									}
 									// save current pool index for next
-									// invokation
+									// invocation
 									// only iff no history step
 									if (!this.isHistoryStep()) {
 										dataComponentWrapper
