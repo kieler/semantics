@@ -14,7 +14,9 @@
 package de.cau.cs.kieler.esterel.cec.sim;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -66,6 +68,7 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.esterel.cec.CEC;
+import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
@@ -77,6 +80,13 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
+ * The Esterel simulation DataComponent is responsible for 
+ * 1) preparing Esterel code for a possibly visualized simulation execution run, 
+ * 2) generating C code with the CEC
+ * 3) compiling the C code to an exeutable
+ * 4) starting and running the executable stepwise generating inputs and
+ * examinating outputs.
+ * 
  * @author cmot, ctr
  * 
  */
@@ -85,6 +95,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -----------------------------------------------------------------------------
 	// -----------------------------------------------------------------------------
 
+	/**
+	 * A progress monitor for the Esterel CEC compilation into C code.
+	 */
 	class EsterelSimulationProgressMonitor implements ProgressMonitor {
 
 		private KielerProgressMonitor kielerProgressMonitor;
@@ -149,24 +162,33 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 	// -----------------------------------------------------------------------------
 	// -----------------------------------------------------------------------------
 
+	/** The Esterel program is the concerned model. */
 	private Program myModel = null;
+	
+	/** The process running the executable. */
 	private Process process = null;
+	
+	/** The PrintWriter for input to the executed Esterel C program. */
 	private PrintWriter toEsterel = null;
+	
+	/** The BufferedReader for output from the executed Esterel C program. */
 	private BufferedReader fromEsterel = null;
+	
+	/** The BufferedReader for errors possibly occurring during execution of the Esterel C program. */
 	private BufferedReader error = null;
 
+	/** The actually executed file. */
 	private File simFile = null;
 
+	/** The list of output signals to be examined. */
 	private LinkedList<String> outputSignalList = null;
 
+	
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
-     */
+	/**
+	 * {@inheritDoc}
+	 */
     @Override
     public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
         if (!(rootEObject instanceof Program)) {
@@ -206,7 +228,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 					"No esterel simulation is running", true, null);
 		}
 		try {
-
 			toEsterel.write(jSONObject.toString() + "\n");
 			toEsterel.flush();
 			while (error.ready()) {
@@ -320,6 +341,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public KiemProperty[] doProvideProperties() {
 		final int nProperties = 3;
@@ -342,25 +366,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		if (process != null) {
 			process.destroy();
 		}
-		// boolean ok = true;
-		//
-		// if (strlFile != null && strlFile.exists()) {
-		// ok &= strlFile.delete();
-		// }
-		// if (dataFile != null && dataFile.exists()) {
-		// ok &= dataFile.delete();
-		// }
-		// if (simFile != null && simFile.exists()) {
-		// ok &= simFile.delete();
-		// }
-		// strlFile = null;
-		// dataFile = null;
-		// simFile = null;
-		//
-		// if (!ok) {
-		// throw new KiemInitializationException(
-		// "Could not delete temp files", false, null);
-		// }
 	}
 
 	// -------------------------------------------------------------------------
@@ -477,6 +482,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void doModel2ModelTransform(final KielerProgressMonitor monitor)
 			throws KiemInitializationException {
 		monitor.begin("Esterel Simulation", 10);
@@ -621,6 +629,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
 	// -------------------------------------------------------------------------
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JSONObject doProvideInitialVariables()
 			throws KiemInitializationException {
@@ -718,9 +729,30 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 		File data;
 		try {
 			data = File.createTempFile("data", ".c");
-			CSimulationInterfaceGenerator cSimulationInterfaceGenerator = new CSimulationInterfaceGenerator(
-					esterelProgram, esterelProgramURI);
-			cSimulationInterfaceGenerator.execute(data.getPath());
+			
+			// Apply transformation
+			// Because for @Inject tags we cannot use the standard JAVA 'new'
+			// keyword
+			Esterel2CSimulationInterface transform = Guice.createInjector()
+					.getInstance(Esterel2CSimulationInterface.class);
+			String ccode = transform.createCSimulationInterface(
+					esterelProgram.getModules().get(0)).toString();
+
+			// Write out c program
+			URI output = URI.createURI(esterelProgramURI.toString());
+			output = output.trimFragment();
+			try {
+				FileWriter fileWriter = new FileWriter(data.getPath());
+				if (fileWriter != null) {
+					BufferedWriter out = new BufferedWriter(fileWriter);
+					if (out != null) {
+						out.write(ccode);
+						out.close();
+					}
+				}
+			} catch (IOException e) {
+				throw new ExecutionException("Cannot write output file.");
+			}
 			return data.toURI().toURL();
 		} catch (IOException e) {
 			throw new KiemInitializationException("Error creating data file",
