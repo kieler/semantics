@@ -62,7 +62,7 @@ public class SelectInputOutputSignalDialog extends Dialog {
     private static final Color COLOR_INPUT = new Color(null, new RGB(200, 0, 0));
     
     /** The Constant DIALOG_TITLE. */
-    private static final String DIALOG_TITLE = "Select INPUT signals";
+    private static final String DIALOG_TITLE = "Select Input Signals";
 
     /** The basic dialog SWT component. */
     private SelectInputOutputSignalDialog dialog;
