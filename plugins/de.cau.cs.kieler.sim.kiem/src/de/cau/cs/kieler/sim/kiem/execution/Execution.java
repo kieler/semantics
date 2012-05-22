@@ -1310,7 +1310,6 @@ public class Execution extends Job {
 								// Observer AND Producer => blocking
 								try {
 									// make a step
-									System.out.println("STEP:" + dataComponentWrapper.getComponentId());
 									if (!makeStepObserverProducer(dataComponentWrapper)) {
 										errorTerminate();
 										isStarted = false;
