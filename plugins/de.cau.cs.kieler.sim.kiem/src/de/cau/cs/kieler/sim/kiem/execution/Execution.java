@@ -1068,14 +1068,12 @@ public class Execution extends Job {
 	 * Makes step of an observer AND producer data component. This is not
 	 * sourced out into a separate thread because it is made in a blocking
 	 * sense.
-	 * 
-	 * @param dataComponentWrapper
-	 *            the data component which should make a step
-	 * 
-	 * @throws JSONException
-	 *             a JSONException
+	 *
+	 * @param dataComponentWrapper the data component which should make a step
+	 * @return true, if successful
+	 * @throws JSONException a JSONException
 	 */
-	private void makeStepObserverProducer(
+	private boolean makeStepObserverProducer(
 			final DataComponentWrapper dataComponentWrapper)
 			throws JSONException {
 		JSONObject oldData;
@@ -1098,6 +1096,7 @@ public class Execution extends Job {
 				timeout.abortTimeout();
 				KiemPlugin.handleComponentError(
 						dataComponentWrapper.getDataComponent(), e);
+				return false;
 			}
 
 			// only put in data pool if no history step
@@ -1114,6 +1113,7 @@ public class Execution extends Job {
 				timeout.abortTimeout();
 				KiemPlugin.handleComponentError(
 						dataComponentWrapper.getDataComponent(), e);
+				return false;
 			}
 			JSONObject newJsonData = null;
 			if (newData != null && newData != "") {
@@ -1126,6 +1126,7 @@ public class Execution extends Job {
 			}
 		}
 		timeout.abortTimeout();
+		return true;
 	}
 
 	// -------------------------------------------------------------------------
@@ -1319,7 +1320,10 @@ public class Execution extends Job {
 								// Observer AND Producer => blocking
 								try {
 									// make a step
-									makeStepObserverProducer(dataComponentWrapper);
+									if (!makeStepObserverProducer(dataComponentWrapper)) {
+										isStarted = false;
+										return Status.CANCEL_STATUS;
+									}
 									// save current pool index for next
 									// invokation
 									// only iff no history step
