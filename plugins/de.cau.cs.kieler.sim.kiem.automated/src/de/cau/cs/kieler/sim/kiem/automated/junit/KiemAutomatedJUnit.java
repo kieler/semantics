@@ -253,6 +253,7 @@ public class KiemAutomatedJUnit {
 		stopProperty.setValue("true"); // stop execution after eso file is done
 		errorSignalName = errorProperty.getValue(); // extract the corrct error
 													// signal name to look for
+		KiemPlugin.noErrorOutput = true;
 
 		// -----------------------------------------------------------------------------------------
 		// For all ESO files grab the number of executions (separated by
@@ -265,7 +266,7 @@ public class KiemAutomatedJUnit {
 
 		boolean errorFlag = false;
 		String errorInformation = "";
-
+		
 		for (String esoFileString : esoFiles) {
 			IPath esoFilePath = new Path(esoFileString);
 			IFile esoFile = myWorkspaceRoot.getFile(esoFilePath);
@@ -300,8 +301,12 @@ public class KiemAutomatedJUnit {
 								"KIEM cannot start execution. Try to do this manually for the following scheduling file:'"
 										+ executionFile + "'.");
 					}
+					System.out.println("HUHUUUU");
 					// at this point we know that the execution is not null
-					while (execution.isRunning() && !errorFlag) {
+					int tick = 0;
+					while (execution.isStarted() && !errorFlag) {
+						System.out.println("Tick" + tick);
+
 						// remember the pool counter number
 						long poolCounter = execution.getDataPool()
 								.getPoolCounter();
@@ -318,6 +323,7 @@ public class KiemAutomatedJUnit {
 						try {
 							JSONObject jSONData = execution.getDataPool()
 									.getData(null, poolCounter);
+							System.out.println(jSONData.toString());
 							if (jSONData != null) {
 								if (jSONData.has(errorSignalName)) {
 									Object errorContent = jSONData
@@ -326,7 +332,7 @@ public class KiemAutomatedJUnit {
 										if (!((String) errorContent).equals("")) {
 											// !!! ERRROR DETECTED !!! //
 											errorFlag = true;
-											errorInformation = "Error in trace number "
+											errorInformation = "Error in tick "+tick+" of trace "
 													+ traceNumber
 													+ " of ESO file '"
 													+ esoFileString
@@ -340,7 +346,7 @@ public class KiemAutomatedJUnit {
 						} catch (JSONException e) {
 							e.printStackTrace();
 						}
-
+						tick++;
 					} // while executing
 				} // init execution
 
