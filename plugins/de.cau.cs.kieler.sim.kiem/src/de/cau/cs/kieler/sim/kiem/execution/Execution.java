@@ -247,6 +247,10 @@ public class Execution extends Job {
 			for (int c = 0; c < dataComponentWrapperListParam.size(); c++) {
 				DataComponentWrapper dataComponentWrapper = dataComponentWrapperListParam
 						.get(c);
+				// reset delta index
+				this.dataComponentWrapperList.get(c).setDeltaIndex(0);
+				// reset pool indices
+				this.dataComponentWrapperList.get(c).resetPoolIndices();
 				timeout.timeout(getTimeout(), "isEnabled, isObserver, isProducer",
 						dataComponentWrapper, this);
 				if (dataComponentWrapper.isEnabled()) {
@@ -609,21 +613,6 @@ public class Execution extends Job {
 
 		synchronized (this) {
 			if (this.steps == NO_STEPS) {
-				// notify components
-				// TODO: dubious code, to be deleted
-				// for (int c = 0; c < this.dataComponentWrapperList.size();
-				// c++) {
-				// DataComponentWrapper dataComponentWrapper =
-				// dataComponentWrapperList.get(c);
-				// timeout.timeout(getTimeout(), "isEnabled",
-				// dataComponentWrapper, this);
-				// if (dataComponentWrapper.isEnabled()) {
-				// timeout.timeout(getTimeout(), "commandStep",
-				// dataComponentWrapper, this);
-				// // dataComponentWrapper.getDataComponent().commandStep();
-				// }
-				// timeout.abortTimeout();
-				// }
 				if (eventManager != null) {
 					eventManager.notify(KiemEvent.CMD_STEP);
 				}
@@ -1321,6 +1310,7 @@ public class Execution extends Job {
 								// Observer AND Producer => blocking
 								try {
 									// make a step
+									System.out.println("STEP:" + dataComponentWrapper.getComponentId());
 									if (!makeStepObserverProducer(dataComponentWrapper)) {
 										errorTerminate();
 										isStarted = false;
