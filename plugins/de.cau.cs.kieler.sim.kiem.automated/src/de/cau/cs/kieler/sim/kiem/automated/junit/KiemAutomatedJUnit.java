@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
+// TODO: Auto-generated Javadoc
 /**
  * The class KiemAutomatedJUnit enabled the integration of several KIEM
  * execution runs into a JUNIT plugin test.
@@ -96,6 +97,15 @@ public class KiemAutomatedJUnit {
 
 	/** The plugin id of the required KART plugin. */
 	static final String KART_VALIDATION_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.validation";
+	
+	/** The Constant KART_KONFIG. */
+	static final String KART_KONFIG = "kartConfig";
+
+	/** The Constant KART_END_OF_TRANCE. */
+	static final String KART_END_OF_TRANCE = "eot";
+	
+	/** The delay between consecutive executions is needed for garbage collecting/freeing resources. */
+	static final long SLEEP_DELAY_BETWEEN_EXECUTIONS = 500;
 
 	/**
 	 * The Constant KART_PROPERTY_ESOFILE - must be equal to the one defined in
@@ -250,7 +260,7 @@ public class KiemAutomatedJUnit {
 				kartValidation);
 		KiemProperty stopProperty = getProperty(KART_PROPERTY_STOPONSUCCESS,
 				kartReplay);
-		stopProperty.setValue("true"); // stop execution after eso file is done
+		stopProperty.setValue("false"); // not stop execution after eso file is done
 		errorSignalName = errorProperty.getValue(); // extract the corrct error
 													// signal name to look for
 		KiemPlugin.noErrorOutput = true;
@@ -294,14 +304,14 @@ public class KiemAutomatedJUnit {
 				// now run the execution stepwise until it has stopped
 
 				if (kiemPlugin.initExecution()) {
-
 					Execution execution = kiemPlugin.getExecution();
 					if (execution == null) {
 						throw new RuntimeException(
 								"KIEM cannot start execution. Try to do this manually for the following scheduling file:'"
 										+ executionFile + "'.");
 					}
-					System.out.println("HUHUUUU");
+					pause();
+					
 					// at this point we know that the execution is not null
 					int tick = 0;
 					while (execution.isStarted() && !errorFlag) {
@@ -312,7 +322,7 @@ public class KiemAutomatedJUnit {
 								.getPoolCounter();
 						execution.stepExecutionSync();
 						// wait until step is done
-						while (!execution.isPaused()) {
+						while (!execution.isPaused() && execution.isStarted()) {
 							try {
 								Thread.sleep(10);
 							} catch (InterruptedException e) {
@@ -325,14 +335,34 @@ public class KiemAutomatedJUnit {
 									.getData(null, poolCounter);
 							System.out.println(jSONData.toString());
 							if (jSONData != null) {
+								if (jSONData.has(KART_KONFIG)) {
+									Object kartConfigContent = jSONData
+											.get(KART_KONFIG);
+									if (kartConfigContent instanceof JSONObject && 
+											((JSONObject) kartConfigContent).has(KART_END_OF_TRANCE)) {
+										Object kartEOTContent = ((JSONObject) kartConfigContent)
+												.get(KART_END_OF_TRANCE);
+										if (kartEOTContent instanceof Boolean) {
+											if (((Boolean) kartEOTContent)) {
+												// !!! EOT DETECTED !!! //
+												execution.stopExecutionSync();
+												execution.cancel();
+												while (kiemPlugin.getExecution() != null) {
+													pause();
+												}
+											}
+										}
+									}
+								}
 								if (jSONData.has(errorSignalName)) {
 									Object errorContent = jSONData
 											.get(errorSignalName);
 									if (errorContent instanceof String) {
 										if (!((String) errorContent).equals("")) {
 											// !!! ERRROR DETECTED !!! //
+//											execution.stopExecutionSync();
 											errorFlag = true;
-											errorInformation = "Error in tick "+tick+" of trace "
+											errorInformation = "Error ("+(String) errorContent+") in tick "+tick+" of trace "
 													+ traceNumber
 													+ " of ESO file '"
 													+ esoFileString
@@ -372,27 +402,23 @@ public class KiemAutomatedJUnit {
 
 	// -------------------------------------------------------------------------
 
-	void initExecution() {
-		(new Thread(new Runnable() {
-			public void run() {
-				// otherwise default implementation
-				if (kiemPlugin.getExecution() == null) {
-					if (kiemPlugin.initExecution()) {
-//						// per default make a pause as a first step
-						kiemPlugin.getExecution().pauseExecutionSync();
-					}
-				}
-			}
-		})).start();
+	/**
+	 * Pause.
+	 */
+	void pause() {
+		try {
+			Thread.sleep(SLEEP_DELAY_BETWEEN_EXECUTIONS);
+		} catch (InterruptedException e1) {
+			// irgnore sleeping error
+		}
 	}
 
 	// -------------------------------------------------------------------------
 
 	/**
 	 * Open model file.
-	 * 
-	 * @param modelFilePath
-	 *            the model file path
+	 *
+	 * @param modelFilePath2 the model file path2
 	 */
 	void openModelFile(IPath modelFilePath2) {
 		this.modelFilePath = modelFilePath2;
