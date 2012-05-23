@@ -40,7 +40,7 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor of the table plug-in.
+     * {@inheritDoc}
      */
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
@@ -49,8 +49,8 @@ public class CodegenSPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
-	/**
-     * The constructor of the table plug-in.
+    /**
+     * {@inheritDoc}
      */
 	public void stop(BundleContext context) throws Exception {
 		plugin = null;
