@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,14 +15,13 @@
 package de.cau.cs.kieler.sim.signals.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The class SignalsUIPlugin is the activator of this plug-in.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalsUIPlugin extends AbstractUIPlugin {
 

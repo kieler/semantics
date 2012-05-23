@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,7 +32,8 @@ import org.eclipse.swt.graphics.RGB;
  * // color ALL ticks of signal S2<BR>
  * colors.setSignalColor("S2", myColor );<BR>
  * <BR>
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * 
+ * @author cmot
  */
 public class Colors {
 

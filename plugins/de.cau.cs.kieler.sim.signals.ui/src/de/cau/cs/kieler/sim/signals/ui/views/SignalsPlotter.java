@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,9 +13,6 @@
  */
 
 package de.cau.cs.kieler.sim.signals.ui.views;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.draw2d.EllipseAnchor;
 import org.eclipse.draw2d.FigureCanvas;
@@ -39,14 +36,15 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Layout;
-import de.cau.cs.kieler.sim.signals.SignalList;
+
 import de.cau.cs.kieler.sim.signals.Signal;
+import de.cau.cs.kieler.sim.signals.SignalList;
 
 /**
  * The class SignalsPlotter implements the basic plotter for the synchronous
  * signals. It can be zoomed using a zoom level (in percent).
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalsPlotter {
 

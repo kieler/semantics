@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -19,7 +19,7 @@ import java.util.LinkedList;
 /**
  * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
 

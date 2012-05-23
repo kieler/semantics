@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -38,7 +38,7 @@ import de.cau.cs.kieler.sim.signals.ui.views.SignalsView;
  * The class DataComponent implements a Execution Manager observer DataComponent
  * and in each step plots all signals and their histories.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class DataComponent extends JSONObjectDataComponent implements
 		IJSONObjectDataComponent {

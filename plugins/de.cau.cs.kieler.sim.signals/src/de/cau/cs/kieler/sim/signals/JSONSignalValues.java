@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2011 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -36,7 +36,7 @@ import org.json.JSONObject;
  * Pure signal b, absent<BR>
  * b:{present:absent}<BR>
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2009-01-15 proposed yellow
  * 
  */

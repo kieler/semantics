@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -13,9 +13,7 @@
  */
 package de.cau.cs.kieler.sim.signals;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
-import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +32,7 @@ import org.eclipse.core.runtime.IPath;
 /**
  * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 abstract public class SignalASCIIPlotter {
 

@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -14,11 +14,8 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.eclipse.core.runtime.IPath;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -43,7 +40,7 @@ import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
  * The SignalView constructs the actual Eclipse View of the synchronous signal
  * UI.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalsView extends ViewPart {
 

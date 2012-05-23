@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -22,8 +22,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * {@link de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType}s and are declared directly by those
  * types.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
  * 
  */
 public final class SignalIcons {
