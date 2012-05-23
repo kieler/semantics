@@ -69,7 +69,7 @@ public final class EditorUtils {
                     }
                 }
             }
-        }, true);
+        }, false);
         return editor.get();
     }
 
