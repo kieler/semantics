@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: S
+Bundle-SymbolicName: de.cau.cs.kieler.synccharts.sim.s
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
+Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-ActivationPolicy: lazy
