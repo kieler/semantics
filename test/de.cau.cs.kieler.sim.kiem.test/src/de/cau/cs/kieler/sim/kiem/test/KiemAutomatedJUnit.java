@@ -56,7 +56,6 @@ import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
-// TODO: Auto-generated Javadoc
 /**
  * The class KiemAutomatedJUnit enabled the integration of several KIEM
  * execution runs into a JUNIT plugin test.
@@ -78,7 +77,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * the executions may be too fast done and the Kiem.UI Plugin may get problems handling
  * already closed widgets.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * 
  */
 public class KiemAutomatedJUnit {
