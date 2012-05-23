@@ -149,13 +149,13 @@ public class KiemAutomatedJUnit {
 	private String errorSignalName = "errorState";
 
 	/** The execution file name. */
-	private String executionFile = "automated.execution";
+	protected String executionFile = "automated.execution";
 
 	/** The model file extension. */
-	private String modelFileExtension = "kids";
+	protected String modelFileExtension = "kids";
 
 	/** The eso file names. */
-	private List<String> esoFiles = new LinkedList<String>();
+	protected List<String> esoFiles = new LinkedList<String>();
 
 	/** The current model file path. */
 	private IPath modelFilePath;
