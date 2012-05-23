@@ -23,6 +23,9 @@
     <module>de.cau.cs.kieler.core.kivi.test</module>
     <module>de.cau.cs.kieler.core.test</module>
     <module>de.cau.cs.kieler.s.sim.sc.test</module>
+    <module>de.cau.cs.kieler.sim.kiem.test</module>
+    <module>de.cau.cs.kieler.sj.test</module>
+    <module>de.cau.cs.kieler.synccharts.text.bridge.test</module>
   </modules>
 
 </project>
