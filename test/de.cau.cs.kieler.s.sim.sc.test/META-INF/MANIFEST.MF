@@ -7,6 +7,7 @@ Bundle-Activator: de.cau.cs.kieler.s.sim.sc.test.SSimSCTestPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- de.cau.cs.kieler.sim.kiem.test;bundle-version="0.1.0"
+ de.cau.cs.kieler.sim.kiem.test,
+ org.eclipse.core.resources;bundle-version="3.7.101"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
