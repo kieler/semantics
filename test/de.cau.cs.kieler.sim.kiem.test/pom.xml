@@ -10,5 +10,5 @@
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>de.cau.cs.kieler.sim.kiem.test</artifactId>
   <version>0.1.0-SNAPSHOT</version>
-  <packaging>eclipse-test-plugin</packaging>
+  <packaging>eclipse-plugin</packaging>
 </project>
