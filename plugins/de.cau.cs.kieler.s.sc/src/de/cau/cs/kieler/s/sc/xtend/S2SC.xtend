@@ -76,14 +76,13 @@ class S2SC {
    def scHeader(String outputFolderm, Program program) {
    	'''
 	/*****************************************************************************/
-	/*                 G E N E R A T E D     S C    C O D E                      */
+	/*                 G E N E R A T E D     S C    C O D E                     */
 	/*****************************************************************************/
 	/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
-	*/
-	http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
 	/*                                                                           */
+	/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
 	/* Copyright 2012 by                                                         */
-	+ Christian-Albrechts-University of Kiel                                  */
+	/* + Christian-Albrechts-University of Kiel                                  */
 	/*   + Department of Computer Science                                        */
 	/*     + Real-Time and Embedded Systems Group                                */
 	/*                                                                           */
@@ -237,16 +236,17 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
-	'''«FOR signal : program.signals.filter(e | e.isOutput)»
-	   	void simple_OUTPUT_«signal.name»(int status){
-	value = cJSON_CreateObject();
-	cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
+	'''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
+		void simple_OUTPUT_«signal.name»(int status){
+		value = cJSON_CreateObject();
+		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	«IF signal.type == ValueType::INT»
-	cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
+		cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
 	«ENDIF»
-	cJSON_AddItemToObject(output, "«signal.name»", value);
-	}
-	«ENDFOR»'''
+		cJSON_AddItemToObject(output, "«signal.name»", value);
+		}
+	«ENDFOR»'''»
+	'''
    }
    
    // -------------------------------------------------------------------------   
