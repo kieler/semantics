@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.codegen.s.xtend
 import de.cau.cs.kieler.core.kexpressions.ComplexExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.Instruction
@@ -32,8 +33,6 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
-import de.cau.cs.kieler.core.kexpressions.OperatorExpression
-import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 
 /**
@@ -106,12 +105,10 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
 	// Apply conversion on children/subexpression.
 	def dispatch Expression convertToSExpression(ComplexExpression expression) {
 		var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
-		if (expression instanceof ComplexExpression) {
-			newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
-			for (subExpression : (expression as ComplexExpression).subExpressions) {
-				(newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
-			} 
-		}
+		newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
+		for (subExpression : (expression as ComplexExpression).subExpressions) {
+			(newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
+		} 
 		newExpression;
 	}
 
