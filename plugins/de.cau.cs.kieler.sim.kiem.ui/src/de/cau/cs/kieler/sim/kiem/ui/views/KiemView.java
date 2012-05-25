@@ -991,10 +991,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     }
                     getStepTextField().updateTextfield(steps2);
                     // update StepBackButton
-                    if ((kIEMInstance.getExecution() != null) &&
-                       ((kIEMInstance.getExecution().getSteps() > 0)
-                            && (!kIEMInstance.getExecution().isRunning())
-                            && (getActionStep().isEnabled()))) {
+                    if ((kIEMInstance.getExecution() != null)
+                            && ((kIEMInstance.getExecution().getSteps() > 0)
+                                    && (!kIEMInstance.getExecution().isRunning()) && (getActionStep()
+                                        .isEnabled()))) {
                         getActionStepBack().setEnabled(true);
                     } else {
                         getActionStepBack().setEnabled(false);
@@ -1079,7 +1079,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                                 && (((DataComponentWrapper) obj).getProperties() != null)
                                 && (((DataComponentWrapper) obj).getProperties().length > 0) 
                                 && (((DataComponentWrapper) obj)
-                                .isUnfolded()))) {
+                                    .isUnfolded()))) {
                     // unfolded - show property headers
                     refreshTableColumns(false, viewerParam);
                 } else {
@@ -1127,8 +1127,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 if (getAimedStepDurationTextField().isEnabled()) {
                     getAimedStepDurationTextField().setEnabled(false);
                 }
-                // if abortion is possible, let the user abort via STOP button
-                if (isAbortionPossible()) {
+                if (isAbortionPossible()) { // if abortion possible, let the user abort via STOP btn
                     getActionStop().setEnabled(true);
                 }
                 return;
@@ -1153,13 +1152,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 getActionStop().setEnabled(
                         KiemPlugin.getDefault().getCurrentMaster()
                                 .masterGUIisEnabled(AbstractDataComponent.MASTER_CMD_STOP));
-                // getActionStepBack().setEnabled(currentMaster.masterGUIisEnabledStepBack());
-                // getActionStep().setEnabled(currentMaster.masterGUIisEnabledStep());
-                // getActionMacroStep().setEnabled(currentMaster.masterGUIisEnabledMacroStep());
-                // getActionRun().setEnabled(currentMaster.masterGUIisEnabledRun());
-                // getActionPause().setEnabled(currentMaster.masterGUIisEnabledPause());
-                // getActionStop().setEnabled(currentMaster.masterGUIisEnabledStop());
-
                 // if abortion is possible, let the user abort via STOP button
                 if (isAbortionPossible()) {
                     getActionStop().setEnabled(true);
