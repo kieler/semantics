@@ -17,7 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnit;
-import de.cau.cs.kieler.sim.kiem.test.KiemTestPlugin;
 
 /**
  * The test plugin for testing the s-sc-simulator
@@ -42,7 +41,10 @@ public class SSimSCAutomatedJUnit extends KiemAutomatedJUnit {
      * {@inheritDoc}
      */
     protected List<String> getPluginModelFiles() {
-        return new LinkedList<String>();
+        LinkedList<String> modelFileList = new LinkedList<String>();
+        modelFileList.add("/testdata/03-googcycle.s");
+        modelFileList.add("/testdata/05-simpletransition-inputoutput-communication.s");
+        return modelFileList;
     }
 
     // -------------------------------------------------------------------------
@@ -51,7 +53,7 @@ public class SSimSCAutomatedJUnit extends KiemAutomatedJUnit {
      * {@inheritDoc}
      */
     protected String getPluginExecutionFile() {
-        return "";
+        return "/testdata/automated.execution";
     }
 
     
