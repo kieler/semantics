@@ -66,7 +66,8 @@ class S2Simulation {
 		for(targetInstruction : targetInstructions) {
 			var originalInstruction = originalInstructionsList.get(i);
 			i = i + 1;
-			var statementUID = AUXILIARY_VARIABLE_TAG + originalInstruction.eResource.getURIFragment(originalInstruction).hashCode.toString().replace("-","M");
+			val originalInstructionURIFragment = originalInstruction.eResource.getURIFragment(originalInstruction);
+			var statementUID = AUXILIARY_VARIABLE_TAG + originalInstructionURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetInstruction.transformInstruction(target, statementUID);
 		}
@@ -112,7 +113,7 @@ class S2Simulation {
 			val stateInstruction = container as State;
 			val instructionList = stateInstruction.instructions;
 			val index = instructionList.indexOf(instruction);
-//			System::out.println(index.toString + ":"+  stateInstruction.name.toString);
+			System::out.println(index.toString + ":"+  stateInstruction.name.toString);
 			instructionList.add(index, auxiliaryEmitInstruction);
 		}
 		else if (container instanceof If) {
