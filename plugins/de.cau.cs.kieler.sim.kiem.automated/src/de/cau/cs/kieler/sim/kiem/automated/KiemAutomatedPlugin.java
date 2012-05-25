@@ -46,8 +46,7 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.automated";
 
     /** the id of the view for displaying results. */
-    public static final String VIEW_ID = "de.cau.cs.kieler.sim.kiem"
-            + ".automated.aebView";
+    public static final String VIEW_ID = "de.cau.cs.kieler.sim.kiem" + ".automated.aebView";
 
     /** the timeout for the automation. */
     public static final String AUTO_TIMEOUT_ID = "AUTO_TIMEOUT";
@@ -125,8 +124,7 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
      * @return the value loaded value if any
      */
     public String load(final String key, final String defaultValue) {
-        IEclipsePreferences pref = new InstanceScope()
-                .getNode(KiemConfigurationPlugin.PLUGIN_ID);
+        IEclipsePreferences pref = new InstanceScope().getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         String result = pref.get(key, defaultValue);
 
@@ -140,8 +138,7 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
      *            the key to remove
      */
     public void remove(final String key) {
-        IEclipsePreferences pref = new InstanceScope()
-                .getNode(KiemConfigurationPlugin.PLUGIN_ID);
+        IEclipsePreferences pref = new InstanceScope().getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         pref.remove(key);
     }
@@ -155,8 +152,7 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
      *            the value to save
      */
     public void save(final String key, final String value) {
-        IEclipsePreferences pref = new InstanceScope()
-                .getNode(KiemConfigurationPlugin.PLUGIN_ID);
+        IEclipsePreferences pref = new InstanceScope().getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         if (value != null) {
             pref.put(key, value);
@@ -225,8 +221,7 @@ public class KiemAutomatedPlugin extends AbstractUIPlugin {
     public static List<IAutomationListener> getListeners() {
         List<IAutomationListener> result = new LinkedList<IAutomationListener>();
 
-        IConfigurationElement[] contributors = Platform
-                .getExtensionRegistry()
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(
                         "de.cau.cs.kieler.sim.kiem.automated.AutomationListener");
 
