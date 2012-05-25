@@ -25,18 +25,21 @@ public class EsterelCECSimPlugin extends Plugin {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.esterel.cec.sim";
-    
-    /** The Constant AUXILIARY_VARIABLE_TAG.
-     *  This TAG is also defined in Esterel2Simulation.xtend. Both TAGs must match */
-    public static final String AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
-	/** The Constant ESTEREL_LANGUAGE points to the Esterel Xtext Editor. */
-	public static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
-    
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in Esterel2Simulation.xtend.
+     * Both TAGs must match
+     */
+    public static final String AUXILIARY_VARIABLE_TAG 
+                                        = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+
+    /** The Constant ESTEREL_LANGUAGE points to the Esterel Xtext Editor. */
+    public static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
+
     /** The The shared instance of this plugin. */
     private static EsterelCECSimPlugin plugin;
 
-	// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 
     /**
      * The constructor.
@@ -44,29 +47,29 @@ public class EsterelCECSimPlugin extends Plugin {
     public EsterelCECSimPlugin() {
     }
 
-	// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
 
-	// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
 
-	// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 
     /**
      * Returns the shared instance.
@@ -77,5 +80,5 @@ public class EsterelCECSimPlugin extends Plugin {
         return plugin;
     }
 
-	// -----------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
 }

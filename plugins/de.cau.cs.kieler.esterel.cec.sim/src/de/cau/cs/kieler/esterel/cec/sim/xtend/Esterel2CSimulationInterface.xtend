@@ -158,13 +158,13 @@ int main(){«name»_reset();
    	for (signal : signals)  {
    	   	gen = gen + '''
    	child = cJSON_GetObjectItem(object, "«signal.name»");
-	if (child != NULL){
-		present = cJSON_GetObjectItem(child, "present");
-		value = cJSON_GetObjectItem(child, "value");
-		if (present != NULL && present->type==cJSON_True) {
+   	if (child != NULL){
+   	present = cJSON_GetObjectItem(child, "present");
+   	value = cJSON_GetObjectItem(child, "value");
+   	if (present != NULL && present->type==cJSON_True) {
 			«moduleName»_I_«signal.name»();
-		}
-	}'''.toString();
+   	}
+   	}'''.toString();
    	} // next signal
  	   	gen;
    }
