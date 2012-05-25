@@ -13,7 +13,11 @@
  */
 package de.cau.cs.kieler.s.sim.sc.test;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnit;
+import de.cau.cs.kieler.sim.kiem.test.KiemTestPlugin;
 
 /**
  * The test plugin for testing the s-sc-simulator
@@ -22,4 +26,33 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnit;
  */
 public class SSimSCAutomatedJUnit extends KiemAutomatedJUnit {
 
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    protected String getPluginId() {
+        return SSimSCTestPlugin.PLUGIN_ID;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    protected List<String> getPluginModelFiles() {
+        return new LinkedList<String>();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    protected String getPluginExecutionFile() {
+        return "";
+    }
+
+    
 }
