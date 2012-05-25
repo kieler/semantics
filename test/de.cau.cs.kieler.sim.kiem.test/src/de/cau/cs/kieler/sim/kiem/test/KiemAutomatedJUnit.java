@@ -222,6 +222,8 @@ public class KiemAutomatedJUnit {
      */
     @Test
     public void KiemAutomatedJUnitTest() {
+        // if the bundle is not ready then there is no image
+        Bundle bundle = Platform.getBundle(this.getPluginId());
 
         // -----------------------------------------------------------------------------------------
         // Inspect program arguments for -execution and -model parameters
@@ -231,7 +233,7 @@ public class KiemAutomatedJUnit {
         boolean executionFileAlreadySet = false;
         boolean modelFilesAlreadySet = false;
         if (!getPluginExecutionFile().equals("")) {
-            executionFile = getPluginExecutionFile();
+            executionFile =  getPluginExecutionFile();
             executionFileAlreadySet = true;
         }
         if (getPluginModelFiles().size() > 0) {
@@ -293,12 +295,15 @@ public class KiemAutomatedJUnit {
         // -----------------------------------------------------------------------------------------
         // Figure out execution file path and try to load it with KIEM
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        IPath executionFilePath = new Path(executionFile);
         try {
-            kiemPlugin.openFile(executionFilePath, true);
+            URL executionFileURL = resolveBundleOrWorkspaceFile(executionFile);
+            if (executionFileURL != null) {
+                kiemPlugin.openFile(new Path(executionFileURL.toString()), true);
+            } else {
+                fail("Cannot find execution scheduling file '" + executionFile + "'.");
+            }
         } catch (IOException e) {
-            e.printStackTrace();
-            fail("Cannot find execution scheduling file '" + executionFilePath.toString() + "'.");
+            fail("Cannot find execution scheduling file '" + executionFile + "'.");
         }
 
         // -----------------------------------------------------------------------------------------
@@ -353,12 +358,10 @@ public class KiemAutomatedJUnit {
                 }
             }
         } else {
-            // if the bundle is not ready then there is no image
-            Bundle bundle = Platform.getBundle(this.getPluginId());
-            // if model files are given then try to finde corresponding eso
+            // if model files are given then try to find corresponding eso
             // files and add both
             for (String modelFileName : modelFiles) {
-                URL modelFileUrl = bundle.getResource(modelFileName);
+                URL modelFileUrl = resolveBundleOrWorkspaceFile(modelFileName);
                 if (modelFileUrl == null) {
                     throw new RuntimeException("Model file:'" + modelFileName
                             + "' can not be found but was specified to be tested.");
@@ -367,7 +370,7 @@ public class KiemAutomatedJUnit {
                 int replacePosition = modelFileName.lastIndexOf(".");
                 String esoFileName = modelFileName.substring(0, replacePosition) + "."
                         + DEFAULT_ESO_FILE_EXTENSITION;
-                URL esoFileUrl = bundle.getResource(esoFileName);
+                URL esoFileUrl = resolveBundleOrWorkspaceFile(esoFileName);
                 if (esoFileUrl == null) {
                     throw new RuntimeException(
                             "Eso file:'"
@@ -421,9 +424,7 @@ public class KiemAutomatedJUnit {
             // modelFileExtension);
 
             URL modelFileUrl = this.modelFile.get(esoFileUrl);
-            modelFilePath = this.getAbsoluteFilePath(modelFileUrl); // new
-                                                                    // Path(modelFileUrl.getFile());
-            openModelFile(modelFilePath);
+            openModelFile(modelFileUrl);
 
             System.out.println("Model File" + modelFilePath.toString());
 
@@ -595,15 +596,40 @@ public class KiemAutomatedJUnit {
 
     // -------------------------------------------------------------------------
 
+    URL resolveBundleOrWorkspaceFile(String fileLocation) {
+        // if the bundle is not ready then there is no image
+        final Bundle bundle = Platform.getBundle(this.getPluginId());
+
+        URL fileURL = null;
+        if (fileLocation.contains("bundleentry")) {
+            // already resolved bundle file
+            try {
+                fileURL = new URI(fileLocation).toURL();
+            } catch (Exception e) {
+                // ignore errors
+            }
+        } else {
+            // first try to resolve bundle files (give preference to bundle files)
+            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation),
+                    null);
+            // then try to resolve workspace files
+            if (fileURL == null) {
+                fileURL = bundle.getResource(fileLocation);
+            }
+        }
+        return fileURL;
+    }
+
+    // -------------------------------------------------------------------------
+
     /**
      * Open model file.
      * 
      * @param modelFilePath2
      *            the model file path2
      */
-    void openModelFile(String modelFilePath2) {
-        this.modelFilePath = modelFilePath2;
-
+    void openModelFile(URL modelFileUrl) {
+        this.modelFilePath = getAbsoluteFilePath(modelFileUrl);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
 
@@ -786,6 +812,10 @@ public class KiemAutomatedJUnit {
      * @return the absolute file path
      */
     String getAbsoluteFilePath(URL url) {
+        // if bundle entry then just to string
+        if (url.toString().contains("bundleentry")) {
+            return url.toString();
+        }
         IPath urlPath = new Path(url.getFile());
         return getAbsoluteFilePath(urlPath);
     }
@@ -823,6 +853,10 @@ public class KiemAutomatedJUnit {
      * @return the absolute file path
      */
     String getAbsoluteFilePath(IPath ipath) {
+        // if bundle entry then just to string
+        if (ipath.toString().contains("bundleentry")) {
+            return ipath.toString();
+        }
         // Ensure it is absolute
         ipath.makeAbsolute();
         java.io.File javaFile = new File(ipath.toString().replaceAll("%20", " "));
