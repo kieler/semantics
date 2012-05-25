@@ -351,6 +351,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         if (fileString.contains("bundleentry")) {
             String urlPath = fileString.replaceFirst("bundleentry:/", "bundleentry://");
+            urlPath = urlPath.replace("\\", "/");
             URL pathUrl = new URL(urlPath);
             URL url2 = FileLocator.resolve(pathUrl);
             openFile(executionFile, readOnly, url2.openStream());
