@@ -32,6 +32,8 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
+import de.cau.cs.kieler.core.kexpressions.OperatorType
 
 
 /**
@@ -102,7 +104,7 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	// ======================================================================================================
 
 	// Apply conversion on children/subexpression.
-	def dispatch Expression convertToSExpression(Expression expression) {
+	def dispatch Expression convertToSExpression(ComplexExpression expression) {
 		var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
 		if (expression instanceof ComplexExpression) {
 			newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
@@ -135,6 +137,22 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	 	booleanValue	
 	}
 
+
+	// Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
+	def dispatch Expression convertToSExpression(OperatorExpression expression) {
+		val newExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+		newExpression.setOperator(expression.operator);
+		for (subExpression : expression.subExpressions) {
+			newExpression.subExpressions.add(subExpression.convertToSExpression)
+		}
+		return newExpression;
+	}
+	
+	// Apply conversion to the default case
+	def dispatch Expression convertToSExpression(Expression expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
+		newExpression;
+	}
 
 	// ======================================================================================================
 	// ==                               C O N V E R T    E F F E C T S                                     ==
