@@ -30,9 +30,9 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static SignalsUIPlugin plugin;
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * The constructor of the table plug-in.
      */
@@ -44,21 +44,21 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
     // -------------------------------------------------------------------------
-	
+
     /**
      * {@inheritDoc}
      */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
-	
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -69,7 +69,7 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     public static SignalsUIPlugin getDefault() {
         return plugin;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -82,7 +82,7 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     public static ImageDescriptor getImageDescriptor(final String path) {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
 }

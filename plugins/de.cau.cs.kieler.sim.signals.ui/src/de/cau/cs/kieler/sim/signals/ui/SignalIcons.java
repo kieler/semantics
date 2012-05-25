@@ -37,13 +37,13 @@ public final class SignalIcons {
     /** The Constant Image/ImageDescriptor OUTPUT_SIGNAL. */
     public static final Image OUTPUT_SIGNAL = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.signals.ui", "icons/outputSignal.png").createImage();
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Instantiates a new KIEM icons.
      */
     private SignalIcons() {
     }
-    
+
 }

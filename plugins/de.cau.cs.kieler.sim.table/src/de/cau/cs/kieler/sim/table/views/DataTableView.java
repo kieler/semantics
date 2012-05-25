@@ -236,10 +236,10 @@ public class DataTableView extends ViewPart {
                 TableViewerSorter oldSorter = (TableViewerSorter) viewer.getSorter();
                 viewer.getTree().setSortColumn((TreeColumn) e.widget);
                 if (oldSorter != null && column == oldSorter.getColumn()) {
-                      oldSorter.setReversed(!oldSorter.getReversed());
-//                    System.out.println("SORTCOMMAND " + column);
+                    oldSorter.setReversed(!oldSorter.getReversed());
+                    // System.out.println("SORTCOMMAND " + column);
                     viewer.refresh();
-//                    viewer.setSorter(null);
+                    // viewer.setSorter(null);
                 } else {
                     viewer.setSorter(new TableViewerSorter(column));
                 }
@@ -262,7 +262,7 @@ public class DataTableView extends ViewPart {
         }
         // for default sorting
         viewer.setSorter(new TableViewerSorter(2));
-        
+
         Tree tree = viewerParam.getTree();
         tree.setHeaderVisible(true);
         tree.setLinesVisible(true);

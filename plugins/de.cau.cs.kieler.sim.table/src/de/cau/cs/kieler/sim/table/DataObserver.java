@@ -55,6 +55,9 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
      */
     private static final int EYE_CATCH_DELAY = 80;
 
+    /** The delay to sleep while blocked waiting for the UI thread to bring to front the DataTable. */
+    private static final int BRING_TO_FRONT_DELAY = 100;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -193,7 +196,7 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
         });
         while (!broughtToFront) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(BRING_TO_FRONT_DELAY);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

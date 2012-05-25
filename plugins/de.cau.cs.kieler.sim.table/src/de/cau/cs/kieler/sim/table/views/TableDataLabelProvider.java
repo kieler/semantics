@@ -47,16 +47,16 @@ public class TableDataLabelProvider implements ITableLabelProvider {
     /** The Constant PERMANENT. */
     private static final Image PERMANENT = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.table", "icons/permanent.png").createImage();
-    
+
     /** The Constant COLUMN_0. */
     private static final int COLUMN_0 = 0;
-    
+
     /** The Constant COLUMN_1. */
     private static final int COLUMN_1 = 1;
-    
+
     /** The Constant COLUMN_2. */
     private static final int COLUMN_2 = 2;
-    
+
     /** The Constant COLUMN_3. */
     private static final int COLUMN_3 = 3;
 
