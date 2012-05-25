@@ -42,7 +42,7 @@ public class SSimSCAutomatedJUnit extends KiemAutomatedJUnit {
      */
     protected List<String> getPluginModelFiles() {
         LinkedList<String> modelFileList = new LinkedList<String>();
-        modelFileList.add("/testdata/03-googcycle.s");
+        modelFileList.add("/testdata/03-goodcycle.s");
         modelFileList.add("/testdata/05-simpletransition-inputoutput-communication.s");
         return modelFileList;
     }
