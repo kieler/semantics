@@ -13,7 +13,6 @@
  */
 package de.cau.cs.kieler.sim.signals;
 
-
 import java.util.LinkedList;
 
 /**
@@ -23,57 +22,55 @@ import java.util.LinkedList;
  */
 public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
 
+    /**
+     * Plot ASCII.
+     * 
+     * @param signalList
+     *            the signal list
+     * @return the string[]
+     */
+    public String[] plot(SignalList signalList) {
+        LinkedList<String> stringList = new LinkedList<String>();
 
-	/**
-	 * Plot ASCII.
-	 * 
-	 * @param signalList
-	 *            the signal list
-	 * @return the string[]
-	 */
-	public String[] plot(SignalList signalList) {
-		LinkedList<String> stringList = new LinkedList<String>();
+        long minTick = signalList.getMinTick();
+        long maxTick = signalList.getMaxTick();
 
-		long minTick = signalList.getMinTick();
-		long maxTick = signalList.getMaxTick();
+        int maxSignalNameLength = getMaxSignalNameLength(signalList);
+        int maxTickLabelLength = (maxTick + "").length();
+        int spaceLength = Math.max(maxSignalNameLength, maxTickLabelLength) + 2;
 
-		int maxSignalNameLength = getMaxSignalNameLength(signalList);
-		int maxTickLabelLength = (maxTick + "").length();
-		int spaceLength = Math.max(maxSignalNameLength, maxTickLabelLength) + 2;
-		
-		int maxLineLength = spaceLength * (int)(maxTick - minTick);
-		
-		// space line
-		stringList.add(getSpaceCharacters(maxLineLength));
-		
-		// plot signal data
-		for (Signal signal : signalList) {
-			String currentLine = "";
-			for (long tick = minTick; tick <= maxTick; tick++) {
-				if (signal.isPresent(tick)) {
-					currentLine +=  createSpacedLabel(signal.getName(), spaceLength, 0);
-				}
-				else {
-					currentLine +=  getSpaceCharacters(spaceLength);
-				}
-			}
-			stringList.add(currentLine);
-		}
-		
-		// space line
-		stringList.add(getSpaceCharacters(maxLineLength));
-		
-		// plot time line and tick labels
-		String timeLine = "";
-		String tickLabels = "";
-		for (long tick = minTick; tick <= maxTick; tick++) {
-			timeLine   +=  createSpacedLabel("|", spaceLength, 0, '-');
-			tickLabels +=  createSpacedLabel(tick+"", spaceLength, 0);
-		}
-		stringList.add(timeLine);
-		stringList.add(tickLabels);
-		
-		return (String[]) stringList.toArray(new String[signalList.size()]);
-	}
+        int maxLineLength = spaceLength * (int) (maxTick - minTick);
+
+        // space line
+        stringList.add(getSpaceCharacters(maxLineLength));
+
+        // plot signal data
+        for (Signal signal : signalList) {
+            String currentLine = "";
+            for (long tick = minTick; tick <= maxTick; tick++) {
+                if (signal.isPresent(tick)) {
+                    currentLine += createSpacedLabel(signal.getName(), spaceLength, 0);
+                } else {
+                    currentLine += getSpaceCharacters(spaceLength);
+                }
+            }
+            stringList.add(currentLine);
+        }
+
+        // space line
+        stringList.add(getSpaceCharacters(maxLineLength));
+
+        // plot time line and tick labels
+        String timeLine = "";
+        String tickLabels = "";
+        for (long tick = minTick; tick <= maxTick; tick++) {
+            timeLine += createSpacedLabel("|", spaceLength, 0, '-');
+            tickLabels += createSpacedLabel(tick + "", spaceLength, 0);
+        }
+        stringList.add(timeLine);
+        stringList.add(tickLabels);
+
+        return (String[]) stringList.toArray(new String[signalList.size()]);
+    }
 
 }
