@@ -45,18 +45,18 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
 
 /**
  * Transformation of Esterel code into Esterel code that is 
- * enriched with additional signals for each statement.
- * 
- * These signals, here HP, are generated in the following fashion for a 
- * statement P:
- * 
- *  signal AP in 
- *  	[P; emit AP; || emit HP; abort sustain HP when immediate AP] 
- *  end 
- * 
- * As names for the signals are randomly generated and must be unique
- * there must be a mapping that keeps track which signal (name) belongs to
- * which original Esterel statement.
+ * enriched with additional signals for each statement.<BR>
+ * <BR>
+ * These signals, here HP, are generated in the following fashion for a<BR> 
+ * statement P:<BR>
+ * <BR>
+ *  signal AP in<BR> 
+ *  	[P; emit AP; || emit HP; abort sustain HP when immediate AP]<BR> 
+ *  end <BR>
+ * <BR>
+ * As names for the signals are randomly generated and must be unique<BR>
+ * there must be a mapping that keeps track which signal (name) belongs to<BR>
+ * which original Esterel statement.<BR>
  * 
  * @author cmot
  */
