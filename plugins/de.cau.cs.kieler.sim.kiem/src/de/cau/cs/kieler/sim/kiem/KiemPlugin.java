@@ -61,7 +61,6 @@ import de.cau.cs.kieler.sim.kiem.internal.EventManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 
-// TODO: Auto-generated Javadoc
 /**
  * This activator class controls the life cycle of the KiemPlugin. It also provides the access to
  * the one and only instance of this class and hence a way to access the execution thread. For the
@@ -145,7 +144,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     private InitializeExecution initializeExecution;
 
     /** The no error output. */
-    public static boolean noErrorOutput = false;
+    private boolean forceNoErrorOutput = false;
 
     // -------------------------------------------------------------------------
 
@@ -311,9 +310,11 @@ public class KiemPlugin extends AbstractUIPlugin {
      * <BR>
      * This method is called from the KiemProxyEditor that acts as a proxy for passing the
      * editoInput from the Workbench to the KiemView.
-     *
-     * @param editorInput the file editor input to open
-     * @throws IOException Signals that an I/O exception has occurred.
+     * 
+     * @param editorInput
+     *            the file editor input to open
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public void openFile(final IEditorInput editorInput) throws IOException {
         if (!(editorInput instanceof IFileEditorInput)) {
@@ -368,10 +369,13 @@ public class KiemPlugin extends AbstractUIPlugin {
      * this to the user's attention. <BR>
      * <BR>
      * This method can be called from another plug-in and is part of the KIEM API.
-     *
-     * @param executionFile the execution file to open
-     * @param readOnly the readonly flag indicates that the file is locked for writing
-     * @param inputStream the input stream
+     * 
+     * @param executionFile
+     *            the execution file to open
+     * @param readOnly
+     *            the readonly flag indicates that the file is locked for writing
+     * @param inputStream
+     *            the input stream
      */
     /**
      * Open a file from a given InputStream.
@@ -583,9 +587,10 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /**
      * Check for single enabled master. This is just a wrapper for the method
-     *
-     * @param silent if true, the warning dialog will be suppressed
-     * {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
+     * 
+     * @param silent
+     *            if true, the warning dialog will be suppressed
+     *            {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
      */
     public void checkForSingleEnabledMaster(final boolean silent) {
         checkForSingleEnabledMaster(silent, null);
@@ -853,15 +858,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (vglComponentId.equals(componentId)) {
                     // restore KIEM property type first
                     if (properties != null) {
-                    	KiemProperty[] defaultProperties = dataComponent.getProperties();
+                        KiemProperty[] defaultProperties = dataComponent.getProperties();
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
-                                if (ccc < dataComponent.getProperties().length)  {
+                                if (ccc < dataComponent.getProperties().length) {
                                     properties[ccc].setType(defaultProperties[ccc].getType());
                                     // if a property asks for restoring its default value
                                     // then omit the loaded value for this property
                                     if (properties[ccc].isRestoreToDefaultOnLoad()) {
-                                    	properties[ccc].setValue(defaultProperties[ccc].getValue());
+                                        properties[ccc].setValue(defaultProperties[ccc].getValue());
                                     }
                                 }
                             } catch (Exception e) {
@@ -1301,12 +1306,14 @@ public class KiemPlugin extends AbstractUIPlugin {
      * - {@link KiemExecutionException}<BR>
      * If the mustStop flag is set, then the execution is immediately stopped. Note that all threads
      * will be advised to stop in the
-     *
-     * @param dataComponent the DataComponent that caused the error or warning
-     * @param exception the Exception if any, or null
-     * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()} method. But there is
-     * no guarantee that they really stop. The links to these threads will be cut down, so that
-     * there is the possibility of zombie threads.
+     * 
+     * @param dataComponent
+     *            the DataComponent that caused the error or warning
+     * @param exception
+     *            the Exception if any, or null
+     *            {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()} method. But
+     *            there is no guarantee that they really stop. The links to these threads will be
+     *            cut down, so that there is the possibility of zombie threads.
      */
     public static void handleComponentError(final AbstractDataComponent dataComponent,
             final Exception exception) {
@@ -1368,10 +1375,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the error warning message.
-     *
-     * @param textMessage the text message
-     * @param pluginID the plugin id
-     * @param exception the exception
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
      * @return the error warning message
      */
     private String getErrorWarningMessage(final String textMessage, final String pluginID,
@@ -1398,10 +1408,13 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /**
      * Gets the plugin id.
-     *
-     * @param textMessage the text message
-     * @param pluginID the plugin id
-     * @param exception the exception
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
      * @return the plugin id
      */
     private String getPluginID(final String textMessage, final String pluginID,
@@ -1467,9 +1480,9 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public void showWarning(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-    	if (noErrorOutput) {
-    		return;
-    	}
+        if (forceNoErrorOutput) {
+            return;
+        }
         try {
             String message = getErrorWarningMessage(textMessage, pluginID, exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
@@ -1525,9 +1538,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
-    	if (noErrorOutput) {
-    		return;
-    	}
+        if (isForceNoErrorOutput()) {
+            return;
+        }
         try {
             String message = getErrorWarningMessage(textMessage, pluginID, exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
@@ -1565,6 +1578,29 @@ public class KiemPlugin extends AbstractUIPlugin {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is force no error output.
+     *
+     * @return true, if is force no error output
+     */
+    public boolean isForceNoErrorOutput() {
+        return forceNoErrorOutput;
+    }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the force no error output.
+     *
+     * @param forceNoErrorOutput the new force no error output
+     */
+    public void setForceNoErrorOutput(final boolean forceNoErrorOutput) {
+        this.forceNoErrorOutput = forceNoErrorOutput;
     }
 
 }

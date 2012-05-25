@@ -23,52 +23,52 @@ import org.osgi.framework.BundleContext;
  */
 public class SSimSCTestPlugin extends AbstractUIPlugin {
 
-	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.sc.test"; //$NON-NLS-1$
+    /** The plug-in ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.sc.test"; //$NON-NLS-1$
 
-	/** The shared instance. */
-	private static SSimSCTestPlugin plugin;
-	
-	// -----------------------------------------------------------------------------------------
+    /** The shared instance. */
+    private static SSimSCTestPlugin plugin;
 
-	/**
-	 * The constructor
-	 */
-	public SSimSCTestPlugin() {
-	}
+    // -----------------------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------------------
+    /**
+     * The constructor
+     */
+    public SSimSCTestPlugin() {
+    }
 
-	/**
+    // -----------------------------------------------------------------------------------------
+
+    /**
      * 
      * {@inheritDoc}
      */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
-	/**
+    /**
      * 
      * {@inheritDoc}
      */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SSimSCTestPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static SSimSCTestPlugin getDefault() {
+        return plugin;
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 }
