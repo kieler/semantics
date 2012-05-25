@@ -23,52 +23,52 @@ import org.osgi.framework.BundleContext;
  */
 public class KiemTestPlugin extends AbstractUIPlugin {
 
-	/** The plug-in ID. */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.test"; //$NON-NLS-1$
+    /** The plug-in ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sim.kiem.test"; //$NON-NLS-1$
 
-	/** The shared instance. */
-	private static KiemTestPlugin plugin;
-	
-	// -----------------------------------------------------------------------------------------
+    /** The shared instance. */
+    private static KiemTestPlugin plugin;
 
-	/**
-	 * The constructor
-	 */
-	public KiemTestPlugin() {
-	}
+    // -----------------------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------------------
+    /**
+     * The constructor
+     */
+    public KiemTestPlugin() {
+    }
 
-	/**
+    // -----------------------------------------------------------------------------------------
+
+    /**
      * 
      * {@inheritDoc}
      */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
-	/**
+    /**
      * 
      * {@inheritDoc}
      */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static KiemTestPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static KiemTestPlugin getDefault() {
+        return plugin;
+    }
 
-	// -----------------------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------------------
 }
