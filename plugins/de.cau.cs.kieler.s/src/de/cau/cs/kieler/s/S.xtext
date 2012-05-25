@@ -8,7 +8,7 @@ grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.KExpression
 //import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
 
-import "platform:/resource/de.cau.cs.kieler.core.kexpressions/model/kexpressions.ecore" as expressions
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as expressions
 //import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"

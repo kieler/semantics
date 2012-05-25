@@ -37,20 +37,10 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStatesStateParserRuleCall_6_0 = (RuleCall)cStatesAssignment_6.eContents().get(0);
 		
 		//Program:
-		//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
-		//	//	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
-		//	//	(programInterface=ProgramInterface)? 
-		//	//	(signals += Signal)*
-		//	//	((signals += Signal) (',' signals += Signal)*';')?
-		//	(signals+=Signal signals+=Signal*)? states+=State+;
+		//	"Synchronous Program" name=ID "(" priority=INT ")" (signals+=Signal signals+=Signal*)? states+=State+;
 		public ParserRule getRule() { return rule; }
 
-		//"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
-		////	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
-		////	(programInterface=ProgramInterface)? 
-		////	(signals += Signal)*
-		////	((signals += Signal) (',' signals += Signal)*';')?
-		//(signals+=Signal signals+=Signal*)? states+=State+
+		//"Synchronous Program" name=ID "(" priority=INT ")" (signals+=Signal signals+=Signal*)? states+=State+
 		public Group getGroup() { return cGroup; }
 
 		//"Synchronous Program"
@@ -115,8 +105,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final Keyword cSemicolonKeyword_6_1 = (Keyword)cGroup_6.eContents().get(1);
 		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
 		
-		////ProgramInterface:
-		////	(interfaceSignalDecls+=InterfaceSignalDecl)+;
 		////Annotation:
 		////	'@' key = ID ':'
 		////	value = STRING
@@ -382,35 +370,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cStateParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cThreadParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		////Signal returns expressions::Signal :
-		////	name=ID ':' 
-		////	type = SignalType
-		////	('combine' combineFunction = [CombineFunction])?
-		////;
-		////CombineFunction:
-		////	name=ID
-		////	type=[expressions::ValueType]
-		////	type=ValueType
-		////;
-		////SignalType:
-		////	PrimitiveSignalType | CustomSignalType;
-		////CustomSignalType:
-		////  'CUSTOM' customType = STRING;
-		////enum PrimitiveType:
-		////	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
-		////PrimitiveSignalType:
-		////	primitiveType = PrimitiveType
-		////	;
-		////IntValue: 
-		////	value=IntValue;
-		////FloatValue:
-		////    value=Float; 
-		////BooleanValue:
-		////    value=Boolean;
-		////terminal Float: 
-		////	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-		////terminal Boolean: 
-		////	"true" | "false";
 		////---------------------------------------------------------------------
 		////----------------------- List of S-Instructions ----------------------
 		////---------------------------------------------------------------------
@@ -1076,12 +1035,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	//Program:
-	//	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
-	//	//	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
-	//	//	(programInterface=ProgramInterface)? 
-	//	//	(signals += Signal)*
-	//	//	((signals += Signal) (',' signals += Signal)*';')?
-	//	(signals+=Signal signals+=Signal*)? states+=State+;
+	//	"Synchronous Program" name=ID "(" priority=INT ")" (signals+=Signal signals+=Signal*)? states+=State+;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
 	}
@@ -1090,8 +1044,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getProgramAccess().getRule();
 	}
 
-	////ProgramInterface:
-	////	(interfaceSignalDecls+=InterfaceSignalDecl)+;
 	////Annotation:
 	////	'@' key = ID ':'
 	////	value = STRING
@@ -1130,35 +1082,6 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		return getSignalAccess().getRule();
 	}
 
-	////Signal returns expressions::Signal :
-	////	name=ID ':' 
-	////	type = SignalType
-	////	('combine' combineFunction = [CombineFunction])?
-	////;
-	////CombineFunction:
-	////	name=ID
-	////	type=[expressions::ValueType]
-	////	type=ValueType
-	////;
-	////SignalType:
-	////	PrimitiveSignalType | CustomSignalType;
-	////CustomSignalType:
-	////  'CUSTOM' customType = STRING;
-	////enum PrimitiveType:
-	////	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
-	////PrimitiveSignalType:
-	////	primitiveType = PrimitiveType
-	////	;
-	////IntValue: 
-	////	value=IntValue;
-	////FloatValue:
-	////    value=Float; 
-	////BooleanValue:
-	////    value=Boolean;
-	////terminal Float: 
-	////	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
-	////terminal Boolean: 
-	////	"true" | "false";
 	////---------------------------------------------------------------------
 	////----------------------- List of S-Instructions ----------------------
 	////---------------------------------------------------------------------

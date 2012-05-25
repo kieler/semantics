@@ -98,21 +98,11 @@ protected class ThisRootNode extends RootToken {
 /************ begin Rule Program ****************
  *
  * Program:
- * 	"Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
- * 	//	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
- * 	//	(programInterface=ProgramInterface)? 
- * 	//	(signals += Signal)*
- * 	//	((signals += Signal) (',' signals += Signal)*';')?
- * 	(signals+=Signal signals+=Signal*)? states+=State+;
+ * 	"Synchronous Program" name=ID "(" priority=INT ")" (signals+=Signal signals+=Signal*)? states+=State+;
  *
  **/
 
-// "Synchronous Program" name=ID "(" priority=INT ")" //	('Inputs' (inputSignals += Signal) (',' inputSignals += Signal)*';')?
-// //	('Outputs' (outputSignals += Signal) (',' outputSignals += Signal)*';')?
-// //	(programInterface=ProgramInterface)? 
-// //	(signals += Signal)*
-// //	((signals += Signal) (',' signals += Signal)*';')?
-// (signals+=Signal signals+=Signal*)? states+=State+
+// "Synchronous Program" name=ID "(" priority=INT ")" (signals+=Signal signals+=Signal*)? states+=State+
 protected class Program_Group extends GroupToken {
 	
 	public Program_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -445,8 +435,6 @@ protected class Program_StatesAssignment_6 extends AssignmentToken  {
 
 /************ begin Rule State ****************
  *
- * //ProgramInterface:
- * //	(interfaceSignalDecls+=InterfaceSignalDecl)+;
  * //Annotation:
  * //	'@' key = ID ':'
  * //	value = STRING
@@ -1784,35 +1772,6 @@ protected class Signal_SemicolonKeyword_6 extends KeywordToken  {
 
 /************ begin Rule Continuation ****************
  *
- * //Signal returns expressions::Signal :
- * //	name=ID ':' 
- * //	type = SignalType
- * //	('combine' combineFunction = [CombineFunction])?
- * //;
- * //CombineFunction:
- * //	name=ID
- * //	type=[expressions::ValueType]
- * //	type=ValueType
- * //;
- * //SignalType:
- * //	PrimitiveSignalType | CustomSignalType;
- * //CustomSignalType:
- * //  'CUSTOM' customType = STRING;
- * //enum PrimitiveType:
- * //	Pure='PURE' | Int='INT' | Bool='BOOL' | Float='FLOAT';
- * //PrimitiveSignalType:
- * //	primitiveType = PrimitiveType
- * //	;
- * //IntValue: 
- * //	value=IntValue;
- * //FloatValue:
- * //    value=Float; 
- * //BooleanValue:
- * //    value=Boolean;
- * //terminal Float: 
- * //	((INT"."INT | INT("."INT)?("e"|"E")("+")?INT))"f"? | INT"f";
- * //terminal Boolean: 
- * //	"true" | "false";
  * //---------------------------------------------------------------------
  * //----------------------- List of S-Instructions ----------------------
  * //---------------------------------------------------------------------
