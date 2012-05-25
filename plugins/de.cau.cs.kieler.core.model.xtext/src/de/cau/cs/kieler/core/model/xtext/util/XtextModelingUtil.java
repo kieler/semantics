@@ -43,6 +43,7 @@ public final class XtextModelingUtil {
 
 
     private static EObject xtextModel = null;
+    private static boolean done = false;
 
     /**
      * Get the model from a given xtext editor.
@@ -58,6 +59,8 @@ public final class XtextModelingUtil {
         if (docu instanceof XtextDocument) {
             XtextDocument document = (XtextDocument) docu;
 
+            xtextModel = null;
+            done = false;
             document.readOnly(new Void<XtextResource>() {
 
                 @Override
@@ -69,9 +72,16 @@ public final class XtextModelingUtil {
                             xtextModel = eObj.get(0);
                         }
                     }
-
+                    done = true;
                 }
             });
+        }
+        while (!done){
+        	try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// ignore sleep error
+			}
         }
         return xtextModel;
     }
