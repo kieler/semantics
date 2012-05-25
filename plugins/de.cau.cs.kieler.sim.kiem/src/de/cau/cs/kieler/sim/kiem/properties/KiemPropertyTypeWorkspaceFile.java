@@ -39,9 +39,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 @SuppressWarnings("restriction")
 public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -2468753195329915004L;
-
     /** The Constant PROPERTY_FILE. */
     private static final Image PROPERTY_FILE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyFileIcon.png").createImage();
@@ -72,8 +69,8 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String file location values (encoded as Strings in property) 
-     * and the String displayed in the String cell editor.
+     * This method bridges String file location values (encoded as Strings in property) and the
+     * String displayed in the String cell editor.
      * 
      * {@inheritDoc}
      */
@@ -84,8 +81,8 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String file location values (encoded as Strings in property) 
-     * and the String displayed in the String cell editor.
+     * This method bridges String file location values (encoded as Strings in property) and the
+     * String displayed in the String cell editor.
      * 
      * {@inheritDoc}
      */
@@ -213,8 +210,9 @@ public class KiemPropertyTypeWorkspaceFile extends KiemPropertyType implements I
         @Override
         protected Object openDialogBox(final Control cellEditorWindow) {
 
-            ElementTreeSelectionDialog dlg = new ElementTreeSelectionDialog(cellEditorWindow
-                    .getShell(), new WorkbenchLabelProvider(), new BaseWorkbenchContentProvider());
+            ElementTreeSelectionDialog dlg = new ElementTreeSelectionDialog(
+                    cellEditorWindow.getShell(), new WorkbenchLabelProvider(),
+                    new BaseWorkbenchContentProvider());
             dlg.setTitle("Open");
             dlg.setMessage("Select a file from your workspace to be opened:");
             dlg.setInput(ResourcesPlugin.getWorkspace().getRoot());

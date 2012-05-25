@@ -38,9 +38,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 3163900421868918205L;
-
     /** The Constant PROPERTY_CHOICE. */
     private static final Image PROPERTY_CHOICE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyEditorIcon.png").createImage();
@@ -86,7 +83,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
             return;
         }
         String[] itemsTmp = new String[editors.length + 1];
-        itemsTmp[0] = ""; // dummy for NO editor 
+        itemsTmp[0] = ""; // dummy for NO editor
         for (int c = 0; c < editors.length; c++) {
             try {
                 itemsTmp[c + 1] = editors[c].getTitle() + " (" + editors[c].getId() + ")";
