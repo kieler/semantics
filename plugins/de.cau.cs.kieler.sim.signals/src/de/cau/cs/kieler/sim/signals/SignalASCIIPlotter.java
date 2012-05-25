@@ -311,7 +311,7 @@ abstract public class SignalASCIIPlotter {
 			long maxTick = signalList.getMaxTick();
 			
 			out.println("! reset;");
-			for (long tick = 0; tick < maxTick; tick++) {
+			for (long tick = 1; tick < maxTick; tick++) {
 				for (Signal inputSignal: inputSignalList) {
 					if (inputSignal.isPresent(tick)) {
 						out.print(inputSignal.getName() + " ");
