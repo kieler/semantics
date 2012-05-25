@@ -241,7 +241,7 @@ void setInputs(){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	«IF signal.type == ValueType::INT»
-		cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
+cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
 	«ENDIF»
 		cJSON_AddItemToObject(output, "«signal.name»", value);
 		}
