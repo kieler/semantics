@@ -138,7 +138,6 @@
     <module>de.cau.cs.kieler.sim.trace</module>
     <module>de.cau.cs.kieler.sim.validator</module>
     <module>de.cau.cs.kieler.sj</module>
-    <module>de.cau.cs.kieler.sj.test</module>
     <module>de.cau.cs.kieler.synccharts</module>
     <module>de.cau.cs.kieler.synccharts.codegen.esterel</module>
     <module>de.cau.cs.kieler.synccharts.codegen.sc</module>
