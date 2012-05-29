@@ -27,6 +27,9 @@
     <module>de.cau.cs.kieler.sj.test</module>
     <module>de.cau.cs.kieler.kies.test</module>
     <module>de.cau.cs.kieler.synccharts.text.bridge.test</module>
+    
+    <module>de.cau.cs.kieler.s.sim.sc</module>
+    
   </modules>
 
 </project>
