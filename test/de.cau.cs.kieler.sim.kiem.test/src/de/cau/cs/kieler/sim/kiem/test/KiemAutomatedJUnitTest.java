@@ -221,7 +221,7 @@ public class KiemAutomatedJUnitTest {
      * ESO file extension.
      */
     @Test
-    public void KiemAutomatedJUnitTest() {
+    public void KiemAutomatedJUnitTestExecution() {
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
