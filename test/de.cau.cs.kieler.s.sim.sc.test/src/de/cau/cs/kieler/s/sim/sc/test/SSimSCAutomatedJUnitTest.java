@@ -16,14 +16,14 @@ package de.cau.cs.kieler.s.sim.sc.test;
 import java.util.LinkedList;
 import java.util.List;
 
-import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnit;
+import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 
 /**
  * The test plugin for testing the s-sc-simulator
  * 
  * @author cmot
  */
-public class SSimSCAutomatedJUnit extends KiemAutomatedJUnit {
+public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     
     // -------------------------------------------------------------------------

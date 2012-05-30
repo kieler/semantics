@@ -82,7 +82,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @author cmot
  * 
  */
-public class KiemAutomatedJUnit {
+public class KiemAutomatedJUnitTest {
 
     /** The Constant EXECUTION_FILE_ARG. */
     static final String EXECUTION_FILE_ARG = "-execution";
