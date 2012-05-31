@@ -82,6 +82,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  * <br>
  * 
  * @author cmot, ctr
+ * @kieler.rating 2012-05-31 yellow KI-7
  * 
  */
 public class DataComponent extends JSONObjectSimulationDataComponent {
@@ -605,7 +606,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             throws KiemInitializationException {
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
-        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = new EsterelSimulationProgressMonitor(
+        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = 
+                new EsterelSimulationProgressMonitor(
                 monitor, EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
         File executable = null;
@@ -836,8 +838,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             if (esterelProgram.getModules() == null || esterelProgram.getModules().size() < 1) {
                 throw new KiemInitializationException(
                         "Error creating data file due to invalid Esterel file "
-                        + "(no Esterel modules found)",
-                        true, null);
+                                + "(no Esterel modules found)", true, null);
             }
 
             String ccode = transform.createCSimulationInterface(esterelProgram.getModules().get(0))

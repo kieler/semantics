@@ -63,6 +63,7 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
  * which original Esterel statement.<BR>
  * 
  * @author cmot
+ * @kieler.rating 2012-05-31 yellow KI-7
  */
 class Esterel2Simulation {
     
