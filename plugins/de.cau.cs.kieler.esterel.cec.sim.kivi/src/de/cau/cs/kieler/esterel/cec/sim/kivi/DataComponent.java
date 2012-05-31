@@ -512,7 +512,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             XtextEditor xtextEditor = (XtextEditor) editorPart;
 
             if (xtextEditor.getDocument() instanceof XtextDocument
-                    && xtextEditor.getLanguageName().equals(EsterelCECSimPlugin.ESTEREL_LANGUAGE)) {
+                    && xtextEditor.getLanguageName().equals(EsterelCECSimPlugin.ESTEREL_EDITOR_ID)) {
 
                 return xtextEditor;
             }

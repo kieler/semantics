@@ -33,10 +33,10 @@ public class EsterelCECSimPlugin extends Plugin {
     public static final String AUXILIARY_VARIABLE_TAG 
                                         = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
-    /** The Constant ESTEREL_LANGUAGE points to the Esterel Xtext Editor. */
-    public static final String ESTEREL_LANGUAGE = "de.cau.cs.kieler.esterel.Esterel";
+    /** The Constant ESTEREL_EDITOR_ID points to the Esterel Xtext Editor. */
+    public static final String ESTEREL_EDITOR_ID = "de.cau.cs.kieler.esterel.Esterel";
 
-    /** The The shared instance of this plugin. */
+    /** The shared instance of this plugin. */
     private static EsterelCECSimPlugin plugin;
 
     // -----------------------------------------------------------------------------
