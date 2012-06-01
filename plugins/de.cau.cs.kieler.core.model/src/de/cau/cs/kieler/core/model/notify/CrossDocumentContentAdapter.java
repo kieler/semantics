@@ -27,7 +27,7 @@ import org.eclipse.emf.ecore.util.EContentsEList;
  * <br>
  * The implementation has been copied from {@link http://wiki.eclipse.org/EMF/Recipes}.
  * 
- * @author ?
+ * @author EMF, mri
  */
 public class CrossDocumentContentAdapter extends EContentAdapter {
 
