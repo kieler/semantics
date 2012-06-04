@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="assignModule" label="assignModule">
+    <variables xsi:type="kexpressions:IVariable" name="a"/>
+    <regions id="">
+      <states id="Parallel_State2" label="Parallel State" isInitial="true" isFinal="true">
+        <regions id="">
+          <states id="Assignment_State2" label="Assignment State" isInitial="true" isFinal="true">
+            <regions id="">
+              <states id="_" isInitial="true">
+                <outgoingTransitions label="/ a:=4 + 6" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                  <effects xsi:type="synccharts:Assignment" variable="//@states.0/@variables.0">
+                    <expression xsi:type="kexpressions:OperatorExpression" operator="+">
+                      <subExpressions xsi:type="kexpressions:IntValue" value="4"/>
+                      <subExpressions xsi:type="kexpressions:IntValue" value="6"/>
+                    </expression>
+                  </effects>
+                </outgoingTransitions>
+              </states>
+              <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+            </regions>
+          </states>
+        </regions>
+        <regions id="">
+          <states id="LocalVariable_State2" label="LocalVariable State" isInitial="true" isFinal="true">
+            <variables xsi:type="kexpressions:IVariable" name="b"/>
+            <regions id="">
+              <states id="Assignment_State2" label="Assignment State" isInitial="true" isFinal="true">
+                <regions id="">
+                  <states id="_" isInitial="true">
+                    <outgoingTransitions label="/ b:=4 - 0" priority="1" targetState="//@states.0/@regions.0/@states.0/@regions.1/@states.0/@regions.0/@states.0/@regions.0/@states.1">
+                      <effects xsi:type="synccharts:Assignment" variable="//@states.0/@regions.0/@states.0/@regions.1/@states.0/@variables.0">
+                        <expression xsi:type="kexpressions:OperatorExpression" operator="-">
+                          <subExpressions xsi:type="kexpressions:IntValue" value="4"/>
+                          <subExpressions xsi:type="kexpressions:IntValue" value="0"/>
+                        </expression>
+                      </effects>
+                    </outgoingTransitions>
+                  </states>
+                  <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.1/@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+                </regions>
+              </states>
+            </regions>
+          </states>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

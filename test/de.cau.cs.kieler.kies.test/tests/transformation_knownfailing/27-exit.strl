@@ -1,0 +1,7 @@
+module exitModule:
+trap t1 in
+	trap t2 in
+		exit t1(5)
+	end trap
+end trap
+end module

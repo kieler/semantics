@@ -1,0 +1,19 @@
+module presentModule:
+input A, B, C;
+output O;
+present 
+	case A do emit O
+	case B do emit O
+	case C
+	else nothing 
+end present 
+||
+present
+	A and B then 
+		nothing
+	else nothing
+end present
+||
+present [ A and B ] end 
+
+end module

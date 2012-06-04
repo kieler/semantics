@@ -1,0 +1,22 @@
+module abortModule:
+input A,B;
+output O;
+	abort 
+		emit O
+	when case [ A and B ] do emit O
+		case [ A or B ] do nothing 
+	end abort 
+	
+	||
+	
+	abort 
+		emit O
+	when immediate A 
+	
+	|| 
+	
+	abort 
+		emit O
+	when A
+	
+end module

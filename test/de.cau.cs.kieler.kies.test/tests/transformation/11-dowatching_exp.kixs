@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="dowatchingModule" label="dowatchingModule">
+    <signals xsi:type="kexpressions:ISignal" name="A" isInput="true"/>
+    <regions id="">
+      <states id="Do_State4" label="Do State" isInitial="true">
+        <regions id="">
+          <states id="Nothing_State4" label="Nothing State" isInitial="true">
+            <regions id="">
+              <states id="_" isInitial="true" isFinal="true"/>
+            </regions>
+            <outgoingTransitions label="(A and pre(A)) or A" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:OperatorExpression" operator="or">
+                <subExpressions xsi:type="kexpressions:OperatorExpression" operator="and">
+                  <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+                  <subExpressions xsi:type="kexpressions:OperatorExpression" operator="pre">
+                    <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+                  </subExpressions>
+                </subExpressions>
+                <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+              </trigger>
+            </outgoingTransitions>
+            <outgoingTransitions priority="2" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.0/@regions.0/@states.2"/>
+          </states>
+          <states id="Nothing_State3" label="Nothing State" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+            <regions id="">
+              <states id="_" isInitial="true" isFinal="true"/>
+            </regions>
+          </states>
+          <states id="_" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@regions.0/@states.0/@outgoingTransitions.1"/>
+        </regions>
+        <outgoingTransitions priority="1" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="Do_State3" label="Do State" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0">
+        <regions id="">
+          <states id="Nothing_State2" label="Nothing State" isInitial="true">
+            <regions id="">
+              <states id="_" isInitial="true" isFinal="true"/>
+            </regions>
+            <outgoingTransitions label="A or A" priority="1" type="STRONGABORT" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.1">
+              <trigger xsi:type="kexpressions:OperatorExpression" operator="or">
+                <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+                <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+              </trigger>
+            </outgoingTransitions>
+            <outgoingTransitions priority="2" type="NORMALTERMINATION" targetState="//@states.0/@regions.0/@states.1/@regions.0/@states.2"/>
+          </states>
+          <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.0"/>
+          <states id="_" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.1/@regions.0/@states.0/@outgoingTransitions.1"/>
+        </regions>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

@@ -361,7 +361,7 @@ Boolean isSimpleState(State s):
 ;
 
 Boolean hasSignalsVariables(State state):
- 	scopeHasSignalsVariables(state)
+	state.scopeHasSignalsVariables()
 ;
 
 

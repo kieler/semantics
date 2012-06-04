@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:kexpressions="http://kieler.cs.cau.de/kexpressions/0.1.2" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="rule4" label="rule4">
+    <signals name="A"/>
+    <signals name="B"/>
+    <regions id="">
+      <states id="_" incomingTransitions="//@states.0/@regions.0/@states.2/@outgoingTransitions.0">
+        <signals name="Horst"/>
+        <outgoingTransitions label="A" priority="1" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="B" priority="2" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+        </outgoingTransitions>
+        <outgoingTransitions label="A and B" priority="3" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:OperatorExpression" operator="and">
+            <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+            <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+          </trigger>
+        </outgoingTransitions>
+        <outgoingTransitions label="A or B" priority="4" targetState="//@states.0/@regions.0/@states.1">
+          <trigger xsi:type="kexpressions:OperatorExpression" operator="or">
+            <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.0"/>
+            <subExpressions xsi:type="kexpressions:ValuedObjectReference" valuedObject="//@states.0/@signals.1"/>
+          </trigger>
+        </outgoingTransitions>
+      </states>
+      <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0 //@states.0/@regions.0/@states.0/@outgoingTransitions.1 //@states.0/@regions.0/@states.0/@outgoingTransitions.2 //@states.0/@regions.0/@states.0/@outgoingTransitions.3"/>
+      <states id="_5" isInitial="true">
+        <signals name="Helmut"/>
+        <outgoingTransitions priority="1" targetState="//@states.0/@regions.0/@states.0"/>
+      </states>
+    </regions>
+  </states>
+</synccharts:Region>

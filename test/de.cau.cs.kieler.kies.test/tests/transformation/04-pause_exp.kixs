@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<synccharts:Region xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:synccharts="http://kieler.cs.cau.de/synccharts/0.2.4">
+  <states id="pauseModule" label="pauseModule">
+    <regions id="">
+      <states id="_" isInitial="true">
+        <outgoingTransitions priority="1" targetState="//@states.0/@regions.0/@states.1"/>
+      </states>
+      <states id="_2" isFinal="true" incomingTransitions="//@states.0/@regions.0/@states.0/@outgoingTransitions.0"/>
+    </regions>
+  </states>
+</synccharts:Region>

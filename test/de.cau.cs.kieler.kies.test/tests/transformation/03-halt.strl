@@ -1,0 +1,3 @@
+module haltModule:
+	halt
+end module
