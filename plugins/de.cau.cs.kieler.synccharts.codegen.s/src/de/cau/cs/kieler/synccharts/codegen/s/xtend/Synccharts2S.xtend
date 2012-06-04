@@ -34,8 +34,8 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
  */
 class Synccharts2S {
 
-	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
 	extension de.cau.cs.kieler.synccharts.codegen.s.xtend.Helper Helper = Guice::createInjector().getInstance(typeof(Helper));
+	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
 
 	// ======================================================================================================
 	// ==                                        M A I N   T R A N S F O R M A T I O N                     ==
