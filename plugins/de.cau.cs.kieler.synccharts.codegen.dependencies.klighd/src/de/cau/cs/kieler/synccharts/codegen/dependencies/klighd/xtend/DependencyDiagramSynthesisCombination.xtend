@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend
 
 import com.google.inject.Guice
-import com.google.inject.Inject
 import de.cau.cs.kieler.core.kivi.AbstractCombination
 import de.cau.cs.kieler.core.model.triggers.SelectionTrigger$SelectionState
 import de.cau.cs.kieler.klighd.effects.KlighdUpdateDiagramEffect
@@ -41,10 +40,10 @@ import java.util.List
  */
 class DependencyDiagramSynthesisCombination extends AbstractCombination {
 	
-	//extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = 
-	//		Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
-	@Inject
-	extension Synccharts2Dependenies Synccharts2Dependenies
+	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = 
+			Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
+//	@Inject
+//	extension Synccharts2Dependenies Synccharts2Dependenies
 
 	// ------------------------------------------------------------------------------
 	

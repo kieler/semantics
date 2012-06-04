@@ -14,8 +14,19 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.xtext.xbase
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.synccharts.codegen.dependencies,
- de.cau.cs.kieler.synccharts.codegen.dependencies.dependency,
- de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl,
- de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.util,
- de.cau.cs.kieler.synccharts.codegen.dependencies.xtend
+Export-Package: de.cau.cs.kieler.synccharts.codegen.dependencies;uses:="org.eclipse.ui.plugin,org.osgi.framework",
+ de.cau.cs.kieler.synccharts.codegen.dependencies.dependency;uses:="org.eclipse.emf.ecore,org.eclipse.emf.common.util,de.cau.cs.kieler.synccharts",
+ de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.impl;
+  uses:="org.eclipse.emf.ecore,
+   de.cau.cs.kieler.synccharts.codegen.dependencies.dependency,
+   org.eclipse.emf.common.util,
+   de.cau.cs.kieler.synccharts,
+   org.eclipse.emf.ecore.impl,
+   org.eclipse.emf.common.notify",
+ de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.util;
+  uses:="org.eclipse.emf.ecore.util,
+   org.eclipse.emf.ecore,
+   de.cau.cs.kieler.synccharts.codegen.dependencies.dependency,
+   org.eclipse.emf.common.notify.impl,
+   org.eclipse.emf.common.notify",
+ de.cau.cs.kieler.synccharts.codegen.dependencies.xtend;uses:="de.cau.cs.kieler.synccharts.codegen.dependencies.dependency,de.cau.cs.kieler.core.kexpressions,de.cau.cs.kieler.synccharts"
