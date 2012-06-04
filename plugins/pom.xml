@@ -140,7 +140,6 @@
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
     <module>de.cau.cs.kieler.sim.trace</module>
-    <module>de.cau.cs.kieler.sim.validator</module>
     <module>de.cau.cs.kieler.sj</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
