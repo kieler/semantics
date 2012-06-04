@@ -17,6 +17,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
@@ -30,6 +31,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -37,6 +39,7 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 import org.junit.Before;
 import org.junit.Test;
+import org.osgi.framework.Bundle;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.ImmutableList;
@@ -75,10 +78,11 @@ public class TimeMeasurement {
 
     // CHECKSTYLEOFF VisibilityModifier
     // FIXME
-    private String pathToWS = "/../workspace/";
+    private static String pathToTests = "/tests/transformation/";
+    //private String pathToWS = "/../workspace/"; REMOVED THIS HACK (cmot)
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
-
+    
     private File[] filesTest = null;
 
     private Multimap<String, Long> times = HashMultimap.create();
@@ -123,13 +127,28 @@ public class TimeMeasurement {
         FileFilter fileFilterTest = new FileFilter() {
             public boolean accept(final File file) {
                 String ext = getFileExtension(file);
-                String start = getFileStart(file);
-                return !file.isDirectory() && ext.equals("strl") && start.equals("test");
+                return !file.isDirectory() && ext.equals("strl");
             }
         };
 
-        File dir = new File(workspaceRoot.getLocation() + pathToWS + "de.cau.cs.kieler.kies/tests/");
-        filesTest = dir.listFiles(fileFilterTest);
+        //File dir = new File(workspaceRoot.getLocation() + pathToWS + "de.cau.cs.kieler.kies/tests/");
+        // if the bundle is not ready then there is no image
+        Bundle bundle = Platform.getBundle(KiesTestPlugin.PLUGIN_ID);
+        // first try to resolve bundle files (give preference to bundle files)
+        URL testDirURL = null;
+        testDirURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(pathToTests),
+                null);
+        String testDirString = getAbsoluteFilePath(testDirURL);
+        File testDir;
+        try {
+            testDir = org.eclipse.core.runtime.FileLocator.getBundleFile(bundle);
+            testDir = new File(testDir.getAbsolutePath() + pathToTests);
+            if (testDir.exists()) {
+                filesTest = testDir.listFiles(fileFilterTest);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -211,13 +230,16 @@ public class TimeMeasurement {
         }
     }
 
-    private void measure(final File strlFile) {
-        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+    private void measure(final File modelFile) {
+        // REMOVED THIS HACK (cmot)
+//        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+//                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+        IPath modelFilePath = new Path(modelFile.getPath());
+        
 
-        IFile strl = project.getFile(path.lastSegment());
+        IFile strl = project.getFile(modelFilePath.lastSegment());
         try {
-            strl.createLink(path, IResource.NONE, null);
+            strl.createLink(modelFilePath, IResource.NONE, null);
         } catch (CoreException e) {
             e.printStackTrace();
         }
@@ -238,7 +260,7 @@ public class TimeMeasurement {
 
         try {
             fw = new FileWriter(outputFile, true);
-            fw.write("\n" + strlFile.getName() + ";");
+            fw.write("\n" + modelFile.getName() + ";");
             fw.write((end - start) + ";");
             fw.close();
         } catch (IOException e) {
@@ -594,13 +616,15 @@ public class TimeMeasurement {
         }
     }
 
-    public void compareHierarchyLevels(final File strlFile) {
-        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+    public void compareHierarchyLevels(final File modelFile) {
+        // REMOVED THIS HACK (cmot)
+//      IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+//      + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+      IPath modelFilePath = new Path(modelFile.getPath());
 
-        IFile strl = project.getFile(path.lastSegment());
+        IFile strl = project.getFile(modelFilePath.lastSegment());
         try {
-            strl.createLink(path, IResource.NONE, null);
+            strl.createLink(modelFilePath, IResource.NONE, null);
         } catch (CoreException e) {
             e.printStackTrace();
         }
@@ -711,13 +735,15 @@ public class TimeMeasurement {
      * @throws Exception
      *             if test fails
      */
-    private void performTest(final File strlFile, int time) throws Exception {
+    private void performTest(final File modelFile, int time) throws Exception {
         // create links to the testfiles in the test project folder
-        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+        // REMOVED THIS HACK (cmot)
+//        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+//                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+      IPath modelFilePath = new Path(modelFile.getPath());
 
-        IFile strl = project.getFile(path.lastSegment());
-        strl.createLink(path, IResource.NONE, null);
+        IFile strl = project.getFile(modelFilePath.lastSegment());
+        strl.createLink(modelFilePath, IResource.NONE, null);
 
         // kixsExp.createLink(pathExp, IResource.NONE, null);
 
@@ -841,6 +867,49 @@ public class TimeMeasurement {
         String start = (filename.indexOf("-") == -1 ? "" : filename.substring(0,
                 filename.indexOf("-")));
         return start;
+    }
+    // -------------------------------------------------------------------------
+
+
+    /**
+     * Gets the absolute file path.
+     * 
+     * @param url
+     *            the url
+     * @return the absolute file path
+     */
+    String getAbsoluteFilePath(URL url) {
+        // if bundle entry then just to string
+        if (url.toString().contains("bundleentry")) {
+            return url.toString();
+        }
+        IPath urlPath = new Path(url.getFile());
+        return getAbsoluteFilePath(urlPath);
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the absolute file path.
+     * 
+     * @param ipath
+     *            the ipath
+     * @return the absolute file path
+     */
+    String getAbsoluteFilePath(IPath ipath) {
+        // if bundle entry then just to string
+        if (ipath.toString().contains("bundleentry")) {
+            return ipath.toString();
+        }
+        // Ensure it is absolute
+        ipath.makeAbsolute();
+        java.io.File javaFile = new File(ipath.toString().replaceAll("%20", " "));
+        if (javaFile.exists()) {
+            String fileString = javaFile.getAbsolutePath();
+            return fileString;
+        }
+        // Something went wrong, we could not resolve the file location
+        return null;
     }
 
 }

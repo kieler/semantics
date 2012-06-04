@@ -1,6 +1,0 @@
-module localSignalModule:
-	signal A, B : integer in 
-			emit A;
-			emit B(14)
-	end
-end module

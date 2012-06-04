@@ -1,9 +1,0 @@
-module assignModule:
-	var a : integer in
-		a := 4 + 6
-		|| 
-		var b : integer in
-			b := 4 - 0
-		end var
-	end var 
-end module

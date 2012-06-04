@@ -1,4 +1,0 @@
-module loopModule:
-output O, P, Q, R;
-emit O ; emit P || emit Q ; emit R ; nothing
-end module

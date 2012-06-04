@@ -1,5 +1,0 @@
-module loopModule:
-loop
-	nothing
-end loop 
-end module
