@@ -17,10 +17,10 @@
   <packaging>eclipse-plugin</packaging>
   <dependencies>
     <dependency>
-	  <groupId>de.cau.cs.kieler</groupId>
-	  <artifactId>de.cau.cs.kieler.synccharts.codegen.dependencies</artifactId>
-	  <version>0.2.0</version>
-	</dependency>
+      <groupId>com.google.inject</groupId>
+      <artifactId>com.google.inject</artifactId>
+      <version>3.0.0.no_aop</version>
+      </dependency>	
   </dependencies>    
   <build>
     <sourceDirectory>src</sourceDirectory>
