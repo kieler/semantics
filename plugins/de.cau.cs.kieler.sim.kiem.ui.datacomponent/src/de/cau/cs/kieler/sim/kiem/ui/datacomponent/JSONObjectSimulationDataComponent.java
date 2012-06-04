@@ -76,6 +76,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 public abstract class JSONObjectSimulationDataComponent extends
 		JSONObjectDataComponent implements IJSONObjectDataComponent {
 
+        /** The properties added by this super-component shift all sub components properties by one. */
+        protected static final int KIEM_PROPERTY_DIFF = 1;
+
 	/** The transformation completed flag. */
 	private boolean transformationCompleted;
 
