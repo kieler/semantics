@@ -26,39 +26,57 @@ import de.cau.cs.kieler.core.util.Maybe;
 
 /**
  * Static utility class for working with editors.
- *
+ * 
  * @author haf, chsch
- *
+ * 
  */
 public final class EditorUtils {
 
     private EditorUtils() {
     }
 
+    /** The done flag for finding the last active editor. */
+    private static boolean doneGetLastActiveEditor = true;
+
+    /** The Constant WAIT_SLEEP_TIME for finding the last active editor. */
+    private final static int WAIT_SLEEP_TIME = 10;
+
+    /** The last found editor. */
+    private static Maybe<IEditorPart> editor = Maybe.create();
+
     /**
-     * Return the last active editor. Returns the active editor of the current
-     * page if it is not null. This might happen when you maximize a view and
-     * minimize it again. Returns the first editor of any open editors if the
-     * active editor is null.
-     *
+     * Return the last active editor. Returns the active editor of the current page if it is not
+     * null. This might happen when you maximize a view and minimize it again. Returns the first
+     * editor of any open editors if the active editor is null.
+     * 
      * @author haf
-     *
+     * 
      * @return the last open active editor, which may be {@code null} if there is no open editor
-     * @deprecated Using such a static method is a cheap way to get around the problem of
-     *     finding the right context for an operation. This may fail in some situations. Therefore,
-     *     a more generic and reliable solution for managing the context of things that happen
-     *     in view management must be found.
+     * @deprecated Using such a static method is a cheap way to get around the problem of finding
+     *             the right context for an operation. This may fail in some situations. Therefore,
+     *             a more generic and reliable solution for managing the context of things that
+     *             happen in view management must be found.<br>
+     * <br>
+     *             Be careful cause this method blocks waiting for the UI thread, this could cause a
+     *             deadlock if other depending code also waits for the UI thread.
      */
     public static IEditorPart getLastActiveEditor() {
-        final Maybe<IEditorPart> editor = Maybe.create();
+        if (!doneGetLastActiveEditor) {
+            // If we are still searching concurrently for the last active editor then exit
+            // here with the last one found!
+            return editor.get();
+        }
+        doneGetLastActiveEditor = false;
         MonitoredOperation.runInUI(new Runnable() {
             public void run() {
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 if (window == null) {
+                    doneGetLastActiveEditor = true;
                     return;
                 }
                 IWorkbenchPage page = window.getActivePage();
                 if (page == null) {
+                    doneGetLastActiveEditor = true;
                     return;
                 }
                 editor.set(page.getActiveEditor());
@@ -68,18 +86,27 @@ public final class EditorUtils {
                         editor.set(editors[0].getEditor(true));
                     }
                 }
+                doneGetLastActiveEditor = true;
             }
         }, false);
+        while (!doneGetLastActiveEditor) {
+            // blocking wait until UI thread got the last active editor
+            try {
+                Thread.sleep(WAIT_SLEEP_TIME);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         return editor.get();
     }
 
-
     /**
      * Convenience method for dropping log infos.
-     *
+     * 
      * @author chsch
-     *
-     * @param status a status to be logged
+     * 
+     * @param status
+     *            a status to be logged
      */
     public static void log(final IStatus status) {
         if (CoreUIPlugin.getDefault() != null) {
