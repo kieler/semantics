@@ -33,6 +33,9 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 
 /**
@@ -144,6 +147,27 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 		}
 		return newExpression;
 	}
+
+	// Apply conversion to integer values
+	def dispatch Expression convertToSExpression(IntValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createIntValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}
+
+	// Apply conversion to float values
+	def dispatch Expression convertToSExpression(FloatValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createFloatValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}
+
+	// Apply conversion to boolean values
+	def dispatch Expression convertToSExpression(BooleanValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createBooleanValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}	
 	
 	// Apply conversion to the default case
 	def dispatch Expression convertToSExpression(Expression expression) {
@@ -159,6 +183,10 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
 		val sEmit = SFactory::eINSTANCE.createEmit;
 		val sSignal = TraceComponent::getSingleTraceTarget(effect.signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+		if (effect.newValue != null) {
+			val sSignalValue = effect.newValue.convertToSExpression;
+			sEmit.setValue(sSignalValue);
+		}
 		sEmit.setSignal(sSignal);
 		instructions.add(sEmit);
 	}
