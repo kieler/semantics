@@ -13,6 +13,18 @@
   <packaging>eclipse-plugin</packaging>
   <build>
     <sourceDirectory>src</sourceDirectory>
+	<dependencies>
+	    <dependency>
+	        <groupId>org.eclipse.xtend2</groupId>
+	        <artifactId>org.eclipse.xtend2.lib</artifactId>
+	        <version>2.2.0</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>com.google.inject</groupId>
+	        <artifactId>com.google.inject</artifactId>
+	        <version>2.0.0.v201105231817</version>
+	    </dependency>
+	</dependencies>    
     <plugins>
       <plugin>
         <groupId>org.eclipse.xtend2</groupId>
