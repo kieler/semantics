@@ -25,8 +25,8 @@
     <module>de.cau.cs.kieler.s.sim.sc.test</module>
     <module>de.cau.cs.kieler.sim.kiem.test</module>
     <module>de.cau.cs.kieler.sj.test</module>
-    <!--  KIES IS CURRENTLY FAILING <module>de.cau.cs.kieler.kies.test</module> -->
-    <module>de.cau.cs.kieler.synccharts.text.bridge.test</module>
+    <!--  KIES IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.kies.test</module> -->
+    <!--  TEXT IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.synccharts.text.bridge.test</module> -->
   </modules>
 
 </project>
