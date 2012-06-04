@@ -55,26 +55,26 @@ public interface Emit extends Instruction
   void setSignal(Signal value);
 
   /**
-   * Returns the value of the '<em><b>Value</b></em>' reference.
+   * Returns the value of the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Value</em>' reference isn't clear,
+   * If the meaning of the '<em>Value</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Value</em>' reference.
+   * @return the value of the '<em>Value</em>' containment reference.
    * @see #setValue(Expression)
    * @see de.cau.cs.kieler.s.s.SPackage#getEmit_Value()
-   * @model
+   * @model containment="true"
    * @generated
    */
   Expression getValue();
 
   /**
-   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Emit#getValue <em>Value</em>}' reference.
+   * Sets the value of the '{@link de.cau.cs.kieler.s.s.Emit#getValue <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Value</em>' reference.
+   * @param value the new value of the '<em>Value</em>' containment reference.
    * @see #getValue()
    * @generated
    */

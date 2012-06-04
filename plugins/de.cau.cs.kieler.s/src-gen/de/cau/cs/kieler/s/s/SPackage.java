@@ -524,7 +524,7 @@ public interface SPackage extends EPackage
   int EMIT__SIGNAL = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
-   * The feature id for the '<em><b>Value</b></em>' reference.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -927,10 +927,10 @@ public interface SPackage extends EPackage
   EReference getEmit_Signal();
 
   /**
-   * Returns the meta object for the reference '{@link de.cau.cs.kieler.s.s.Emit#getValue <em>Value</em>}'.
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Emit#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Value</em>'.
+   * @return the meta object for the containment reference '<em>Value</em>'.
    * @see de.cau.cs.kieler.s.s.Emit#getValue()
    * @see #getEmit()
    * @generated
@@ -1258,7 +1258,7 @@ public interface SPackage extends EPackage
     EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
 
     /**
-     * The meta object literal for the '<em><b>Value</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated

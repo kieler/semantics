@@ -13,6 +13,7 @@ import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -46,7 +47,7 @@ public class EmitImpl extends InstructionImpl implements Emit
   protected Signal signal;
 
   /**
-   * The cached value of the '{@link #getValue() <em>Value</em>}' reference.
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getValue()
@@ -126,16 +127,6 @@ public class EmitImpl extends InstructionImpl implements Emit
    */
   public Expression getValue()
   {
-    if (value != null && value.eIsProxy())
-    {
-      InternalEObject oldValue = (InternalEObject)value;
-      value = (Expression)eResolveProxy(oldValue);
-      if (value != oldValue)
-      {
-        if (eNotificationRequired())
-          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.EMIT__VALUE, oldValue, value));
-      }
-    }
     return value;
   }
 
@@ -144,9 +135,16 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression basicGetValue()
+  public NotificationChain basicSetValue(Expression newValue, NotificationChain msgs)
   {
-    return value;
+    Expression oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, oldValue, newValue);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
   }
 
   /**
@@ -156,10 +154,34 @@ public class EmitImpl extends InstructionImpl implements Emit
    */
   public void setValue(Expression newValue)
   {
-    Expression oldValue = value;
-    value = newValue;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, oldValue, value));
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, newValue, newValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case SPackage.EMIT__VALUE:
+        return basicSetValue(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -176,8 +198,7 @@ public class EmitImpl extends InstructionImpl implements Emit
         if (resolve) return getSignal();
         return basicGetSignal();
       case SPackage.EMIT__VALUE:
-        if (resolve) return getValue();
-        return basicGetValue();
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }

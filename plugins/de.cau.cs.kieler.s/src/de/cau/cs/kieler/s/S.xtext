@@ -8,7 +8,7 @@ grammar de.cau.cs.kieler.s.S with de.cau.cs.kieler.core.kexpressions.KExpression
 //import 'http://kieler.cs.cau.de/expressions' as expressions --> wrong
 //import 'http://kieler.cs.cau.de/annotations' as annotations
 
-import "http://kieler.cs.cau.de/kexpressions/0.1.2" as expressions
+import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 //import "platform:/resource/de.cau.cs.kieler.core.annotations/model/annotations.ecore" as annotations
 
 generate s "http://www.cau.de/cs/kieler/s"
@@ -48,7 +48,7 @@ Thread:
 ;
 
 
-Signal returns expressions::Signal:
+Signal returns kexpressions::Signal:
     (isInput?='input')?
 	(isOutput?='output')?
 	'signal'
@@ -112,7 +112,7 @@ Halt :
   
 
 Emit:
-	'Emit''('signal= [expressions::Signal] (',' value=[expressions::Expression])? (',' continuation=[Continuation])?')'
+	'Emit''('signal= [kexpressions::Signal] ('(' value=Expression ')')? (',' continuation=[Continuation])?')'
 ;
   
 Abort : 
@@ -129,6 +129,6 @@ If :
   
 // Complex instruction
 Await:
-	'Await' '('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
+	'Await' '('signal= [kexpressions::Signal] (',' continuation=[Continuation])?')'
 ;
 

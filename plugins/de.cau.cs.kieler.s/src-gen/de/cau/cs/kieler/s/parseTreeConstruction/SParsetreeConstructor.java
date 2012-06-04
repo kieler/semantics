@@ -1182,7 +1182,7 @@ protected class Thread_RightCurlyBracketKeyword_7 extends KeywordToken  {
 
 /************ begin Rule Signal ****************
  *
- * Signal returns expressions::Signal:
+ * Signal returns kexpressions::Signal:
  * 	isInput?="input"? isOutput?="output"? "signal" name=EString (":=" initialValue=EString)? (":" type=ValueType | ":"
  * 	"combine" type=ValueType "with" (combineOperator=CombineOperator | hostCombineOperator=EString))? ";";
  *
@@ -3676,11 +3676,11 @@ protected class Halt_RightParenthesisKeyword_4 extends KeywordToken  {
 /************ begin Rule Emit ****************
  *
  * Emit:
- * 	"Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")";
+ * 	"Emit" "(" signal=[kexpressions::Signal] ("(" value=Expression ")")? ("," continuation=[Continuation])? ")";
  *
  **/
 
-// "Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")"
+// "Emit" "(" signal=[kexpressions::Signal] ("(" value=Expression ")")? ("," continuation=[Continuation])? ")"
 protected class Emit_Group extends GroupToken {
 	
 	public Emit_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3752,7 +3752,7 @@ protected class Emit_LeftParenthesisKeyword_1 extends KeywordToken  {
 
 }
 
-// signal=[expressions::Signal]
+// signal=[kexpressions::Signal]
 protected class Emit_SignalAssignment_2 extends AssignmentToken  {
 	
 	public Emit_SignalAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3789,7 +3789,7 @@ protected class Emit_SignalAssignment_2 extends AssignmentToken  {
 
 }
 
-// ("," value=[expressions::Expression])?
+// ("(" value=Expression ")")?
 protected class Emit_Group_3 extends GroupToken {
 	
 	public Emit_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3804,23 +3804,23 @@ protected class Emit_Group_3 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Emit_ValueAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Emit_RightParenthesisKeyword_3_2(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
 
 }
 
-// ","
-protected class Emit_CommaKeyword_3_0 extends KeywordToken  {
+// "("
+protected class Emit_LeftParenthesisKeyword_3_0 extends KeywordToken  {
 	
-	public Emit_CommaKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Emit_LeftParenthesisKeyword_3_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getEmitAccess().getCommaKeyword_3_0();
+		return grammarAccess.getEmitAccess().getLeftParenthesisKeyword_3_0();
 	}
 
     @Override
@@ -3833,7 +3833,7 @@ protected class Emit_CommaKeyword_3_0 extends KeywordToken  {
 
 }
 
-// value=[expressions::Expression]
+// value=Expression
 protected class Emit_ValueAssignment_3_1 extends AssignmentToken  {
 	
 	public Emit_ValueAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3848,7 +3848,7 @@ protected class Emit_ValueAssignment_3_1 extends AssignmentToken  {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Emit_CommaKeyword_3_0(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Expression_Alternatives(this, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3857,15 +3857,46 @@ protected class Emit_ValueAssignment_3_1 extends AssignmentToken  {
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("value",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::RuleCallImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getEmitAccess().getValueExpressionCrossReference_3_1_0().getType().getClassifier())) {
-				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getEmitAccess().getValueExpressionCrossReference_3_1_0(); 
-				return obj;
+			if(param.isInstanceOf(grammarAccess.getExpressionRule().getType().getClassifier())) {
+				type = AssignmentType.PARSER_RULE_CALL;
+				element = grammarAccess.getEmitAccess().getValueExpressionParserRuleCall_3_1_0(); 
+				consumed = obj;
+				return param;
 			}
 		}
 		return null;
+	}
+
+    @Override
+	public AbstractToken createFollowerAfterReturn(AbstractToken next,	int actIndex, int index, IEObjectConsumer inst) {
+		if(value == inst.getEObject() && !inst.isConsumed()) return null;
+		switch(index) {
+			case 0: return new Emit_LeftParenthesisKeyword_3_0(lastRuleCallOrigin, next, actIndex, consumed);
+			default: return null;
+		}	
+	}	
+}
+
+// ")"
+protected class Emit_RightParenthesisKeyword_3_2 extends KeywordToken  {
+	
+	public Emit_RightParenthesisKeyword_3_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getEmitAccess().getRightParenthesisKeyword_3_2();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Emit_ValueAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
 	}
 
 }
@@ -4528,11 +4559,11 @@ protected class If_RightCurlyBracketKeyword_7 extends KeywordToken  {
  *
  * // Complex instruction
  * Await:
- * 	"Await" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")";
+ * 	"Await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")";
  *
  **/
 
-// "Await" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")"
+// "Await" "(" signal=[kexpressions::Signal] ("," continuation=[Continuation])? ")"
 protected class Await_Group extends GroupToken {
 	
 	public Await_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4604,7 +4635,7 @@ protected class Await_LeftParenthesisKeyword_1 extends KeywordToken  {
 
 }
 
-// signal=[expressions::Signal]
+// signal=[kexpressions::Signal]
 protected class Await_SignalAssignment_2 extends AssignmentToken  {
 	
 	public Await_SignalAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
