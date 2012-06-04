@@ -112,7 +112,7 @@ Halt :
   
 
 Emit:
-	'Emit''('signal= [expressions::Signal] (',' continuation=[Continuation])?')'
+	'Emit''('signal= [expressions::Signal] (',' value=[expressions::Expression])? (',' continuation=[Continuation])?')'
 ;
   
 Abort : 

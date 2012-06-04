@@ -6,6 +6,7 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.s.s.Emit;
@@ -26,6 +27,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +44,16 @@ public class EmitImpl extends InstructionImpl implements Emit
    * @ordered
    */
   protected Signal signal;
+
+  /**
+   * The cached value of the '{@link #getValue() <em>Value</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected Expression value;
 
   /**
    * <!-- begin-user-doc -->
@@ -112,6 +124,49 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
+  public Expression getValue()
+  {
+    if (value != null && value.eIsProxy())
+    {
+      InternalEObject oldValue = (InternalEObject)value;
+      value = (Expression)eResolveProxy(oldValue);
+      if (value != oldValue)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, SPackage.EMIT__VALUE, oldValue, value));
+      }
+    }
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression basicGetValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(Expression newValue)
+  {
+    Expression oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, oldValue, value));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -120,6 +175,9 @@ public class EmitImpl extends InstructionImpl implements Emit
       case SPackage.EMIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
+      case SPackage.EMIT__VALUE:
+        if (resolve) return getValue();
+        return basicGetValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -136,6 +194,9 @@ public class EmitImpl extends InstructionImpl implements Emit
     {
       case SPackage.EMIT__SIGNAL:
         setSignal((Signal)newValue);
+        return;
+      case SPackage.EMIT__VALUE:
+        setValue((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -154,6 +215,9 @@ public class EmitImpl extends InstructionImpl implements Emit
       case SPackage.EMIT__SIGNAL:
         setSignal((Signal)null);
         return;
+      case SPackage.EMIT__VALUE:
+        setValue((Expression)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -170,6 +234,8 @@ public class EmitImpl extends InstructionImpl implements Emit
     {
       case SPackage.EMIT__SIGNAL:
         return signal != null;
+      case SPackage.EMIT__VALUE:
+        return value != null;
     }
     return super.eIsSet(featureID);
   }

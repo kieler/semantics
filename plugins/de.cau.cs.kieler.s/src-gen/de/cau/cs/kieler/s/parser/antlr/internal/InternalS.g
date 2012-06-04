@@ -1250,13 +1250,33 @@ ruleEmit returns [EObject current=null]
         }
 	otherlv_4=RULE_ID
 	{
-		newLeafNode(otherlv_4, grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_3_1_0()); 
+		newLeafNode(otherlv_4, grammarAccess.getEmitAccess().getValueExpressionCrossReference_3_1_0()); 
 	}
 
 )
-))?	otherlv_5=')' 
+))?(	otherlv_5=',' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getEmitAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_5, grammarAccess.getEmitAccess().getCommaKeyword_4_0());
+    }
+(
+(
+		{ 
+		  /* */ 
+		}
+		{
+			if ($current==null) {
+	            $current = createModelElement(grammarAccess.getEmitRule());
+	        }
+        }
+	otherlv_6=RULE_ID
+	{
+		newLeafNode(otherlv_6, grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_4_1_0()); 
+	}
+
+)
+))?	otherlv_7=')' 
+    {
+    	newLeafNode(otherlv_7, grammarAccess.getEmitAccess().getRightParenthesisKeyword_5());
     }
 )
 ;

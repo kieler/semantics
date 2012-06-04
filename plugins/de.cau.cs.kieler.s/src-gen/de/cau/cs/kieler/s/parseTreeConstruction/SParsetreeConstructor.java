@@ -3676,11 +3676,11 @@ protected class Halt_RightParenthesisKeyword_4 extends KeywordToken  {
 /************ begin Rule Emit ****************
  *
  * Emit:
- * 	"Emit" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")";
+ * 	"Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")";
  *
  **/
 
-// "Emit" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")"
+// "Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")"
 protected class Emit_Group extends GroupToken {
 	
 	public Emit_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3695,7 +3695,7 @@ protected class Emit_Group extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Emit_RightParenthesisKeyword_4(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Emit_RightParenthesisKeyword_5(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3789,7 +3789,7 @@ protected class Emit_SignalAssignment_2 extends AssignmentToken  {
 
 }
 
-// ("," continuation=[Continuation])?
+// ("," value=[expressions::Expression])?
 protected class Emit_Group_3 extends GroupToken {
 	
 	public Emit_Group_3(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -3804,7 +3804,7 @@ protected class Emit_Group_3 extends GroupToken {
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Emit_ContinuationAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
+			case 0: return new Emit_ValueAssignment_3_1(lastRuleCallOrigin, this, 0, inst);
 			default: return null;
 		}	
 	}
@@ -3833,16 +3833,16 @@ protected class Emit_CommaKeyword_3_0 extends KeywordToken  {
 
 }
 
-// continuation=[Continuation]
-protected class Emit_ContinuationAssignment_3_1 extends AssignmentToken  {
+// value=[expressions::Expression]
+protected class Emit_ValueAssignment_3_1 extends AssignmentToken  {
 	
-	public Emit_ContinuationAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Emit_ValueAssignment_3_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Assignment getGrammarElement() {
-		return grammarAccess.getEmitAccess().getContinuationAssignment_3_1();
+		return grammarAccess.getEmitAccess().getValueAssignment_3_1();
 	}
 
     @Override
@@ -3855,13 +3855,96 @@ protected class Emit_ContinuationAssignment_3_1 extends AssignmentToken  {
 
     @Override	
 	public IEObjectConsumer tryConsume() {
+		if((value = eObjectConsumer.getConsumable("value",false)) == null) return null;
+		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
+		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
+			IEObjectConsumer param = createEObjectConsumer((EObject)value);
+			if(param.isInstanceOf(grammarAccess.getEmitAccess().getValueExpressionCrossReference_3_1_0().getType().getClassifier())) {
+				type = AssignmentType.CROSS_REFERENCE;
+				element = grammarAccess.getEmitAccess().getValueExpressionCrossReference_3_1_0(); 
+				return obj;
+			}
+		}
+		return null;
+	}
+
+}
+
+
+// ("," continuation=[Continuation])?
+protected class Emit_Group_4 extends GroupToken {
+	
+	public Emit_Group_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Group getGrammarElement() {
+		return grammarAccess.getEmitAccess().getGroup_4();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Emit_ContinuationAssignment_4_1(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// ","
+protected class Emit_CommaKeyword_4_0 extends KeywordToken  {
+	
+	public Emit_CommaKeyword_4_0(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Keyword getGrammarElement() {
+		return grammarAccess.getEmitAccess().getCommaKeyword_4_0();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Emit_Group_3(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Emit_SignalAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			default: return null;
+		}	
+	}
+
+}
+
+// continuation=[Continuation]
+protected class Emit_ContinuationAssignment_4_1 extends AssignmentToken  {
+	
+	public Emit_ContinuationAssignment_4_1(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
+	}
+	
+	@Override
+	public Assignment getGrammarElement() {
+		return grammarAccess.getEmitAccess().getContinuationAssignment_4_1();
+	}
+
+    @Override
+	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
+		switch(index) {
+			case 0: return new Emit_CommaKeyword_4_0(lastRuleCallOrigin, this, 0, inst);
+			default: return null;
+		}	
+	}
+
+    @Override	
+	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("continuation",false)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("continuation");
 		if(value instanceof EObject) { // org::eclipse::xtext::impl::CrossReferenceImpl
 			IEObjectConsumer param = createEObjectConsumer((EObject)value);
-			if(param.isInstanceOf(grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_3_1_0().getType().getClassifier())) {
+			if(param.isInstanceOf(grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_4_1_0().getType().getClassifier())) {
 				type = AssignmentType.CROSS_REFERENCE;
-				element = grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_3_1_0(); 
+				element = grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_4_1_0(); 
 				return obj;
 			}
 		}
@@ -3872,22 +3955,23 @@ protected class Emit_ContinuationAssignment_3_1 extends AssignmentToken  {
 
 
 // ")"
-protected class Emit_RightParenthesisKeyword_4 extends KeywordToken  {
+protected class Emit_RightParenthesisKeyword_5 extends KeywordToken  {
 	
-	public Emit_RightParenthesisKeyword_4(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
+	public Emit_RightParenthesisKeyword_5(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
 		super(lastRuleCallOrigin, next, transitionIndex, eObjectConsumer);
 	}
 	
 	@Override
 	public Keyword getGrammarElement() {
-		return grammarAccess.getEmitAccess().getRightParenthesisKeyword_4();
+		return grammarAccess.getEmitAccess().getRightParenthesisKeyword_5();
 	}
 
     @Override
 	public AbstractToken createFollower(int index, IEObjectConsumer inst) {
 		switch(index) {
-			case 0: return new Emit_Group_3(lastRuleCallOrigin, this, 0, inst);
-			case 1: return new Emit_SignalAssignment_2(lastRuleCallOrigin, this, 1, inst);
+			case 0: return new Emit_Group_4(lastRuleCallOrigin, this, 0, inst);
+			case 1: return new Emit_Group_3(lastRuleCallOrigin, this, 1, inst);
+			case 2: return new Emit_SignalAssignment_2(lastRuleCallOrigin, this, 2, inst);
 			default: return null;
 		}	
 	}

@@ -774,16 +774,21 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cSignalSignalIDTerminalRuleCall_2_0_1 = (RuleCall)cSignalSignalCrossReference_2_0.eContents().get(1);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cCommaKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cContinuationAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final CrossReference cContinuationContinuationCrossReference_3_1_0 = (CrossReference)cContinuationAssignment_3_1.eContents().get(0);
-		private final RuleCall cContinuationContinuationIDTerminalRuleCall_3_1_0_1 = (RuleCall)cContinuationContinuationCrossReference_3_1_0.eContents().get(1);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cValueAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final CrossReference cValueExpressionCrossReference_3_1_0 = (CrossReference)cValueAssignment_3_1.eContents().get(0);
+		private final RuleCall cValueExpressionIDTerminalRuleCall_3_1_0_1 = (RuleCall)cValueExpressionCrossReference_3_1_0.eContents().get(1);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cCommaKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cContinuationAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final CrossReference cContinuationContinuationCrossReference_4_1_0 = (CrossReference)cContinuationAssignment_4_1.eContents().get(0);
+		private final RuleCall cContinuationContinuationIDTerminalRuleCall_4_1_0_1 = (RuleCall)cContinuationContinuationCrossReference_4_1_0.eContents().get(1);
+		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//Emit:
-		//	"Emit" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")";
+		//	"Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")";
 		public ParserRule getRule() { return rule; }
 
-		//"Emit" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")"
+		//"Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")"
 		public Group getGroup() { return cGroup; }
 
 		//"Emit"
@@ -801,23 +806,38 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 		//ID
 		public RuleCall getSignalSignalIDTerminalRuleCall_2_0_1() { return cSignalSignalIDTerminalRuleCall_2_0_1; }
 
-		//("," continuation=[Continuation])?
+		//("," value=[expressions::Expression])?
 		public Group getGroup_3() { return cGroup_3; }
 
 		//","
 		public Keyword getCommaKeyword_3_0() { return cCommaKeyword_3_0; }
 
-		//continuation=[Continuation]
-		public Assignment getContinuationAssignment_3_1() { return cContinuationAssignment_3_1; }
+		//value=[expressions::Expression]
+		public Assignment getValueAssignment_3_1() { return cValueAssignment_3_1; }
 
-		//[Continuation]
-		public CrossReference getContinuationContinuationCrossReference_3_1_0() { return cContinuationContinuationCrossReference_3_1_0; }
+		//[expressions::Expression]
+		public CrossReference getValueExpressionCrossReference_3_1_0() { return cValueExpressionCrossReference_3_1_0; }
 
 		//ID
-		public RuleCall getContinuationContinuationIDTerminalRuleCall_3_1_0_1() { return cContinuationContinuationIDTerminalRuleCall_3_1_0_1; }
+		public RuleCall getValueExpressionIDTerminalRuleCall_3_1_0_1() { return cValueExpressionIDTerminalRuleCall_3_1_0_1; }
+
+		//("," continuation=[Continuation])?
+		public Group getGroup_4() { return cGroup_4; }
+
+		//","
+		public Keyword getCommaKeyword_4_0() { return cCommaKeyword_4_0; }
+
+		//continuation=[Continuation]
+		public Assignment getContinuationAssignment_4_1() { return cContinuationAssignment_4_1; }
+
+		//[Continuation]
+		public CrossReference getContinuationContinuationCrossReference_4_1_0() { return cContinuationContinuationCrossReference_4_1_0; }
+
+		//ID
+		public RuleCall getContinuationContinuationIDTerminalRuleCall_4_1_0_1() { return cContinuationContinuationIDTerminalRuleCall_4_1_0_1; }
 
 		//")"
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
 	}
 
 	public class AbortElements extends AbstractParserRuleElementFinder {
@@ -1181,7 +1201,7 @@ public class SGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//Emit:
-	//	"Emit" "(" signal=[expressions::Signal] ("," continuation=[Continuation])? ")";
+	//	"Emit" "(" signal=[expressions::Signal] ("," value=[expressions::Expression])? ("," continuation=[Continuation])? ")";
 	public EmitElements getEmitAccess() {
 		return (pEmit != null) ? pEmit : (pEmit = new EmitElements());
 	}
