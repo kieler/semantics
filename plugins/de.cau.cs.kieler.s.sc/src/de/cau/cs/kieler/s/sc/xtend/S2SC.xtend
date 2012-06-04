@@ -34,6 +34,8 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -351,7 +353,13 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
-   	'''EMIT(sig_«emitInstruction.signal.name»);'''
+   	if (emitInstruction.value != null) {
+	   	'''EMITINTADD(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»);'''
+   		
+   	}
+   	else {
+   		'''EMIT(sig_«emitInstruction.signal.name»);'''
+   	}
    }   
    
    // Expand fall back for other instructions do nothing.
@@ -444,6 +452,16 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    // Expand a signal.
    def dispatch expand(Signal signal) {
    	 '''PRESENT(sig_«signal.name»)'''
+   }
+
+   // Expand a int expression value.
+   def dispatch expand(IntValue expression) {
+   	 '''«expression.value.toString»'''
+   }
+
+   // Expand a float expression value.
+   def dispatch expand(FloatValue expression) {
+   	 '''«expression.value.toString»'''
    }
 
    // Expand a boolean expression value (true or false).
