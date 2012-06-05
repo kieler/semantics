@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
 /**
@@ -408,7 +409,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
+        KiemPropertyTypeWorkspaceFile fileProperty = new KiemPropertyTypeWorkspaceFile();
         fileProperty.setFilterExts(Constants.FILEEXTS);
         fileProperty.setFilterNames(Constants.FILEEXTNAMES);
         
