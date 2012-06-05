@@ -24,23 +24,27 @@ import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 
 /**
- * 
+ * This is a utility class for File inputs, opening and URL conversion of bundle and workspace
+ * files.
  * 
  * @author cmot
  * 
  */
 public final class KiemUtil {
 
+    // -------------------------------------------------------------------------
+
     /**
      * KiemUtil should not be instantiate.
      */
     private KiemUtil() {
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Checks if is bundle file.
@@ -53,13 +57,17 @@ public final class KiemUtil {
         return (fileAbsolute.toString().contains("bundleentry"));
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the plugin id to a given bundle file URL like
      * "bundleentry://189.fwk22643639/testdata/03-goodcycle.s".
-     *
-     * @param fileAbsolute the file absolute
+     * 
+     * @param fileAbsolute
+     *            the file absolute
      * @return the plugin id
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static String getPluginID(final URL fileAbsolute) throws IOException {
         // if bundle entry then just to string
@@ -75,6 +83,8 @@ public final class KiemUtil {
         }
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Open bundle or workspace file.
      * 
@@ -89,8 +99,10 @@ public final class KiemUtil {
         return openBundleOrWorkspaceFile(fileAbsolute, pluginID);
     }
 
+    // -------------------------------------------------------------------------
+
     /**
-     * Open a bundle or workspace file and return an InputStream.
+     * Open a bundle or workspace file and returns an InputStream.
      * 
      * @param fileAbsolute
      *            the file absolute
@@ -153,7 +165,8 @@ public final class KiemUtil {
         IPath fullPath = ifile.getLocation();
         // If we have spaces, try it like this...
         if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
+            org.eclipse.core.internal.resources.Resource resource = 
+                    (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
         return (getAbsoluteFilePath(fullPath));
