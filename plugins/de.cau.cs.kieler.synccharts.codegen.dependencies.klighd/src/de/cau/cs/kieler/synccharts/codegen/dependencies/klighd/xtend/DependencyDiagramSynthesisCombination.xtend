@@ -40,10 +40,10 @@ import java.util.List
  */
 class DependencyDiagramSynthesisCombination extends AbstractCombination {
 	
+    //	@Inject
+    //	extension Synccharts2Dependenies Synccharts2Dependenies
 	extension de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies Synccharts2Dependenies = 
-			Guice::createInjector().getInstance(typeof(Synccharts2Dependenies));
-//	@Inject
-//	extension Synccharts2Dependenies Synccharts2Dependenies
+			Guice::createInjector().getInstance(typeof(Synccharts2Dependenies))
 
 	// ------------------------------------------------------------------------------
 	
