@@ -72,8 +72,6 @@ terminal INT returns ecore::EInt: ('0'..'9')+;
 terminal AlphaNumSpecial:
     ('0'..'9')* ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*
 ;
-    
-
 
 terminal STRING : 
             '"' ( '\\' ('b'|'t'|'n'|'f'|'r'|'u'|'"'|"'"|'\\') | !('\\'|'"') )* '"' |
