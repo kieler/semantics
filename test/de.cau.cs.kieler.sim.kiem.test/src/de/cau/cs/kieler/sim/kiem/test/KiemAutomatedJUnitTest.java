@@ -64,6 +64,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The class KiemAutomatedJUnit enabled the integration of several KIEM execution runs into a JUNIT
@@ -634,7 +635,7 @@ public class KiemAutomatedJUnitTest {
      *            the model file path2
      */
     void openModelFile(URL modelFileUrl) {
-        this.modelFilePath = getAbsoluteFilePath(modelFileUrl);
+        this.modelFilePath = KiemUtil.getAbsoluteFilePath(modelFileUrl);
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
 
@@ -710,32 +711,6 @@ public class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
     
     /**
-     * Open a bundle or workspace file and return an InputStream.
-     *
-     * @param fileAbsolute the file absolute
-     * @return the input stream
-     * @throws IOException Signals that an I/O exception has occurred.
-     */
-    InputStream openBundleOrWorkspaceFile(URL fileAbsolute) throws IOException {
-        // if bundle entry then just to string
-        if (fileAbsolute.toString().contains("bundleentry")) {
-            // resolve relative workspace paths
-            URIConverter uriConverter = new ExtensibleURIConverterImpl();
-            String fileString = this.getPluginId() + fileAbsolute.getFile();
-            org.eclipse.emf.common.util.URI fileURI = org.eclipse.emf.common.util.URI.createPlatformPluginURI(fileString, false);
-            InputStream inputStream = uriConverter.createInputStream(fileURI);
-            return inputStream;
-        }
-        else {
-            FileInputStream fis;
-            fis = new FileInputStream(fileAbsolute.getFile());
-            return fis;
-        }
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
      * Gets the number of traces.
      * 
      * @param esoFileAbsolute
@@ -744,7 +719,7 @@ public class KiemAutomatedJUnitTest {
      */
     int getNumberOfTraces(URL esoFileAbsolute) {
         try {
-            InputStream inputStream = openBundleOrWorkspaceFile(esoFileAbsolute);
+            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileAbsolute, this.getPluginId());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             int number = 0;
@@ -834,69 +809,4 @@ public class KiemAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Gets the absolute file path.
-     * 
-     * @param url
-     *            the url
-     * @return the absolute file path
-     */
-    String getAbsoluteFilePath(URL url) {
-        // if bundle entry then just to string
-        if (url.toString().contains("bundleentry")) {
-            return url.toString();
-        }
-        IPath urlPath = new Path(url.getFile());
-        return getAbsoluteFilePath(urlPath);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the absolute file path.
-     * 
-     * @param file
-     *            the file
-     * @return the absolute file path
-     */
-    // To resolve references to locations outside the workspace
-    // org.eclipse.core.internal.resources.Resource seems to be needed.
-    // Is there a better alternative? -> "restriction"
-    @SuppressWarnings({ "restriction" })
-    String getAbsoluteFilePath(IFile ifile) {
-        IPath fullPath = ifile.getLocation();
-        // If we have spaces, try it like this...
-        if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
-            fullPath = resource.getLocalManager().locationFor(resource);
-        }
-        return (getAbsoluteFilePath(fullPath));
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the absolute file path.
-     * 
-     * @param ipath
-     *            the ipath
-     * @return the absolute file path
-     */
-    String getAbsoluteFilePath(IPath ipath) {
-        // if bundle entry then just to string
-        if (ipath.toString().contains("bundleentry")) {
-            return ipath.toString();
-        }
-        // Ensure it is absolute
-        ipath.makeAbsolute();
-        java.io.File javaFile = new File(ipath.toString().replaceAll("%20", " "));
-        if (javaFile.exists()) {
-            String fileString = javaFile.getAbsolutePath();
-            return fileString;
-        }
-        // Something went wrong, we could not resolve the file location
-        return null;
-    }
-
-    // -------------------------------------------------------------------------
 }
