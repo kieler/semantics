@@ -70,7 +70,7 @@ terminal FLOAT returns ecore::EFloat:
 terminal INT returns ecore::EInt: ('0'..'9')+;
 
 terminal AlphaNumSpecial:
-    ('0'..'9')* ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | ' ' | Special)*
+    ('0'..'9')* ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*
 ;
     
 
