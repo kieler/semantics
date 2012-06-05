@@ -18,14 +18,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IWorkspaceRoot;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.osgi.framework.Bundle;
+
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
 /**
  * This is a utility class for File inputs, opening and URL conversion of bundle and workspace
@@ -149,6 +158,93 @@ public final class KiemUtil {
     }
 
     // -------------------------------------------------------------------------
+    /**
+     * Creates the URL from string and try no normalize backslashes.
+     *
+     * @param fileLocation the file location
+     * @return the uRL
+     */
+//    public static URL createURLfromWorkspaceRelativeString(final String urlString)
+//            throws MalformedURLException {
+//        String fileSeparator = System.getProperty("file.separator");
+//        String urlString2 = urlString.replaceAll("\\\\", "/"); // as \ is an escape character in
+//                                                               // a String AND a RegEx
+//        Path path = new Path(urlString);
+//        path.URL returnURL = new URL(urlString2);
+//        return returnURL;
+//    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resolve a bundle or workspace file from a String representation. If it starts with a
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look
+     * relative to the KIEM plugin and then in the current workspace.
+     * 
+     * @param fileLocation
+     *            the file location
+     * @return the uRL
+     * @throws URISyntaxException 
+     * @throws MalformedURLException 
+     */
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation) throws MalformedURLException, URISyntaxException {
+        String pluginID = KiemPlugin.PLUGIN_ID;
+        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resolve a bundle or workspace file from a String representation. If it starts with a
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look
+     * relative to the bundle/plugin and then in the bundles current workspace.
+     *
+     * @param fileLocation the file location
+     * @param pluginID the plugin id
+     * @return the uRL
+     * @throws MalformedURLException the malformed url exception
+     * @throws URISyntaxException the uRI syntax exception
+     */
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID) 
+            throws MalformedURLException, URISyntaxException {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        
+        // as \ is an escape character in a String AND a RegEx
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/"); 
+
+        URL fileURL = null;
+        if (fileLocation2.contains("bundleentry")) {
+            // already resolved bundle file
+            try {
+                fileURL = new URI(fileLocation2).toURL();
+            } catch (Exception e) {
+                // ignore errors
+            }
+        } else {
+            // if the bundle is not ready then there is no image
+            final Bundle bundle = Platform.getBundle(pluginID);
+
+            // first try to resolve bundle files (give preference to bundle files)
+            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation2),
+                    null);
+            // then try to resolve workspace files
+            if (fileURL == null) {
+                fileURL = bundle.getResource(fileLocation2);
+            }
+            
+            // try to resolve workspace files as absolute files
+            if (fileURL == null) {
+                IFile file = myWorkspaceRoot.getFile(new Path(fileLocation2));
+                String fileString = myWorkspaceRoot
+                        .getFile(file.getFullPath()).getLocation()
+                        .toString();  
+                fileURL = new URI("file://" + fileString).toURL();
+            }
+        }
+        return fileURL;
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the absolute file path.
@@ -165,8 +261,7 @@ public final class KiemUtil {
         IPath fullPath = ifile.getLocation();
         // If we have spaces, try it like this...
         if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = 
-                    (org.eclipse.core.internal.resources.Resource) ifile;
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
         return (getAbsoluteFilePath(fullPath));
