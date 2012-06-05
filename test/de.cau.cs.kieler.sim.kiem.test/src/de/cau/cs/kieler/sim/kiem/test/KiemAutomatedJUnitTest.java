@@ -44,6 +44,8 @@ import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.content.IContentType;
+import org.eclipse.emf.ecore.resource.URIConverter;
+import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
@@ -222,9 +224,9 @@ public class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        if (true) {
-            return;
-        }
+//        if (true) {
+//            return;
+//        }
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
@@ -706,6 +708,32 @@ public class KiemAutomatedJUnitTest {
     }
 
     // -------------------------------------------------------------------------
+    
+    /**
+     * Open a bundle or workspace file and return an InputStream.
+     *
+     * @param fileAbsolute the file absolute
+     * @return the input stream
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    InputStream openBundleOrWorkspaceFile(URL fileAbsolute) throws IOException {
+        // if bundle entry then just to string
+        if (fileAbsolute.toString().contains("bundleentry")) {
+            // resolve relative workspace paths
+            URIConverter uriConverter = new ExtensibleURIConverterImpl();
+            String fileString = this.getPluginId() + fileAbsolute.getFile();
+            org.eclipse.emf.common.util.URI fileURI = org.eclipse.emf.common.util.URI.createPlatformPluginURI(fileString, false);
+            InputStream inputStream = uriConverter.createInputStream(fileURI);
+            return inputStream;
+        }
+        else {
+            FileInputStream fis;
+            fis = new FileInputStream(fileAbsolute.getFile());
+            return fis;
+        }
+    }
+
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the number of traces.
@@ -715,19 +743,18 @@ public class KiemAutomatedJUnitTest {
      * @return the number of traces
      */
     int getNumberOfTraces(URL esoFileAbsolute) {
-        FileInputStream fis;
         try {
-            fis = new FileInputStream(esoFileAbsolute.getFile());
-            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            InputStream inputStream = openBundleOrWorkspaceFile(esoFileAbsolute);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             int number = 0;
-            while ((line = br.readLine()) != null) {
+            while ((line = bufferedReader.readLine()) != null) {
                 if (line.contains(ESO_FILE_RESET_TRACE_ID)) {
                     number++;
                 }
             }
-            br.close();
-            fis.close();
+            bufferedReader.close();
+            inputStream.close();
             return number;
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFileAbsolute
