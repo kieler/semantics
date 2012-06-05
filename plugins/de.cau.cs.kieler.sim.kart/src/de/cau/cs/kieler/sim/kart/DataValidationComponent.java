@@ -89,7 +89,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
     private List<HashMap<String, String>> simVariables;
 
     /**
-     * A map f all values of all simulated or recorded input signals in each step. Pushed here by
+     * A map of all values of all simulated or recorded input signals in each step. Pushed here by
      * the DataReplayComponent
      */
     private List<HashMap<String, Object>> recInputs;
