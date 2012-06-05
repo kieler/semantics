@@ -251,7 +251,7 @@ import de.cau.cs.kieler.core.kexpressions.BooleanValue
 	//	"_" + state.hashCode.toString;
 		if (state.isRootState())  {
 			if (state.regions.size > 1) {
-		   	"_" + state.id	
+		   		"L_" + state.id	
 			}
 			else {
 				"L"
