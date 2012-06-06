@@ -151,7 +151,8 @@ public final class KiemUtil {
      * @param fileAbsolute
      *            the file absolute
      * @return the resolved absolute file path
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static URL getResolvedAbsoluteFilePath(final URL fileAbsolute) throws IOException {
         URL resolvedFileAbsolute = FileLocator.resolve(fileAbsolute);
@@ -179,11 +180,14 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
     /**
      * Creates the URL from string and try no normalize backslashes.
-     *
-     * @param fileLocation the file location
+     * 
+     * @param fileLocation
+     *            the file location
      * @return the uRL
-     * @throws MalformedURLException the malformed url exception
-     * @throws URISyntaxException the uRI syntax exception
+     * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
      */
     // public static URL createURLfromWorkspaceRelativeString(final String urlString)
     // throws MalformedURLException {
@@ -288,8 +292,7 @@ public final class KiemUtil {
         IPath fullPath = ifile.getLocation();
         // If we have spaces, try it like this...
         if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = 
-                    (org.eclipse.core.internal.resources.Resource) ifile;
+            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
         return (getAbsoluteFilePath(fullPath));
@@ -323,15 +326,18 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
 
     /**
-     * Creates a linked workspace file and opens the corresponding project. If
-     * cleanProject is true, then the project will be deleted and re-created
-     * before.
-     *
-     * @param fullFilePathString the full file path string
-     * @param workspaceProjectName the workspace project name
-     * @param cleanProject the clean project
+     * Creates a linked workspace file and opens the corresponding project. If cleanProject is true,
+     * then the project will be deleted and re-created before.
+     * 
+     * @param fullFilePathString
+     *            the full file path string
+     * @param workspaceProjectName
+     *            the workspace project name
+     * @param cleanProject
+     *            the clean project
      * @return the i file
-     * @throws CoreException the core exception
+     * @throws CoreException
+     *             the core exception
      */
     public static IFile createLinkedWorkspaceFile(final String fullFilePathString,
             final String workspaceProjectName, final boolean cleanProject) throws CoreException {
@@ -364,5 +370,22 @@ public final class KiemUtil {
     }
 
     // -------------------------------------------------------------------------
-
+    /**
+     * Gets the input model as uri.
+     *
+     * @param fileString the file string
+     * @return the input model as uri
+     */
+    public static org.eclipse.emf.common.util.URI getFileStringAsEMFURI(String fileString) {
+        if (fileString == null) {
+            return null;
+        }
+        if (!fileString.startsWith("file://")) {
+            fileString = "file://" + fileString;
+        }
+        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(fileString
+                .replaceAll(" ", "%20").replace("\\", "/"));
+        return uri;
+    }
+    // -------------------------------------------------------------------------
 }
