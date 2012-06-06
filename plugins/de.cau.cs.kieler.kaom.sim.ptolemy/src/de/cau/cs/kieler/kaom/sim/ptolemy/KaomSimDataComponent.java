@@ -50,7 +50,7 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -596,7 +596,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
     @Override
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[2];
-        properties[0] = new KiemProperty("Kaom Editor", new KiemPropertyTypeEditor(), "");
+        properties[0] = new KiemProperty("Kaom Editor", new KiemPropertyTypeModel(), "");
         properties[1] = new KiemProperty("Recursive", false);
         return properties;
     }
