@@ -566,7 +566,7 @@ public class KiemAutomatedJUnitTest {
         IFile[] files = workspace.getRoot().findFilesForLocationURI(fileStore.toURI());
         // files= filterNonExistentFiles(files);
         if (files == null || files.length == 0)
-            return null;
+            return  workspace.getRoot().getFile(new Path(fileStore.toString()));
         if (files.length == 1)
             return files[0];
         return (IFile) files[0];
@@ -617,9 +617,16 @@ public class KiemAutomatedJUnitTest {
      * 
      * @param modelFilePath2
      *            the model file path2
+     * @throws  
      */
-    void openModelFile(URL modelFileUrl) {
-        this.modelFilePath = KiemUtil.getAbsoluteFilePath(modelFileUrl);
+    void openModelFile(URL modelFileUrl)  {
+        try {
+            this.modelFilePath = KiemUtil.getAbsoluteFilePath(KiemUtil.getResolvedAbsoluteFilePath(modelFileUrl));
+        } catch (IOException e1) {
+            throw new RuntimeException(
+                    "Cannot open model file:'"
+                            + modelFileUrl + "'.");
+        }
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
 
@@ -647,6 +654,10 @@ public class KiemAutomatedJUnitTest {
                         // bla
                     }
 
+                } else {
+                    throw new RuntimeException(
+                            "Cannot open model file:'"
+                                    + modelFilePath + "'.");
                 }
 
                 // try {
