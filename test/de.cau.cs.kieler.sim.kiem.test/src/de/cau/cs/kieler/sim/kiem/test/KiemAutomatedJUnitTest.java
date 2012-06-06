@@ -460,7 +460,9 @@ public class KiemAutomatedJUnitTest {
                 traceProperty.setValue(traceNumber + "");
                 // now run the execution stepwise until it has stopped
 
+                pause();
                 if (kiemPlugin.initExecution()) {
+                    pause();
                     Execution execution = kiemPlugin.getExecution();
                     if (execution == null) {
                         throw new RuntimeException(
@@ -533,6 +535,11 @@ public class KiemAutomatedJUnitTest {
                         tick++;
                     } // while executing
                 } // init execution
+                else {
+                    throw new RuntimeException(
+                            "KIEM cannot initialize execution. Try to do this manually for the following scheduling file:'"
+                                    + executionFile + "'. Error message: "+ KiemPlugin.getLastError());
+                }
 
                 // if an error occurred, do not proceed with the next trace!
                 if (errorFlag) {
@@ -651,6 +658,9 @@ public class KiemAutomatedJUnitTest {
                             .findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
                 }
                 String editorId = getEditorId(modelFilePathString);
+
+                // Close all other editors
+                page.closeAllEditors(false);
 
                 // Try to open as workspace file
                 IEditorInput input = createEditorInput(modelFilePathString);
