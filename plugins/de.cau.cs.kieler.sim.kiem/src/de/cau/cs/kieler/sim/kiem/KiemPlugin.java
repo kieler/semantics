@@ -21,26 +21,28 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-//import org.eclipse.osgi.service.debug.DebugOptions;
-//import org.eclipse.osgi.framework.debug.FrameworkDebugOptions;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISaveablePart2;
 import org.eclipse.ui.IWorkbenchPage;
@@ -50,9 +52,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Bundle;
-import org.eclipse.core.runtime.FileLocator;
+import org.osgi.framework.BundleContext;
+
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.InitializeExecution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -149,6 +151,18 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The last error. */
     private static String lastError = null;
 
+    /** The current model file. */
+    private static IPath currentModelFile = null;
+    
+    /** The opened model files. */
+    private static List<IPath> openedModelFiles = new LinkedList<IPath>();
+    
+    /** A mapping between model files and model editors. */
+    private static HashMap<IPath, IEditorPart> openedModelEditors = new HashMap<IPath, IEditorPart>();
+    
+    /** A mapping between model files and model root EObjects. */
+    private static HashMap<IPath, EObject> openedModelRootObjects = new HashMap<IPath, EObject>();
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -532,7 +546,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                 fileName = KiemPlugin.getDefault().getCurrentFile().toFile().getName();
             }
 
-            // FIXME: Is there a default dialog for this?
             String[] buttons = { "Yes", "No", "Cancel" };
 
             MessageDialog dlg = new MessageDialog(parentShell, "Save Execution", null, "'"
@@ -1030,7 +1043,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                         .notify(new KiemEvent(KiemEvent.SAVE, getCurrentFile()));
             }
         } catch (IOException e) {
-            // TODO: error behavior
             e.printStackTrace();
         }
         setDirty(false);
@@ -1631,4 +1643,59 @@ public class KiemPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
-}
+
+    /**
+     * Gets the current model file.
+     *
+     * @return the current model file
+     */
+    public static IPath getCurrentModelFile() {
+        return currentModelFile;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the current model file.
+     *
+     * @param currentModelFile the new current model file
+     */
+    public static void setCurrentModelFile(final IPath currentModelFile) {
+        KiemPlugin.currentModelFile = currentModelFile;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model files.
+     *
+     * @return the opened model files
+     */
+    public static List<IPath> getOpenedModelFiles() {
+        return openedModelFiles;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model editors.
+     *
+     * @return the opened model editors
+     */
+    public static HashMap<IPath, IEditorPart> getOpenedModelEditors() {
+        return openedModelEditors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model root objects.
+     *
+     * @return the opened model root objects
+     */
+    public static HashMap<IPath, EObject> getOpenedModelRootObjects() {
+        return openedModelRootObjects;
+    }
+
+    // -------------------------------------------------------------------------
+}    

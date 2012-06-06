@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.properties;
 
 import java.util.StringTokenizer;
 
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.viewers.CellEditor;
 import org.eclipse.jface.viewers.ComboBoxCellEditor;
@@ -28,6 +29,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
+
 /**
  * The Class KiemPropertyTypeEditor. This implements a sample KiemPropertyType that uses a displays
  * a list of all open editors to choose from.
@@ -36,7 +39,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * @kieler.rating 2009-01-15 yellow
  * 
  */
-public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPropertyType {
+public class KiemPropertyTypeModel extends KiemPropertyType implements IKiemPropertyType {
 
     /** The Constant PROPERTY_CHOICE. */
     private static final Image PROPERTY_CHOICE = AbstractUIPlugin.imageDescriptorFromPlugin(
@@ -50,7 +53,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     /**
      * Instantiates a new KiemPropertyType editor.
      */
-    public KiemPropertyTypeEditor() {
+    public KiemPropertyTypeModel() {
         super();
     }
 
@@ -66,7 +69,9 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
     @Override
     public CellEditor provideCellEditor(final Composite parent) {
         refreshItems();
-        return new ComboBoxCellEditor(parent, items, SWT.Deactivate);
+        EditableComboBoxCellEditor cellEditor = (new EditableComboBoxCellEditor(parent, items, SWT.Activate));
+        //cellEditor.s
+        return cellEditor;
     }
 
     // -------------------------------------------------------------------------
@@ -76,22 +81,12 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
      * items list for the drop down list.
      */
     public void refreshItems() {
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        IEditorReference[] editors = page.getEditorReferences();
-        if ((editors == null) || (editors.length == 0)) {
-            this.items = new String[0];
-            return;
+        this.items = new String[KiemPlugin.getOpenedModelFiles().size() + 1];
+        int c = 0;
+        this.items[c++] = "[ACTIVE MODEL]";
+        for (IPath modelFilePath : KiemPlugin.getOpenedModelFiles()) {
+            this.items[c++] = modelFilePath.toString();
         }
-        String[] itemsTmp = new String[editors.length + 1];
-        itemsTmp[0] = ""; // dummy for NO editor
-        for (int c = 0; c < editors.length; c++) {
-            try {
-                itemsTmp[c + 1] = editors[c].getTitle() + " (" + editors[c].getId() + ")";
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        this.items = itemsTmp;
     }
 
     // -------------------------------------------------------------------------
@@ -104,61 +99,10 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
      * {@inheritDoc}
      */
     public Object getValue(final KiemProperty property) {
-        if ((items == null) || (items.length == 0)) {
-            return 0;
-        }
-        for (int c = 0; c < items.length; c++) {
-            if (property.getValue().equals(items[c])) {
-                return c;
-            }
-        }
-        return 0; // default is the first item
+        return property.getValue();
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the DiagramEditor selected in the KiemProperty.
-     * 
-     * @param property
-     *            the KiemProperty
-     * 
-     * @return the DiagramEditor
-     */
-    public DiagramEditor getValueAsDiagramEditor(final KiemProperty property) {
-        String kiemEditorProperty = property.getValue();
-        DiagramEditor noDiagramEditor = null;
-
-        // only check non-empty and valid property (this is optional)
-        if (!kiemEditorProperty.equals("")) {
-            if ((kiemEditorProperty == null) || (kiemEditorProperty.length() == 0)) {
-                return null;
-            }
-
-            StringTokenizer tokenizer = new StringTokenizer(kiemEditorProperty, " ()");
-            if (tokenizer.hasMoreTokens()) {
-                String fileString = tokenizer.nextToken();
-                String editorString = tokenizer.nextToken();
-
-                IEditorReference[] editorRefs = PlatformUI.getWorkbench()
-                        .getActiveWorkbenchWindow().getActivePage().getEditorReferences();
-                for (int i = 0; i < editorRefs.length; i++) {
-                    if (editorRefs[i].getId().equals(editorString)) {
-                        IEditorPart editor = editorRefs[i].getEditor(true);
-                        if (editor instanceof DiagramEditor) {
-                            // test if correct file
-                            if (fileString.equals(editor.getTitle())) {
-                                return (DiagramEditor) editor;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return noDiagramEditor;
-    }
-
-    // -------------------------------------------------------------------------
+     // -------------------------------------------------------------------------
 
     /**
      * This method bridges String names values (encoded as Strings in property) to int of the
@@ -167,11 +111,7 @@ public class KiemPropertyTypeEditor extends KiemPropertyType implements IKiemPro
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty property, final Object value) {
-        if ((items == null) || (items.length == 0)) {
-            return;
-        }
-        String item = items[Integer.parseInt((String) value)];
-        property.setValue(item);
+        property.setValue((String) value);
     }
 
     // -------------------------------------------------------------------------
