@@ -230,9 +230,9 @@ public class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        // if (true) {
-        // return;
-        // }
+        if (true) {
+             return;
+        }
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
@@ -638,6 +638,7 @@ public class KiemAutomatedJUnitTest {
      * @throws
      */
     void openModelFile(URL modelFileUrl) {
+        System.out.println("opening model file");
         try {
             this.modelFilePathString = KiemUtil.getAbsoluteFilePath(KiemUtil
                     .getResolvedAbsoluteFilePath(modelFileUrl));
@@ -646,7 +647,9 @@ public class KiemAutomatedJUnitTest {
         }
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
+                System.out.println("opening model file 0");
                 IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                System.out.println("opening model file 1");
                 IWorkbenchPage page = win.getActivePage();
 
                 // Get the default editor and the editor ID
@@ -659,22 +662,30 @@ public class KiemAutomatedJUnitTest {
                 }
                 String editorId = getEditorId(modelFilePathString);
 
+                System.out.println("opening model file 2");
                 // Close all other editors
                 page.closeAllEditors(false);
+                System.out.println("opening model file 3");
 
                 // Try to open as workspace file
                 IEditorInput input = createEditorInput(modelFilePathString);
+                System.out.println("opening model file 4");
                 try {
                     if (input.exists()) {
+                        System.out.println("opening model file 5");
                         // If this exists then directly open it
                         page.openEditor(input, editorId);
+                        System.out.println("opening model file 6");
                     }
                     else {
+                        System.out.println("opening model file 5b");
                         // If it doesn't exist create a link in the workspace and open the link instead 
                         IFile file = KiemUtil.createLinkedWorkspaceFile(modelFilePathString,
                                 TEST_PROJECT_NAME, true);
                         input = createEditorInput(file.getFullPath().toFile().toString());
+                        System.out.println("opening model file 6b");
                         page.openEditor(input, editorId);
+                        System.out.println("opening model file 7b");
                     }
                 } catch (Exception e) {
                         e.printStackTrace();

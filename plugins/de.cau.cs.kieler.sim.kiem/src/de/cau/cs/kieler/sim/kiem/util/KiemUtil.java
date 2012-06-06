@@ -23,8 +23,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
-import org.eclipse.core.filesystem.EFS;
-import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
@@ -38,8 +36,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
-import org.eclipse.ui.IPathEditorInput;
-import org.eclipse.ui.internal.ide.dialogs.IFileStoreFilter;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -155,7 +151,7 @@ public final class KiemUtil {
      * @param fileAbsolute
      *            the file absolute
      * @return the resolved absolute file path
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public static URL getResolvedAbsoluteFilePath(final URL fileAbsolute) throws IOException {
         URL resolvedFileAbsolute = FileLocator.resolve(fileAbsolute);
@@ -183,10 +179,11 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
     /**
      * Creates the URL from string and try no normalize backslashes.
-     * 
-     * @param fileLocation
-     *            the file location
+     *
+     * @param fileLocation the file location
      * @return the uRL
+     * @throws MalformedURLException the malformed url exception
+     * @throws URISyntaxException the uRI syntax exception
      */
     // public static URL createURLfromWorkspaceRelativeString(final String urlString)
     // throws MalformedURLException {
@@ -208,8 +205,10 @@ public final class KiemUtil {
      * @param fileLocation
      *            the file location
      * @return the uRL
-     * @throws URISyntaxException
      * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
      */
     public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
             throws MalformedURLException, URISyntaxException {
@@ -289,7 +288,8 @@ public final class KiemUtil {
         IPath fullPath = ifile.getLocation();
         // If we have spaces, try it like this...
         if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
+            org.eclipse.core.internal.resources.Resource resource = 
+                    (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
         return (getAbsoluteFilePath(fullPath));
@@ -323,14 +323,15 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
 
     /**
-     * Creates the linked workspace file.
-     * 
-     * @param fullFilePathString
-     *            the full file path string
-     * @param workspaceProjectName
-     *            the workspace project name
+     * Creates a linked workspace file and opens the corresponding project. If
+     * cleanProject is true, then the project will be deleted and re-created
+     * before.
+     *
+     * @param fullFilePathString the full file path string
+     * @param workspaceProjectName the workspace project name
+     * @param cleanProject the clean project
      * @return the i file
-     * @throws CoreException 
+     * @throws CoreException the core exception
      */
     public static IFile createLinkedWorkspaceFile(final String fullFilePathString,
             final String workspaceProjectName, final boolean cleanProject) throws CoreException {
