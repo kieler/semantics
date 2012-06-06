@@ -46,6 +46,7 @@ import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
@@ -263,7 +264,7 @@ public class SyncchartsSimDataComponent extends
 //        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
 //                + ".moml").getAbsolutePath());
         
-        URI fileUri = getInputModelAsURI();
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
         // also support kits files
         String extension = ".kixs";
         if (!fileUri.toString().contains(extension)) {
@@ -286,7 +287,8 @@ public class SyncchartsSimDataComponent extends
 
         // EMF reader
         Reader emfReader = new Reader();
-        emfReader.setUri(this.getInputModelAsURI().toString());
+        URI fileInputUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
+        emfReader.setUri(fileInputUri.toString());
         emfReader.setModelSlot("emfmodel");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
         // OTHERWISE WE MAY CHANGE THE INPUT MODEL!
@@ -419,16 +421,16 @@ public class SyncchartsSimDataComponent extends
 
     // -------------------------------------------------------------------------
 
-    @Override
-    public URL resolveBundelFile(final String relativePath) {
-        Bundle bundle = Platform
-                .getBundle(SyncchartsSimPtolemyPlugin.PLUGIN_ID);
-        if (!BundleUtility.isReady(bundle)) {
-            return null;
-        }
-        URL fullPathString = BundleUtility.find(bundle, relativePath);
-        return fullPathString;
-    }
+//    @Override
+//    public URL resolveBundelFile(final String relativePath) {
+//        Bundle bundle = Platform
+//                .getBundle(SyncchartsSimPtolemyPlugin.PLUGIN_ID);
+//        if (!BundleUtility.isReady(bundle)) {
+//            return null;
+//        }
+//        URL fullPathString = BundleUtility.find(bundle, relativePath);
+//        return fullPathString;
+//    }
 
     // -------------------------------------------------------------------------
 
