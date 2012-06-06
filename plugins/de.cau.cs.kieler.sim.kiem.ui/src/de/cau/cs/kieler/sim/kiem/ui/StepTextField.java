@@ -71,6 +71,9 @@ public class StepTextField extends ControlContribution {
      *            the text to display in the text field
      */
     public void updateTextfield(final String text) {
+        if (textfield.isDisposed()) {
+            return;
+        }
         if (text == null) {
             // this.textfield.setVisible(false);
             this.textfield.setText(Messages.mStepTextFieldNoStep);

@@ -80,13 +80,17 @@ public class AimedStepDurationTextField extends ControlContribution implements
         if (enabled) {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
-                    textfield.setEnabled(true);
+                    if (!textfield.isDisposed()) {
+                        textfield.setEnabled(true);
+                    }
                 }
             });
         } else {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
-                    textfield.setEnabled(false);
+                    if (!textfield.isDisposed()) {
+                        textfield.setEnabled(false);
+                    }
                 }
             });
         }

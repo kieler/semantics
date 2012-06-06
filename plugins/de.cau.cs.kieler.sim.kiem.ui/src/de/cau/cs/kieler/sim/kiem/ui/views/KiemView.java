@@ -391,6 +391,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void refreshTableColumns(final boolean collapsed, final KiemTableViewer viewerParam) {
         Tree tree = viewerParam.getTree();
+        if (tree.isDisposed()) {
+            return;
+        }
         if (columnProperty == -1) {
             columnProperty = COLUMN_BOUNDS[1];
         } else {
