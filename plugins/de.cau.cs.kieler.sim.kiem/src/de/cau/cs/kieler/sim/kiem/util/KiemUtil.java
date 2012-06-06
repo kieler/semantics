@@ -142,6 +142,20 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
 
     /**
+     * Gets the resolved absolute file path.
+     *
+     * @param fileAbsolute the file absolute
+     * @return the resolved absolute file path
+     * @throws IOException 
+     */
+    public static URL getResolvedAbsoluteFilePath(final URL fileAbsolute) throws IOException {
+        URL resolvedFileAbsolute = FileLocator.resolve(fileAbsolute);
+        return resolvedFileAbsolute;
+    }
+    
+    // -------------------------------------------------------------------------
+
+    /**
      * Gets the absolute file path.
      * 
      * @param url
