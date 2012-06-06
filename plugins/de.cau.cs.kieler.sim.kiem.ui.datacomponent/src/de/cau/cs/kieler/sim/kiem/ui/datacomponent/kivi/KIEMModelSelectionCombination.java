@@ -104,14 +104,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         KiemPlugin.getOpenedModelEditors().clear();
         KiemPlugin.getOpenedModelRootObjects().clear();
 
-        IEditorReference[] editors = getEditorList();
+        IEditorPart[] editors = getEditorList();
         if ((editors == null) || (editors.length == 0)) {
             return;
         }
 
         // Go thru all editors
-        for (IEditorReference editor : editors) {
-            IEditorPart editorPart = editor.getEditor(true);
+        for (IEditorPart editorPart : editors) {
             IPath inputModelPath = getInputModelPath(editorPart);
             
             // this is the active editor if any
@@ -136,14 +135,14 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
     // -------------------------------------------------------------------------
     
     boolean doneGetEditorList = false;
-    IEditorReference[] editors = null;
+    IEditorPart[] editors = null;
     
     /**
      * Gets the editor list in the UI thread.
      *
      * @return the editor list
      */
-    IEditorReference[] getEditorList() {
+    IEditorPart[] getEditorList() {
         doneGetEditorList = false;
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
@@ -153,7 +152,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
                     if (workbenchWindow != null) {
                         IWorkbenchPage page = workbenchWindow.getActivePage();
                         if (page != null) {
-                            editors = page.getEditorReferences();
+                            IEditorReference[] editorReferences  = page.getEditorReferences();
+                            editors = new IEditorPart[editorReferences.length];
+                            int c = 0;
+                            for (IEditorReference editorReference : editorReferences) {
+                                IEditorPart editorPart = editorReference.getEditor(true);
+                                editors[c++] = editorPart;
+                            }
                         }
                     }
                 }
