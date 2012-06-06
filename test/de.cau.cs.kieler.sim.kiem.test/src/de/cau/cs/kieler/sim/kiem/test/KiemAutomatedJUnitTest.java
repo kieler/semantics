@@ -225,9 +225,9 @@ public class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-//        if (true) {
-//            return;
-//        }
+        if (true) {
+            return;
+        }
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
@@ -565,8 +565,11 @@ public class KiemAutomatedJUnitTest {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IFile[] files = workspace.getRoot().findFilesForLocationURI(fileStore.toURI());
         // files= filterNonExistentFiles(files);
-        if (files == null || files.length == 0)
-            return  workspace.getRoot().getFile(new Path(fileStore.toString()));
+        if (files == null || files.length == 0) {
+//            fileStore.
+//            return  workspace.getRoot(). (new Path(fileStore.toString()));
+          return  workspace.getRoot().getFile(new Path(fileStore.toString()));
+        }
         if (files.length == 1)
             return files[0];
         return (IFile) files[0];
@@ -646,7 +649,7 @@ public class KiemAutomatedJUnitTest {
                 IFileStore fileStore = EFS.getLocalFileSystem().getStore(modelFilePath2);
                 // fileStore = fileStore.getChild(names[i]);
                 if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
-                    IEditorInput input = createEditorInput(fileStore);
+                    IEditorInput  input = createEditorInput(fileStore);
                     String editorId = getEditorId(fileStore);
                     try {
                         page.openEditor(input, editorId);
