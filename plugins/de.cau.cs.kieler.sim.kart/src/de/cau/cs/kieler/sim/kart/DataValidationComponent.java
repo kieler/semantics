@@ -157,7 +157,7 @@ public class DataValidationComponent extends JSONObjectSimulationDataComponent i
         recInputs = new LinkedList<HashMap<String, Object>>();
 
         try {
-            editor = (DiagramEditor) getActivePage().getActiveEditor();
+            editor = (DiagramEditor) this.getModelEditor();
         } catch (Exception e) {
             editor = null;
         }
