@@ -14,19 +14,11 @@
 
 package de.cau.cs.kieler.sim.kiem.properties;
 
-import java.util.StringTokenizer;
-
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.viewers.CellEditor;
-import org.eclipse.jface.viewers.ComboBoxCellEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.IEditorReference;
-import org.eclipse.ui.IWorkbenchPage;
-import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -44,6 +36,9 @@ public class KiemPropertyTypeModel extends KiemPropertyType implements IKiemProp
     /** The Constant PROPERTY_CHOICE. */
     private static final Image PROPERTY_CHOICE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyEditorIcon.png").createImage();
+    
+    /** The String constant indicating the selection of the active editor. */
+    public static final String ACTIVE_EDITOR = "[ACTIVE EDITOR]";
 
     /** The editor items. */
     private String[] items;
@@ -69,7 +64,8 @@ public class KiemPropertyTypeModel extends KiemPropertyType implements IKiemProp
     @Override
     public CellEditor provideCellEditor(final Composite parent) {
         refreshItems();
-        EditableComboBoxCellEditor cellEditor = (new EditableComboBoxCellEditor(parent, items, SWT.Activate));
+        EditableComboBoxCellEditor cellEditor =
+                (new EditableComboBoxCellEditor(parent, items, SWT.Activate));
         //cellEditor.s
         return cellEditor;
     }
@@ -83,7 +79,7 @@ public class KiemPropertyTypeModel extends KiemPropertyType implements IKiemProp
     public void refreshItems() {
         this.items = new String[KiemPlugin.getOpenedModelFiles().size() + 1];
         int c = 0;
-        this.items[c++] = "[ACTIVE MODEL]";
+        this.items[c++] = ACTIVE_EDITOR;
         for (IPath modelFilePath : KiemPlugin.getOpenedModelFiles()) {
             this.items[c++] = modelFilePath.toString();
         }
