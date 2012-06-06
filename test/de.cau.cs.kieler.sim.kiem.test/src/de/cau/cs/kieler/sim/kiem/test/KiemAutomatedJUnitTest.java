@@ -460,10 +460,14 @@ public class KiemAutomatedJUnitTest {
                 traceProperty.setValue(traceNumber + "");
                 // now run the execution stepwise until it has stopped
 
+                System.out.println("opening model file A 0");
                 pause();
+                System.out.println("opening model file A 1");
                 if (kiemPlugin.initExecution()) {
+                    System.out.println("opening model file A 2");
                     pause();
                     Execution execution = kiemPlugin.getExecution();
+                    System.out.println("opening model file A 3");
                     if (execution == null) {
                         throw new RuntimeException(
                                 "KIEM cannot start execution. Try to do this manually for the following scheduling file:'"
