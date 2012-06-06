@@ -30,16 +30,15 @@ import de.cau.cs.kieler.sim.kiem.Messages;
 import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 
 /**
- * The Class AimedStepDurationTextField. This is the GUI component that shows
- * the currently set aimed step duration for the execution. It can also be used
- * to edit this duration.
+ * The Class AimedStepDurationTextField. This is the GUI component that shows the currently set
+ * aimed step duration for the execution. It can also be used to edit this duration.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
-public class AimedStepDurationTextField extends ControlContribution implements
-        KeyListener, FocusListener {
+public class AimedStepDurationTextField extends ControlContribution implements KeyListener,
+        FocusListener {
 
     /** The SWT text field. */
     private Text textfield;
@@ -66,8 +65,8 @@ public class AimedStepDurationTextField extends ControlContribution implements
     // -------------------------------------------------------------------------
 
     /**
-     * Enables or disables the text field. Only sets the status if there already
-     * is a text field created by the GUI createControl.
+     * Enables or disables the text field. Only sets the status if there already is a text field
+     * created by the GUI createControl.
      * 
      * @param enabledParam
      *            the new status of the enableness
@@ -158,17 +157,16 @@ public class AimedStepDurationTextField extends ControlContribution implements
      */
     public void focusLost(final FocusEvent e) {
         updateDuration();
-        textfield.setText("" + kIEM.getAimedStepDuration()
-                + Messages.mDurationTextFieldSuffix);
+        textfield.setText("" + kIEM.getAimedStepDuration() + Messages.mDurationTextFieldSuffix);
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the step duration. This methods also checks the bounds and it
-     * checks if a valid integer has been entered. In case the bounds are not
-     * met or the user entered an invalid integer number, the duration is not
-     * updated and the text field is set back to the initial value.
+     * Updates the step duration. This methods also checks the bounds and it checks if a valid
+     * integer has been entered. In case the bounds are not met or the user entered an invalid
+     * integer number, the duration is not updated and the text field is set back to the initial
+     * value.
      */
     private void updateDuration() {
         if (textfield == null) {
@@ -180,16 +178,14 @@ public class AimedStepDurationTextField extends ControlContribution implements
 
             int aimedStepDuration = Integer.parseInt(text.trim());
             if (aimedStepDuration < KiemPlugin.AIMED_STEP_DURATION_MIN) {
-                throw (new NumberFormatException(
-                        Messages.mWarningDurationTooSmall
-                                + KiemPlugin.AIMED_STEP_DURATION_MIN
-                                + Messages.mDurationTextFieldSuffix + "!"));
+                throw (new NumberFormatException(Messages.mWarningDurationTooSmall
+                        + KiemPlugin.AIMED_STEP_DURATION_MIN + Messages.mDurationTextFieldSuffix
+                        + "!"));
             }
             if (aimedStepDuration > KiemPlugin.AIMED_STEP_DURATION_MAX) {
-                throw (new NumberFormatException(
-                        Messages.mWarningDurationTooLarge
-                                + KiemPlugin.AIMED_STEP_DURATION_MAX
-                                + Messages.mDurationTextFieldSuffix + "!"));
+                throw (new NumberFormatException(Messages.mWarningDurationTooLarge
+                        + KiemPlugin.AIMED_STEP_DURATION_MAX + Messages.mDurationTextFieldSuffix
+                        + "!"));
             }
             kIEM.setAimedStepDuration(aimedStepDuration);
         } catch (NumberFormatException e) {
@@ -201,10 +197,11 @@ public class AimedStepDurationTextField extends ControlContribution implements
 
     @Override
     public void update() {
-        // reserve some amount of space and declare default value
-        textfield.setText(KiemPlugin.getDefault().getAimedStepDuration()
-                + Messages.mDurationTextFieldSuffix
-                + Messages.mDurationTextFieldReserveSpace);
+        if (!textfield.isDisposed()) {
+            // reserve some amount of space and declare default value
+            textfield.setText(KiemPlugin.getDefault().getAimedStepDuration()
+                    + Messages.mDurationTextFieldSuffix + Messages.mDurationTextFieldReserveSpace);
+        }
         super.update();
     }
 
