@@ -230,9 +230,9 @@ public class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-//        if (true) {
-//             return;
-//        }
+        if (true) {
+             return;
+        }
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
