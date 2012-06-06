@@ -145,6 +145,9 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /** The no error output. */
     private boolean forceNoErrorOutput = false;
+    
+    /** The last error. */
+    private static String lastError = null;
 
     // -------------------------------------------------------------------------
 
@@ -166,6 +169,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.currentMaster = null;
         this.currentFile = null;
         initializeExecution = null;
+        lastError = null;
     }
 
     // -------------------------------------------------------------------------
@@ -1540,6 +1544,7 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         if (isForceNoErrorOutput()) {
+            KiemPlugin.lastError = pluginID + ":" + textMessage;
             return;
         }
         try {
@@ -1604,4 +1609,26 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.forceNoErrorOutput = forceNoErrorOutput;
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the last error.
+     *
+     * @return the last error
+     */
+    public static String getLastError() {
+        return lastError;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resets the last error.
+     *
+     */
+    public static void resetLastError() {
+        KiemPlugin.lastError = null;
+    }
+
+    // -------------------------------------------------------------------------
 }
