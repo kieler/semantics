@@ -614,13 +614,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         String compile = "";
 
         try {
-            // Get active editor
-            IEditorPart editorPart = this.getInputEditor();
-            if (editorPart == null) {
-                throw new KiemInitializationException("No active editor selected!", true, null);
-            }
 
-            myModel = (Program) this.getInputModelEObject(editorPart);
+            myModel = (Program) this.getModelRootElement();
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -645,8 +640,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             }
 
             // Calculate output path
-            FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
-            URI input = URI.createPlatformResourceURI(editorInput.getFile().getFullPath()
+            URI input = URI.createPlatformResourceURI(this.getModelFilePath()
                     .toString(), true);
 
             esterelOutput = URI.createURI(input.toString());

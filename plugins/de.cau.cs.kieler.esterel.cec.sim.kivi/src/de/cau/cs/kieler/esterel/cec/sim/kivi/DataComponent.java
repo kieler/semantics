@@ -506,9 +506,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @throws KiemInitializationException
      */
     private XtextEditor getEsterelEditor() throws KiemInitializationException {
-        IEditorPart editorPart = this.getInputEditor();
-
-        if (editorPart instanceof XtextEditor) {
+        IEditorPart editorPart = this.getModelEditor();
+        if ((editorPart != null) &&
+            (editorPart instanceof XtextEditor)) {
             XtextEditor xtextEditor = (XtextEditor) editorPart;
 
             if (xtextEditor.getDocument() instanceof XtextDocument
