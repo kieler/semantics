@@ -302,13 +302,15 @@ public class KiemAutomatedJUnitTest {
         // Figure out execution file path and try to load it with KIEM
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         try {
-            URL executionFileURL = resolveBundleOrWorkspaceFile(executionFile);
+            URL executionFileURL =  KiemUtil.resolveBundleOrWorkspaceFile(executionFile, this.getPluginId());
             if (executionFileURL != null) {
                 kiemPlugin.openFile(new Path(executionFileURL.toString()), true);
             } else {
                 fail("Cannot find execution scheduling file '" + executionFile + "'.");
             }
         } catch (IOException e) {
+            fail("Cannot find execution scheduling file '" + executionFile + "'.");
+        } catch (URISyntaxException e) {
             fail("Cannot find execution scheduling file '" + executionFile + "'.");
         }
 
@@ -367,16 +369,22 @@ public class KiemAutomatedJUnitTest {
             // if model files are given then try to find corresponding eso
             // files and add both
             for (String modelFileName : modelFiles) {
-                URL modelFileUrl = resolveBundleOrWorkspaceFile(modelFileName);
-                if (modelFileUrl == null) {
-                    throw new RuntimeException("Model file:'" + modelFileName
-                            + "' can not be found but was specified to be tested.");
-                }
+                URL modelFileUrl = null;
+                URL esoFileUrl = null;
                 // can we finde an eso file for it?
                 int replacePosition = modelFileName.lastIndexOf(".");
                 String esoFileName = modelFileName.substring(0, replacePosition) + "."
                         + DEFAULT_ESO_FILE_EXTENSITION;
-                URL esoFileUrl = resolveBundleOrWorkspaceFile(esoFileName);
+                try {
+                    modelFileUrl = KiemUtil.resolveBundleOrWorkspaceFile(modelFileName, this.getPluginId());
+                    esoFileUrl =  KiemUtil.resolveBundleOrWorkspaceFile(esoFileName, this.getPluginId());
+                } catch (MalformedURLException e) {
+                } catch (URISyntaxException e) {
+                }
+                if (modelFileUrl == null) {
+                    throw new RuntimeException("Model file:'" + modelFileName
+                            + "' can not be found but was specified to be tested.");
+                }
                 if (esoFileUrl == null) {
                     throw new RuntimeException(
                             "Eso file:'"
@@ -601,30 +609,6 @@ public class KiemAutomatedJUnitTest {
     }
 
     // -------------------------------------------------------------------------
-
-    URL resolveBundleOrWorkspaceFile(String fileLocation) {
-        // if the bundle is not ready then there is no image
-        final Bundle bundle = Platform.getBundle(this.getPluginId());
-
-        URL fileURL = null;
-        if (fileLocation.contains("bundleentry")) {
-            // already resolved bundle file
-            try {
-                fileURL = new URI(fileLocation).toURL();
-            } catch (Exception e) {
-                // ignore errors
-            }
-        } else {
-            // first try to resolve bundle files (give preference to bundle files)
-            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation),
-                    null);
-            // then try to resolve workspace files
-            if (fileURL == null) {
-                fileURL = bundle.getResource(fileLocation);
-            }
-        }
-        return fileURL;
-    }
 
     // -------------------------------------------------------------------------
 
