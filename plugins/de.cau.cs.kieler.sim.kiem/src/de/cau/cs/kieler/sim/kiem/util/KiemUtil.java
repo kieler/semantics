@@ -23,15 +23,23 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.eclipse.core.filesystem.EFS;
+import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
+import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.IResource;
+import org.eclipse.core.resources.IWorkspace;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.ui.IPathEditorInput;
+import org.eclipse.ui.internal.ide.dialogs.IFileStoreFilter;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -143,16 +151,17 @@ public final class KiemUtil {
 
     /**
      * Gets the resolved absolute file path.
-     *
-     * @param fileAbsolute the file absolute
+     * 
+     * @param fileAbsolute
+     *            the file absolute
      * @return the resolved absolute file path
-     * @throws IOException 
+     * @throws IOException
      */
     public static URL getResolvedAbsoluteFilePath(final URL fileAbsolute) throws IOException {
         URL resolvedFileAbsolute = FileLocator.resolve(fileAbsolute);
         return resolvedFileAbsolute;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -174,34 +183,36 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
     /**
      * Creates the URL from string and try no normalize backslashes.
-     *
-     * @param fileLocation the file location
+     * 
+     * @param fileLocation
+     *            the file location
      * @return the uRL
      */
-//    public static URL createURLfromWorkspaceRelativeString(final String urlString)
-//            throws MalformedURLException {
-//        String fileSeparator = System.getProperty("file.separator");
-//        String urlString2 = urlString.replaceAll("\\\\", "/"); // as \ is an escape character in
-//                                                               // a String AND a RegEx
-//        Path path = new Path(urlString);
-//        path.URL returnURL = new URL(urlString2);
-//        return returnURL;
-//    }
+    // public static URL createURLfromWorkspaceRelativeString(final String urlString)
+    // throws MalformedURLException {
+    // String fileSeparator = System.getProperty("file.separator");
+    // String urlString2 = urlString.replaceAll("\\\\", "/"); // as \ is an escape character in
+    // // a String AND a RegEx
+    // Path path = new Path(urlString);
+    // path.URL returnURL = new URL(urlString2);
+    // return returnURL;
+    // }
 
     // -------------------------------------------------------------------------
 
     /**
      * Resolve a bundle or workspace file from a String representation. If it starts with a
-     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look
-     * relative to the KIEM plugin and then in the current workspace.
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
+     * to the KIEM plugin and then in the current workspace.
      * 
      * @param fileLocation
      *            the file location
      * @return the uRL
-     * @throws URISyntaxException 
-     * @throws MalformedURLException 
+     * @throws URISyntaxException
+     * @throws MalformedURLException
      */
-    public static URL resolveBundleOrWorkspaceFile(final String fileLocation) throws MalformedURLException, URISyntaxException {
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
+            throws MalformedURLException, URISyntaxException {
         String pluginID = KiemPlugin.PLUGIN_ID;
         return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
     }
@@ -210,21 +221,25 @@ public final class KiemUtil {
 
     /**
      * Resolve a bundle or workspace file from a String representation. If it starts with a
-     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look
-     * relative to the bundle/plugin and then in the bundles current workspace.
-     *
-     * @param fileLocation the file location
-     * @param pluginID the plugin id
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
+     * to the bundle/plugin and then in the bundles current workspace.
+     * 
+     * @param fileLocation
+     *            the file location
+     * @param pluginID
+     *            the plugin id
      * @return the uRL
-     * @throws MalformedURLException the malformed url exception
-     * @throws URISyntaxException the uRI syntax exception
+     * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
      */
-    public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID) 
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID)
             throws MalformedURLException, URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        
+
         // as \ is an escape character in a String AND a RegEx
-        String fileLocation2 = fileLocation.replaceAll("\\\\", "/"); 
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
 
         URL fileURL = null;
         if (fileLocation2.contains("bundleentry")) {
@@ -245,13 +260,12 @@ public final class KiemUtil {
             if (fileURL == null) {
                 fileURL = bundle.getResource(fileLocation2);
             }
-            
+
             // try to resolve workspace files as absolute files
             if (fileURL == null) {
                 IFile file = myWorkspaceRoot.getFile(new Path(fileLocation2));
-                String fileString = myWorkspaceRoot
-                        .getFile(file.getFullPath()).getLocation()
-                        .toString();  
+                String fileString = myWorkspaceRoot.getFile(file.getFullPath()).getLocation()
+                        .toString();
                 fileURL = new URI("file://" + fileString).toURL();
             }
         }
@@ -304,6 +318,48 @@ public final class KiemUtil {
         }
         // Something went wrong, we could not resolve the file location
         return null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Creates the linked workspace file.
+     * 
+     * @param fullFilePathString
+     *            the full file path string
+     * @param workspaceProjectName
+     *            the workspace project name
+     * @return the i file
+     * @throws CoreException 
+     */
+    public static IFile createLinkedWorkspaceFile(final String fullFilePathString,
+            final String workspaceProjectName, final boolean cleanProject) throws CoreException {
+        IWorkspace workspace = ResourcesPlugin.getWorkspace();
+        IWorkspaceRoot workspaceRoot = workspace.getRoot();
+
+        IProject project = workspaceRoot.getProject(workspaceProjectName);
+
+        // if the test project exists, delete it
+        if (cleanProject && project.exists()) {
+            project.delete(true, null);
+        }
+        if (!project.exists()) {
+            project.create(null);
+        }
+        if (!project.isOpen()) {
+            project.open(null);
+        }
+
+        IPath path = new Path(fullFilePathString);
+        IFile file = project.getFile(path.lastSegment());
+        try {
+            if (!file.exists()) {
+                file.createLink(path, IResource.NONE, null);
+            }
+        } catch (CoreException e) {
+            e.printStackTrace();
+        }
+        return file;
     }
 
     // -------------------------------------------------------------------------

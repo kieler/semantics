@@ -50,9 +50,11 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorRegistry;
+import org.eclipse.ui.IPathEditorInput;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONException;
@@ -113,6 +115,9 @@ public class KiemAutomatedJUnitTest {
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
 
+    /** The name of the workspace project where tests are being linked in. */
+    static final String TEST_PROJECT_NAME = "test";
+
     /**
      * The Constant KART_PROPERTY_ESOFILE - must be equal to the one defined in sim.kart.Constants!
      */
@@ -172,7 +177,7 @@ public class KiemAutomatedJUnitTest {
     protected HashMap<URL, URL> modelFile = new HashMap<URL, URL>();
 
     /** The current model file path. */
-    private String modelFilePath;
+    private String modelFilePathString;
 
     // -------------------------------------------------------------------------
 
@@ -225,9 +230,9 @@ public class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        if (true) {
-            return;
-        }
+        // if (true) {
+        // return;
+        // }
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(this.getPluginId());
 
@@ -239,7 +244,7 @@ public class KiemAutomatedJUnitTest {
         boolean executionFileAlreadySet = false;
         boolean modelFilesAlreadySet = false;
         if (!getPluginExecutionFile().equals("")) {
-            executionFile =  getPluginExecutionFile();
+            executionFile = getPluginExecutionFile();
             executionFileAlreadySet = true;
         }
         if (getPluginModelFiles().size() > 0) {
@@ -302,7 +307,8 @@ public class KiemAutomatedJUnitTest {
         // Figure out execution file path and try to load it with KIEM
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         try {
-            URL executionFileURL =  KiemUtil.resolveBundleOrWorkspaceFile(executionFile, this.getPluginId());
+            URL executionFileURL = KiemUtil.resolveBundleOrWorkspaceFile(executionFile,
+                    this.getPluginId());
             if (executionFileURL != null) {
                 kiemPlugin.openFile(new Path(executionFileURL.toString()), true);
             } else {
@@ -376,8 +382,10 @@ public class KiemAutomatedJUnitTest {
                 String esoFileName = modelFileName.substring(0, replacePosition) + "."
                         + DEFAULT_ESO_FILE_EXTENSITION;
                 try {
-                    modelFileUrl = KiemUtil.resolveBundleOrWorkspaceFile(modelFileName, this.getPluginId());
-                    esoFileUrl =  KiemUtil.resolveBundleOrWorkspaceFile(esoFileName, this.getPluginId());
+                    modelFileUrl = KiemUtil.resolveBundleOrWorkspaceFile(modelFileName,
+                            this.getPluginId());
+                    esoFileUrl = KiemUtil.resolveBundleOrWorkspaceFile(esoFileName,
+                            this.getPluginId());
                 } catch (MalformedURLException e) {
                 } catch (URISyntaxException e) {
                 }
@@ -440,7 +448,7 @@ public class KiemAutomatedJUnitTest {
             URL modelFileUrl = this.modelFile.get(esoFileUrl);
             openModelFile(modelFileUrl);
 
-            System.out.println("Model File" + modelFilePath.toString());
+            System.out.println("Model File" + modelFilePathString);
 
             int numberOfTraces = getNumberOfTraces(esoFileUrl);
             System.out.println("NUMBER OF TRACES " + numberOfTraces);
@@ -561,45 +569,45 @@ public class KiemAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
 
-    private IFile getWorkspaceFile(IFileStore fileStore) {
+    private IFile getWorkspaceFile(IPath path) {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
-        IFile[] files = workspace.getRoot().findFilesForLocationURI(fileStore.toURI());
+        IFile file = workspace.getRoot().getFile(path);
         // files= filterNonExistentFiles(files);
-        if (files == null || files.length == 0) {
-//            fileStore.
-//            return  workspace.getRoot(). (new Path(fileStore.toString()));
-          return  workspace.getRoot().getFile(new Path(fileStore.toString()));
+        if (file == null) {
+            return null;
         }
-        if (files.length == 1)
-            return files[0];
-        return (IFile) files[0];
+        return file;
     }
 
-    private IEditorInput createEditorInput(IFileStore fileStore) {
-        IFile workspaceFile = getWorkspaceFile(fileStore);
+    private IEditorInput createEditorInput(String fullFilePathString) {
+        IPath path = new Path(fullFilePathString);
+        IFile workspaceFile = getWorkspaceFile(path);
         if (workspaceFile != null)
             return new FileEditorInput(workspaceFile);
-        return null;// new JavaFileEditorInput(fileStore);
+        return null;
     }
 
-    private String getEditorId(IFileStore file) {
+    private String getEditorId(String fullFilePathString) {
+        IPath path = new Path(fullFilePathString);
+        IFileStore fileStore = EFS.getLocalFileSystem().getStore(path);
         try {
             IWorkbench workbench = PlatformUI.getWorkbench();
             IEditorRegistry editorRegistry = workbench.getEditorRegistry();
             InputStream inputStream;
-            inputStream = file.openInputStream(EFS.NONE, null);
+            inputStream = fileStore.openInputStream(EFS.NONE, null);
             IContentType contentType = Platform.getContentTypeManager().findContentTypeFor(
-                    inputStream, file.getName());
-            IEditorDescriptor descriptor = editorRegistry.getDefaultEditor(file.getName(),
+                    inputStream, fileStore.getName());
+            IEditorDescriptor descriptor = editorRegistry.getDefaultEditor(fileStore.getName(),
                     contentType);
 
             // check the OS for in-place editor (OLE on Win32)
-            if (descriptor == null && editorRegistry.isSystemInPlaceEditorAvailable(file.getName()))
+            if (descriptor == null
+                    && editorRegistry.isSystemInPlaceEditorAvailable(fileStore.getName()))
                 descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_INPLACE_EDITOR_ID);
 
             // check the OS for external editor
             if (descriptor == null
-                    && editorRegistry.isSystemExternalEditorAvailable(file.getName()))
+                    && editorRegistry.isSystemExternalEditorAvailable(fileStore.getName()))
                 descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
 
             if (descriptor != null)
@@ -620,86 +628,47 @@ public class KiemAutomatedJUnitTest {
      * 
      * @param modelFilePath2
      *            the model file path2
-     * @throws  
+     * @throws
      */
-    void openModelFile(URL modelFileUrl)  {
+    void openModelFile(URL modelFileUrl) {
         try {
-            this.modelFilePath = KiemUtil.getAbsoluteFilePath(KiemUtil.getResolvedAbsoluteFilePath(modelFileUrl));
+            this.modelFilePathString = KiemUtil.getAbsoluteFilePath(KiemUtil
+                    .getResolvedAbsoluteFilePath(modelFileUrl));
         } catch (IOException e1) {
-            throw new RuntimeException(
-                    "Cannot open model file:'"
-                            + modelFileUrl + "'.");
+            throw new RuntimeException("Cannot open model file:'" + modelFileUrl + "'.");
         }
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-
                 IWorkbenchWindow win = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 IWorkbenchPage page = win.getActivePage();
 
-                IPath modelFilePath2 = new Path(modelFilePath);
-
+                // Get the default editor and the editor ID
+                String fileExtension = (new Path(modelFilePathString)).getFileExtension();
                 IEditorDescriptor defaultEditor = PlatformUI.getWorkbench().getEditorRegistry()
-                        .getDefaultEditor("default." + modelFilePath2.getFileExtension());
-
+                        .getDefaultEditor("default." + fileExtension);
                 if (defaultEditor == null) {
                     defaultEditor = PlatformUI.getWorkbench().getEditorRegistry()
                             .findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
                 }
+                String editorId = getEditorId(modelFilePathString);
 
-                IFileStore fileStore = EFS.getLocalFileSystem().getStore(modelFilePath2);
-                // fileStore = fileStore.getChild(names[i]);
-                if (!fileStore.fetchInfo().isDirectory() && fileStore.fetchInfo().exists()) {
-                    IEditorInput  input = createEditorInput(fileStore);
-                    String editorId = getEditorId(fileStore);
-                    try {
+                // Try to open as workspace file
+                IEditorInput input = createEditorInput(modelFilePathString);
+                try {
+                    if (input.exists()) {
+                        // If this exists then directly open it
                         page.openEditor(input, editorId);
-                    } catch (Exception e) {
-                        // bla
                     }
-
-                } else {
-                    throw new RuntimeException(
-                            "Cannot open model file:'"
-                                    + modelFilePath + "'.");
+                    else {
+                        // If it doesn't exist create a link in the workspace and open the link instead 
+                        IFile file = KiemUtil.createLinkedWorkspaceFile(modelFilePathString,
+                                TEST_PROJECT_NAME, true);
+                        input = createEditorInput(file.getFullPath().toFile().toString());
+                        page.openEditor(input, editorId);
+                    }
+                } catch (Exception e) {
+                        e.printStackTrace();
                 }
-
-                // try {
-                // page.openEditor(FileEditorInput(modelFilePath2),
-                // defaultEditor.getId());
-                // } catch (PartInitException exception) {
-                // }
-                //
-                // IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
-                // .getRoot();
-                //
-                //
-                // IFile modelFile = myWorkspaceRoot.getFile(modelFilePath);
-                // IFile file = myWorkspaceRoot.getFile(path);
-                //
-                // IPath fullPath = file.getLocation();
-                // String modelFileString = (myWorkspaceRoot.getFile(modelFilePath)).getLocation();
-                //
-                // // only open the model file iff it exists (in the workspace)
-                // // otherwise do not open it
-                // if (modelFile.exists()) {
-                // IEditorDescriptor defaultEditor = PlatformUI.getWorkbench()
-                // .getEditorRegistry()
-                // .getDefaultEditor(modelFile.getName());
-                //
-                // if (defaultEditor == null) {
-                // defaultEditor = PlatformUI
-                // .getWorkbench()
-                // .getEditorRegistry()
-                // .findEditor(
-                // IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
-                // }
-                // try {
-                // page.openEditor(new FileEditorInput(modelFilePath),
-                // defaultEditor.getId());
-                // } catch (PartInitException e) {
-                //
-                // }
-                // }
 
             }
         });
@@ -707,7 +676,7 @@ public class KiemAutomatedJUnitTest {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the number of traces.
      * 
@@ -717,7 +686,8 @@ public class KiemAutomatedJUnitTest {
      */
     int getNumberOfTraces(URL esoFileAbsolute) {
         try {
-            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileAbsolute, this.getPluginId());
+            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileAbsolute,
+                    this.getPluginId());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             int number = 0;
