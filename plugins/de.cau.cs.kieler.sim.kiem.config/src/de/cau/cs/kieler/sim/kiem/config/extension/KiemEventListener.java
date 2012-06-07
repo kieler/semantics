@@ -28,6 +28,7 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Listens to all events from the main KIEM Plugin and handles file related
@@ -106,8 +107,7 @@ public final class KiemEventListener implements IKiemEventListener {
             List<ScheduleData> schedules = ScheduleManager.getInstance()
                     .getRecentSchedules();
             if (schedules == null || schedules.isEmpty()) {
-                IEditorSite editor = KiemConfigurationPlugin.getDefault()
-                        .getActiveEditor();
+                IEditorSite editor = KiemUtil.getActiveEditor(); 
 
                 EditorIdWrapper editorId = null;
                 String editorName = null;

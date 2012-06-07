@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.IKiemConfigEventListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The selection combobox for loading saved schedules.
@@ -197,7 +198,7 @@ public class ScheduleSelector extends ControlContribution implements
 
             // get the currently opened editor
             // this may throw a NullPointerException if no editor is open
-            IEditorSite editor = plugin.getActiveEditor();
+            IEditorSite editor = KiemUtil.getActiveEditor(); 
 
             if (editor != null) {
                 // get the attributes from the editor

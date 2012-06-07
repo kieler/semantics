@@ -56,6 +56,7 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Manages all data for the scheduling preferences.
@@ -575,12 +576,11 @@ public final class ScheduleManager extends AbstractManager implements
             EditorDefinition matchingEditor = null;
 
             // try to get the editor from workbench
-            IEditorSite editorSite = KiemConfigurationPlugin.getDefault()
-                    .getActiveEditor();
+            IEditorSite editor = KiemUtil.getActiveEditor(); 
 
-            if (editorSite != null) {
-                editorId = new EditorIdWrapper(editorSite.getId());
-                editorName = editorSite.getRegisteredName();
+            if (editor != null) {
+                editorId = new EditorIdWrapper(editor.getId());
+                editorName = editor.getRegisteredName();
             }
 
             if (editorId == null) {
@@ -594,10 +594,10 @@ public final class ScheduleManager extends AbstractManager implements
 
             if (matchingEditor == null) {
                 // create a new editor
-                EditorDefinition editor = new EditorDefinition(editorName,
+                EditorDefinition editorDefinition = new EditorDefinition(editorName,
                         editorId);
-                EditorManager.getInstance().addEditor(editor);
-                matchingEditor = editor;
+                EditorManager.getInstance().addEditor(editorDefinition);
+                matchingEditor = editorDefinition;
             }
 
             match = addSchedule(matchingEditor, location,

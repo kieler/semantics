@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * A KiVi Combination controlling the auto loading of execution files. While NO execution is
@@ -74,7 +75,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
 
                 // get the currently opened editor
                 // this may throw a NullPointerException if no editor is open
-                IEditorSite editor = KiemConfigurationPlugin.getDefault().getActiveEditor();
+                IEditorSite editor = KiemUtil.getActiveEditor(); 
 
                 // if an editor is opened
                 if (editor != null) {
