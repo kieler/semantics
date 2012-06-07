@@ -64,7 +64,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public static final String DATA_REPLAY_COMPONENT_ID = "de.cau.cs.kieler.sim.kart.DataReplayComponent";
     
     /** The Constant for the name of the KIEM property model file selection. */
-    protected static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
+    public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
     
     /** The number of the current step */
     private static volatile long step;
@@ -94,6 +94,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /** Are we in training mode, i. e. recording, or not */
     private boolean trainingMode;
 
+    //-------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getKiemPropertyModelFileName() {
+        return KIEM_PROPERTY_MODEFILE;
+    }
+    
+    //-------------------------------------------------------------------------
+    
     /**
      * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
@@ -168,6 +180,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         }
     }
     
+    //-------------------------------------------------------------------------
     
     /**
      * Gets the eso file path.
@@ -180,6 +193,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         return esoFilePath;
     }
 
+    //-------------------------------------------------------------------------
+
     /**
      * Wrapup the data component and revert the internal state, here this means do nothing.
      * 
@@ -189,6 +204,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void wrapup() throws KiemInitializationException {
 
     }
+
+    //-------------------------------------------------------------------------
 
     /**
      * Sets the step number according to the button the user pressed. This is needed to correctly
@@ -201,6 +218,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
         }
     }
+
+    //-------------------------------------------------------------------------
 
     /**
      * Return the types of events this component listens to
