@@ -62,8 +62,19 @@
       <executionFile
             file="execution/synccharts_ptolemy_kart.execution">
          <editor
-               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="SyncChart Diagram Editor"
+               id="de.cau.cs.kieler.s.S"
+               name="S Editor"
+               priority="7">
+         </editor>
+      </executionFile>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor">
+      <executionFile
+            file="execution/s_sc_kart.execution">
+         <editor
+               id="de.cau.cs.kieler.s.S"
+               name="de.cau.cs.kieler.esterel.Esterel"
                priority="7">
          </editor>
       </executionFile>
