@@ -39,7 +39,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+//import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -113,7 +113,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     /** The Constant MAUDEMODELCHECKOK2 (or 1) indicates no counter example can be found. */
     private static final String MAUDEMODELCHECKOK2 = "result Bool: true";
-    
+
     /** The currently active states. */
     String[] currentStates;
 
@@ -235,7 +235,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             int start = part.lastIndexOf("{") + 1;
             int end = part.lastIndexOf(",");
-            //int end = part.lastIndexOf("\")") + 2;
+            // int end = part.lastIndexOf("\")") + 2;
             String value = part.substring(start, end);
             return value;
         }
@@ -256,39 +256,37 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         LinkedList<String> stringList = new LinkedList<String>();
         // if invalid data return empty list
         if (rawValue.indexOf("(") == -1) {
-        	return (stringList.toArray(new String[0]));
+            return (stringList.toArray(new String[0]));
         }
-        
-        
-//        
-//        result (sort not calculated): readyBFPSM schedule <ready QUEUE a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
-//        a b a b a b a b a ENDQUEUE > <ready (b, a) (acc:(E)b(F)a(L)5(U)0, acc:(E)a(
-//        F)b(L)5(U)1) > b maState eventSelC<STATEC> root R "R1280114252", root R
-//        "R1280114252" : C "State0--402295417", root R "R1280114252" : C
-//        "State0--402295417" : R "R-775518637", root R "R1280114252" : C
-//        "State0--402295417" : R "R-775518637" : C "State2--412151283" <HISTC> empty
-//        <EVENT> b <ENDCONF> (b, a)
-//        
-        
-        // consume "maState stableC (" or similar
-        rawValue = rawValue.substring(rawValue.indexOf("<STATEC>")+8);
 
+        //
+        // result (sort not calculated): readyBFPSM schedule <ready QUEUE a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b a b
+        // a b a b a b a b a ENDQUEUE > <ready (b, a) (acc:(E)b(F)a(L)5(U)0, acc:(E)a(
+        // F)b(L)5(U)1) > b maState eventSelC<STATEC> root R "R1280114252", root R
+        // "R1280114252" : C "State0--402295417", root R "R1280114252" : C
+        // "State0--402295417" : R "R-775518637", root R "R1280114252" : C
+        // "State0--402295417" : R "R-775518637" : C "State2--412151283" <HISTC> empty
+        // <EVENT> b <ENDCONF> (b, a)
+        //
+
+        // consume "maState stableC (" or similar
+        rawValue = rawValue.substring(rawValue.indexOf("<STATEC>") + 8);
 
         boolean consuming = false;
         String consumedPart = "";
@@ -330,7 +328,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         // parsing "... seq seq (a1 skip skip) (ee2 ee2)" --> a1 skip skip
         rawValue = rawValue.substring(rawValue.indexOf("("));
         rawValue = rawValue.trim();
-        
+
         boolean inBracket = false;
         boolean skipped = false;
         String extracted = "";
@@ -399,11 +397,12 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             // Actions
             String rawValue = getRuleRawValue(resultPart, MAUDE_RULE_FINISHEDRTC, 0);
-//FIXME: The following does not seem to work any more :/ ... did we recently change the syntax of actions (actually NO actions esp.)?            
-//            String[] actions = extractEventsAndActions(rawValue);
-//            for (String action : actions) {
-//                currentStep.actions.add(action);
-//            }
+            // FIXME: The following does not seem to work any more :/ ... did we recently change the
+            // syntax of actions (actually NO actions esp.)?
+            // String[] actions = extractEventsAndActions(rawValue);
+            // for (String action : actions) {
+            // currentStep.actions.add(action);
+            // }
 
             // States
             String[] states = extractStates(rawValue);
@@ -416,76 +415,64 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
     }
 
-    
     // -------------------------------------------------------------------------
 
-    
-    
     static final String EVENT_FILE_NAME = "events-gen.maude";
     static final String RESULT_FILE_NAME = "out.txt";
-    static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" +
-    		" including QUEUESIGNATURE .\n" +
-    		" including eclipseInterface .\n" +
-    		"     sort QueueStatus .\n" +
-    		" var el : EventSet .\n" +
-    		" var event : Event .\n" +
-    		" var equeue : EventQueue .\n "+
-    		" op allEvs : -> EventSet .\n"+
-    		" eq allEvs = empty";
-    static final String EVENT_POSTLUDE = 
-    		"  .\n" +
-    		" op <ready_ > : EventQueue -> QueueStatus .\n" +
-    		" op <schedule__ > : EventQueue Event -> QueueStatus .\n" +
-    		" op <initQueue> : -> QueueStatus .\n" +
-    		" rl <ready (QUEUE event, el ENDQUEUE) > => <schedule (QUEUE el, event ENDQUEUE) event > .\n" +
-    		" rl <schedule equeue event >  => <ready equeue > .\n" +
-    		" rl <initQueue> => <ready (QUEUE allEvs ENDQUEUE) > .\n " +
-    		"endm\n";
+    static final String EVENT_PRELUDE = "mod QUEUESEMANTICS is\n" + " including QUEUESIGNATURE .\n"
+            + " including eclipseInterface .\n" + "     sort QueueStatus .\n"
+            + " var el : EventSet .\n" + " var event : Event .\n" + " var equeue : EventQueue .\n "
+            + " op allEvs : -> EventSet .\n" + " eq allEvs = empty";
+    static final String EVENT_POSTLUDE = "  .\n"
+            + " op <ready_ > : EventQueue -> QueueStatus .\n"
+            + " op <schedule__ > : EventQueue Event -> QueueStatus .\n"
+            + " op <initQueue> : -> QueueStatus .\n"
+            + " rl <ready (QUEUE event, el ENDQUEUE) > => <schedule (QUEUE el, event ENDQUEUE) event > .\n"
+            + " rl <schedule equeue event >  => <ready equeue > .\n"
+            + " rl <initQueue> => <ready (QUEUE allEvs ENDQUEUE) > .\n " + "endm\n";
     static final String EVENT_LINE_START = "***   rl QUEUE el ENDQUEUE => QUEUE el (";
-    static final String EVENT_LINE_END   = ") ENDQUEUE .\n";
-    
+    static final String EVENT_LINE_END = ") ENDQUEUE .\n";
+
     public void writeAndReloadSelectedEvents(JSONObject signals) throws KiemExecutionException {
-    	// This is the additional Maude code to write
-    	String maudeCode = "";
-    	
-    	maudeCode += EVENT_PRELUDE;
+        // This is the additional Maude code to write
+        String maudeCode = "";
+
+        maudeCode += EVENT_PRELUDE;
         String[] signalNames = JSONObject.getNames(signals);
         for (String signalName : signalNames) {
-        	try {
-				if (JSONSignalValues.isPresent(signals.get(signalName))) {
-//					maudeCode += EVENT_LINE_START;
-					maudeCode += (", "+signalName);
-//					maudeCode += EVENT_LINE_END;
-					
-				}
-			} catch (JSONException e) {
-				//TODO: handle these errors properly
-				// ignore JSON parser errors for now
-			}
+            try {
+                if (JSONSignalValues.isPresent(signals.get(signalName))) {
+                    // maudeCode += EVENT_LINE_START;
+                    maudeCode += (", " + signalName);
+                    // maudeCode += EVENT_LINE_END;
+
+                }
+            } catch (JSONException e) {
+                // TODO: handle these errors properly
+                // ignore JSON parser errors for now
+            }
         }
-    	maudeCode += EVENT_POSTLUDE;
-    	
-    	// Write this out to file
-    	String path = super.outPath;
-    	try {
-    		BufferedWriter out = new BufferedWriter(new FileWriter(path + "/" +  EVENT_FILE_NAME));
-    		out.write(maudeCode);
-    		out.close();
-   		}
-   		catch (IOException e) {
-    		throw new KiemExecutionException("Java IO Error. Cannot write event file.", false, e);
-   		}
-    	
-    	
-    	// (Re)Load into Maude
+        maudeCode += EVENT_POSTLUDE;
+
+        // Write this out to file
+        String path = super.outPath;
+        try {
+            BufferedWriter out = new BufferedWriter(new FileWriter(path + "/" + EVENT_FILE_NAME));
+            out.write(maudeCode);
+            out.close();
+        } catch (IOException e) {
+            throw new KiemExecutionException("Java IO Error. Cannot write event file.", false, e);
+        }
+
+        // (Re)Load into Maude
         try {
             String result = MaudeInterfacePlugin.getDefault().queryMaude(maudeCode, maudeSessionId);
         } catch (Exception e) {
-            throw new KiemExecutionException("A Maude error occurred when trying to reload events.", false, e);
+            throw new KiemExecutionException(
+                    "A Maude error occurred when trying to reload events.", false, e);
         }
-    	
+
     }
-    
 
     // -------------------------------------------------------------------------
 
@@ -504,9 +491,9 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         // If this component is in the zero tick, then we do the check, otherwise we are in replay
         // mode and do NOTHING!
         if (!modelCheckDone) {
-        	// First reload events/signals
-        	writeAndReloadSelectedEvents(signals);
-        	
+            // First reload events/signals
+            writeAndReloadSelectedEvents(signals);
+
             // do not modelcheck another time
             modelCheckDone = true;
 
@@ -549,57 +536,57 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
 
             // Consider no-consume option
             // TODO: Select/load different modules on simulation run/model checking
-//            boolean noConsume = this.getProperties()[3].getValueAsBoolean();
-//            String noConsumeString = "";
-//            if (noConsume) {
-//                noConsumeString = " noConsume";
-//            }
+            // boolean noConsume = this.getProperties()[3].getValueAsBoolean();
+            // String noConsumeString = "";
+            // if (noConsume) {
+            // noConsumeString = " noConsume";
+            // }
 
             // search (maState (stableC ((R-990928836 ,
             // susp441237549)) empty) (res,
             // ee1)) =>* mastate such that isDone mastate .
-            //TODO: empty == history conf string
-            String queryRequest = 
-//          		"set trace on .\n"+
-          //  		"red 2 . \n "+
-          //  		"red in MCBFPOOLANDSM : "+ currentStatesQuery + " .\n"+
-          //  		"red " + triggerEventsQuery + " .\n"+
-  	//	"red in MCBFPOOLANDSM :  tups .\n" +
-  	//	"red in MCBFPOOLANDSM : emptyQueue .\n" +      
-  	//	"red in MCBFPOOLANDSM : <ready (a, b) tups > .\n" +  		
-  	//	"red in MCBFPOOLANDSM : ready <ready emptyQueue > <ready (a, b) tups > .\n" +
-           	                    
-//
-//            		
-            		"red in MCBFPOOLANDSM : modelCheck(" +
-            		"readyBFPSM(ready <ready QUEUE "+ triggerEventsQuery +" ENDQUEUE > <ready ("+ triggerEventsQuery +") tups >)" +
-            		"(maState (stableC<STATEC> " + 
-                    currentStatesQuery + " <HISTC> empty <ENDCONF>)  ("
-                    + triggerEventsQuery + ")), " + checkingRule + ") . \n"
+            // TODO: empty == history conf string
+            String queryRequest =
+            // "set trace on .\n"+
+            // "red 2 . \n "+
+            // "red in MCBFPOOLANDSM : "+ currentStatesQuery + " .\n"+
+            // "red " + triggerEventsQuery + " .\n"+
+            // "red in MCBFPOOLANDSM :  tups .\n" +
+            // "red in MCBFPOOLANDSM : emptyQueue .\n" +
+            // "red in MCBFPOOLANDSM : <ready (a, b) tups > .\n" +
+            // "red in MCBFPOOLANDSM : ready <ready emptyQueue > <ready (a, b) tups > .\n" +
 
-                    
-                    ;
-            
+            //
+            //
+            "red in MCBFPOOLANDSM : modelCheck(" + "readyBFPSM(ready <ready QUEUE "
+                    + triggerEventsQuery + " ENDQUEUE > <ready (" + triggerEventsQuery
+                    + ") tups >)" + "(maState (stableC<STATEC> " + currentStatesQuery
+                    + " <HISTC> empty <ENDCONF>)  (" + triggerEventsQuery + ")), " + checkingRule
+                    + ") . \n"
+
+            ;
+
             // Debug output query request
             printConsole(queryRequest);
 
             String result = "";
             String path = super.outPath;
-            
+
             try {
-//            	    StringBuilder text = new StringBuilder();
-//            	    String NL = System.getProperty("line.separator");
-//            	    Scanner scanner = new Scanner(new FileInputStream(path + "/" +  RESULT_FILE_NAME));
-//            	    try {
-//            	      while (scanner.hasNextLine()){
-//            	        result += (scanner.nextLine() + NL);
-//            	      }
-//            	    }
-//            	    finally{
-//            	      scanner.close();
-//            	    }
-//
-            		  result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
+                // StringBuilder text = new StringBuilder();
+                // String NL = System.getProperty("line.separator");
+                // Scanner scanner = new Scanner(new FileInputStream(path + "/" +
+                // RESULT_FILE_NAME));
+                // try {
+                // while (scanner.hasNextLine()){
+                // result += (scanner.nextLine() + NL);
+                // }
+                // }
+                // finally{
+                // scanner.close();
+                // }
+                //
+                result = MaudeInterfacePlugin.getDefault().queryMaude(queryRequest, maudeSessionId);
             } catch (Exception e) {
                 throw new KiemExecutionException("A Maude model checking error occurred.", false, e);
             }
@@ -611,8 +598,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             // example
             // or not
             modelCheckCounterExample = true;
-            if (   result.contains(MAUDEMODELCHECKOK1)
-                || result.contains(MAUDEMODELCHECKOK2)) {
+            if (result.contains(MAUDEMODELCHECKOK1) || result.contains(MAUDEMODELCHECKOK2)) {
                 modelCheckCounterExample = false;
             }
 
@@ -643,14 +629,13 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
             if (modelCheckCounterExample) {
                 // Pause the execution
                 throw (new KiemExecutionException(
-                        "Maude Model Checking finished. Counter example found: " + modelCheckCounterExample
-                                + ".", false, true, true, null));
-            }
-            else {
+                        "Maude Model Checking finished. Counter example found: "
+                                + modelCheckCounterExample + ".", false, true, true, null));
+            } else {
                 // Raise a stop exception to stop the running execution
                 throw (new KiemExecutionException(
-                        "No counter example was found. Execution was stopped.",
-                        true, false, true, null));
+                        "No counter example was found. Execution was stopped.", true, false, true,
+                        null));
             }
         } else {
             // In this case we may have computed a counter example an can now re-play it
@@ -685,8 +670,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
                 try {
                     returnObj.accumulate(stateName,
                             getCurrentStateIds(currentStep.states.toArray(new String[0])));
-                    returnObj.accumulate("DEBUG",
-                            currentStep.states.toArray(new String[0]));
+                    returnObj.accumulate("DEBUG", currentStep.states.toArray(new String[0]));
                 } catch (Exception e) {
                     // ignore any errors
                 }
@@ -733,7 +717,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         // now reset all other events/actions that are not present at this step
         for (String event : getAllEvents()) {
             try {
-                if (!returnObj.has(event) ) {
+                if (!returnObj.has(event)) {
                     returnObj.accumulate(event, JSONSignalValues.newValue(false));
                 }
             } catch (Exception e) {
@@ -752,7 +736,7 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
         }
         return returnObj;
     }
-    
+
     // -------------------------------------------------------------------------
 
     private boolean flagDialogDone = false;
@@ -826,27 +810,27 @@ public class DataComponentModelCheck extends DataComponent implements IJSONObjec
      * #initialize()
      */
     public void initialize() throws KiemInitializationException {
-        String pathToMaude = this.getProperties()[1].getValue();
-
-        System.out.println("");
-        
-        String pathToMaudeCode = getMaudeGenCodeLocation();
-        if (isWindows()) {
-            pathToMaudeCode =  "\"" + transformToCygwinPath(pathToMaudeCode) +"\"";
-        }
-
-        // reset the mapping
-        resetMappingHashmap();
-
-        // clear the maude console
-        clearConsole();
-
-        // initialize with initial states (and regions)
-        currentStates = getInitialStates();
-
-        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                       pathToMaudeCode );
         try {
+            String pathToMaude = this.getProperties()[1].getValue();
+
+            System.out.println("");
+
+            String pathToMaudeCode = getMaudeGenCodeLocation();
+            if (isWindows()) {
+                pathToMaudeCode = "\"" + transformToCygwinPath(pathToMaudeCode) + "\"";
+            }
+
+            // reset the mapping
+            resetMappingHashmap();
+
+            // clear the maude console
+            clearConsole();
+
+            // initialize with initial states (and regions)
+            currentStates = getInitialStates();
+
+            maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
+                    pathToMaudeCode);
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
         } catch (Exception e) {
