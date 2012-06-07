@@ -36,6 +36,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IEditorSite;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -292,7 +294,8 @@ public final class KiemUtil {
         IPath fullPath = ifile.getLocation();
         // If we have spaces, try it like this...
         if (fullPath == null && ifile instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) ifile;
+            org.eclipse.core.internal.resources.Resource resource = null;
+            resource = (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
         return (getAbsoluteFilePath(fullPath));
@@ -370,22 +373,47 @@ public final class KiemUtil {
     }
 
     // -------------------------------------------------------------------------
+
     /**
      * Gets the input model as uri.
-     *
-     * @param fileString the file string
+     * 
+     * @param fileString
+     *            the file string
      * @return the input model as uri
      */
-    public static org.eclipse.emf.common.util.URI getFileStringAsEMFURI(String fileString) {
+    public static org.eclipse.emf.common.util.URI getFileStringAsEMFURI(final String fileString) {
         if (fileString == null) {
             return null;
         }
-        if (!fileString.startsWith("file://")) {
-            fileString = "file://" + fileString;
+        String fileStringCopy = fileString;
+        if (!fileStringCopy.startsWith("file://")) {
+            fileStringCopy = "file://" + fileStringCopy;
         }
-        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(fileString
+        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(fileStringCopy
                 .replaceAll(" ", "%20").replace("\\", "/"));
         return uri;
     }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Get the currently active editor if any was set by the
+     * kiem.config.kivi.ModelSelectionCombination.
+     * 
+     * @return the currently active editor, or null
+     */
+    public static IEditorSite getActiveEditor() {
+        IEditorSite editorSite = null;
+        IPath currentModelPath = KiemPlugin.getCurrentModelFile();
+        if (currentModelPath != null) {
+            IEditorPart editor = KiemPlugin.getOpenedModelEditors().get(currentModelPath);
+            if (editor != null) {
+                editorSite = editor.getEditorSite();
+
+            }
+        }
+        return editorSite;
+    }
+    
     // -------------------------------------------------------------------------
 }
