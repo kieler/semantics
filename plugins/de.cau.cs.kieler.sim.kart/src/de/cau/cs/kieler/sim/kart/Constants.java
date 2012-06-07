@@ -21,7 +21,7 @@ package de.cau.cs.kieler.sim.kart;
  */
 public class Constants {
     public static final String PLUGINID = "de.cau.cs.kieler.sim.kart";
-    public static final String ESOFILE = "ESI/ESO trace file";
+    public static final String ESO_FILEEXTENSION = "eso";
     public static final String TRACENUM = "Trace number to replay";
     public static final String IGNOREEXTRA = "Ignore additionally generated signals";
     public static final String TRAINMODE = "Training mode";
@@ -35,7 +35,7 @@ public class Constants {
     public static final String[] FILEEXTS = { "*.eso", "*.esi" };
     public static final String[] FILEEXTNAMES = { "ESO", "ESI" };
     
-    public static final String ERR_NOTESO = "The replay file provided is not an .esi or .eso file";
+    public static final String ERR_NOTEXISTESO = "The replay ESO file to the provided model does not exist!";
     public static final String ERR_NEEDESO = "You must set an ESO filename!";
     public static final String ERR_NOTRACE = "The trace file does not contain a trace number ";
     public static final String ERR_JSON = "Could not build JSON object with signals read from ESO file";

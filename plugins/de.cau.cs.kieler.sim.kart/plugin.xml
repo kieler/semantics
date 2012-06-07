@@ -2,7 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
    <extension-point id="de.cau.cs.kieler.sim.kart.MessageDialog" name="KART Message Dialog" schema="schema/de.cau.cs.kieler.sim.kart.MessageDialog.exsd"/>
-   <extension-point id="de.cau.cs.kieler.sim.kart.NamingSuggestion" name="KART Naming suggestion" schema="schema/de.cau.cs.kieler.sim.kart.NamingSuggestion.exsd"/>
    <extension-point id="de.cau.cs.kieler.sim.kart.Refresh" name="Refresh" schema="schema/de.cau.cs.kieler.sim.kart.Refresh.exsd"/>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
