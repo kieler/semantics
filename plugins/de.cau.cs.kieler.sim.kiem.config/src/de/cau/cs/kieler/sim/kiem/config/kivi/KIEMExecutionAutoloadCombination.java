@@ -20,7 +20,6 @@ import org.eclipse.ui.IEditorSite;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
-import de.cau.cs.kieler.sim.kiem.config.KiemConfigurationPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;

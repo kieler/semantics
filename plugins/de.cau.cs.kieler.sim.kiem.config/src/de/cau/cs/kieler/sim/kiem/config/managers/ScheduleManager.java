@@ -64,8 +64,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public final class ScheduleManager extends AbstractManager implements
-        IRefactoringHistoryListener {
+public final class ScheduleManager extends AbstractManager implements IRefactoringHistoryListener {
 
     /** the default capacity for the recent list. */
     public static final int DEFAULT_RECENT_CAPACITY = 5;
@@ -78,10 +77,10 @@ public final class ScheduleManager extends AbstractManager implements
 
     /** The list of all saved schedules. */
     private List<ScheduleData> scheduleData = null;
-    
+
     /** The enabled flag. Should be false during simulation. */
     private boolean enabled;
-    
+
     // --------------------------------------------------------------------------
 
     /** Singleton pattern. */
@@ -107,28 +106,38 @@ public final class ScheduleManager extends AbstractManager implements
     // --------------------------------------------------------------------------
     // --------------------------------------------------------------------------
 
-    public void setEnabled(boolean enabled) {
-    	this.enabled = enabled;
-    	if (ContributionManager.getInstance().getMatchingCombo() != null) {
-        	ContributionManager.getInstance().getMatchingCombo().setEnabled(enabled);
-    	}
-    	if (ContributionManager.getInstance().getRecentCombo() != null) {
-        	ContributionManager.getInstance().getRecentCombo().setEnabled(enabled);
-    		
-    	}
+    /**
+     * Sets the enabled.
+     * 
+     * @param enabled
+     *            the new enabled
+     */
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
+        if (ContributionManager.getInstance().getMatchingCombo() != null) {
+            ContributionManager.getInstance().getMatchingCombo().setEnabled(enabled);
+        }
+        if (ContributionManager.getInstance().getRecentCombo() != null) {
+            ContributionManager.getInstance().getRecentCombo().setEnabled(enabled);
+
+        }
     }
 
-    // --------------------------------------------------------------------------
-    
-    public boolean isEnabled() {
-    	return this.enabled;
-    }
-    
     // --------------------------------------------------------------------------
 
     /**
-     * Getter for the list of schedules that were imported through the extension
-     * point.
+     * Checks if is enabled.
+     * 
+     * @return true, if is enabled
+     */
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+
+    // --------------------------------------------------------------------------
+
+    /**
+     * Getter for the list of schedules that were imported through the extension point.
      * 
      * @return the list of imported schedules.
      */
@@ -149,8 +158,8 @@ public final class ScheduleManager extends AbstractManager implements
     /**
      * Get the list of all schedules that apply to the current editorID.
      * <p>
-     * The list is sorted by the supported priority for the matching editor. The
-     * best schedules have the lowest index to appear at the top of any list.
+     * The list is sorted by the supported priority for the matching editor. The best schedules have
+     * the lowest index to appear at the top of any list.
      * 
      * @param editorID
      *            the ID to look for.
@@ -158,21 +167,20 @@ public final class ScheduleManager extends AbstractManager implements
      *            the name of the editor if the editor hasn't been added yet
      * @return the list of applicable schedules.
      */
-    public List<ScheduleData> getMatchingSchedules(
-            final EditorIdWrapper editorID, final String editorName) {
+    public List<ScheduleData> getMatchingSchedules(final EditorIdWrapper editorID,
+            final String editorName) {
         List<ScheduleData> result = new LinkedList<ScheduleData>();
-        
+
         if (editorID == null) {
             for (ScheduleData data : getAllSchedules()) {
-                    result.add(data);
+                result.add(data);
             }
             // sort by matching editor
             Collections.sort(result, new ScheduleComparator(null));
         }
-        
+
         if (!EditorManager.getInstance().getEditors().isEmpty()) {
-            EditorDefinition matchingEditor = EditorManager.getInstance()
-                    .findEditorById(editorID);
+            EditorDefinition matchingEditor = EditorManager.getInstance().findEditorById(editorID);
 
             if (matchingEditor == null) {
                 // create and add the new editor
@@ -292,8 +300,7 @@ public final class ScheduleManager extends AbstractManager implements
      */
     public void historyNotification(final RefactoringHistoryEvent event) {
 
-        RefactoringDescriptor desc = event.getDescriptor().requestDescriptor(
-                null);
+        RefactoringDescriptor desc = event.getDescriptor().requestDescriptor(null);
 
         if (desc instanceof RenameResourceDescriptor) {
             RenameResourceDescriptor renameDesc = (RenameResourceDescriptor) desc;
@@ -310,8 +317,7 @@ public final class ScheduleManager extends AbstractManager implements
             moveSchedule(moveDesc);
         }
 
-        notifyListeners(new KiemConfigEvent(
-                KiemConfigEvent.FILE_LOCATION_CHANGED));
+        notifyListeners(new KiemConfigEvent(KiemConfigEvent.FILE_LOCATION_CHANGED));
 
         KiemPlugin.getDefault().updateViewAsync();
         save();
@@ -354,8 +360,7 @@ public final class ScheduleManager extends AbstractManager implements
                 IPath srcName = path.removeFileExtension();
                 String name = srcName.segment(srcName.segmentCount() - 1);
 
-                name = dest.toOSString() + IPath.SEPARATOR + name
-                        + ".execution";
+                name = dest.toOSString() + IPath.SEPARATOR + name + ".execution";
 
                 updateScheduleLocation(schedule, name);
 
@@ -377,8 +382,8 @@ public final class ScheduleManager extends AbstractManager implements
         ScheduleData schedule = getScheduleData(location);
 
         if (schedule != null) {
-            String newPath = schedule.getLocation().removeFileExtension()
-                    .removeLastSegments(1).addTrailingSeparator().toOSString()
+            String newPath = schedule.getLocation().removeFileExtension().removeLastSegments(1)
+                    .addTrailingSeparator().toOSString()
                     + newName;
 
             updateScheduleLocation(schedule, newPath);
@@ -386,16 +391,14 @@ public final class ScheduleManager extends AbstractManager implements
     }
 
     /**
-     * Update the location of the schedule and the contents of the most recently
-     * used list.
+     * Update the location of the schedule and the contents of the most recently used list.
      * 
      * @param schedule
      *            the schedule to update
      * @param newLocation
      *            the new location as OSString
      */
-    private void updateScheduleLocation(final ScheduleData schedule,
-            final String newLocation) {
+    private void updateScheduleLocation(final ScheduleData schedule, final String newLocation) {
         IPath destination = Path.fromOSString(newLocation);
 
         String oldId = schedule.getId();
@@ -466,12 +469,11 @@ public final class ScheduleManager extends AbstractManager implements
     /**
      * Create a new schedule.
      * <p>
-     * First the method checks if the editor is already in the list of currently
-     * available editors. If not the new editor is created and added to that
-     * list.
+     * First the method checks if the editor is already in the list of currently available editors.
+     * If not the new editor is created and added to that list.
      * <p>
-     * After that the new Schedule is created and the default priority assigned
-     * to the editor that the schedule was first used with.
+     * After that the new Schedule is created and the default priority assigned to the editor that
+     * the schedule was first used with.
      * 
      * @param editor
      *            the editor that created the schedule.
@@ -481,8 +483,8 @@ public final class ScheduleManager extends AbstractManager implements
      *            the priority to assign to the editor
      * @return the added schedule, or null if no schedule was added.
      */
-    public ScheduleData addSchedule(final EditorDefinition editor,
-            final IPath location, final int priority) {
+    public ScheduleData addSchedule(final EditorDefinition editor, final IPath location,
+            final int priority) {
 
         EditorManager.getInstance().addEditor(editor);
 
@@ -532,8 +534,7 @@ public final class ScheduleManager extends AbstractManager implements
                     openSchedule(newRecent.get(0));
                 } catch (ScheduleFileMissingException e0) {
                     ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                            KiemConfigurationPlugin.getShell(),
-                            newRecent.get(0));
+                            KiemConfigurationPlugin.getShell(), newRecent.get(0));
                     dialog.open();
                 }
             }
@@ -576,7 +577,7 @@ public final class ScheduleManager extends AbstractManager implements
             EditorDefinition matchingEditor = null;
 
             // try to get the editor from workbench
-            IEditorSite editor = KiemUtil.getActiveEditor(); 
+            IEditorSite editor = KiemUtil.getActiveEditor();
 
             if (editor != null) {
                 editorId = new EditorIdWrapper(editor.getId());
@@ -589,19 +590,16 @@ public final class ScheduleManager extends AbstractManager implements
             }
 
             // try to find an editor with the id
-            matchingEditor = EditorManager.getInstance().findEditorById(
-                    editorId);
+            matchingEditor = EditorManager.getInstance().findEditorById(editorId);
 
             if (matchingEditor == null) {
                 // create a new editor
-                EditorDefinition editorDefinition = new EditorDefinition(editorName,
-                        editorId);
+                EditorDefinition editorDefinition = new EditorDefinition(editorName, editorId);
                 EditorManager.getInstance().addEditor(editorDefinition);
                 matchingEditor = editorDefinition;
             }
 
-            match = addSchedule(matchingEditor, location,
-                    ScheduleData.getDefaultPriority());
+            match = addSchedule(matchingEditor, location, ScheduleData.getDefaultPriority());
 
         }
 
@@ -616,33 +614,28 @@ public final class ScheduleManager extends AbstractManager implements
     // --------------------------------------------------------------------------
 
     /**
-     * Load a schedule from the file system into the plugin. If the editor is
-     * dirty a save is triggered. Then the plugin tries to load the .execution
-     * file through the method provided by the main KIEM plugin. If that method
-     * fails because the file is no longer at the saved location an Exception is
-     * thrown to inform the loader. It is suggested that in this case the faulty
-     * schedule should either be removed or the location updated and the load
-     * tried again.
+     * Load a schedule from the file system into the plugin. If the editor is dirty a save is
+     * triggered. Then the plugin tries to load the .execution file through the method provided by
+     * the main KIEM plugin. If that method fails because the file is no longer at the saved
+     * location an Exception is thrown to inform the loader. It is suggested that in this case the
+     * faulty schedule should either be removed or the location updated and the load tried again.
      * <p>
-     * This method can be called from another plug-in and is part of the KIEM
-     * Configurations API.
+     * This method can be called from another plug-in and is part of the KIEM Configurations API.
      * 
      * @param schedule
      *            the schedule data to load.
      * @throws ScheduleFileMissingException
      *             if the location in the schedule is no longer valid
      */
-    public void openSchedule(final ScheduleData schedule)
-            throws ScheduleFileMissingException {
+    public void openSchedule(final ScheduleData schedule) throws ScheduleFileMissingException {
         KiemEventListener.getInstance().setLoadImminent();
         try {
             String pluginID = schedule.getPluginId();
             if (pluginID == null) {
-                KiemPlugin.getDefault().openFile(schedule.getLocation(),
-                        schedule.isLocked());
+                KiemPlugin.getDefault().openFile(schedule.getLocation(), schedule.isLocked());
             } else {
-                KiemPlugin.getDefault().openFile(schedule.getLocation(),
-                        pluginID, schedule.isLocked());
+                KiemPlugin.getDefault().openFile(schedule.getLocation(), pluginID,
+                        schedule.isLocked());
             }
         } catch (IOException e0) {
             // loading failed due to missing .execution file
@@ -656,16 +649,14 @@ public final class ScheduleManager extends AbstractManager implements
 
         // loading successful
         getRecentScheduleIds().add(schedule.getId());
-        notifyListeners(new KiemConfigEvent(KiemConfigEvent.FILE_LOADED,
-                schedule.getLocation()));
+        notifyListeners(new KiemConfigEvent(KiemConfigEvent.FILE_LOADED, schedule.getLocation()));
     }
 
     // --------------------------------------------------------------------------
 
     /**
-     * Notify the manager that the user triggered a save. The manager gathers
-     * all information needed to create a new schedule and adds that schedule to
-     * the list.
+     * Notify the manager that the user triggered a save. The manager gathers all information needed
+     * to create a new schedule and adds that schedule to the list.
      * 
      * @param location
      *            the location where the file was saved.
@@ -676,9 +667,8 @@ public final class ScheduleManager extends AbstractManager implements
     }
 
     /**
-     * Notify the manager that the user triggered a load. The manager gathers
-     * all information needed to create a new schedule and adds that schedule to
-     * the list.
+     * Notify the manager that the user triggered a load. The manager gathers all information needed
+     * to create a new schedule and adds that schedule to the list.
      * 
      * @param location
      *            the location where the file was loaded from.
@@ -692,17 +682,15 @@ public final class ScheduleManager extends AbstractManager implements
     // --------------------------------------------------------------------------
 
     /**
-     * Load the list of most recently used schedules from the Eclipse Preference
-     * Store.
+     * Load the list of most recently used schedules from the Eclipse Preference Store.
      */
     private void loadMostRecentlyUsedSchedules() {
         if (recentScheduleIds == null) {
             int capacity = DEFAULT_RECENT_CAPACITY;
 
             try {
-                capacity = Integer.parseInt(ConfigurationManager.getInstance()
-                        .findPropertyValue(Tools.RECENT_CAPACITY_KEY,
-                                DEFAULT_RECENT_CAPACITY + ""));
+                capacity = Integer.parseInt(ConfigurationManager.getInstance().findPropertyValue(
+                        Tools.RECENT_CAPACITY_KEY, DEFAULT_RECENT_CAPACITY + ""));
             } catch (NumberFormatException e0) {
                 // not a number in stored preferences, keep default
             } catch (KiemPropertyException e0) {
@@ -743,8 +731,7 @@ public final class ScheduleManager extends AbstractManager implements
      * Load the schedules from the extension point.
      */
     private void loadFromExtensionPoint() {
-        IConfigurationElement[] contributors = Platform
-                .getExtensionRegistry()
+        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(
                         "de.cau.cs.kieler.sim.kiem.config.DefaultScheduleContributor");
 
@@ -756,8 +743,7 @@ public final class ScheduleManager extends AbstractManager implements
 
                     IPath location = Path.fromOSString(fileName);
                     // convert path into the desired format
-                    Bundle bundle = Platform.getBundle(element.getContributor()
-                            .getName());
+                    Bundle bundle = Platform.getBundle(element.getContributor().getName());
                     URL url = FileLocator.find(bundle, location, null);
 
                     if (url != null) {
@@ -766,9 +752,8 @@ public final class ScheduleManager extends AbstractManager implements
                         if (path.toOSString().startsWith("bundleentry:/")) {
                             // test if the file is valid before adding it
                             try {
-                                String urlPath = path.toOSString()
-                                        .replaceFirst("bundleentry:/",
-                                                "bundleentry://");
+                                String urlPath = path.toOSString().replaceFirst("bundleentry:/",
+                                        "bundleentry://");
                                 URL pathUrl = new URL(urlPath);
 
                                 InputStream inputStream = pathUrl.openStream();
@@ -779,44 +764,35 @@ public final class ScheduleManager extends AbstractManager implements
                             }
                         }
 
-                        IConfigurationElement[] children = element
-                                .getChildren();
+                        IConfigurationElement[] children = element.getChildren();
 
                         if (children != null && children.length > 0) {
 
                             for (IConfigurationElement child : children) {
 
                                 String editorId = child.getAttribute("id");
-                                String editorPriority = child
-                                        .getAttribute("priority");
+                                String editorPriority = child.getAttribute("priority");
                                 String editorName = child.getAttribute("name");
 
                                 if (editorId != null && !editorId.equals("")) {
                                     int priority = ScheduleData.DEFAULT_PRIORITY;
                                     try {
-                                        priority = Integer
-                                                .parseInt(editorPriority);
+                                        priority = Integer.parseInt(editorPriority);
                                     } catch (NumberFormatException e0) {
                                         // not a number in editorId, use default
                                         // priority
                                     }
-                                    EditorIdWrapper wrapper = new EditorIdWrapper(
-                                            editorId);
+                                    EditorIdWrapper wrapper = new EditorIdWrapper(editorId);
 
                                     // add the editor and schedule
-                                    EditorDefinition editor = EditorManager
-                                            .getInstance()
-                                            .addEditor(
-                                                    new EditorDefinition(
-                                                            editorName, wrapper));
+                                    EditorDefinition editor = EditorManager.getInstance()
+                                            .addEditor(new EditorDefinition(editorName, wrapper));
 
                                     if (editor != null) {
                                         editor.setLocked(true);
-                                        ScheduleData data = addSchedule(editor,
-                                                path, priority);
+                                        ScheduleData data = addSchedule(editor, path, priority);
                                         if (data != null) {
-                                            data.setPluginId(element
-                                                    .getContributor().getName());
+                                            data.setPluginId(element.getContributor().getName());
                                         }
                                     }
                                 }
@@ -824,12 +800,10 @@ public final class ScheduleManager extends AbstractManager implements
                             }
                         } else {
                             // no editors added, use default editor
-                            ScheduleData data = addSchedule(EditorManager
-                                    .getInstance().getDefaultEditor(), path,
-                                    ScheduleData.DEFAULT_PRIORITY);
+                            ScheduleData data = addSchedule(EditorManager.getInstance()
+                                    .getDefaultEditor(), path, ScheduleData.DEFAULT_PRIORITY);
                             if (data != null) {
-                                data.setPluginId(element.getContributor()
-                                        .getName());
+                                data.setPluginId(element.getContributor().getName());
                             }
                         }
                     }
@@ -846,8 +820,7 @@ public final class ScheduleManager extends AbstractManager implements
     private void loadFromPrefStore() {
         String input = super.load(Tools.SCHEDULE_CONFIGURATION_KEY, null);
         if (input != null) {
-            String[] array = Tools
-                    .getValueList(Tools.SCHEDULE_DATA_NAME, input);
+            String[] array = Tools.getValueList(Tools.SCHEDULE_DATA_NAME, input);
             if (array != null) {
                 for (String s : array) {
                     if (s != null && !s.contains("bundleentry:")) {
@@ -886,8 +859,7 @@ public final class ScheduleManager extends AbstractManager implements
             StringBuilder builder = new StringBuilder();
             for (ScheduleData data : scheduleData) {
                 if (!data.getId().contains("bundleentry:")) {
-                    builder.append(Tools.putValue(Tools.SCHEDULE_DATA_NAME,
-                            data.toString()));
+                    builder.append(Tools.putValue(Tools.SCHEDULE_DATA_NAME, data.toString()));
                 }
             }
             super.save(Tools.SCHEDULE_CONFIGURATION_KEY, builder.toString());
