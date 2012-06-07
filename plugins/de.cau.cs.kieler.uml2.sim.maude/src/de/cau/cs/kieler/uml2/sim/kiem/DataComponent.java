@@ -12,6 +12,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -67,9 +68,9 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.uml2.sim.Uml2SimPlugin;
 
 import org.eclipse.uml2.uml.Model;
@@ -141,18 +142,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    protected EObject getInputModelEObject(IEditorPart editorPart) {
-        EObject model = null;
-        if (editorPart instanceof PapyrusMultiDiagramEditor) {
-            PapyrusMultiDiagramEditor papyrusMultiDiagramEditor = (PapyrusMultiDiagramEditor) editorPart;
-            View notationElement = (View) papyrusMultiDiagramEditor.getDiagramEditPart().getModel();
-            if (notationElement == null) {
-                return null;
-            }
-            model = (EObject) notationElement.getElement();
-    	}
-        return model;
-    }
+//    protected EObject getInputModelEObject(IEditorPart editorPart) {
+//        EObject model = null;
+//        if (editorPart instanceof PapyrusMultiDiagramEditor) {
+//            PapyrusMultiDiagramEditor papyrusMultiDiagramEditor = (PapyrusMultiDiagramEditor) editorPart;
+//            View notationElement = (View) papyrusMultiDiagramEditor.getDiagramEditPart().getModel();
+//            if (notationElement == null) {
+//                return null;
+//            }
+//            model = (EObject) notationElement.getElement();
+//    	}
+//        return model;
+//    }
 
     // -------------------------------------------------------------------------
     
@@ -181,7 +182,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         LinkedList<String> stringList = new LinkedList<String>();
 
         // we here read in the uml model and extract the necessary information
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement();
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -437,7 +438,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // if id was not found, then we search the model for it
 
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement();
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -691,8 +692,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the maude gen code location
      */
     public String getMaudeGenCodeLocation() {
-        String outPath = part2Location(this.getInputEditor()).replace("%20"," ");
-        String stringUri = this.getInputModelAsURI().lastSegment().toString();
+        String outPath = getLocation().replace("%20"," ");
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
+        String stringUri = fileUri.lastSegment().toString();
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
         return (outPath + stringUri2);
@@ -773,7 +775,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // EMF reader
         Reader emfReader = new Reader();
-        String stringUri = this.getInputModelAsURI().toString();
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
+        String stringUri = fileUri.toString();
         
         //FIXME: Is this correct?! Seems not to work in RCA :(
         //emfReader.setUri("platform:/resource" + stringUri);
@@ -784,7 +787,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // emfReader.setResourceSet(this.getInputResourceSet());
         // emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
-        outPath = part2Location(this.getInputEditor()).replace("%20"," ");
+        outPath = (getLocation()).replace("%20"," ");
 
         // Set model name (gets model.maude)
         GlobalVar modelname = new GlobalVar();
@@ -914,12 +917,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      *            the editor
      * @return the string
      */
-    private static String part2Location(final IEditorPart editor) {
-        String out = null;
-        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-        String outName = uri.getName();
-        out = uri.getURI().getRawPath().replace(outName, "");
-        return out;
+    private String getLocation() {
+        IPath outPathTmp = this.getModelFilePath();
+        outPathTmp = outPathTmp.removeFileExtension();
+        outPathTmp = outPathTmp.removeLastSegments(1);
+        return outPathTmp.toString();
     }
 
     // -------------------------------------------------------------------------
@@ -968,7 +970,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     protected String[] getAllEvents() {
         if (allEvents == null) {
         LinkedList<String> returnList = new LinkedList<String>();
-        Object rootEObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootEObject = this.getModelRootElement(); 
         XtendFacade facade = getXtendFacade();
 
         // first collect events
@@ -999,7 +1001,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     protected String[] getAllActions() {
         if (allActions == null) {
             LinkedList<String> returnList = new LinkedList<String>();
-            Object rootEObject = this.getInputModelEObject(this.getInputEditor());
+            Object rootEObject = this.getModelRootElement(); 
             XtendFacade facade = getXtendFacade();
             
             // first collect events
@@ -1029,7 +1031,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     protected XtendFacade getXtendFacade() {
         // we here read in the uml model and extract the necessary information
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement(); 
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -1087,15 +1089,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #getNotationElement (org.eclipse.ui.IEditorPart)
      */
-    @Override
-    protected View getNotationElement(IEditorPart diagramEditor) {
-        if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
-            View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
-                    .getDiagramEditPart().getModel());
-            return notationElement;
-        }
-        return null;
-    }
+//    @Override
+//    protected View getNotationElement(IEditorPart diagramEditor) {
+//        if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
+//            View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
+//                    .getDiagramEditPart().getModel());
+//            return notationElement;
+//        }
+//        return null;
+//    }
 
     // -------------------------------------------------------------------------
 
@@ -1106,14 +1108,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #getInputEditor()
      */
-    @Override
-    protected IEditorPart getInputEditor() {
-        IEditorPart ep = super.getInputEditor();
-        if (!(ep instanceof PapyrusMultiDiagramEditor)) {
-            return null;
-        }
-        return ep;
-    }
+//    @Override
+//    protected IEditorPart getInputEditor() {
+//        IEditorPart ep = super.getInputEditor();
+//        if (!(ep instanceof PapyrusMultiDiagramEditor)) {
+//            return null;
+//        }
+//        return ep;
+//    }
 
     // -------------------------------------------------------------------------
 
