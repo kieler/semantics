@@ -189,7 +189,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     private IPath getEsoFilePath() {
         IPath modelFilePath = this.getModelFilePath();
-        IPath esoFilePath = modelFilePath.removeFileExtension().addFileExtension(Constants.ESO_FILEEXTENSION);
+        IPath esoFilePath = null;
+        if (modelFilePath != null) {
+            esoFilePath = modelFilePath.removeFileExtension().addFileExtension(Constants.ESO_FILEEXTENSION);
+        }
         return esoFilePath;
     }
 
