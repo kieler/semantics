@@ -428,7 +428,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
         try {
             value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
-            value.accumulate(Constants.VAR_ESOFILE, esoFilePath);
+            value.accumulate(Constants.VAR_ESOFILE, esoFilePath.toString());
             if (!trainingMode && trace.getSize() <= (step - 1)) {
                 value.accumulate(Constants.VAR_EOT, true);
             	if (this.getProperties()[6].getValueAsBoolean()) {

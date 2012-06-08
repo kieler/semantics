@@ -382,7 +382,12 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
             if (config.has(Constants.VAR_ESOFILE)) {
                 Object object = config.get(Constants.VAR_ESOFILE);
                 if (object != null) {
-                    esoFilePath = (Path) object;
+                    if (object instanceof Path) {
+                        esoFilePath = (Path) object;
+                    }
+                    else if (object instanceof String) {
+                        esoFilePath = new Path((String) object);
+                    }
                 }
             }
             trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
