@@ -328,9 +328,9 @@ public abstract class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        // if (true) {
-        // return;
-        // }
+         if (true) {
+         return;
+         }
 
         // -----------------------------------------------------------------------------------------
         // Create links in temp workspace and test if valid input (eso files and execution file)
