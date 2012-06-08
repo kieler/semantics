@@ -1556,7 +1556,16 @@ public class KiemPlugin extends AbstractUIPlugin {
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
         if (isForceNoErrorOutput()) {
-            KiemPlugin.lastError = pluginID + ":" + textMessage + exception.getMessage();
+            KiemPlugin.lastError = "";
+            if (pluginID != null) {
+                KiemPlugin.lastError += pluginID + ":";
+            }
+            if (textMessage != null) {
+                KiemPlugin.lastError += textMessage;
+            }
+            if (exception != null) {
+                KiemPlugin.lastError += exception.getMessage();
+            }
             return;
         }
         try {
