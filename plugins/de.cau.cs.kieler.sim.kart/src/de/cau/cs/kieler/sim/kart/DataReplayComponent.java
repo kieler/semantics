@@ -13,10 +13,13 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -24,6 +27,7 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -471,7 +475,10 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         // check whether ESO file exists!
         IPath esoFilePath = this.getEsoFilePath();
         try {
-            if (KiemUtil.openBundleOrWorkspaceFile(KiemUtil.resolveBundleOrWorkspaceFile(esoFilePath.toString())) == null) {
+            String esoFilePathString = esoFilePath.toString();
+            URL absoluteEsoFileURL = KiemUtil.resolveBundleOrWorkspaceFile(esoFilePathString);
+            InputStream esoFile = KiemUtil.openBundleOrWorkspaceFile(absoluteEsoFileURL);
+            if (esoFile == null) {
                 throw new KiemPropertyException(Constants.ERR_NOTEXISTESO);
             }
         } catch (MalformedURLException e) {
