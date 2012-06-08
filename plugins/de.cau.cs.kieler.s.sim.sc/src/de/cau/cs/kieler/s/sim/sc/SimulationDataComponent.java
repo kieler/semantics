@@ -277,12 +277,12 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
         try {
             // get active editor
-            IEditorPart editorPart = this.getModelEditor();
-            if (editorPart == null) {
-                throw new KiemInitializationException("No active editor selected!", true, null);
-            }
-
             myModel = (Program) this.getModelRootElement();
+            if (myModel == null) {
+                // try to load manually
+                
+            }
+            
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -309,9 +309,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             }
 
             // Calculate output path
-            FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
-            URI input = URI.createPlatformResourceURI(editorInput.getFile().getFullPath()
-                    .toString(), true);
+            //FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
+            String inputPathString = this.getModelFilePath().toString();
+            URI input = URI.createPlatformResourceURI(inputPathString, true);
 
             sOutput = URI.createURI(input.toString());
             sOutput = sOutput.trimFragment();

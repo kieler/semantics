@@ -14,6 +14,7 @@
 
 package de.cau.cs.kieler.sim.kiem.ui.datacomponent;
 
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
@@ -47,6 +48,7 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The Class JSONObjectDataComponent. Implementation for the extension point JSONObjectDataComponent
@@ -61,7 +63,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     /** The properties added by this super-component shift all sub components properties by one. */
     protected static final int KIEM_PROPERTY_DIFF = 1;
-    
+
     /** The Constant for the name of the KIEM property model file selection. */
     public static final String KIEM_PROPERTY_MODEFILE = "Model File";
 
@@ -95,16 +97,15 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     /**
      * Gets the kiem property model file name.
-     *
+     * 
      * @return the kiem property model file name
      */
     protected String getKiemPropertyModelFileName() {
         return KIEM_PROPERTY_MODEFILE;
     }
-    
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Provide filter keys and default values as a JSONObject.
      * 
@@ -270,8 +271,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         // If an opened EMF model editor is involved, check the timestamp
         if (this.getModelRootElement() != null) {
             try {
-                long newModelTimeStamp = getModelRootElement().eResource()
-                        .getTimeStamp();
+                long newModelTimeStamp = getModelRootElement().eResource().getTimeStamp();
                 // check the dirty state of the editor containing the simulated
                 // model
                 if (((newModelTimeStamp != modelTimeStamp) || getModelEditor().isDirty())
@@ -386,7 +386,21 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         if (modelFilePath == null) {
             return null;
         }
-        return KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+        EObject eObject = KiemPlugin.getOpenedModelRootObjects().get(modelFilePath);
+        if (eObject == null) {
+            // try to load it
+            try {
+                eObject = KiemUtil.loadEObjectFromModelFile(modelFilePath);
+            } catch (IOException e) {
+                // ignore errors
+                e.printStackTrace();
+            }
+            if (eObject != null) {
+                // save in KIEM for future use
+                KiemPlugin.getOpenedModelRootObjects().put(modelFilePath, eObject);
+            }
+        }
+        return eObject;
     }
 
     // -------------------------------------------------------------------------
@@ -449,7 +463,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
-        
+
         // Do validation only for (opened) EMF editors
         if (this.getModelRootElement() != null) {
             // Check if the model conforms to all check files and no warnings left!
@@ -466,18 +480,17 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                 askForModelError();
 
             }
-            try {
-                // first do the model transformation
-                performModelTransformation();
-                // then do the provide initial variables
-                returnObj = doProvideInitialVariables();
-            } catch (Exception e) {
-                throw new KiemInitializationException("Model could not be generated\n\n"
-                        + "Please ensure that all simulation warnings in the "
-                        + "respective Eclipse Problems View have been cleared.\n\n", true, e);
-            }
         }
-
+        try {
+            // first do the model transformation
+            performModelTransformation();
+            // then do the provide initial variables
+            returnObj = doProvideInitialVariables();
+        } catch (Exception e) {
+            throw new KiemInitializationException("Model could not be generated\n\n"
+                    + "Please ensure that all simulation warnings in the "
+                    + "respective Eclipse Problems View have been cleared.\n\n", true, e);
+        }
         return returnObj;
     }
 
@@ -602,12 +615,12 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         KiemProperty[] properties = doProvideProperties();
         if (properties == null) {
             returnProperties = new KiemProperty[1];
-            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(), new KiemPropertyTypeModel(),
-                    KiemPropertyTypeModel.ACTIVE_EDITOR);
+            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(),
+                    new KiemPropertyTypeModel(), KiemPropertyTypeModel.ACTIVE_EDITOR);
         } else {
             returnProperties = new KiemProperty[KIEM_PROPERTY_DIFF + properties.length];
-            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(), new KiemPropertyTypeModel(),
-                    KiemPropertyTypeModel.ACTIVE_EDITOR);
+            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(),
+                    new KiemPropertyTypeModel(), KiemPropertyTypeModel.ACTIVE_EDITOR);
             for (int c = 0; c < properties.length; c++) {
                 returnProperties[KIEM_PROPERTY_DIFF + c] = properties[c];
             }
@@ -690,15 +703,16 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                         + "Please ensure that an opened editor is selected and "
                         + "the file name matches.\n\nIf you want the currently active editor to be"
                         + "simulated make sure the (optional) editor property is empty!");
-            }
-            else {
+            } else {
                 // this is an error, probably the selected editor isnt open any
                 // more
                 // or the file(name) opened has changed
-                throw new KiemPropertyException("The selected editor '" + getModelFileProperty() + "'"
+                throw new KiemPropertyException("The selected editor '" + getModelFileProperty()
+                        + "'"
                         + " does not exist.\nPlease ensure that an opened editor is selected and"
                         + "the file name matches.\n\nIf you want the currently active editor to be"
-                        + "simulated select "+KiemPropertyTypeModel.ACTIVE_EDITOR +" as model file property!");
+                        + "simulated select " + KiemPropertyTypeModel.ACTIVE_EDITOR
+                        + " as model file property!");
             }
         }
 
@@ -711,16 +725,14 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                     saveEditor();
                     if (getModelRootElement() != null) {
                         // if this is an EMF editor, grab the time stamp
-                        modelTimeStamp = this.getModelRootElement().eResource()
-                                .getTimeStamp();
+                        modelTimeStamp = this.getModelRootElement().eResource().getTimeStamp();
                         simulatingOldModelVersion = false;
                     }
                 } else {
                     if (getModelRootElement() != null) {
                         // if this is an EMF editor, grab the time stamp
                         simulatingOldModelVersion = true;
-                        modelTimeStamp = this.getModelRootElement().eResource()
-                                .getTimeStamp();
+                        modelTimeStamp = this.getModelRootElement().eResource().getTimeStamp();
                     }
                 }
             } catch (KiemPropertyException e) {

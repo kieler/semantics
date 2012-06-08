@@ -22,6 +22,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Collections;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -34,8 +35,11 @@ import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.osgi.framework.Bundle;
@@ -450,4 +454,26 @@ public final class KiemUtil {
     }
 
     // -------------------------------------------------------------------------
+
+    /**
+     * Load an EMF EObject from a model file.
+     *
+     * @param modelFilePath the model file path
+     * @return the e object
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
+    public static EObject loadEObjectFromModelFile(final IPath modelFilePath) throws IOException {
+        // try to load it
+        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI
+                .createPlatformResourceURI(modelFilePath.toOSString(), true);
+        Resource resource = new ResourceSetImpl().createResource(uri);
+        resource.load(Collections.EMPTY_MAP);
+        if (resource != null && resource.getContents() != null && resource.getContents().size() > 0) {
+            EObject eobject = resource.getContents().get(0);
+            return eobject;
+        }
+        throw new IOException("Resource '" + modelFilePath.toString()
+                + "' loaded but no EMF model found inside.");
+    }
+
 }
