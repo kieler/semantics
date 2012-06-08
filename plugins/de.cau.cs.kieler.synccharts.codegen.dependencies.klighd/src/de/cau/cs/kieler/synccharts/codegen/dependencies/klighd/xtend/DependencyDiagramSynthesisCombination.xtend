@@ -56,8 +56,8 @@ class DependencyDiagramSynthesisCombination extends AbstractCombination {
 		// If this is a file selection then visualize the complete dependency graph
 		if (!selection.nullOrEmpty &&
 			    selection.size() == 1 && (selection.filter(typeof(File)).size > 0) && (selection.get(0) as File).fileExtension.equals("dependency")) {
-			    	
-			val uri = URI::createPlatformResourceURI((selection.get(0) as File).fullPath.toOSString, true);
+			val modelOSString = (selection.get(0) as File).fullPath.toOSString;
+			val uri = URI::createPlatformResourceURI(modelOSString, true);
 			val resource = new ResourceSetImpl().createResource(uri);
 			resource.load(Collections::EMPTY_MAP);
 			if (resource != null && !resource.contents.nullOrEmpty) {
