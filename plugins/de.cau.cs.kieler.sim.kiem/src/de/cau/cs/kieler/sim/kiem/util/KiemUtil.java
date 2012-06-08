@@ -150,15 +150,15 @@ public final class KiemUtil {
     /**
      * Gets the resolved absolute file path.
      * 
-     * @param fileAbsolute
-     *            the file absolute
+     * @param fullBundlePath
+     *            the full bundle path
      * @return the resolved absolute file path
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static URL getResolvedAbsoluteFilePath(final URL fileAbsolute) throws IOException {
-        URL resolvedFileAbsolute = FileLocator.resolve(fileAbsolute);
-        return resolvedFileAbsolute;
+    public static URL getAbsoluteBundlePath(final URL fullBundlePath) throws IOException {
+        URL absoluteBundlePath = FileLocator.resolve(fullBundlePath);
+        return absoluteBundlePath;
     }
 
     // -------------------------------------------------------------------------
@@ -177,104 +177,6 @@ public final class KiemUtil {
         }
         IPath urlPath = new Path(url.getFile());
         return getAbsoluteFilePath(urlPath);
-    }
-
-    // -------------------------------------------------------------------------
-    /**
-     * Creates the URL from string and try no normalize backslashes.
-     * 
-     * @param fileLocation
-     *            the file location
-     * @return the uRL
-     * @throws MalformedURLException
-     *             the malformed url exception
-     * @throws URISyntaxException
-     *             the uRI syntax exception
-     */
-    // public static URL createURLfromWorkspaceRelativeString(final String urlString)
-    // throws MalformedURLException {
-    // String fileSeparator = System.getProperty("file.separator");
-    // String urlString2 = urlString.replaceAll("\\\\", "/"); // as \ is an escape character in
-    // // a String AND a RegEx
-    // Path path = new Path(urlString);
-    // path.URL returnURL = new URL(urlString2);
-    // return returnURL;
-    // }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Resolve a bundle or workspace file from a String representation. If it starts with a
-     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
-     * to the KIEM plugin and then in the current workspace.
-     * 
-     * @param fileLocation
-     *            the file location
-     * @return the uRL
-     * @throws MalformedURLException
-     *             the malformed url exception
-     * @throws URISyntaxException
-     *             the uRI syntax exception
-     */
-    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
-            throws MalformedURLException, URISyntaxException {
-        String pluginID = KiemPlugin.PLUGIN_ID;
-        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Resolve a bundle or workspace file from a String representation. If it starts with a
-     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
-     * to the bundle/plugin and then in the bundles current workspace.
-     * 
-     * @param fileLocation
-     *            the file location
-     * @param pluginID
-     *            the plugin id
-     * @return the uRL
-     * @throws MalformedURLException
-     *             the malformed url exception
-     * @throws URISyntaxException
-     *             the uRI syntax exception
-     */
-    public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID)
-            throws MalformedURLException, URISyntaxException {
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-
-        // as \ is an escape character in a String AND a RegEx
-        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
-
-        URL fileURL = null;
-        if (fileLocation2.contains("bundleentry")) {
-            // already resolved bundle file
-            try {
-                fileURL = new URI(fileLocation2).toURL();
-            } catch (Exception e) {
-                // ignore errors
-            }
-        } else {
-            // if the bundle is not ready then there is no image
-            final Bundle bundle = Platform.getBundle(pluginID);
-
-            // first try to resolve bundle files (give preference to bundle files)
-            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation2),
-                    null);
-            // then try to resolve workspace files
-            if (fileURL == null) {
-                fileURL = bundle.getResource(fileLocation2);
-            }
-
-            // try to resolve workspace files as absolute files
-            if (fileURL == null) {
-                IFile file = myWorkspaceRoot.getFile(new Path(fileLocation2));
-                String fileString = myWorkspaceRoot.getFile(file.getFullPath()).getLocation()
-                        .toString();
-                fileURL = new URI("file://" + fileString).toURL();
-            }
-        }
-        return fileURL;
     }
 
     // -------------------------------------------------------------------------
@@ -329,21 +231,131 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
 
     /**
+     * Resolve a bundle or workspace file from a String representation. If it starts with a
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
+     * to the KIEM plugin and then in the current workspace.
+     * 
+     * @param fileLocation
+     *            the file location
+     * @return the uRL
+     * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
+     */
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation)
+            throws MalformedURLException, URISyntaxException {
+        String pluginID = KiemPlugin.PLUGIN_ID;
+        return resolveBundleOrWorkspaceFile(fileLocation, pluginID);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resolve a bundle or workspace file from a String representation. If it starts with a
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
+     * to the bundle/plugin and then in the bundles current workspace.
+     * 
+     * @param fileLocation
+     *            the file location
+     * @param pluginID
+     *            the plugin id
+     * @return the uRL
+     * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
+     */
+    public static URL resolveBundleOrWorkspaceFile(final String fileLocation, final String pluginID)
+            throws MalformedURLException, URISyntaxException {
+        // as \ is an escape character in a String AND a RegEx
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
+
+        URL fileURL = null;
+        if (fileLocation2.contains("bundleentry")) {
+            // already resolved bundle file
+            try {
+                fileURL = new URI(fileLocation2).toURL();
+            } catch (Exception e) {
+                // ignore errors
+            }
+        } else {
+            // if the bundle is not ready then there is no image
+            final Bundle bundle = Platform.getBundle(pluginID);
+
+            // first try to resolve bundle files (give preference to bundle files)
+            fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(fileLocation2),
+                    null);
+            // then try to resolve workspace files
+            if (fileURL == null) {
+                fileURL = bundle.getResource(fileLocation2);
+            }
+            
+            // then try to resolve workspace files
+            if (fileURL == null) {
+                fileURL = resolveWorkspaceFile(fileLocation);
+            }
+        }
+        return fileURL;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
+     * Resolve a workspace file from a String representation. If it starts with a
+     * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
+     * to the bundle/plugin and then in the bundles current workspace.
+     * 
+     * @param fileLocation
+     *            the file location
+     * @param pluginID
+     *            the plugin id
+     * @return the uRL
+     * @throws MalformedURLException
+     *             the malformed url exception
+     * @throws URISyntaxException
+     *             the uRI syntax exception
+     */
+    public static URL resolveWorkspaceFile(final String fileLocation)
+            throws MalformedURLException, URISyntaxException {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+
+        // as \ is an escape character in a String AND a RegEx
+        String fileLocation2 = fileLocation.replaceAll("\\\\", "/");
+
+        URL fileURL = null;
+        if (fileLocation2.contains("bundleentry")) {
+            return null;
+        } else {
+
+            // try to resolve workspace files as absolute files
+            if (fileURL == null) {
+                IFile file = myWorkspaceRoot.getFile(new Path(fileLocation2));
+                String fileString = file.getLocation()
+                        .toString();
+                fileURL = new URI("file://" + fileString).toURL();
+            }
+        }
+        return fileURL;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
      * Creates a linked workspace file and opens the corresponding project. If cleanProject is true,
      * then the project will be deleted and re-created before.
-     * 
-     * @param fullFilePathString
-     *            the full file path string
-     * @param workspaceProjectName
-     *            the workspace project name
-     * @param cleanProject
-     *            the clean project
+     *
+     * @param fullBundlePath the full bundle path
+     * @param workspaceProjectName the workspace project name
+     * @param cleanProject the clean project
+     * @param override the override
      * @return the i file
-     * @throws CoreException
-     *             the core exception
+     * @throws CoreException the core exception
+     * @throws URISyntaxException the uRI syntax exception
+     * @throws IOException Signals that an I/O exception has occurred.
      */
-    public static IFile createLinkedWorkspaceFile(final String fullFilePathString,
-            final String workspaceProjectName, final boolean cleanProject) throws CoreException {
+    public static IFile createLinkedWorkspaceFile(final IPath fullBundlePath,
+            final String workspaceProjectName, final boolean cleanProject, final boolean override)
+            throws CoreException, URISyntaxException, IOException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot workspaceRoot = workspace.getRoot();
 
@@ -360,16 +372,20 @@ public final class KiemUtil {
             project.open(null);
         }
 
-        IPath path = new Path(fullFilePathString);
-        IFile file = project.getFile(path.lastSegment());
-        try {
-            if (!file.exists()) {
-                file.createLink(path, IResource.NONE, null);
-            }
-        } catch (CoreException e) {
-            e.printStackTrace();
+        IFile workspaceLinkFile = null;
+        URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
+        URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(fullBundleUrl);
+        String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
+        IPath absoluteBundlePath = new Path(absoluteBundlePathString);
+        workspaceLinkFile = project.getFile(absoluteBundlePath.lastSegment());
+        if (override && workspaceLinkFile.exists()) {
+            // delete old file
+            workspaceLinkFile.delete(true, null);
         }
-        return file;
+        if (!workspaceLinkFile.exists()) {
+            workspaceLinkFile.createLink(absoluteBundlePath, IResource.NONE, null);
+        }
+        return workspaceLinkFile;
     }
 
     // -------------------------------------------------------------------------
@@ -389,8 +405,8 @@ public final class KiemUtil {
         if (!fileStringCopy.startsWith("file://")) {
             fileStringCopy = "file://" + fileStringCopy;
         }
-        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI.createURI(fileStringCopy
-                .replaceAll(" ", "%20").replace("\\", "/"));
+        org.eclipse.emf.common.util.URI uri = org.eclipse.emf.common.util.URI
+                .createURI(fileStringCopy.replaceAll(" ", "%20").replace("\\", "/"));
         return uri;
     }
 
@@ -414,6 +430,6 @@ public final class KiemUtil {
         }
         return editorSite;
     }
-    
+
     // -------------------------------------------------------------------------
 }
