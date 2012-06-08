@@ -304,16 +304,11 @@ public final class KiemUtil {
      * Resolve a workspace file from a String representation. If it starts with a
      * bundleentry, then it is already resolved as a bundle file. Otherwise we first look relative
      * to the bundle/plugin and then in the bundles current workspace.
-     * 
-     * @param fileLocation
-     *            the file location
-     * @param pluginID
-     *            the plugin id
+     *
+     * @param fileLocation the file location
      * @return the uRL
-     * @throws MalformedURLException
-     *             the malformed url exception
-     * @throws URISyntaxException
-     *             the uRI syntax exception
+     * @throws MalformedURLException the malformed url exception
+     * @throws URISyntaxException the uRI syntax exception
      */
     public static URL resolveWorkspaceFile(final String fileLocation)
             throws MalformedURLException, URISyntaxException {

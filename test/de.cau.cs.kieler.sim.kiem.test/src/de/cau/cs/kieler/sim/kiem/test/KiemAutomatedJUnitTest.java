@@ -63,17 +63,13 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * The class KiemAutomatedJUnit enabled the integration of several KIEM execution runs into a JUNIT
  * plugin test.
  * 
- * Execution schedules may be passed using the -execution="/project/file.exeution" parameter.
- * Typically all ESO files found in all projects of the selected workspace are run.
+ * Test model files and corresponding (same name!) ESO files should be provided with the
+ * bundle implementing the KiemAutomatedJUnitTest abstract class in a bundle directory
+ * specified by getBundleTestPath().
  * 
- * You should select a model file extension -model=s or select directly some model files use the
- * -model={"/project/file1.s","/project/file2.s"} parameter to select some.
+ * The execution file that should be used must exist also in this direcory. Its name is specified
+ * by getExecutionFileName().
  * 
- * ATTENTION: Be sure to uncheck the run in UI thread option in the run configuration of the JUnit
- * test case ([ ] run in UI thread).
- * 
- * ATTENTION: The Kiem.UI Plugin should not be part of the run configuration because the executions
- * may be too fast done and the Kiem.UI Plugin may get problems handling already closed widgets.
  * 
  * @author cmot
  * 
@@ -176,6 +172,8 @@ public abstract class KiemAutomatedJUnitTest {
      * Defines a path in the bundle where the model files, the eso files and the execution files are
      * located.
      * 
+     * E.g., return new Path("/testdata/");
+     * 
      * @return the ESO files
      */
     protected abstract IPath getBundleTestPath();
@@ -184,6 +182,8 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Defines the file extension for the model files.
+     * 
+     * E.g., return "s"
      * 
      * @return the model file extension
      */
@@ -195,6 +195,8 @@ public abstract class KiemAutomatedJUnitTest {
      * Defines the name of the folder in the workspace where links to the bundle files will be
      * created.
      * 
+     * E.g., return "temp-s"
+     * 
      * @return the temporary workspace folder name
      */
     protected abstract String getTemporaryWorkspaceFolderName();
@@ -205,6 +207,8 @@ public abstract class KiemAutomatedJUnitTest {
      * Gets the name of the considered KIEM execution scheduling file. Derived test classes should
      * provide the name of the execution file that should be part of the plugin in the
      * BundleTestPath.
+     * 
+     * E.g., return "myexecution.execution";
      * 
      * @return the plugin execution file
      */
@@ -518,31 +522,36 @@ public abstract class KiemAutomatedJUnitTest {
             if (errorFlag) {
                 break;
             }
-        } // next eso file
+        } // next ESO file
 
         // -----------------------------------------------------------------------------------------
         // if an error occurred than print it out
         if (errorFlag) {
             fail(errorInformation);
         }
-
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Pause.
+     * A pause instruction for delaying execution.
      */
-    void pause() {
+    private void pause() {
         try {
             Thread.sleep(SLEEP_DELAY_BETWEEN_EXECUTIONS);
         } catch (InterruptedException e1) {
-            // irgnore sleeping error
+            // ignore sleeping error
         }
     }
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Creates the editor input for opening model files.
+     *
+     * @param fullFilePathString the full file path string
+     * @return the i editor input
+     */
     private IEditorInput createEditorInput(String fullFilePathString) {
         IPath path = new Path(fullFilePathString);
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -554,6 +563,14 @@ public abstract class KiemAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the editor id for opening model files.
+     *
+     * @param fullFilePath the full file path
+     * @return the editor id
+     * @throws URISyntaxException the uRI syntax exception
+     * @throws IOException Signals that an I/O exception has occurred.
+     */
     private String getEditorId(IPath fullFilePath) throws URISyntaxException, IOException {
         URL absoluteFileUrl = KiemUtil.resolveWorkspaceFile(fullFilePath.toString());
         String absoluteFilePathString = KiemUtil.getAbsoluteFilePath(absoluteFileUrl);

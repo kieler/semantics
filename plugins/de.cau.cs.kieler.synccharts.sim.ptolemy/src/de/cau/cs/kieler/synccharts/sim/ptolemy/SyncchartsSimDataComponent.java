@@ -14,12 +14,9 @@
 
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
-import java.net.URL;
-
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
@@ -33,12 +30,10 @@ import org.eclipse.emf.mwe.core.issues.Issues;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.emf.mwe.internal.core.Workflow;
 import org.eclipse.emf.mwe.utils.Reader;
-import org.eclipse.ui.internal.util.BundleUtility;
 import org.eclipse.xtend.XtendComponent;
 import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
