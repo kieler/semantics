@@ -61,6 +61,9 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     /** The properties added by this super-component shift all sub components properties by one. */
     protected static final int KIEM_PROPERTY_DIFF = 1;
+    
+    /** The Constant for the name of the KIEM property model file selection. */
+    public static final String KIEM_PROPERTY_MODEFILE = "Model File";
 
     /** The transformation completed flag. */
     private boolean transformationCompleted;
@@ -90,6 +93,18 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the kiem property model file name.
+     *
+     * @return the kiem property model file name
+     */
+    protected String getKiemPropertyModelFileName() {
+        return KIEM_PROPERTY_MODEFILE;
+    }
+    
+    
+    // -------------------------------------------------------------------------
+    
     /**
      * Provide filter keys and default values as a JSONObject.
      * 
@@ -754,14 +769,14 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         KiemProperty[] properties = doProvideProperties();
         if (properties == null) {
             returnProperties = new KiemProperty[1];
-            returnProperties[0] = new KiemProperty("Model File", new KiemPropertyTypeModel(),
+            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(), new KiemPropertyTypeModel(),
                     KiemPropertyTypeModel.ACTIVE_EDITOR);
         } else {
-            returnProperties = new KiemProperty[1 + properties.length];
-            returnProperties[0] = new KiemProperty("Model File", new KiemPropertyTypeModel(),
+            returnProperties = new KiemProperty[KIEM_PROPERTY_DIFF + properties.length];
+            returnProperties[0] = new KiemProperty(getKiemPropertyModelFileName(), new KiemPropertyTypeModel(),
                     KiemPropertyTypeModel.ACTIVE_EDITOR);
             for (int c = 0; c < properties.length; c++) {
-                returnProperties[1 + c] = properties[c];
+                returnProperties[KIEM_PROPERTY_DIFF + c] = properties[c];
             }
         }
         return returnProperties;
@@ -834,9 +849,16 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
         IEditorPart modelEditor = getModelEditor();
 
-        if (!isActiveEditorSelected()) {
-            // if NOT the active editor is selected but a different file check whether the file exists
-            if (this.getModelFilePath() == null) {
+        // if NOT the active editor is selected but a different file check whether the file exists
+        if (this.getModelFilePath() == null) {
+            // if the active editor is selected then this is the problem
+            if (modelEditor == null && isActiveEditorSelected()) {
+                throw new KiemPropertyException("There exists no active editor.\n"
+                        + "Please ensure that an opened editor is selected and "
+                        + "the file name matches.\n\nIf you want the currently active editor to be"
+                        + "simulated make sure the (optional) editor property is empty!");
+            }
+            else {
                 // this is an error, probably the selected editor isnt open any
                 // more
                 // or the file(name) opened has changed
@@ -845,15 +867,6 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                         + "the file name matches.\n\nIf you want the currently active editor to be"
                         + "simulated select "+KiemPropertyTypeModel.ACTIVE_EDITOR +" as model file property!");
             }
-        }
-        else {
-            // if the active editor is selected check whether kiem provides a proper model
-            if (modelEditor == null) {
-                throw new KiemPropertyException("There exists no active editor.\n"
-                        + "Please ensure that an opened editor is selected and "
-                        + "the file name matches.\n\nIf you want the currently active editor to be"
-                        + "simulated make sure the (optional) editor property is empty!");
-            }            
         }
 
         // if this model belongs to an opened editor check whether it is dirty
