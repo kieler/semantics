@@ -146,6 +146,7 @@ public final class KiemUtil {
         } else {
             String blaa = fileAbsolute.toExternalForm();
             blaa = blaa.replace("file://", "");
+            blaa = blaa.replace("file:/", "");
             File file = new File(blaa);
             InputStream inputStream = new FileInputStream(file);
             return inputStream;

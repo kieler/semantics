@@ -17,11 +17,13 @@ package de.cau.cs.kieler.sim.kiem.test;
 import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Enumeration;
@@ -33,11 +35,13 @@ import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspace;
+import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.filesystem.URIUtil;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
@@ -236,23 +240,28 @@ public abstract class KiemAutomatedJUnitTest {
 
                 IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         this.getTemporaryWorkspaceFolderName(), false, true);
+                if (!workspaceFile.exists()) {
+                    throw new RuntimeException(
+                            "Cannot create temporary workspace link for the following bundle file (1) :"
+                                    + bundleFileUrl.toString());
+                }
                 IPath filePath = workspaceFile.getFullPath();
                 allFiles.add(filePath);
             } catch (CoreException e) {
                 throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file:"
+                        "Cannot create temporary workspace link for the following bundle file (2) :"
                                 + bundleFileUrl.toString());
             } catch (MalformedURLException e) {
                 throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file:"
+                        "Cannot create temporary workspace link for the following bundle file (3) :"
                                 + bundleFileUrl.toString());
             } catch (URISyntaxException e) {
                 throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file:"
+                        "Cannot create temporary workspace link for the following bundle file (4) :"
                                 + bundleFileUrl.toString());
             } catch (IOException e) {
                 throw new RuntimeException(
-                        "Cannot create temporary workspace link for the following bundle file:"
+                        "Cannot create temporary workspace link for the following bundle file (5) :"
                                 + bundleFileUrl.toString());
             }
         }
@@ -666,8 +675,26 @@ public abstract class KiemAutomatedJUnitTest {
      */
     int getNumberOfTraces(IPath esoFilePath) {
         try {
-            URL esoFileURL = KiemUtil.resolveBundleOrWorkspaceFile(esoFilePath.toString());
-            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileURL,
+            IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+            System.out.println("myWorkspaceRoot" + myWorkspaceRoot.getLocation().toString());
+            IFile esoFileFile = myWorkspaceRoot.getFile(esoFilePath);
+            System.out.println("esoFileFile" + esoFileFile.toString());
+            String esoFileString = esoFileFile.getLocation().toString();
+            System.out.println("esoFileString" + esoFileString);
+            URL esoFileUrl = new URI("file://" + esoFileString).toURL();
+            System.out.println("esoFileUrl" + esoFileUrl.toString());
+            
+            
+//            // if the bundle is not ready then there is no image
+//            final Bundle bundle = Platform.getBundle(this.getPluginId());
+//            URL esoFileUrl = bundle.getResource(esoFilePath.toString());
+//            
+//            esoFilePath.makeAbsolute();
+//            java.io.File javaFile = new File(esoFilePath.toString().replaceAll("%20", " "));
+//            
+//            URI esoFileUri = URIUtil.toURI(esoFilePath);
+//            URL esoFileUrl = esoFileUri.toURL(); 
+            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileUrl,
                     this.getPluginId());
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
