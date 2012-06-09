@@ -675,14 +675,16 @@ public abstract class KiemAutomatedJUnitTest {
      */
     int getNumberOfTraces(IPath esoFilePath) {
         try {
-            IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-            System.out.println("myWorkspaceRoot" + myWorkspaceRoot.getLocation().toString());
-            IFile esoFileFile = myWorkspaceRoot.getFile(esoFilePath);
-            System.out.println("esoFileFile" + esoFileFile.toString());
-            String esoFileString = esoFileFile.getLocation().toString();
-            System.out.println("esoFileString" + esoFileString);
-            URL esoFileUrl = new URI("file://" + esoFileString).toURL();
-            System.out.println("esoFileUrl" + esoFileUrl.toString());
+//            IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+//            System.out.println("myWorkspaceRoot" + myWorkspaceRoot.getLocation().toString());
+//            IFile esoFileFile = myWorkspaceRoot.getFile(esoFilePath);
+//            Input StreaesoFileFile.getContents()
+
+            //            System.out.println("esoFileFile" + esoFileFile.toString());
+//            String esoFileString = esoFileFile.getLocation().toString();
+//            System.out.println("esoFileString" + esoFileString);
+//            URL esoFileUrl = new URI("file://" + esoFileString).toURL();
+//            System.out.println("esoFileUrl" + esoFileUrl.toString());
             
             
 //            // if the bundle is not ready then there is no image
@@ -694,8 +696,7 @@ public abstract class KiemAutomatedJUnitTest {
 //            
 //            URI esoFileUri = URIUtil.toURI(esoFilePath);
 //            URL esoFileUrl = esoFileUri.toURL(); 
-            InputStream inputStream = KiemUtil.openBundleOrWorkspaceFile(esoFileUrl,
-                    this.getPluginId());
+            InputStream inputStream = KiemUtil.openWorkspaceFile(esoFilePath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
             int number = 0;
@@ -713,7 +714,7 @@ public abstract class KiemAutomatedJUnitTest {
         } catch (IOException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
                     + "' in order to count the maximum number of traces.");
-        } catch (URISyntaxException e) {
+        } catch (CoreException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
                     + "' in order to count the maximum number of traces.");
         }

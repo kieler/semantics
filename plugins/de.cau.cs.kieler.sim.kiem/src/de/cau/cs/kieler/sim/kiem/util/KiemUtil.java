@@ -130,6 +130,25 @@ public final class KiemUtil {
      * @return the input stream
      * @throws IOException
      *             Signals that an I/O exception has occurred.
+     * @throws CoreException 
+     */
+    public static InputStream openWorkspaceFile(final IPath relativeFilePath) throws CoreException {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        IFile relativeFile = myWorkspaceRoot.getFile(relativeFilePath);
+        return relativeFile.getContents();
+    }
+
+    
+    /**
+     * Open a bundle or workspace file and returns an InputStream.
+     * 
+     * @param fileAbsolute
+     *            the file absolute
+     * @param pluginID
+     *            the plugin id
+     * @return the input stream
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static InputStream openBundleOrWorkspaceFile(final URL fileAbsolute,
             final String pluginID) throws IOException {
