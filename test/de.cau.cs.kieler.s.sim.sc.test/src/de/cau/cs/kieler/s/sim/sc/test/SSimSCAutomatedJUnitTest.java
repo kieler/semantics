@@ -46,7 +46,7 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     @Override
     protected IPath getBundleTestPath() {
-        return new Path("/testdata/");
+        return new Path("testdata");
     }
 
     @Override

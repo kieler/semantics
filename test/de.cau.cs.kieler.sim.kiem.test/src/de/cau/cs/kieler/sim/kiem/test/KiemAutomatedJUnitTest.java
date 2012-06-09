@@ -227,9 +227,11 @@ public abstract class KiemAutomatedJUnitTest {
         // Search for all files in the test directory
         Enumeration<URL> allBundleFilesURL = bundle.findEntries(
                 this.getBundleTestPath().toString(), "*.*", false);
+        System.out.println("testpath:" + this.getBundleTestPath().toString());
         while (allBundleFilesURL.hasMoreElements()) {
             URL bundleFileURL = allBundleFilesURL.nextElement();
             try {
+                System.out.println("bundleFileURL:" + bundleFileURL.toString());
                 IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
                 IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(fullBundleFilePath,
