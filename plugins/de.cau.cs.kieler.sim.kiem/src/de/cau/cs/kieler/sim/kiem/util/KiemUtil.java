@@ -164,9 +164,9 @@ public final class KiemUtil {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static URL getAbsoluteBundlePath(final URL fullBundlePath) throws IOException {
-        System.out.println("fullBundlePath:" + fullBundlePath);
-        URL absoluteBundlePath = FileLocator.resolve(fullBundlePath);
+    public static URL getAbsoluteBundlePath(final URL fullBundleUrl) throws IOException {
+        System.out.println("fullBundleUrl:" + fullBundleUrl);
+        URL absoluteBundlePath = FileLocator.resolve(fullBundleUrl);
         return absoluteBundlePath;
     }
 
@@ -376,7 +376,7 @@ public final class KiemUtil {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static IFile createLinkedWorkspaceFile(final IPath fullBundlePath,
+    public static IFile createLinkedWorkspaceFile(final URL fullBundleUrl,
             final String workspaceProjectName, final boolean cleanProject, final boolean override)
             throws CoreException, URISyntaxException, IOException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
@@ -396,7 +396,12 @@ public final class KiemUtil {
         }
 
         IFile workspaceLinkFile = null;
-        URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
+        //URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
+//        URI fullBundleUri =   org.eclipse.core.filesystem.URIUtil.toURI(fullBundlePath);
+//                System.out.println("fullBundleUri:" + fullBundleUri);
+//                URL fullBundleUrl =  fullBundleUri.toURL();
+//                System.out.println("fullBundleUrl:" + fullBundleUrl);
+
         URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(fullBundleUrl);
         String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
         IPath absoluteBundlePath = new Path(absoluteBundlePathString);

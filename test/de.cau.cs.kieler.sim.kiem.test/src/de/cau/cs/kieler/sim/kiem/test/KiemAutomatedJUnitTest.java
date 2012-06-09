@@ -225,35 +225,35 @@ public abstract class KiemAutomatedJUnitTest {
         final Bundle bundle = Platform.getBundle(this.getPluginId());
 
         // Search for all files in the test directory
-        Enumeration<URL> allBundleFilesURL = bundle.findEntries(
+        Enumeration<URL> allBundleFilesUrl = bundle.findEntries(
                 this.getBundleTestPath().toString(), "*.*", false);
         System.out.println("testpath:" + this.getBundleTestPath().toString());
-        while (allBundleFilesURL.hasMoreElements()) {
-            URL bundleFileURL = allBundleFilesURL.nextElement();
+        while (allBundleFilesUrl.hasMoreElements()) {
+            URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
-                System.out.println("bundleFileURL:" + bundleFileURL.toString());
-                IPath fullBundleFilePath = new Path(bundleFileURL.toString());
+                System.out.println("bundleFileUrl:" + bundleFileUrl.toString());
+                //IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
-                IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(fullBundleFilePath,
+                IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         this.getTemporaryWorkspaceFolderName(), false, true);
                 IPath filePath = workspaceFile.getFullPath();
                 allFiles.add(filePath);
             } catch (CoreException e) {
                 throw new RuntimeException(
                         "Cannot create temporary workspace link for the following bundle file:"
-                                + bundleFileURL.toString());
+                                + bundleFileUrl.toString());
             } catch (MalformedURLException e) {
                 throw new RuntimeException(
                         "Cannot create temporary workspace link for the following bundle file:"
-                                + bundleFileURL.toString());
+                                + bundleFileUrl.toString());
             } catch (URISyntaxException e) {
                 throw new RuntimeException(
                         "Cannot create temporary workspace link for the following bundle file:"
-                                + bundleFileURL.toString());
+                                + bundleFileUrl.toString());
             } catch (IOException e) {
                 throw new RuntimeException(
                         "Cannot create temporary workspace link for the following bundle file:"
-                                + bundleFileURL.toString());
+                                + bundleFileUrl.toString());
             }
         }
         return allFiles;
