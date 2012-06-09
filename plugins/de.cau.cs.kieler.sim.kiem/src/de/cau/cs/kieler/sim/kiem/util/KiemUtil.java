@@ -165,6 +165,7 @@ public final class KiemUtil {
      *             Signals that an I/O exception has occurred.
      */
     public static URL getAbsoluteBundlePath(final URL fullBundlePath) throws IOException {
+        System.out.println("fullBundlePath:" + fullBundlePath);
         URL absoluteBundlePath = FileLocator.resolve(fullBundlePath);
         return absoluteBundlePath;
     }
