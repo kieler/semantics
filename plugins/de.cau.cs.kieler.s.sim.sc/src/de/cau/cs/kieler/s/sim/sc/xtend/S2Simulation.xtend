@@ -32,6 +32,8 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import org.eclipse.xtend.util.stdlib.CloningExtensions
 
+import de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
+
 /**
  * Transformation of S code into S code that is
  * enriched with additional signals for each s statement.
@@ -51,7 +53,7 @@ class S2Simulation {
     
     // General method to create the enriched S simulation code.
    	def Program transform2Simulation (Program program) {
-   		var AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
+   		var AUXILIARY_VARIABLE_TAG = SSimSCPlugin::AUXILIARY_VARIABLE_TAG
    		
 		// Clone the complete S program 
    		var target = CloningExtensions::clone(program) as Program;
