@@ -126,6 +126,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         configVarName = "";
         outputVarName = "";
         prevInputVarName = "";
+        
+        System.out.println("KART REPLAY INIT 1");
 
         // load properties
         for (KiemProperty prop : properties) {
@@ -141,18 +143,22 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 prevInputVarName = prop.getValue();
             }
         }
+        System.out.println("KART REPLAY INIT 2");
 
         if (!trainingMode) {
             // Read the file
             ITraceProvider tracefile = new EsoFile();
             try {
+                System.out.println("KART REPLAY INIT 3");
                 List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
+                System.out.println("KART REPLAY INIT 4");
 
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(Constants.ERR_NOTRACE + tracenum, true, e);
                 }
+                System.out.println("KART REPLAY INIT 5");
             } catch (FileNotFoundException e) {
                 IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                         .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.MessageDialog");
@@ -182,6 +188,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 throw new KiemInitializationException(Constants.ERR_READ, true, e);
             }
         }
+        System.out.println("KART REPLAY INIT 6");
     }
     
     //-------------------------------------------------------------------------

@@ -61,7 +61,7 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     @Override
     protected String getExecutionFileName() {
-        return "automated-simple.execution";
+        return "automated.execution";
     }
 
     

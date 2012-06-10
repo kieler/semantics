@@ -153,6 +153,8 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         errSignalVar = Constants.DEF_SIGNALVAR;
         variables = Utilities.makeSetOfPairs(Constants.DEF_VALVAR);
 
+        System.out.println("KART VALIDATE INIT 1");
+
         KiemProperty[] properties = this.getProperties();
 
         esoOutputs = new LinkedList<HashMap<String, Object>>();
@@ -160,6 +162,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         simOutputs = new LinkedList<HashMap<String, String>>();
         simVariables = new LinkedList<HashMap<String, String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
+        System.out.println("KART VALIDATE INIT 2");
 
         // load properties
         variables = new HashSet<Pair<String, String>>();
@@ -178,11 +181,13 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 errSignalVar = prop.getValue();
             }
         }
+        System.out.println("KART VALIDATE INIT 3");
 
         // Read the file
         if (!trainingMode) {
             valEngine = new DefaultValidationEngine(ignoreAdditionalSignals);
         }
+        System.out.println("KART VALIDATE INIT 4");
     }
 
     /**
