@@ -271,6 +271,7 @@ public class InitializeExecution implements Runnable {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
             if (dataComponentWrapper.isEnabled()) {
                 try {
+                    System.out.println("opening model file B 3.1."+c+": "+dataComponentWrapper.getComponentId());
                     JSONObject localInitialVariables = dataComponentWrapper
                             .provideInitialVariables();
                     if (localInitialVariables != null) {
