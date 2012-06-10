@@ -475,17 +475,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         // check whether ESO file exists!
         IPath esoFilePath = this.getEsoFilePath();
         try {
-            String esoFilePathString = esoFilePath.toString();
-            URL absoluteEsoFileURL = KiemUtil.resolveBundleOrWorkspaceFile(esoFilePathString);
-            InputStream esoFile = KiemUtil.openBundleOrWorkspaceFile(absoluteEsoFileURL);
+            InputStream esoFile = KiemUtil.openWorkspaceFile(esoFilePath);
             if (esoFile == null) {
                 throw new KiemPropertyException(Constants.ERR_NOTEXISTESO);
             }
-        } catch (MalformedURLException e) {
-            throw new KiemPropertyException(Constants.ERR_NOTEXISTESO);
-        } catch (IOException e) {
-            throw new KiemPropertyException(Constants.ERR_NOTEXISTESO);
-        } catch (URISyntaxException e) {
+        } catch (CoreException e) {
             throw new KiemPropertyException(Constants.ERR_NOTEXISTESO);
         }
         

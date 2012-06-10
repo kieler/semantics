@@ -25,6 +25,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.xtext.ISetup;
 import org.eclipse.xtext.nodemodel.INode;
@@ -174,16 +177,9 @@ public class EsoFile implements ITraceProvider {
         InputStream in;
         if (fileName != null && fileName.length() > 0) {
             try {
-                URL fileURL = KiemUtil.resolveBundleOrWorkspaceFile(fileName, "de.cau.cs.kieler.sim.eso");
-                in = KiemUtil.openBundleOrWorkspaceFile(fileURL);
-            } catch (MalformedURLException e) {
-                throw new KiemInitializationException(
-                        "EsiComponent cannot load trace file due to malformed URL.", false, null);
-            } catch (IOException e) {
-                throw new KiemInitializationException(
-                        "EsiComponent cannot load trace file due to IO exception.", false, null);
-            }
-            catch (URISyntaxException e) {
+                IPath filePath = new Path(fileName);
+                in = KiemUtil.openWorkspaceFile(filePath);
+            } catch (CoreException e) {
                 throw new KiemInitializationException(
                         "EsiComponent cannot load trace file due to malformed URI.", false, null);
             }

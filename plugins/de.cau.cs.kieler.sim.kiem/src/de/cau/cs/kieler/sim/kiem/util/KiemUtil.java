@@ -107,30 +107,35 @@ public final class KiemUtil {
     /**
      * Open bundle or workspace file.
      * 
-     * @param fileAbsolute
-     *            the file absolute
+     * @param relativeFilePath
+     *            the relative file path
+     * @param pluginID
+     *            the plugin id
      * @return the input stream
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     * @throws CoreException
+     *             the core exception
      */
-    public static InputStream openBundleOrWorkspaceFile(final URL fileAbsolute) throws IOException {
-        String pluginID = getPluginID(fileAbsolute);
-        return openBundleOrWorkspaceFile(fileAbsolute, pluginID);
+    public static InputStream openBundleOrWorkspaceFile(final IPath relativeFilePath,
+            final String pluginID) throws CoreException {
+        InputStream inputStream = null;
+        try {
+            inputStream = openBundleFile(relativeFilePath, pluginID);
+        } catch (Exception e) {
+            inputStream = openWorkspaceFile(relativeFilePath);
+        }
+        return inputStream;
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Open a bundle or workspace file and returns an InputStream.
+     * Open a bundle file and returns an InputStream.
      * 
-     * @param fileAbsolute
-     *            the file absolute
-     * @param pluginID
-     *            the plugin id
+     * @param relativeFilePath
+     *            the relative file path
      * @return the input stream
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
-     * @throws CoreException 
+     * @throws CoreException
+     *             the core exception
      */
     public static InputStream openWorkspaceFile(final IPath relativeFilePath) throws CoreException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
@@ -138,39 +143,31 @@ public final class KiemUtil {
         return relativeFile.getContents();
     }
 
-    
+    // -------------------------------------------------------------------------
+
     /**
      * Open a bundle or workspace file and returns an InputStream.
      * 
-     * @param fileAbsolute
-     *            the file absolute
+     * @param relativeFilePath
+     *            the relative file path
      * @param pluginID
      *            the plugin id
      * @return the input stream
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static InputStream openBundleOrWorkspaceFile(final URL fileAbsolute,
-            final String pluginID) throws IOException {
+    public static InputStream openBundleFile(final IPath relativeFilePath, final String pluginID)
+            throws IOException {
+        // TODO: is this working with ?
+        final Bundle bundle = Platform.getBundle(pluginID);
+        URL bundleFileUrl = bundle.getEntry(relativeFilePath.toString());
 
-        // if bundle entry then just to string
-        if (isBundleFile(fileAbsolute)) {
-            // resolve relative workspace paths
-            URIConverter uriConverter = new ExtensibleURIConverterImpl();
-            String fileString = pluginID + fileAbsolute.getFile();
-            org.eclipse.emf.common.util.URI fileURI = org.eclipse.emf.common.util.URI
-                    .createPlatformPluginURI(fileString, false);
-            InputStream inputStream = uriConverter.createInputStream(fileURI);
-            return inputStream;
-        } else {
-            String blaa = fileAbsolute.toExternalForm();
-            blaa = blaa.replace("file://", "");
-            blaa = blaa.replace("file:/", "");
-            File file = new File(blaa);
-            InputStream inputStream = new FileInputStream(file);
-            return inputStream;
+        URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(bundleFileUrl);
+        String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
 
-        }
+        FileInputStream fileInputStream = new FileInputStream(absoluteBundlePathString);
+
+        return fileInputStream;
     }
 
     // -------------------------------------------------------------------------
@@ -416,11 +413,11 @@ public final class KiemUtil {
         }
 
         IFile workspaceLinkFile = null;
-        //URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
-//        URI fullBundleUri =   org.eclipse.core.filesystem.URIUtil.toURI(fullBundlePath);
-//                System.out.println("fullBundleUri:" + fullBundleUri);
-//                URL fullBundleUrl =  fullBundleUri.toURL();
-//                System.out.println("fullBundleUrl:" + fullBundleUrl);
+        // URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
+        // URI fullBundleUri = org.eclipse.core.filesystem.URIUtil.toURI(fullBundlePath);
+        // System.out.println("fullBundleUri:" + fullBundleUri);
+        // URL fullBundleUrl = fullBundleUri.toURL();
+        // System.out.println("fullBundleUrl:" + fullBundleUrl);
 
         URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(fullBundleUrl);
         String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
@@ -483,10 +480,12 @@ public final class KiemUtil {
 
     /**
      * Load an EMF EObject from a model file.
-     *
-     * @param modelFilePath the model file path
+     * 
+     * @param modelFilePath
+     *            the model file path
      * @return the e object
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static EObject loadEObjectFromModelFile(final IPath modelFilePath) throws IOException {
         // try to load it
