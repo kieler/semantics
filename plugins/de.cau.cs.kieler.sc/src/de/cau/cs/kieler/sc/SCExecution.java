@@ -89,6 +89,7 @@ public class SCExecution {
      * {@inheritDoc}
      */
     public void compile(List<String> filePaths) throws IOException, InterruptedException {
+        System.out.println("SC COMPILE 1");
         // reset successful compiled flag
         setCompiled(false);
         // choose a random name for the compiled executable
@@ -96,6 +97,7 @@ public class SCExecution {
 
         // building path to bundle
         Bundle bundle = Platform.getBundle(SCPlugin.PLUGIN_ID);
+        System.out.println("SC COMPILE 2");
 
         URL url = null;
         try {
@@ -104,11 +106,14 @@ public class SCExecution {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
+        System.out.println("SC COMPILE 3");
 
         String bundleLocation = url.getFile();
+        System.out.println("SC COMPILE 4");
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
+        System.out.println("SC COMPILE 5" + bundleLocation);
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
@@ -125,6 +130,7 @@ public class SCExecution {
             for (String filePath : filePaths) {
                 compile = compile + " " + filePath;
             }
+            System.out.println("SC COMPILE 6" + compile);
 
             compile += " "
                     // + outPath
@@ -138,7 +144,9 @@ public class SCExecution {
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
                     + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -m32";
+            System.out.println("SC COMPILE 7" + compile);
             executionProcess = Runtime.getRuntime().exec(compile);
+            System.out.println("SC COMPILE 8");
             System.out.println(compile);
 
             InputStream stderr = executionProcess.getErrorStream();
@@ -149,10 +157,12 @@ public class SCExecution {
             while ((line = br.readLine()) != null) {
                 setCompileError(getCompileError() + "\n" + line);
             }
+            System.out.println("SC COMPILE 9");
 
             // TODO: -D_SC_SUPPRESS_ERROR_DETECT: error messages detecting
             // (use own buffer)
             int exitValue = executionProcess.waitFor();
+            System.out.println("SC COMPILE 10");
 
             if (exitValue != 0) {
                 throw new IOException(
