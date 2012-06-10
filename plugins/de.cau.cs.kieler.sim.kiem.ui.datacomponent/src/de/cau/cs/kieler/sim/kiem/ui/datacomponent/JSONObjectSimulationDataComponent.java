@@ -510,6 +510,13 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         transformationCompleted = false;
         transformationError = false;
         exception = null;
+        
+        if ( Display.getDefault() == null) {
+            System.out.println("Display.getDefault() == null");
+        }
+        else {
+            System.out.println("Display.getDefault() != null");
+        }
 
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
