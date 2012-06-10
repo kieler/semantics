@@ -339,17 +339,6 @@ public abstract class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        
-        for (String arg : Platform.getApplicationArgs()) {
-            System.out.println("ARGUMENT:"+ arg);
-        }
-        
-        try {
-            InputStream inputStream = KiemUtil.openBundleFile(new Path("/testdata/automated.execution"), getPluginId());
-        } catch (IOException e1) {
-            e1.printStackTrace();
-        }
-        
 //         if (true) {
 //             return;
 //         }

@@ -23,6 +23,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
@@ -519,46 +520,54 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         else {
             System.out.println("Display.getDefault() != null");
         }
+        
+        if (KiemUtil.isHeadlessRun()) {
+            // headless run - sequential in current thread
+            model2ModelTransform(new KielerProgressMonitor(
+                    new NullProgressMonitor()));
+        } else {
+            // normal run - concurrent to UI thread
+            Display.getDefault().asyncExec(new Runnable() {
+                public void run() {
+                    System.out.println("RUN 1");
 
-        Display.getDefault().asyncExec(new Runnable() {
-            public void run() {
-                System.out.println("RUN 1");
-
-                final Maybe<IStatus> status = new Maybe<IStatus>();
-                try {
-                    System.out.println("RUN 2");
-                    PlatformUI.getWorkbench().getProgressService()
-                            .run(false, false, new IRunnableWithProgress() {
-                                public void run(final IProgressMonitor monitor) {
-                                    System.out.println("RUN RUN 1");
-                                    try {
-                                        System.out.println("RUN RUN 2");
-                                        status.set(model2ModelTransform(new KielerProgressMonitor(
-                                                monitor)));
-                                        System.out.println("RUN RUN 3");
-                                    } catch (KiemInitializationException e) {
-                                        transformationError = true;
-                                        exception = e;
+                    final Maybe<IStatus> status = new Maybe<IStatus>();
+                    try {
+                        System.out.println("RUN 2");
+                        PlatformUI.getWorkbench().getProgressService()
+                                .run(false, false, new IRunnableWithProgress() {
+                                    public void run(final IProgressMonitor monitor) {
+                                        System.out.println("RUN RUN 1");
+                                        try {
+                                            System.out.println("RUN RUN 2");
+                                            status.set(model2ModelTransform(new KielerProgressMonitor(
+                                                    monitor)));
+                                            System.out.println("RUN RUN 3");
+                                        } catch (KiemInitializationException e) {
+                                            transformationError = true;
+                                            exception = e;
+                                        }
                                     }
-                                }
-                            });
-                } catch (InvocationTargetException e) {
-                    transformationError = true;
-                    exception = e;
-                } catch (InterruptedException e) {
-                    transformationError = true;
-                    exception = e;
+                                });
+                    } catch (InvocationTargetException e) {
+                        transformationError = true;
+                        exception = e;
+                    } catch (InterruptedException e) {
+                        transformationError = true;
+                        exception = e;
+                    }
                 }
-            }
-        });
+            });
 
-        // wait until error or transformation completed
-        while (!transformationCompleted && !transformationError) {
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) { /* hide sleep error */
-            }
-        }// end while
+            // wait until error or transformation completed
+            while (!transformationCompleted && !transformationError) {
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException e) { /* hide sleep error */
+                }
+            }// end while
+        } // end if NOT headless
+
 
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {
