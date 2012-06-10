@@ -271,23 +271,23 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      */
     public void doModel2ModelTransform(final KielerProgressMonitor monitor)
             throws KiemInitializationException {
+        System.out.println("doModel2ModelTransform 1");
         monitor.begin("S Simulation", 10);
 
         String compile = "";
 
+        System.out.println("doModel2ModelTransform 2");
         try {
             // get active editor
             myModel = (Program) this.getModelRootElement();
-            if (myModel == null) {
-                // try to load manually
-                
-            }
+            System.out.println("doModel2ModelTransform 3");
             
 
             if (myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the S Simulator", true, null);
             }
+            System.out.println("doModel2ModelTransform 4");
 
             // Make a copy of the S program in case it was from
             // an active Editor
@@ -307,11 +307,13 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
             }
+            System.out.println("doModel2ModelTransform 5");
 
             // Calculate output path
             //FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString, true);
+            System.out.println("doModel2ModelTransform 6:"+inputPathString);
 
             sOutput = URI.createURI(input.toString());
             sOutput = sOutput.trimFragment();
@@ -322,6 +324,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             scOutput = scOutput.trimFileExtension().appendFileExtension("c");
 
             try {
+                System.out.println("doModel2ModelTransform 7");
                 // Write out copy/transformation of S program
                 Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
                 Map<String, Object> m = reg.getExtensionToFactoryMap();
@@ -329,23 +332,32 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 ResourceSet resSet = new ResourceSetImpl();
                 Resource resource = resSet.createResource(sOutput);
                 resource.getContents().add(transformedProgram);
+                System.out.println("doModel2ModelTransform 8");
                 resource.save(Collections.EMPTY_MAP);
+                System.out.println("doModel2ModelTransform 9");
             } catch (IOException e) {
                 throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
 
+            System.out.println("doModel2ModelTransform 10");
             // Set a random output folder for the compiled files
             String outputFolder = SCExecution.generateRandomTempOutputFolder();
+            System.out.println("doModel2ModelTransform 11:"+outputFolder);
 
             // Genereate SC code
             String scOutputString = getFileStringFromUri(scOutput);
+            System.out.println("doModel2ModelTransform 12:"+scOutputString);
             S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
 
+            System.out.println("doModel2ModelTransform 13");
             // Compile
             scExecution = new SCExecution(outputFolder);
+            System.out.println("doModel2ModelTransform 14");
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
+            System.out.println("doModel2ModelTransform 15");
             scExecution.compile(generatedSCFiles);
+            System.out.println("doModel2ModelTransform 16");
         } catch (Exception e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
