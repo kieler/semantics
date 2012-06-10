@@ -462,30 +462,40 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     // -------------------------------------------------------------------------
 
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
+        System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 1");
         JSONObject returnObj = new JSONObject();
+        System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 2");
 
         // Do validation only for (opened) EMF editors
         if (this.getModelRootElement() != null) {
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 3");
             // Check if the model conforms to all check files and no warnings left!
             EObject rootEObject = this.getModelRootElement();
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 4");
             boolean ok = checkModelValidation(rootEObject);
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 5");
 
             if (!ok) {
                 // bring Problems View to the front otherwise
                 bringProblemsViewToFront();
+                System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 6");
 
                 // the following method may throw an Exception and abort the
                 // initialization in the case
                 // that the user hits cancel or no.
                 askForModelError();
+                System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 7");
 
             }
         }
         try {
             // first do the model transformation
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 8");
             performModelTransformation();
             // then do the provide initial variables
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 9");
             returnObj = doProvideInitialVariables();
+            System.out.println("JSONObjectSimulation PROVIDEINITIALVARIABLES 10");
         } catch (Exception e) {
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
