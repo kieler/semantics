@@ -55,6 +55,8 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public final class KiemUtil {
 
+    public static final String HEADLESS_PROPERTY = "surefire";
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -501,4 +503,18 @@ public final class KiemUtil {
                 + "' loaded but no EMF model found inside.");
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Checks if this is a headless run.
+     *
+     * @return true, if is headless run
+     */
+    public static boolean isHeadlessRun() {
+        for (String arg : Platform.getApplicationArgs()) {
+            if (arg.contains(HEADLESS_PROPERTY)) return true;
+        }
+        return false;
+    }
+    
 }
