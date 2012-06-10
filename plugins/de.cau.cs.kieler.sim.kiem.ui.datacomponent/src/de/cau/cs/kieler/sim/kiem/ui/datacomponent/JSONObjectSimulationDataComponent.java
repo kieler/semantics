@@ -230,6 +230,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      */
     private final IStatus model2ModelTransform(KielerProgressMonitor monitor)
             throws KiemInitializationException {
+        System.out.println("MODEL2MODEL 1");
         monitor.begin("Model2Model transformation", 4);
         try {
             doModel2ModelTransform(monitor);
@@ -241,6 +242,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             return new Status(IStatus.ERROR, DataComponentPlugin.PLUGIN_ID,
                     "Model transformation failed.", e);
         }
+        System.out.println("MODEL2MODEL 2");
         monitor.done();
         transformationCompleted = true;
         transformationError = false;
@@ -518,17 +520,22 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             System.out.println("Display.getDefault() != null");
         }
 
-        Display.getDefault().syncExec(new Runnable() {
+        Display.getDefault().asyncExec(new Runnable() {
             public void run() {
+                System.out.println("RUN 1");
 
                 final Maybe<IStatus> status = new Maybe<IStatus>();
                 try {
+                    System.out.println("RUN 2");
                     PlatformUI.getWorkbench().getProgressService()
                             .run(false, false, new IRunnableWithProgress() {
                                 public void run(final IProgressMonitor monitor) {
+                                    System.out.println("RUN RUN 1");
                                     try {
+                                        System.out.println("RUN RUN 2");
                                         status.set(model2ModelTransform(new KielerProgressMonitor(
                                                 monitor)));
+                                        System.out.println("RUN RUN 3");
                                     } catch (KiemInitializationException e) {
                                         transformationError = true;
                                         exception = e;
