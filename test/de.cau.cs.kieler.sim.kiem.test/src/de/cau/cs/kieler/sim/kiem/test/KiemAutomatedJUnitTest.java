@@ -89,7 +89,7 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * The delay between consecutive executions is needed for garbage collecting/freeing resources.
      */
-    static final long SLEEP_DELAY_BETWEEN_EXECUTIONS = 500;
+    static final long SLEEP_DELAY_BETWEEN_EXECUTIONS = 1;
 
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
@@ -339,6 +339,17 @@ public abstract class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
+        
+        for (String arg : Platform.getApplicationArgs()) {
+            System.out.println("ARGUMENT:"+ arg);
+        }
+        
+        try {
+            InputStream inputStream = KiemUtil.openBundleFile(new Path("/testdata/automated.execution"), getPluginId());
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        
 //         if (true) {
 //             return;
 //         }
@@ -675,27 +686,6 @@ public abstract class KiemAutomatedJUnitTest {
      */
     int getNumberOfTraces(IPath esoFilePath) {
         try {
-//            IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-//            System.out.println("myWorkspaceRoot" + myWorkspaceRoot.getLocation().toString());
-//            IFile esoFileFile = myWorkspaceRoot.getFile(esoFilePath);
-//            Input StreaesoFileFile.getContents()
-
-            //            System.out.println("esoFileFile" + esoFileFile.toString());
-//            String esoFileString = esoFileFile.getLocation().toString();
-//            System.out.println("esoFileString" + esoFileString);
-//            URL esoFileUrl = new URI("file://" + esoFileString).toURL();
-//            System.out.println("esoFileUrl" + esoFileUrl.toString());
-            
-            
-//            // if the bundle is not ready then there is no image
-//            final Bundle bundle = Platform.getBundle(this.getPluginId());
-//            URL esoFileUrl = bundle.getResource(esoFilePath.toString());
-//            
-//            esoFilePath.makeAbsolute();
-//            java.io.File javaFile = new File(esoFilePath.toString().replaceAll("%20", " "));
-//            
-//            URI esoFileUri = URIUtil.toURI(esoFilePath);
-//            URL esoFileUrl = esoFileUri.toURL(); 
             InputStream inputStream = KiemUtil.openWorkspaceFile(esoFilePath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String line;
