@@ -917,15 +917,17 @@ public class Execution extends Job {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#finalize()
-     */
-    @Override
-    protected void finalize() {
-        errorTerminate();
-    }
+//TODO: is this always right? It seems to be wrong to depend on the garbage 
+// collector (cmot, 11.06.2012)
+//    /*
+//     * (non-Javadoc)
+//     * 
+//     * @see java.lang.Object#finalize()
+//     */
+//    @Override
+//    protected void finalize() {
+//        errorTerminate();
+//    }
 
     // -------------------------------------------------------------------------
 
