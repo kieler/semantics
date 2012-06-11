@@ -440,7 +440,9 @@ public abstract class KiemAutomatedJUnitTest {
         IPath modelFilePath = this.modelFile.get(esoFilePath);
 
         // Try to open it
-        // openModelFile(modelFilePath);
+        if (!KiemUtil.isHeadlessRun()) {
+            openModelFile(modelFilePath);
+        }
 
         // Set modelFile in execution manager
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
