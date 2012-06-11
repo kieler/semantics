@@ -25,44 +25,27 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
  */
 public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
-    
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
     protected String getPluginId() {
         return SSimSCTestPlugin.PLUGIN_ID;
     }
 
-    // -------------------------------------------------------------------------
-
-    /**
-     * {@inheritDoc}
-     */
     protected String getPluginExecutionFile() {
         return "/testdata/automated.execution";
     }
 
-    @Override
     protected IPath getBundleTestPath() {
         return new Path("testdata");
     }
 
-    @Override
     protected String getModelFileExtension() {
         return "s";
     }
 
-    @Override
     protected String getTemporaryWorkspaceFolderName() {
         return "test-s";
     }
 
-    @Override
     protected String getExecutionFileName() {
         return "automated.execution";
     }
-
-    
 }
