@@ -270,6 +270,7 @@ public class SCExecution {
     public static String generateRandomTempOutputFolder() throws IOException {
         String folderName = System.getProperty("java.io.tmpdir") + SCExecution.randomString()
                 + File.separator;
+        System.out.println("folderName" + folderName);
         if (new File(folderName).mkdir()) {
             return (folderName);
         }
