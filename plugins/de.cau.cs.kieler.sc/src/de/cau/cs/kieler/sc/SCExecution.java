@@ -145,7 +145,22 @@ public class SCExecution {
                     + bundleLocation + " " + "-o " + outputPath + getExecutableName()
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
-                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -m32";
+                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE"; 
+                    // -m32"; REMOVED due to error with surefire on 64bit machine:
+                    /*
+                     * In file included from /usr/include/string.h:27:0,
+build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/data/test-s/05-simpletransition-inputoutput-communication.c:16:
+build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
+build   11-Jun-2012 11:42:26    compilation terminated.
+build   11-Jun-2012 11:42:26    In file included from /usr/include/string.h:27:0,
+build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/sc.c:14:
+build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
+build   11-Jun-2012 11:42:26    compilation terminated.
+build   11-Jun-2012 11:42:26    In file included from /usr/include/string.h:27:0,
+build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/cJSON.c:26:
+build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
+build   11-Jun-2012 11:42:26    compilation terminated.
+                     */
             System.out.println("SC COMPILE 7" + compile);
             executionProcess = Runtime.getRuntime().exec(compile);
             System.out.println("SC COMPILE 8");
