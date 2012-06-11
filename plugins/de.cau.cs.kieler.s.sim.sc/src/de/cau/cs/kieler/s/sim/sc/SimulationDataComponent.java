@@ -14,23 +14,17 @@
 package de.cau.cs.kieler.s.sim.sc;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
 
-import org.eclipse.core.resources.IFile;
-import org.eclipse.core.resources.IWorkspaceRoot;
-import org.eclipse.core.resources.ResourcesPlugin;
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -246,28 +240,6 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
     // -------------------------------------------------------------------------
 
-    // /**
-    // * Convert an EMF URI to a Java.net.URI.
-    // *
-    // * @param uri
-    // * the uri
-    // * @return the java.net. uri
-    // * @throws URISyntaxException
-    // * the uRI syntax exception
-    // */
-    // private java.net.URI convertURI(URI uri) throws URISyntaxException {
-    // IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace()
-    // .getRoot();
-    //
-    // IPath path = new Path(uri.toPlatformString(false));
-    // IFile file = myWorkspaceRoot.getFile(path);
-    // IPath fullPath = file.getLocation();
-    //
-    // return new java.net.URI(fullPath.toString());
-    // }
-
-    // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
@@ -299,7 +271,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
             if (this.getProperties()[3].getValueAsBoolean()) {
-                // Try to load synccharts model
+                // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
@@ -334,8 +306,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
-            // Genereate SC code
-            String scOutputString = getFileStringFromUri(scOutput);
+            // Generate SC code
+            URL resolvedPath = KiemUtil.resolveBundleOrWorkspaceFile(scOutput.toPlatformString(false));
+            String scOutputString = KiemUtil.getAbsoluteFilePath(resolvedPath); 
             S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
 
             // Compile
@@ -412,49 +385,4 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
     }
 
     // -------------------------------------------------------------------------
-    // -------------------------------------------------------------------------
-
-    /**
-     * Transform a URI into a file string.
-     * 
-     * @param uri
-     *            the uri
-     * @return the file string from uri
-     */
-    // To resolve references to locations outside the workspace 
-    // org.eclipse.core.internal.resources.Resource seems to be needed. 
-    // Is there a better alternative? -> "restriction"
-    // Checkstyle erroneously detects dead code which is not dead. -> "unused"
-    @SuppressWarnings({ "restriction", "unused" }) 
-    protected String getFileStringFromUri(URI uri) {
-
-        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-
-        IPath path = new Path(uri.toPlatformString(false));
-        IFile file = myWorkspaceRoot.getFile(path);
-
-        IPath fullPath = file.getLocation();
-
-        // If we have spaces, try it like this...
-        if (fullPath == null && file instanceof org.eclipse.core.internal.resources.Resource) {
-            org.eclipse.core.internal.resources.Resource resource = (org.eclipse.core.internal.resources.Resource) file;
-            fullPath = resource.getLocalManager().locationFor(resource);
-        }
-
-        // Ensure it is absolute
-        fullPath.makeAbsolute();
-
-        java.io.File javaFile = new java.io.File(fullPath.toString().replaceAll("%20", " "));
-
-        if (javaFile != null) {
-            String fileString = javaFile.getAbsolutePath();
-            return fileString;
-        }
-
-        // Something went wrong, we could not resolve the file location
-        return "";
-    }
-
-    // -------------------------------------------------------------------------
-
 }
