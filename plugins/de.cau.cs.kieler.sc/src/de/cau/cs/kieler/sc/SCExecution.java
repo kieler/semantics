@@ -165,12 +165,21 @@ public class SCExecution {
             // (use own buffer)
             int exitValue = executionProcess.waitFor();
             System.out.println("SC COMPILE 10");
-
-            if (exitValue != 0) {
-                throw new IOException(
-                        "Could not compile the generated C code.\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n\n"
-                                + getCompileError());
+            
+            // Test if compiled file exists
+            File file = new File(outputPath + getExecutableName());
+            if (file.exists()) {
+                System.out.println("File '"+file.getAbsolutePath()+"' exists.");
             }
+            else {
+                System.out.println("File '"+file.getAbsolutePath()+"' NOT exists.");
+                if (exitValue != 0) {
+                    throw new IOException(
+                            "Could not compile the generated C code ("+exitValue+").\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n\n"
+                                    + getCompileError());
+                }
+            }
+
 
         } catch (IOException e) {
             System.err.println(e.getMessage());

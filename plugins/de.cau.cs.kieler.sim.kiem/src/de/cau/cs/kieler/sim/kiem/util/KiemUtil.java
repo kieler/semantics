@@ -534,7 +534,6 @@ public final class KiemUtil {
             folderName += File.separator;
         }
         folderName += randomString() + File.separator;
-        System.out.println("folderName:" + folderName);
         if (new File(folderName).mkdir()) {
             return (folderName);
         }
