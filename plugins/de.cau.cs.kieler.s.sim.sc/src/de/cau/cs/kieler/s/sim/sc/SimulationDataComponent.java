@@ -49,6 +49,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
@@ -341,7 +342,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
             System.out.println("doModel2ModelTransform 10");
             // Set a random output folder for the compiled files
-            String outputFolder = SCExecution.generateRandomTempOutputFolder();
+            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
             System.out.println("doModel2ModelTransform 11:"+outputFolder);
 
             // Genereate SC code
