@@ -513,7 +513,9 @@ public final class KiemUtil {
      */
     public static boolean isHeadlessRun() {
         for (String arg : Platform.getApplicationArgs()) {
-            if (arg.contains(HEADLESS_PROPERTY)) return true;
+            if (arg.contains(HEADLESS_PROPERTY)) {
+                return true;
+            }
         }
         return false;
     }
@@ -522,9 +524,9 @@ public final class KiemUtil {
 
     /**
      * Generate a random temporary output folder in the java tempdir directory.
-     * 
+     *
      * @return the string
-     * @throws IOException
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public static String generateRandomTempOutputFolder() throws IOException {
         String folderName = System.getProperty("java.io.tmpdir");
@@ -532,7 +534,7 @@ public final class KiemUtil {
             folderName += File.separator;
         }
         folderName += randomString() + File.separator;
-        System.out.println("folderName" + folderName);
+        System.out.println("folderName:" + folderName);
         if (new File(folderName).mkdir()) {
             return (folderName);
         }
