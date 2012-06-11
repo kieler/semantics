@@ -29,6 +29,8 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
+
 /**
  * This class is intended to compile and execute SC code.
  * 
@@ -64,7 +66,7 @@ public class SCExecution {
         setCompiler(COMPILER_DEFAULT);
         setCompiled(false);
         setStarted(false);
-        setOutputPath(SCExecution.generateRandomTempOutputFolder());
+        setOutputPath(KiemUtil.generateRandomTempOutputFolder());
     }
 
     /**
@@ -93,7 +95,7 @@ public class SCExecution {
         // reset successful compiled flag
         setCompiled(false);
         // choose a random name for the compiled executable
-        setExecutableName(EXECUTABLE_PREFIX + SCExecution.randomString());
+        setExecutableName(EXECUTABLE_PREFIX + KiemUtil.randomString());
 
         // building path to bundle
         Bundle bundle = Platform.getBundle(SCPlugin.PLUGIN_ID);
@@ -250,7 +252,7 @@ public class SCExecution {
         // delete temp folder
         File folder = new File(outputPath);
         if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
-            boolean folderDeleted = deleteFolder(folder);
+            boolean folderDeleted = KiemUtil.deleteFolder(folder);
             if (folderDeleted) {
                 System.out.println("temp folder " + folder + " successfully deleted");
             } else {
@@ -261,61 +263,6 @@ public class SCExecution {
 
     // -------------------------------------------------------------------------
 
-    /**
-     * Generate a random temporary output folder in the java tempdir directory.
-     * 
-     * @return the string
-     * @throws IOException
-     */
-    public static String generateRandomTempOutputFolder() throws IOException {
-        String folderName = System.getProperty("java.io.tmpdir") + SCExecution.randomString()
-                + File.separator;
-        System.out.println("folderName" + folderName);
-        if (new File(folderName).mkdir()) {
-            return (folderName);
-        }
-        throw new IOException("Could not create folder '" + folderName + "'.");
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Create random string of 16 letters/numbers.
-     * 
-     * @return the string
-     */
-    private static String randomString() {
-        final int folderLength = 16;
-        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
-        Random random = new Random();
-        int max = allowedChars.length();
-        StringBuffer buffer = new StringBuffer();
-        for (int i = 0; i < folderLength; i++) {
-            int value = random.nextInt(max);
-            buffer.append(allowedChars.charAt(value));
-        }
-        return buffer.toString();
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Delete folder.
-     * 
-     * @param directory
-     *            the directory to be deleted
-     * @return true, if successful
-     */
-    private boolean deleteFolder(final File directory) {
-        if (directory.isDirectory()) {
-            String[] entries = directory.list();
-            for (int x = 0; x < entries.length; x++) {
-                File aktFile = new File(directory.getPath(), entries[x]);
-                deleteFolder(aktFile);
-            }
-        }
-        return directory.delete();
-    }
 
     // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------

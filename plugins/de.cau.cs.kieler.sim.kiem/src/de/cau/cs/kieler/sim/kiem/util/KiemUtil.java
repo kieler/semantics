@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
+import java.util.Random;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
@@ -516,5 +517,66 @@ public final class KiemUtil {
         }
         return false;
     }
+    
+    // -------------------------------------------------------------------------
+
+    /**
+     * Generate a random temporary output folder in the java tempdir directory.
+     * 
+     * @return the string
+     * @throws IOException
+     */
+    public static String generateRandomTempOutputFolder() throws IOException {
+        String folderName = System.getProperty("java.io.tmpdir");
+        if (!folderName.endsWith(File.separator)) {
+            folderName += File.separator;
+        }
+        folderName += randomString() + File.separator;
+        System.out.println("folderName" + folderName);
+        if (new File(folderName).mkdir()) {
+            return (folderName);
+        }
+        throw new IOException("Could not create folder '" + folderName + "'.");
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Create random string of 16 letters/numbers.
+     * 
+     * @return the string
+     */
+    public static String randomString() {
+        final int folderLength = 16;
+        String allowedChars = "0123456789abcdefghijklmnopqrstuvwxyz";
+        Random random = new Random();
+        int max = allowedChars.length();
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < folderLength; i++) {
+            int value = random.nextInt(max);
+            buffer.append(allowedChars.charAt(value));
+        }
+        return buffer.toString();
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Delete folder.
+     * 
+     * @param directory
+     *            the directory to be deleted
+     * @return true, if successful
+     */
+    public static boolean deleteFolder(final File directory) {
+        if (directory.isDirectory()) {
+            String[] entries = directory.list();
+            for (int x = 0; x < entries.length; x++) {
+                File aktFile = new File(directory.getPath(), entries[x]);
+                deleteFolder(aktFile);
+            }
+        }
+        return directory.delete();
+    }    
     
 }
