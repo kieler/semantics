@@ -19,6 +19,9 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.eclipse.core.resources.IFile;
+import org.eclipse.core.runtime.IPath;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -307,8 +310,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
             // Generate SC code
-            URL resolvedPath = KiemUtil.resolveBundleOrWorkspaceFile(scOutput.toPlatformString(false));
-            String scOutputString = KiemUtil.getAbsoluteFilePath(resolvedPath); 
+            IPath scOutputPath = new Path(scOutput.toPlatformString(false));
+            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
+            String scOutputString =  KiemUtil.getAbsoluteFilePath(scOutputFile); 
             S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
 
             // Compile

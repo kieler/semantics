@@ -208,6 +208,19 @@ public final class KiemUtil {
     // -------------------------------------------------------------------------
 
     /**
+     * Convert i path to i file.
+     *
+     * @param path the path
+     * @return the i file
+     */
+    public static IFile convertIPathToIFile(final IPath path) {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        IFile file = myWorkspaceRoot.getFile(path);
+        return file;
+    }
+
+    // -------------------------------------------------------------------------
+    /**
      * Gets the absolute file path.
      * 
      * @param ifile
@@ -226,7 +239,7 @@ public final class KiemUtil {
             resource = (org.eclipse.core.internal.resources.Resource) ifile;
             fullPath = resource.getLocalManager().locationFor(resource);
         }
-        return (getAbsoluteFilePath(fullPath));
+        return (getAbsoluteFilePath(ifile.getLocation()));
     }
 
     // -------------------------------------------------------------------------
@@ -269,7 +282,7 @@ public final class KiemUtil {
             return fileString;
         }
         // Something went wrong, we could not resolve the file location
-        return null;
+        return resolvedPath.toString();
     }
 
     // -------------------------------------------------------------------------
