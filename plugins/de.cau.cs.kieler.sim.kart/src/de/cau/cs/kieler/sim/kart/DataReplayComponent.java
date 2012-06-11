@@ -13,13 +13,8 @@
  */
 package de.cau.cs.kieler.sim.kart;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
@@ -27,7 +22,6 @@ import java.util.Map.Entry;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +42,6 @@ import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
@@ -127,8 +120,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         outputVarName = "";
         prevInputVarName = "";
         
-        System.out.println("KART REPLAY INIT 1");
-
         // load properties
         for (KiemProperty prop : properties) {
             if (prop.getKey().equals(Constants.TRACENUM)) {
@@ -143,22 +134,17 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 prevInputVarName = prop.getValue();
             }
         }
-        System.out.println("KART REPLAY INIT 2");
 
         if (!trainingMode) {
             // Read the file
             ITraceProvider tracefile = new EsoFile();
             try {
-                System.out.println("KART REPLAY INIT 3");
                 List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
-                System.out.println("KART REPLAY INIT 4");
-
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
                     throw new KiemInitializationException(Constants.ERR_NOTRACE + tracenum, true, e);
                 }
-                System.out.println("KART REPLAY INIT 5");
             } catch (FileNotFoundException e) {
                 IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                         .getConfigurationElementsFor("de.cau.cs.kieler.sim.kart.MessageDialog");
@@ -188,7 +174,6 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                 throw new KiemInitializationException(Constants.ERR_READ, true, e);
             }
         }
-        System.out.println("KART REPLAY INIT 6");
     }
     
     //-------------------------------------------------------------------------

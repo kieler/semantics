@@ -22,7 +22,6 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URL;
 import java.util.List;
-import java.util.Random;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Path;
@@ -91,7 +90,6 @@ public class SCExecution {
      * {@inheritDoc}
      */
     public void compile(List<String> filePaths) throws IOException, InterruptedException {
-        System.out.println("SC COMPILE 1");
         // reset successful compiled flag
         setCompiled(false);
         // choose a random name for the compiled executable
@@ -99,7 +97,6 @@ public class SCExecution {
 
         // building path to bundle
         Bundle bundle = Platform.getBundle(SCPlugin.PLUGIN_ID);
-        System.out.println("SC COMPILE 2");
 
         URL url = null;
         try {
@@ -108,14 +105,10 @@ public class SCExecution {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
-        System.out.println("SC COMPILE 3");
-
         String bundleLocation = url.getFile();
-        System.out.println("SC COMPILE 4");
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
         bundleLocation = bundleLocation.replaceAll("[/\\\\]+", "\\" + File.separator);
-        System.out.println("SC COMPILE 5" + bundleLocation);
         if (bundleLocation.startsWith("\\")) {
             bundleLocation = bundleLocation.substring(1);
         }
@@ -132,7 +125,6 @@ public class SCExecution {
             for (String filePath : filePaths) {
                 compile = compile + " " + filePath;
             }
-            System.out.println("SC COMPILE 6" + compile);
 
             compile += " "
                     // + outPath
@@ -145,26 +137,35 @@ public class SCExecution {
                     + bundleLocation + " " + "-o " + outputPath + getExecutableName()
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
-                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE"; 
-                    // -m32"; REMOVED due to error with surefire on 64bit machine:
-                    /*
-                     * In file included from /usr/include/string.h:27:0,
-build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/data/test-s/05-simpletransition-inputoutput-communication.c:16:
-build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
-build   11-Jun-2012 11:42:26    compilation terminated.
-build   11-Jun-2012 11:42:26    In file included from /usr/include/string.h:27:0,
-build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/sc.c:14:
-build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
-build   11-Jun-2012 11:42:26    compilation terminated.
-build   11-Jun-2012 11:42:26    In file included from /usr/include/string.h:27:0,
-build   11-Jun-2012 11:42:26                     from /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler.s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/cJSON.c:26:
-build   11-Jun-2012 11:42:26    /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or directory
-build   11-Jun-2012 11:42:26    compilation terminated.
-                     */
-            System.out.println("SC COMPILE 7" + compile);
+                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
+            /*
+             * -m32"; REMOVED due to error with surefire on 64bit machine:
+             * 
+             * In file included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from
+             * /var
+             * /atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler
+             * .s.
+             * sim.sc.test/target/work/data/test-s/05-simpletransition-inputoutput-communication.c
+             * :16: build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error:
+             * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
+             * terminated. build 11-Jun-2012 11:42:26 In file included from
+             * /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26 from
+             * /var/atlassian/bamboo-data
+             * /xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.kieler
+             * .s.sim.sc.test/target/work
+             * /configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/sc.c:14: build 11-Jun-2012
+             * 11:42:26 /usr/include/features.h:323:26: fatal error: bits/predefs.h: No such file or
+             * directory build 11-Jun-2012 11:42:26 compilation terminated. build 11-Jun-2012
+             * 11:42:26 In file included from /usr/include/string.h:27:0, build 11-Jun-2012 11:42:26
+             * from
+             * /var/atlassian/bamboo-data/xml-data/build-dir/KIELER-PLUGIN2-JOB1/test/de.cau.cs.
+             * kieler
+             * .s.sim.sc.test/target/work/configuration/org.eclipse.osgi/bundles/67/1/.cp/sc/cJSON
+             * .c:26: build 11-Jun-2012 11:42:26 /usr/include/features.h:323:26: fatal error:
+             * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
+             * terminated.
+             */
             executionProcess = Runtime.getRuntime().exec(compile);
-            System.out.println("SC COMPILE 8");
-            System.out.println(compile);
 
             InputStream stderr = executionProcess.getErrorStream();
             InputStreamReader isr = new InputStreamReader(stderr);
@@ -174,27 +175,22 @@ build   11-Jun-2012 11:42:26    compilation terminated.
             while ((line = br.readLine()) != null) {
                 setCompileError(getCompileError() + "\n" + line);
             }
-            System.out.println("SC COMPILE 9");
 
             // TODO: -D_SC_SUPPRESS_ERROR_DETECT: error messages detecting
             // (use own buffer)
             int exitValue = executionProcess.waitFor();
-            System.out.println("SC COMPILE 10");
-            
+
             // Test if compiled file exists
             File file = new File(outputPath + getExecutableName());
-            if (file.exists()) {
-                System.out.println("File '"+file.getAbsolutePath()+"' exists.");
-            }
-            else {
-                System.out.println("File '"+file.getAbsolutePath()+"' NOT exists.");
+            if (!file.exists()) {
                 if (exitValue != 0) {
                     throw new IOException(
-                            "Could not compile the generated C code ("+exitValue+").\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n\n"
+                            "Could not compile the generated C code ("
+                                    + exitValue
+                                    + ").\nCheck that the path to your Workspace/Eclipse installation does not contain any white spaces.\n\n"
                                     + getCompileError());
                 }
             }
-
 
         } catch (IOException e) {
             System.err.println(e.getMessage());
@@ -277,18 +273,12 @@ build   11-Jun-2012 11:42:26    compilation terminated.
         File folder = new File(outputPath);
         if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
             boolean folderDeleted = KiemUtil.deleteFolder(folder);
-            if (folderDeleted) {
-                System.out.println("temp folder " + folder + " successfully deleted");
-            } else {
+            if (!folderDeleted) {
                 System.err.println("error while deleting temp folder: " + folder);
             }
         }
     }
 
-    // -------------------------------------------------------------------------
-
-
-    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
     /**
@@ -478,7 +468,6 @@ build   11-Jun-2012 11:42:26    compilation terminated.
         this.compiled = compiled;
     }
 
-    // -------------------------------------------------------------------------
     // -------------------------------------------------------------------------
 
 }

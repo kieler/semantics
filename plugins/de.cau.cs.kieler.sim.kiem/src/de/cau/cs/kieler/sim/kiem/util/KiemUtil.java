@@ -38,8 +38,6 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.URIConverter;
-import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
@@ -56,8 +54,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  */
 public final class KiemUtil {
 
+    /** The Constant HEADLESS_PROPERTY to dected a headless run by program/VM parameters. */
     public static final String HEADLESS_PROPERTY = "surefire";
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -161,7 +160,6 @@ public final class KiemUtil {
      */
     public static InputStream openBundleFile(final IPath relativeFilePath, final String pluginID)
             throws IOException {
-        // TODO: is this working with ?
         final Bundle bundle = Platform.getBundle(pluginID);
         URL bundleFileUrl = bundle.getEntry(relativeFilePath.toString());
 
@@ -178,14 +176,13 @@ public final class KiemUtil {
     /**
      * Gets the resolved absolute file path.
      * 
-     * @param fullBundlePath
-     *            the full bundle path
+     * @param fullBundleUrl
+     *            the full bundle url
      * @return the resolved absolute file path
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
     public static URL getAbsoluteBundlePath(final URL fullBundleUrl) throws IOException {
-        System.out.println("fullBundleUrl:" + fullBundleUrl);
         URL absoluteBundlePath = FileLocator.resolve(fullBundleUrl);
         return absoluteBundlePath;
     }
@@ -234,7 +231,14 @@ public final class KiemUtil {
 
     // -------------------------------------------------------------------------
 
-    public static String getAbsoluteJavaIOPath(String resolvedPathString) {
+    /**
+     * Gets the absolute java io path.
+     * 
+     * @param resolvedPathString
+     *            the resolved path string
+     * @return the absolute java io path
+     */
+    public static String getAbsoluteJavaIOPath(final String resolvedPathString) {
         java.io.File javaFile = new File(resolvedPathString.replaceAll("%20", " "));
         if (javaFile.exists()) {
             String fileString = javaFile.getAbsolutePath();
@@ -244,11 +248,12 @@ public final class KiemUtil {
         return null;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Gets the absolute file path.
-     * 
-     * @param ipath
-     *            the ipath
+     *
+     * @param resolvedPath the resolved path
      * @return the absolute file path
      */
     public static String getAbsoluteFilePath(final IPath resolvedPath) {
@@ -380,8 +385,8 @@ public final class KiemUtil {
      * Creates a linked workspace file and opens the corresponding project. If cleanProject is true,
      * then the project will be deleted and re-created before.
      * 
-     * @param fullBundlePath
-     *            the full bundle path
+     * @param fullBundleUrl
+     *            the full bundle url
      * @param workspaceProjectName
      *            the workspace project name
      * @param cleanProject
@@ -416,11 +421,6 @@ public final class KiemUtil {
         }
 
         IFile workspaceLinkFile = null;
-        // URL fullBundleUrl = KiemUtil.resolveBundleOrWorkspaceFile(fullBundlePath.toString());
-        // URI fullBundleUri = org.eclipse.core.filesystem.URIUtil.toURI(fullBundlePath);
-        // System.out.println("fullBundleUri:" + fullBundleUri);
-        // URL fullBundleUrl = fullBundleUri.toURL();
-        // System.out.println("fullBundleUrl:" + fullBundleUrl);
 
         URL absoluteBundleUrl = KiemUtil.getAbsoluteBundlePath(fullBundleUrl);
         String absoluteBundlePathString = KiemUtil.getAbsoluteFilePath(absoluteBundleUrl);
@@ -505,10 +505,10 @@ public final class KiemUtil {
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Checks if this is a headless run.
-     *
+     * 
      * @return true, if is headless run
      */
     public static boolean isHeadlessRun() {
@@ -519,14 +519,15 @@ public final class KiemUtil {
         }
         return false;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
      * Generate a random temporary output folder in the java tempdir directory.
-     *
+     * 
      * @return the string
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static String generateRandomTempOutputFolder() throws IOException {
         String folderName = System.getProperty("java.io.tmpdir");
@@ -578,6 +579,6 @@ public final class KiemUtil {
             }
         }
         return directory.delete();
-    }    
-    
+    }
+
 }

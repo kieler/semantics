@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sim.kart;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -244,18 +243,5 @@ public class Utilities {
         
     }
 
-    /**
-     * Get names, or a close equivalent thereof, from a list of {@code EObject}s
-     * taken from a GMF editor.
-     * 
-     * @param states the list of objects
-     * @return the names of the objects
-     */
-    private static List<String> getStrings(List<EObject> states) throws Exception {
-        List<String> retval = new LinkedList<String>();
-        for(EObject s : states) {
-            retval.add(s.toString());
-        }
-        return retval;
-    }
+
 }

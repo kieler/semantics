@@ -135,28 +135,23 @@ public class InitializeExecution implements Runnable {
      * 
      */
     public void run() {
-        System.out.println("opening model file B 0");
-        
         this.cancelInitialize = false;
         this.initializing = true;
 
         if (eventManager != null) {
             eventManager.notify(new KiemEvent(KiemEvent.DISABLE_UI));
         }
-        System.out.println("opening model file B 1");
 
         if (!testNumberOfProducersObservers()) {
             cleanUpBeforeExit(false);
             return;
         }
-        System.out.println("opening model file B 2");
 
         if (!this.cancelInitialize && (!testForKiemPropertyError())) {
             cleanUpBeforeExit(false);
             return;
         }
 
-        System.out.println("opening model file B 3");
         JSONObject globalInitialVariables = new JSONObject();
         try {
             globalInitialVariables = distributeInitialKeys();
@@ -164,7 +159,6 @@ public class InitializeExecution implements Runnable {
             cleanUpBeforeExit(false);
             return;
         }
-        System.out.println("opening model file B 4");
 
         if (!this.cancelInitialize && !initializeDataComponents()) {
             cleanUpBeforeExit(false);
@@ -271,7 +265,6 @@ public class InitializeExecution implements Runnable {
             DataComponentWrapper dataComponentWrapper = dataComponentWrapperList.get(c);
             if (dataComponentWrapper.isEnabled()) {
                 try {
-                    System.out.println("opening model file B 3.1."+c+": "+dataComponentWrapper.getComponentId());
                     JSONObject localInitialVariables = dataComponentWrapper
                             .provideInitialVariables();
                     if (localInitialVariables != null) {

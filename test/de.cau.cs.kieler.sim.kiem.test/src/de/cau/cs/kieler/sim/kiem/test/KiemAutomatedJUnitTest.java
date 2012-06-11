@@ -417,13 +417,12 @@ public abstract class KiemAutomatedJUnitTest {
 
             // Set modelFile in execution manager
             // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
-            System.out.println("Model File:" + modelFilePath.toString());
             // Set the global model file in KIEM, other components will retrieve this
             KiemPlugin.setCurrentModelFile(modelFilePath);
+            System.out.println("ModelFile: " + modelFilePath);
 
             int numberOfTraces = getNumberOfTraces(esoFilePath);
-            System.out.println("NUMBER OF TRACES " + numberOfTraces);
-
+            
             for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
                 System.out.println("traceNumber" + traceNumber);
 
@@ -431,14 +430,10 @@ public abstract class KiemAutomatedJUnitTest {
                 traceProperty.setValue(traceNumber + "");
                 // now run the execution stepwise until it has stopped
 
-                System.out.println("opening model file A 0");
                 pause();
-                System.out.println("opening model file A 1");
                 if (kiemPlugin.initExecution()) {
-                    System.out.println("opening model file A 2");
                     pause();
                     Execution execution = kiemPlugin.getExecution();
-                    System.out.println("opening model file A 3");
                     if (execution == null) {
                         throw new RuntimeException(
                                 "KIEM cannot start execution. Try to do this manually for the following scheduling file:'"

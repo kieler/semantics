@@ -61,7 +61,6 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     @Override
     protected String getExecutionFileName() {
-        System.out.println("java.io.tmpdir:" + System.getProperty("java.io.tmpdir"));
         return "automated.execution";
     }
 

@@ -153,8 +153,6 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         errSignalVar = Constants.DEF_SIGNALVAR;
         variables = Utilities.makeSetOfPairs(Constants.DEF_VALVAR);
 
-        System.out.println("KART VALIDATE INIT 1");
-
         KiemProperty[] properties = this.getProperties();
 
         esoOutputs = new LinkedList<HashMap<String, Object>>();
@@ -162,7 +160,6 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         simOutputs = new LinkedList<HashMap<String, String>>();
         simVariables = new LinkedList<HashMap<String, String>>();
         recInputs = new LinkedList<HashMap<String, Object>>();
-        System.out.println("KART VALIDATE INIT 2");
 
         // load properties
         variables = new HashSet<Pair<String, String>>();
@@ -181,13 +178,11 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 errSignalVar = prop.getValue();
             }
         }
-        System.out.println("KART VALIDATE INIT 3");
 
         // Read the file
         if (!trainingMode) {
             valEngine = new DefaultValidationEngine(ignoreAdditionalSignals);
         }
-        System.out.println("KART VALIDATE INIT 4");
     }
 
     /**
@@ -389,8 +384,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 if (object != null) {
                     if (object instanceof Path) {
                         esoFilePath = (Path) object;
-                    }
-                    else if (object instanceof String) {
+                    } else if (object instanceof String) {
                         esoFilePath = new Path((String) object);
                     }
                 }
@@ -398,9 +392,10 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
             trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
             eot = ((Boolean) config.get(Constants.VAR_EOT)).booleanValue();
         } catch (JSONException e) {
-            throw new KiemExecutionException("Could not update configuration. Are the KART components positioned correctly in the schedule? " +
-                                            "I. e., the Replay component directly before the simulator and the Validation component " +
-                                            "directly after the simulator.", true, e);
+            throw new KiemExecutionException(
+                    "Could not update configuration. Are the KART components positioned correctly in the schedule? "
+                            + "I. e., the Replay component directly before the simulator and the Validation component "
+                            + "directly after the simulator.", true, e);
         }
     }
 
