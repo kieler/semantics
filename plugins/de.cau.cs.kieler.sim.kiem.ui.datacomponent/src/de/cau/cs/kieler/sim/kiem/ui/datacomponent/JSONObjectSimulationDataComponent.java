@@ -513,14 +513,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         transformationCompleted = false;
         transformationError = false;
         exception = null;
-        
-        if ( Display.getDefault() == null) {
-            System.out.println("Display.getDefault() == null");
-        }
-        else {
-            System.out.println("Display.getDefault() != null");
-        }
-        
+
         if (KiemUtil.isHeadlessRun()) {
             // headless run - sequential in current thread
             model2ModelTransform(new KielerProgressMonitor(
@@ -529,20 +522,15 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             // normal run - concurrent to UI thread
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
-                    System.out.println("RUN 1");
 
                     final Maybe<IStatus> status = new Maybe<IStatus>();
                     try {
-                        System.out.println("RUN 2");
                         PlatformUI.getWorkbench().getProgressService()
                                 .run(false, false, new IRunnableWithProgress() {
                                     public void run(final IProgressMonitor monitor) {
-                                        System.out.println("RUN RUN 1");
                                         try {
-                                            System.out.println("RUN RUN 2");
                                             status.set(model2ModelTransform(new KielerProgressMonitor(
                                                     monitor)));
-                                            System.out.println("RUN RUN 3");
                                         } catch (KiemInitializationException e) {
                                             transformationError = true;
                                             exception = e;
