@@ -332,7 +332,7 @@ public abstract class KiemAutomatedJUnitTest {
      * execution file has to be defined.
      */
     @Test
-    public void KiemAutomatedJUnitTestExecution() {
+    public void kiemAutomatedJUnitTestExecution() {
         // -----------------------------------------------------------------------------------------
         // Create links in temp workspace and test if valid input (eso files and execution file)
 
