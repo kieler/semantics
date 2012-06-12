@@ -53,8 +53,6 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.sim.kart.DataReplayComponent;
-import de.cau.cs.kieler.sim.kart.DataValidationComponent;
 import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
@@ -62,6 +60,7 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
+// TODO: Auto-generated Javadoc
 /**
  * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
  * plugin test.
@@ -95,8 +94,8 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 public abstract class KiemAutomatedJUnitTest {
 
     // -------------------------------------------------------------------------
-    // General Configuration 
-    
+    // General Configuration
+
     /**
      * The maximum number of ticks for executing one trace in an ESO file. If this boundary is
      * reached an error will be thrown.
@@ -111,35 +110,11 @@ public abstract class KiemAutomatedJUnitTest {
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
 
+    /** The DEBUG constant. */
+    static final boolean DEBUG = false;
+
     // -------------------------------------------------------------------------
-    // KART Configuration
-    //
-    // Note: Because we do not want a strong dependency
-
-//
-//    /** The Constant KART_KONFIG. */
-//    static final String KART_KONFIG = "kartConfig";
-//
-//    /** The Constant KART_END_OF_TRANCE. */
-//    static final String KART_END_OF_TRANCE = "eot";
-
-    /**
-     * The Constant KART_PROPERTY_TRACNUMBER - must be equal to the one defined in
-     * sim.kart.Constants!
-     */
-    static final String KART_PROPERTY_TRACNUMBER = "Trace number to replay";
-
-    /**
-     * The Constant KART_PROPERTY_ERRORVARIABLE - must be equal to the one defined in
-     * sim.kart.Constants!
-     */
-    static final String KART_PROPERTY_ERRORVARIABLE = "Erroneous signals variable";
-
-    /**
-     * The Constant KART_PROPERTY_STOPONSUCCESS - must be equal to the one defined in
-     * sim.kart.Constants!
-     */
-    static final String KART_PROPERTY_STOPONSUCCESS = "Stop execution upon end of ESO file";
+    // ESO file an KART configuration
 
     /**
      * The id used to separate traces within ESO files is used to count the number of available
@@ -152,9 +127,10 @@ public abstract class KiemAutomatedJUnitTest {
      * by KART. This is configurable in the KART data component properties and need to be extracted
      * from the execution file.
      */
-    private String errorSignalName = "errorState";
+    private String errorSignalName = KartConstants.DEF_VAL_ERRORSTATE; // "errorState"
 
     // -------------------------------------------------------------------------
+    // Private / protected properties
 
     /** The kiem plugin single instance. */
     private KiemPlugin kiemPlugin = null;
@@ -171,7 +147,7 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Important for scanning files is the Plugin ID
+     * Important for scanning files is the Plugin ID.
      * 
      * @return the plugin id
      */
@@ -182,7 +158,7 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Defines a path in the bundle where the model files, the eso files and the execution files are
+     * Defines a path in the bundle where the model files, the ESO files and the execution files are
      * located.
      * 
      * E.g., return new Path("/testdata/");
@@ -231,6 +207,8 @@ public abstract class KiemAutomatedJUnitTest {
 
     /**
      * Creates links for all files in the bundles test directory and returns all paths as a list.
+     * 
+     * @return the list
      */
     private List<IPath> createLinksForAllTestFiles() {
         List<IPath> allFiles = new LinkedList<IPath>();
@@ -240,11 +218,15 @@ public abstract class KiemAutomatedJUnitTest {
         // Search for all files in the test directory
         Enumeration<URL> allBundleFilesUrl = bundle.findEntries(
                 this.getBundleTestPath().toString(), "*.*", false);
-        System.out.println("testpath:" + this.getBundleTestPath().toString());
+        if (DEBUG) {
+            System.out.println("testpath:" + this.getBundleTestPath().toString());
+        }
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
-                System.out.println("bundleFileUrl:" + bundleFileUrl.toString());
+                if (DEBUG) {
+                    System.out.println("bundleFileUrl:" + bundleFileUrl.toString());
+                }
                 // IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
                 IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
@@ -283,8 +265,8 @@ public abstract class KiemAutomatedJUnitTest {
      * Gets the path of the execution file if this is found in the files that were copied to the
      * temporary workspace folder.
      * 
-     * @param allFiles
-     *            the all files
+     * @param allWorkspaceFiles
+     *            the all workspace files
      * @return true, if successful
      */
     private IPath getExecutionFilePath(List<IPath> allWorkspaceFiles) {
@@ -300,7 +282,10 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Fill model and ESO files.
+     * Fill model and ESO files list and hash map.
+     * 
+     * @param allFiles
+     *            the all files
      */
     private void fillModelAndEsoFiles(List<IPath> allFiles) {
         this.esoFiles.clear();
@@ -325,7 +310,9 @@ public abstract class KiemAutomatedJUnitTest {
                     this.esoFiles.add(esoFilePath);
                     this.modelFile.put(esoFilePath, modelFilePath);
                 }
-                // Only a testcase if matching ESO files are found
+                // Consider this only a test case if matching ESO files are found.
+                // Otherwise this model file is ignored
+                //
                 // if (!foundEsoFile) {
                 // throw new RuntimeException(
                 // "ESO file:'"
@@ -348,10 +335,6 @@ public abstract class KiemAutomatedJUnitTest {
      */
     @Test
     public void KiemAutomatedJUnitTestExecution() {
-        // if (true) {
-        // return;
-        // }
-
         // -----------------------------------------------------------------------------------------
         // Create links in temp workspace and test if valid input (eso files and execution file)
 
@@ -396,9 +379,9 @@ public abstract class KiemAutomatedJUnitTest {
         // Initialize the KART data component properties
         DataComponentWrapper kartReplay = getKartReplayComponent();
         DataComponentWrapper kartValidation = getKartValidationComponent();
-        KiemProperty traceProperty = getProperty(KART_PROPERTY_TRACNUMBER, kartReplay);
-        KiemProperty errorProperty = getProperty(KART_PROPERTY_ERRORVARIABLE, kartValidation);
-        KiemProperty stopProperty = getProperty(KART_PROPERTY_STOPONSUCCESS, kartReplay);
+        KiemProperty traceProperty = getProperty(KartConstants.TRACENUM, kartReplay);
+        KiemProperty errorProperty = getProperty(KartConstants.SIGNALVAR, kartValidation);
+        KiemProperty stopProperty = getProperty(KartConstants.STOPEXECUTION, kartReplay);
         stopProperty.setValue("true"); // not stop execution after ESO file is
                                        // done
         errorSignalName = errorProperty.getValue(); // extract the correct error
@@ -437,7 +420,7 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Test eso file and return a potential (first) error as a String.
+     * Test ESO file and return a potential (first) error as a String.
      * 
      * @param esoFilePath
      *            the eso file path
@@ -461,12 +444,12 @@ public abstract class KiemAutomatedJUnitTest {
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
         // Set the global model file in KIEM, other components will retrieve this
         KiemPlugin.setCurrentModelFile(modelFilePath);
-        System.out.println("ModelFile: " + modelFilePath);
+        System.out.println("\nModel File: " + modelFilePath);
 
         int numberOfTraces = getNumberOfTraces(esoFilePath);
 
         for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
-            System.out.println("traceNumber" + traceNumber);
+            System.out.println("Trace Number " + traceNumber);
 
             // set the current trace number
             traceProperty.setValue(traceNumber + "");
@@ -486,7 +469,7 @@ public abstract class KiemAutomatedJUnitTest {
                 // at this point we know that the execution is not null
                 int tick = 0;
                 while (execution.isStarted() && !errorFlag) {
-                    System.out.println("Tick" + tick);
+                    System.out.println("Tick " + tick);
 
                     if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
                         throw new RuntimeException("Maximum number of ticks ("
@@ -507,12 +490,15 @@ public abstract class KiemAutomatedJUnitTest {
                     // now inspect the data pool
                     try {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
-                        System.out.println(jSONData.toString());
+                        if (DEBUG) {
+                            System.out.println(jSONData.toString());
+                        }
                         if (jSONData != null) {
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
                                 Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
                                 if (kartConfigContent instanceof JSONObject
-                                        && ((JSONObject) kartConfigContent).has(KartConstants.VAR_EOT)) {
+                                        && ((JSONObject) kartConfigContent)
+                                                .has(KartConstants.VAR_EOT)) {
                                     Object kartEOTContent = ((JSONObject) kartConfigContent)
                                             .get(KartConstants.VAR_EOT);
                                     if (kartEOTContent instanceof Boolean) {
@@ -645,12 +631,10 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * Open model file.
      * 
-     * @param modelFilePath2
-     *            the model file path2
-     * @throws
+     * @param modelFilePath
+     *            the model file path
      */
     void openModelFile(IPath modelFilePath) {
-        System.out.println("opening model file");
         this.modelFilePathString = modelFilePath.toString();
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -693,8 +677,8 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * Gets the number of traces.
      * 
-     * @param esoFileAbsolute
-     *            the eso file absolute
+     * @param esoFilePath
+     *            the eso file path
      * @return the number of traces
      */
     int getNumberOfTraces(IPath esoFilePath) {
@@ -764,7 +748,8 @@ public abstract class KiemAutomatedJUnitTest {
                 return dataComponentWrapper;
             }
         }
-        throw new RuntimeException("KART DataComponent (" + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
+        throw new RuntimeException("KART DataComponent ("
+                + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
                 + ") was not loaded. The KART Plugin must be added to the run configuration "
                 + "together with all dependend plugins.");
     }
@@ -785,7 +770,8 @@ public abstract class KiemAutomatedJUnitTest {
                 return dataComponentWrapper;
             }
         }
-        throw new RuntimeException("KART DataComponent (" + KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START
+        throw new RuntimeException("KART DataComponent ("
+                + KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START
                 + ") was not loaded. The KART Plugin must be added to the run configuration"
                 + " together with all dependend plugins.");
     }

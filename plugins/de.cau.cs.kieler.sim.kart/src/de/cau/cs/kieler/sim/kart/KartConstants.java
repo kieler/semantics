@@ -59,7 +59,9 @@ public class KartConstants {
     
     public static final String DEF_CONFIGVAR = "kartConfig";
     public static final String DEF_OUTPUTVAR = "kartOutput";
-    public static final String DEF_VALVAR = "(state, errorState)";
+    public static final String DEF_VAL_STATE = "state";
+    public static final String DEF_VAL_ERRORSTATE = "errorState";
+    public static final String DEF_VALVAR = "(" +DEF_VAL_STATE+", "+DEF_VAL_ERRORSTATE+")";
     public static final String DEF_PREVINVAR = "kartPrevInput";
     public static final String DEF_SIGNALVAR = "errorSignal";
 }
