@@ -273,9 +273,9 @@ public class SCExecution {
         File folder = new File(outputPath);
         if (folder.getAbsolutePath().contains(System.getProperty("java.io.tmpdir"))) {
             boolean folderDeleted = KiemUtil.deleteFolder(folder);
-            if (!folderDeleted) {
-                System.err.println("error while deleting temp folder: " + folder);
-            }
+//            if (!folderDeleted) {
+//                System.err.println("error while deleting temp folder: " + folder);
+//            }
         }
     }
 

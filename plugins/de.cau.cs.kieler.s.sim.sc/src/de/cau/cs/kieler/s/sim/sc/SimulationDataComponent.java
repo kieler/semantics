@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.s.sim.sc;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
