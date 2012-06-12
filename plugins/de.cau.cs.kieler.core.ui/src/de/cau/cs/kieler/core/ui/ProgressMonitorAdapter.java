@@ -37,6 +37,7 @@ public class ProgressMonitorAdapter extends BasicProgressMonitor {
      * @param theprogressMonitor the progress monitor
      */
     public ProgressMonitorAdapter(final IProgressMonitor theprogressMonitor) {
+        super();
         this.progressMonitor = theprogressMonitor;
     }
     

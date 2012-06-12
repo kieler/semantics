@@ -33,6 +33,7 @@ public class ProgressBarMonitor extends BasicProgressMonitor {
      * @param theprogressBar the progress bar to which progress is reported
      */
     public ProgressBarMonitor(final ProgressBar theprogressBar) {
+        super();
         this.progressBar = theprogressBar;
     }
     
