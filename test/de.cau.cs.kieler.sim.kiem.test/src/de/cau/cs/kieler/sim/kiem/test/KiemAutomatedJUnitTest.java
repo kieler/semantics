@@ -128,16 +128,16 @@ public abstract class KiemAutomatedJUnitTest {
     private String errorSignalName = KartConstants.DEF_VAL_ERRORSTATE; // "errorState"
 
     // -------------------------------------------------------------------------
-    // Private / protected properties
+    // Private properties
 
     /** The kiem plugin single instance. */
     private KiemPlugin kiemPlugin = null;
 
     /** The ESO files. */
-    protected List<IPath> esoFiles = new LinkedList<IPath>();
+    private List<IPath> esoFiles = new LinkedList<IPath>();
 
     /** The corresponding model file for an ESO file. */
-    protected HashMap<IPath, IPath> modelFile = new HashMap<IPath, IPath>();
+    private HashMap<IPath, IPath> modelFile = new HashMap<IPath, IPath>();
 
     /** The current model file path. */
     private String modelFilePathString;
@@ -267,7 +267,7 @@ public abstract class KiemAutomatedJUnitTest {
      *            the all workspace files
      * @return true, if successful
      */
-    private IPath getExecutionFilePath(List<IPath> allWorkspaceFiles) {
+    private IPath getExecutionFilePath(final List<IPath> allWorkspaceFiles) {
         for (IPath workspaceFilePath : allWorkspaceFiles) {
             // If this is a model file search for the corresponding ESO file
             if (workspaceFilePath.toString().endsWith(this.getExecutionFileName())) {
@@ -285,7 +285,7 @@ public abstract class KiemAutomatedJUnitTest {
      * @param allFiles
      *            the all files
      */
-    private void fillModelAndEsoFiles(List<IPath> allFiles) {
+    private void fillModelAndEsoFiles(final List<IPath> allFiles) {
         this.esoFiles.clear();
         this.modelFile.clear();
 
@@ -352,7 +352,8 @@ public abstract class KiemAutomatedJUnitTest {
         if (esoFiles.size() == 0) {
             throw new RuntimeException(
                     "No model files are provided and also no model file extension was provided to search"
-                            + " for model files in the current workspace. Cannot proceed without model files to test!");
+                            + " for model files in the current workspace. "
+                            + "Cannot proceed without model files to test!");
         }
 
         // -----------------------------------------------------------
@@ -426,7 +427,7 @@ public abstract class KiemAutomatedJUnitTest {
      *            the trace property
      * @return a possible error string or null if no error
      */
-    private String testEsoFile(IPath esoFilePath, KiemProperty traceProperty) {
+    private String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty) {
         boolean errorFlag = false;
         String errorInformation = null;
 
@@ -459,7 +460,8 @@ public abstract class KiemAutomatedJUnitTest {
                 Execution execution = kiemPlugin.getExecution();
                 if (execution == null) {
                     throw new RuntimeException(
-                            "KIEM cannot start execution. Try to do this manually for the following scheduling file:'"
+                            "KIEM cannot start execution. " 
+                            + "Try to do this manually for the following scheduling file:'"
                                     + this.getExecutionFileName() + "'.");
                 }
                 pause();
@@ -479,11 +481,7 @@ public abstract class KiemAutomatedJUnitTest {
                     execution.stepExecutionSync();
                     // wait until step is done
                     while (!execution.isPaused() && execution.isStarted()) {
-                        try {
-                            Thread.sleep(10);
-                        } catch (InterruptedException e) {
-                            // ignore sleeping errors
-                        }
+                        pause();
                     }
                     // now inspect the data pool
                     try {
@@ -534,14 +532,14 @@ public abstract class KiemAutomatedJUnitTest {
                     }
                     tick++;
                 } // while executing
-            } // init execution
-            else {
+            } else {
                 throw new RuntimeException(
-                        "KIEM cannot initialize execution. Try to do this manually for the following scheduling file:'"
+                        "KIEM cannot initialize execution. "
+                        + "Try to do this manually for the following scheduling file:'"
                                 + this.getExecutionFileName() + "'. Error message: "
                                 + KiemPlugin.getLastError());
             }
-        }// next trace
+        } // next trace
 
         // return a possible error message or null if no error
         return errorInformation;
@@ -569,12 +567,14 @@ public abstract class KiemAutomatedJUnitTest {
      *            the full file path string
      * @return the i editor input
      */
-    private IEditorInput createEditorInput(String fullFilePathString) {
+    private IEditorInput createEditorInput(final String fullFilePathString) {
         IPath path = new Path(fullFilePathString);
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IFile workspaceFile = workspace.getRoot().getFile(path);
-        if (workspaceFile != null)
+        if (workspaceFile != null) {
             return new FileEditorInput(workspaceFile);
+            
+        }
         return null;
     }
 
@@ -591,7 +591,7 @@ public abstract class KiemAutomatedJUnitTest {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    private String getEditorId(IPath fullFilePath) throws URISyntaxException, IOException {
+    private String getEditorId(final IPath fullFilePath) throws URISyntaxException, IOException {
         URL absoluteFileUrl = KiemUtil.resolveWorkspaceFile(fullFilePath.toString());
         String absoluteFilePathString = KiemUtil.getAbsoluteFilePath(absoluteFileUrl);
         IPath absoluteFilePath = new Path(absoluteFilePathString);
@@ -608,16 +608,20 @@ public abstract class KiemAutomatedJUnitTest {
 
             // check the OS for in-place editor (OLE on Win32)
             if (descriptor == null
-                    && editorRegistry.isSystemInPlaceEditorAvailable(fileStore.getName()))
+                    && editorRegistry.isSystemInPlaceEditorAvailable(fileStore.getName())) {
                 descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_INPLACE_EDITOR_ID);
+            }
 
             // check the OS for external editor
             if (descriptor == null
-                    && editorRegistry.isSystemExternalEditorAvailable(fileStore.getName()))
+                    && editorRegistry.isSystemExternalEditorAvailable(fileStore.getName())) {
                 descriptor = editorRegistry.findEditor(IEditorRegistry.SYSTEM_EXTERNAL_EDITOR_ID);
+            }
 
-            if (descriptor != null)
+            // otherwise
+            if (descriptor != null) {
                 return descriptor.getId();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -633,7 +637,7 @@ public abstract class KiemAutomatedJUnitTest {
      * @param modelFilePath
      *            the model file path
      */
-    void openModelFile(IPath modelFilePath) {
+    void openModelFile(final IPath modelFilePath) {
         this.modelFilePathString = modelFilePath.toString();
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
@@ -680,7 +684,7 @@ public abstract class KiemAutomatedJUnitTest {
      *            the ESO file path
      * @return the number of traces
      */
-    int getNumberOfTraces(IPath esoFilePath) {
+    int getNumberOfTraces(final IPath esoFilePath) {
         try {
             InputStream inputStream = KiemUtil.openWorkspaceFile(esoFilePath);
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
@@ -717,7 +721,7 @@ public abstract class KiemAutomatedJUnitTest {
      *            the data component wrapper
      * @return the property
      */
-    KiemProperty getProperty(String propertyKey, DataComponentWrapper dataComponentWrapper) {
+    KiemProperty getProperty(final String propertyKey, final DataComponentWrapper dataComponentWrapper) {
         KiemProperty[] kiemProperties = dataComponentWrapper.getProperties();
         for (KiemProperty kiemProperty : kiemProperties) {
             if (kiemProperty.getKey().equals(propertyKey)) {
