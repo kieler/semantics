@@ -52,7 +52,7 @@ import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -146,12 +146,12 @@ public abstract class JSONObjectSimulationDataComponent extends
 	// -----------------------------------------------------------------------------
 	protected class M2MProgressMonitor implements ProgressMonitor {
 
-		private KielerProgressMonitor kielerProgressMonitor;
+		private ProgressMonitorAdapter kielerProgressMonitor;
 		private int numberOfComponents = 1;
 		private int numberOfComponentsDone = 0;
 
 		public M2MProgressMonitor(
-				KielerProgressMonitor kielerProgressMonitorParam,
+				ProgressMonitorAdapter kielerProgressMonitorParam,
 				int numberOfComponentsParam) {
 			kielerProgressMonitor = kielerProgressMonitorParam;
 			numberOfComponents = numberOfComponentsParam;
@@ -216,7 +216,7 @@ public abstract class JSONObjectSimulationDataComponent extends
 	 * @throws Exception
 	 *             the exception
 	 */
-	public void doModel2ModelTransform(KielerProgressMonitor monitor)
+	public void doModel2ModelTransform(ProgressMonitorAdapter monitor)
 			throws Exception {
 		// not implemented
 	}
@@ -235,7 +235,7 @@ public abstract class JSONObjectSimulationDataComponent extends
 	 * @throws KiemInitializationException
 	 *             the kiem initialization exception
 	 */
-	private final IStatus model2ModelTransform(KielerProgressMonitor monitor)
+	private final IStatus model2ModelTransform(ProgressMonitorAdapter monitor)
 			throws KiemInitializationException {
 		monitor.begin("Model2Model transformation", 4);
 		try {
@@ -619,7 +619,7 @@ public abstract class JSONObjectSimulationDataComponent extends
 							.run(false, false, new IRunnableWithProgress() {
 								public void run(final IProgressMonitor monitor) {
 									try {
-										status.set(model2ModelTransform(new KielerProgressMonitor(
+										status.set(model2ModelTransform(new ProgressMonitorAdapter(
 												monitor)));
 									} catch (KiemInitializationException e) {
 										transformationError = true;

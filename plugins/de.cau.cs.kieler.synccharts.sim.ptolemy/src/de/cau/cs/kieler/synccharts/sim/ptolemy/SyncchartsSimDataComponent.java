@@ -41,7 +41,7 @@ import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
@@ -90,12 +90,12 @@ public class SyncchartsSimDataComponent extends
     // -----------------------------------------------------------------------------
     class M2MProgressMonitor implements ProgressMonitor {
 
-        private KielerProgressMonitor kielerProgressMonitor;
+        private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
         private int numberOfComponentsDone = 0;
 
         public M2MProgressMonitor(
-                final KielerProgressMonitor kielerProgressMonitorParam,
+                final ProgressMonitorAdapter kielerProgressMonitorParam,
                 final int numberOfComponentsParam) {
             kielerProgressMonitor = kielerProgressMonitorParam;
             numberOfComponents = numberOfComponentsParam;
@@ -253,10 +253,10 @@ public class SyncchartsSimDataComponent extends
      * (non-Javadoc)
      * 
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
-     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
+     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.ProgressMonitorAdapter)
      */
     @Override
-    public void doModel2ModelTransform(final KielerProgressMonitor monitor)
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws Exception {
 
         ResourceSet resourceSet = new ResourceSetImpl();
