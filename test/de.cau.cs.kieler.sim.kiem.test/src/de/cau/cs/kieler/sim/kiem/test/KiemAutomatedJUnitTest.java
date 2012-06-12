@@ -60,7 +60,6 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
-// TODO: Auto-generated Javadoc
 /**
  * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
  * plugin test.
@@ -86,7 +85,6 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * because typical test models should be small (!) and should test specific functionality only.
  * Hence ESO files for such test models should contain only a small number of ticks far below this
  * maximum!
- * 
  * 
  * @author cmot
  * 
