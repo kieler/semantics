@@ -675,10 +675,10 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the number of traces.
+     * Gets the number of traces of an eso file.
      * 
      * @param esoFilePath
-     *            the eso file path
+     *            the ESO file path
      * @return the number of traces
      */
     int getNumberOfTraces(IPath esoFilePath) {
@@ -697,13 +697,13 @@ public abstract class KiemAutomatedJUnitTest {
             return number;
         } catch (FileNotFoundException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces.");
+                    + "' in order to count the maximum number of traces. (FileNotFoundException)");
         } catch (IOException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces.");
+                    + "' in order to count the maximum number of traces. (IOException)");
         } catch (CoreException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces.");
+                    + "' in order to count the maximum number of traces. (CoreException)");
         }
     }
 
