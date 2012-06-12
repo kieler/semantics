@@ -19,32 +19,43 @@ import org.eclipse.core.runtime.Path;
 import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 
 /**
- * The test plugin for testing the s-sc-simulator
+ * The test plugin for regression testing the s-sc-simulator.
  * 
  * @author cmot
  */
 public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
+    /**
+     * {@inheritDoc}
+     */
     protected String getPluginId() {
         return SSimSCTestPlugin.PLUGIN_ID;
     }
 
-    protected String getPluginExecutionFile() {
-        return "/testdata/automated.execution";
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     protected IPath getBundleTestPath() {
         return new Path("testdata");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected String getModelFileExtension() {
         return "s";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected String getTemporaryWorkspaceFolderName() {
         return "test-s";
     }
 
+    /**
+     * {@inheritDoc}
+     */
     protected String getExecutionFileName() {
         return "automated.execution";
     }
