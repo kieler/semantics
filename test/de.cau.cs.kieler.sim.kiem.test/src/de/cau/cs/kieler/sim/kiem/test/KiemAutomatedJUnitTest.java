@@ -494,7 +494,8 @@ public abstract class KiemAutomatedJUnitTest {
                         if (jSONData != null) {
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
                                 Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
-                                if (kartConfigContent instanceof JSONObject
+                                if (kartConfigContent != null
+                                        && kartConfigContent instanceof JSONObject
                                         && ((JSONObject) kartConfigContent)
                                                 .has(KartConstants.VAR_EOT)) {
                                     Object kartEOTContent = ((JSONObject) kartConfigContent)
