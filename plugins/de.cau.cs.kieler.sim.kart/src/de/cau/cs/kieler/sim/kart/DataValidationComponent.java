@@ -147,11 +147,11 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         esoFilePath = null;
         trainingMode = false;
         ignoreAdditionalSignals = false;
-        configVarName = Constants.DEF_CONFIGVAR;
-        outputVarName = Constants.DEF_OUTPUTVAR;
-        prevInputVar = Constants.DEF_PREVINVAR;
-        errSignalVar = Constants.DEF_SIGNALVAR;
-        variables = Utilities.makeSetOfPairs(Constants.DEF_VALVAR);
+        configVarName = KartConstants.DEF_CONFIGVAR;
+        outputVarName = KartConstants.DEF_OUTPUTVAR;
+        prevInputVar = KartConstants.DEF_PREVINVAR;
+        errSignalVar = KartConstants.DEF_SIGNALVAR;
+        variables = Utilities.makeSetOfPairs(KartConstants.DEF_VALVAR);
 
         KiemProperty[] properties = this.getProperties();
 
@@ -164,17 +164,17 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         // load properties
         variables = new HashSet<Pair<String, String>>();
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals(Constants.IGNOREEXTRA)) {
+            if (prop.getKey().equals(KartConstants.IGNOREEXTRA)) {
                 ignoreAdditionalSignals = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals(Constants.VALVAR)) {
+            } else if (prop.getKey().equals(KartConstants.VALVAR)) {
                 variables = Utilities.makeSetOfPairs(prop.getValue());
-            } else if (prop.getKey().equals(Constants.CONFIGVAR)) {
+            } else if (prop.getKey().equals(KartConstants.CONFIGVAR)) {
                 configVarName = prop.getValue();
-            } else if (prop.getKey().equals(Constants.OUTPUTVAR)) {
+            } else if (prop.getKey().equals(KartConstants.OUTPUTVAR)) {
                 outputVarName = prop.getValue();
-            } else if (prop.getKey().equals(Constants.PREVINVAR)) {
+            } else if (prop.getKey().equals(KartConstants.PREVINVAR)) {
                 prevInputVar = prop.getValue();
-            } else if (prop.getKey().equals(Constants.SIGNALVAR)) {
+            } else if (prop.getKey().equals(KartConstants.SIGNALVAR)) {
                 errSignalVar = prop.getValue();
             }
         }
@@ -205,7 +205,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                         TimeoutThread.setAwaitUserRepsonse(true);
                         IMessageDialog msg = (IMessageDialog) (contributors[0]
                                 .createExecutableExtension("class"));
-                        if (msg.question(Constants.OVERWRITE_TITLE, Constants.OVERWRITE)) {
+                        if (msg.question(KartConstants.OVERWRITE_TITLE, KartConstants.OVERWRITE)) {
                             file.delete();
                         }
                     } catch (CoreException e0) {
@@ -234,7 +234,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                         .equals(DataReplayComponent.DATA_REPLAY_COMPONENT_ID)) {
                     KiemProperty[] props = c.getProperties();
                     for (KiemProperty p : props) {
-                        if (p.getKey().equals(Constants.TRAINMODE)) {
+                        if (p.getKey().equals(KartConstants.TRAINMODE)) {
                             p.setValue("false");
                         }
                     }
@@ -314,12 +314,12 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     @Override
     public KiemProperty[] provideProperties() {
         KiemProperty[] properties = new KiemProperty[6];
-        properties[0] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
-        properties[1] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
-        properties[2] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
-        properties[3] = new KiemProperty(Constants.VALVAR, Constants.DEF_VALVAR);
-        properties[4] = new KiemProperty(Constants.SIGNALVAR, Constants.DEF_SIGNALVAR);
-        properties[5] = new KiemProperty(Constants.IGNOREEXTRA, false);
+        properties[0] = new KiemProperty(KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
+        properties[1] = new KiemProperty(KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
+        properties[2] = new KiemProperty(KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
+        properties[3] = new KiemProperty(KartConstants.VALVAR, KartConstants.DEF_VALVAR);
+        properties[4] = new KiemProperty(KartConstants.SIGNALVAR, KartConstants.DEF_SIGNALVAR);
+        properties[5] = new KiemProperty(KartConstants.IGNOREEXTRA, false);
         return properties;
     }
 
@@ -379,8 +379,8 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     private void updateConfiguration(JSONObject json) throws KiemExecutionException {
         try {
             JSONObject config = json.getJSONObject(configVarName);
-            if (config.has(Constants.VAR_ESOFILE)) {
-                Object object = config.get(Constants.VAR_ESOFILE);
+            if (config.has(KartConstants.VAR_ESOFILE)) {
+                Object object = config.get(KartConstants.VAR_ESOFILE);
                 if (object != null) {
                     if (object instanceof Path) {
                         esoFilePath = (Path) object;
@@ -389,8 +389,8 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                     }
                 }
             }
-            trainingMode = ((Boolean) config.get(Constants.VAR_TRAINMODE)).booleanValue();
-            eot = ((Boolean) config.get(Constants.VAR_EOT)).booleanValue();
+            trainingMode = ((Boolean) config.get(KartConstants.VAR_TRAINMODE)).booleanValue();
+            eot = ((Boolean) config.get(KartConstants.VAR_EOT)).booleanValue();
         } catch (JSONException e) {
             throw new KiemExecutionException(
                     "Could not update configuration. Are the KART components positioned correctly in the schedule? "
@@ -507,7 +507,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 esoVariables.add(outputVariables);
             }
         } catch (JSONException e) {
-            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+            throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);
         }
     }
 

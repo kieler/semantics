@@ -20,7 +20,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.util.Pair;
-import de.cau.cs.kieler.sim.kart.Constants;
+import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.Utilities;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 
@@ -65,12 +65,12 @@ public class DefaultValidationEngine implements IValidationEngine {
                     "The simulation step did not generate a variable \"" + variable.getFirst()
                             + "\". "
                             + "No validation for this variable will take place in this step!",
-                    Constants.PLUGINID, null, Constants.ERR_SILENT);
+                    KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
         } else if (recValue == null) {
             KiemPlugin.getDefault().showWarning(
                     "The trace file did not contain a variable \"" + variable.getFirst() + "\"."
                             + "No validation for this variable will take place in this step!",
-                    Constants.PLUGINID, null, Constants.ERR_SILENT);
+                    KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
         } else if (!Utilities.compareValues(recValue, simValue)) {
             try {
                 if (!isHistoryStep) {
@@ -89,8 +89,8 @@ public class DefaultValidationEngine implements IValidationEngine {
                         // do nothing
                     }
 
-                    KiemPlugin.getDefault().showError(errorMessage, Constants.PLUGINID, null,
-                            Constants.ERR_SILENT);
+                    KiemPlugin.getDefault().showError(errorMessage, KartConstants.PLUGINID, null,
+                            KartConstants.ERR_SILENT);
                     // throw new KiemExecutionException(Constants.VAL_TITLE, false,
                     // new ValidationException(errorMessage));
                 }
@@ -106,7 +106,7 @@ public class DefaultValidationEngine implements IValidationEngine {
                         "Validation error: The simulation should provide a variable \""
                                 + variable.getFirst() + "\" with a value of \"" + recValue
                                 + "\", but it actually generated the value \"" + simValue + "\".",
-                        Constants.PLUGINID, null, Constants.ERR_SILENT);
+                        KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
             }
         } else {
             try {
@@ -149,7 +149,7 @@ public class DefaultValidationEngine implements IValidationEngine {
                                         + errSignals
                                         + " were produced erroneously, they were either not present when they should "
                                         + "have been or in the case of valued signals were present with a wrong value",
-                                Constants.PLUGINID, null, Constants.ERR_SILENT);
+                                KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
             }
         }
 
@@ -168,7 +168,7 @@ public class DefaultValidationEngine implements IValidationEngine {
                 KiemPlugin.getDefault().showError(
                         "Validation error: The signal(s) " + excessSignals
                                 + " were not recorded, but generated in the simulation",
-                        Constants.PLUGINID, null, Constants.ERR_SILENT);
+                        KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
             }
         }
 

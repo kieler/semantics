@@ -53,6 +53,9 @@ import org.json.JSONObject;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
+import de.cau.cs.kieler.sim.kart.DataReplayComponent;
+import de.cau.cs.kieler.sim.kart.DataValidationComponent;
+import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
@@ -60,15 +63,30 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
- * The class KiemAutomatedJUnit enabled the integration of several KIEM execution runs into a JUNIT
+ * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
  * plugin test.
  * 
- * Test model files and corresponding (same name!) ESO files should be provided with the bundle
- * implementing the KiemAutomatedJUnitTest abstract class in a bundle directory specified by
+ * A new test plugin has to have a class C extending KiemAutomatedJUnitTest. The new class C has to
+ * have "Test" in its name to be found as a JUnit class by the build system.
+ * 
+ * Test model files and corresponding (same name by convention!) ESO files must be provided with the
+ * bundle implementing the KiemAutomatedJUnitTest abstract class in a bundle directory specified by
  * getBundleTestPath().
  * 
- * The execution file that should be used must exist also in this direcory. Its name is specified by
- * getExecutionFileName().
+ * The execution file that should be used must exist also in this directory. Its name must be
+ * specified by getExecutionFileName().
+ * 
+ * Model, ESO and the execution file are linked in a temporary workspace folder. The name of this
+ * folder in the temporary workspace is defined by getTemporaryWorkspaceFolderName().
+ * 
+ * ESO file names are derived by model files. Model files are identified by the file extension that
+ * is specified by getModelFileExtension(). If a model has no corresponding ESO file it is not
+ * considered as a test case.
+ * 
+ * The maximum number of ticks is defined by 100. Reaching this maximum will generate an error
+ * because typical test models should be small (!) and should test specific functionality only.
+ * Hence ESO files for such test models should contain only a small number of ticks far below this
+ * maximum!
  * 
  * 
  * @author cmot
@@ -76,6 +94,9 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  */
 public abstract class KiemAutomatedJUnitTest {
 
+    // -------------------------------------------------------------------------
+    // General Configuration 
+    
     /**
      * The maximum number of ticks for executing one trace in an ESO file. If this boundary is
      * reached an error will be thrown.
@@ -91,24 +112,16 @@ public abstract class KiemAutomatedJUnitTest {
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
 
     // -------------------------------------------------------------------------
+    // KART Configuration
+    //
+    // Note: Because we do not want a strong dependency
 
-    /** The Constant EXECUTION_FILE_ARG. */
-    static final String EXECUTION_FILE_ARG = "-execution";
-
-    /** The Constant MODEL_FILE_ARG. */
-    static final String MODEL_FILE_ARG = "-model";
-
-    /** The plugin id of the required KART plugin. */
-    static final String KART_REPLAY_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.replay";
-
-    /** The plugin id of the required KART plugin. */
-    static final String KART_VALIDATION_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.validation";
-
-    /** The Constant KART_KONFIG. */
-    static final String KART_KONFIG = "kartConfig";
-
-    /** The Constant KART_END_OF_TRANCE. */
-    static final String KART_END_OF_TRANCE = "eot";
+//
+//    /** The Constant KART_KONFIG. */
+//    static final String KART_KONFIG = "kartConfig";
+//
+//    /** The Constant KART_END_OF_TRANCE. */
+//    static final String KART_END_OF_TRANCE = "eot";
 
     /**
      * The Constant KART_PROPERTY_TRACNUMBER - must be equal to the one defined in
@@ -496,12 +509,12 @@ public abstract class KiemAutomatedJUnitTest {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
                         System.out.println(jSONData.toString());
                         if (jSONData != null) {
-                            if (jSONData.has(KART_KONFIG)) {
-                                Object kartConfigContent = jSONData.get(KART_KONFIG);
+                            if (jSONData.has(KartConstants.CONFIGVAR)) {
+                                Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
                                 if (kartConfigContent instanceof JSONObject
-                                        && ((JSONObject) kartConfigContent).has(KART_END_OF_TRANCE)) {
+                                        && ((JSONObject) kartConfigContent).has(KartConstants.VAR_EOT)) {
                                     Object kartEOTContent = ((JSONObject) kartConfigContent)
-                                            .get(KART_END_OF_TRANCE);
+                                            .get(KartConstants.VAR_EOT);
                                     if (kartEOTContent instanceof Boolean) {
                                         if (((Boolean) kartEOTContent)) {
                                             // !!! EOT DETECTED !!! //
@@ -524,8 +537,8 @@ public abstract class KiemAutomatedJUnitTest {
                                         errorInformation = "Error (" + (String) errorContent
                                                 + ") in tick " + tick + " of trace " + traceNumber
                                                 + " of ESO file '" + esoFilePath.toString()
-                                                + "' during execution '" + this.getExecutionFileName()
-                                                + "'.";
+                                                + "' during execution '"
+                                                + this.getExecutionFileName() + "'.";
                                         break;
                                     }
                                 }
@@ -544,7 +557,7 @@ public abstract class KiemAutomatedJUnitTest {
                                 + KiemPlugin.getLastError());
             }
         }// next trace
-        
+
         // return a possible error message or null if no error
         return errorInformation;
     }
@@ -747,11 +760,11 @@ public abstract class KiemAutomatedJUnitTest {
                 .getDataComponentWrapperList();
         for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
             String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
-            if (dataComponentId.startsWith(KART_REPLAY_DATACOMPONENT_ID_START)) {
+            if (dataComponentId.startsWith(KartConstants.KART_REPLAY_DATACOMPONENT_ID_START)) {
                 return dataComponentWrapper;
             }
         }
-        throw new RuntimeException("KART DataComponent (" + KART_REPLAY_DATACOMPONENT_ID_START
+        throw new RuntimeException("KART DataComponent (" + KartConstants.KART_REPLAY_DATACOMPONENT_ID_START
                 + ") was not loaded. The KART Plugin must be added to the run configuration "
                 + "together with all dependend plugins.");
     }
@@ -768,11 +781,11 @@ public abstract class KiemAutomatedJUnitTest {
                 .getDataComponentWrapperList();
         for (DataComponentWrapper dataComponentWrapper : dataComponentWrapperList) {
             String dataComponentId = dataComponentWrapper.getDataComponent().getDataComponentId();
-            if (dataComponentId.startsWith(KART_VALIDATION_DATACOMPONENT_ID_START)) {
+            if (dataComponentId.startsWith(KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START)) {
                 return dataComponentWrapper;
             }
         }
-        throw new RuntimeException("KART DataComponent (" + KART_VALIDATION_DATACOMPONENT_ID_START
+        throw new RuntimeException("KART DataComponent (" + KartConstants.KART_VALIDATION_DATACOMPONENT_ID_START
                 + ") was not loaded. The KART Plugin must be added to the run configuration"
                 + " together with all dependend plugins.");
     }

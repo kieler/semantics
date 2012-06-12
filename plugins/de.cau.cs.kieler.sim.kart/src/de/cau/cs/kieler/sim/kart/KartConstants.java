@@ -19,8 +19,11 @@ package de.cau.cs.kieler.sim.kart;
  * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
  * @kieler.rating 2012-02-23 red
  */
-public class Constants {
+public class KartConstants {
     public static final String PLUGINID = "de.cau.cs.kieler.sim.kart";
+    public static final String KART_REPLAY_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.replay";
+    public static final String KART_VALIDATION_DATACOMPONENT_ID_START = "de.cau.cs.kieler.sim.kart.validation";
+
     public static final String ESO_FILEEXTENSION = "eso";
     public static final String TRACENUM = "Trace number to replay";
     public static final String IGNOREEXTRA = "Ignore additionally generated signals";

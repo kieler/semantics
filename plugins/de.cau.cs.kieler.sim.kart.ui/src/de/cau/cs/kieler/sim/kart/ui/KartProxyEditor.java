@@ -33,7 +33,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
-import de.cau.cs.kieler.sim.kart.Constants;
+import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.DataReplayComponent;
 import de.cau.cs.kieler.sim.kart.DataValidationComponent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -119,7 +119,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
                     IFile file = (IFile) editorInput.getAdapter(IFile.class);
                     URI resource = URI.createURI(file.getLocationURI().toString());
                     resource = resource.trimFileExtension().appendFileExtension(
-                            Constants.ESO_FILEEXTENSION);
+                            KartConstants.ESO_FILEEXTENSION);
                     modelFileKiemProperty.setValue(resource.toPlatformString(true));
                     success = true;
                 }
