@@ -17,10 +17,9 @@ package de.cau.cs.kieler.sim.kiem.properties;
 import java.io.Serializable;
 
 /**
- * The Class KiemProperty. This is the basic serializable KiemProperty
- * implementation which can hold a key value pair of types String and also a
- * KiemPropertyType. The contents of the KiemProperty can be saved and loaded
- * but the KiemPropertyType is recovered by its identifier.
+ * The Class KiemProperty. This is the basic serializable KiemProperty implementation which can hold
+ * a key value pair of types String and also a KiemPropertyType. The contents of the KiemProperty
+ * can be saved and loaded but the KiemPropertyType is recovered by its identifier.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  * @kieler.rating 2009-01-15 yellow
@@ -28,275 +27,275 @@ import java.io.Serializable;
  */
 public class KiemProperty implements Serializable {
 
-	/** The Constant serialVersionUID. */
-	private static final long serialVersionUID = -6897758298476417410L;
+    /** The Constant serialVersionUID. */
+    private static final long serialVersionUID = -6897758298476417410L;
 
-	/** The String key of the KiemProperty. */
-	private String key;
+    /** The String key of the KiemProperty. */
+    private String key;
 
-	/** The String value of the KiemProperty. */
-	private String value;
+    /** The String value of the KiemProperty. */
+    private String value;
 
-	/**
-	 * Use this flag to set the Property to be re-initialized again when loading
-	 * it from an execution schedule file.
-	 */
-	private boolean restoreToDefaultOnLoad = false;
+    /**
+     * Use this flag to set the Property to be re-initialized again when loading it from an
+     * execution schedule file.
+     */
+    private boolean restoreToDefaultOnLoad = false;
 
-	/** The KiemPropertyType of the KiemProperty. */
-	private transient KiemPropertyType type;
+    /** The KiemPropertyType of the KiemProperty. */
+    private transient KiemPropertyType type;
 
-	/** The propertyType id of the component for deserialization. */
-	@SuppressWarnings("unused")
-	private String propertyTypeId;
+    /** The propertyType id of the component for deserialization. */
+    @SuppressWarnings("unused")
+    private String propertyTypeId;
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new String KiemProperty, with given default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param typeParam
-	 *            the type of this property
-	 * @param valueParam
-	 *            the value of this property
-	 */
-	public KiemProperty(final String keyParam,
-			final KiemPropertyType typeParam, final String valueParam) {
-		this.key = keyParam;
-		this.value = valueParam;
-		this.type = typeParam;
-		this.propertyTypeId = type.getId();
-	}
+    /**
+     * Instantiates a new String KiemProperty, with given default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param typeParam
+     *            the type of this property
+     * @param valueParam
+     *            the value of this property
+     */
+    public KiemProperty(final String keyParam, final KiemPropertyType typeParam,
+            final String valueParam) {
+        this.key = keyParam;
+        this.value = valueParam;
+        this.type = typeParam;
+        this.propertyTypeId = type.getId();
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new KiemProperty of given type with given default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param typeParam
-	 *            the type of this property
-	 * @param valueParam
-	 *            the value of this property
-	 */
-	public KiemProperty(final String keyParam,
-			final KiemPropertyType typeParam, final int valueParam) {
-		this.key = keyParam;
-		this.value = "" + valueParam;
-		this.type = typeParam;
-	}
+    /**
+     * Instantiates a new KiemProperty of given type with given default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param typeParam
+     *            the type of this property
+     * @param valueParam
+     *            the value of this property
+     */
+    public KiemProperty(final String keyParam, final KiemPropertyType typeParam,
+            final int valueParam) {
+        this.key = keyParam;
+        this.value = "" + valueParam;
+        this.type = typeParam;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new KiemProperty of given type with empty default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param typeParam
-	 *            the type of this property
-	 */
-	public KiemProperty(final String keyParam, final KiemPropertyType typeParam) {
-		this.key = keyParam;
-		this.value = "";
-		this.type = typeParam;
-	}
+    /**
+     * Instantiates a new KiemProperty of given type with empty default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param typeParam
+     *            the type of this property
+     */
+    public KiemProperty(final String keyParam, final KiemPropertyType typeParam) {
+        this.key = keyParam;
+        this.value = "";
+        this.type = typeParam;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new String KiemProperty with empty default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 */
-	public KiemProperty(final String keyParam) {
-		this.key = keyParam;
-		this.value = "";
-		this.type = new KiemPropertyTypeString();
-	}
+    /**
+     * Instantiates a new String KiemProperty with empty default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     */
+    public KiemProperty(final String keyParam) {
+        this.key = keyParam;
+        this.value = "";
+        this.type = new KiemPropertyTypeString();
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new String KiemProperty with given default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param valueParam
-	 *            the value of this property
-	 */
-	public KiemProperty(final String keyParam, final String valueParam) {
-		this.key = keyParam;
-		this.value = valueParam;
-		this.type = new KiemPropertyTypeString();
-	}
+    /**
+     * Instantiates a new String KiemProperty with given default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param valueParam
+     *            the value of this property
+     */
+    public KiemProperty(final String keyParam, final String valueParam) {
+        this.key = keyParam;
+        this.value = valueParam;
+        this.type = new KiemPropertyTypeString();
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new int KiemProperty with given default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param valueParam
-	 *            the value of this property
-	 */
-	public KiemProperty(final String keyParam, final int valueParam) {
-		this.key = keyParam;
-		this.value = valueParam + "";
-		this.type = new KiemPropertyTypeInt();
-	}
+    /**
+     * Instantiates a new int KiemProperty with given default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param valueParam
+     *            the value of this property
+     */
+    public KiemProperty(final String keyParam, final int valueParam) {
+        this.key = keyParam;
+        this.value = valueParam + "";
+        this.type = new KiemPropertyTypeInt();
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Instantiates a new boolean KiemProperty with given default value.
-	 * 
-	 * @param keyParam
-	 *            the key of this property
-	 * @param valueParam
-	 *            the value of this property
-	 */
-	public KiemProperty(final String keyParam, final boolean valueParam) {
-		this.key = keyParam;
-		this.value = "" + valueParam;
-		this.type = new KiemPropertyTypeBool();
-	}
+    /**
+     * Instantiates a new boolean KiemProperty with given default value.
+     * 
+     * @param keyParam
+     *            the key of this property
+     * @param valueParam
+     *            the value of this property
+     */
+    public KiemProperty(final String keyParam, final boolean valueParam) {
+        this.key = keyParam;
+        this.value = "" + valueParam;
+        this.type = new KiemPropertyTypeBool();
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the key of the KiemProperty.
-	 * 
-	 * @return the String property key
-	 */
-	public String getKey() {
-		return this.key;
-	}
+    /**
+     * Gets the key of the KiemProperty.
+     * 
+     * @return the String property key
+     */
+    public String getKey() {
+        return this.key;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the value of the KiempProperty.
-	 * 
-	 * @return the String property value
-	 */
-	public String getValue() {
-		return this.value;
-	}
+    /**
+     * Gets the value of the KiempProperty.
+     * 
+     * @return the String property value
+     */
+    public String getValue() {
+        return this.value;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the value as boolean value.
-	 * 
-	 * @return the value as boolean
-	 * 
-	 */
-	public final boolean getValueAsBoolean() {
-		return Boolean.parseBoolean(this.getValue());
-	}
+    /**
+     * Gets the value as boolean value.
+     * 
+     * @return the value as boolean
+     * 
+     */
+    public final boolean getValueAsBoolean() {
+        return Boolean.parseBoolean(this.getValue());
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the value as an integer value.
-	 * 
-	 * @return the value as integer
-	 */
-	public final int getValueAsInt() {
-		return Integer.parseInt(this.getValue());
-	}
+    /**
+     * Gets the value as an integer value.
+     * 
+     * @return the value as integer
+     */
+    public final int getValueAsInt() {
+        return Integer.parseInt(this.getValue());
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the type of the KiemProperty.
-	 * 
-	 * @return the KiemPropertyType
-	 */
-	public KiemPropertyType getType() {
-		return this.type;
-	}
+    /**
+     * Gets the type of the KiemProperty.
+     * 
+     * @return the KiemPropertyType
+     */
+    public KiemPropertyType getType() {
+        return this.type;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Sets the KIEM property type.
-	 * 
-	 * @param typeParam
-	 *            the new property type
-	 */
-	public void setType(final KiemPropertyType typeParam) {
-		this.type = typeParam;
-	}
+    /**
+     * Sets the KIEM property type.
+     * 
+     * @param typeParam
+     *            the new property type
+     */
+    public void setType(final KiemPropertyType typeParam) {
+        this.type = typeParam;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Sets the value of the KiemPorperty.
-	 * 
-	 * @param valueParam
-	 *            the new String property value
-	 */
-	public void setValue(final String valueParam) {
-		this.value = valueParam;
-	}
+    /**
+     * Sets the value of the KiemPorperty.
+     * 
+     * @param valueParam
+     *            the new String property value
+     */
+    public void setValue(final String valueParam) {
+        this.value = valueParam;
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the file path as a String. This interprets the property value as a
-	 * file path.
-	 * 
-	 * @return the String file path
-	 */
-	public String getFilePath() {
-		return this.value.replace("\\", "/");
-	}
+    /**
+     * Gets the file path as a String. This interprets the property value as a file path.
+     * 
+     * @return the String file path
+     */
+    public String getFilePath() {
+        return this.value.replace("\\", "/");
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
 
-	/**
-	 * Gets the directory as a String. This interprets the property value as a
-	 * file and extracts the directory out of it.
-	 * 
-	 * @return the String directory
-	 */
-	public String getDirectory() {
-		String backDir = this.value;
-		backDir = backDir.replace("\\", "/");
-		int i = backDir.lastIndexOf("/");
-		if (i > -1) {
-			backDir = backDir.substring(0, i + 1);
-		}
-		return backDir;
-	}
+    /**
+     * Gets the directory as a String. This interprets the property value as a file and extracts the
+     * directory out of it.
+     * 
+     * @return the String directory
+     */
+    public String getDirectory() {
+        String backDir = this.value;
+        backDir = backDir.replace("\\", "/");
+        int i = backDir.lastIndexOf("/");
+        if (i > -1) {
+            backDir = backDir.substring(0, i + 1);
+        }
+        return backDir;
+    }
 
-	// -------------------------------------------------------------------------
-	
-	/**
-	 * Checks if is restore to default on load.
-	 *
-	 * @return true, if is restore to default on load
-	 */
-	public boolean isRestoreToDefaultOnLoad() {
-		return restoreToDefaultOnLoad;
-	}
+    // -------------------------------------------------------------------------
 
-	// -------------------------------------------------------------------------
-	
-	/**
-	 * Sets the restore to default on load.
-	 *
-	 * @param restoreToDefaultOnLoad the new restore to default on load
-	 */
-	public void setRestoreToDefaultOnLoad(boolean restoreToDefaultOnLoad) {
-		this.restoreToDefaultOnLoad = restoreToDefaultOnLoad;
-	}
+    /**
+     * Checks if is restore to default on load.
+     * 
+     * @return true, if is restore to default on load
+     */
+    public boolean isRestoreToDefaultOnLoad() {
+        return restoreToDefaultOnLoad;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the restore to default on load.
+     * 
+     * @param restoreToDefaultOnLoad
+     *            the new restore to default on load
+     */
+    public void setRestoreToDefaultOnLoad(final boolean restoreToDefaultOnLoad) {
+        this.restoreToDefaultOnLoad = restoreToDefaultOnLoad;
+    }
 
 }

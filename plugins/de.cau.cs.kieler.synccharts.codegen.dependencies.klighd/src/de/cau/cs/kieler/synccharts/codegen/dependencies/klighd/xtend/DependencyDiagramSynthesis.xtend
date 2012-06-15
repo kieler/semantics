@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend
 
 import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
@@ -16,11 +29,17 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDepende
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
 
+/**
+ * Visualization of a dependency graph for a SyncChart.
+ * 
+ * @author cmot
+ */
 class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KNode> {
 	
 	@Inject
 	extension KRenderingUtil
 	
+	// Main transformation for every dependency node create a node figure and for every dependency an connecting edge figure.
 	override KNode transform(Dependencies model, TransformationContext<Dependencies, KNode> transformationContext) {
 		
 		val rootNode = KimlUtil::createInitializedNode;
@@ -44,7 +63,9 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	}
 	
 	
-def createNodeFigure(Node node, KNode rootNode) {
+	// For a dependency node create a node figure. For strong nodes (ending wit _S) use black for
+	// weak nodes use gray.
+	def createNodeFigure(Node node, KNode rootNode) {
 			val kNode = node.createRoundedRectangulareNode(25, 85);
 			kNode.KRendering.add(factory.createKLineWidth.of(2));
 			
@@ -65,10 +86,12 @@ def createNodeFigure(Node node, KNode rootNode) {
 			kNode.KRendering.add(factory.createKText.of(nodeText + " (" + node.priority + ")"));
 			rootNode.children.add(kNode)
 			return kNode
-}
+	}
 	
 	
-def createDependencyFigure(Dependency dependency, KNode rootNode) {
+	// For a dependency edge create a connecting figure with a decorator. Depending on the type use
+	// a different color.
+	def createDependencyFigure(Dependency dependency, KNode rootNode) {
 		val kEdge = dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
 		val ellipse = factory.createKEllipse;
@@ -84,7 +107,6 @@ def createDependencyFigure(Dependency dependency, KNode rootNode) {
 			if ((dependency as ControlflowDependency).immediate) {
 					color.setBlue(255);
 					color.setGreen(150);
-//					color.setRed(155);
 			}
 			kEdge.KRendering.add(color);
 		}

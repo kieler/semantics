@@ -26,9 +26,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiemPropertyTypeString extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 2752993929727262411L;
-
     /** The Constant PROPERTY_STRING. */
     private static final Image PROPERTY_STRING = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyStringIcon.png").createImage();

@@ -1,5 +1,5 @@
 /*
- * KIELER - Kiel Integrated Environment for Layout Eclipse Rich Client
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
@@ -14,11 +14,9 @@
 package de.cau.cs.kieler.synccharts.codegen.s;
 
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -33,10 +31,7 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -45,20 +40,15 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtext.util.EmfFormatter;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.s.s.Program;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
-import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
-import de.cau.cs.kieler.synccharts.codegen.dependencies.xtend.Synccharts2Dependenies;
-
 import com.google.common.base.Predicate;
 import com.google.common.base.Predicates;
+
+import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.synccharts.Region;
+import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 
 // Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
 //import com.google.inject.AbstractModule;

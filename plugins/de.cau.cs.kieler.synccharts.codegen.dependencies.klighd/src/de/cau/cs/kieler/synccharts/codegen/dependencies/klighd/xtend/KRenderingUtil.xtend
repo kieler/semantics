@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend
 
 import de.cau.cs.kieler.kiml.util.KimlUtil
@@ -12,6 +25,11 @@ import de.cau.cs.kieler.core.krendering.KContainerRendering
 import de.cau.cs.kieler.core.krendering.KText
 import de.cau.cs.kieler.core.kgraph.KEdge
 
+/**
+ * KRendering Utility class for KLighD visualization.
+ * 
+ * @author chsch
+ */
 class KRenderingUtil {
 	
 	def KRenderingFactory factory() {

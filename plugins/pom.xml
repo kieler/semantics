@@ -116,7 +116,11 @@
     <module>de.cau.cs.kieler.maude</module>
     <module>de.cau.cs.kieler.papyrus</module>
     <module>de.cau.cs.kieler.s</module>
+    <module>de.cau.cs.kieler.s.sc</module>
+    <module>de.cau.cs.kieler.s.sim.kivi</module>
+    <module>de.cau.cs.kieler.s.sim.sc</module>
     <module>de.cau.cs.kieler.s.ui</module>
+    <module>de.cau.cs.kieler.sc</module>
     <module>de.cau.cs.kieler.sim.abro</module>
     <module>de.cau.cs.kieler.sim.eso</module>
     <module>de.cau.cs.kieler.sim.eso.ui</module>
@@ -136,9 +140,10 @@
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
     <module>de.cau.cs.kieler.sim.trace</module>
-    <module>de.cau.cs.kieler.sim.validator</module>
     <module>de.cau.cs.kieler.sj</module>
-    <module>de.cau.cs.kieler.sj.test</module>
+    <module>de.cau.cs.kieler.synccharts.codegen.dependencies</module>
+    <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
+    <module>de.cau.cs.kieler.synccharts.codegen.s</module>
     <module>de.cau.cs.kieler.synccharts</module>
     <module>de.cau.cs.kieler.synccharts.codegen.esterel</module>
     <module>de.cau.cs.kieler.synccharts.codegen.sc</module>
@@ -152,6 +157,7 @@
     <module>de.cau.cs.kieler.synccharts.ksbase</module>
     <module>de.cau.cs.kieler.synccharts.sim.ptolemy</module>
     <module>de.cau.cs.kieler.synccharts.sim.sc</module>
+    <module>de.cau.cs.kieler.synccharts.sim.s</module>
     <module>de.cau.cs.kieler.synccharts.synchronizer</module>
     <module>de.cau.cs.kieler.synccharts.text</module>
     <module>de.cau.cs.kieler.synccharts.text.bridge</module>

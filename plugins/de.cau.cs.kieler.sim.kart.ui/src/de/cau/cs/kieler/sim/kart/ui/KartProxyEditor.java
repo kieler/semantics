@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.layout.FillLayout;
@@ -34,7 +33,7 @@ import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.MultiPageEditorPart;
 
-import de.cau.cs.kieler.sim.kart.Constants;
+import de.cau.cs.kieler.sim.kart.KartConstants;
 import de.cau.cs.kieler.sim.kart.DataReplayComponent;
 import de.cau.cs.kieler.sim.kart.DataValidationComponent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
@@ -42,12 +41,11 @@ import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
-
 /**
- * An editor to facilitate automatically changing the ESO file property
- * in the current KIEM schedule.
+ * An editor to facilitate automatically changing the ESO file property in the current KIEM
+ * schedule.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc, cmot
  * @kieler.rating 2012-01-24 red
  */
 public class KartProxyEditor extends MultiPageEditorPart {
@@ -77,62 +75,61 @@ public class KartProxyEditor extends MultiPageEditorPart {
         }
 
         boolean suc = updateProperty();
-        
-        if(!suc) {
-            List<AbstractDataComponent> allComps = KiemPlugin.getDefault().getRegisteredDataComponentList();
+
+        if (!suc) {
+            List<AbstractDataComponent> allComps = KiemPlugin.getDefault()
+                    .getRegisteredDataComponentList();
             Iterator<AbstractDataComponent> it = allComps.iterator();
-            
+
             while (it.hasNext()) {
                 AbstractDataComponent comp = it.next();
-                if(comp instanceof DataValidationComponent || comp instanceof DataReplayComponent) {
+                if (comp instanceof DataValidationComponent || comp instanceof DataReplayComponent) {
                     KiemPlugin.getDefault().addTodataComponentWrapperList(comp);
                 }
             }
             updateProperty();
         }
-        
-        
+
         KiemPlugin.getDefault().setDirty(true);
         KiemPlugin.getDefault().updateViewAsync();
-        
+
         this.closeEditor();
     }
-    
+
     /**
      * Update the ESO file property of the Replay component to reflect the "opened" ESO file.
      * 
      * @return {@code true} if the Replay component was found in the current list of
-     * {@code DataComponent}s and the property was changed. {@code false} otherwise.
+     *         {@code DataComponent}s and the property was changed. {@code false} otherwise.
      */
     private boolean updateProperty() {
         boolean success = false;
-        
-        List<DataComponentWrapper> components = KiemPlugin.getDefault().getDataComponentWrapperList();
-        Iterator<DataComponentWrapper> it = components.iterator();
-        
-        while(it.hasNext()) {
-            DataComponentWrapper c = it.next();
 
-            if(c.getDataComponent().getClass().getName().equals("de.cau.cs.kieler.sim.kart.DataReplayComponent")) {
-                KiemProperty[] props = c.getProperties();
-                for(KiemProperty p : props) {
-                    if(p.getKey().equals(Constants.ESOFILE)) {
-                        IFile file = (IFile) editorInput.getAdapter(IFile.class);
-                        URI resource = URI.createURI(file.getLocationURI().toString());
-                        URI absFile = CommonPlugin.resolve(resource.trimFileExtension().appendFileExtension("eso"));
-                        p.setValue(absFile.toFileString());
-                        success = true;
-                    }
+        List<DataComponentWrapper> components = KiemPlugin.getDefault()
+                .getDataComponentWrapperList();
+
+        for (DataComponentWrapper dataComponentWrapper : components) {
+
+            if (dataComponentWrapper.getDataComponent().getClass().getName()
+                    .equals(DataReplayComponent.DATA_REPLAY_COMPONENT_ID)) {
+
+                KiemProperty[] properties = dataComponentWrapper.getProperties();
+                if (properties.length > 0) {
+                    KiemProperty modelFileKiemProperty = properties[0];
+                    IFile file = (IFile) editorInput.getAdapter(IFile.class);
+                    URI resource = URI.createURI(file.getLocationURI().toString());
+                    resource = resource.trimFileExtension().appendFileExtension(
+                            KartConstants.ESO_FILEEXTENSION);
+                    modelFileKiemProperty.setValue(resource.toPlatformString(true));
+                    success = true;
                 }
             }
         }
-        
         return success;
     }
 
     /**
-     * Create just an empty fake page
-     * {@inheritDoc}
+     * Create just an empty fake page {@inheritDoc}
      */
     @Override
     protected void createPages() {
@@ -143,7 +140,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
         int index = addPage(composite);
         setPageText(index, " ");
     }
-    
+
     /**
      * This allows asynchronous closing of this fake editor.
      */
@@ -164,14 +161,13 @@ public class KartProxyEditor extends MultiPageEditorPart {
             }
         });
     }
-    
+
     /**
      * {@inheritDoc}
      */
     @Override
     public void doSave(IProgressMonitor monitor) {
-        // TODO Auto-generated method stub
-
+        // not implemented, PROXY editor only!
     }
 
     /**
@@ -179,8 +175,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
      */
     @Override
     public void doSaveAs() {
-        // TODO Auto-generated method stub
-
+        // not implemented, PROXY editor only!
     }
 
     /**
@@ -188,7 +183,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
      */
     @Override
     public boolean isSaveAsAllowed() {
-        // TODO Auto-generated method stub
+        // not implemented, PROXY editor only!
         return false;
     }
 

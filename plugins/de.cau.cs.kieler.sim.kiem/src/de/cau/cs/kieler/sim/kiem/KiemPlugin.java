@@ -21,26 +21,28 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-//import org.eclipse.osgi.service.debug.DebugOptions;
-//import org.eclipse.osgi.framework.debug.FrameworkDebugOptions;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.URIConverter;
 import org.eclipse.emf.ecore.resource.impl.ExtensibleURIConverterImpl;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IFileEditorInput;
 import org.eclipse.ui.ISaveablePart2;
 import org.eclipse.ui.IWorkbenchPage;
@@ -50,9 +52,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
-import org.osgi.framework.BundleContext;
 import org.osgi.framework.Bundle;
-import org.eclipse.core.runtime.FileLocator;
+import org.osgi.framework.BundleContext;
+
 import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.execution.InitializeExecution;
 import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
@@ -143,6 +145,24 @@ public class KiemPlugin extends AbstractUIPlugin {
     /** The initialize execution task. */
     private InitializeExecution initializeExecution;
 
+    /** The no error output. */
+    private boolean forceNoErrorOutput = false;
+    
+    /** The last error. */
+    private static String lastError = null;
+
+    /** The current model file. */
+    private static IPath currentModelFile = null;
+    
+    /** The opened model files. */
+    private static List<IPath> openedModelFiles = new LinkedList<IPath>();
+    
+    /** A mapping between model files and model editors. */
+    private static HashMap<IPath, IEditorPart> openedModelEditors = new HashMap<IPath, IEditorPart>();
+    
+    /** A mapping between model files and model root EObjects. */
+    private static HashMap<IPath, EObject> openedModelRootObjects = new HashMap<IPath, EObject>();
+    
     // -------------------------------------------------------------------------
 
     /**
@@ -163,6 +183,7 @@ public class KiemPlugin extends AbstractUIPlugin {
         this.currentMaster = null;
         this.currentFile = null;
         initializeExecution = null;
+        lastError = null;
     }
 
     // -------------------------------------------------------------------------
@@ -310,7 +331,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      * 
      * @param editorInput
      *            the file editor input to open
-     * @throws IOException 
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public void openFile(final IEditorInput editorInput) throws IOException {
         if (!(editorInput instanceof IFileEditorInput)) {
@@ -347,6 +369,7 @@ public class KiemPlugin extends AbstractUIPlugin {
 
         if (fileString.contains("bundleentry")) {
             String urlPath = fileString.replaceFirst("bundleentry:/", "bundleentry://");
+            urlPath = urlPath.replace("\\", "/");
             URL pathUrl = new URL(urlPath);
             URL url2 = FileLocator.resolve(pathUrl);
             openFile(executionFile, readOnly, url2.openStream());
@@ -370,9 +393,8 @@ public class KiemPlugin extends AbstractUIPlugin {
      *            the execution file to open
      * @param readOnly
      *            the readonly flag indicates that the file is locked for writing
-     * 
-     * @throws IOException
-     *             if the file was not found
+     * @param inputStream
+     *            the input stream
      */
     /**
      * Open a file from a given InputStream.
@@ -524,7 +546,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                 fileName = KiemPlugin.getDefault().getCurrentFile().toFile().getName();
             }
 
-            // FIXME: Is there a default dialog for this?
             String[] buttons = { "Yes", "No", "Cancel" };
 
             MessageDialog dlg = new MessageDialog(parentShell, "Save Execution", null, "'"
@@ -584,11 +605,10 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     /**
      * Check for single enabled master. This is just a wrapper for the method
-     * {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
      * 
      * @param silent
      *            if true, the warning dialog will be suppressed
-     * 
+     *            {@link #checkForSingleEnabledMaster(boolean, DataComponentWrapper)}.
      */
     public void checkForSingleEnabledMaster(final boolean silent) {
         checkForSingleEnabledMaster(silent, null);
@@ -856,15 +876,15 @@ public class KiemPlugin extends AbstractUIPlugin {
                 if (vglComponentId.equals(componentId)) {
                     // restore KIEM property type first
                     if (properties != null) {
-                    	KiemProperty[] defaultProperties = dataComponent.getProperties();
+                        KiemProperty[] defaultProperties = dataComponent.getProperties();
                         for (int ccc = 0; ccc < properties.length; ccc++) {
                             try {
-                                if (ccc < dataComponent.getProperties().length)  {
+                                if (ccc < dataComponent.getProperties().length) {
                                     properties[ccc].setType(defaultProperties[ccc].getType());
                                     // if a property asks for restoring its default value
                                     // then omit the loaded value for this property
                                     if (properties[ccc].isRestoreToDefaultOnLoad()) {
-                                    	properties[ccc].setValue(defaultProperties[ccc].getValue());
+                                        properties[ccc].setValue(defaultProperties[ccc].getValue());
                                     }
                                 }
                             } catch (Exception e) {
@@ -1023,7 +1043,6 @@ public class KiemPlugin extends AbstractUIPlugin {
                         .notify(new KiemEvent(KiemEvent.SAVE, getCurrentFile()));
             }
         } catch (IOException e) {
-            // TODO: error behavior
             e.printStackTrace();
         }
         setDirty(false);
@@ -1304,14 +1323,14 @@ public class KiemPlugin extends AbstractUIPlugin {
      * - {@link KiemExecutionException}<BR>
      * If the mustStop flag is set, then the execution is immediately stopped. Note that all threads
      * will be advised to stop in the
-     * {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()} method. But there is
-     * no guarantee that they really stop. The links to these threads will be cut down, so that
-     * there is the possibility of zombie threads.
      * 
      * @param dataComponent
      *            the DataComponent that caused the error or warning
      * @param exception
      *            the Exception if any, or null
+     *            {@link de.cau.cs.kieler.sim.kiem.execution.Execution#errorTerminate()} method. But
+     *            there is no guarantee that they really stop. The links to these threads will be
+     *            cut down, so that there is the possibility of zombie threads.
      */
     public static void handleComponentError(final AbstractDataComponent dataComponent,
             final Exception exception) {
@@ -1371,6 +1390,17 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Gets the error warning message.
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
+     * @return the error warning message
+     */
     private String getErrorWarningMessage(final String textMessage, final String pluginID,
             final Exception exception) {
         String message = "";
@@ -1393,6 +1423,17 @@ public class KiemPlugin extends AbstractUIPlugin {
         return message;
     }
 
+    /**
+     * Gets the plugin id.
+     * 
+     * @param textMessage
+     *            the text message
+     * @param pluginID
+     *            the plugin id
+     * @param exception
+     *            the exception
+     * @return the plugin id
+     */
     private String getPluginID(final String textMessage, final String pluginID,
             final Exception exception) {
         String pluginID2 = null;
@@ -1456,6 +1497,9 @@ public class KiemPlugin extends AbstractUIPlugin {
      */
     public void showWarning(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
+        if (forceNoErrorOutput) {
+            return;
+        }
         try {
             String message = getErrorWarningMessage(textMessage, pluginID, exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
@@ -1511,6 +1555,19 @@ public class KiemPlugin extends AbstractUIPlugin {
 
     public void showError(final String textMessage, final String pluginID,
             final Exception exception, final boolean silent) {
+        if (isForceNoErrorOutput()) {
+            KiemPlugin.lastError = "";
+            if (pluginID != null) {
+                KiemPlugin.lastError += pluginID + ":";
+            }
+            if (textMessage != null) {
+                KiemPlugin.lastError += textMessage;
+            }
+            if (exception != null) {
+                KiemPlugin.lastError += exception.getMessage();
+            }
+            return;
+        }
         try {
             String message = getErrorWarningMessage(textMessage, pluginID, exception);
             String pluginID2 = getPluginID(textMessage, pluginID, exception);
@@ -1550,4 +1607,104 @@ public class KiemPlugin extends AbstractUIPlugin {
         }
     }
 
-}
+    // -------------------------------------------------------------------------
+
+    /**
+     * Checks if is force no error output.
+     *
+     * @return true, if is force no error output
+     */
+    public boolean isForceNoErrorOutput() {
+        return forceNoErrorOutput;
+    }
+
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the force no error output.
+     *
+     * @param forceNoErrorOutput the new force no error output
+     */
+    public void setForceNoErrorOutput(final boolean forceNoErrorOutput) {
+        this.forceNoErrorOutput = forceNoErrorOutput;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the last error.
+     *
+     * @return the last error
+     */
+    public static String getLastError() {
+        return lastError;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Resets the last error.
+     *
+     */
+    public static void resetLastError() {
+        KiemPlugin.lastError = null;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the current model file.
+     *
+     * @return the current model file
+     */
+    public static IPath getCurrentModelFile() {
+        return currentModelFile;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Sets the current model file.
+     *
+     * @param currentModelFile the new current model file
+     */
+    public static void setCurrentModelFile(final IPath currentModelFile) {
+        KiemPlugin.currentModelFile = currentModelFile;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model files.
+     *
+     * @return the opened model files
+     */
+    public static List<IPath> getOpenedModelFiles() {
+        return openedModelFiles;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model editors.
+     *
+     * @return the opened model editors
+     */
+    public static HashMap<IPath, IEditorPart> getOpenedModelEditors() {
+        return openedModelEditors;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Gets the opened model root objects.
+     *
+     * @return the opened model root objects
+     */
+    public static HashMap<IPath, EObject> getOpenedModelRootObjects() {
+        return openedModelRootObjects;
+    }
+
+    // -------------------------------------------------------------------------
+}    

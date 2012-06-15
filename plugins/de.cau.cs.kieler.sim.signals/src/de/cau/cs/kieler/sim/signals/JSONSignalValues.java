@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2011 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -36,7 +36,7 @@ import org.json.JSONObject;
  * Pure signal b, absent<BR>
  * b:{present:absent}<BR>
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
@@ -49,14 +49,14 @@ public final class JSONSignalValues {
     public static final String VALUE_KEY = "value";
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Instantiates a new jSON signal values.
      */
     private JSONSignalValues() {
-        
+
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -71,8 +71,8 @@ public final class JSONSignalValues {
      * @throws JSONException
      *             a JSONException
      */
-    public static void setPresent(final JSONObject signalValue, 
-                                  final boolean isPresent) throws JSONException {
+    public static void setPresent(final JSONObject signalValue, final boolean isPresent)
+            throws JSONException {
         signalValue.put(PRESENT_KEY, isPresent);
     }
 
@@ -164,7 +164,8 @@ public final class JSONSignalValues {
      * @throws JSONException
      *             a JSONException
      */
-    public static JSONObject newValue(final Object value, final boolean present) throws JSONException {
+    public static JSONObject newValue(final Object value, final boolean present)
+            throws JSONException {
 
         JSONObject returnObject = new JSONObject();
 

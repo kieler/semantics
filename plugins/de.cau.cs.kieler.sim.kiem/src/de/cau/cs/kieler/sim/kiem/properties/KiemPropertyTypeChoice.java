@@ -31,9 +31,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 922994563762566959L;
-
     /** The Constant PROPERTY_CHOICE. */
     private static final Image PROPERTY_CHOICE = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyChoiceIcon.png").createImage();
@@ -71,10 +68,9 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String names values (encoded as Strings in property) to
-     * int of the combobox cell editor. All items are searched, and the resulting
-     * index is returned. If nothing is found, the first item with index 0
-     * is the default selected one.
+     * This method bridges String names values (encoded as Strings in property) to int of the
+     * combobox cell editor. All items are searched, and the resulting index is returned. If nothing
+     * is found, the first item with index 0 is the default selected one.
      * 
      * {@inheritDoc}
      */
@@ -90,10 +86,9 @@ public class KiemPropertyTypeChoice extends KiemPropertyType implements IKiemPro
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges String names values (encoded as Strings in property) to
-     * int of the combobox cell editor. The item text of the selected index
-     * is saved as a String.
-     *  
+     * This method bridges String names values (encoded as Strings in property) to int of the
+     * combobox cell editor. The item text of the selected index is saved as a String.
+     * 
      * {@inheritDoc}
      */
     public void setValue(final KiemProperty element, final Object value) {

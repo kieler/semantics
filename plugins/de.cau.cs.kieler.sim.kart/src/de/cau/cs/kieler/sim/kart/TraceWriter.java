@@ -107,7 +107,7 @@ public class TraceWriter {
                 }
             }
         } catch (IOException e) {
-            throw new KiemInitializationException(Constants.ERR_WRITE, true, e);
+            throw new KiemInitializationException(KartConstants.ERR_WRITE, true, e);
         }
     }
     

@@ -1,9 +1,9 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Test - KIELER Synchronous Java (SJ)
-Bundle-SymbolicName: de.cau.cs.kieler.sj.jtest
+Bundle-SymbolicName: de.cau.cs.kieler.sj.test
 Bundle-Version: 0.2.0.qualifier
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
-Import-Package: junit.framework
-Require-Bundle: de.cau.cs.kieler.sj
+Require-Bundle: de.cau.cs.kieler.sj,
+ org.junit;bundle-version="4.8.0"

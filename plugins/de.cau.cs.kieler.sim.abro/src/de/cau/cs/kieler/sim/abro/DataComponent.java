@@ -22,7 +22,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
+import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 
@@ -282,7 +282,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         properties[4] = new KiemProperty("a choice", new KiemPropertyTypeChoice(items), items[2]);
         properties[5] = new KiemProperty("workspace file", new KiemPropertyTypeWorkspaceFile(),
                 "/nothing.txt");
-        properties[6] = new KiemProperty("editor", new KiemPropertyTypeEditor(), "");
+        properties[6] = new KiemProperty("editor", new KiemPropertyTypeModel(), "");
         // CHECKSTYLEON MagicNumber
         return properties;
     }

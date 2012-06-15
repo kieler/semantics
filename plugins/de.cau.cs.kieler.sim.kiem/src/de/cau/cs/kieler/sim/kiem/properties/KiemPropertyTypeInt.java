@@ -26,9 +26,6 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = 8908596145125394334L;
-
     /** The Constant PROPERTY_INT. */
     private static final Image PROPERTY_INT = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyIntIcon.png").createImage();
@@ -45,9 +42,9 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges integer values (encoded as Strings in property) to
-     * Strings of the string cell editor. It tries to encode the saved value
-     * as an Integer. If this fails, the default 0 value is taken.
+     * This method bridges integer values (encoded as Strings in property) to Strings of the string
+     * cell editor. It tries to encode the saved value as an Integer. If this fails, the default 0
+     * value is taken.
      * 
      * {@inheritDoc}
      */
@@ -66,9 +63,9 @@ public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemProper
     // -------------------------------------------------------------------------
 
     /**
-     * This method bridges integer values (encoded as Strings in property) to
-     * Strings of the string cell editor. It tries to encode the saved value
-     * as an Integer. If this fails, the default 0 value is taken.
+     * This method bridges integer values (encoded as Strings in property) to Strings of the string
+     * cell editor. It tries to encode the saved value as an Integer. If this fails, the default 0
+     * value is taken.
      * 
      * {@inheritDoc}
      */

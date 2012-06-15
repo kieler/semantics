@@ -24,13 +24,15 @@ import org.eclipse.ui.IEditorSite;
 import org.eclipse.xtext.ui.editor.XtextEditor;
 import org.eclipse.xtext.ui.editor.model.IXtextDocument;
 import org.eclipse.xtext.ui.editor.model.XtextDocument;
+import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
+import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 /**
  * Utility class for Xtext modeling.
  *
- * @author msp
+ * @author msp, cmot
  */
 public final class XtextModelingUtil {
 
@@ -41,39 +43,29 @@ public final class XtextModelingUtil {
     }
     
 
-
-    private static EObject xtextModel = null;
-
     /**
      * Get the model from a given xtext editor.
      * 
-     * @param xtextEd
-     *            the editor
-     * @return the model
+     * @param xtextEditor
+     *            the Xtext editor
+     * @return the EObject of the root part of the model
      */
-    public static EObject getModelFromXtextEditor(final XtextEditor xtextEd) {
-        checkForDirtyEditor(xtextEd);
-        IXtextDocument docu = xtextEd.getDocument();
+    public static EObject getModelFromXtextEditor(final XtextEditor xtextEditor) {
+        checkForDirtyEditor(xtextEditor);
+        IXtextDocument xtextDocument = xtextEditor.getDocument();
 
-        if (docu instanceof XtextDocument) {
-            XtextDocument document = (XtextDocument) docu;
-
-            document.readOnly(new Void<XtextResource>() {
-
-                @Override
-                public void process(final XtextResource state) throws Exception {
-                    if (state != null) {
-                        List<EObject> eObj = state.getContents();
-
-                        if (!eObj.isEmpty()) {
-                            xtextModel = eObj.get(0);
-                        }
-                    }
-
-                }
-            });
+        if (xtextDocument instanceof XtextDocument) {
+    		IParseResult result = null;
+    		IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
+    			public IParseResult exec(final XtextResource xtextResource)
+    					throws Exception {
+    				return xtextResource.getParseResult();
+    			}
+    		};
+    		result = xtextDocument.readOnly(work);
+    		return result.getRootASTElement();
         }
-        return xtextModel;
+        return null;
     }
 
     private static void checkForDirtyEditor(final XtextEditor diagramEditor) {

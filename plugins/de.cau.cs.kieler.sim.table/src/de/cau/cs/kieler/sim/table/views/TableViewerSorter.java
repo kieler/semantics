@@ -100,7 +100,7 @@ public class TableViewerSorter extends ViewerSorter {
             return null;
         }
         if ((!inString.equals("")) && inString.charAt(0) == '*') {
-       		return inString.substring(1);
+            return inString.substring(1);
         }
         return inString;
     }

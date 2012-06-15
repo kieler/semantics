@@ -28,10 +28,10 @@ import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
- * Listens to all events from the main KIEM Plugin and handles file related
- * events.
+ * Listens to all events from the main KIEM Plugin and handles file related events.
  * 
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
@@ -39,14 +39,14 @@ import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
 public final class KiemEventListener implements IKiemEventListener {
 
     /** The list of supported KiemEvent constants for this listener. */
-    private static final int[] EVENTS = { KiemEvent.LOAD, KiemEvent.SAVE,
-            KiemEvent.VIEW_DONE, KiemEvent.EXECUTION_START, KiemEvent.EXECUTION_STOP };
+    private static final int[] EVENTS = { KiemEvent.LOAD, KiemEvent.SAVE, KiemEvent.VIEW_DONE,
+            KiemEvent.EXECUTION_START, KiemEvent.EXECUTION_STOP };
 
     /**
      * The last created instance of the event listener.
      * <p>
-     * Used to set the load/save imminent variables. This is done to prevent the
-     * listener from reporting events that were triggered by the plugin itself.
+     * Used to set the load/save imminent variables. This is done to prevent the listener from
+     * reporting events that were triggered by the plugin itself.
      */
     private static KiemEventListener instance = new KiemEventListener();
 
@@ -89,13 +89,13 @@ public final class KiemEventListener implements IKiemEventListener {
      * {@inheritDoc}
      */
     public void notifyEvent(final KiemEvent event) {
-    	if (event.isEvent(KiemEvent.EXECUTION_START)) {
-    		ScheduleManager.getInstance().setEnabled(false);
-    	}
-    	if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
-    		ScheduleManager.getInstance().setEnabled(true);
-    	}
-    	
+        if (event.isEvent(KiemEvent.EXECUTION_START)) {
+            ScheduleManager.getInstance().setEnabled(false);
+        }
+        if (event.isEvent(KiemEvent.EXECUTION_STOP)) {
+            ScheduleManager.getInstance().setEnabled(true);
+        }
+
         if (event.isEvent(KiemEvent.LOAD)) {
             handleLoad(event.getInfo());
         }
@@ -103,11 +103,9 @@ public final class KiemEventListener implements IKiemEventListener {
             handleSave(event.getInfo());
         }
         if (event.isEvent(KiemEvent.VIEW_DONE)) {
-            List<ScheduleData> schedules = ScheduleManager.getInstance()
-                    .getRecentSchedules();
+            List<ScheduleData> schedules = ScheduleManager.getInstance().getRecentSchedules();
             if (schedules == null || schedules.isEmpty()) {
-                IEditorSite editor = KiemConfigurationPlugin.getDefault()
-                        .getActiveEditor();
+                IEditorSite editor = KiemUtil.getActiveEditor();
 
                 EditorIdWrapper editorId = null;
                 String editorName = null;
@@ -119,23 +117,20 @@ public final class KiemEventListener implements IKiemEventListener {
                 }
                 if (editorId == null) {
                     editorId = EditorManager.getInstance().getDefaultEditorId();
-                    editorName = EditorManager.getInstance()
-                            .getDefaultEditorName();
+                    editorName = EditorManager.getInstance().getDefaultEditorName();
                 }
                 if (editorId != null) {
-                    schedules = ScheduleManager.getInstance()
-                            .getMatchingSchedules(editorId, editorName);
+                    schedules = ScheduleManager.getInstance().getMatchingSchedules(editorId,
+                            editorName);
                 }
             }
 
             if (schedules != null && !schedules.isEmpty()) {
                 try {
-                    ScheduleManager.getInstance()
-                            .openSchedule(schedules.get(0));
+                    ScheduleManager.getInstance().openSchedule(schedules.get(0));
                 } catch (ScheduleFileMissingException e0) {
                     ExecutionFileMissingDialog dialog = new ExecutionFileMissingDialog(
-                            KiemConfigurationPlugin.getShell(), schedules
-                                    .get(0));
+                            KiemConfigurationPlugin.getShell(), schedules.get(0));
                     dialog.open();
                 }
             }
@@ -183,8 +178,8 @@ public final class KiemEventListener implements IKiemEventListener {
     // --------------------------------------------------------------------------
 
     /**
-     * Notify the listener that the plugin will report a load soon but the
-     * listener should ignore it as it was plugin-triggered.
+     * Notify the listener that the plugin will report a load soon but the listener should ignore it
+     * as it was plugin-triggered.
      */
     public void setLoadImminent() {
         this.loadImminent = true;
@@ -198,8 +193,8 @@ public final class KiemEventListener implements IKiemEventListener {
     }
 
     /**
-     * Notify the listener that the plugin will report a save soon but the
-     * listener should ignore it as it was plugin-triggered.
+     * Notify the listener that the plugin will report a save soon but the listener should ignore it
+     * as it was plugin-triggered.
      */
     public void setSaveImminent() {
         this.saveImminent = true;

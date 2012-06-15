@@ -1,0 +1,9 @@
+Whole setup(resource, ted...) ; just recursive execution ; recursive + dc setup ; just stepwise execution 
+02-nothing.strl;844;93;100;97
+03-halt.strl;447;87;95;94
+04-pause.strl;735;132;103;109
+05-abort.strl;639;186;169;167
+08-await.strl;560;158;172;148
+10-doupto.strl;459;96;115;101
+11-dowatching.strl;491;118;128;124
+12-emit.strl;476;113;120;117
