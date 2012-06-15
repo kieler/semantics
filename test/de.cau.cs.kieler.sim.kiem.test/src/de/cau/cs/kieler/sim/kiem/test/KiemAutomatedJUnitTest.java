@@ -550,7 +550,7 @@ public abstract class KiemAutomatedJUnitTest {
     /**
      * A pause instruction for delaying execution.
      */
-    private void pause() {
+    private void pause() { 
         try {
             Thread.sleep(SLEEP_DELAY_BETWEEN_EXECUTIONS);
         } catch (InterruptedException e1) {
