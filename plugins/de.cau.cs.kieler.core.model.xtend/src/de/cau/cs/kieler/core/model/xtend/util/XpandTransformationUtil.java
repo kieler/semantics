@@ -39,7 +39,7 @@ import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 
 import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.xtend.m2m.M2MProgressMonitor;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
@@ -75,7 +75,7 @@ public final class XpandTransformationUtil {
      * 
      * @return the Status about success and errors and warnings
      */
-    public static XtendStatus model2TextTransform(final KielerProgressMonitor monitor,
+    public static XtendStatus model2TextTransform(final ProgressMonitorAdapter monitor,
             final String xpandFile, final String startFunction, final URI inputModelURI,
             final String outPath, final EPackage... modelPackages) {
         return model2TextTransform(monitor, xpandFile, startFunction, inputModelURI, outPath, null,
@@ -101,7 +101,7 @@ public final class XpandTransformationUtil {
      *            EPackage of the metamodels that need to be known to the transformation
      * @return the Status about success and errors and warnings
      */
-    public static XtendStatus model2TextTransform(final KielerProgressMonitor monitor,
+    public static XtendStatus model2TextTransform(final ProgressMonitorAdapter monitor,
             final String xpandFile, final String startFunction, final URI inputModelURI,
             final String outPath, final PostProcessor postProcessor,
             final EPackage... modelPackages) {
@@ -221,7 +221,7 @@ public final class XpandTransformationUtil {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
-                return model2TextTransform(new KielerProgressMonitor(monitor), xpandFile,
+                return model2TextTransform(new ProgressMonitorAdapter(monitor), xpandFile,
                         startFunction, inputModelURI, outPath, modelPackages);
             }
         };
@@ -256,7 +256,7 @@ public final class XpandTransformationUtil {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
-                return model2TextTransform(new KielerProgressMonitor(monitor), xpandFile,
+                return model2TextTransform(new ProgressMonitorAdapter(monitor), xpandFile,
                         startFunction, inputModelURI, outPath, postProcessor, modelPackages);
             }
         };

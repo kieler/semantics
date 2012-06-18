@@ -15,7 +15,7 @@ package de.cau.cs.kieler.core.model.xtend.m2m;
 
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 
 /**
  * 
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
  */
 public class M2MProgressMonitor implements ProgressMonitor {
 
-    private KielerProgressMonitor kielerProgressMonitor;
+    private ProgressMonitorAdapter kielerProgressMonitor;
     private int numberOfComponents = 1;
     private int numberOfComponentsDone = 0;
 
@@ -39,7 +39,7 @@ public class M2MProgressMonitor implements ProgressMonitor {
      *            the number of components
      */
     public M2MProgressMonitor(
-            final KielerProgressMonitor kielerProgressMonitorParam,
+            final ProgressMonitorAdapter kielerProgressMonitorParam,
             final int numberOfComponentsParam) {
         kielerProgressMonitor = kielerProgressMonitorParam;
         numberOfComponents = numberOfComponentsParam;

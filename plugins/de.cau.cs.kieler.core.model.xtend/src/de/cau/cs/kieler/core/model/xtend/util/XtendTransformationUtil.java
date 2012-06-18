@@ -48,7 +48,7 @@ import org.eclipse.xtend.util.stdlib.ExtIssueReporter;
 import de.cau.cs.kieler.core.model.m2m.TransformException;
 import de.cau.cs.kieler.core.model.xtend.Activator;
 import de.cau.cs.kieler.core.model.xtend.m2m.M2MProgressMonitor;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
@@ -86,7 +86,7 @@ public final class XtendTransformationUtil {
      * 
      * @return the Status about success and errors and warnings
      */
-    public static XtendStatus model2ModelTransform(final KielerProgressMonitor monitor,
+    public static XtendStatus model2ModelTransform(final ProgressMonitorAdapter monitor,
             final String xtendFile, final String startFunction, final URI inputModelURI,
             final URI outputModelURI, final TransformationWorkflowHook workflowHook,
             final EPackage... involvedMetamodels) {
@@ -210,7 +210,7 @@ public final class XtendTransformationUtil {
      * 
      * @return the Status about success and errors and warnings
      */
-    public static XtendStatus model2ModelTransform(final KielerProgressMonitor monitor,
+    public static XtendStatus model2ModelTransform(final ProgressMonitorAdapter monitor,
             final String xtendFile, final String startFunction, final URI inputModelURI,
             final URI outputModelURI, final EPackage... involvedMetamodels) {
 
@@ -246,7 +246,7 @@ public final class XtendTransformationUtil {
         MonitoredOperation monitoredOperation = new MonitoredOperation() {
             @Override
             protected IStatus execute(final IProgressMonitor monitor) {
-                return XtendTransformationUtil.model2ModelTransform(new KielerProgressMonitor(
+                return XtendTransformationUtil.model2ModelTransform(new ProgressMonitorAdapter(
                         monitor), xtendFile, startFunction, inputModelURI, outputModelURI,
                         involvedMetamodels);
             }

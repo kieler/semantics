@@ -57,7 +57,7 @@ import org.eclipse.core.runtime.Path;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.osgi.framework.Bundle;
 
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 
 /**
  * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager DataComponent. <BR>
@@ -110,11 +110,11 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
     // -----------------------------------------------------------------------------
     class M2MProgressMonitor implements ProgressMonitor {
 
-        private KielerProgressMonitor kielerProgressMonitor;
+        private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
         private int numberOfComponentsDone = 0;
 
-        public M2MProgressMonitor(KielerProgressMonitor kielerProgressMonitorParam,
+        public M2MProgressMonitor(ProgressMonitorAdapter kielerProgressMonitorParam,
                 int numberOfComponentsParam) {
             kielerProgressMonitor = kielerProgressMonitorParam;
             numberOfComponents = numberOfComponentsParam;
@@ -479,7 +479,7 @@ public class KaomSimDataComponent extends JSONObjectDataComponent {
         // new IRunnableWithProgress() {
         // public void run(final IProgressMonitor monitor) {
         // try {
-        // status.set(model2ModelTransform(new KielerProgressMonitor(
+        // status.set(model2ModelTransform(new ProgressMonitorAdapter(
         // monitor)));
         // } catch (KiemInitializationException e) {
         // transformationError = true;

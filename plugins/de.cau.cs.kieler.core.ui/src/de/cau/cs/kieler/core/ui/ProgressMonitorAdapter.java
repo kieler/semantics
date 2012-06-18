@@ -23,7 +23,7 @@ import de.cau.cs.kieler.core.alg.BasicProgressMonitor;
  * @kieler.rating 2009-12-11 proposed yellow msp
  * @author msp
  */
-public class KielerProgressMonitor extends BasicProgressMonitor {
+public class ProgressMonitorAdapter extends BasicProgressMonitor {
 
     /** the Eclipse progress monitor used by this monitor. */
     private IProgressMonitor progressMonitor;
@@ -36,7 +36,8 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * 
      * @param theprogressMonitor the progress monitor
      */
-    public KielerProgressMonitor(final IProgressMonitor theprogressMonitor) {
+    public ProgressMonitorAdapter(final IProgressMonitor theprogressMonitor) {
+        super();
         this.progressMonitor = theprogressMonitor;
     }
     
@@ -47,7 +48,7 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * @param theprogressMonitor the progress monitor
      * @param maxLevels maximal number of hierarchy levels for which progress is reported
      */
-    public KielerProgressMonitor(final IProgressMonitor theprogressMonitor, final int maxLevels) {
+    public ProgressMonitorAdapter(final IProgressMonitor theprogressMonitor, final int maxLevels) {
         super(maxLevels);
         this.progressMonitor = theprogressMonitor;
     }
@@ -96,7 +97,7 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
     }
 
     /**
-     * Creates a new instance of {@code KielerProgressMonitor}.
+     * Creates a new instance of {@code ProgressMonitorAdapter}.
      * 
      * @param work amount of work that is completed in the current monitor
      *            instance when the sub-task ends
@@ -107,9 +108,9 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
     @Override
     public BasicProgressMonitor doSubTask(final float work, final int maxHierarchyLevels) {
         if (maxHierarchyLevels > 0) {
-            return new KielerProgressMonitor(progressMonitor, maxHierarchyLevels - 1);
+            return new ProgressMonitorAdapter(progressMonitor, maxHierarchyLevels - 1);
         } else {
-            return new KielerProgressMonitor(progressMonitor, maxHierarchyLevels);            
+            return new ProgressMonitorAdapter(progressMonitor, maxHierarchyLevels);            
         }
     }
 
@@ -117,12 +118,13 @@ public class KielerProgressMonitor extends BasicProgressMonitor {
      * Reports to the integrated Eclipse progress monitor that some work was
      * done, if this is the top instance.
      * 
-     * @param work amount of work that has just been done
      * @param completedWork total number of work that is done for this task
+     * @param totalWork total number of work that is targeted for completion
      * @param topInstance if true, this progress monitor is the top instance
      */
     @Override
-    protected void doWorked(final float work, final float completedWork, final boolean topInstance) {
+    protected void doWorked(final float completedWork, final float totalWork,
+            final boolean topInstance) {
         if (topInstance) {
             int newWork = (int) completedWork;
             if (newWork > submittedWork) {

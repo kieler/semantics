@@ -39,7 +39,7 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
@@ -142,11 +142,11 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     // -----------------------------------------------------------------------------
     protected class M2MProgressMonitor implements ProgressMonitor {
 
-        private KielerProgressMonitor kielerProgressMonitor;
+        private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
         private int numberOfComponentsDone = 0;
 
-        public M2MProgressMonitor(KielerProgressMonitor kielerProgressMonitorParam,
+        public M2MProgressMonitor(ProgressMonitorAdapter kielerProgressMonitorParam,
                 int numberOfComponentsParam) {
             kielerProgressMonitor = kielerProgressMonitorParam;
             numberOfComponents = numberOfComponentsParam;
@@ -211,7 +211,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      * @throws Exception
      *             the exception
      */
-    public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
+    public void doModel2ModelTransform(ProgressMonitorAdapter monitor) throws Exception {
         // not implemented
     }
 
@@ -229,7 +229,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    private final IStatus model2ModelTransform(KielerProgressMonitor monitor)
+    private final IStatus model2ModelTransform(ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
         monitor.begin("Model2Model transformation", 4);
         try {
@@ -503,7 +503,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
 
         if (KiemUtil.isHeadlessRun()) {
             // headless run - sequential in current thread
-            model2ModelTransform(new KielerProgressMonitor(
+            model2ModelTransform(new ProgressMonitorAdapter(
                     new NullProgressMonitor()));
         } else {
             // normal run - concurrent to UI thread
@@ -516,7 +516,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
                                 .run(false, false, new IRunnableWithProgress() {
                                     public void run(final IProgressMonitor monitor) {
                                         try {
-                                            status.set(model2ModelTransform(new KielerProgressMonitor(
+                                            status.set(model2ModelTransform(new ProgressMonitorAdapter(
                                                     monitor)));
                                         } catch (KiemInitializationException e) {
                                             transformationError = true;
