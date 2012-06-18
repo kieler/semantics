@@ -471,7 +471,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             if (esoFile == null) {
                 throw new KiemPropertyException(KartConstants.ERR_NOTEXISTESO);
             }
-        } catch (CoreException e) {
+        } catch (FileNotFoundException e) {
             throw new KiemPropertyException(KartConstants.ERR_NOTEXISTESO);
         }
         

@@ -704,9 +704,6 @@ public abstract class KiemAutomatedJUnitTest {
         } catch (IOException e) {
             throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
                     + "' in order to count the maximum number of traces. (IOException)");
-        } catch (CoreException e) {
-            throw new RuntimeException("Cannot load ESO file '" + esoFilePath.toString()
-                    + "' in order to count the maximum number of traces. (CoreException)");
         }
     }
 

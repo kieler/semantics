@@ -16,6 +16,7 @@ package de.cau.cs.kieler.sim.kiem.util;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -108,17 +109,14 @@ public final class KiemUtil {
 
     /**
      * Open bundle or workspace file.
-     * 
-     * @param relativeFilePath
-     *            the relative file path
-     * @param pluginID
-     *            the plugin id
+     *
+     * @param relativeFilePath the relative file path
+     * @param pluginID the plugin id
      * @return the input stream
-     * @throws CoreException
-     *             the core exception
+     * @throws FileNotFoundException the file not found exception
      */
     public static InputStream openBundleOrWorkspaceFile(final IPath relativeFilePath,
-            final String pluginID) throws CoreException {
+            final String pluginID) throws FileNotFoundException {
         InputStream inputStream = null;
         try {
             inputStream = openBundleFile(relativeFilePath, pluginID);
@@ -132,17 +130,19 @@ public final class KiemUtil {
 
     /**
      * Open a bundle file and returns an InputStream.
-     * 
-     * @param relativeFilePath
-     *            the relative file path
+     *
+     * @param relativeFilePath the relative file path
      * @return the input stream
-     * @throws CoreException
-     *             the core exception
+     * @throws FileNotFoundException the file not found exception
      */
-    public static InputStream openWorkspaceFile(final IPath relativeFilePath) throws CoreException {
+    public static InputStream openWorkspaceFile(final IPath relativeFilePath) 
+            throws FileNotFoundException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IFile relativeFile = myWorkspaceRoot.getFile(relativeFilePath);
-        return relativeFile.getContents();
+        IPath rawLocation = relativeFile.getRawLocation();
+        InputStream inputStream;
+        inputStream = new FileInputStream(rawLocation.toString());
+        return inputStream; //relativeFile.getContents(true);
     }
 
     // -------------------------------------------------------------------------

@@ -179,7 +179,7 @@ public class EsoFile implements ITraceProvider {
             try {
                 IPath filePath = new Path(fileName);
                 in = KiemUtil.openWorkspaceFile(filePath);
-            } catch (CoreException e) {
+            } catch (FileNotFoundException e) {
                 throw new KiemInitializationException(
                         "EsiComponent cannot load trace file due to malformed URI.", false, null);
             }
