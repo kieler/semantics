@@ -57,7 +57,7 @@ import de.cau.cs.kieler.core.kexpressions.Input;
 import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
@@ -97,7 +97,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
         /** The number of tasks. */
         static final int NUMBER_OF_TASKS = 10;
-        private KielerProgressMonitor kielerProgressMonitor;
+        private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
         private int numberOfComponentsDone = 0;
 
@@ -110,7 +110,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
          *            the number of components param
          */
         public EsterelSimulationProgressMonitor(
-                final KielerProgressMonitor kielerProgressMonitorParam,
+                final ProgressMonitorAdapter kielerProgressMonitorParam,
                 final int numberOfComponentsParam) {
             kielerProgressMonitor = kielerProgressMonitorParam;
             numberOfComponents = numberOfComponentsParam;
@@ -602,7 +602,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     /**
      * {@inheritDoc}
      */
-    public void doModel2ModelTransform(final KielerProgressMonitor monitor)
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
