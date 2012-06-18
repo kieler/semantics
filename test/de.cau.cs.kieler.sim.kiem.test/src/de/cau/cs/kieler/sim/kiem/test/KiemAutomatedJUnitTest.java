@@ -490,6 +490,18 @@ public abstract class KiemAutomatedJUnitTest {
                             System.out.println(jSONData.toString());
                         }
                         if (jSONData != null) {
+//                            // Evaluate KIEM's getLastError()
+//                            if (KiemPlugin.getLastError() != null && !KiemPlugin.getLastError().equalsIgnoreCase("")) {
+//                                errorFlag = true;
+//                                errorInformation = "Error (" + (String) KiemPlugin.getLastError()
+//                                        + ") in tick " + tick + " of trace " + traceNumber
+//                                        + " of ESO file '" + esoFilePath.toString()
+//                                        + "' during execution '"
+//                                        + this.getExecutionFileName() + "'.";
+//                                break;
+//                                
+//                            }
+                            // Evaluate KART-Diff
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
                                 Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
                                 if (kartConfigContent != null
@@ -532,6 +544,12 @@ public abstract class KiemAutomatedJUnitTest {
                     }
                     tick++;
                 } // while executing
+                
+                // If an error occurred tell!
+                if (errorFlag) {
+                    fail(errorInformation);
+                }
+                
             } else {
                 throw new RuntimeException(
                         "KIEM cannot initialize execution. "
