@@ -260,6 +260,13 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                         "Cannot simulate active editor using the S Simulator", true, null);
             }
 
+            {// get active editor
+            Resource resource = this.getModelRootElement().eResource();
+            if (resource == null) {
+                throw new KiemInitializationException(
+                        "The active editor has must be saved in order to simulate the S program. Volatile resources cannot be simulated.", true, null);
+            }}
+
             // Make a copy of the S program in case it was from
             // an active Editor
 
