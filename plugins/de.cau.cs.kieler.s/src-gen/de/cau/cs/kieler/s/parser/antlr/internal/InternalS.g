@@ -1234,9 +1234,35 @@ ruleEmit returns [EObject current=null]
 	}
 
 )
-)(	otherlv_3=',' 
+)(	otherlv_3='(' 
     {
-    	newLeafNode(otherlv_3, grammarAccess.getEmitAccess().getCommaKeyword_3_0());
+    	newLeafNode(otherlv_3, grammarAccess.getEmitAccess().getLeftParenthesisKeyword_3_0());
+    }
+(
+(
+		{ 
+	        newCompositeNode(grammarAccess.getEmitAccess().getValueExpressionParserRuleCall_3_1_0()); 
+	    }
+		lv_value_4_0=ruleExpression		{
+	        if ($current==null) {
+	            $current = createModelElementForParent(grammarAccess.getEmitRule());
+	        }
+       		set(
+       			$current, 
+       			"value",
+        		lv_value_4_0, 
+        		"Expression");
+	        afterParserOrEnumRuleCall();
+	    }
+
+)
+)	otherlv_5=')' 
+    {
+    	newLeafNode(otherlv_5, grammarAccess.getEmitAccess().getRightParenthesisKeyword_3_2());
+    }
+)?(	otherlv_6=',' 
+    {
+    	newLeafNode(otherlv_6, grammarAccess.getEmitAccess().getCommaKeyword_4_0());
     }
 (
 (
@@ -1248,15 +1274,15 @@ ruleEmit returns [EObject current=null]
 	            $current = createModelElement(grammarAccess.getEmitRule());
 	        }
         }
-	otherlv_4=RULE_ID
+	otherlv_7=RULE_ID
 	{
-		newLeafNode(otherlv_4, grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_3_1_0()); 
+		newLeafNode(otherlv_7, grammarAccess.getEmitAccess().getContinuationContinuationCrossReference_4_1_0()); 
 	}
 
 )
-))?	otherlv_5=')' 
+))?	otherlv_8=')' 
     {
-    	newLeafNode(otherlv_5, grammarAccess.getEmitAccess().getRightParenthesisKeyword_4());
+    	newLeafNode(otherlv_8, grammarAccess.getEmitAccess().getRightParenthesisKeyword_5());
     }
 )
 ;

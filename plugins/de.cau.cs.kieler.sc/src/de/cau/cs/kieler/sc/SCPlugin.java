@@ -23,51 +23,51 @@ import org.osgi.framework.BundleContext;
  */
 public class SCPlugin extends AbstractUIPlugin {
 
-	/** The Constant PLUGIN_ID. */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.sc"; //$NON-NLS-1$
+    /** The Constant PLUGIN_ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.sc"; //$NON-NLS-1$
 
-	/** The plugin. */
-	private static SCPlugin plugin;
-	
-	// -------------------------------------------------------------------------
+    /** The plugin. */
+    private static SCPlugin plugin;
 
-	/**
-	 * The constructor
-	 */
-	public SCPlugin() {
-	}
+    // -------------------------------------------------------------------------
 
-	// -------------------------------------------------------------------------
+    /**
+     * The constructor
+     */
+    public SCPlugin() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    // -------------------------------------------------------------------------
 
-	// -------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    // -------------------------------------------------------------------------
 
-	// -------------------------------------------------------------------------
-	
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SCPlugin getDefault() {
-		return plugin;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
 
-	// -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static SCPlugin getDefault() {
+        return plugin;
+    }
+
+    // -------------------------------------------------------------------------
 
 }

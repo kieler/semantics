@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -57,15 +57,12 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
     /** The Constant COLOR_OUTPUT. */
     private static final Color COLOR_OUTPUT = new Color(null, new RGB(0, 0, 0));
-    
+
     /** The Constant COLOR_INPUT. */
     private static final Color COLOR_INPUT = new Color(null, new RGB(200, 0, 0));
-    
-    /** The Constant DIALOG_TITLE. */
-    private static final String DIALOG_TITLE = "Select INPUT signals";
 
-    /** The basic dialog SWT component. */
-    private SelectInputOutputSignalDialog dialog;
+    /** The Constant DIALOG_TITLE. */
+    private static final String DIALOG_TITLE = "Select Input Signals";
 
     /** The temporary table that allows the user to select DataComponents. */
     private Table table;
@@ -75,19 +72,9 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
     /** The list that holds the currently selected output signals. */
     private List<Signal> outputSignalList;
-    
+
     /** The Constant KEYBOARD_DELETE. */
     private static final int KEYBOARD_DELETE = 127;
-
-    /** The Constant KEYBOARD_DELETE. */
-    private static final int KEYBOARD_SPACE = 32;
-
-    /**
-     * The signal list should hold all available signals and is used to update the 
-     * table.
-     */
-    private List<Signal> signalList;
-
 
     // -------------------------------------------------------------------------
 
@@ -99,7 +86,6 @@ public class SelectInputOutputSignalDialog extends Dialog {
      */
     public SelectInputOutputSignalDialog(final Shell parent) {
         super(parent);
-        dialog = this;
     }
 
     // -------------------------------------------------------------------------
@@ -149,15 +135,15 @@ public class SelectInputOutputSignalDialog extends Dialog {
                 // if user pressed delete
                 if (e.keyCode == KEYBOARD_DELETE) {
                     // delete selected signals from inputSignalList and outputSignalList
-                	List<Signal> selectedSignalList = getSelectedSignalList();    	
+                    List<Signal> selectedSignalList = getSelectedSignalList();
                     for (Signal selectedSignal : selectedSignalList) {
-                    	if (inputSignalList.contains(selectedSignal)) {
-                    		inputSignalList.remove(selectedSignal);
-                    	}
-                    	if (outputSignalList.contains(selectedSignal)) {
-                    		outputSignalList.remove(selectedSignal);
-                    	}
-                       	table.remove(table.getSelectionIndices());
+                        if (inputSignalList.contains(selectedSignal)) {
+                            inputSignalList.remove(selectedSignal);
+                        }
+                        if (outputSignalList.contains(selectedSignal)) {
+                            outputSignalList.remove(selectedSignal);
+                        }
+                        table.remove(table.getSelectionIndices());
                     }
 
                     updateSelectedList();
@@ -171,11 +157,11 @@ public class SelectInputOutputSignalDialog extends Dialog {
         });
         table.addMouseListener(new MouseListener() {
             public void mouseDoubleClick(final MouseEvent e) {
-            	 // toggle checked status of selected signal
-            	TableItem[] tableItems  = table.getSelection();
-            	for (TableItem tableItem : tableItems) {
-            		tableItem.setChecked(!tableItem.getChecked());
-            	}
+                // toggle checked status of selected signal
+                TableItem[] tableItems = table.getSelection();
+                for (TableItem tableItem : tableItems) {
+                    tableItem.setChecked(!tableItem.getChecked());
+                }
                 updateSelectedList();
                 updateTable();
                 refreshTextColorsAndItemName();
@@ -219,56 +205,55 @@ public class SelectInputOutputSignalDialog extends Dialog {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the signal list. The signal list should hold all available signals
-     * and is used to update the table. This should be provided by the calling instance.
-     *
-     * @param signalList the new signal list
+     * Sets the signal list. The signal list should hold all available signals and is used to update
+     * the table. This should be provided by the calling instance.
+     * 
+     * @param signalList
+     *            the new signal list
      */
     public void setSignalList(final List<Signal> signalList) {
-        this.signalList = signalList;
         // clear input signal list and fill output signal list by default
         inputSignalList = new LinkedList<Signal>();
         outputSignalList = new LinkedList<Signal>();
-        
+
         // select signals that start with I or i to be probably input signals
         for (Signal signal : signalList) {
-        	if (signal.getName().toLowerCase().startsWith("i")) {
-            		inputSignalList.add(signal);
-        	}
-        	else {
-        			outputSignalList.add(signal);
-        	}
+            if (signal.getName().toLowerCase().startsWith("i")) {
+                inputSignalList.add(signal);
+            } else {
+                outputSignalList.add(signal);
+            }
         }
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the temporary table from which the user can select or delete signals that
-     * he/she wishes to export or select as input signals.
-     * The type of the signal (input output) is shown in brackets, and the
-     * icon is also personalized for each type of signal.
-     *
-     * @param signal the signal
-     * @param isInput the is input
+     * Updates the temporary table from which the user can select or delete signals that he/she
+     * wishes to export or select as input signals. The type of the signal (input output) is shown
+     * in brackets, and the icon is also personalized for each type of signal.
+     * 
+     * @param signal
+     *            the signal
+     * @param isInput
+     *            the is input
      */
     private void addToTable(final Signal signal, boolean isInput) {
         TableItem item = new TableItem(table, SWT.NULL);
         item.setChecked(isInput);
         item.setData(signal);
     }
-    
-    
+
     private boolean tableContains(final Signal signal) {
         TableItem[] allItems = table.getItems();
         for (int c = 0; c < allItems.length; c++) {
-        	TableItem tableItem = allItems[c];
-             Signal tableSignal = (Signal) tableItem.getData();
-             if (tableSignal == signal) {
-            	 return true;
-        	}
+            TableItem tableItem = allItems[c];
+            Signal tableSignal = (Signal) tableItem.getData();
+            if (tableSignal == signal) {
+                return true;
+            }
         }
-    	return false;
+        return false;
     }
 
     /**
@@ -276,94 +261,93 @@ public class SelectInputOutputSignalDialog extends Dialog {
      */
     private void updateTable() {
         for (Signal signal : inputSignalList) {
-    		if (!tableContains(signal)) {
-    			this.addToTable(signal, true);
-    		}
+            if (!tableContains(signal)) {
+                this.addToTable(signal, true);
+            }
         } // next signal
         for (Signal signal : outputSignalList) {
-    		if (!tableContains(signal)) {
-    			this.addToTable(signal, false);
-    		}
-    } // next signal
+            if (!tableContains(signal)) {
+                this.addToTable(signal, false);
+            }
+        } // next signal
     }
 
-
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the currently selected signal list.
-     *
+     * 
      * @return the selected signal list
      */
     private List<Signal> getSelectedSignalList() {
-    	List<Signal> selectedSignalList = new LinkedList<Signal>();    	
-    	
+        List<Signal> selectedSignalList = new LinkedList<Signal>();
+
         TableItem[] allItems = table.getSelection();
         for (int c = 0; c < allItems.length; c++) {
-        	TableItem tableItem = allItems[c];
+            TableItem tableItem = allItems[c];
             Signal signal = (Signal) tableItem.getData();
             selectedSignalList.add(signal);
         }
-        
+
         return selectedSignalList;
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the currently checked signal list.
-     *
+     * 
      * @return the checked signal list
      */
     private List<Signal> getCheckedSignalList() {
-    	List<Signal> selectedSignalList = new LinkedList<Signal>();    	
-    	
+        List<Signal> selectedSignalList = new LinkedList<Signal>();
+
         TableItem[] allItems = table.getItems();
         for (int c = 0; c < allItems.length; c++) {
-        	TableItem tableItem = allItems[c];
-        	if (tableItem.getChecked()) {
+            TableItem tableItem = allItems[c];
+            if (tableItem.getChecked()) {
                 Signal signal = (Signal) tableItem.getData();
                 selectedSignalList.add(signal);
-        	}
+            }
         }
-        
+
         return selectedSignalList;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Updates the selected list. This is done immediately when the user selects input
-     * signals in the list. The selected lists can be obtained by calling 
-     * {@link #getInputSignals()} and {@link #getOutputSignals()}.
+     * Updates the selected list. This is done immediately when the user selects input signals in
+     * the list. The selected lists can be obtained by calling {@link #getInputSignals()} and
+     * {@link #getOutputSignals()}.
      */
     private void updateSelectedList() {
-    	List<Signal> newInputSignalList = getCheckedSignalList();    	
-    	
+        List<Signal> newInputSignalList = getCheckedSignalList();
+
         for (Signal newInputSignal : newInputSignalList) {
-        	if (!inputSignalList.contains(newInputSignal)) {
+            if (!inputSignalList.contains(newInputSignal)) {
                 inputSignalList.add(newInputSignal);
-        	}
+            }
             if (outputSignalList.contains(newInputSignal)) {
-            	outputSignalList.remove(newInputSignal);
+                outputSignalList.remove(newInputSignal);
             }
         }
-        
+
         // go thru inputSignalList and move all signals that are NOT selected (any more) to
         // the outputSignalList
         for (Signal oldInputSignal : inputSignalList) {
-        	if (!newInputSignalList.contains(oldInputSignal)) { 
-        		outputSignalList.add(oldInputSignal);
-        	}
+            if (!newInputSignalList.contains(oldInputSignal)) {
+                outputSignalList.add(oldInputSignal);
+            }
         }
         inputSignalList = newInputSignalList;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected input signals. This is normally called after the user has selected and chosen
-     * signals and already closed the dialog.
+     * Gets the selected input signals. This is normally called after the user has selected and
+     * chosen signals and already closed the dialog.
      * 
      * @return the selected input signals to be exported
      */
@@ -374,8 +358,8 @@ public class SelectInputOutputSignalDialog extends Dialog {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the selected output signals. This is normally called after the user has selected and chosen
-     * signals and already closed the dialog.
+     * Gets the selected output signals. This is normally called after the user has selected and
+     * chosen signals and already closed the dialog.
      * 
      * @return the selected output signals to be exported
      */
@@ -386,7 +370,7 @@ public class SelectInputOutputSignalDialog extends Dialog {
     // -------------------------------------------------------------------------
 
     /**
-     * Refreshes the text colors of the signal selection list. 
+     * Refreshes the text colors of the signal selection list.
      */
     public void refreshTextColorsAndItemName() {
         for (int c = 0; c < table.getItemCount(); c++) {
@@ -400,21 +384,21 @@ public class SelectInputOutputSignalDialog extends Dialog {
             // update text colors
             TableItem tableItem = table.getItem(c);
             tableItem.setForeground(currentColor);
-            
+
             // set item name
             String type = "output";
             if (isInput) {
                 type = "input";
             }
             tableItem.setText(signal.getName() + " (" + type + ")");
-            
+
             // set icon
             if (isInput) {
-            	tableItem.setImage(SignalIcons.INPUT_SIGNAL);
+                tableItem.setImage(SignalIcons.INPUT_SIGNAL);
             } else {
-            	tableItem.setImage(SignalIcons.OUTPUT_SIGNAL);
+                tableItem.setImage(SignalIcons.OUTPUT_SIGNAL);
             }
-            
+
         }
     }
 

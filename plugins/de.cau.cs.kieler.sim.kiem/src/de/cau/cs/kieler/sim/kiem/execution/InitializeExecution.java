@@ -167,17 +167,17 @@ public class InitializeExecution implements Runnable {
 
         if (!this.cancelInitialize) {
             // now create and run the execution thread
-        	try {
-        		Execution execution = new Execution(dataComponentWrapperList, eventManager);
-        		if (execution != null) {
-                    this.kIEMInstance.setExecution(execution);
-        		}
-        	}
-        	catch(Exception e) {
-        		// non-successful exit
-        		cleanUpBeforeExit(false);
-        		return;
-        	}
+            try {
+                Execution newExecution = new Execution(dataComponentWrapperList, eventManager);
+                if (newExecution != null) {
+                    this.kIEMInstance.setExecution(newExecution);
+                }
+            } catch (Exception e) {
+                // non-successful exit
+                cleanUpBeforeExit(false);
+                return;
+            }
+            // get the new set execution (if previously there where no errors)
             execution = this.kIEMInstance.getExecution();
             // take the last set delay
             execution.setAimedStepDuration(this.kIEMInstance.getAimedStepDuration());
@@ -243,9 +243,9 @@ public class InitializeExecution implements Runnable {
                     dataComponentWrapper.checkProperties(properties);
                 }
             } catch (Exception e) {
-                boolean silent = false; 
+                boolean silent = false;
                 if (e instanceof KiemPropertyException) {
-                    silent = ((KiemPropertyException) e).isSilent(); 
+                    silent = ((KiemPropertyException) e).isSilent();
                 }
                 this.kIEMInstance.showError(null, dataComponentWrapper.getDataComponent()
                         .getConfigurationElement().getContributor().getName(), e, silent);

@@ -30,15 +30,12 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  */
 public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPropertyType {
 
-    /** The Constant serialVersionUID. */
-    private static final long serialVersionUID = -5476290662796694133L;
-
     /** The Constant PROPERTY_BOOL. */
     private static final Image PROPERTY_BOOL = AbstractUIPlugin.imageDescriptorFromPlugin(
             "de.cau.cs.kieler.sim.kiem", "icons/propertyBoolIcon.png").createImage();
 
     /** The Constant BOOL_ITEMS. */
-    private static final String[] BOOL_ITEMS = {"false", "true"};
+    private static final String[] BOOL_ITEMS = { "false", "true" };
 
     // -------------------------------------------------------------------------
 
@@ -107,7 +104,8 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * Gets the value as a boolean.
      * 
-     * @param property the KiemProperty
+     * @param property
+     *            the KiemProperty
      * 
      * @return the value as boolean
      */
@@ -120,8 +118,10 @@ public class KiemPropertyTypeBool extends KiemPropertyType implements IKiemPrope
     /**
      * Gets the value as a boolean.
      * 
-     * @param property the KiemProperty
-     * @param value the value
+     * @param property
+     *            the KiemProperty
+     * @param value
+     *            the value
      */
     public static void setValue(final KiemProperty property, final boolean value) {
         property.setValue("" + value);

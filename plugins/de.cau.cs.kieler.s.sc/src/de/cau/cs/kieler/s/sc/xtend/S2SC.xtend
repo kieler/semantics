@@ -34,6 +34,8 @@ import de.cau.cs.kieler.s.s.Program
 import de.cau.cs.kieler.s.s.State
 import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -61,7 +63,7 @@ class S2SC {
 
 	   «/* Generate output functions for each S signal */» 
        «sSetOutputFunction(program)»
-       
+	   
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
 
@@ -75,26 +77,25 @@ class S2SC {
    // Generate the C header.
    def scHeader(String outputFolderm, Program program) {
    	'''
-    /*****************************************************************************/
-    /*                 G E N E R A T E D     S C    C O D E                      */
-    /*****************************************************************************/
-    /* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
-    /*                                                                           */
-    /* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
-    /*                                                                           */
-    /* Copyright 2012 by                                                         */
-    /* + Christian-Albrechts-University of Kiel                                  */
-    /*   + Department of Computer Science                                        */
-    /*     + Real-Time and Embedded Systems Group                                */
-    /*                                                                           */
-    /* This code is provided under the terms of the Eclipse Public License (EPL).*/
-    /*****************************************************************************/
+	/*****************************************************************************/
+	/*                 G E N E R A T E D     S C    C O D E                     */
+	/*****************************************************************************/
+	/* KIELER - Kiel Integrated Environment for Layout Eclipse RichClient        */
+	/*                                                                           */
+	/* http://www.informatik.uni-kiel.de/rtsys/kieler/                           */
+	/* Copyright 2012 by                                                         */
+	/* + Christian-Albrechts-University of Kiel                                  */
+	/*   + Department of Computer Science                                        */
+	/*     + Real-Time and Embedded Systems Group                                */
+	/*                                                                           */
+	/* This code is provided under the terms of the Eclipse Public License (EPL).*/
+	/*****************************************************************************/
 
 	#include <string.h>
 	#include <stdlib.h>
 	#include <stdio.h>
 
-    #include "sc.h"
+	#include "sc.h"
 	#include "cJSON.h"
 	
 	«/* Signal constants */»
@@ -102,7 +103,7 @@ class S2SC {
 	
 
 	// Highest signal id in use;
-    #define _SC_valSigInt_SIZE «program.getSignals().size» 
+	#define _SC_valSigInt_SIZE «program.getSignals().size» 
 
 	cJSON* output = 0;
 	cJSON* value = 0;
@@ -237,17 +238,17 @@ void setInputs(){
 
    // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
-'''	   «'''«FOR signal : program.signals.filter(e | e.isOutput)»
-       void simple_OUTPUT_«signal.name»(int status){
+	'''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
+		void simple_OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
-		«IF signal.type == ValueType::INT»
-			cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
-		«ENDIF»
+	«IF signal.type == ValueType::INT»
+cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
+	«ENDIF»
 		cJSON_AddItemToObject(output, "«signal.name»", value);
-	    }
+		}
 	«ENDFOR»'''»
-'''
+	'''
    }
    
    // -------------------------------------------------------------------------   
@@ -352,7 +353,13 @@ void setInputs(){
    
    // Expand an EMIT instruction.
    def dispatch expand(Emit emitInstruction) {
-   	'''EMIT(sig_«emitInstruction.signal.name»);'''
+   	if (emitInstruction.value != null) {
+	   	'''EMITINTADD(sig_«emitInstruction.signal.name», «emitInstruction.value.expand»);'''
+   		
+   	}
+   	else {
+   		'''EMIT(sig_«emitInstruction.signal.name»);'''
+   	}
    }   
    
    // Expand fall back for other instructions do nothing.
@@ -445,6 +452,16 @@ void setInputs(){
    // Expand a signal.
    def dispatch expand(Signal signal) {
    	 '''PRESENT(sig_«signal.name»)'''
+   }
+
+   // Expand a int expression value.
+   def dispatch expand(IntValue expression) {
+   	 '''«expression.value.toString»'''
+   }
+
+   // Expand a float expression value.
+   def dispatch expand(FloatValue expression) {
+   	 '''«expression.value.toString»'''
    }
 
    // Expand a boolean expression value (true or false).

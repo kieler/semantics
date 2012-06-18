@@ -34,8 +34,7 @@ public final class ContributionManager extends AbstractManager {
     private static ContributionManager instance = null;
 
     /**
-     * the selector should use the list of matching schedules ordered by
-     * priority.
+     * the selector should use the list of matching schedules ordered by priority.
      */
     public static final int MATCHING_COMBO = 1;
 
@@ -58,8 +57,7 @@ public final class ContributionManager extends AbstractManager {
     private boolean loaded = false;
 
     /**
-     * combo box holding the schedule Ids matching the currently selected
-     * editor.
+     * combo box holding the schedule Ids matching the currently selected editor.
      */
     private ScheduleSelector matchingCombo;
 
@@ -140,8 +138,8 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @param componentId
      *            the id of the component.
-     * @return true if it should be visible false if not or if there is no
-     *         component with the provided id.
+     * @return true if it should be visible false if not or if there is no component with the
+     *         provided id.
      */
     public boolean isComponentEnabled(final int componentId) {
         load();
@@ -183,7 +181,7 @@ public final class ContributionManager extends AbstractManager {
      * 
      * @return the isSummaryMessageDisabled flag
      */
-    public boolean isSummaryMessageDisabled()  {
+    public boolean isSummaryMessageDisabled() {
         load();
         return this.isSummaryMessageDisabled;
     }
@@ -202,8 +200,7 @@ public final class ContributionManager extends AbstractManager {
 
         save();
     }
-    
-    
+
     /**
      * Getter for the isInAdvancedMode.
      * 
@@ -237,18 +234,14 @@ public final class ContributionManager extends AbstractManager {
     @Override
     public void load() {
         if (!loaded) {
-            String string = super.load(Tools.CONTRIBUTION_CONFIGURATION_KEY,
-                    null);
+            String string = super.load(Tools.CONTRIBUTION_CONFIGURATION_KEY, null);
 
             if (string != null) {
-                String isRecentString = Tools.getValue(
-                        Tools.IS_RECENT_VISIBLE_NAME, string);
-                String isMatchingString = Tools.getValue(
-                        Tools.IS_MATCHING_VISIBLE_NAME, string);
-                String isAdvancedString = Tools.getValue(
-                        Tools.IS_ADVANCED_NAME, string);
-                String isSummaryMessageString = Tools.getValue(
-                        Tools.IS_SUMMARYMESSAGE_NAME, string);
+                String isRecentString = Tools.getValue(Tools.IS_RECENT_VISIBLE_NAME, string);
+                String isMatchingString = Tools.getValue(Tools.IS_MATCHING_VISIBLE_NAME, string);
+                String isAdvancedString = Tools.getValue(Tools.IS_ADVANCED_NAME, string);
+                String isSummaryMessageString = Tools
+                        .getValue(Tools.IS_SUMMARYMESSAGE_NAME, string);
 
                 if (isRecentString != null) {
                     isRecentVisible = isRecentString.equals("true");
@@ -260,7 +253,7 @@ public final class ContributionManager extends AbstractManager {
                     isInAdvancedMode = isAdvancedString.equals("true");
                 }
                 if (isSummaryMessageString != null) {
-                	isSummaryMessageDisabled = isSummaryMessageString.equals("true");
+                    isSummaryMessageDisabled = isSummaryMessageString.equals("true");
                 }
             }
 
@@ -274,15 +267,14 @@ public final class ContributionManager extends AbstractManager {
     @Override
     public void save() {
         String isSummaryMessageString = Tools.putValue(Tools.IS_SUMMARYMESSAGE_NAME,
-        		isSummaryMessageDisabled + "");
-        String isRecentString = Tools.putValue(Tools.IS_RECENT_VISIBLE_NAME,
-                isRecentVisible + "");
-        String isMatchingString = Tools.putValue(
-                Tools.IS_MATCHING_VISIBLE_NAME, isMatchingVisible + "");
-        String isAdvancedString = Tools.putValue(Tools.IS_ADVANCED_NAME,
-                isInAdvancedMode + "");
+                isSummaryMessageDisabled + "");
+        String isRecentString = Tools.putValue(Tools.IS_RECENT_VISIBLE_NAME, isRecentVisible + "");
+        String isMatchingString = Tools.putValue(Tools.IS_MATCHING_VISIBLE_NAME, isMatchingVisible
+                + "");
+        String isAdvancedString = Tools.putValue(Tools.IS_ADVANCED_NAME, isInAdvancedMode + "");
 
-        String result = isRecentString + isMatchingString + isAdvancedString + isSummaryMessageString;
+        String result = isRecentString + isMatchingString + isAdvancedString
+                + isSummaryMessageString;
         super.save(Tools.CONTRIBUTION_CONFIGURATION_KEY, result);
     }
 }

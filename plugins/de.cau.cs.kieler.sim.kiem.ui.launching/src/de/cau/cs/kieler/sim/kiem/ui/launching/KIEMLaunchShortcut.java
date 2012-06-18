@@ -14,9 +14,6 @@
 
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
-import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.debug.core.ILaunchConfigurationType;
-import org.eclipse.debug.core.ILaunchManager;
 import org.eclipse.debug.ui.ILaunchShortcut;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
@@ -29,12 +26,12 @@ import org.eclipse.ui.IEditorPart;
  * 
  */
 public class KIEMLaunchShortcut implements ILaunchShortcut {
-    
+
     /** The constant KIEM_LAUNCH_TYPE. */
     public static final String KIEM_LAUNCH_TYPE = "de.cau.cs.kieler.sim.kiem.ui.launching.KIEM";
-    
+
     /** The constant ATTR_BATCH_PATH. */
-    private static final String ATTR_BATCH_PATH = "PATH_TO_BATCH_FILE"; 
+    static final String ATTR_BATCH_PATH = "PATH_TO_BATCH_FILE";
 
     // --------------------------------------------------------------------------
 
@@ -42,19 +39,18 @@ public class KIEMLaunchShortcut implements ILaunchShortcut {
      * {@inheritDoc}
      */
     public void launch(final ISelection selection, final String mode) {
-        System.out.println("LAUNCH SELECTION" + selection.toString() + ", " + mode);
-
-        ILaunchManager lm = DebugPlugin.getDefault().getLaunchManager();
-        ILaunchConfigurationType type = lm.getLaunchConfigurationType(KIEM_LAUNCH_TYPE);
+        //System.out.println("LAUNCH SELECTION" + selection.toString() + ", " + mode);
+        //ILaunchManager lm = DebugPlugin.getDefault().getLaunchManager();
+        //ILaunchConfigurationType type = lm.getLaunchConfigurationType(KIEM_LAUNCH_TYPE);
     }
 
     // --------------------------------------------------------------------------
-    
+
     /**
      * {@inheritDoc}
      */
     public void launch(final IEditorPart editor, final String mode) {
-        System.out.println("LAUNCH EDITOR" + editor.toString() + ", " + mode);
+        //System.out.println("LAUNCH EDITOR" + editor.toString() + ", " + mode);
     }
 
 }

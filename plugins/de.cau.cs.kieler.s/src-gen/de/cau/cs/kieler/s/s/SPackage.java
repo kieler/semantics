@@ -524,13 +524,22 @@ public interface SPackage extends EPackage
   int EMIT__SIGNAL = INSTRUCTION_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EMIT__VALUE = INSTRUCTION_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Emit</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EMIT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 1;
+  int EMIT_FEATURE_COUNT = INSTRUCTION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link de.cau.cs.kieler.s.s.impl.AbortImpl <em>Abort</em>}' class.
@@ -918,6 +927,17 @@ public interface SPackage extends EPackage
   EReference getEmit_Signal();
 
   /**
+   * Returns the meta object for the containment reference '{@link de.cau.cs.kieler.s.s.Emit#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see de.cau.cs.kieler.s.s.Emit#getValue()
+   * @see #getEmit()
+   * @generated
+   */
+  EReference getEmit_Value();
+
+  /**
    * Returns the meta object for class '{@link de.cau.cs.kieler.s.s.Abort <em>Abort</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1236,6 +1256,14 @@ public interface SPackage extends EPackage
      * @generated
      */
     EReference EMIT__SIGNAL = eINSTANCE.getEmit_Signal();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EMIT__VALUE = eINSTANCE.getEmit_Value();
 
     /**
      * The meta object literal for the '{@link de.cau.cs.kieler.s.s.impl.AbortImpl <em>Abort</em>}' class.

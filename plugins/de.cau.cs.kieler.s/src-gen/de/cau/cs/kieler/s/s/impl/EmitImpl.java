@@ -6,12 +6,14 @@
  */
 package de.cau.cs.kieler.s.s.impl;
 
+import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 
 import de.cau.cs.kieler.s.s.Emit;
 import de.cau.cs.kieler.s.s.SPackage;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -26,6 +28,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
  * The following features are implemented:
  * <ul>
  *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getSignal <em>Signal</em>}</li>
+ *   <li>{@link de.cau.cs.kieler.s.s.impl.EmitImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -42,6 +45,16 @@ public class EmitImpl extends InstructionImpl implements Emit
    * @ordered
    */
   protected Signal signal;
+
+  /**
+   * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getValue()
+   * @generated
+   * @ordered
+   */
+  protected Expression value;
 
   /**
    * <!-- begin-user-doc -->
@@ -112,6 +125,70 @@ public class EmitImpl extends InstructionImpl implements Emit
    * <!-- end-user-doc -->
    * @generated
    */
+  public Expression getValue()
+  {
+    return value;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetValue(Expression newValue, NotificationChain msgs)
+  {
+    Expression oldValue = value;
+    value = newValue;
+    if (eNotificationRequired())
+    {
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, oldValue, newValue);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
+    }
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setValue(Expression newValue)
+  {
+    if (newValue != value)
+    {
+      NotificationChain msgs = null;
+      if (value != null)
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__VALUE, null, msgs);
+      if (newValue != null)
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - SPackage.EMIT__VALUE, null, msgs);
+      msgs = basicSetValue(newValue, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, SPackage.EMIT__VALUE, newValue, newValue));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case SPackage.EMIT__VALUE:
+        return basicSetValue(null, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
@@ -120,6 +197,8 @@ public class EmitImpl extends InstructionImpl implements Emit
       case SPackage.EMIT__SIGNAL:
         if (resolve) return getSignal();
         return basicGetSignal();
+      case SPackage.EMIT__VALUE:
+        return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -136,6 +215,9 @@ public class EmitImpl extends InstructionImpl implements Emit
     {
       case SPackage.EMIT__SIGNAL:
         setSignal((Signal)newValue);
+        return;
+      case SPackage.EMIT__VALUE:
+        setValue((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -154,6 +236,9 @@ public class EmitImpl extends InstructionImpl implements Emit
       case SPackage.EMIT__SIGNAL:
         setSignal((Signal)null);
         return;
+      case SPackage.EMIT__VALUE:
+        setValue((Expression)null);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -170,6 +255,8 @@ public class EmitImpl extends InstructionImpl implements Emit
     {
       case SPackage.EMIT__SIGNAL:
         return signal != null;
+      case SPackage.EMIT__VALUE:
+        return value != null;
     }
     return super.eIsSet(featureID);
   }

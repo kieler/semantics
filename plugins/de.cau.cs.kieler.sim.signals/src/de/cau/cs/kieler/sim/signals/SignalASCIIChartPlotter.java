@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,7 +15,6 @@ package de.cau.cs.kieler.sim.signals;
 
 import java.util.LinkedList;
 
-
 /**
  * The SignalASCIIPlotter plots ASCII art signals to a text file
  * 
@@ -23,44 +22,42 @@ import java.util.LinkedList;
  */
 public class SignalASCIIChartPlotter extends SignalASCIIPlotter {
 
-	/**
-	 * Plot ASCII.
-	 * 
-	 * @param signalList
-	 *            the signal list
-	 * @return the string[]
-	 */
-	public String[] plot(SignalList signalList) {
-		LinkedList<String> stringList = new LinkedList<String>();
+    /**
+     * Plot ASCII.
+     * 
+     * @param signalList
+     *            the signal list
+     * @return the string[]
+     */
+    public String[] plot(SignalList signalList) {
+        LinkedList<String> stringList = new LinkedList<String>();
 
-		long minTick = signalList.getMinTick();
-		long maxTick = signalList.getMaxTick();
+        long minTick = signalList.getMinTick();
+        long maxTick = signalList.getMaxTick();
 
-		// plot signal data
-		int maxSignalNameLength = getMaxSignalNameLength(signalList);
-		String spaceLine = "";
-		for (Signal signal : signalList) {
-			String[] signalData = getASCISignalData(minTick, maxTick, signal,
-					maxSignalNameLength);
-			if (spaceLine.equals("")) {
-				spaceLine = getSpaceCharacters(signalData[0].length());
-			}
-			// no space line by default
-			// stringList.add(spaceLine);
-			stringList.add(signalData[0]);
-			stringList.add(signalData[1]);
-		}
+        // plot signal data
+        int maxSignalNameLength = getMaxSignalNameLength(signalList);
+        String spaceLine = "";
+        for (Signal signal : signalList) {
+            String[] signalData = getASCISignalData(minTick, maxTick, signal, maxSignalNameLength);
+            if (spaceLine.equals("")) {
+                spaceLine = getSpaceCharacters(signalData[0].length());
+            }
+            // no space line by default
+            // stringList.add(spaceLine);
+            stringList.add(signalData[0]);
+            stringList.add(signalData[1]);
+        }
 
-		// build tick labels
-		stringList.add(spaceLine);
-		String[] tickLabels = getTickLabels(minTick, maxTick,
-				maxSignalNameLength);
+        // build tick labels
+        stringList.add(spaceLine);
+        String[] tickLabels = getTickLabels(minTick, maxTick, maxSignalNameLength);
 
-		for (int line = 0; line < tickLabels.length; line++) {
-			stringList.add(tickLabels[line]);
-		}
+        for (int line = 0; line < tickLabels.length; line++) {
+            stringList.add(tickLabels[line]);
+        }
 
-		return (String[]) stringList.toArray(new String[signalList.size()]);
-	}
+        return (String[]) stringList.toArray(new String[signalList.size()]);
+    }
 
 }

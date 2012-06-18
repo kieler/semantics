@@ -31,10 +31,10 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
-//  TODO: is this used as relative position? 
+    // TODO: is this used as relative position?
     // FIXME: the has to be adapted to the new syntax -> check
     private static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>"; // FALSCH!
-                                                                                // "--> maState  doneC (r";
+                                                                                  // "--> maState  doneC (r";
 
     /** The constant MAUDEERROR indicates the error token to search for. */
     private static final String MAUDEERROR = "*HERE*";
@@ -72,9 +72,8 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         properties[1] = new KiemProperty("State Variable", "state");
         properties[2] = new KiemProperty("Region Variable", "region");
         properties[3] = new KiemProperty("Number of Steps", 1);
-       // properties[4] = new KiemProperty("parse output", (new KiemPropertyTypeBool()));
-        
-        
+        // properties[4] = new KiemProperty("parse output", (new KiemPropertyTypeBool()));
+
         return properties;
     }
 
@@ -132,7 +131,7 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         if (triggerEventsQuery.equals("")) {
             triggerEventsQuery = "ev: \"noevent\"";
         }
-        String triggerEventsQueue = triggerEventsQuery.replace(",", " "); 
+        String triggerEventsQueue = triggerEventsQuery.replace(",", " ");
 
         // second build the current states
         String currentStatesRegionsQuery = "";
@@ -152,39 +151,39 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
         // event queue
         String numSteps = this.getProperties()[4].getValue();
         String queryEQ = "<ready emptyQueue > ";
-        // acceptance tuples 
-        String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)" + numSteps + "(U)0 " + ") "; 
-//        String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
-        String queryAS = "<ready (" + triggerEventsQuery + ") " +  queryAT + " > ";
-        // event pool 
+        // acceptance tuples
+        String queryAT = "(" + "acc:(E) emptyEventSet (F) " + triggerEventsQuery + " (L)"
+                + numSteps + "(U)0 " + ") ";
+        // String queryAS = "<ready (" + triggerEventsQuery + ") emptyAcctupSet > ";
+        String queryAS = "<ready (" + triggerEventsQuery + ") " + queryAT + " > ";
+        // event pool
         String queryEP = "ready " + queryEQ + queryAS + " ";
         // configuration
-        String queryCf = "stableC<STATEC> " + currentStatesRegionsQuery +  " <HISTC> empty <ENDCONF> ";
+        String queryCf = "stableC<STATEC> " + currentStatesRegionsQuery
+                + " <HISTC> empty <ENDCONF> ";
         // machine configuration
         String queryMC = "maState (" + queryCf + ") (" + triggerEventsQuery + ") ";
         // system configuration
-        String querySC = "readyBFPSM (" + queryEP + ") (" + queryMC + ") "; 
-        
-        
-        // The event pool
-        //readyBFPSM(ready <ready emptyQueue > <ready
-     
-        String queryRequest = 
-//        		"red (acc:(E)emptyEventSet(F)b(L)1(U)1) . \n"+
-//        		"red (blocked (acc:(E)emptyEventSet(F)b(L)1(U)1)) . \n"+
-//        		"red 2 . \n";
-//        		"red " + queryEQ + ". \n"+
-//           		"red " + queryAT + ". \n"+
-//       		"red " + queryAS + ". \n"+
+        String querySC = "readyBFPSM (" + queryEP + ") (" + queryMC + ") ";
 
-//        		"red " + queryEP + ". \n"+
-//           		"red " + queryCf + ". \n"+
-//           		"red " + queryMC + ". \n"+
-//           		"red " + querySC + ". \n"+
-//				"red $allowed " + triggerEventsQuery + " " + queryAT + " . \n" + 
-        		"search " + querySC +" =>* mastate such that isDone mastate . \n";
-//        		"rew [200] " + querySC +" . \n";
-           		
+        // The event pool
+        // readyBFPSM(ready <ready emptyQueue > <ready
+
+        String queryRequest =
+        // "red (acc:(E)emptyEventSet(F)b(L)1(U)1) . \n"+
+        // "red (blocked (acc:(E)emptyEventSet(F)b(L)1(U)1)) . \n"+
+        // "red 2 . \n";
+        // "red " + queryEQ + ". \n"+
+        // "red " + queryAT + ". \n"+
+        // "red " + queryAS + ". \n"+
+
+        // "red " + queryEP + ". \n"+
+        // "red " + queryCf + ". \n"+
+        // "red " + queryMC + ". \n"+
+        // "red " + querySC + ". \n"+
+        // "red $allowed " + triggerEventsQuery + " " + queryAT + " . \n" +
+        "search " + querySC + " =>* mastate such that isDone mastate . \n";
+        // "rew [200] " + querySC +" . \n";
 
         // Debug output query request
         printConsole(queryRequest);
@@ -205,16 +204,15 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
 
         if (currentStatesRegionsChoices.size() == 1) {
             currentStatesRegions = Arrays.asList(currentStatesRegionsChoices.get(0));
-        } 
-        else {
+        } else {
 
-        	printConsole(currentStatesRegionsChoices.toString()); 
+            printConsole(currentStatesRegionsChoices.toString());
         }
-        
+
         if (currentStatesRegionsChoices.size() > 1) {
             currentStatesRegions = Arrays.asList(selectCurrentState(currentStatesRegionsChoices));
-            if (KiemPlugin.getDefault().getExecution() != null && 
-                      KiemPlugin.getDefault().getExecution().isRunning()) {
+            if (KiemPlugin.getDefault().getExecution() != null
+                    && KiemPlugin.getDefault().getExecution().isRunning()) {
                 // Raise a pause exception to pause a possibly running execution
                 throw (new KiemExecutionException(
                         "A user selection during a running execution will cause the execution to be paused.",
@@ -361,26 +359,26 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
      */
     @Override
     public void initialize() throws KiemInitializationException {
-        String pathToMaude = this.getProperties()[1].getValue();
-
-        String pathToMaudeCode = getMaudeGenCodeLocation();
-        if (isWindows()) {
-            pathToMaudeCode = "\"" + transformToCygwinPath(pathToMaudeCode) +"\"";
-        }
-
-        // reset the mapping
-        resetMappingHashmap();
-
-        // clear the maude console
-        clearConsole();
-
-        // initialize with initial states (and regions)
-        currentStates = Arrays.asList(getInitialStates());
-        // TODO: Initial Regions?
-
-        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                pathToMaudeCode );
         try {
+            String pathToMaude = this.getProperties()[1].getValue();
+
+            String pathToMaudeCode = getMaudeGenCodeLocation();
+            if (isWindows()) {
+                pathToMaudeCode = "\"" + transformToCygwinPath(pathToMaudeCode) + "\"";
+            }
+
+            // reset the mapping
+            resetMappingHashmap();
+
+            // clear the maude console
+            clearConsole();
+
+            // initialize with initial states (and regions)
+            currentStates = Arrays.asList(getInitialStates());
+            // TODO: Initial Regions?
+
+            maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
+                    pathToMaudeCode);
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
         } catch (Exception e) {
@@ -392,6 +390,5 @@ public class DataComponentSim extends DataComponent implements IJSONObjectDataCo
     }
 
     // -------------------------------------------------------------------------
-
 
 }

@@ -2,6 +2,8 @@ package de.cau.cs.kieler.uml2.sim.kiem;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,6 +14,7 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.FileLocator;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.common.util.Diagnostic;
@@ -33,7 +36,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.notation.View;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.wizard.WizardDialog;
-import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
+//import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -58,7 +61,7 @@ import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
@@ -67,9 +70,9 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeEditor;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.uml2.sim.Uml2SimPlugin;
 
 import org.eclipse.uml2.uml.Model;
@@ -97,10 +100,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     /**
      * The constant MAUDEPARSESTATESTARTER indicates the start token to search for.
      */
-//    protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C"; (OLD SYNTAX)
-//    protected static final String MAUDEPARSESTATESTARTER = "--> maState doneC (";
-//    TODO: is this used as relative position? 
-	// TODO: still needed? seems to be defined in DCSim and DCMC
+    // protected static final String MAUDEPARSESTATESTARTER = "--> maState \"UML\" $doneC (C"; (OLD
+    // SYNTAX)
+    // protected static final String MAUDEPARSESTATESTARTER = "--> maState doneC (";
+    // TODO: is this used as relative position?
+    // TODO: still needed? seems to be defined in DCSim and DCMC
     protected static final String MAUDEPARSESTATESTARTER = "maState doneC<STATEC>";
 
     /** The Constant MAUDENOEVENT no event (will not be displayed). */
@@ -114,10 +118,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     /** The maude2 emf id hashmap to cache the mapping. */
     private HashMap<String, String> maude2EMFId;
-    
+
     /** The all events cache. */
     private String[] allEvents = null;
-    
+
     /** The all actions cache. */
     private String[] allActions = null;
 
@@ -141,21 +145,21 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
     // -------------------------------------------------------------------------
 
-    protected EObject getInputModelEObject(IEditorPart editorPart) {
-        EObject model = null;
-        if (editorPart instanceof PapyrusMultiDiagramEditor) {
-            PapyrusMultiDiagramEditor papyrusMultiDiagramEditor = (PapyrusMultiDiagramEditor) editorPart;
-            View notationElement = (View) papyrusMultiDiagramEditor.getDiagramEditPart().getModel();
-            if (notationElement == null) {
-                return null;
-            }
-            model = (EObject) notationElement.getElement();
-    	}
-        return model;
-    }
+    // protected EObject getInputModelEObject(IEditorPart editorPart) {
+    // EObject model = null;
+    // if (editorPart instanceof PapyrusMultiDiagramEditor) {
+    // PapyrusMultiDiagramEditor papyrusMultiDiagramEditor = (PapyrusMultiDiagramEditor) editorPart;
+    // View notationElement = (View) papyrusMultiDiagramEditor.getDiagramEditPart().getModel();
+    // if (notationElement == null) {
+    // return null;
+    // }
+    // model = (EObject) notationElement.getElement();
+    // }
+    // return model;
+    // }
 
     // -------------------------------------------------------------------------
-    
+
     /*
      * (non-Javadoc)
      * 
@@ -181,7 +185,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         LinkedList<String> stringList = new LinkedList<String>();
 
         // we here read in the uml model and extract the necessary information
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement();
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -217,143 +221,133 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @return the string[]
      */
     public List<String[]> extractActiveStates(String maudeResult) {
-		boolean error = maudeResult.contains(MAUDEERROR);
-		LinkedList activeStatesChoices = new LinkedList();
-		// if maude result contains error, use the old current states
-		if (error) {
-			activeStatesChoices.add(activeStatesChoices);
-			return activeStatesChoices;
-		}
+        boolean error = maudeResult.contains(MAUDEERROR);
+        LinkedList activeStatesChoices = new LinkedList();
+        // if maude result contains error, use the old current states
+        if (error) {
+            activeStatesChoices.add(activeStatesChoices);
+            return activeStatesChoices;
+        }
 
-		boolean foundAnotherSolution = true;
+        boolean foundAnotherSolution = true;
 
-		while (foundAnotherSolution) {
-			try {
-				int firstSolutionStartIndex = maudeResult
-						.indexOf(MAUDEPARSESTATESTARTER);
+        while (foundAnotherSolution) {
+            try {
+                int firstSolutionStartIndex = maudeResult.indexOf(MAUDEPARSESTATESTARTER);
 
-				// check if solution is found
-				if (firstSolutionStartIndex < 0) {
-					foundAnotherSolution = false;
-					break;
-				}
+                // check if solution is found
+                if (firstSolutionStartIndex < 0) {
+                    foundAnotherSolution = false;
+                    break;
+                }
 
-				// part result
-				// start of what? i assume the state configuration 
-				String maudePartResult = maudeResult
-						.substring(firstSolutionStartIndex
-								+ MAUDEPARSESTATESTARTER.length());
+                // part result
+                // start of what? i assume the state configuration
+                String maudePartResult = maudeResult.substring(firstSolutionStartIndex
+                        + MAUDEPARSESTATESTARTER.length());
 
-				// remainder (may contain previous solutions)
-				maudeResult = maudeResult.substring(firstSolutionStartIndex
-						+ MAUDEPARSESTATESTARTER.length());
+                // remainder (may contain previous solutions)
+                maudeResult = maudeResult.substring(firstSolutionStartIndex
+                        + MAUDEPARSESTATESTARTER.length());
 
-				// FIXME: this has to be adapted to the new syntax
-				/*
-				 * Maude output looks like this:
-				 * 
-				 * search in INIT : maState "UML" $stableC prettyVerts
-				 * (T461729046, R-768353767) empty ee3 =>* mastate such that
-				 * isDone mastate = true .
-				 * 
-				 * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms
-				 * cpu (0ms real) (0 rewrites/second) mastate --> maState "UML"
-				 * $doneC (C "T461729046", root R "R-768353767") empty empty
-				 * 
-				 * Solution 2 (state 3) states: 4 rewrites: 65 in 6597516000ms
-				 * cpu (0ms real) (0 rewrites/second) mastate --> maState "UML"
-				 * $doneC (C "T461729046", root R "R-768353767") empty empty
-				 * 
-				 * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu
-				 * (0ms real) (0 rewrites/second)
-				 * 
-				 * 
-				 * =========== new syntax:  START "--> maState  doneC (r"
-				 * 
-				 * search in INIT : maState stableC (State0-885791716,
-				 * R-2027565592) empty a =>* mastate such that isDone mastate =
-				 * (true).Bool . 
-				 * 
-				 * Solution 1 (state 18) states: 19 rewrites: 7169 in 9341596000ms cpu (139ms real) (0
-				 * rewrites/second) mastate --> maState doneC (root R
-				 * "R-2027565592", root R "R-2027565592" : C
-				 * "State8--772141864", root R "R-2027565592" : C
-				 * "State8--772141864" : R "R1009037042", root R "R-2027565592"
-				 * : C "State8--772141864" : R "R236686905", root R
-				 * "R-2027565592" : C "State8--772141864" : R "R1009037042" : C
-				 * "State9--1326027058", root R "R-2027565592" : C
-				 * "State8--772141864" : R "R236686905" : C
-				 * "State12--599864602") empty a
-				 * 
-				 * 
-				 * Solution 2 (state 21) states: 22 rewrites: 7493 in
-				 * 9341596000ms cpu (142ms real) (0 rewrites/second) mastate -->
-				 * maState doneC (root R "R-2027565592", root R "R-2027565592" :
-				 * C "State8--772141864", root R "R-2027565592" : C
-				 * "State8--772141864" : R "R1009037042", root R "R-2027565592"
-				 * : C "State8--772141864" : R "R236686905", root R
-				 * "R-2027565592" : C "State8--772141864" : R "R1009037042" : C
-				 * "State9--1326027058", root R "R-2027565592" : C
-				 * "State8--772141864" : R "R236686905" : C
-				 * "State12--599864602") (historyconf root R "R-2027565592"
-				 * (root R "R-2027565592" : C "State8--772141864") , historyconf
-				 * root R "R-2027565592" : C "State8--772141864" : R
-				 * "R1009037042" ( root R "R-2027565592" : C "State8--772141864"
-				 * : R "R1009037042" : C "State9--1326027058") , historyconf
-				 * root R "R-2027565592" : C "State8--772141864" : R
-				 * "R236686905" ( root R "R-2027565592" : C "State8--772141864"
-				 * : R "R236686905" : C "State12--599864602") ) a
-				 */
+                // FIXME: this has to be adapted to the new syntax
+                /*
+                 * Maude output looks like this:
+                 * 
+                 * search in INIT : maState "UML" $stableC prettyVerts (T461729046, R-768353767)
+                 * empty ee3 =>* mastate such that isDone mastate = true .
+                 * 
+                 * Solution 1 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
+                 * "R-768353767") empty empty
+                 * 
+                 * Solution 2 (state 3) states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second) mastate --> maState "UML" $doneC (C "T461729046", root R
+                 * "R-768353767") empty empty
+                 * 
+                 * No more solutions. states: 4 rewrites: 65 in 6597516000ms cpu (0ms real) (0
+                 * rewrites/second)
+                 * 
+                 * 
+                 * =========== new syntax: START "--> maState  doneC (r"
+                 * 
+                 * search in INIT : maState stableC (State0-885791716, R-2027565592) empty a =>*
+                 * mastate such that isDone mastate = (true).Bool .
+                 * 
+                 * Solution 1 (state 18) states: 19 rewrites: 7169 in 9341596000ms cpu (139ms real)
+                 * (0 rewrites/second) mastate --> maState doneC (root R "R-2027565592", root R
+                 * "R-2027565592" : C "State8--772141864", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R1009037042", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R236686905", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R1009037042" : C "State9--1326027058", root R
+                 * "R-2027565592" : C "State8--772141864" : R "R236686905" : C "State12--599864602")
+                 * empty a
+                 * 
+                 * 
+                 * Solution 2 (state 21) states: 22 rewrites: 7493 in 9341596000ms cpu (142ms real)
+                 * (0 rewrites/second) mastate --> maState doneC (root R "R-2027565592", root R
+                 * "R-2027565592" : C "State8--772141864", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R1009037042", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R236686905", root R "R-2027565592" : C
+                 * "State8--772141864" : R "R1009037042" : C "State9--1326027058", root R
+                 * "R-2027565592" : C "State8--772141864" : R "R236686905" : C "State12--599864602")
+                 * (historyconf root R "R-2027565592" (root R "R-2027565592" : C
+                 * "State8--772141864") , historyconf root R "R-2027565592" : C "State8--772141864"
+                 * : R "R1009037042" ( root R "R-2027565592" : C "State8--772141864" : R
+                 * "R1009037042" : C "State9--1326027058") , historyconf root R "R-2027565592" : C
+                 * "State8--772141864" : R "R236686905" ( root R "R-2027565592" : C
+                 * "State8--772141864" : R "R236686905" : C "State12--599864602") ) a
+                 */
 
-				LinkedList<String> stringList = new LinkedList<String>();
+                LinkedList<String> stringList = new LinkedList<String>();
 
-				boolean consuming = false;
-				String consumedPart = "";
-				for (int c = 0; c < maudePartResult.length(); c++) {
-					String character = maudePartResult.substring(c, c + 1);
-					if (character.equals("\"")) {
-						consuming = !consuming;
-						if (!consuming) {
-							// Add state or region only if not already contained
-							boolean foundInList = false;
-							for (String stringListItem: stringList) {
-								if (stringListItem.equals(consumedPart)) {
-									foundInList = true;
-									break;
-								}
-							}
-							if (!foundInList) {
-								stringList.add(consumedPart);
-							}
-							consumedPart = "";
-						}
-						// do not consume "-character
-						continue;
-					}
-					if (character.equals(")")) {
-						break;
-					}
-					if (consuming) {
-						consumedPart += character;
-					}
-				}
+                boolean consuming = false;
+                String consumedPart = "";
+                for (int c = 0; c < maudePartResult.length(); c++) {
+                    String character = maudePartResult.substring(c, c + 1);
+                    if (character.equals("\"")) {
+                        consuming = !consuming;
+                        if (!consuming) {
+                            // Add state or region only if not already contained
+                            boolean foundInList = false;
+                            for (String stringListItem : stringList) {
+                                if (stringListItem.equals(consumedPart)) {
+                                    foundInList = true;
+                                    break;
+                                }
+                            }
+                            if (!foundInList) {
+                                stringList.add(consumedPart);
+                            }
+                            consumedPart = "";
+                        }
+                        // do not consume "-character
+                        continue;
+                    }
+                    if (character.equals(")")) {
+                        break;
+                    }
+                    if (consuming) {
+                        consumedPart += character;
+                    }
+                }
 
                 // add only if not already inside the activeStatesChoices list
                 boolean foundInList = false;
-                for (Object object: activeStatesChoices) {
-                	if (object instanceof String[]) {
-                		boolean equal = false;
-                		String[] itemList = (String[])object;
-                		if (stringList.size() != itemList.length) {
-                    		equal = true;
-                    		for (int i = 0; i < stringList.size(); i++) {
-                    			equal = equal && stringList.get(i).equals(itemList[i]);
-                    		}
-                		}
-                		if (equal) {
-                			foundInList = true;
-                		}
-                	}
+                for (Object object : activeStatesChoices) {
+                    if (object instanceof String[]) {
+                        boolean equal = false;
+                        String[] itemList = (String[]) object;
+                        if (stringList.size() != itemList.length) {
+                            equal = true;
+                            for (int i = 0; i < stringList.size(); i++) {
+                                equal = equal && stringList.get(i).equals(itemList[i]);
+                            }
+                        }
+                        if (equal) {
+                            foundInList = true;
+                        }
+                    }
                 }
                 if (!foundInList) {
                     activeStatesChoices.add(stringList.toArray(new String[0]));
@@ -437,7 +431,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
 
         // if id was not found, then we search the model for it
 
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement();
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -622,25 +616,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * #initialize()
      */
     public void initialize() throws KiemInitializationException {
-        String pathToMaude = this.getProperties()[1].getValue();
-
-        String pathToMaudeCode = getMaudeGenCodeLocation();
-        if (isWindows()) {
-            pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
-        }
-
-        // reset the mapping
-        resetMappingHashmap();
-
-        // clear the maude console
-        clearConsole();
-
-        // initialize with initial states (and regions)
-        currentStates = getInitialStates();
-
-        maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
-                pathToMaudeCode);
         try {
+            String pathToMaude = this.getProperties()[1].getValue();
+
+            String pathToMaudeCode = getMaudeGenCodeLocation();
+            if (isWindows()) {
+                pathToMaudeCode = transformToCygwinPath(pathToMaudeCode);
+            }
+
+            // reset the mapping
+            resetMappingHashmap();
+
+            // clear the maude console
+            clearConsole();
+
+            // initialize with initial states (and regions)
+            currentStates = getInitialStates();
+
+            maudeSessionId = MaudeInterfacePlugin.getDefault().createMaudeSession(pathToMaude,
+                    pathToMaudeCode);
             MaudeInterfacePlugin.getDefault().startMaudeSession(maudeSessionId);
             printConsole(MaudeInterfacePlugin.getDefault().queryMaude(null, 1000, maudeSessionId));
         } catch (Exception e) {
@@ -660,7 +654,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     public void wrapup() throws KiemInitializationException {
         // clear caches
-        resetAllEventsAndActions() ;
+        resetAllEventsAndActions();
         // close Maude session
         MaudeInterfacePlugin.getDefault().closeMaudeSession(maudeSessionId);
     }
@@ -690,9 +684,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * 
      * @return the maude gen code location
      */
-    public String getMaudeGenCodeLocation() {
-        String outPath = part2Location(this.getInputEditor()).replace("%20"," ");
-        String stringUri = this.getInputModelAsURI().lastSegment().toString();
+    public String getMaudeGenCodeLocation() throws MalformedURLException, URISyntaxException {
+        String outPath = getLocation().replace("%20", " ");
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(
+                this.getModelFilePath().toString()).toString());
+        String stringUri = fileUri.lastSegment().toString();
         String stringUri2 = stringUri.replace(".uml", "");
         stringUri2 = stringUri2.substring(stringUri2.indexOf("/", 1) + 1);
         return (outPath + stringUri2);
@@ -760,23 +756,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     // -------------------------------------------------------------------------
     public String errorMsg = "";
     public String blaaa;
-    
+
     /*
      * (non-Javadoc)
      * 
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
      * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
      */
-    public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
+    public void doModel2ModelTransform(ProgressMonitorAdapter monitor) throws Exception {
         // Workflow
         Workflow workflow = new Workflow();
 
         // EMF reader
         Reader emfReader = new Reader();
-        String stringUri = this.getInputModelAsURI().toString();
-        
-        //FIXME: Is this correct?! Seems not to work in RCA :(
-        //emfReader.setUri("platform:/resource" + stringUri);
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(
+                this.getModelFilePath().toString()).toString());
+        String stringUri = fileUri.toString();
+
+        // FIXME: Is this correct?! Seems not to work in RCA :(
+        // emfReader.setUri("platform:/resource" + stringUri);
         emfReader.setUri(stringUri);
         emfReader.setModelSlot("model");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
@@ -784,7 +782,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // emfReader.setResourceSet(this.getInputResourceSet());
         // emfReader.setResourceSet(ptolemyModel.getResourceSet());
 
-        outPath = part2Location(this.getInputEditor()).replace("%20"," ");
+        outPath = (getLocation()).replace("%20", " ");
 
         // Set model name (gets model.maude)
         GlobalVar modelname = new GlobalVar();
@@ -794,29 +792,29 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         if (stringUri.lastIndexOf(".uml") > 0) {
             stringUri2 = stringUri.substring(0, stringUri.lastIndexOf(".uml"));
         }
-        stringUri2 = stringUri2.substring(stringUri2.lastIndexOf("/")+1);
+        stringUri2 = stringUri2.substring(stringUri2.lastIndexOf("/") + 1);
         modelname.setValue(stringUri2);
-        
-//        blaaa = "1";
-//        if (blaaa.equals("1")) {
-//            System.out.println("sdfsdfsdf");
-//        }
-//        
-//        errorMsg = stringUri2;
-//        Display.getDefault().syncExec(new Runnable() {
-//            public void run() {
-//                final Shell shell = Display.getCurrent().getShells()[0];
-//                MessageDialog.openInformation(shell, "Info", errorMsg);
-//            }
-//        });
-//     
-//        Display.getDefault().syncExec(new Runnable() {
-//            public void run() {
-//                final Shell shell = Display.getCurrent().getShells()[0];
-//                MessageDialog.openInformation(shell, "Info", "debug test");
-//            }
-//        });
-//                
+
+        // blaaa = "1";
+        // if (blaaa.equals("1")) {
+        // System.out.println("sdfsdfsdf");
+        // }
+        //
+        // errorMsg = stringUri2;
+        // Display.getDefault().syncExec(new Runnable() {
+        // public void run() {
+        // final Shell shell = Display.getCurrent().getShells()[0];
+        // MessageDialog.openInformation(shell, "Info", errorMsg);
+        // }
+        // });
+        //
+        // Display.getDefault().syncExec(new Runnable() {
+        // public void run() {
+        // final Shell shell = Display.getCurrent().getShells()[0];
+        // MessageDialog.openInformation(shell, "Info", "debug test");
+        // }
+        // });
+        //
 
         GlobalVar maudebasecode = new GlobalVar();
         maudebasecode.setName("maudebasecode");
@@ -825,19 +823,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
             baseLocation = transformToCygwinPath(baseLocation);
         }
         maudebasecode.setValue(baseLocation);
-//
-//        errorMsg = baseLocation;
-//        Display.getDefault().syncExec(new Runnable() {
-//            public void run() {
-//                final Shell shell = Display.getCurrent().getShells()[0];
-//                MessageDialog.openInformation(shell, "Info", errorMsg);
-//            }
-//        });
-        
+        //
+        // errorMsg = baseLocation;
+        // Display.getDefault().syncExec(new Runnable() {
+        // public void run() {
+        // final Shell shell = Display.getCurrent().getShells()[0];
+        // MessageDialog.openInformation(shell, "Info", errorMsg);
+        // }
+        // });
+
         // Outlet
         Outlet outlet = new Outlet();
         outlet.setPath(outPath);
-        
+
         // Meta models
         EmfMetaModel metaModel0 = new EmfMetaModel(UMLPackage.eINSTANCE);
         EmfMetaModel metaModel1 = new EmfMetaModel(org.eclipse.emf.ecore.EcorePackage.eINSTANCE);
@@ -861,7 +859,6 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
         workflow.invoke(wfx, m2mMonitor, issues);
 
-        
         // For debugging purposes
         for (MWEDiagnostic errorDiag : issues.getErrors()) {
             errorMsg = errorDiag.getMessage();
@@ -872,7 +869,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 }
             });
         }
-        for (MWEDiagnostic errorDiag : issues.getWarnings() ) {
+        for (MWEDiagnostic errorDiag : issues.getWarnings()) {
             errorMsg = errorDiag.getMessage();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
@@ -881,7 +878,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 }
             });
         }
-        for (MWEDiagnostic errorDiag : issues.getIssues() ) {
+        for (MWEDiagnostic errorDiag : issues.getIssues()) {
             errorMsg = errorDiag.getMessage();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
@@ -890,7 +887,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 }
             });
         }
-        for (MWEDiagnostic errorDiag : issues.getInfos() ) {
+        for (MWEDiagnostic errorDiag : issues.getInfos()) {
             errorMsg = errorDiag.getMessage();
             Display.getDefault().syncExec(new Runnable() {
                 public void run() {
@@ -899,8 +896,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
                 }
             });
         }
-        
-        
+
         // refresh the workspace because we created a new file
         refreshWorkspace();
     }
@@ -914,12 +910,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      *            the editor
      * @return the string
      */
-    private static String part2Location(final IEditorPart editor) {
-        String out = null;
-        FileEditorInput uri = (FileEditorInput) editor.getEditorInput();
-        String outName = uri.getName();
-        out = uri.getURI().getRawPath().replace(outName, "");
-        return out;
+    private String getLocation() {
+        IPath outPathTmp = this.getModelFilePath();
+        outPathTmp = outPathTmp.removeFileExtension();
+        outPathTmp = outPathTmp.removeLastSegments(1);
+        return outPathTmp.toString();
     }
 
     // -------------------------------------------------------------------------
@@ -932,10 +927,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * #checkModelValidation (org.eclipse.emf.ecore.EObject)
      */
     public boolean checkModelValidation(EObject rootEObject) {
-        //FIXME: Reenable this later
-    	// Enable KlePto checks in possibly open GMF SyncCharts editor
-        //ValidationManager.enableCheck("de.cau.cs.kieler.uml2.UMLMaudeChecks");
-        //ValidationManager.validateActiveEditor();
+        // FIXME: Reenable this later
+        // Enable KlePto checks in possibly open GMF SyncCharts editor
+        // ValidationManager.enableCheck("de.cau.cs.kieler.uml2.UMLMaudeChecks");
+        // ValidationManager.validateActiveEditor();
 
         // We don't want a dependency to synccharts diagram (custom) for validation
         // because we might want to simulate head less!!!
@@ -949,13 +944,13 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Reset all events and actions.
      */
     protected void resetAllEventsAndActions() {
-    	allEvents = null;
-    	allActions = null;
+        allEvents = null;
+        allActions = null;
     }
 
     // -------------------------------------------------------------------------
@@ -967,24 +962,24 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     protected String[] getAllEvents() {
         if (allEvents == null) {
-        LinkedList<String> returnList = new LinkedList<String>();
-        Object rootEObject = this.getInputModelEObject(this.getInputEditor());
-        XtendFacade facade = getXtendFacade();
+            LinkedList<String> returnList = new LinkedList<String>();
+            Object rootEObject = this.getModelRootElement();
+            XtendFacade facade = getXtendFacade();
 
-        // first collect events
-        Object objectList = facade.call("getTriggerEvents", rootEObject);
-        if (objectList instanceof ArrayList) {
-            for (Object key : ((ArrayList) objectList)) {
-                if (key instanceof String) {
-                    String keyString = (String) key;
-                    // not include noevent
-                    if (!keyString.equals(MAUDENOEVENT)) {
-                        returnList.add(keyString);
+            // first collect events
+            Object objectList = facade.call("getTriggerEvents", rootEObject);
+            if (objectList instanceof ArrayList) {
+                for (Object key : ((ArrayList) objectList)) {
+                    if (key instanceof String) {
+                        String keyString = (String) key;
+                        // not include noevent
+                        if (!keyString.equals(MAUDENOEVENT)) {
+                            returnList.add(keyString);
+                        }
                     }
                 }
             }
-        }
-        allEvents = returnList.toArray(new String[0]);
+            allEvents = returnList.toArray(new String[0]);
         }
         return allEvents;
     }
@@ -999,9 +994,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     protected String[] getAllActions() {
         if (allActions == null) {
             LinkedList<String> returnList = new LinkedList<String>();
-            Object rootEObject = this.getInputModelEObject(this.getInputEditor());
+            Object rootEObject = this.getModelRootElement();
             XtendFacade facade = getXtendFacade();
-            
+
             // first collect events
             Object objectList = facade.call("getActions", rootEObject);
             if (objectList instanceof ArrayList) {
@@ -1029,7 +1024,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      */
     protected XtendFacade getXtendFacade() {
         // we here read in the uml model and extract the necessary information
-        Object rootObject = this.getInputModelEObject(this.getInputEditor());
+        Object rootObject = this.getModelRootElement();
         if (rootObject instanceof EObject) {
             EObject eObject = (EObject) rootObject;
             EmfMetaModel metaModel0 = new EmfMetaModel(org.eclipse.uml2.uml.UMLPackage.eINSTANCE);
@@ -1054,27 +1049,27 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         JSONObject returnObj = new JSONObject();
 
-           // first collect events
-           for (String event: getAllEvents()) {
-               if (!returnObj.has(event)) {
-                   try {
+        // first collect events
+        for (String event : getAllEvents()) {
+            if (!returnObj.has(event)) {
+                try {
                     returnObj.accumulate(event, JSONSignalValues.newValue(false));
                 } catch (JSONException e) {
                     // ignore
                 }
-               }
-           }    
+            }
+        }
 
-            // second collect actions
-           for (String action: getAllActions()) {
-               if (!returnObj.has(action)) {
-                   try {
+        // second collect actions
+        for (String action : getAllActions()) {
+            if (!returnObj.has(action)) {
+                try {
                     returnObj.accumulate(action, JSONSignalValues.newValue(false));
                 } catch (JSONException e) {
                     // ignore
                 }
-               }
-           }    
+            }
+        }
         return returnObj;
     }
 
@@ -1087,15 +1082,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #getNotationElement (org.eclipse.ui.IEditorPart)
      */
-    @Override
-    protected View getNotationElement(IEditorPart diagramEditor) {
-        if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
-            View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
-                    .getDiagramEditPart().getModel());
-            return notationElement;
-        }
-        return null;
-    }
+    // @Override
+    // protected View getNotationElement(IEditorPart diagramEditor) {
+    // if (diagramEditor instanceof PapyrusMultiDiagramEditor) {
+    // View notationElement = ((View) ((PapyrusMultiDiagramEditor) diagramEditor)
+    // .getDiagramEditPart().getModel());
+    // return notationElement;
+    // }
+    // return null;
+    // }
 
     // -------------------------------------------------------------------------
 
@@ -1106,14 +1101,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #getInputEditor()
      */
-    @Override
-    protected IEditorPart getInputEditor() {
-        IEditorPart ep = super.getInputEditor();
-        if (!(ep instanceof PapyrusMultiDiagramEditor)) {
-            return null;
-        }
-        return ep;
-    }
+    // @Override
+    // protected IEditorPart getInputEditor() {
+    // IEditorPart ep = super.getInputEditor();
+    // if (!(ep instanceof PapyrusMultiDiagramEditor)) {
+    // return null;
+    // }
+    // return ep;
+    // }
 
     // -------------------------------------------------------------------------
 

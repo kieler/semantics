@@ -491,7 +491,7 @@ public class EsoGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//terminal AlphaNumSpecial:
-	//	"0".."9"* ("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | " " | Special)*;
+	//	"0".."9"* ("a".."z" | "A".."Z" | Special) ("a".."z" | "A".."Z" | "0".."9" | Special)*;
 	public TerminalRule getAlphaNumSpecialRule() {
 		return (tAlphaNumSpecial != null) ? tAlphaNumSpecial : (tAlphaNumSpecial = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "AlphaNumSpecial"));
 	} 

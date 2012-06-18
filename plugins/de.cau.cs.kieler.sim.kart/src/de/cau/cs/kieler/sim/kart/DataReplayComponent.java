@@ -14,16 +14,15 @@
 package de.cau.cs.kieler.sim.kart;
 
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.common.CommonPlugin;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +33,6 @@ import de.cau.cs.kieler.sim.eso.ITick;
 import de.cau.cs.kieler.sim.eso.ITrace;
 import de.cau.cs.kieler.sim.eso.ITraceProvider;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
-import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
 import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -43,9 +41,10 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.TimeoutThread;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeInt;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
  * Implements a data component for KIEM that reads a ESI/ESO trace file and in each step of the
@@ -57,11 +56,18 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
  */
 public class DataReplayComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent, IKiemEventListener {
+    
+    /** The Constant DATA_REPLAY_COMPONENT_ID. */
+    public static final String DATA_REPLAY_COMPONENT_ID = "de.cau.cs.kieler.sim.kart.DataReplayComponent";
+    
+    /** The Constant for the name of the KIEM property model file selection. */
+    public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
+    
     /** The number of the current step */
     private static volatile long step;
 
     /** Name of the ESO file to be replayed/recorded from/to. */
-    private String filename;
+    private IPath esoFilePath;
 
     /** Name of the variable that will be used to communicate with the validation component */
     private String configVarName;
@@ -85,6 +91,18 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     /** Are we in training mode, i. e. recording, or not */
     private boolean trainingMode;
 
+    //-------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected String getKiemPropertyModelFileName() {
+        return KIEM_PROPERTY_MODEFILE;
+    }
+    
+    //-------------------------------------------------------------------------
+    
     /**
      * Initializes the component by reading the whole ESI/ESO file and saves it internally for
      * replay.
@@ -95,26 +113,24 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void initialize() throws KiemInitializationException {
         KiemProperty[] properties = this.getProperties();
         trace = null;
-        filename = "";
+        esoFilePath = this.getEsoFilePath();
         int tracenum = 0;
         step = 0;
         configVarName = "";
         outputVarName = "";
         prevInputVarName = "";
-
+        
         // load properties
         for (KiemProperty prop : properties) {
-            if (prop.getKey().equals(Constants.ESOFILE)) {
-                filename = prop.getValue();
-            } else if (prop.getKey().equals(Constants.TRACENUM)) {
+            if (prop.getKey().equals(KartConstants.TRACENUM)) {
                 tracenum = prop.getValueAsInt();
-            } else if (prop.getKey().equals(Constants.TRAINMODE)) {
+            } else if (prop.getKey().equals(KartConstants.TRAINMODE)) {
                 trainingMode = prop.getValueAsBoolean();
-            } else if (prop.getKey().equals(Constants.CONFIGVAR)) {
+            } else if (prop.getKey().equals(KartConstants.CONFIGVAR)) {
                 configVarName = prop.getValue();
-            } else if (prop.getKey().equals(Constants.OUTPUTVAR)) {
+            } else if (prop.getKey().equals(KartConstants.OUTPUTVAR)) {
                 outputVarName = prop.getValue();
-            } else if (prop.getKey().equals(Constants.PREVINVAR)) {
+            } else if (prop.getKey().equals(KartConstants.PREVINVAR)) {
                 prevInputVarName = prop.getValue();
             }
         }
@@ -123,12 +139,11 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             // Read the file
             ITraceProvider tracefile = new EsoFile();
             try {
-                List<ITrace> tracelist = tracefile.loadTrace(filename);
-
+                List<ITrace> tracelist = tracefile.loadTrace(esoFilePath.toString());
                 try {
                     trace = tracelist.get(tracenum);
                 } catch (IndexOutOfBoundsException e) {
-                    throw new KiemInitializationException(Constants.ERR_NOTRACE + tracenum, true, e);
+                    throw new KiemInitializationException(KartConstants.ERR_NOTRACE + tracenum, true, e);
                 }
             } catch (FileNotFoundException e) {
                 IConfigurationElement[] contributors = Platform.getExtensionRegistry()
@@ -139,12 +154,12 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                         TimeoutThread.setAwaitUserRepsonse(true);
                         IMessageDialog msg = (IMessageDialog) (contributors[0]
                                 .createExecutableExtension("class"));
-                        if (msg.question(Constants.ERR_NOTFOUND_TITLE, Constants.ERR_NOTFOUND)) {
+                        if (msg.question(KartConstants.ERR_NOTFOUND_TITLE, KartConstants.ERR_NOTFOUND)) {
                             trainingMode = true;
                         } else {
                             KiemPlugin.getDefault().cancelInitialization();
-                            KiemPlugin.getDefault().showError(Constants.ERR_NOTFOUND,
-                                    Constants.PLUGINID, null, Constants.ERR_SILENT);
+                            KiemPlugin.getDefault().showError(KartConstants.ERR_NOTFOUND,
+                                    KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
                         }
                     } catch (CoreException e0) {
                         // TODO Auto-generated catch block
@@ -153,13 +168,31 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
                         TimeoutThread.setAwaitUserRepsonse(false);
                     }
                 } else {
-                    throw new KiemInitializationException(Constants.ERR_NOTFOUND, true, e);
+                    throw new KiemInitializationException(KartConstants.ERR_NOTFOUND, true, e);
                 }
             } catch (KiemInitializationException e) {
-                throw new KiemInitializationException(Constants.ERR_READ, true, e);
+                throw new KiemInitializationException(KartConstants.ERR_READ, true, e);
             }
         }
     }
+    
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Gets the eso file path.
+     *
+     * @return the eso file path
+     */
+    private IPath getEsoFilePath() {
+        IPath modelFilePath = this.getModelFilePath();
+        IPath esoFilePath = null;
+        if (modelFilePath != null) {
+            esoFilePath = modelFilePath.removeFileExtension().addFileExtension(KartConstants.ESO_FILEEXTENSION);
+        }
+        return esoFilePath;
+    }
+
+    //-------------------------------------------------------------------------
 
     /**
      * Wrapup the data component and revert the internal state, here this means do nothing.
@@ -170,6 +203,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public void wrapup() throws KiemInitializationException {
 
     }
+
+    //-------------------------------------------------------------------------
 
     /**
      * Sets the step number according to the button the user pressed. This is needed to correctly
@@ -182,6 +217,8 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             step = ((Pair<Long, Long>) event.getInfo()).getFirst().longValue();
         }
     }
+
+    //-------------------------------------------------------------------------
 
     /**
      * Return the types of events this component listens to
@@ -277,7 +314,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
             }
             retval.accumulate(prevInputVarName, prevSignals);
         } catch (JSONException e) {
-            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+            throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);
         }
     }
 
@@ -304,17 +341,19 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         }
 
         String[] fieldNames = JSONObject.getNames(json);
-        for (String field : fieldNames) {
-            try {
-                Object obj = json.get(field);
+        if (fieldNames != null) {
+            for (String field : fieldNames) {
+                try {
+                    Object obj = json.get(field);
 
-                if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)
-                        && !retval.has(field)) {
-                    prevSignals.accumulate(field, obj);
+                    if (obj instanceof JSONObject && JSONSignalValues.isSignalValue(obj)
+                            && !retval.has(field)) {
+                        prevSignals.accumulate(field, obj);
+                    }
+                } catch (JSONException e) {
+                    System.out.println(e.getMessage());
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                System.out.println(e.getMessage());
-                e.printStackTrace();
             }
         }
         try {
@@ -362,7 +401,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
 
             json.accumulate(outputVarName, value);
         } catch (JSONException e) {
-            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+            throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);
         }
     }
 
@@ -380,17 +419,22 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
         JSONObject value = new JSONObject();
 
         try {
-            value.accumulate(Constants.VAR_TRAINMODE, trainingMode);
-            value.accumulate(Constants.VAR_ESOFILE, filename);
+            value.accumulate(KartConstants.VAR_TRAINMODE, trainingMode);
+            value.accumulate(KartConstants.VAR_ESOFILE, esoFilePath.toString());
             if (!trainingMode && trace.getSize() <= (step - 1)) {
-                value.accumulate(Constants.VAR_EOT, true);
+                value.accumulate(KartConstants.VAR_EOT, true);
+            	if (this.getProperties()[6].getValueAsBoolean()) {
+            		// stop execution if this property is set to true and the EOT is reached
+                    throw new KiemExecutionException("End of ESO file reached", true, true, true, null);
+//            		KiemPlugin.getDefault().getExecution().stopExecutionSync();
+            	}
             } else {
-                value.accumulate(Constants.VAR_EOT, false);
+                value.accumulate(KartConstants.VAR_EOT, false);
             }
 
             json.accumulate(configVarName, value);
         } catch (JSONException e) {
-            throw new KiemExecutionException(Constants.ERR_JSON, true, e);
+            throw new KiemExecutionException(KartConstants.ERR_JSON, true, e);
         }
     }
 
@@ -401,37 +445,13 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemPropertyTypeFile fileProperty = new KiemPropertyTypeFile(true);
-        fileProperty.setFilterExts(Constants.FILEEXTS);
-        fileProperty.setFilterNames(Constants.FILEEXTNAMES);
-        
-        IConfigurationElement[] contributors = Platform.getExtensionRegistry()
-                .getConfigurationElementsFor(
-                        "de.cau.cs.kieler.sim.kart.NamingSuggestion");
-
-        String filename = "";
-        if(contributors.length > 0) {
-            INamingSuggestion nsg;
-            try {
-                nsg = (INamingSuggestion) (contributors[0]
-                        .createExecutableExtension("class"));
-                filename = nsg.suggestName();
-            } catch (CoreException e) {
-                // do nothing, auto suggestion will simply not work
-            }
-        }
-        
         KiemProperty[] properties = new KiemProperty[6];
-        properties[0] = new KiemProperty(Constants.ESOFILE, fileProperty);
-        fileProperty.setValue(properties[0], filename);
-        properties[0].setRestoreToDefaultOnLoad(true);
-        
-        properties[1] = new KiemProperty(Constants.TRACENUM, new KiemPropertyTypeInt(), 0);
-        properties[2] = new KiemProperty(Constants.TRAINMODE, false);
-        properties[3] = new KiemProperty(Constants.CONFIGVAR, Constants.DEF_CONFIGVAR);
-        properties[4] = new KiemProperty(Constants.OUTPUTVAR, Constants.DEF_OUTPUTVAR);
-        properties[5] = new KiemProperty(Constants.PREVINVAR, Constants.DEF_PREVINVAR);
-
+        properties[0] = new KiemProperty(KartConstants.TRACENUM, new KiemPropertyTypeInt(), 0);
+        properties[1] = new KiemProperty(KartConstants.TRAINMODE, false);
+        properties[2] = new KiemProperty(KartConstants.CONFIGVAR, KartConstants.DEF_CONFIGVAR);
+        properties[3] = new KiemProperty(KartConstants.OUTPUTVAR, KartConstants.DEF_OUTPUTVAR);
+        properties[4] = new KiemProperty(KartConstants.PREVINVAR, KartConstants.DEF_PREVINVAR);
+        properties[5] = new KiemProperty(KartConstants.STOPEXECUTION, true);
         return properties;
     }
 
@@ -444,16 +464,16 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
      */
     @Override
     public void checkProperties(KiemProperty[] properties) throws KiemPropertyException {
-        for (KiemProperty prop : properties) {
-            if (prop.getKey().equals(Constants.ESOFILE)) {
-                if (prop.getValue().isEmpty()) {
-                    throw new KiemPropertyException(Constants.ERR_NEEDESO);
-                }
-                if (!(prop.getValue().toLowerCase().endsWith(".esi") || prop.getValue()
-                        .toLowerCase().endsWith(".eso"))) {
-                    throw new KiemPropertyException(Constants.ERR_NOTESO);
-                }
+        // check whether ESO file exists!
+        IPath esoFilePath = this.getEsoFilePath();
+        try {
+            InputStream esoFile = KiemUtil.openWorkspaceFile(esoFilePath);
+            if (esoFile == null) {
+                throw new KiemPropertyException(KartConstants.ERR_NOTEXISTESO);
             }
+        } catch (CoreException e) {
+            throw new KiemPropertyException(KartConstants.ERR_NOTEXISTESO);
         }
+        
     }
 }

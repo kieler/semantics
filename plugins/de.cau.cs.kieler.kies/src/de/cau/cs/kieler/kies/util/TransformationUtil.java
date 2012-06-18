@@ -62,6 +62,7 @@ import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.ui.statushandlers.StatusManager;
 import org.eclipse.xtend.expression.Variable;
 //import org.eclipse.xtext.parsetree.reconstr.Serializer;
+import org.eclipse.xtext.serializer.ISerializer;
 import org.eclipse.xtext.serializer.impl.Serializer;
 import org.eclipse.xtext.resource.SaveOptions;
 import org.eclipse.xtext.resource.XtextResourceSet;
@@ -149,7 +150,8 @@ public final class TransformationUtil {
 	public static String getSerializedString(final EObject e) {
 		if (!isEsterelElement(e)) {
 			IStatus status = new Status(Status.WARNING, Activator.PLUGIN_ID,
-					"In this context only serialization of Esterel objects is possible.");
+					"In this context only serialization of Esterel"
+					+ " objects is possible.");
 			StatusManager.getManager().handle(status);
 			return "";
 		}
@@ -158,7 +160,7 @@ public final class TransformationUtil {
 		OutputStreamWriter osw = new OutputStreamWriter(baos);
 		try {
 			// serialize the element
-			Serializer serializerUtil = injector.getInstance(Serializer.class);
+			ISerializer serializerUtil = injector.getInstance(ISerializer.class);
 			SaveOptions saveOptions = SaveOptions.newBuilder().noValidation()
 					.getOptions();
 			serializerUtil.serialize(e, osw, saveOptions);

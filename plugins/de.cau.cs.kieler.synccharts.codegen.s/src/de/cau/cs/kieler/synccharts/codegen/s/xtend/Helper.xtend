@@ -16,6 +16,7 @@ package de.cau.cs.kieler.synccharts.codegen.s.xtend
 import de.cau.cs.kieler.core.kexpressions.ComplexExpression
 import de.cau.cs.kieler.core.kexpressions.Expression
 import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.OperatorExpression
 import de.cau.cs.kieler.core.kexpressions.Signal
 import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference
 import de.cau.cs.kieler.s.s.Instruction
@@ -32,6 +33,9 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Node
 import java.util.ArrayList
 import java.util.List
 import org.eclipse.xtend.util.stdlib.TraceComponent
+import de.cau.cs.kieler.core.kexpressions.IntValue
+import de.cau.cs.kieler.core.kexpressions.FloatValue
+import de.cau.cs.kieler.core.kexpressions.BooleanValue
 
 
 /**
@@ -102,14 +106,12 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	// ======================================================================================================
 
 	// Apply conversion on children/subexpression.
-	def dispatch Expression convertToSExpression(Expression expression) {
+	def dispatch Expression convertToSExpression(ComplexExpression expression) {
 		var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
-		if (expression instanceof ComplexExpression) {
-			newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
-			for (subExpression : (expression as ComplexExpression).subExpressions) {
-				(newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
-			} 
-		}
+		newExpression = KExpressionsFactory::eINSTANCE.createComplexExpression;
+		for (subExpression : (expression as ComplexExpression).subExpressions) {
+			(newExpression as ComplexExpression).subExpressions.add(subExpression.convertToSExpression());
+		} 
 		newExpression;
 	}
 
@@ -136,6 +138,43 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	}
 
 
+	// Apply conversion to operator expressions like and, equals, not, greater, val, pre, add, etc.
+	def dispatch Expression convertToSExpression(OperatorExpression expression) {
+		val newExpression = KExpressionsFactory::eINSTANCE.createOperatorExpression;
+		newExpression.setOperator(expression.operator);
+		for (subExpression : expression.subExpressions) {
+			newExpression.subExpressions.add(subExpression.convertToSExpression)
+		}
+		return newExpression;
+	}
+
+	// Apply conversion to integer values
+	def dispatch Expression convertToSExpression(IntValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createIntValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}
+
+	// Apply conversion to float values
+	def dispatch Expression convertToSExpression(FloatValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createFloatValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}
+
+	// Apply conversion to boolean values
+	def dispatch Expression convertToSExpression(BooleanValue expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createBooleanValue();
+		newExpression.setValue(expression.value);
+		newExpression;
+	}	
+	
+	// Apply conversion to the default case
+	def dispatch Expression convertToSExpression(Expression expression) {
+		var newExpression = KExpressionsFactory::eINSTANCE.createExpression;
+		newExpression;
+	}
+
 	// ======================================================================================================
 	// ==                               C O N V E R T    E F F E C T S                                     ==
 	// ======================================================================================================
@@ -144,6 +183,10 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	def dispatch void convertToSEffect(Emission effect, List<de.cau.cs.kieler.s.s.Instruction> instructions) {
 		val sEmit = SFactory::eINSTANCE.createEmit;
 		val sSignal = TraceComponent::getSingleTraceTarget(effect.signal, "Signal") as de.cau.cs.kieler.core.kexpressions.Signal
+		if (effect.newValue != null) {
+			val sSignalValue = effect.newValue.convertToSExpression;
+			sEmit.setValue(sSignalValue);
+		}
 		sEmit.setSignal(sSignal);
 		instructions.add(sEmit);
 	}
@@ -208,7 +251,7 @@ import org.eclipse.xtend.util.stdlib.TraceComponent
 	//	"_" + state.hashCode.toString;
 		if (state.isRootState())  {
 			if (state.regions.size > 1) {
-		   	"_" + state.id	
+		   		"L_" + state.id	
 			}
 			else {
 				"L"

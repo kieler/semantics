@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,14 +15,13 @@
 package de.cau.cs.kieler.sim.signals.ui;
 
 import org.eclipse.jface.resource.ImageDescriptor;
-import org.eclipse.swt.graphics.RGB;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.osgi.framework.BundleContext;
 
 /**
  * The class SignalsUIPlugin is the activator of this plug-in.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalsUIPlugin extends AbstractUIPlugin {
 
@@ -31,9 +30,9 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static SignalsUIPlugin plugin;
-    
+
     // -------------------------------------------------------------------------
-    
+
     /**
      * The constructor of the table plug-in.
      */
@@ -45,21 +44,21 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
     // -------------------------------------------------------------------------
-	
+
     /**
      * {@inheritDoc}
      */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
-	
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -70,7 +69,7 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     public static SignalsUIPlugin getDefault() {
         return plugin;
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -83,7 +82,7 @@ public class SignalsUIPlugin extends AbstractUIPlugin {
     public static ImageDescriptor getImageDescriptor(final String path) {
         return imageDescriptorFromPlugin(PLUGIN_ID, path);
     }
-    
+
     // -------------------------------------------------------------------------
-    
+
 }

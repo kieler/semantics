@@ -1,70 +1,105 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2011 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.esterel.cec.sim.xtend
 
-import de.cau.cs.kieler.synccharts.*
-import de.cau.cs.kieler.core.kexpressions.*
-import java.util.*
-import com.google.inject.Inject
+import de.cau.cs.kieler.esterel.cec.sim.EsterelCECSimPlugin
 
-
-import org.eclipse.emf.ecore.EObject
-
-import de.cau.cs.kieler.core.kexpressions.*
-import de.cau.cs.kieler.esterel.esterel.*
-import de.cau.cs.kieler.esterel.esterel.impl.*
-
-import org.eclipse.xtend2.lib.StringConcatenation
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.core.kexpressions.ValueType
+import de.cau.cs.kieler.esterel.esterel.Abort
+import de.cau.cs.kieler.esterel.esterel.Await
+import de.cau.cs.kieler.esterel.esterel.Do
+import de.cau.cs.kieler.esterel.esterel.Emit
+import de.cau.cs.kieler.esterel.esterel.EsterelFactory
+import de.cau.cs.kieler.esterel.esterel.EveryDo
+import de.cau.cs.kieler.esterel.esterel.Exit
+import de.cau.cs.kieler.esterel.esterel.Halt
+import de.cau.cs.kieler.esterel.esterel.IfTest
+import de.cau.cs.kieler.esterel.esterel.LocalSignalList
+import de.cau.cs.kieler.esterel.esterel.Loop
+import de.cau.cs.kieler.esterel.esterel.Module
+import de.cau.cs.kieler.esterel.esterel.ModuleBody
+import de.cau.cs.kieler.esterel.esterel.Nothing
+import de.cau.cs.kieler.esterel.esterel.Parallel
+import de.cau.cs.kieler.esterel.esterel.Pause
+import de.cau.cs.kieler.esterel.esterel.Present
+import de.cau.cs.kieler.esterel.esterel.Program
+import de.cau.cs.kieler.esterel.esterel.Repeat
+import de.cau.cs.kieler.esterel.esterel.Run
+import de.cau.cs.kieler.esterel.esterel.Sequence
+import de.cau.cs.kieler.esterel.esterel.Statement
+import de.cau.cs.kieler.esterel.esterel.StatementContainer
+import de.cau.cs.kieler.esterel.esterel.Suspend
+import de.cau.cs.kieler.esterel.esterel.Sustain
 import org.eclipse.xtend.util.stdlib.CloningExtensions
-import org.eclipse.xtend.util.stdlib.TraceComponent
 
 
-// Transformation of Esterel code into Esterel code that is
-// enriched with additional signals for each statement.
-
-// These signals, here HP, are generated in the following fashion for a 
-// statement P:
-// 
-//  signal AP in 
-//  	[P; emit AP; || emit HP; abort sustain HP when immediate AP] 
-//  end 
-//
-// As names for the signals are randomly generated and must be unique
-// there must be a mapping that keeps track which sigal (name) belongs to
-// which original Esterel statement.
-
+/**
+ * Transformation of Esterel code into Esterel code that is 
+ * enriched with additional signals for each statement.<BR>
+ * <BR>
+ * These signals, here HP, are generated in the following fashion for a<BR> 
+ * statement P:<BR>
+ * <BR>
+ * <PRE> 
+ *  signal AP in<BR> 
+ *  	[P; emit AP; || emit HP; abort sustain HP when immediate AP]<BR> 
+ *  end <BR>
+ * </PRE> 
+ * <BR>
+ * As names for the signals are randomly generated and must be unique<BR>
+ * there must be a mapping that keeps track which signal (name) belongs to<BR>
+ * which original Esterel statement.<BR>
+ * 
+ * @author cmot
+ * @kieler.rating 2012-05-31 yellow KI-7
+ */
 class Esterel2Simulation {
     
-    // Generale method to create the enriched Esterel simulation code
+	//-------------------------------------------------------------------------
+	
+    // General method to create the enriched Esterel simulation code
    	def Program transform2Simulation (Program program) {
-   		var AUXILIARY_VARIABLE_TAG = "oESTERELoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo"
+   		// Use the same auxiliary variable tag 
+   		val AUXILIARY_VARIABLE_TAG = EsterelCECSimPlugin::AUXILIARY_VARIABLE_TAG
    		
 		// Clone the complete Esterel program
 		// clone the program and then copy modules to preserve the run-links
-   		var target = CloningExtensions::clone(program) as Program;
-
+   		val target = CloningExtensions::clone(program) as Program;
 		
-		var originalStatements = program.eAllContents().toIterable().filter(typeof(Statement));
-		var targetStatements = target.eAllContents().toIterable().filter(typeof(Statement));
-		var targetStatementsCopy = targetStatements.toList;
+		val originalStatements = program.eAllContents().toIterable().filter(typeof(Statement));
 		
-		var targetMainmodule = target.eAllContents().toIterable().filter(typeof(Module)).toList.get(0);
-		var targetMainmoduleStatements = targetMainmodule.eAllContents().toIterable().filter(typeof(Statement));
-		var targetMainmoduleStatemensCopy = targetMainmoduleStatements.toList;
+		val targetMainmodule = target.eAllContents().toIterable().filter(typeof(Module)).toList.get(0);
+		val targetMainmoduleStatements = targetMainmodule.eAllContents().toIterable().filter(typeof(Statement));
+		val targetMainmoduleStatementsCopy = targetMainmoduleStatements.toList;
 		
 		// Ensure an interface declaration
 		if (targetMainmodule.interface == null) {
-			var moduleInterface = EsterelFactory::eINSTANCE.createModuleInterface(); 
+			val moduleInterface = EsterelFactory::eINSTANCE.createModuleInterface(); 
 			targetMainmodule.setInterface(moduleInterface);
 		} 
 		
 		// For every statement in the Esterel program do the transformation
 		// Iterate over a copy of the list	
 		var i = 0;	
-		var originalStatementsList = originalStatements.toList;
-//		for(targetStatement : targetStatemensCopy) {
-		for(targetStatement : targetMainmoduleStatemensCopy) {
+		val originalStatementsList = originalStatements.toList;
+		
+		for(targetStatement : targetMainmoduleStatementsCopy) {
 			var originalStatement = originalStatementsList.get(i);
 			i = i + 1;
-			var statementUID = AUXILIARY_VARIABLE_TAG + originalStatement.eResource.getURIFragment(originalStatement).hashCode.toString().replace("-","M");
+			val originalStatementURIFragment = originalStatement.eResource.getURIFragment(originalStatement);
+			val statementUID = AUXILIARY_VARIABLE_TAG + originalStatementURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetStatement.transformStatement(targetMainmodule, statementUID);
 		}
@@ -73,56 +108,13 @@ class Esterel2Simulation {
 	}	
 	
 	
-	def create pause : EsterelFactory::eINSTANCE.createPause createPause(Object object) {
-	}
-	def create parallel : EsterelFactory::eINSTANCE.createParallel createParallel(Object object) {
-	}
-	def create sequence : EsterelFactory::eINSTANCE.createSequence createSequence(Object object) {
-	}
-	def create sequence : EsterelFactory::eINSTANCE.createModuleInterface createModuleInterface(Object object) {
-	}
-	
-	
-//	def create reslut: new PauseImpl() createPause() {
-//	 resu
-//	}
-
-	// Statement transformation in the fashion like described at the top
-	def void transformStatementSimple(Statement statement, Module mainmodule, String UID) {
-		//SIMPLE TEST
-		if ((
-		   (statement instanceof Abort)
-		   ||(statement instanceof Await)
-		   ||(statement instanceof Do)
-		   ||(statement instanceof Emit)
-		   ||(statement instanceof EveryDo)
-		   ||(statement instanceof Exit)
-		   ||(statement instanceof Halt)
-		   ||(statement instanceof IfTest)
-		   ||(statement instanceof Loop)
-		   ||(statement instanceof Nothing)
-		   ||(statement instanceof Pause)
-		   ||(statement instanceof Present)
-		   ||(statement instanceof Repeat)
-		   ||(statement instanceof Run)
-		   ||(statement instanceof Suspend)
-		   ||(statement instanceof Sustain)
-		)) {
-			var container = statement.eContainer;
-			var blockStatement = EsterelFactory::eINSTANCE.createBlock()
-			blockStatement.addStatement(statement);
-			container.addStatement(blockStatement);
-		}
-		
-	}
-
+	//-------------------------------------------------------------------------
 	
 	// Statement transformation in the fashion like described at the top
 	def void transformStatement(Statement statement, Module mainmodule, String UID) {
 		var container = statement.eContainer;
 
 		var parallelStatement = EsterelFactory::eINSTANCE.createParallel()
-		var pauseStatement = EsterelFactory::eINSTANCE.createPause()
 		var sequenceStatement1 = EsterelFactory::eINSTANCE.createSequence()
 		var sequenceStatement2 = EsterelFactory::eINSTANCE.createSequence()
 		var blockStatement = EsterelFactory::eINSTANCE.createBlock()
@@ -149,14 +141,10 @@ class Esterel2Simulation {
 		var abortDelayEvent = EsterelFactory::eINSTANCE.createDelayEvent();
 		var abortValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference();
 		
-		//No Parallel
-		//No Sequence
+		//Statements for which the transformation should take part
 		if ((
-//			 (statement instanceof LocalSignalDecl)
-//		   ||(statement instanceof Assignment)
 		   (statement instanceof Abort)
 		   ||(statement instanceof Await)
-//		   ||(statement instanceof ProcCall)
 		   ||(statement instanceof Do)
 		   ||(statement instanceof Emit)
 		   ||(statement instanceof EveryDo)
@@ -164,7 +152,6 @@ class Esterel2Simulation {
 		   ||(statement instanceof Halt)
 		   ||(statement instanceof IfTest)
 		   ||(statement instanceof Loop)
-//		   ||(statement instanceof LoopDelay)
 		   ||(statement instanceof Nothing)
 		   ||(statement instanceof Pause)
 		   ||(statement instanceof Present)
@@ -172,6 +159,11 @@ class Esterel2Simulation {
 		   ||(statement instanceof Run)
 		   ||(statement instanceof Suspend)
 		   ||(statement instanceof Sustain)
+// Other statements that currently are not visualized in an Esterel debug session		   
+//		   ||(statement instanceof ProcCall)
+//		   ||(statement instanceof LoopDelay)
+//		   ||(statement instanceof LocalSignalDecl)
+//		   ||(statement instanceof Assignment)
 //		   ||(statement instanceof Trap)
 //		   ||(statement instanceof LocalVariable)
 //		   ||(statement instanceof Exec)
@@ -228,17 +220,16 @@ class Esterel2Simulation {
 				blockStatement2.addStatement(abortSignalDecl)
 				// Add it to initial container
 				container.addStatement(blockStatement2);
-
-// SIMPLE TEST
-//				blockStatement.addStatement(statement)
-//				container.addStatement(blockStatement);
 		}
 		
 	}
+
 	
-	// Replace an removeStatement with an addStatement
+	//-------------------------------------------------------------------------
+
 	// Multiple statements
 	def dispatch void addStatement(ModuleBody parent, Statement addStatement) {
+		// Replace current statements with addStatement
 		parent.statements.clear();
 		parent.statements.add(addStatement);
 	}
@@ -249,16 +240,15 @@ class Esterel2Simulation {
 		parent.list.add(addStatement);
 	}
 	
+	//-------------------------------------------------------------------------
 	
 	// Single statement
 	def dispatch void addStatement(StatementContainer parent, Statement addStatement) {
 		parent.setStatement(addStatement);
 	}
-//	// Default case
-//	def dispatch void addStatement(Statement parent, Statement addStatement) {
-//		// Do nothing in the default case
-//	}
 
+
+	//-------------------------------------------------------------------------
 }
 
 

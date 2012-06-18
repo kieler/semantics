@@ -469,8 +469,8 @@ public class InternalEsoLexer extends Lexer {
         try {
             int _type = RULE_ALPHANUMSPECIAL;
             int _channel = DEFAULT_TOKEN_CHANNEL;
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:22: ( ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )* )
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:24: ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:22: ( ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )* )
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:24: ( '0' .. '9' )* ( 'a' .. 'z' | 'A' .. 'Z' | RULE_SPECIAL ) ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
             {
             // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:24: ( '0' .. '9' )*
             loop6:
@@ -506,13 +506,13 @@ public class InternalEsoLexer extends Lexer {
                 recover(mse);
                 throw mse;}
 
-            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:69: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | ' ' | RULE_SPECIAL )*
+            // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:714:69: ( 'a' .. 'z' | 'A' .. 'Z' | '0' .. '9' | RULE_SPECIAL )*
             loop7:
             do {
                 int alt7=2;
                 int LA7_0 = input.LA(1);
 
-                if ( (LA7_0==' '||(LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<='9')||LA7_0=='='||(LA7_0>='@' && LA7_0<='Z')||(LA7_0>='a' && LA7_0<='z')) ) {
+                if ( ((LA7_0>='#' && LA7_0<='$')||LA7_0=='&'||(LA7_0>='*' && LA7_0<='9')||LA7_0=='='||(LA7_0>='@' && LA7_0<='Z')||(LA7_0>='a' && LA7_0<='z')) ) {
                     alt7=1;
                 }
 
@@ -521,7 +521,7 @@ public class InternalEsoLexer extends Lexer {
             	case 1 :
             	    // ../de.cau.cs.kieler.sim.eso/src-gen/de/cau/cs/kieler/sim/eso/parser/antlr/internal/InternalEso.g:
             	    {
-            	    if ( input.LA(1)==' '||(input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
+            	    if ( (input.LA(1)>='#' && input.LA(1)<='$')||input.LA(1)=='&'||(input.LA(1)>='*' && input.LA(1)<='9')||input.LA(1)=='='||(input.LA(1)>='@' && input.LA(1)<='Z')||(input.LA(1)>='a' && input.LA(1)<='z') ) {
             	        input.consume();
 
             	    }
@@ -897,10 +897,10 @@ public class InternalEsoLexer extends Lexer {
     static final String DFA12_eofS =
         "\55\uffff";
     static final String DFA12_minS =
-        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\40\1\162\1\141"+
-        "\1\40\1\43\3\uffff\1\163\2\uffff\1\164\1\56\1\uffff\1\165\1\154"+
-        "\1\uffff\1\60\1\145\1\160\1\60\1\145\1\163\1\40\1\164\1\165\1\40"+
-        "\1\145\1\uffff\1\40\1\164\1\uffff\1\40\1\uffff\1\40\1\uffff";
+        "\1\11\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\43\1\162\1\141"+
+        "\2\43\3\uffff\1\163\2\uffff\1\164\1\56\1\uffff\1\165\1\154\1\uffff"+
+        "\1\60\1\145\1\160\1\60\1\145\1\163\1\43\1\164\1\165\1\43\1\145\1"+
+        "\uffff\1\43\1\164\1\uffff\1\43\1\uffff\1\43\1\uffff";
     static final String DFA12_maxS =
         "\1\172\1\uffff\1\145\1\uffff\1\45\1\165\3\uffff\1\172\1\162\1\141"+
         "\2\172\3\uffff\1\163\2\uffff\1\164\1\71\1\uffff\1\165\1\154\1\uffff"+
@@ -925,12 +925,12 @@ public class InternalEsoLexer extends Lexer {
             "",
             "",
             "",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\6\16\12\25\3\uffff"+
-            "\1\16\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\6\16\12\25\3\uffff\1\16\2\uffff"+
+            "\33\16\6\uffff\32\16",
             "\1\27",
             "\1\30",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16"+
-            "\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
+            "\6\uffff\32\16",
             "\2\16\1\uffff\1\16\3\uffff\4\16\1\32\1\16\12\15\3\uffff\1"+
             "\16\2\uffff\33\16\6\uffff\32\16",
             "",
@@ -951,23 +951,23 @@ public class InternalEsoLexer extends Lexer {
             "\12\40",
             "\1\43",
             "\1\44",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\6\16\12\40\3\uffff"+
-            "\1\16\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\6\16\12\40\3\uffff\1\16\2\uffff"+
+            "\33\16\6\uffff\32\16",
             "\1\46",
             "\1\47",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16"+
-            "\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
+            "\6\uffff\32\16",
             "\1\51",
             "",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16"+
-            "\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
+            "\6\uffff\32\16",
             "\1\53",
             "",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16"+
-            "\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
+            "\6\uffff\32\16",
             "",
-            "\1\16\2\uffff\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16"+
-            "\2\uffff\33\16\6\uffff\32\16",
+            "\2\16\1\uffff\1\16\3\uffff\20\16\3\uffff\1\16\2\uffff\33\16"+
+            "\6\uffff\32\16",
             ""
     };
 

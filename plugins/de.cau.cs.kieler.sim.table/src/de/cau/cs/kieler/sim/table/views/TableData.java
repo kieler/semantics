@@ -107,9 +107,8 @@ public class TableData {
      * @param valueParam
      *            the value of the entry
      */
-    public TableData(final TableDataList parentTableDataList, 
-                     final String keyParam, 
-                     final String valueParam) {
+    public TableData(final TableDataList parentTableDataList, final String keyParam,
+            final String valueParam) {
         this.tableDataList = parentTableDataList;
         this.present = false;
         this.signal = false;
@@ -132,10 +131,8 @@ public class TableData {
      * @param valueParam
      *            the value of the entry
      */
-    public TableData(final TableDataList parentTableDataList, 
-                     final boolean presentParam, 
-                     final String keyParam, 
-                     final String valueParam) {
+    public TableData(final TableDataList parentTableDataList, final boolean presentParam,
+            final String keyParam, final String valueParam) {
         this.tableDataList = parentTableDataList;
         this.present = presentParam;
         this.key = keyParam;
@@ -159,11 +156,8 @@ public class TableData {
      * @param valueParam
      *            the value of the entry
      */
-    public TableData(final TableDataList parentTableDataList, 
-                     final boolean presentParam, 
-                     final boolean signalParam,
-                     final String keyParam, 
-                     final String valueParam) {
+    public TableData(final TableDataList parentTableDataList, final boolean presentParam,
+            final boolean signalParam, final String keyParam, final String valueParam) {
         this.tableDataList = parentTableDataList;
         this.present = presentParam;
         this.signal = signalParam;

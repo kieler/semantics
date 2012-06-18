@@ -21,54 +21,54 @@ import org.osgi.framework.BundleContext;
  */
 public class SSimKiviPlugin extends AbstractUIPlugin {
 
-	/** The Constant S_LANGUAGE points to the S Xtext Editor. */
-	public static final String S_LANGUAGE = "de.cau.cs.kieler.s.S";
+    /** The Constant S_LANGUAGE points to the S Xtext Editor. */
+    public static final String S_LANGUAGE = "de.cau.cs.kieler.s.S";
 
-	/** The Constant PLUGIN_ID. */
-	public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.kivi"; //$NON-NLS-1$
+    /** The Constant PLUGIN_ID. */
+    public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.kivi"; //$NON-NLS-1$
 
-	/** The shared instance. */
-	private static SSimKiviPlugin plugin;
-	
-	// -----------------------------------------------------------------------------
+    /** The shared instance. */
+    private static SSimKiviPlugin plugin;
 
-	/**
-	 * The constructor.
-	 */
-	public SSimKiviPlugin() {
-	}
+    // -----------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------
+    /**
+     * The constructor.
+     */
+    public SSimKiviPlugin() {
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void start(BundleContext context) throws Exception {
-		super.start(context);
-		plugin = this;
-	}
+    // -----------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public void start(BundleContext context) throws Exception {
+        super.start(context);
+        plugin = this;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void stop(BundleContext context) throws Exception {
-		plugin = null;
-		super.stop(context);
-	}
+    // -----------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------
+    /**
+     * {@inheritDoc}
+     */
+    public void stop(BundleContext context) throws Exception {
+        plugin = null;
+        super.stop(context);
+    }
 
-	/**
-	 * Returns the shared instance
-	 *
-	 * @return the shared instance
-	 */
-	public static SSimKiviPlugin getDefault() {
-		return plugin;
-	}
+    // -----------------------------------------------------------------------------
 
-	// -----------------------------------------------------------------------------
+    /**
+     * Returns the shared instance
+     * 
+     * @return the shared instance
+     */
+    public static SSimKiviPlugin getDefault() {
+        return plugin;
+    }
+
+    // -----------------------------------------------------------------------------
 
 }

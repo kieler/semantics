@@ -264,7 +264,7 @@ public class EsterelFormatter extends AbstractDeclarativeFormatter {
         // // ...
     }
 
-    private String getMaxIndentation(final String keyword) {
+    protected String getMaxIndentation(final String keyword) {
         // Max Indentation may be changed here
         int maxIndent = keyword.length() + 1;
         String indent = "";

@@ -16,7 +16,7 @@
          <editor
                id="de.cau.cs.kieler.s.S"
                name="KIELER S Editor"
-               priority="2">
+               priority="7">
          </editor>
       </executionFile>
    </extension>

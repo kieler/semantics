@@ -85,6 +85,7 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getHaltAccess().getGroup(), "rule__Halt__Group__0");
 					put(grammarAccess.getEmitAccess().getGroup(), "rule__Emit__Group__0");
 					put(grammarAccess.getEmitAccess().getGroup_3(), "rule__Emit__Group_3__0");
+					put(grammarAccess.getEmitAccess().getGroup_4(), "rule__Emit__Group_4__0");
 					put(grammarAccess.getAbortAccess().getGroup(), "rule__Abort__Group__0");
 					put(grammarAccess.getIfAccess().getGroup(), "rule__If__Group__0");
 					put(grammarAccess.getIfAccess().getGroup_3(), "rule__If__Group_3__0");
@@ -179,7 +180,8 @@ public class SParser extends AbstractContentAssistParser {
 					put(grammarAccess.getTermAccess().getContinuationAssignment_3(), "rule__Term__ContinuationAssignment_3");
 					put(grammarAccess.getHaltAccess().getContinuationAssignment_3(), "rule__Halt__ContinuationAssignment_3");
 					put(grammarAccess.getEmitAccess().getSignalAssignment_2(), "rule__Emit__SignalAssignment_2");
-					put(grammarAccess.getEmitAccess().getContinuationAssignment_3_1(), "rule__Emit__ContinuationAssignment_3_1");
+					put(grammarAccess.getEmitAccess().getValueAssignment_3_1(), "rule__Emit__ValueAssignment_3_1");
+					put(grammarAccess.getEmitAccess().getContinuationAssignment_4_1(), "rule__Emit__ContinuationAssignment_4_1");
 					put(grammarAccess.getAbortAccess().getContinuationAssignment_3(), "rule__Abort__ContinuationAssignment_3");
 					put(grammarAccess.getIfAccess().getExpressionAssignment_2(), "rule__If__ExpressionAssignment_2");
 					put(grammarAccess.getIfAccess().getContinuationAssignment_3_1(), "rule__If__ContinuationAssignment_3_1");

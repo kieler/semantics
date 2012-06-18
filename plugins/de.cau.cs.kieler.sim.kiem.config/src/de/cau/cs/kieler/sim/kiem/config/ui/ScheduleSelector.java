@@ -40,6 +40,7 @@ import de.cau.cs.kieler.sim.kiem.config.managers.EditorManager;
 import de.cau.cs.kieler.sim.kiem.config.managers.IKiemConfigEventListener;
 import de.cau.cs.kieler.sim.kiem.config.managers.ScheduleManager;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * The selection combobox for loading saved schedules.
@@ -47,8 +48,8 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * @author soh
  * @kieler.rating 2010-01-27 proposed yellow
  */
-public class ScheduleSelector extends ControlContribution implements
-        SelectionListener, FocusListener, IKiemConfigEventListener {
+public class ScheduleSelector extends ControlContribution implements SelectionListener,
+        FocusListener, IKiemConfigEventListener {
 
     /** string display for the matching schedules entry. */
     private static final String MATCHING_HEADER = "Matching schedules";
@@ -73,24 +74,23 @@ public class ScheduleSelector extends ControlContribution implements
     /** The parent component of this element. */
     private Composite parentComponent = null;
 
-    /** The running instance of a plugin. */
-    private KiemConfigurationPlugin plugin = KiemConfigurationPlugin
-            .getDefault();
+    // /** The running instance of a plugin. */
+    // private KiemConfigurationPlugin plugin = KiemConfigurationPlugin
+    // .getDefault();
 
     /** True if the combo is in the process of refreshing. */
     private boolean refreshing = false;
-    
+
     /** The enabled flag. */
     private boolean enabled;
-    
+
     // --------------------------------------------------------------------------
 
     /**
      * Creates a new configuration selection box.
      * 
      * @param type
-     *            the type of the selector. either
-     *            ContributionManager.RECENT_COMBO or
+     *            the type of the selector. either ContributionManager.RECENT_COMBO or
      *            ContributionManager.MATCHING_COMBO.
      */
     public ScheduleSelector(final int type) {
@@ -141,33 +141,41 @@ public class ScheduleSelector extends ControlContribution implements
 
     // --------------------------------------------------------------------------
 
-    public void setEnabled(boolean enabled) {
-    	this.enabled = enabled;
-    	if (enabled) {
+    /**
+     * Sets the enabled.
+     *
+     * @param enabled the new enabled
+     */
+    public void setEnabled(final boolean enabled) {
+        this.enabled = enabled;
+        if (enabled) {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
-                	combo.setEnabled(true);
+                    combo.setEnabled(true);
                 }
             });
-    	} else {
+        } else {
             Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
-                	combo.setEnabled(false);
+                    combo.setEnabled(false);
                 }
             });
-    	}
+        }
     }
 
     // --------------------------------------------------------------------------
-    
+
+    /**
+     * {@inheritDoc}
+     */
     public boolean isEnabled() {
-    	return this.enabled;
+        return this.enabled;
     }
 
     // --------------------------------------------------------------------------
     /**
-     * Sets up the combobox according to the currently selected editor and the
-     * list of matching schedules.
+     * Sets up the combobox according to the currently selected editor and the list of matching
+     * schedules.
      * 
      * @param useShortNames
      *            true if the name should be shortened
@@ -175,9 +183,9 @@ public class ScheduleSelector extends ControlContribution implements
     private void setupCombo(final boolean useShortNames) {
         if (combo != null && !refreshing && !combo.isDisposed()) {
             refreshing = true;
-// do not do disabling/enabling because we leave the focus and we want to use this
-// just when getting the focus (@author cmot)
-//            combo.setEnabled(false);
+            // do not do disabling/enabling because we leave the focus and we want to use this
+            // just when getting the focus (@author cmot)
+            // combo.setEnabled(false);
             if (listType == ContributionManager.MATCHING_COMBO
                     && EditorManager.getInstance().getEditors().isEmpty()) {
                 String[] names = { "No editor available" };
@@ -197,7 +205,7 @@ public class ScheduleSelector extends ControlContribution implements
 
             // get the currently opened editor
             // this may throw a NullPointerException if no editor is open
-            IEditorSite editor = plugin.getActiveEditor();
+            IEditorSite editor = KiemUtil.getActiveEditor();
 
             if (editor != null) {
                 // get the attributes from the editor
@@ -246,9 +254,9 @@ public class ScheduleSelector extends ControlContribution implements
             }
             combo.setItems(names);
             combo.select(0);
-// do not do disabling/enabling because we leave the focus and we want to use this
-// just when getting the focus (@author cmot)
-//            combo.setEnabled(true);
+            // do not do disabling/enabling because we leave the focus and we want to use this
+            // just when getting the focus (@author cmot)
+            // combo.setEnabled(true);
 
             refreshing = false;
         }
@@ -280,8 +288,7 @@ public class ScheduleSelector extends ControlContribution implements
      * @return true if the header should be displayed, false if not.
      */
     private boolean showHeader() {
-        return (listType == ContributionManager.MATCHING_COMBO)
-                || data.size() < 1;
+        return (listType == ContributionManager.MATCHING_COMBO) || data.size() < 1;
     }
 
     // --------------------------------------------------------------------------
@@ -326,14 +333,14 @@ public class ScheduleSelector extends ControlContribution implements
      * {@inheritDoc}
      */
     public void widgetSelected(final SelectionEvent e) {
-    	// do not do this while simulation is running
-    	if (KiemPlugin.getDefault().getExecution() == null) {
+        // do not do this while simulation is running
+        if (KiemPlugin.getDefault().getExecution() == null) {
             if (e.widget == combo) {
                 loadSelected();
             }
-    	} else {
-           combo.select(0);
-    	}
+        } else {
+            combo.select(0);
+        }
     }
 
     /**
@@ -363,7 +370,7 @@ public class ScheduleSelector extends ControlContribution implements
      * {@inheritDoc}
      */
     public void focusGained(final FocusEvent e) {
-         setupCombo(false);
+        setupCombo(false);
     }
 
     /**
