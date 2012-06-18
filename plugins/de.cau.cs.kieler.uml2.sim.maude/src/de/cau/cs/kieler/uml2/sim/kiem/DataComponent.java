@@ -61,7 +61,7 @@ import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
@@ -763,7 +763,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent implements
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
      * doModel2ModelTransform(de.cau.cs.kieler.core.ui.KielerProgressMonitor)
      */
-    public void doModel2ModelTransform(KielerProgressMonitor monitor) throws Exception {
+    public void doModel2ModelTransform(ProgressMonitorAdapter monitor) throws Exception {
         // Workflow
         Workflow workflow = new Workflow();
 

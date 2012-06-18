@@ -64,7 +64,6 @@ import org.json.JSONObject;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.core.model.validation.ValidationManager;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
 import de.cau.cs.kieler.maude.MaudeInterfacePlugin;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
