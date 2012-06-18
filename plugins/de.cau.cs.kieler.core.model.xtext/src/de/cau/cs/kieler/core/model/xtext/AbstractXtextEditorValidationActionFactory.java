@@ -33,7 +33,7 @@ public abstract class AbstractXtextEditorValidationActionFactory extends
     public boolean supportsEditor(final IEditorPart editor) {
         if (editor != null && editor instanceof XtextEditor) {
             XtextEditor xtextEd = (XtextEditor) editor;
-            EObject eObj = XtextModelingUtil.getModelFromXtextEditor(xtextEd);
+            EObject eObj = XtextModelingUtil.getModelFromXtextEditor(xtextEd, false);
             if (eObj != null) {
                 return eObj.eClass().getEPackage().equals(getEPackage());
             }

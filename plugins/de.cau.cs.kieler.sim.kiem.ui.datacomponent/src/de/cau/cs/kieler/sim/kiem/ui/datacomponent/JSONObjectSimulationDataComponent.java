@@ -270,7 +270,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      */
     public final JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
         // If an opened EMF model editor is involved, check the timestamp
-        if (this.getModelRootElement() != null) {
+        if (this.getModelRootElement() != null &&  getModelRootElement().eResource() != null) {
             try {
                 long newModelTimeStamp = getModelRootElement().eResource().getTimeStamp();
                 // check the dirty state of the editor containing the simulated
@@ -753,9 +753,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             }
         } else if (modelEditor != null) {
             // not dirty
-            if (getModelRootElement() != null) {
+            EObject modelRootElement = getModelRootElement();
+            if (modelRootElement != null && modelRootElement.eResource() != null) {
                 // if this is an EMF editor, grab the time stamp
-                modelTimeStamp = getModelRootElement().eResource().getTimeStamp();
+                modelTimeStamp = modelRootElement.eResource().getTimeStamp();
                 simulatingOldModelVersion = false;
             }
         }

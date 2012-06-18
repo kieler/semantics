@@ -45,13 +45,17 @@ public final class XtextModelingUtil {
 
     /**
      * Get the model from a given xtext editor.
-     * 
-     * @param xtextEditor
-     *            the Xtext editor
+     *
+     * @param xtextEditor the Xtext editor
+     * @param ignoreDirtyEditor the ignore dirty editor
      * @return the EObject of the root part of the model
      */
-    public static EObject getModelFromXtextEditor(final XtextEditor xtextEditor) {
-        checkForDirtyEditor(xtextEditor);
+    public static EObject getModelFromXtextEditor(final XtextEditor xtextEditor, boolean ignoreDirtyEditor) {
+
+        if (!ignoreDirtyEditor) {
+            checkForDirtyEditor(xtextEditor);
+        }
+        
         IXtextDocument xtextDocument = xtextEditor.getDocument();
 
         if (xtextDocument instanceof XtextDocument) {

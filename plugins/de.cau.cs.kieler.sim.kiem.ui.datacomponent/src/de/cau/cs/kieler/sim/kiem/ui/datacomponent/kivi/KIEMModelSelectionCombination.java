@@ -190,7 +190,8 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         if (editorPart instanceof DiagramEditor) {
             model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
         } else if (editorPart instanceof XtextEditor) {
-            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart);
+            boolean ignoreDirtyEditor = true;
+            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart, ignoreDirtyEditor);
         }
         return model;
     }
