@@ -34,7 +34,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.ui.KielerProgressMonitor;
+import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
 import de.cau.cs.kieler.s.sim.sc.xtend.S2Simulation;
@@ -245,7 +245,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
     /**
      * {@inheritDoc}
      */
-    public void doModel2ModelTransform(final KielerProgressMonitor monitor)
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
         monitor.begin("S Simulation", 10);
 
