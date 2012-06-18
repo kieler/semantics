@@ -10,14 +10,6 @@
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.sim.kart.NamingSuggestion">
-      <content
-            class="de.cau.cs.kieler.sim.kart.ui.NamingSuggestion"
-            id="de.cau.cs.kieler.sim.kart.ui.NamingSuggestion"
-            name="NamingSuggestion">
-      </content>
-   </extension>
-   <extension
          point="de.cau.cs.kieler.sim.kart.Refresh">
       <content
             class="de.cau.cs.kieler.sim.kart.ui.Refresh"
