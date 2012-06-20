@@ -453,6 +453,7 @@ public abstract class KiemAutomatedJUnitTest {
                             System.out.println(jSONData.toString());
                         }
                         if (jSONData != null) {
+                            
                             // // Evaluate KIEM's getLastError()
                             // if (KiemPlugin.getLastError() != null &&
                             // !KiemPlugin.getLastError().equalsIgnoreCase("")) {
@@ -465,6 +466,7 @@ public abstract class KiemAutomatedJUnitTest {
                             // break;
                             //
                             // }
+                            
                             // Evaluate KART-Diff
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
                                 Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
@@ -491,6 +493,11 @@ public abstract class KiemAutomatedJUnitTest {
                                 if (errorContent instanceof String) {
                                     if (!((String) errorContent).equals("")) {
                                         // !!! ERRROR DETECTED !!! //
+                                        execution.stopExecutionSync();
+                                        execution.cancel();
+                                        while (kiemPlugin.getExecution() != null) {
+                                            pause();
+                                        }
                                         // execution.stopExecutionSync();
                                         errorFlag = true;
                                         errorInformation = "Error (" + (String) errorContent
