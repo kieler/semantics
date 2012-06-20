@@ -18,9 +18,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -37,7 +35,7 @@ import org.junit.runners.model.TestClass;
  * @author cmot
  * 
  */
-public class KiemTestRunner extends Parameterized {
+public class KiemTestRunner extends KielerTestRunner {
 
     /**
      * Instantiates a new kiem test runner.
@@ -50,42 +48,33 @@ public class KiemTestRunner extends Parameterized {
 
         // Force initialization of model/eso files (and also of KIEM)
         Constructor<?> constructor = getTestClass().getJavaClass().getConstructor(IPath.class);
-        Object constructorObject = constructor.newInstance(new Path(""));
-        System.out.println(constructorObject.getClass().toString());
-        if (constructorObject instanceof KiemAutomatedJUnitTest) {
+        Object object = constructor.newInstance(new Path(""));
+        System.out.println(object.getClass().toString());
+        if (object instanceof KiemAutomatedJUnitTest) {
             // Do the actual initialization.
-            ((KiemAutomatedJUnitTest) constructorObject).kiemAutomatedJUnitTestInitialization();
+            ((KiemAutomatedJUnitTest) object).kiemAutomatedJUnitTestInitialization();
         }
 
         // Manually rebuild the list that is originally done by super(klass)
         // but now after all model/ESO files have been initialized.
-        List<HashMap<String,Object>> parametersList = getParametersList(getTestClass());
-        
-        for (Entry<String, Object> entry : parametersList.get(0).entrySet()) {
-            String hashMapKey = entry.getKey();
-            Object hashMapObject = entry.getValue();
+        List<Object[]> parametersList = getParametersList(getTestClass());
+        for (int i = 0; i < parametersList.size(); i++)
             this.getChildren().add(
                     new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
-                            parametersList, hashMapKey));
-        }
-        
-//        for (int i = 0; i < parametersList.size(); i++)
-//            this.getChildren().add(
-//                    new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
-//                            parametersList, i));
+                            parametersList, i));
 
     }
 
     private class OurTestClassRunnerForParameters extends BlockJUnit4ClassRunner {
-        private final String fParameterKey;
+        private final int fParameterSetNumber;
 
-        private final List<HashMap<String,Object>> fParameterList;
+        private final List<Object[]> fParameterList;
 
-        OurTestClassRunnerForParameters(Class<?> type, List<HashMap<String,Object>> parameterList, String key)
+        OurTestClassRunnerForParameters(Class<?> type, List<Object[]> parameterList, int i)
                 throws InitializationError {
             super(type);
             fParameterList = parameterList;
-            fParameterKey = key;
+            fParameterSetNumber = i;
         }
 
         @Override
@@ -96,18 +85,7 @@ public class KiemTestRunner extends Parameterized {
 
         private Object[] computeParams() throws Exception {
             try {
-                Object[] objectArray = new Object[1];
-                Object hashMapObject = fParameterList.get(0).get(fParameterKey);
-                objectArray[0] = hashMapObject;
-                return objectArray;
-//                List<Object[]> objectArrayList = new LinkedList<Object[]>();
-//                for (Entry<String, Object> entry : fParameterList.get(0).entrySet()) {
-//                    Object[] objectArray = new Object[1];
-//                    Object hashMapObject = entry.getValue();
-//                    objectArray[0] = hashMapObject;
-//                    objectArrayList.add(objectArray);
-//                }
-//                return objectArrayList;
+                return fParameterList.get(fParameterSetNumber);
             } catch (ClassCastException e) {
                 throw new Exception(
                         String.format("%s.%s() must return a Collection of arrays.", getTestClass()
@@ -117,11 +95,10 @@ public class KiemTestRunner extends Parameterized {
 
         @Override
         protected String getName() {
-            HashMap<String,Object> objectHashMap = fParameterList.get(0);
-            //Object[] objectArray = fParameterList.get(fParameterSetNumber);
-            IPath iPath = (IPath) objectHashMap.get(fParameterKey);
+            
+            Object[] objectArray = fParameterList.get(fParameterSetNumber);
+            IPath iPath = (IPath) objectArray[0];
             String name = iPath.toString();
-            System.out.println(name);
             return name;
         }
 
@@ -142,8 +119,8 @@ public class KiemTestRunner extends Parameterized {
     }
 
     @SuppressWarnings("unchecked")
-    private List<HashMap<String,Object>> getParametersList(TestClass klass) throws Throwable {
-        return (List<HashMap<String,Object>>) getParametersMethod(klass).invokeExplosively(null);
+    private List<Object[]> getParametersList(TestClass klass) throws Throwable {
+        return (List<Object[]>) getParametersMethod(klass).invokeExplosively(null);
     }
 
     private FrameworkMethod getParametersMethod(TestClass testClass) throws Exception {

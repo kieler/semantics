@@ -229,36 +229,20 @@ public abstract class KiemAutomatedJUnitTest {
      * 
      * @return all ESO files as a hash map
      */
-//    @Parameters
-//    public static Collection<Object[]> getEso() {
-//        LinkedList<Object[]> esoFilesList = new LinkedList<Object[]>();
-//
-//        // HashMap<String, Object> hashMap = new HashMap<String, Object>();
-//        for (IPath esoFile : esoFiles) {
-//            // hashMap.put(esoFile.toString(), esoFile);
-//            Object[] objectArray = new Object[1];
-//            objectArray[0] = esoFile;
-//            esoFilesList.add(objectArray);
-//        }
-//        return esoFilesList;
-//    }
-
     @Parameters
-    public static Collection<HashMap<String, Object>> getEso() {
-        if (esoFiles.size() < 1) {
-            return new LinkedList<HashMap<String, Object>>();
-        }
-        LinkedList<HashMap<String, Object>> esoFilesList = new LinkedList<HashMap<String, Object>>();
-        HashMap<String, Object> esoFilesHashMap = new HashMap<String, Object>();
-        esoFilesList.add(esoFilesHashMap);
+    public static Collection<Object[]> getEso() {
+        LinkedList<Object[]> esoFilesList = new LinkedList<Object[]>();
 
         // HashMap<String, Object> hashMap = new HashMap<String, Object>();
         for (IPath esoFile : esoFiles) {
             // hashMap.put(esoFile.toString(), esoFile);
-            esoFilesHashMap.put(esoFile.toString(), esoFile);
+            Object[] objectArray = new Object[1];
+            objectArray[0] = esoFile;
+            esoFilesList.add(objectArray);
         }
         return esoFilesList;
     }
+
 
     
     // -------------------------------------------------------------------------
