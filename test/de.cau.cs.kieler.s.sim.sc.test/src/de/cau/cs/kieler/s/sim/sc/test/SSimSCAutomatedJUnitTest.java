@@ -26,6 +26,15 @@ import de.cau.cs.kieler.sim.kiem.test.KiemAutomatedJUnitTest;
 public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
 
     /**
+     * Instantiates a new S-SC simulation test.
+     *
+     * @param esoFile the ESO file
+     */
+    public SSimSCAutomatedJUnitTest(final IPath esoFile) {
+        super(esoFile);
+    }
+
+    /**
      * {@inheritDoc}
      */
     protected String getPluginId() {
