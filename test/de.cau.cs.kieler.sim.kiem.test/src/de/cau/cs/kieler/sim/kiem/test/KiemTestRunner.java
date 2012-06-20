@@ -102,7 +102,7 @@ public class KiemTestRunner extends Parameterized {
 
         @Override
         protected String testName(final FrameworkMethod method) {
-            return String.format("%s[%s]", method.getName(), fParameterSetNumber + 1);
+            return getName();
         }
 
         @Override
