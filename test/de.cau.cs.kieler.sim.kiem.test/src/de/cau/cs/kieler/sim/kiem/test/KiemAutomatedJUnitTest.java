@@ -51,10 +51,8 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.osgi.framework.Bundle;
 
@@ -65,9 +63,7 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
-//import de.cau.cs.kieler.core.test.runners.KielerRunner;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
@@ -99,7 +95,6 @@ import org.junit.runners.Parameterized.Parameters;
  * @author cmot
  * 
  */
-// @RunWith(Parameterized.class)
 @RunWith(KiemTestRunner.class)
 public abstract class KiemAutomatedJUnitTest {
 
@@ -253,7 +248,7 @@ public abstract class KiemAutomatedJUnitTest {
      * @param esoFile
      *            the eso file
      */
-    public KiemAutomatedJUnitTest(IPath esoFile) {
+    public KiemAutomatedJUnitTest(final IPath esoFile) {
         super();
         this.currentEsoFile = esoFile;
     }
