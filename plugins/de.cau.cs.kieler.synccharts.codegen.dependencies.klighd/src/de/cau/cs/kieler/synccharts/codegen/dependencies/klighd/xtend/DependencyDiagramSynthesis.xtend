@@ -28,6 +28,12 @@ import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.Dependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.SignalDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.ControlflowDependency
 import de.cau.cs.kieler.synccharts.codegen.dependencies.dependency.TransitionDependency
+import de.cau.cs.kieler.core.krendering.KPolyline
+import de.cau.cs.kieler.core.krendering.KPosition
+import de.cau.cs.kieler.core.krendering.KXPosition
+import de.cau.cs.kieler.core.krendering.KYPosition
+import de.cau.cs.kieler.core.krendering.KLineWidth
+import de.cau.cs.kieler.core.krendering.KForegroundColor
 
 /**
  * Visualization of a dependency graph for a SyncChart.
@@ -94,44 +100,139 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 	def createDependencyFigure(Dependency dependency, KNode rootNode) {
 		val kEdge = dependency.createPolyLineEdge;
 		kEdge.KRendering.add(factory.createKLineWidth.of(2));
-		val ellipse = factory.createKEllipse;
 		
+		var color = factory.createKForegroundColor();
+		var color2 = factory.createKForegroundColor();
 		if (dependency instanceof SignalDependency) {
-			val color = factory.createKForegroundColor();
 			color.setRed(255);
-			kEdge.KRendering.add(color);
+			color2.setRed(255);
 		}
 		else if (dependency instanceof ControlflowDependency) {
-			val color = factory.createKForegroundColor();
 			color.setBlue(230);
+			color2.setRed(255);
 			if ((dependency as ControlflowDependency).immediate) {
 					color.setBlue(255);
 					color.setGreen(150);
+					color2.setBlue(255);
+					color2.setGreen(150);
 			}
-			kEdge.KRendering.add(color);
 		}
 		else if (dependency instanceof TransitionDependency) {
-			val color = factory.createKForegroundColor();
 			color.setGreen(255);
-			kEdge.KRendering.add(color);
+			color2.setGreen(255);
 		}
+		kEdge.KRendering.add(color2);
+		(kEdge.KRendering as KPolyline).addConnectionArrow(1, color, true);
 		
-		val dpd = factory.createKDecoratorPlacementData;
-		dpd.location = Float::valueOf("0.95");
-		dpd.height = 7;
-		dpd.width = 7;
-		dpd.XOffset = -5;
-		dpd.YOffset = -5;
-		ellipse.placementData = dpd;
+//		val ellipse = factory.createKEllipse;
+//		val dpd = factory.createKDecoratorPlacementData;
+//		dpd.location = Float::valueOf("0.99");
+//		dpd.height = 7;
+//		dpd.width = 7;
+//		dpd.XOffset = -5;
+//		dpd.YOffset = -5;
+//		ellipse.placementData = dpd;
+//		kEdge.KRendering.add(ellipse);
 		
-			
-		kEdge.KRendering.add(ellipse);
 		kEdge.source = dependency.sourceNode.createNodeFigure(rootNode);
 		kEdge.target = dependency.targetNode.createNodeFigure(rootNode);
 		
 		kEdge.source.outgoingEdges.add(kEdge);
 		
 		return kEdge
-	}	
+	}
 	
+	
+	def KPolyline addConnectionArrow(KPolyline line, int scale, KForegroundColor kForegroundColor, boolean toHead) {
+		val float actualScale = Math::sqrt(2*scale).floatValue;
+        val dpd = factory.createKDecoratorPlacementData;
+        dpd.height = 6 * actualScale;
+        dpd.width = 6 * actualScale;
+        dpd.XOffset = -7 * actualScale;
+        dpd.YOffset = (dpd.height+scale.float/2.float) / (-2).float;
+        dpd.relative = true; // this directs klighd to rotate the decorator accordingly!!
+        dpd.location = if (toHead) "1.0".float else 0;
+        
+        val plp = factory.createKPolylinePlacementData;
+		plp.detailPlacementData = dpd;        
+        if (toHead) {
+            plp.points.addAll(newArrayList(
+        	    createPoint(createLeftPos(0,0), createTopPos(0,0)),
+        	    createPoint(createRightPos(0,0), createTopPos(0.float,"0.5".float)),
+        	    createPoint(createLeftPos(0,0), createBottomPos(0,0))
+            ));
+        } else {
+            plp.points.addAll(newArrayList(
+        	    createPoint(createRightPos(0,0), createTopPos(0,0)),
+        	    createPoint(createLeftPos(0,0), createTopPos(0.float,"0.5".float)),
+        	    createPoint(createRightPos(0,0), createBottomPos(0,0))
+            ));
+        }
+
+        val linewidth = factory.createKLineWidth;
+        linewidth.lineWidth = line.styles.filter(typeof(KLineWidth)).last?.lineWidth;
+        
+        val arrow =  factory.createKPolyline;
+        arrow.add(linewidth);
+        arrow.add(kForegroundColor);
+        arrow.placementData = plp;
+
+        return line.add(arrow) as KPolyline;
+    }
+    
+    def KXPosition createLeftPos(Integer abs, Integer rel) {
+    	return createLeftPos(abs.float, rel.float);
+	}
+
+    def KXPosition createLeftPos(Float abs, Float rel) {
+    	val pos = factory.createKLeftPosition;
+    	pos.absolute = abs;
+    	pos.relative = rel;
+    	return pos;
+    }
+    
+    def KXPosition createRightPos(Integer abs, Integer rel) {
+    	createRightPos(abs.float, rel.float);
+    }
+    def KXPosition createRightPos(Float abs, Float rel) {
+    	val pos = factory.createKRightPosition;
+    	pos.absolute = abs;
+    	pos.relative = rel;
+    	return pos;
+    }
+
+    def KYPosition createBottomPos(Integer abs, Integer rel) {
+    	return createBottomPos(abs.getFloat, rel.getFloat);
+    }
+    def KYPosition createBottomPos(Float abs, Float rel) {
+    	val pos = factory.createKBottomPosition;
+    	pos.absolute = abs;
+    	pos.relative = rel;
+    	return pos;
+    }
+
+    def KYPosition createTopPos(Integer abs, Integer rel) {
+    	return createTopPos(abs.getFloat, rel.getFloat);
+    }
+    def KYPosition createTopPos(Float abs, Float rel) {
+    	val pos = factory.createKTopPosition;
+    	pos.absolute = abs;
+    	pos.relative = rel;
+    	return pos;
+    }
+    
+    def KPosition createPoint(KXPosition x, KYPosition y) {
+    	val pos = factory.createKPosition;
+    	pos.x = x;
+    	pos.y = y;
+    	return pos;
+    }
+	
+    def float getFloat(String s) {
+    	return Float::valueOf(s);
+    }
+    def float getFloat(Integer i) {
+    	return Float::valueOf(i);
+    }
+    	
 }
