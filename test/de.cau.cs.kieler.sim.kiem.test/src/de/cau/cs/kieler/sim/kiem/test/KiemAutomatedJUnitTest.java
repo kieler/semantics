@@ -498,7 +498,6 @@ public abstract class KiemAutomatedJUnitTest {
                                         while (kiemPlugin.getExecution() != null) {
                                             pause();
                                         }
-                                        // execution.stopExecutionSync();
                                         errorFlag = true;
                                         errorInformation = "Error (" + (String) errorContent
                                                 + ") in tick " + tick + " of trace " + traceNumber
