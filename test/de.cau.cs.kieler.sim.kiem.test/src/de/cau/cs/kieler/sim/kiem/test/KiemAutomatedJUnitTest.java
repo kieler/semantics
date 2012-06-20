@@ -253,7 +253,6 @@ public abstract class KiemAutomatedJUnitTest {
      */
     public KiemAutomatedJUnitTest(IPath esoFile) {
         super();
-        kiemAutomatedJUnitTestInitialization();
         this.currentEsoFile = esoFile;
     }
 

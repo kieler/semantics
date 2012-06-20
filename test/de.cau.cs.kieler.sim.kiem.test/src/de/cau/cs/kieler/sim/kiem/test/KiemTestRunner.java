@@ -30,38 +30,37 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.junit.runners.model.TestClass;
 
-
-
 /**
- * @author chsch
+ * @author cmot
  * 
  */
 public class KiemTestRunner extends Parameterized {
 
     /**
-     * @param klass
-     * @throws Throwable
+     * Instantiates a new kiem test runner.
+     *
+     * @param klass the klass
+     * @throws Throwable the throwable
      */
-    public KiemTestRunner(Class<?> klass) throws Throwable {
+    public KiemTestRunner(final Class<?> klass) throws Throwable {
         super(klass);
+
+        // Force initialization of model/eso files (and also of KIEM)
         Constructor<?> constructor = getTestClass().getJavaClass().getConstructor(IPath.class);
         Object object = constructor.newInstance(new Path(""));
         System.out.println(object.getClass().toString());
         if (object instanceof KiemAutomatedJUnitTest) {
+            // Do the actual initialization.
             ((KiemAutomatedJUnitTest) object).kiemAutomatedJUnitTestInitialization();
         }
-        //List<?> runners = new ArrayList<Object>(this.getChildren());
-//        this.getChildren().clear();
 
-        List<Object[]> parametersList= getParametersList(getTestClass());
-        for (int i= 0; i < parametersList.size(); i++)
-            this.getChildren().add(new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
-                                parametersList, i));        
-//        for (Object r : runners) {
-//            this.getChildren().add(
-//                    new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
-//                            getParametersList(getTestClass()), runners.indexOf(r)));
-//        }
+        // Manually rebuild the list that is originally done by super(klass)
+        // but now after all model/ESO files have been initialized.
+        List<Object[]> parametersList = getParametersList(getTestClass());
+        for (int i = 0; i < parametersList.size(); i++)
+            this.getChildren().add(
+                    new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
+                            parametersList, i));
 
     }
 
@@ -79,7 +78,7 @@ public class KiemTestRunner extends Parameterized {
 
         @Override
         public Object createTest() throws Exception {
-//            Constructor[] constructors = getTestClass().getClass().getConstructors();
+            // Constructor[] constructors = getTestClass().getClass().getConstructors();
             return getTestClass().getOnlyConstructor().newInstance(computeParams());
         }
 
@@ -97,7 +96,7 @@ public class KiemTestRunner extends Parameterized {
         protected String getName() {
             Object[] objectArray = fParameterList.get(fParameterSetNumber);
             IPath iPath = (IPath) objectArray[0];
-            String name = iPath.toString(); 
+            String name = iPath.toString();
             return name;
         }
 
