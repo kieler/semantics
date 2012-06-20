@@ -17,7 +17,6 @@ import de.cau.cs.kieler.klighd.transformations.AbstractTransformation
 import de.cau.cs.kieler.klighd.TransformationContext
 import de.cau.cs.kieler.core.kgraph.KNode
 import de.cau.cs.kieler.kiml.util.KimlUtil
-import de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.xtend.KRenderingUtil
 import com.google.inject.Inject
 import de.cau.cs.kieler.kiml.options.LayoutOptions
 import de.cau.cs.kieler.kiml.options.Direction
