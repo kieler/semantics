@@ -220,7 +220,12 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets all ESO files.
+     * Gets all ESO files and provides the parameters for the consecutive
+     * tests run by the KiemTestRunner. 
+     * 
+     * The objectArray contains exactly ONE
+     * entry because the constructor KiemAutomatedJUnitTest(final IPath esoFile)
+     * takes ONE parameter value. 
      * 
      * @return all ESO files as a hash map
      */
