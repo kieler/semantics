@@ -18,6 +18,8 @@ import java.util.List;
 import org.eclipse.core.runtime.IPath;
 import org.junit.runners.model.FrameworkMethod;
 
+import de.cau.cs.kieler.core.test.runners.KielerTestRunner;
+
 /**
  * @author cmot
  * 
