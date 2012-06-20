@@ -38,7 +38,7 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected String getPluginId() {
-        return SSimSCTestPlugin.PLUGIN_ID;
+        return "de.cau.cs.kieler.s.sim.sc.test";
     }
 
     /**
