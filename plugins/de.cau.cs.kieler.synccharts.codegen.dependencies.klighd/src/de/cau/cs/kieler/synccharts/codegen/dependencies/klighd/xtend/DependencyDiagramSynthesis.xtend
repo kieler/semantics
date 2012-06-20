@@ -148,7 +148,7 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
         dpd.height = 6 * actualScale;
         dpd.width = 6 * actualScale;
         dpd.XOffset = -7 * actualScale;
-        dpd.YOffset = (dpd.height.floatValue + (scale.floatValue / 2.floatValue)) / (-2).floatValue;
+        dpd.YOffset = 4 - dpd.height; //(dpd.height.floatValue + (scale.floatValue / 2.floatValue)) / 2.floatValue;
         dpd.relative = true; // this directs klighd to rotate the decorator accordingly!!
         dpd.location = if (toHead) "1.0".float else 0;
         
