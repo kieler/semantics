@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Test Plugin for S Simulation
 Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sc.test
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.s.sim.sc.test.SSimSCTestPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
