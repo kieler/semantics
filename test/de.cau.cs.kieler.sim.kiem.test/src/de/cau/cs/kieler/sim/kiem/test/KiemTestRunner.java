@@ -21,6 +21,11 @@ import org.junit.runners.model.FrameworkMethod;
 import de.cau.cs.kieler.core.test.runners.KielerTestRunner;
 
 /**
+ * This test runner is used by the KiemAutomatedJUnitTest. In the initialize() method it calls the 
+ * kiemAutomatedJUnitTestInitialization() explicitly that will load KIEM and the execution schedule.
+ * 
+ * It further provides names for the tests derived from their corresponding ESO file's path names.
+ * 
  * @author cmot
  * 
  */
