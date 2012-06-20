@@ -13,6 +13,10 @@
  */
 package de.cau.cs.kieler.sim.kiem.test;
 
+import java.util.List;
+
+import org.eclipse.core.runtime.IPath;
+import org.junit.runners.model.FrameworkMethod;
 
 /**
  * @author cmot
@@ -22,20 +26,24 @@ public class KiemTestRunner extends KielerTestRunner {
 
     /**
      * Instantiates a new kiem test runner.
-     *
-     * @param klass the klass
-     * @throws Throwable the throwable
+     * 
+     * @param klass
+     *            the klass
+     * @throws Throwable
+     *             the throwable
      */
     public KiemTestRunner(final Class<?> klass) throws Throwable {
         super(klass);
     }
-    
-    //-------------------------------------------------------------------------
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Force initialization of model/ESO files (and also of KIEM).
-     *
-     * @param object the object
+     * Force initialization of model/ESO files (and also of KIEM) before the static method to
+     * provide the test parameters is being called.
+     * 
+     * @param object
+     *            the object
      */
     @Override
     public void initialize(final Object object) {
@@ -45,6 +53,30 @@ public class KiemTestRunner extends KielerTestRunner {
         }
     }
 
-    //-------------------------------------------------------------------------
-    
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getRunnerName(final List<Object[]> parameterObjectList, final int parameterIndex) {
+        Object[] objectArray = parameterObjectList.get(parameterIndex);
+        IPath iPath = (IPath) objectArray[0];
+        String name = iPath.toString();
+        return name;
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getTestName(final List<Object[]> parameterObjectList, final int parameterIndex,
+            final FrameworkMethod method) {
+        return getRunnerName(parameterObjectList, parameterIndex);
+    }
+
+    // -------------------------------------------------------------------------
+
 }
