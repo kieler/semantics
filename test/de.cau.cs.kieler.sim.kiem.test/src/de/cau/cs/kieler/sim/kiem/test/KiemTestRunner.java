@@ -13,23 +13,6 @@
  */
 package de.cau.cs.kieler.sim.kiem.test;
 
-import java.lang.reflect.Constructor;
-import java.lang.reflect.Modifier;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-
-import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.Path;
-import org.junit.runner.notification.RunNotifier;
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
-import org.junit.runners.model.FrameworkMethod;
-import org.junit.runners.model.InitializationError;
-import org.junit.runners.model.Statement;
-import org.junit.runners.model.TestClass;
 
 /**
  * @author cmot
@@ -45,93 +28,23 @@ public class KiemTestRunner extends KielerTestRunner {
      */
     public KiemTestRunner(final Class<?> klass) throws Throwable {
         super(klass);
-
-        // Force initialization of model/eso files (and also of KIEM)
-        Constructor<?> constructor = getTestClass().getJavaClass().getConstructor(IPath.class);
-        Object object = constructor.newInstance(new Path(""));
-        System.out.println(object.getClass().toString());
+    }
+    
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Force initialization of model/ESO files (and also of KIEM).
+     *
+     * @param object the object
+     */
+    @Override
+    public void initialize(final Object object) {
         if (object instanceof KiemAutomatedJUnitTest) {
             // Do the actual initialization.
             ((KiemAutomatedJUnitTest) object).kiemAutomatedJUnitTestInitialization();
         }
-
-        // Manually rebuild the list that is originally done by super(klass)
-        // but now after all model/ESO files have been initialized.
-        List<Object[]> parametersList = getParametersList(getTestClass());
-        for (int i = 0; i < parametersList.size(); i++)
-            this.getChildren().add(
-                    new OurTestClassRunnerForParameters(getTestClass().getJavaClass(),
-                            parametersList, i));
-
     }
 
-    private class OurTestClassRunnerForParameters extends BlockJUnit4ClassRunner {
-        private final int fParameterSetNumber;
-
-        private final List<Object[]> fParameterList;
-
-        OurTestClassRunnerForParameters(Class<?> type, List<Object[]> parameterList, int i)
-                throws InitializationError {
-            super(type);
-            fParameterList = parameterList;
-            fParameterSetNumber = i;
-        }
-
-        @Override
-        public Object createTest() throws Exception {
-            // Constructor[] constructors = getTestClass().getClass().getConstructors();
-            return getTestClass().getOnlyConstructor().newInstance(computeParams());
-        }
-
-        private Object[] computeParams() throws Exception {
-            try {
-                return fParameterList.get(fParameterSetNumber);
-            } catch (ClassCastException e) {
-                throw new Exception(
-                        String.format("%s.%s() must return a Collection of arrays.", getTestClass()
-                                .getName() /* , getParametersMethod(getTestClass()).getName() */));
-            }
-        }
-
-        @Override
-        protected String getName() {
-            
-            Object[] objectArray = fParameterList.get(fParameterSetNumber);
-            IPath iPath = (IPath) objectArray[0];
-            String name = iPath.toString();
-            return name;
-        }
-
-        @Override
-        protected String testName(final FrameworkMethod method) {
-            return getName();
-        }
-
-        @Override
-        protected void validateConstructor(List<Throwable> errors) {
-            validateOnlyOneConstructor(errors);
-        }
-
-        @Override
-        protected Statement classBlock(RunNotifier notifier) {
-            return childrenInvoker(notifier);
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    private List<Object[]> getParametersList(TestClass klass) throws Throwable {
-        return (List<Object[]>) getParametersMethod(klass).invokeExplosively(null);
-    }
-
-    private FrameworkMethod getParametersMethod(TestClass testClass) throws Exception {
-        List<FrameworkMethod> methods = testClass.getAnnotatedMethods(Parameters.class);
-        for (FrameworkMethod each : methods) {
-            int modifiers = each.getMethod().getModifiers();
-            if (Modifier.isStatic(modifiers) && Modifier.isPublic(modifiers))
-                return each;
-        }
-
-        throw new Exception("No public static parameters method on class " + testClass.getName());
-    }
-
+    //-------------------------------------------------------------------------
+    
 }
