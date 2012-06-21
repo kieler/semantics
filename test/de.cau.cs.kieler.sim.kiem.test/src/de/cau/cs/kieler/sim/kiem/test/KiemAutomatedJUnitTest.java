@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
 import org.eclipse.core.resources.IFile;
@@ -39,6 +40,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
@@ -48,7 +50,9 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.part.FileEditorInput;
+import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.AfterClass;
@@ -220,12 +224,11 @@ public abstract class KiemAutomatedJUnitTest {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets all ESO files and provides the parameters for the consecutive
-     * tests run by the KiemTestRunner. 
+     * Gets all ESO files and provides the parameters for the consecutive tests run by the
+     * KiemTestRunner.
      * 
-     * The objectArray contains exactly ONE
-     * entry because the constructor KiemAutomatedJUnitTest(final IPath esoFile)
-     * takes ONE parameter value. 
+     * The objectArray contains exactly ONE entry because the constructor
+     * KiemAutomatedJUnitTest(final IPath esoFile) takes ONE parameter value.
      * 
      * @return all ESO files as a hash map
      */
@@ -233,9 +236,7 @@ public abstract class KiemAutomatedJUnitTest {
     public static Collection<Object[]> getEso() {
         LinkedList<Object[]> esoFilesList = new LinkedList<Object[]>();
 
-        // HashMap<String, Object> hashMap = new HashMap<String, Object>();
         for (IPath esoFile : esoFiles) {
-            // hashMap.put(esoFile.toString(), esoFile);
             Object[] objectArray = new Object[1];
             objectArray[0] = esoFile;
             esoFilesList.add(objectArray);
@@ -243,8 +244,6 @@ public abstract class KiemAutomatedJUnitTest {
         return esoFilesList;
     }
 
-
-    
     // -------------------------------------------------------------------------
 
     /**
@@ -376,7 +375,7 @@ public abstract class KiemAutomatedJUnitTest {
 
         // test this ESO file with all its included traces
         // the traceProperty is required to be able to update the trace number
-        testEsoFile(currentEsoFile, traceProperty, getExecutionFileName());
+        testEsoFile(currentEsoFile, traceProperty, getExecutionFileName(), getPluginId());
     }
 
     // -------------------------------------------------------------------------
@@ -385,13 +384,13 @@ public abstract class KiemAutomatedJUnitTest {
      * Test ESO file and return a potential (first) error as a String.
      * 
      * @param esoFilePath
-     *            the eso file path
+     *            the ESO file path
      * @param traceProperty
      *            the trace property
      * @return a possible error string or null if no error
      */
     private static String testEsoFile(final IPath esoFilePath, final KiemProperty traceProperty,
-            final String executionFileName) {
+            final String executionFileName, final String pluginId) {
         boolean errorFlag = false;
         String errorInformation = null;
 
@@ -407,12 +406,15 @@ public abstract class KiemAutomatedJUnitTest {
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
         // Set the global model file in KIEM, other components will retrieve this
         KiemPlugin.setCurrentModelFile(modelFilePath);
-        System.out.println("\nModel File: " + modelFilePath);
+        Logger.getRootLogger().info("\nModel File: " + modelFilePath);
+        StatusManager.getManager().addLoggedStatus(
+                new Status(Status.ERROR, pluginId, "\nModel File: " + modelFilePath));
 
         int numberOfTraces = getNumberOfTraces(esoFilePath);
 
         for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
-            System.out.println("Trace Number " + traceNumber);
+            StatusManager.getManager().addLoggedStatus(
+                    new Status(Status.INFO, pluginId, "Trace Number " + traceNumber));
 
             // set the current trace number
             traceProperty.setValue(traceNumber + "");
@@ -432,7 +434,8 @@ public abstract class KiemAutomatedJUnitTest {
                 // at this point we know that the execution is not null
                 int tick = 0;
                 while (execution.isStarted() && !errorFlag) {
-                    System.out.println("Tick " + tick);
+                    StatusManager.getManager().addLoggedStatus(
+                            new Status(Status.INFO, pluginId, "Tick " + tick));
 
                     if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
                         throw new RuntimeException("Maximum number of ticks ("
@@ -450,10 +453,11 @@ public abstract class KiemAutomatedJUnitTest {
                     try {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
                         if (DEBUG) {
-                            System.out.println(jSONData.toString());
+                            StatusManager.getManager().addLoggedStatus(
+                                    new Status(Status.INFO, pluginId, jSONData.toString()));
                         }
                         if (jSONData != null) {
-                            
+
                             // // Evaluate KIEM's getLastError()
                             // if (KiemPlugin.getLastError() != null &&
                             // !KiemPlugin.getLastError().equalsIgnoreCase("")) {
@@ -466,7 +470,7 @@ public abstract class KiemAutomatedJUnitTest {
                             // break;
                             //
                             // }
-                            
+
                             // Evaluate KART-Diff
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
                                 Object kartConfigContent = jSONData.get(KartConstants.CONFIGVAR);
@@ -553,13 +557,16 @@ public abstract class KiemAutomatedJUnitTest {
         Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
                 false);
         if (DEBUG) {
-            System.out.println("testpath:" + bundleTestPath.toString());
+            StatusManager.getManager().addLoggedStatus(
+                    new Status(Status.INFO, pluginId, "testpath:" + bundleTestPath.toString()));
         }
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
                 if (DEBUG) {
-                    System.out.println("bundleFileUrl:" + bundleFileUrl.toString());
+                    StatusManager.getManager().addLoggedStatus(
+                            new Status(Status.INFO, pluginId, "bundleFileUrl:"
+                                    + bundleFileUrl.toString()));
                 }
                 // IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
