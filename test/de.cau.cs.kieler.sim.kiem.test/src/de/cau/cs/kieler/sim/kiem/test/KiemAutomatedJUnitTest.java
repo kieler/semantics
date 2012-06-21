@@ -561,7 +561,6 @@ public abstract class KiemAutomatedJUnitTest {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
                 logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
-                // IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
                 IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
                         temporaryWorkspaceFolderName, false, true);
