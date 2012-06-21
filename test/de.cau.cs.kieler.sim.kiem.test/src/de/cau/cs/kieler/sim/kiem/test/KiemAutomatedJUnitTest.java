@@ -30,6 +30,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.eclipse.core.filesystem.EFS;
 import org.eclipse.core.filesystem.IFileStore;
@@ -40,7 +41,6 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
-import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.content.IContentType;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorDescriptor;
@@ -50,14 +50,14 @@ import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.internal.WorkbenchPlugin;
 import org.eclipse.ui.part.FileEditorInput;
-import org.eclipse.ui.statushandlers.StatusManager;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized.Parameters;
 import org.osgi.framework.Bundle;
 
 import de.cau.cs.kieler.sim.kart.KartConstants;
@@ -66,9 +66,6 @@ import de.cau.cs.kieler.sim.kiem.execution.Execution;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
-
-import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized.Parameters;
 
 /**
  * The class KiemAutomatedJUnit enables the integration of several KIEM execution runs into a JUnit
@@ -119,8 +116,8 @@ public abstract class KiemAutomatedJUnitTest {
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
 
-    /** The DEBUG constant. */
-    static final boolean DEBUG = false;
+    /** The Apache lag4j logger. */
+    private static Logger logger = Logger.getLogger(KiemAutomatedJUnitTest.class);
 
     // -------------------------------------------------------------------------
     // ESO file an KART configuration
@@ -255,6 +252,16 @@ public abstract class KiemAutomatedJUnitTest {
     public KiemAutomatedJUnitTest(final IPath esoFile) {
         super();
         this.currentEsoFile = esoFile;
+
+        // New logger for the specific class instance
+        logger = Logger.getLogger(this.getClass());
+        // Establish logging level 
+        logger.setAdditivity(true);
+        if (KiemPlugin.DEBUG) {
+            logger.setLevel(Level.ALL);
+        } else {
+            logger.setLevel(Level.INFO);
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -406,15 +413,12 @@ public abstract class KiemAutomatedJUnitTest {
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
         // Set the global model file in KIEM, other components will retrieve this
         KiemPlugin.setCurrentModelFile(modelFilePath);
-        Logger.getRootLogger().info("\nModel File: " + modelFilePath);
-        StatusManager.getManager().addLoggedStatus(
-                new Status(Status.ERROR, pluginId, "\nModel File: " + modelFilePath));
+        logger.info("Model File: " + modelFilePath);
 
         int numberOfTraces = getNumberOfTraces(esoFilePath);
 
         for (int traceNumber = 0; traceNumber < numberOfTraces; traceNumber++) {
-            StatusManager.getManager().addLoggedStatus(
-                    new Status(Status.INFO, pluginId, "Trace Number " + traceNumber));
+            logger.info("Trace Number " + traceNumber);
 
             // set the current trace number
             traceProperty.setValue(traceNumber + "");
@@ -434,8 +438,7 @@ public abstract class KiemAutomatedJUnitTest {
                 // at this point we know that the execution is not null
                 int tick = 0;
                 while (execution.isStarted() && !errorFlag) {
-                    StatusManager.getManager().addLoggedStatus(
-                            new Status(Status.INFO, pluginId, "Tick " + tick));
+                    logger.info("Tick " + tick);
 
                     if (tick > MAX_NUMBER_OF_TICKS_UNTIL_ERROR) {
                         throw new RuntimeException("Maximum number of ticks ("
@@ -452,10 +455,7 @@ public abstract class KiemAutomatedJUnitTest {
                     // now inspect the data pool
                     try {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
-                        if (DEBUG) {
-                            StatusManager.getManager().addLoggedStatus(
-                                    new Status(Status.INFO, pluginId, jSONData.toString()));
-                        }
+                        logger.debug(jSONData.toString());
                         if (jSONData != null) {
 
                             // // Evaluate KIEM's getLastError()
@@ -556,18 +556,11 @@ public abstract class KiemAutomatedJUnitTest {
         // Search for all files in the test directory
         Enumeration<URL> allBundleFilesUrl = bundle.findEntries(bundleTestPath.toString(), "*.*",
                 false);
-        if (DEBUG) {
-            StatusManager.getManager().addLoggedStatus(
-                    new Status(Status.INFO, pluginId, "testpath:" + bundleTestPath.toString()));
-        }
+        logger.debug("testpath:" + bundleTestPath.toString());
         while (allBundleFilesUrl.hasMoreElements()) {
             URL bundleFileUrl = allBundleFilesUrl.nextElement();
             try {
-                if (DEBUG) {
-                    StatusManager.getManager().addLoggedStatus(
-                            new Status(Status.INFO, pluginId, "bundleFileUrl:"
-                                    + bundleFileUrl.toString()));
-                }
+                logger.debug("bundleFileUrl:" + bundleFileUrl.toString());
                 // IPath fullBundleFilePath = new Path(bundleFileURL.toString());
 
                 IFile workspaceFile = KiemUtil.createLinkedWorkspaceFile(bundleFileUrl,
@@ -608,7 +601,9 @@ public abstract class KiemAutomatedJUnitTest {
      * 
      * @param allWorkspaceFiles
      *            the all workspace files
-     * @return true, if successful
+     * @param executionFileName
+     *            the execution file name
+     * @return the execution file path
      */
     private static IPath getExecutionFilePath(final List<IPath> allWorkspaceFiles,
             final String executionFileName) {
