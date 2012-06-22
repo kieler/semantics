@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2012 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.esterel.cec.sim.kivi;
 
 import java.util.HashMap;
@@ -30,13 +43,18 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 
+/**
+ * The DataComponent for visualizing Esterel simulation.
+ * 
+ * @author cmot
+ */
 public class DataComponent extends JSONObjectSimulationDataComponent {
 
     /** The Esterel editor. */
     private XtextEditor esterelEditor;
 
     /** The Esterel semantic resource editor. */
-    Resource semanticResource;
+    private Resource semanticResource;
 
     /** The Esterel program. */
     private Program esterelProgram;
@@ -50,16 +68,25 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     /** The recover style range map to recover original style. */
     private Hashtable<Integer, StyleRange> recoverStyleRangeMap = new Hashtable<Integer, StyleRange>();
 
+    /** The Constant COL_MAX. */
+    private static final int COL_MAX = 255;
+    
+    /** The Constant COL_MED. */
+    private static final int COL_MED = 180;
+    
     /** The highlight background color. */
-    RGB highlightBackgroundColor = new RGB(255, 180, 180); // light red
+    private RGB highlightBackgroundColor = new RGB(COL_MAX, COL_MED, COL_MED); // light red
 
     /** The error background color. */
-    RGB errorBackgroundColor = new RGB(255, 180, 255); // light magenta
+    private RGB errorBackgroundColor = new RGB(COL_MAX, COL_MED, COL_MAX); // light magenta
 
     /**
      * The highlight background color is used internally and set NULL for original.
      */
-    RGB specificBackgroundColor = null;
+    private RGB specificBackgroundColor = null;
+
+    /** The Constant SLEEP_TIME. */
+    private static final int SLEEP_TIME = 100;
 
     // -----------------------------------------------------------------------------
 
@@ -77,6 +104,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #initialize()
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void initialize() throws KiemInitializationException {
         this.esterelEditor = this.getEsterelEditor();
@@ -92,6 +122,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * (non-Javadoc)
      * 
      * @see de.cau.cs.kieler.sim.kiem.IDataComponent#wrapup()
+     */
+    /**
+     * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
         // Undo Highlighting
@@ -130,6 +163,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #isProducer()
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isProducer() {
         return false;
@@ -142,6 +178,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * 
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #isObserver()
+     */
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isObserver() {
@@ -158,7 +197,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *            the e object
      * @return the encoded emf id
      */
-    String getEncodedEMFId(EObject eObject) {
+    String getEncodedEMFId(final EObject eObject) {
         if (eObject.eResource() != null) {
             String uri = eObject.eResource().getURIFragment(eObject);
             // uri = uri.replaceAll("/", "x");
@@ -179,6 +218,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -----------------------------------------------------------------------------
 
+    /** The e object map. */
     private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
 
     /**
@@ -189,7 +229,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      *            the e object id
      * @return the e object
      */
-    EObject getEObject(String eObjectID) {
+    EObject getEObject(final String eObjectID) {
         if ((eObjectID == null) || eObjectID.equals("")) {
             return null;
         } else if (eObjectMap.containsKey(eObjectID)) {
@@ -224,7 +264,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @param baseObj
      *            the base obj
      */
-    void refreshEObjectMap(EObject baseObj) {
+    void refreshEObjectMap(final EObject baseObj) {
         // Add this item
         String baseObjID = this.getEncodedEMFId(baseObj);
         if (!eObjectMap.containsKey(baseObjID)) {
@@ -245,7 +285,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -----------------------------------------------------------------------------
 
-    LinkedList<EObject> getStatements(JSONObject jSONObject, String signalName)
+    /**
+     * Gets the statements.
+     * 
+     * @param jSONObject
+     *            the j son object
+     * @param signalName
+     *            the signal name
+     * @return the statements
+     * @throws KiemExecutionException
+     *             the kiem execution exception
+     */
+    LinkedList<EObject> getStatements(final JSONObject jSONObject, final String signalName)
             throws KiemExecutionException {
 
         LinkedList<EObject> newActiveStatements = new LinkedList<EObject>();
@@ -267,7 +318,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
             } catch (JSONException e) {
                 throw new KiemExecutionException(
-                        "Cannot parse statement data variable of active Esterel statements for visualization.",
+                        "Cannot parse statement data variable of active"
+                        + " Esterel statements for visualization.",
                         false, false, true, e);
             }
         }
@@ -282,8 +334,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
      * #doStep(org.json.JSONObject)
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public JSONObject doStep(JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         String statementName = this.getProperties()[1].getValue();
         String errorStatementName = this.getProperties()[2].getValue();
 
@@ -357,28 +412,34 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -----------------------------------------------------------------------------
 
-    private Resource getEsterelSemanticResource(EObject semanticElement) {
+    /**
+     * Gets the esterel semantic resource.
+     *
+     * @param semanticElement the semantic element
+     * @return the esterel semantic resource
+     */
+    private Resource getEsterelSemanticResource(final EObject semanticElement) {
         return semanticElement.eResource();
     }
 
-    ICompositeNode xtextNode;
-    boolean selectionDone;
+    /** The xtext node. */
+    private ICompositeNode xtextNode;
+
+    /** The selection done. */
+    private boolean selectionDone;
 
     // -----------------------------------------------------------------------------
 
     /**
      * Sets the xtext selection to have a specific background color.
-     * 
-     * @param semanticElement
-     *            the semantic element
-     * @param highlight
-     *            the highlight
-     * @throws KiemInitializationException
-     *             the kiem initialization exception
+     *
+     * @param semanticElement the semantic element
+     * @param specificBackgroundColorParam the specific background color param
+     * @throws KiemInitializationException the kiem initialization exception
      */
-    private void setXtextSelection(EObject semanticElement, RGB specificBackgroundColor)
+    private void setXtextSelection(final EObject semanticElement, final RGB specificBackgroundColorParam)
             throws KiemInitializationException {
-        this.specificBackgroundColor = specificBackgroundColor;
+        this.specificBackgroundColor = specificBackgroundColorParam;
         setXtextSelection(semanticElement);
     }
 
@@ -388,14 +449,15 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * Fail silent recovery from user editor change. If the user edits text in the editor during
      * visualization, the highlighting is invalidated but the next time he clicks on step (and has
      * focused the right editor) the refreshed editor input is used for visualization.
-     * 
-     * @throws KiemInitializationException
-     *             the kiem initialization exception
+     *
+     * @param activeStatementsParam the active statements param
+     * @return true, if successful
+     * @throws KiemInitializationException the kiem initialization exception
      */
-    private boolean failSilentRecoveryFromUserEditorChange(LinkedList<EObject> activeStatements)
-            throws KiemInitializationException {
+    private boolean failSilentRecoveryFromUserEditorChange(
+            final LinkedList<EObject> activeStatementsParam) throws KiemInitializationException {
 
-        for (EObject statement : activeStatements) {
+        for (EObject statement : activeStatementsParam) {
             String semanticElementFragment = semanticResource.getURIFragment(statement);
             if (semanticElementFragment.equals("/-1")) {
                 initialize();
@@ -417,13 +479,14 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * @throws KiemInitializationException
      *             the kiem initialization exception
      */
-    private void setXtextSelection(EObject semanticElement) throws KiemInitializationException {
-        Resource semanticResource = this.semanticResource;
-        if (semanticResource == null) {
+    private void setXtextSelection(final EObject semanticElement)
+            throws KiemInitializationException {
+        Resource localSemanticResource = this.semanticResource;
+        if (localSemanticResource == null) {
             return;
         }
-        String semanticElementFragment = semanticResource.getURIFragment(semanticElement);
-        XtextResource xtextResource = (XtextResource) semanticResource;
+        String semanticElementFragment = localSemanticResource.getURIFragment(semanticElement);
+        XtextResource xtextResource = (XtextResource) localSemanticResource;
         EObject semanticElementInDocument = xtextResource.getEObject(semanticElementFragment);
         xtextNode = NodeModelUtils.findActualNodeFor(semanticElementInDocument);
 
@@ -477,7 +540,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             });
             while (!selectionDone) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(SLEEP_TIME);
                 } catch (InterruptedException e) {
                     // No error behavior
                 }
@@ -492,6 +555,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * 
      * @see de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent#isHistoryObserver ()
      */
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isHistoryObserver() {
         return true;
@@ -504,11 +570,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      * 
      * @return the Esterel editor
      * @throws KiemInitializationException
+     *             the kiem initialization exception
      */
     private XtextEditor getEsterelEditor() throws KiemInitializationException {
         IEditorPart editorPart = this.getModelEditor();
-        if ((editorPart != null) &&
-            (editorPart instanceof XtextEditor)) {
+        if ((editorPart != null) && (editorPart instanceof XtextEditor)) {
             XtextEditor xtextEditor = (XtextEditor) editorPart;
 
             if (xtextEditor.getDocument() instanceof XtextDocument
@@ -525,6 +591,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     // -----------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public KiemProperty[] doProvideProperties() {
         final int nProperties = 2;
@@ -539,12 +608,11 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
 
     /**
      * Gets the Esterel program.
-     * 
-     * @param esterelEditor
-     *            the esterel editor
+     *
+     * @param esterelEditor the esterel editor
      * @return the esterel program
      */
-    private Program getEsterelProgram(XtextEditor esterelEditor) {
+    private Program getEsterelProgram(final XtextEditor esterelEditorParam) {
         IParseResult result = null;
 
         IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
@@ -553,7 +621,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 return state.getParseResult();
             }
         };
-        result = esterelEditor.getDocument().readOnly(work);
+        result = esterelEditorParam.getDocument().readOnly(work);
 
         return ((Program) result.getRootASTElement());
     }
