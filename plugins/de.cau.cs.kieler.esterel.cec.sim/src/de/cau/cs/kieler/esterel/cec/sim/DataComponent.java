@@ -43,8 +43,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
-import org.eclipse.ui.IEditorPart;
-import org.eclipse.ui.part.FileEditorInput;
 import org.eclipse.xtend.util.stdlib.CloningExtensions;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,18 +56,18 @@ import de.cau.cs.kieler.core.kexpressions.InterfaceSignalDecl;
 import de.cau.cs.kieler.core.kexpressions.Output;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
-import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.esterel.cec.CEC;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2CSimulationInterface;
 import de.cau.cs.kieler.esterel.cec.sim.xtend.Esterel2Simulation;
 import de.cau.cs.kieler.esterel.esterel.Module;
 import de.cau.cs.kieler.esterel.esterel.Program;
-import de.cau.cs.kieler.sim.signals.JSONSignalValues;
+import de.cau.cs.kieler.esterel.xtend.InterfaceDeclarationFix;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
  * The Esterel simulation DataComponent is responsible for <br>
