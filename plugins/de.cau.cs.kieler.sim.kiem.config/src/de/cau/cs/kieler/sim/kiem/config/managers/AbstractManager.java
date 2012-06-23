@@ -126,7 +126,7 @@ public abstract class AbstractManager {
      * @return the value loaded value if any
      */
     protected String load(final String key, final String defaultValue) {
-        IEclipsePreferences pref = new InstanceScope()
+        IEclipsePreferences pref = InstanceScope.INSTANCE
                 .getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         String result = pref.get(key, defaultValue);
@@ -141,7 +141,7 @@ public abstract class AbstractManager {
      *            the key to remove
      */
     protected void remove(final String key) {
-        IEclipsePreferences pref = new InstanceScope()
+        IEclipsePreferences pref = InstanceScope.INSTANCE
                 .getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         pref.remove(key);
@@ -159,7 +159,7 @@ public abstract class AbstractManager {
      *            the value to save
      */
     protected void save(final String key, final String value) {
-        IEclipsePreferences pref = new InstanceScope()
+        IEclipsePreferences pref = InstanceScope.INSTANCE
                 .getNode(KiemConfigurationPlugin.PLUGIN_ID);
 
         if (value != null) {
