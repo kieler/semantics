@@ -16,9 +16,9 @@ package de.cau.cs.kieler.sim.signals;
 import java.util.LinkedList;
 
 /**
- * The SignalASCIIPlotter plots ASCII art signals to a text file
+ * The SignalASCIIPlotter plots ASCII art signals to a text file.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
 public class SignalASCIIChartPlotter extends SignalASCIIPlotter {
 
@@ -29,7 +29,7 @@ public class SignalASCIIChartPlotter extends SignalASCIIPlotter {
      *            the signal list
      * @return the string[]
      */
-    public String[] plot(SignalList signalList) {
+    public String[] plot(final SignalList signalList) {
         LinkedList<String> stringList = new LinkedList<String>();
 
         long minTick = signalList.getMinTick();

@@ -37,15 +37,22 @@ import org.eclipse.swt.graphics.RGB;
  */
 public class Colors {
 
-    /** The color constants. */
-    private RGB backgroundColor = new RGB(0, 0, 0); // black
-    private RGB signalColor1 = new RGB(100, 100, 255); // light blue
-    private RGB signalColor2 = new RGB(200, 200, 255); // lighter blue
-    private RGB signalColor0 = new RGB(0, 0, 50); // dark blue
-    private RGB signalColorMarker = new RGB(255, 0, 0); // red
-    private RGB signalColorError = new RGB(255, 0, 255); // magenta
+    private static final RGB COLOR_BLACK = new RGB(0, 0, 0); // black
+    private static final RGB COLOR_LIGHT_BLUE = new RGB(100, 100, 255); // light blue
+    private static final RGB COLOR_LIGHTER_BLUE = new RGB(200, 200, 255); // lighter blue
+    private static final RGB COLOR_DARK_BLUE = new RGB(0, 0, 50); // dark blue
+    private static final RGB COLOR_RED = new RGB(255, 0, 0); // red
+    private static final RGB COLOR_MAGENTA = new RGB(255, 0, 255); // magenta
 
-    /** The variable signal color hashmap for default/all ticks */
+    /** The color constants. */
+    private RGB backgroundColor = COLOR_BLACK;
+    private RGB signalColor1 = COLOR_LIGHT_BLUE;
+    private RGB signalColor2 = COLOR_LIGHTER_BLUE;
+    private RGB signalColor0 = COLOR_DARK_BLUE;
+    private RGB signalColorMarker = COLOR_RED;
+    private RGB signalColorError = COLOR_MAGENTA;
+
+    /** The variable signal color hashmap for default/all ticks. */
     private HashMap<String, RGB> signalColor = new HashMap<String, RGB>();
 
     /** The variable signal color hashmap for special ticks. */
@@ -70,7 +77,7 @@ public class Colors {
      * @param backgroundColor
      *            the new background color
      */
-    public void setBackgroundColor(RGB backgroundColor) {
+    public void setBackgroundColor(final RGB backgroundColor) {
         this.backgroundColor = backgroundColor;
     }
 
@@ -93,7 +100,7 @@ public class Colors {
      * @param signalColor1
      *            the new signal color1
      */
-    public void setSignalColor1(RGB signalColor1) {
+    public void setSignalColor1(final RGB signalColor1) {
         this.signalColor1 = signalColor1;
     }
 
@@ -116,7 +123,7 @@ public class Colors {
      * @param signalColor2
      *            the new signal color2
      */
-    public void setSignalColor2(RGB signalColor2) {
+    public void setSignalColor2(final RGB signalColor2) {
         this.signalColor2 = signalColor2;
     }
 
@@ -139,7 +146,7 @@ public class Colors {
      * @param signalSpareColor
      *            the new signal spare color
      */
-    public void setSignalSpareColor(RGB signalSpareColor) {
+    public void setSignalSpareColor(final RGB signalSpareColor) {
         this.signalColor0 = signalSpareColor;
     }
 
@@ -162,7 +169,7 @@ public class Colors {
      * @param signalColorMarker
      *            the signalColorMarker to set
      */
-    public void setSignalColorMarker(RGB signalColorMarker) {
+    public void setSignalColorMarker(final RGB signalColorMarker) {
         this.signalColorMarker = signalColorMarker;
     }
 
@@ -182,10 +189,10 @@ public class Colors {
     /**
      * Sets the signal color error that is used to mark the currently erroneous signal.
      * 
-     * @param signalColorMarker
-     *            the signalColorMarker to set
+     * @param signalColorError
+     *            the new signal color error
      */
-    public void setSignalColorError(RGB signalColorError) {
+    public void setSignalColorError(final RGB signalColorError) {
         this.signalColorError = signalColorError;
     }
 
@@ -208,7 +215,7 @@ public class Colors {
      * @param signalColor
      *            the signalColor to set
      */
-    public void setSignalColor(HashMap<String, RGB> signalColor) {
+    public void setSignalColor(final HashMap<String, RGB> signalColor) {
         this.signalColor = signalColor;
     }
 
@@ -217,11 +224,13 @@ public class Colors {
     /**
      * Sets a specific individual color for a signal identified by its name.
      * 
-     * @param signalColor
+     * @param signalName
+     *            the signal name
+     * @param signalColorParam
      *            the signalColor to set
      */
-    public void setSignalColor(String signalName, RGB signalColor) {
-        this.signalColor.put(signalName, signalColor);
+    public void setSignalColor(final String signalName, final RGB signalColorParam) {
+        this.signalColor.put(signalName, signalColorParam);
     }
 
     // -------------------------------------------------------------------------
@@ -229,11 +238,15 @@ public class Colors {
     /**
      * Sets a specific individual color for a specific tick for a signal identified by its name.
      * 
-     * @param signalColor
+     * @param signalName
+     *            the signal name
+     * @param signalColorParam
      *            the signalColor to set
+     * @param tick
+     *            the tick
      */
-    public void setSignalColor(String signalName, RGB signalColor, long tick) {
-        this.signalTickColor.put((signalName + tick).hashCode(), signalColor);
+    public void setSignalColor(final String signalName, final RGB signalColorParam, final long tick) {
+        this.signalTickColor.put((signalName + tick).hashCode(), signalColorParam);
     }
 
     // -------------------------------------------------------------------------
@@ -241,10 +254,15 @@ public class Colors {
     /**
      * Sets a specific individual color for a specific tick for a signal identified by its name.
      * 
-     * @param signalColor
-     *            the signalColor to set
+     * @param signalName
+     *            the signal name
+     * @param tick
+     *            the tick
+     * @param defaultColor
+     *            the default color
+     * @return the signal color
      */
-    public RGB getSignalColor(String signalName, long tick, RGB defaultColor) {
+    public RGB getSignalColor(final String signalName, final long tick, final RGB defaultColor) {
         int key = (signalName + tick).hashCode();
         if (!(this.signalTickColor.containsKey(key))) {
             if (!(this.signalColor.containsKey(signalName))) {
@@ -265,7 +283,7 @@ public class Colors {
      * @param tick
      *            the tick
      */
-    public void resetSignalColor(String signalName, long tick) {
+    public void resetSignalColor(final String signalName, final long tick) {
         int key = (signalName + tick).hashCode();
         if ((this.signalTickColor.containsKey(key))) {
             this.signalTickColor.remove(key);
@@ -280,7 +298,7 @@ public class Colors {
      * @param signalName
      *            the signal name
      */
-    public void resetSignalColor(String signalName) {
+    public void resetSignalColor(final String signalName) {
         this.signalColor.remove(signalName);
     }
 

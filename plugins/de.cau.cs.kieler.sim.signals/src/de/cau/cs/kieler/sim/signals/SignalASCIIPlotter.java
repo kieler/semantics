@@ -30,11 +30,11 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 
 /**
- * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file
+ * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file.
  * 
  * @author cmot
  */
-abstract public class SignalASCIIPlotter {
+public abstract class SignalASCIIPlotter {
 
     // -------------------------------------------------------------------------
 
@@ -49,7 +49,7 @@ abstract public class SignalASCIIPlotter {
      *            the align
      * @return the string
      */
-    protected String createSpacedLabel(String text, int length, int align) {
+    protected String createSpacedLabel(final String text, final int length, final int align) {
         return createSpacedLabel(text, length, align, ' ');
     }
 
@@ -68,7 +68,8 @@ abstract public class SignalASCIIPlotter {
      *            the fill char
      * @return the string
      */
-    protected String createSpacedLabel(String text, int length, int align, char fillChar) {
+    protected String createSpacedLabel(final String text, final int length, final int align,
+            final char fillChar) {
 
         String spaceL = "";
         String spaceR = "";
@@ -94,7 +95,7 @@ abstract public class SignalASCIIPlotter {
      *            the num
      * @return the space characters
      */
-    protected String getSpaceCharacters(int num) {
+    protected String getSpaceCharacters(final int num) {
         return getSpaceCharacters(num, ' ');
     }
 
@@ -109,7 +110,7 @@ abstract public class SignalASCIIPlotter {
      *            the fill char
      * @return the space characters
      */
-    protected String getSpaceCharacters(int num, char fillChar) {
+    protected String getSpaceCharacters(final int num, final char fillChar) {
         String returnText = "";
         while (returnText.length() < num) {
             returnText = fillChar + returnText;
@@ -130,7 +131,8 @@ abstract public class SignalASCIIPlotter {
      *            the max signal name length
      * @return the tick labels
      */
-    protected String[] getTickLabels(long minTick, long maxTick, int maxSignalNameLength) {
+    protected String[] getTickLabels(final long minTick, final long maxTick,
+            final int maxSignalNameLength) {
         int lines = (maxTick + "").length();
         String[] ascii = new String[lines];
 
@@ -154,15 +156,15 @@ abstract public class SignalASCIIPlotter {
 
     /**
      * Gets the ASCI signal data.
-     * 
-     * @param signal
-     *            the signal
-     * @param maxSignalNameLength
-     *            the max signal name length
+     *
+     * @param minTick the min tick
+     * @param maxTick the max tick
+     * @param signal the signal
+     * @param maxSignalNameLength the max signal name length
      * @return the aSCI signal data
      */
-    protected String[] getASCISignalData(long minTick, long maxTick, Signal signal,
-            int maxSignalNameLength) {
+    protected String[] getASCISignalData(final long minTick, final long maxTick,
+            final Signal signal, final int maxSignalNameLength) {
         String[] ascii = new String[2];
 
         // build label
@@ -210,10 +212,11 @@ abstract public class SignalASCIIPlotter {
 
     /**
      * Gets the max signal name length.
-     * 
+     *
+     * @param signalList the signal list
      * @return the max signal name length
      */
-    protected int getMaxSignalNameLength(SignalList signalList) {
+    protected int getMaxSignalNameLength(final SignalList signalList) {
         int maxLength = 0;
         for (Signal signal : signalList) {
             maxLength = Math.max(maxLength, signal.getName().length());
@@ -230,7 +233,7 @@ abstract public class SignalASCIIPlotter {
      *            the signal list
      * @return the string[]
      */
-    public String[] plot(SignalList signalList) {
+    public String[] plot(final SignalList signalList) {
         LinkedList<String> stringList = new LinkedList<String>();
         return (String[]) stringList.toArray(new String[signalList.size()]);
     }
@@ -239,11 +242,11 @@ abstract public class SignalASCIIPlotter {
 
     /**
      * Export to ASCII text file.
-     * 
-     * @param path
-     *            the path
+     *
+     * @param path the path
+     * @param signalList the signal list
      */
-    public void plotToTextFile(IPath path, SignalList signalList) {
+    public void plotToTextFile(final IPath path, final SignalList signalList) {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);
@@ -275,12 +278,14 @@ abstract public class SignalASCIIPlotter {
 
     /**
      * Export to ESO ASCII text file appending a new execution run if the file already exists.
-     * 
-     * @param path
-     *            the path
+     *
+     * @param path the path
+     * @param signalList the signal list
+     * @param inputSignalList the input signal list
+     * @param outputSignalList the output signal list
      */
-    public void plotToEsoFile(IPath path, SignalList signalList, List<Signal> inputSignalList,
-            List<Signal> outputSignalList) {
+    public void plotToEsoFile(final IPath path, final SignalList signalList,
+            final List<Signal> inputSignalList, final List<Signal> outputSignalList) {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);

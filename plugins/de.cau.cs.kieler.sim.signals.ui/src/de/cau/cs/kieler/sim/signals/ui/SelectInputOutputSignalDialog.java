@@ -238,7 +238,7 @@ public class SelectInputOutputSignalDialog extends Dialog {
      * @param isInput
      *            the is input
      */
-    private void addToTable(final Signal signal, boolean isInput) {
+    private void addToTable(final Signal signal, final boolean isInput) {
         TableItem item = new TableItem(table, SWT.NULL);
         item.setChecked(isInput);
         item.setData(signal);
@@ -401,5 +401,7 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
         }
     }
+
+    // -------------------------------------------------------------------------
 
 }

@@ -52,13 +52,17 @@ public class SignalsView extends ViewPart {
     /** The action to zoom out. */
     private Action actionZoomOut;
 
+    /** ZOOM_LEVEL_DIFF defines how much the zoom level is changed when clicking on + or -. */
+    private static final int ZOOM_LEVEL_DIFF = 10;
+    
     /** The zoom level. */
-    private int zoomLevel = 100;
+    private static final int DEFAULT_ZOOM_LEVEL = 100;
+    private int zoomLevel = DEFAULT_ZOOM_LEVEL;
 
     /** The action to save as. */
     private Action actionSaveAs;
 
-    /** The action to save as eso. */
+    /** The action to save as ESO. */
     private Action actionSaveAsEso;
 
     /** The action to toggle colors. */
@@ -74,7 +78,7 @@ public class SignalsView extends ViewPart {
     private static SignalsView signalsViewInstance = null;
 
     /** The maximal number of ticks. */
-    private final long MAXIMALTICKS = 250;
+    private static final long MAXIMALTICKS = 250;
 
     /** The signal list. */
     private SignalList signalList = new SignalList(MAXIMALTICKS);
@@ -82,11 +86,11 @@ public class SignalsView extends ViewPart {
     /** The signal view colors. */
     private Colors colors = new Colors();
 
-    /** The nondefault signal view colors. This is the second color scheme */
-    private final RGB NONDEFAULTBACKGROUNDCOLOR = new RGB(255, 255, 255); // white
-    private final RGB NONDEFAULTSIGNALCOLOR2 = new RGB(0, 0, 150); // dark blue
-    private final RGB NONDEFAULTSIGNALCOLOR0 = new RGB(230, 230, 230); // light gray
-    private final RGB NONDEFAULTSIGNALCOLORMARKER = new RGB(200, 0, 0); // dark red
+    /** The non default signal view colors. This is the second color scheme */
+    private static final RGB NONDEFAULTBACKGROUNDCOLOR = new RGB(255, 255, 255); // white
+    private static final RGB NONDEFAULTSIGNALCOLOR2 = new RGB(0, 0, 150); // dark blue
+    private static final RGB NONDEFAULTSIGNALCOLOR0 = new RGB(230, 230, 230); // light gray
+    private static final RGB NONDEFAULTSIGNALCOLORMARKER = new RGB(200, 0, 0); // dark red
 
     /**
      * The default color scheme flag. The default color scheme has the black background the other
@@ -108,19 +112,11 @@ public class SignalsView extends ViewPart {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets .Composite)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public void createPartControl(Composite parent) {
-
-        // colors.setSignalColor("B", new RGB(0, 255, 0), 4);
-        // colors.setSignalColor("A", new RGB(0, 255, 0), 2);
-        // colors.setSignalColor("A", new RGB(0, 255, 0), 3);
-        // colors.setSignalColor("S2", new RGB(0, 255, 0));
-
+    public void createPartControl(final Composite parent) {
         // instantiate a plotter, and provide data to it.
         signalsPlotter = new SignalsPlotter(parent);
 
@@ -133,14 +129,12 @@ public class SignalsView extends ViewPart {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#setFocus()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void setFocus() {
-        signalsPlotter.outerScrolledComposite.setFocus();
+        signalsPlotter.getOuterScrolledComposite().setFocus();
     }
 
     // -------------------------------------------------------------------------
@@ -162,7 +156,7 @@ public class SignalsView extends ViewPart {
      * @param signalList
      *            the new signal list
      */
-    public void setSignalList(SignalList signalList) {
+    public void setSignalList(final SignalList signalList) {
         this.signalList = signalList;
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
@@ -176,7 +170,7 @@ public class SignalsView extends ViewPart {
      * @param currentTick
      *            the current tick
      */
-    public void refresh(long currentTick) {
+    public void refresh(final long currentTick) {
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
@@ -243,7 +237,7 @@ public class SignalsView extends ViewPart {
         }
         actionZoomIn = new Action() {
             public void run() {
-                zoomLevel += 10;
+                zoomLevel += ZOOM_LEVEL_DIFF;
                 signalsPlotter.plot(zoomLevel, colors, defaultMode);
             }
         };
@@ -266,8 +260,8 @@ public class SignalsView extends ViewPart {
         }
         actionZoomOut = new Action() {
             public void run() {
-                if (zoomLevel > 10) {
-                    zoomLevel -= 10;
+                if (zoomLevel > ZOOM_LEVEL_DIFF) {
+                    zoomLevel -= ZOOM_LEVEL_DIFF;
                 }
                 signalsPlotter.plot(zoomLevel, colors, defaultMode);
             }
@@ -317,9 +311,9 @@ public class SignalsView extends ViewPart {
 
     // -------------------------------------------------------------------------
     /**
-     * Gets the action to save as eso.
+     * Gets the action to save as ESO.
      * 
-     * @return the action save as eso
+     * @return the action save as ESO
      */
     private Action getActionSaveAsEso() {
         if (actionSaveAsEso != null) {
@@ -438,7 +432,7 @@ public class SignalsView extends ViewPart {
      * @param colors
      *            the new colors
      */
-    public void setColors(Colors colors) {
+    public void setColors(final Colors colors) {
         this.colors = colors;
         // refresh with new colors
         signalsPlotter.plot(zoomLevel, colors, defaultMode);

@@ -29,8 +29,10 @@ public class SignalList extends LinkedList<Signal> {
     /** The most current tick. */
     private long currentTick = -1;
 
+    private static final long DEFAULT_MAXIMAL_TICKS = 1000;
+
     /** The maximal number of ticks. */
-    private long maximalTicks = 1000;
+    private long maximalTicks = DEFAULT_MAXIMAL_TICKS;
 
     // -------------------------------------------------------------------------
 
@@ -45,8 +47,10 @@ public class SignalList extends LinkedList<Signal> {
 
     /**
      * Instantiates a new signal list.
+     *
+     * @param maximalTicks the maximal ticks
      */
-    public SignalList(long maximalTicks) {
+    public SignalList(final long maximalTicks) {
         super();
         this.maximalTicks = maximalTicks;
     }
@@ -55,11 +59,11 @@ public class SignalList extends LinkedList<Signal> {
 
     /**
      * Instantiates a new signal list.
-     * 
-     * @param signalList
-     *            the signal list to initialize this SignalList with.
+     *
+     * @param signalList the signal list to initialize this SignalList with.
+     * @param maximalTicks the maximal ticks
      */
-    public SignalList(LinkedList<Signal> signalList, long maximalTicks) {
+    public SignalList(final LinkedList<Signal> signalList, final long maximalTicks) {
         this.maximalTicks = maximalTicks;
         for (Signal signal : signalList) {
             signal.setMaximalTicks(maximalTicks);
@@ -76,7 +80,7 @@ public class SignalList extends LinkedList<Signal> {
      *            the name
      * @return true, if successful
      */
-    public boolean containsSignal(String name) {
+    public boolean containsSignal(final String name) {
         return (getSignal(name) != null);
     }
 
@@ -89,7 +93,7 @@ public class SignalList extends LinkedList<Signal> {
      *            the name
      * @return the signal
      */
-    public Signal getSignal(String name) {
+    public Signal getSignal(final String name) {
         for (Signal returnSignal : this) {
             if (returnSignal.getName().equals(name)) {
                 return returnSignal;
@@ -100,10 +104,8 @@ public class SignalList extends LinkedList<Signal> {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.util.LinkedList#clone()
+    /**
+     * {@inheritDoc}
      */
     public SignalList clone() {
         SignalList clonedSignalList = new SignalList(maximalTicks);
@@ -122,7 +124,7 @@ public class SignalList extends LinkedList<Signal> {
      * @param name
      *            the name
      */
-    public void removeSignal(String name) {
+    public void removeSignal(final String name) {
         Signal signal = this.getSignal(name);
         if (signal != null) {
             this.remove(signal);
@@ -137,7 +139,7 @@ public class SignalList extends LinkedList<Signal> {
      * @param appendSignalList
      *            the append signal list
      */
-    public void appendClonedSignalList(SignalList appendSignalList) {
+    public void appendClonedSignalList(final SignalList appendSignalList) {
         appendSignalList(appendSignalList.clone());
     }
 
@@ -149,7 +151,7 @@ public class SignalList extends LinkedList<Signal> {
      * @param appendSignalList
      *            the append signal list
      */
-    public void appendSignalList(LinkedList<Signal> appendSignalList) {
+    public void appendSignalList(final LinkedList<Signal> appendSignalList) {
         for (Signal signal : appendSignalList) {
             // if the signal is already in this list, remove it
             removeSignal(signal.getName());
@@ -209,7 +211,7 @@ public class SignalList extends LinkedList<Signal> {
      * @param currentTick
      *            the new current tick
      */
-    public void setCurrentTick(long currentTick) {
+    public void setCurrentTick(final long currentTick) {
         this.currentTick = currentTick;
     }
 
@@ -232,7 +234,7 @@ public class SignalList extends LinkedList<Signal> {
      * @param maximalTicks
      *            the new maximal ticks
      */
-    public void setMaximalTicks(long maximalTicks) {
+    public void setMaximalTicks(final long maximalTicks) {
         this.maximalTicks = maximalTicks;
         for (Signal signal : this) {
             signal.setMaximalTicks(maximalTicks);

@@ -59,6 +59,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     /** The Constant MAXIMALTICKS. */
     private static final int MAXIMALTICKS = 1000;
+    
+    /** The Constant SLEEP_TIME while bringing the View to the front. */
+    private static final int SLEEP_TIME = 10;
 
     /** The maximal ticks. */
     private int maximalTicks = MAXIMALTICKS;
@@ -71,6 +74,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
+    /**
+     * Instantiates a new data component.
+     */
     public DataComponent() {
     }
 
@@ -84,7 +90,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
      * @param additionalSignalList
      *            the new additional signal list
      */
-    public void setAdditionalSignalList(LinkedList<Signal> additionalSignalList) {
+    public void setAdditionalSignalList(final LinkedList<Signal> additionalSignalList) {
         this.additionalSignalList = new SignalList(additionalSignalList, maximalTicks);
     }
 
@@ -151,6 +157,9 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     public void wrapup() throws KiemInitializationException {
         // Reset error signals
         SignalsView.getInstance().getColors().resetSignalColor();
@@ -206,7 +215,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
     /**
      * {@inheritDoc}
      */
-    public JSONObject step(JSONObject jSONObject) throws KiemExecutionException {
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
         // get the (currently) defined error signal key
         errorSignalKey = getProperties()[0].getValue();
 
@@ -278,7 +287,8 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
                         .showError(
                                 "Error signals ("
                                         + errorSignalKey
-                                        + ") cannot be parsed and do not contain a comma spearated list of signal names.",
+                                        + ") cannot be parsed and do not contain" 
+                                        + " a comma spearated list of signal names.",
                                 SignalsUIPlugin.PLUGIN_ID, e, true);
             }
 
@@ -321,7 +331,7 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         });
         while (!broughtToFront) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -346,4 +356,5 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         return true;
     }
 
+    // -------------------------------------------------------------------------
 }

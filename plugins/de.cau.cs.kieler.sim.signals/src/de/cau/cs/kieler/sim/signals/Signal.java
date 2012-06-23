@@ -31,9 +31,11 @@ public class Signal {
 
     /** The tick offset. */
     private long tickOffset = 0;
-
+    
+    private static final long DEFAULT_MAXIMAL_TICKS = 1000;
+    
     /** The maximal number of ticks. */
-    private long maximalTicks = 1000;
+    private long maximalTicks = DEFAULT_MAXIMAL_TICKS;
 
     // -------------------------------------------------------------------------
 
@@ -65,8 +67,10 @@ public class Signal {
 
     /**
      * Clear the history of present values.
+     *
+     * @param currentTick the current tick
      */
-    public void clear(long currentTick) {
+    public void clear(final long currentTick) {
         // ensure that all values are absent if not set yet
         setPresent(currentTick, false);
         this.tickOffset += presentList.size() - 1;
@@ -82,7 +86,7 @@ public class Signal {
      *            the tick
      * @return true, if is tick defined
      */
-    public boolean isTickDefined(long tick) {
+    public boolean isTickDefined(final long tick) {
         if (tick < getTickOffset()) {
             return false;
         }
@@ -124,7 +128,7 @@ public class Signal {
      *            the tick
      * @return true, if is present
      */
-    public boolean isPresent(long tick) {
+    public boolean isPresent(final long tick) {
         if (!isTickDefined(tick)) {
             return false;
         }
@@ -139,7 +143,7 @@ public class Signal {
      * @param isPresent
      *            the is present
      */
-    public void addPresent(boolean isPresent) {
+    public void addPresent(final boolean isPresent) {
         while (this.presentList.size() >= this.maximalTicks) {
             this.presentList.remove(0);
             this.tickOffset++;
@@ -158,7 +162,7 @@ public class Signal {
      * @param isPresent
      *            the is present
      */
-    public void setPresent(long tick, boolean isPresent) {
+    public void setPresent(final long tick, final boolean isPresent) {
         // if tick too early in already garbaged history then ignore it
         if (tick <= getTickOffset()) {
             return;
@@ -178,10 +182,8 @@ public class Signal {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see java.lang.Object#clone()
+    /**
+     * {@inheritDoc}
      */
     public Signal clone() {
         Signal returnSignal = new Signal(name, maximalTicks);
@@ -210,7 +212,7 @@ public class Signal {
      * @param tickOffset
      *            the new tick offset
      */
-    public void setTickOffset(long tickOffset) {
+    public void setTickOffset(final long tickOffset) {
         this.tickOffset = tickOffset;
     }
 
@@ -233,7 +235,7 @@ public class Signal {
      * @param maximalTicks
      *            the new maximal ticks
      */
-    public void setMaximalTicks(long maximalTicks) {
+    public void setMaximalTicks(final long maximalTicks) {
         this.maximalTicks = maximalTicks;
     }
 
