@@ -36,6 +36,5 @@
 		<nature>org.eclipse.jdt.core.javanature</nature>
 		<nature>org.openarchitectureware.base.oawNature</nature>
 		<nature>org.eclipse.xtend.shared.ui.xtendXPandNature</nature>
-		<nature>net.sf.eclipsecs.core.CheckstyleNature</nature>
 	</natures>
 </projectDescription>
