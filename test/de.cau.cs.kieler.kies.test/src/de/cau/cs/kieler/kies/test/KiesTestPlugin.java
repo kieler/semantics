@@ -18,7 +18,7 @@ package de.cau.cs.kieler.kies.test;
  * 
  * @author cmot
  */
-public class KiesTestPlugin  {
+public final class KiesTestPlugin  {
 
     /** The plug-in ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kies.test"; //$NON-NLS-1$
@@ -26,10 +26,11 @@ public class KiesTestPlugin  {
     // -----------------------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * The constructor.
      */
-    public KiesTestPlugin() {
+    private KiesTestPlugin() {
     }
 
     // -----------------------------------------------------------------------------------------
+    
 }

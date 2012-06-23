@@ -79,10 +79,21 @@ public class TimeMeasurement {
     // CHECKSTYLEOFF VisibilityModifier
     // FIXME
     private static String pathToTests = "/tests/transformation/";
-    //private String pathToWS = "/../workspace/"; REMOVED THIS HACK (cmot)
+    
+    /** PERFORMANCETESTRUNS gives the number of runs for the performance test. */
+    private static final int PERFORMANCETESTRUNS = 10;
+    
+    /** The timeout in ms for waiting for a performance test result. */
+    private static final int JOIN_TEST_TIMEOUT = 10000;
+    
+    /** The SLEEP_TIME_BETWEEN_TESTS in ms. */
+    private static final int SLEEP_TIME_BETWEEN_TESTS = 200;
+    
+    // private String pathToWS = "/../workspace/"; REMOVED THIS HACK (cmot)
+    /** The workspace root. */
     private IWorkspaceRoot workspaceRoot;
     private IProject project;
-    
+
     private File[] filesTest = null;
 
     private Multimap<String, Long> times = HashMultimap.create();
@@ -131,14 +142,14 @@ public class TimeMeasurement {
             }
         };
 
-        //File dir = new File(workspaceRoot.getLocation() + pathToWS + "de.cau.cs.kieler.kies/tests/");
+        // File dir = new File(workspaceRoot.getLocation() + pathToWS +
+        // "de.cau.cs.kieler.kies/tests/");
         // if the bundle is not ready then there is no image
         Bundle bundle = Platform.getBundle(KiesTestPlugin.PLUGIN_ID);
         // first try to resolve bundle files (give preference to bundle files)
-        URL testDirURL = null;
-        testDirURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(pathToTests),
-                null);
-        String testDirString = getAbsoluteFilePath(testDirURL);
+//        URL testDirURL = null;
+//        testDirURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(pathToTests), null);
+//        String testDirString = getAbsoluteFilePath(testDirURL);
         File testDir;
         try {
             testDir = org.eclipse.core.runtime.FileLocator.getBundleFile(bundle);
@@ -156,6 +167,11 @@ public class TimeMeasurement {
     static FileWriter fw;
 
     // @Test
+    /**
+     * Test.
+     *
+     * @throws Exception the exception
+     */
     public void test() throws Exception {
         TransformationUtil.logger.setLevel(Level.OFF);
         fw = new FileWriter(outputFile);
@@ -167,7 +183,7 @@ public class TimeMeasurement {
             }
             System.out.println("##### " + f);
 
-            for (int i = 0; i < 10; i++) {
+            for (int i = 0; i < PERFORMANCETESTRUNS; i++) {
                 performTest(f, i);
 
                 List<Resource> l2 = Lists.newLinkedList(rs.getResources());
@@ -187,11 +203,18 @@ public class TimeMeasurement {
         fw.close();
     }
 
+    /**
+     * Measure time. 
+     *
+     * @throws Exception the exception
+     */
+    @SuppressWarnings("deprecation")
     @Test
     public void measureTime() throws Exception {
 
         fw = new FileWriter(outputFile);
-        fw.write("Whole setup(resource, ted...) ; just recursive execution ; recursive + dc setup ; just stepwise execution ");
+        fw.write("Whole setup(resource, ted...) ; just recursive execution"
+                + " ; recursive + dc setup ; just stepwise execution ");
         fw.close();
 
         TransformationUtil.logger.setLevel(Level.OFF);
@@ -217,14 +240,14 @@ public class TimeMeasurement {
             });
             t.start();
             try {
-                t.join(50000);
+                t.join(JOIN_TEST_TIMEOUT);
                 if (t.isAlive()) {
+                    //TODO: for a possible reimplementation, use someting else here.
                     t.suspend();
 
-                } else {
-                }
+                } 
             } catch (Exception e) {
-
+                // ignore any error
             }
 
         }
@@ -232,10 +255,9 @@ public class TimeMeasurement {
 
     private void measure(final File modelFile) {
         // REMOVED THIS HACK (cmot)
-//        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-//                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+        // IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+        // + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
         IPath modelFilePath = new Path(modelFile.getPath());
-        
 
         IFile strl = project.getFile(modelFilePath.lastSegment());
         try {
@@ -249,7 +271,7 @@ public class TimeMeasurement {
                 .addFileExtension("kixs");
 
         final IFile kixsFile = workspaceRoot.getFile(kixsPath);
-        final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
+//        final URI kixsURI = URI.createPlatformResourceURI(kixsFile.getFullPath().toString(), true);
 
         TransformationUtil.createSyncchartDiagram(kixsFile);
         TransformationUtil.doInitialEsterelTransformation(strl, kixsFile);
@@ -528,8 +550,9 @@ public class TimeMeasurement {
             int i = 0;
             long start = System.currentTimeMillis();
             while (!dc.isFinished()) {
-                if (i > 1000)
+                if (i > JOIN_TEST_TIMEOUT) {
                     return false;
+                }
                 // retrieve transformation description
                 TransformationDescriptor td = dc.getNextTransformation();
                 ITransformationContext context = new XtendTransformationContext(
@@ -580,6 +603,12 @@ public class TimeMeasurement {
     }
 
     // @Test
+    /**
+     * Cal levels.
+     *
+     * @throws Exception the exception
+     */
+    @SuppressWarnings("deprecation")
     public void calLevels() throws Exception {
         TransformationUtil.logger.setLevel(Level.OFF);
         List<File> reversed = Lists.newArrayList(filesTest);
@@ -603,24 +632,29 @@ public class TimeMeasurement {
             });
             t.start();
             try {
-                t.join(50000);
+                t.join(JOIN_TEST_TIMEOUT);
                 if (t.isAlive()) {
+                    //TODO: possible re-implementation w/o deprecated suspend().
                     t.suspend();
 
-                } else {
-                }
+                } 
             } catch (Exception e) {
-
+                // ignore error
             }
 
         }
     }
 
+    /**
+     * Compare hierarchy levels.
+     *
+     * @param modelFile the model file
+     */
     public void compareHierarchyLevels(final File modelFile) {
         // REMOVED THIS HACK (cmot)
-//      IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-//      + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
-      IPath modelFilePath = new Path(modelFile.getPath());
+        // IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+        // + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+        IPath modelFilePath = new Path(modelFile.getPath());
 
         IFile strl = project.getFile(modelFilePath.lastSegment());
         try {
@@ -680,9 +714,16 @@ public class TimeMeasurement {
     Multimap<Integer, State> levels = HashMultimap.create();
     int maxlevel = 0;
 
-    private void addLevel(Region r, int level) {
-        if (level > maxlevel)
+    /**
+     * Adds the level.
+     *
+     * @param r the r
+     * @param level the level
+     */
+    private void addLevel(final Region r, final int level) {
+        if (level > maxlevel) {
             maxlevel = level;
+        }
         for (State s : r.getStates()) {
             levels.put(level, s);
             for (Region rinner : s.getRegions()) {
@@ -735,12 +776,12 @@ public class TimeMeasurement {
      * @throws Exception
      *             if test fails
      */
-    private void performTest(final File modelFile, int time) throws Exception {
+    private void performTest(final File modelFile, final int time) throws Exception {
         // create links to the testfiles in the test project folder
         // REMOVED THIS HACK (cmot)
-//        IPath path = new Path(workspaceRoot.getLocation() + pathToWS
-//                + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
-      IPath modelFilePath = new Path(modelFile.getPath());
+        // IPath path = new Path(workspaceRoot.getLocation() + pathToWS
+        // + "de.cau.cs.kieler.kies/tests/" + strlFile.getName());
+        IPath modelFilePath = new Path(modelFile.getPath());
 
         IFile strl = project.getFile(modelFilePath.lastSegment());
         strl.createLink(modelFilePath, IResource.NONE, null);
@@ -750,7 +791,7 @@ public class TimeMeasurement {
         // transform
         final IFile kixs = transformToSyncchart(strl, time);
 
-        Thread.sleep(200);
+        Thread.sleep(SLEEP_TIME_BETWEEN_TESTS);
         System.gc();
         if (kixs.exists()) {
             boolean deleted = false;
@@ -774,7 +815,7 @@ public class TimeMeasurement {
         System.out.println("##################!!!!!!!! " + kixs.exists());
     }
 
-    private IFile transformToSyncchart(final IFile strlFile, int time) {
+    private IFile transformToSyncchart(final IFile strlFile, final int time) {
         IPath kixsPath = strlFile.getFullPath().removeFileExtension()
         // .append(String.valueOf(time))
                 .addFileExtension("kixs");
@@ -832,14 +873,19 @@ public class TimeMeasurement {
         return kixsFile;
     }
 
-    private void removeReferences(State parent) {
-        parent.setBodyReference(null);
-        for (Region r : parent.getRegions()) {
-            for (State s : r.getStates()) {
-                removeReferences(s);
-            }
-        }
-    }
+//    /**
+//     * Removes the references.
+//     *
+//     * @param parent the parent
+//     */
+//    private void removeReferences(final State parent) {
+//        parent.setBodyReference(null);
+//        for (Region r : parent.getRegions()) {
+//            for (State s : r.getStates()) {
+//                removeReferences(s);
+//            }
+//        }
+//    }
 
     /**
      * returns the file's extension without the leading dot. e.g. for "test.strl" the return is
@@ -855,21 +901,21 @@ public class TimeMeasurement {
         return ext;
     }
 
-    /**
-     * returns the file's leading description prior to a hyphen. e.g. for "fail-test.str" the return
-     * is "fail".
-     * 
-     * @param file
-     * @return
-     */
-    private String getFileStart(final File file) {
-        String filename = file.getName();
-        String start = (filename.indexOf("-") == -1 ? "" : filename.substring(0,
-                filename.indexOf("-")));
-        return start;
-    }
-    // -------------------------------------------------------------------------
+//    /**
+//     * returns the file's leading description prior to a hyphen. e.g. for "fail-test.str" the return
+//     * is "fail".
+//     * 
+//     * @param file
+//     * @return
+//     */
+//    private String getFileStart(final File file) {
+//        String filename = file.getName();
+//        String start = (filename.indexOf("-") == -1 ? "" : filename.substring(0,
+//                filename.indexOf("-")));
+//        return start;
+//    }
 
+    // -------------------------------------------------------------------------
 
     /**
      * Gets the absolute file path.
@@ -878,7 +924,7 @@ public class TimeMeasurement {
      *            the url
      * @return the absolute file path
      */
-    String getAbsoluteFilePath(URL url) {
+    String getAbsoluteFilePath(final URL url) {
         // if bundle entry then just to string
         if (url.toString().contains("bundleentry")) {
             return url.toString();
@@ -886,7 +932,7 @@ public class TimeMeasurement {
         IPath urlPath = new Path(url.getFile());
         return getAbsoluteFilePath(urlPath);
     }
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -896,7 +942,7 @@ public class TimeMeasurement {
      *            the ipath
      * @return the absolute file path
      */
-    String getAbsoluteFilePath(IPath ipath) {
+    String getAbsoluteFilePath(final IPath ipath) {
         // if bundle entry then just to string
         if (ipath.toString().contains("bundleentry")) {
             return ipath.toString();
