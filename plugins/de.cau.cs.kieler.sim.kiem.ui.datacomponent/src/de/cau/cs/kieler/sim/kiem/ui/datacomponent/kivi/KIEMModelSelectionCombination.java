@@ -46,10 +46,10 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * 
  */
 public class KIEMModelSelectionCombination extends AbstractCombination {
-    
+
     /** The time to sleep during blocking wait. */
     public static final int SLEEP_WAIT_TIME = 50;
-    
+
     // -------------------------------------------------------------------------
 
     /**
@@ -104,20 +104,20 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         KiemPlugin.getOpenedModelEditors().clear();
         KiemPlugin.getOpenedModelRootObjects().clear();
 
-        IEditorPart[] editors = getEditorList();
-        if ((editors == null) || (editors.length == 0)) {
+        IEditorPart[] localEditors = getEditorList();
+        if ((localEditors == null) || (localEditors.length == 0)) {
             return;
         }
 
         // Go thru all editors
-        for (IEditorPart editorPart : editors) {
+        for (IEditorPart editorPart : localEditors) {
             IPath inputModelPath = getInputModelPath(editorPart);
-            
+
             // this is the active editor if any
             if (editorPart == editorState.getEditorPart()) {
                 KiemPlugin.setCurrentModelFile(inputModelPath);
             }
-            
+
             // add to opened model files
             KiemPlugin.getOpenedModelFiles().add(inputModelPath);
             EObject rootObject = this.getInputModelEObject(editorPart);
@@ -133,13 +133,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
     }
 
     // -------------------------------------------------------------------------
-    
-    boolean doneGetEditorList = false;
-    IEditorPart[] editors = null;
-    
+
+    private boolean doneGetEditorList = false;
+    private IEditorPart[] editors = null;
+
     /**
      * Gets the editor list in the UI thread.
-     *
+     * 
      * @return the editor list
      */
     IEditorPart[] getEditorList() {
@@ -152,7 +152,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
                     if (workbenchWindow != null) {
                         IWorkbenchPage page = workbenchWindow.getActivePage();
                         if (page != null) {
-                            IEditorReference[] editorReferences  = page.getEditorReferences();
+                            IEditorReference[] editorReferences = page.getEditorReferences();
                             editors = new IEditorPart[editorReferences.length];
                             int c = 0;
                             for (IEditorReference editorReference : editorReferences) {
@@ -165,7 +165,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
                 doneGetEditorList = true;
             }
         });
-        
+
         while (!doneGetEditorList) {
             try {
                 Thread.sleep(SLEEP_WAIT_TIME);
@@ -174,37 +174,40 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             }
         }
         return editors;
-        
+
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Gets the input model EObject.
-     *
-     * @param editorPart the editor part
+     * 
+     * @param editorPart
+     *            the editor part
      * @return the input model e object
      */
-    protected EObject getInputModelEObject(IEditorPart editorPart) {
+    protected EObject getInputModelEObject(final IEditorPart editorPart) {
         EObject model = null;
         if (editorPart instanceof DiagramEditor) {
             model = GmfModelingUtil.getModelFromGmfEditor((DiagramEditor) editorPart);
         } else if (editorPart instanceof XtextEditor) {
             boolean ignoreDirtyEditor = true;
-            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart, ignoreDirtyEditor);
+            model = XtextModelingUtil.getModelFromXtextEditor((XtextEditor) editorPart,
+                    ignoreDirtyEditor);
         }
         return model;
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Gets the input model.
-     *
-     * @param editorPart the editor part
+     * 
+     * @param editorPart
+     *            the editor part
      * @return the input model
      */
-    protected IPath getInputModelPath(IEditorPart editorPart) {
+    protected IPath getInputModelPath(final IEditorPart editorPart) {
         EObject model = this.getInputModelEObject(editorPart);
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IPath fullPath = null;
@@ -214,12 +217,11 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             IPath path = new Path(uri.toPlatformString(false));
             IFile file = myWorkspaceRoot.getFile(path);
             fullPath = file.getFullPath();
-        }
-        else {
+        } else {
             // Other editors
             IEditorInput editorInput = editorPart.getEditorInput();
             if (editorInput instanceof FileEditorInput) {
-                FileEditorInput fileEditorInput = (FileEditorInput)editorInput;
+                FileEditorInput fileEditorInput = (FileEditorInput) editorInput;
                 IFile file = fileEditorInput.getFile();
                 fullPath = file.getFullPath();
             }
