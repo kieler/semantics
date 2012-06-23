@@ -47,7 +47,6 @@ import de.cau.cs.kieler.core.model.gmf.effects.RefreshGMFEditPoliciesEffect;
 import de.cau.cs.kieler.core.model.gmf.triggers.ModelChangeTrigger.ActiveEditorState;
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
-import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.kies.AbstractTransformationDataComponent;
 import de.cau.cs.kieler.kies.Activator;
@@ -100,8 +99,6 @@ public class E2STransformationCombination extends AbstractCombination {
     private String lastStepType = BUTTON_STEP;
 
     private boolean initInProgess = false;
-    
-    
 
     /**
      * Default Constructor, setting up all needed buttons.
@@ -116,29 +113,30 @@ public class E2STransformationCombination extends AbstractCombination {
         ImageDescriptor iconStepBack = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepBackIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP_BACK, "Step Back",
-                "Step Back", iconStepBack, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
-                SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
+                "Step Back", iconStepBack, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
+                null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### step
         ImageDescriptor iconStep = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/stepIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_STEP, "Step", "Step",
-                iconStep, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null, SYNCCHARTS_EDITOR_ID,
-                ESTEREL_EDITOR_ID);
+                iconStep, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
+                SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### expand (complete transformation)
         ImageDescriptor iconExpand = Activator.imageDescriptorFromPlugin(Activator.PLUGIN_ID,
                 "icons/expandIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND, "Expand",
-                "Expand", iconExpand, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null, null,
-                SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
+                "Expand", iconExpand, SWT.PUSH, LocationScheme.MENU_POPUP_TOOLBAR, null, null,
+                null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
 
         // #### expand and optimize
         ImageDescriptor iconExpandAndOptimize = Activator.imageDescriptorFromPlugin(
                 Activator.PLUGIN_ID, "icons/expandAndOptimizeIcon.png");
         KiviMenuContributionService.INSTANCE.addToolbarButton(this, BUTTON_EXPAND_OPTIMIZE,
                 "Expand and Optimize", "Expand and Optimize", iconExpandAndOptimize, SWT.PUSH,
-                LocationScheme.MENU_POPUP_TOOLBAR, null, null, null, SYNCCHARTS_EDITOR_ID, ESTEREL_EDITOR_ID);
+                LocationScheme.MENU_POPUP_TOOLBAR, null, null, null, SYNCCHARTS_EDITOR_ID,
+                ESTEREL_EDITOR_ID);
 
         MenuItemEnableStateEffect ef = new MenuItemEnableStateEffect(BUTTON_STEP_BACK, false);
         ef.schedule();
@@ -168,7 +166,7 @@ public class E2STransformationCombination extends AbstractCombination {
                     + transformationState.getEffect().getResult());
             postTransformation(transformationState.getEffect());
             return;
-            
+
         case FIRST: // button state
             if (!buttonEnabling.keySet().contains(buttonState.getButtonId())) {
                 // not interested in that button
@@ -185,8 +183,8 @@ public class E2STransformationCombination extends AbstractCombination {
             if (currentlyActiveEditor instanceof XtextEditor) {
                 boolean created = initializeTransformation();
                 if (created
-                        && (buttonState.getButtonId() == BUTTON_EXPAND 
-                                || buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE)) {
+                        && (buttonState.getButtonId() == BUTTON_EXPAND
+                        ||  buttonState.getButtonId() == BUTTON_EXPAND_OPTIMIZE)) {
                     // FIXME the editor was changed by the initializeTransformation method, but the
                     // editorState wasn't processed yet. Therefore, it is necessary to fetch the new
                     // editor.
@@ -224,9 +222,9 @@ public class E2STransformationCombination extends AbstractCombination {
             }
             initInProgess = true;
             TransformationUtil.openKidsInEditor(created);
-            //@author: cmot, do not disable ALL checks by default
-//            if (ValidationManager.isEnabled(SYNCCHARTS_EDITOR_ID));
-//            ValidationManager.disableAll();
+            // @author: cmot, do not disable ALL checks by default
+            // if (ValidationManager.isEnabled(SYNCCHARTS_EDITOR_ID));
+            // ValidationManager.disableAll();
             return true;
         }
         return false;
@@ -260,7 +258,7 @@ public class E2STransformationCombination extends AbstractCombination {
         if (isTransformable) {
             currentDataComponent = transformingDataComponent;
         } else {
-            
+
             currentDataComponent = optimizingDataComponent;
         }
 

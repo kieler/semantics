@@ -34,6 +34,11 @@ public class RefreshGMFPoliciesHandler extends AbstractHandler {
      * {@inheritDoc}
      */
     public Object execute(final ExecutionEvent event) throws ExecutionException {
+        // getLastActiveEditor is currently the only way to get to this editor
+        // TODO: it should be called from UI code only and KIES should be
+        // separated into ui and non-ui code.
+        // Possible reimplementation with xtend2
+        @SuppressWarnings("deprecation")
         IEditorPart editorPart = EditorUtils.getLastActiveEditor();
         if (editorPart instanceof DiagramEditor) {
             RefreshGMFEditPoliciesEffect gmf = new RefreshGMFEditPoliciesEffect(
