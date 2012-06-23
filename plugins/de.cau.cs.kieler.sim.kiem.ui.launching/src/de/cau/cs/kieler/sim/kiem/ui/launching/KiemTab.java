@@ -14,6 +14,7 @@
 package de.cau.cs.kieler.sim.kiem.ui.launching;
 
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IPath;
 import org.eclipse.debug.core.ILaunchConfiguration;
 import org.eclipse.debug.core.ILaunchConfigurationWorkingCopy;
 import org.eclipse.debug.ui.AbstractLaunchConfigurationTab;
@@ -32,9 +33,10 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 
-import de.cau.cs.kieler.core.ui.util.EditorUtils;
+import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
@@ -129,10 +131,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#setDirty(boolean)
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void setDirty(final boolean dirty) {
@@ -142,11 +142,8 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
 
     // --------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.debug.ui.AbstractLaunchConfigurationTab#isValid(org.eclipse.debug.core.
-     * ILaunchConfiguration)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean isValid(final ILaunchConfiguration config) {
@@ -253,27 +250,34 @@ public class KiemTab extends AbstractLaunchConfigurationTab {
         EditorIdWrapper editorId = null;
         String editorName = null;
 
-        if (EditorUtils.getLastActiveEditor() != null) {
-            IEditorSite editor = EditorUtils.getLastActiveEditor().getEditorSite();
-            if (editor != null) {
-                // get the attributes from the editor
-                editorId = new EditorIdWrapper(editor.getId());
-                editorName = editor.getRegisteredName();
+        IPath modelFile = KiemPlugin.getCurrentModelFile();
+        if (modelFile != null) {
+            IEditorPart editorPart = KiemPlugin.getOpenedModelEditors().get(modelFile);
+            
+            if (editorPart != null) {
+                IEditorSite editor = editorPart.getEditorSite();
+                if (editor != null) {
+                    // get the attributes from the editor
+                    editorId = new EditorIdWrapper(editor.getId());
+                    editorName = editor.getRegisteredName();
 
-                ScheduleManager manager = ScheduleManager.getInstance();
-                data = manager.getMatchingSchedules(editorId, editorName);
+                    ScheduleManager manager = ScheduleManager.getInstance();
+                    data = manager.getMatchingSchedules(editorId, editorName);
 
-                for (ScheduleData scheduleData : data) {
-                    // take the first default schedule
-                    if (scheduleData.isImported()) {
-                        String scheduleDataString = scheduleData.toString();
-                        configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE,
-                                scheduleDataString);
-                        break;
+                    for (ScheduleData scheduleData : data) {
+                        // take the first default schedule
+                        if (scheduleData.isImported()) {
+                            String scheduleDataString = scheduleData.toString();
+                            configuration.setAttribute(KiemUILaunchPlugin.ATTR_EXECUTION_SCHEDULE,
+                                    scheduleDataString);
+                            break;
+                        }
                     }
                 }
             }
+            
         }
+        
     }
 
     // --------------------------------------------------------------------------

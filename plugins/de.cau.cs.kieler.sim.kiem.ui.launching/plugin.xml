@@ -27,8 +27,6 @@
    delegate="de.cau.cs.kieler.sim.kiem.ui.launching.KIEMDelegate"
    modes="run,debug"
    name="KIELER Execution"
-   migrationDelegate="com.example.migrationDelegate"
-   sourcePathComputerId="com.example.sourcePathComputer"
    delegateName="KIELER Exceution Manager Launch Tooling"
    delegateDescription="The KIELER Execution Manager tooling will run or debug KIELER models.">
   </launchConfigurationType>
