@@ -39,7 +39,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
     // -----------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * The constructor.
      */
     public S2SCPlugin() {
     }
@@ -49,7 +49,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void start(BundleContext context) throws Exception {
+    public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
@@ -59,7 +59,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void stop(BundleContext context) throws Exception {
+    public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
@@ -79,8 +79,8 @@ public class S2SCPlugin extends AbstractUIPlugin {
      * @throws IOException
      *             Signals that an I/O exception has occurred.
      */
-    public static void generateSCCode(Program program, String outputFile, String outputFolder)
-            throws IOException {
+    public static void generateSCCode(final Program program, final String outputFile,
+            final String outputFolder) throws IOException {
         S2SC s2SC = new S2SC();
         String ccode = s2SC.transform(program, outputFolder).toString();
 
@@ -98,7 +98,7 @@ public class S2SCPlugin extends AbstractUIPlugin {
     // -----------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance
+     * Returns the shared instance.
      * 
      * @return the shared instance
      */
