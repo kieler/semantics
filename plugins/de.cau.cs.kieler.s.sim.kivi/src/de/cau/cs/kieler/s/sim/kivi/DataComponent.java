@@ -50,15 +50,6 @@ public class DataComponent extends JSONObjectXtextVisualizationDataComponent {
     protected String getEncodedEObjectId(final EObject eObject) {
         if (eObject.eResource() != null) {
             String uri = eObject.eResource().getURIFragment(eObject);
-            // uri = uri.replaceAll("/", "x");
-            // uri = uri.replaceAll("@", "");
-            // // FIXME: Why does replaceAll not work for "."?!
-            // while (uri.indexOf(".") > 0) {
-            // String test = uri.substring(0, uri.indexOf("."));
-            // String test2 = uri
-            // .substring(uri.indexOf(".") + 1, uri.length());
-            // uri = test + test2;
-            // }
             uri = (uri.hashCode() + "").replace("-", "M");
             return uri;
         }
