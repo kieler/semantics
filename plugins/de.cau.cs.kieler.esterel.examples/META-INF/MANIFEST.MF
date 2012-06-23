@@ -6,7 +6,8 @@ Bundle-Version: 0.1.0.qualifier
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  de.cau.cs.kieler.kex,
- de.cau.cs.kieler.esterel.ui
+ de.cau.cs.kieler.esterel.ui,
+ de.cau.cs.kieler.kex.ui;bundle-version="0.3.0"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
