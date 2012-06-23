@@ -311,10 +311,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     // ---------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.ui.part.WorkbenchPart#createPartControl(org.eclipse.swt.widgets.Composite)
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void createPartControl(final Composite parentParam) {
@@ -326,11 +324,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * Creates the part control2.
-     * 
-     * @param parentParam
-     *            the parent param
-     * @param viewerParam
-     *            the viewer param
+     *
+     * @param parentParam the parent param
+     * @param viewerParam the viewer param
      * @return the kiem table viewer
      */
     public KiemTableViewer createPartControl2(final Composite parentParam,
@@ -357,9 +353,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * This will create the columns for the table.
-     * 
-     * @param viewerParam
-     *            the viewer
+     *
+     * @param viewerParam the viewer param
      */
     public void createColumns(final KiemTableViewer viewerParam) {
         for (int i = 0; i < COLUMN_TITLES.length; i++) {
@@ -385,9 +380,9 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
     /**
      * Refreshes the tables columns an fold/unfold KiemProperties i.e., the value column.
-     * 
-     * @param collapsed
-     *            the collapsed
+     *
+     * @param collapsed the collapsed
+     * @param viewerParam the viewer param
      */
     private void refreshTableColumns(final boolean collapsed, final KiemTableViewer viewerParam) {
         Tree tree = viewerParam.getTree();
@@ -535,10 +530,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         IToolBarManager manager = bars.getToolBarManager();
         // first remove all entries
         manager.removeAll();
-
         // call soh's extension point
         addExternalContributions(manager);
-
         manager.add(getActionUp());
         manager.add(getActionDown());
         manager.add(new Separator());
@@ -546,7 +539,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         manager.add(getStepTextField());
         manager.add(new Separator());
         manager.add(getActionStepBack());
-
         if (KiemPlugin.getDefault().getCurrentMaster() == null) {
             // add a drop down action
             DropDownAction dn = new DropDownAction(getActionStep());
@@ -558,12 +550,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             // simple action iff master is present
             manager.add(getActionStep());
         }
-
-        // manager.add(getActionStep());
-
-        // TODO: macro step implementation
-        // manager.add(getActionMacroStep());
-
+        // TODO: macro step implementation: // manager.add(getActionMacroStep());
         if (KiemPlugin.getDefault().getCurrentMaster() == null) {
             // add a drop down action
             DropDownAction dn = new DropDownAction(getActionRun());
@@ -574,10 +561,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
             // simple action iff master is present
             manager.add(getActionRun());
         }
-
         manager.add(getActionPause());
         manager.add(getActionStop());
-
         // commit changes
         bars.updateActionBars();
     }
@@ -587,22 +572,18 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     /**
      * Add components contributed by other plugins through the ToolBarContributor extension point.
      * 
-     * author soh
-     * 
-     * @param manager
-     *            the manager where to add the components
+     * @author soh
+     *
+     * @param manager the manager where to add the components
      */
     private void addExternalContributions(final IToolBarManager manager) {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor("de.cau.cs.kieler.sim.kiem.toolbarContributor");
-
         for (IConfigurationElement element : contributors) {
             try {
                 IKiemToolbarContributor contributor = (IKiemToolbarContributor) (element
                         .createExecutableExtension("class"));
-
                 ControlContribution[] contributions = contributor.provideToolbarContributions(null);
-
                 if (contributions != null) {
                     for (ControlContribution contribution : contributions) {
                         if (contribution != null) {
@@ -610,9 +591,7 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         }
                     }
                 }
-
                 Action[] actions = contributor.provideToolbarActions(null);
-
                 if (actions != null) {
                     for (Action contribution : actions) {
                         if (contribution != null) {
@@ -621,24 +600,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                     }
                 }
             } catch (CoreException e0) {
-                // TODO Auto-generated catch block
                 e0.printStackTrace();
             }
         }
     }
-
-    // -------------------------------------------------------------------------
-
-    // /**
-    // * Show message dialog with the message.
-    // *
-    // * @param message
-    // * the message to present
-    // */
-    // @SuppressWarnings("unused")
-    // private void showMessage(final String message) {
-    // showMessage(Messages.mViewTitle, message);
-    // }
 
     // -------------------------------------------------------------------------
 
@@ -659,13 +624,10 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private String showInputDialog(final String title, final String message,
             final String defaultValue) {
-
         inputDialogReturnValue = null;
-
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 final Shell shell = Display.getCurrent().getShells()[0];
-
                 InputDialog dlg = new InputDialog(shell, title, message, defaultValue, null);
                 dlg.open();
                 if (dlg.getReturnCode() == InputDialog.OK) {
@@ -673,7 +635,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                 }
             }
         });
-
         return inputDialogReturnValue;
     }
 
@@ -689,7 +650,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
      */
     private void showMessage(final String title, final String message) {
         ContributionManager cm = ContributionManager.getInstance();
-
         if ((cm != null) && !cm.isSummaryMessageDisabled()) {
             String[] buttons = new String[] { "Disable this Message", "Ok" };
             MessageDialog messageDialog = new MessageDialog(viewer.getControl().getShell(),
@@ -824,7 +784,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         if (viewerParam == null || viewerParam.getSelection() == null) {
             return;
         }
-
         Object selection = ((org.eclipse.jface.viewers.StructuredSelection) viewerParam
                 .getSelection()).getFirstElement();
         if (kIEMInstance.getExecution() != null) {
@@ -1889,7 +1848,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     private long aimedStepDuration = 0;
 
     private void actionStopExecution() {
-
         // otherwise default implementation
         if (kIEMInstance.getExecution() != null) {
             // get results
@@ -1903,10 +1861,8 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
 
             kIEMInstance.getExecution().stopExecutionSync();
         }
-
         kIEMInstance.setExecution(null);
         this.updateViewAsync();
-
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
                 // show execution results
@@ -1921,7 +1877,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
                         + " ms");
             }
         });
-
     }
 
     // -------------------------------------------------------------------------
@@ -1981,29 +1936,23 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
-
     // -------------------------------------------------------------------------
     // MAKE PROPERTIES SAVEABLE
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
     public void doSave(final IProgressMonitor monitor) {
         KiemPlugin.getDefault().doSave(monitor, this.getViewSite().getShell());
     }
-
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
     public void doSaveAs() {
         KiemPlugin.getDefault().doSaveAs(this.getViewSite().getShell());
     }
-
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
@@ -2013,7 +1962,6 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
     }
 
     // -------------------------------------------------------------------------
-
     /**
      * Sets the dirty flag. Dirty means that the currentFile has been modified since the last
      * save/load action.
@@ -2025,32 +1973,27 @@ public class KiemView extends ViewPart implements ISaveablePart2 {
         KiemPlugin.getDefault().setDirty(isDirtyParam);
         firePropertyChange(IWorkbenchPartConstants.PROP_DIRTY);
     }
-
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
     public boolean isSaveAsAllowed() {
         return true;
     }
-
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
     public boolean isSaveOnCloseNeeded() {
         return true;
     }
-
     // -------------------------------------------------------------------------
-
     /**
      * {@inheritDoc}
      */
     public int promptToSaveOnClose() {
         return KiemPlugin.getDefault().promptToSaveOnClose(viewer.getControl().getShell());
     }
+    // -------------------------------------------------------------------------
 
 }
