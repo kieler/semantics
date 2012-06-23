@@ -46,10 +46,10 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
-import de.cau.cs.kieler.sim.kiem.automated.AbstractAutomatedProducer;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
+import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
@@ -62,7 +62,7 @@ import de.cau.cs.kieler.synccharts.codegen.sc.WorkflowGenerator;
  * @author tam, cmot
  * 
  */
-public class SCDataComponent extends AbstractAutomatedProducer {
+public class SCDataComponent extends JSONObjectSimulationDataComponent {
 
     private static final int PROP_COMPILER = 1;
     private static final int PROP_PATH = 2;
@@ -533,43 +533,4 @@ public class SCDataComponent extends AbstractAutomatedProducer {
         return out;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public List<KiemProperty> produceInformation() {
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String[] getSupportedExtensions() {
-        String[] out = { "kixs" };
-        return out;
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Is called _before_ provideInitialVariables. Sets the flags for validation.
-     * 
-     */
-    @Override
-    public void setParameters(final List<KiemProperty> properties)
-            throws KiemInitializationException {
-        validation = true;
-        newValidation = true;
-        for (KiemProperty p : properties) {
-            if (p.getKey().equals(MODEL_FILE)) {
-                fileLocation = p.getValue();
-            }
-            if (p.getKey().equals(ITERATION)) {
-                if (Integer.parseInt(p.getValue()) > 0) {
-                    newValidation = false;
-                }
-            }
-        }
-    }
 }
