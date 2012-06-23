@@ -24,5 +24,6 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.core.kivi;bundle-version="0.3.0"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
-Export-Package: de.cau.cs.kieler.sim.kiem.ui.datacomponent
+Export-Package: de.cau.cs.kieler.sim.kiem.ui.datacomponent,
+ de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi
 Import-Package: org.eclipse.ui.part

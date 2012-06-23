@@ -21,8 +21,8 @@ import org.osgi.framework.BundleContext;
  */
 public class SSimKiviPlugin extends AbstractUIPlugin {
 
-    /** The Constant S_LANGUAGE points to the S Xtext Editor. */
-    public static final String S_LANGUAGE = "de.cau.cs.kieler.s.S";
+    /** The Constant S_EDITOR_ID points to the S Xtext Editor. */
+    public static final String S_EDITOR_ID = "de.cau.cs.kieler.s.S";
 
     /** The Constant PLUGIN_ID. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.s.sim.kivi"; //$NON-NLS-1$
