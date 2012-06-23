@@ -127,8 +127,6 @@
     <module>de.cau.cs.kieler.sim.kart</module>
     <module>de.cau.cs.kieler.sim.kart.ui</module>
     <module>de.cau.cs.kieler.sim.kiem</module>
-    <module>de.cau.cs.kieler.sim.kiem.automated</module>
-    <module>de.cau.cs.kieler.sim.kiem.automated.ui</module>
     <module>de.cau.cs.kieler.sim.kiem.config</module>
     <module>de.cau.cs.kieler.sim.kiem.ui</module>
     <module>de.cau.cs.kieler.sim.kiem.ui.datacomponent</module>
@@ -139,7 +137,6 @@
     <module>de.cau.cs.kieler.sim.signals.ui</module>
     <module>de.cau.cs.kieler.sim.syncsignalreset</module>
     <module>de.cau.cs.kieler.sim.table</module>
-    <module>de.cau.cs.kieler.sim.trace</module>
     <module>de.cau.cs.kieler.sj</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies</module>
     <module>de.cau.cs.kieler.synccharts.codegen.dependencies.klighd</module>
