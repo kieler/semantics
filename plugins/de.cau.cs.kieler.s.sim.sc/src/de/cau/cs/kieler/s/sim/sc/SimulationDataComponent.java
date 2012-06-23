@@ -65,6 +65,11 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
     /** The list of output signals including the ones used for the visualization. */
     private LinkedList<String> outputSignalList = null;
 
+    /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
+    private static final int NUMBER_OF_TASKS = 10;
+
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -145,6 +150,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                                 activeStatements += statementWithoutAuxiliaryVariableTag;
 
                             } catch (Exception e) {
+                                // ignore error
                             }
 
                         }
@@ -247,7 +253,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
-        monitor.begin("S Simulation", 10);
+        monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
         String compile = "";
 
@@ -260,12 +266,11 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                         "Cannot simulate active editor using the S Simulator", true, null);
             }
 
-            {// get active editor
-            Resource resource = this.getModelRootElement().eResource();
-            if (resource == null) {
+            if (this.getModelRootElement().eResource() == null) {
                 throw new KiemInitializationException(
-                        "The active editor has must be saved in order to simulate the S program. Volatile resources cannot be simulated.", true, null);
-            }}
+                        "The active editor has must be saved in order to simulate the S program."
+                                + " Volatile resources cannot be simulated.", true, null);
+            }
 
             // Make a copy of the S program in case it was from
             // an active Editor
@@ -279,7 +284,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // also states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
-            if (this.getProperties()[3].getValueAsBoolean()) {
+            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean()) {
                 // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
@@ -287,7 +292,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             }
 
             // Calculate output path
-            //FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
+            // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString, true);
 
@@ -318,7 +323,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            String scOutputString =  KiemUtil.getAbsoluteFilePath(scOutputFile); 
+            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
             S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
 
             // Compile
