@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2011 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -32,7 +32,7 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * The constructor.
      */
     public CodegenSPlugin() {
     }
@@ -42,7 +42,7 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void start(BundleContext context) throws Exception {
+    public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
@@ -52,7 +52,7 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void stop(BundleContext context) throws Exception {
+    public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
@@ -60,7 +60,7 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance
+     * Returns the shared instance.
      * 
      * @return the shared instance
      */
@@ -69,4 +69,5 @@ public class CodegenSPlugin extends AbstractUIPlugin {
     }
 
     // -------------------------------------------------------------------------
+    
 }
