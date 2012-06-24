@@ -115,7 +115,7 @@ class S2Simulation {
 			val stateInstruction = container as State;
 			val instructionList = stateInstruction.instructions;
 			val index = instructionList.indexOf(instruction);
-			System::out.println(index.toString + ":"+  stateInstruction.name.toString);
+			//System::out.println(index.toString + ":"+  stateInstruction.name.toString);
 			instructionList.add(index, auxiliaryEmitInstruction);
 		}
 		else if (container instanceof If) {

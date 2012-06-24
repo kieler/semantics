@@ -107,7 +107,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
         String activeStatements = "";
 
         if (!scExecution.isStarted()) {
-            throw new KiemExecutionException("No s simulation is running", true, null);
+            throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
 
