@@ -49,20 +49,32 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * @kieler.rating 2012-01-24 red
  */
 public class KartProxyEditor extends MultiPageEditorPart {
-    IEditorInput editorInput;
+
+    /** The editor input. */
+    private IEditorInput editorInput;
 
     /** The id of the view for KIEM. */
     private static final String KIEMVIEWID = "de.cau.cs.kieler.sim.kiem.view";
 
+    // -------------------------------------------------------------------------
+
     /**
      * Instead of opening up a real editor, load a new schedule in KIEM and modify the properties of
      * the KART Replay component to set the opened file as the ESO file property.
+     * 
+     * @param editorSite
+     *            the editor site
+     * @param editorInputParam
+     *            the editor input
+     * @throws PartInitException
+     *             the part init exception
      */
     @Override
-    public void init(IEditorSite editorSite, IEditorInput editorInput) throws PartInitException {
-        super.init(editorSite, editorInput);
+    public void init(final IEditorSite editorSite, final IEditorInput editorInputParam)
+            throws PartInitException {
+        super.init(editorSite, editorInputParam);
 
-        this.editorInput = editorInput;
+        this.editorInput = editorInputParam;
 
         // bring KIEM view to the front (lazy loading)
         try {
@@ -96,6 +108,8 @@ public class KartProxyEditor extends MultiPageEditorPart {
         this.closeEditor();
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Update the ESO file property of the Replay component to reflect the "opened" ESO file.
      * 
@@ -128,8 +142,10 @@ public class KartProxyEditor extends MultiPageEditorPart {
         return success;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
-     * Create just an empty fake page {@inheritDoc}
+     * Create just an empty fake page {@inheritDoc}.
      */
     @Override
     protected void createPages() {
@@ -140,6 +156,8 @@ public class KartProxyEditor extends MultiPageEditorPart {
         int index = addPage(composite);
         setPageText(index, " ");
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * This allows asynchronous closing of this fake editor.
@@ -162,13 +180,17 @@ public class KartProxyEditor extends MultiPageEditorPart {
         });
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     @Override
-    public void doSave(IProgressMonitor monitor) {
+    public void doSave(final IProgressMonitor monitor) {
         // not implemented, PROXY editor only!
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -178,6 +200,8 @@ public class KartProxyEditor extends MultiPageEditorPart {
         // not implemented, PROXY editor only!
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
@@ -186,5 +210,7 @@ public class KartProxyEditor extends MultiPageEditorPart {
         // not implemented, PROXY editor only!
         return false;
     }
+
+    // -------------------------------------------------------------------------
 
 }

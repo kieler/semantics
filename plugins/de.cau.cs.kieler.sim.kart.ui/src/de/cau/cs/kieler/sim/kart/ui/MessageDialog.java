@@ -23,24 +23,26 @@ import de.cau.cs.kieler.sim.kart.IMessageDialog;
 /**
  * Provide an easy to use interface to KART to display message dialogs using an extension point.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc
  * @kieler.rating 2012-02-23 red
  */
 public class MessageDialog implements IMessageDialog {
 
     /**
-     * Display a Yes/No question dialog.
-     * If the dialog cannot be displayed {@code false} is returned.
+     * Display a Yes/No question dialog. If the dialog cannot be displayed {@code false} is
+     * returned.
      * 
-     * @param title the title of the question dialog
-     * @param message the message that will be displayed. Should be a question.
-     * @return {@code true} if the user answered with Yes, {@code false} if he answered with No or the dialog
-     *         could not be displayed.
+     * @param title
+     *            the title of the question dialog
+     * @param message
+     *            the message that will be displayed. Should be a question.
+     * @return {@code true} if the user answered with Yes, {@code false} if he answered with No or
+     *         the dialog could not be displayed.
      */
-    public boolean question(String title, String message) {
+    public boolean question(final String title, final String message) {
         Exchanger<Boolean> ex = new Exchanger<Boolean>();
         Display.getDefault().asyncExec(new DialogRunnable(ex, title, message));
-        
+
         try {
             boolean b = ex.exchange(false); // Doesn't matter what we send
             return b;
@@ -50,22 +52,28 @@ public class MessageDialog implements IMessageDialog {
         }
     }
 
+    // -------------------------------------------------------------------------
+
+    /**
+     * DialogRunnable concurrently displays the dialog in the current shell.
+     */
     private class DialogRunnable implements Runnable {
         private Exchanger<Boolean> ex;
         private String title;
         private String message;
-        
-        public DialogRunnable(Exchanger<Boolean> ex, String title, String message) {
+
+        public DialogRunnable(final Exchanger<Boolean> ex, final String title, final String message) {
             this.ex = ex;
             this.title = title;
             this.message = message;
         }
-        
+
         public void run() {
             Shell shell = Display.getCurrent().getShells()[0];
             try {
                 if (shell != null) {
-                    ex.exchange(org.eclipse.jface.dialogs.MessageDialog.openQuestion(null, title, message));
+                    ex.exchange(org.eclipse.jface.dialogs.MessageDialog.openQuestion(null, title,
+                            message));
                 } else {
                     ex.exchange(false);
                 }
@@ -75,4 +83,7 @@ public class MessageDialog implements IMessageDialog {
             }
         }
     }
+
+    // -------------------------------------------------------------------------
+
 }

@@ -23,9 +23,9 @@ import org.eclipse.swt.widgets.Display;
 import de.cau.cs.kieler.sim.kart.IRefresh;
 
 /**
- * {@inheritDoc}
+ * Used after writing a new ESO file in order to force the file explorer to display it.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc
  * @kieler.rating 2012-01-24 red
  */
 public class Refresh implements IRefresh {
@@ -37,10 +37,10 @@ public class Refresh implements IRefresh {
         Display.getDefault().syncExec(new Runnable() {
             public void run() {
                 IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
-                
-                for(IProject p : projects) {
+
+                for (IProject project : projects) {
                     try {
-                        p.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
+                        project.refreshLocal(IResource.DEPTH_INFINITE, new NullProgressMonitor());
                     } catch (CoreException e) {
                         // do nothing, auto-refresh will simply not work
                     }
