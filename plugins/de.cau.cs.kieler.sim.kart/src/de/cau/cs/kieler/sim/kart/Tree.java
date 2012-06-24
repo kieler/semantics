@@ -19,41 +19,51 @@ import java.util.List;
 import org.eclipse.emf.ecore.EObject;
 
 /**
- * A simple tree in which Scope instances can be inserted. The tree is able
- * to produce a textual presentation of the scopes contained in it.
+ * A simple tree in which Scope instances can be inserted. The tree is able to produce a textual
+ * presentation of the scopes contained in it.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc, cmot
  * @kieler.rating 2012-01-24 red
  */
 public class Tree {
+
     /**
-     * The value of this node
+     * The value of this node.
      */
     private EObject value;
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * A list of successor Scopes
+     * A list of successor Scopes.
      */
     private List<Tree> children;
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Create a new empty tree
+     * Create a new empty tree.
      */
     public Tree() {
         this.value = null;
         children = new LinkedList<Tree>();
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Create a new tree with a specific value
+     * Create a new tree with a specific value.
      * 
-     * @param value the value contained in the root node of the tree
+     * @param value
+     *            the value contained in the root node of the tree
      */
-    public Tree(EObject value) {
+    public Tree(final EObject value) {
         this.value = value;
         children = new LinkedList<Tree>();
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Retrieve the node's value.
      * 
@@ -62,59 +72,72 @@ public class Tree {
     public EObject getValue() {
         return value;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
      * Search for a specific value in the tree.
      * 
-     * @param find the Scope instance to find
+     * @param find
+     *            the Scope instance to find
      * @return either the tree's node containing the searched Scope or null
      */
-    public Tree findValue(EObject find) {
+    public Tree findValue(final EObject find) {
         Tree retval = null;
-        if(value != null && value.equals(find)) {
+        if (value != null && value.equals(find)) {
             retval = this;
-        }
-        else {
-            for(Tree child : children) {
+        } else {
+            for (Tree child : children) {
                 retval = child.findValue(find);
                 break;
             }
         }
         return retval;
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Add a child tree to this node
+     * Add a child tree to this node.
      * 
-     * @param child the tree to add as a child
+     * @param child
+     *            the tree to add as a child
      */
-    public void addChild(Tree child) {
+    public void addChild(final Tree child) {
         this.children.add(child);
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Return a textual representation of this tree
+     * Return a textual representation of this tree.
      * 
      * @return the textual representation
      */
     public String toString() {
         return toString("");
     }
-    
+
+    // -------------------------------------------------------------------------
+
     /**
-     * Return a textual representation of this tree
+     * Return a textual representation of this tree.
      * 
-     * @param indent a String to prepend before the node's value
+     * @param indent
+     *            a String to prepend before the node's value
      * @return a textual representation of this tree
      */
-    public String toString(String indent) {
+    public String toString(final String indent) {
         String retval = "";
-        if(value != null) {
+        if (value != null) {
             retval = indent + "- " + getValue().toString() + "\n";
         }
-        for(Tree child : children) {
+        for (Tree child : children) {
             retval += child.toString(indent + "  ");
         }
         return retval;
     }
+
+    // -------------------------------------------------------------------------
+
 }

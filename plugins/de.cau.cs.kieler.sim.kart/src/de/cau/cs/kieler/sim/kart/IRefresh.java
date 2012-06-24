@@ -14,15 +14,17 @@
 package de.cau.cs.kieler.sim.kart;
 
 /**
- * Interface for an extension point to allow KART to initiate a Refresh of all projects.
- * This is needed because the Project explorer else would not show newly recorded trace files.
- *  
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * Interface for an extension point to allow KART to initiate a Refresh of all projects. This is
+ * needed because the Project explorer else would not show newly recorded trace files.
+ * 
+ * @author ssc
  * @kieler.rating 2012-02-23 red
  */
 public interface IRefresh {
+
     /**
-     * Refresh the Project explorer
+     * Refresh the Project explorer.
      */
-    public void refreshProjectExplorer();
+    void refreshProjectExplorer();
+
 }

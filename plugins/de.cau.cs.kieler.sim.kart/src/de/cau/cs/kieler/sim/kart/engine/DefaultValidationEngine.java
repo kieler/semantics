@@ -35,31 +35,32 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * @kieler.rating 2012-01-24 red
  */
 public class DefaultValidationEngine implements IValidationEngine {
+
     /**
-     * Flag to indicate whether to ignore additionally generated signals or not
+     * Flag to indicate whether to ignore additionally generated signals or not.
      */
     private boolean ignoreAdditionalSignals;
 
+    // -------------------------------------------------------------------------
+
     /**
-     * Create a new DefaultValidationEngine
+     * Create a new DefaultValidationEngine.
      * 
-     * @param editor
-     *            the diagram editor to visualize state validation errors in
      * @param ignoreAdditionalSignals
-     *            flag to indicate to ignore additionally generated signals
-     * @param stateVariable
-     *            the name of the variable containing state validation information
+     *            true iff additional signals should be ignored
      */
-    public DefaultValidationEngine(boolean ig) {
-        this.ignoreAdditionalSignals = ig;
+    public DefaultValidationEngine(final boolean ignoreAdditionalSignals) {
+        this.ignoreAdditionalSignals = ignoreAdditionalSignals;
     }
+
+    // -------------------------------------------------------------------------
 
     /**
      * 
      * {@inheritDoc}
      */
-    public void validateVariable(Pair<String, String> variable, Object recValue, String simValue,
-            boolean isHistoryStep, JSONObject retval) {
+    public void validateVariable(final Pair<String, String> variable, final Object recValue,
+            final String simValue, final boolean isHistoryStep, final JSONObject retval) {
         if (simValue == null) {
             KiemPlugin.getDefault().showWarning(
                     "The simulation step did not generate a variable \"" + variable.getFirst()
@@ -117,12 +118,15 @@ public class DefaultValidationEngine implements IValidationEngine {
         }
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * 
      * {@inheritDoc}
      */
-    public void validateSignals(Map<String, Object> recSignals, Map<String, String> simSignals,
-            boolean isHistoryStep, String errSignalVar, JSONObject retval) {
+    public void validateSignals(final Map<String, Object> recSignals,
+            final Map<String, String> simSignals, final boolean isHistoryStep,
+            final String errSignalVar, final JSONObject retval) {
 
         Iterator<String> signals = recSignals.keySet().iterator();
         String errSignals = "";
@@ -142,14 +146,13 @@ public class DefaultValidationEngine implements IValidationEngine {
 
         if (!errSignals.isEmpty()) {
             if (!isHistoryStep) {
-                KiemPlugin
-                        .getDefault()
-                        .showError(
-                                "Validation error: The signals "
-                                        + errSignals
-                                        + " were produced erroneously, they were either not present when they should "
-                                        + "have been or in the case of valued signals were present with a wrong value",
-                                KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
+                KiemPlugin.getDefault().showError(
+                        "Validation error: The signals " + errSignals
+                                + " were produced erroneously, they were either not "
+                                + "present when they should "
+                                + "have been or in the case of valued signals were"
+                                + " present with a wrong value", KartConstants.PLUGINID, null,
+                        KartConstants.ERR_SILENT);
             }
         }
 
@@ -182,4 +185,7 @@ public class DefaultValidationEngine implements IValidationEngine {
             // do nothing
         }
     }
+
+    // -------------------------------------------------------------------------
+
 }

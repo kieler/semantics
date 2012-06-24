@@ -19,30 +19,56 @@ import org.osgi.framework.BundleContext;
 /**
  * This activator class controls the lifecycle of the KartPlugin.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc, cmot
  * @kieler.rating 2012-01-24 red
  * 
  */
 public class KartPlugin implements BundleActivator {
 
-	private static BundleContext context;
+    /** The context. */
+    private static BundleContext context;
 
-	static BundleContext getContext() {
-		return context;
-	}
+    // ---------------------------------------------------------------------
 
-	/**
-	 * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
-	 */
-	public void start(BundleContext bundleContext) throws Exception {
-		KartPlugin.context = bundleContext;
-	}
+    /**
+     * Gets the context.
+     * 
+     * @return the context
+     */
+    static BundleContext getContext() {
+        return context;
+    }
 
-	/**
-	 * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
-	 */
-	public void stop(BundleContext bundleContext) throws Exception {
-		KartPlugin.context = null;
-	}
+    // ---------------------------------------------------------------------
+
+    /**
+     * Start.
+     * 
+     * @param bundleContext
+     *            the bundle context
+     * @throws Exception
+     *             the exception
+     * @see org.osgi.framework.BundleActivator#start(org.osgi.framework.BundleContext)
+     */
+    public void start(final BundleContext bundleContext) throws Exception {
+        KartPlugin.context = bundleContext;
+    }
+
+    // ---------------------------------------------------------------------
+
+    /**
+     * Stop.
+     * 
+     * @param bundleContext
+     *            the bundle context
+     * @throws Exception
+     *             the exception
+     * @see org.osgi.framework.BundleActivator#stop(org.osgi.framework.BundleContext)
+     */
+    public void stop(final BundleContext bundleContext) throws Exception {
+        KartPlugin.context = null;
+    }
+
+    // ---------------------------------------------------------------------
 
 }

@@ -16,14 +16,16 @@ package de.cau.cs.kieler.sim.kart;
 /**
  * Interface for an extension point to allow kart.ui to auto-suggest names for ESO trace files.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
+ * @author ssc
  * @kieler.rating 2012-02-23 red
  */
 public interface INamingSuggestion {
+    
     /**
      * Suggest a file name for an ESO trace file. This must be an absolute file system path.
      * 
      * @return the suggested path and file name
      */
-    public String suggestName();
+    String suggestName();
+    
 }
