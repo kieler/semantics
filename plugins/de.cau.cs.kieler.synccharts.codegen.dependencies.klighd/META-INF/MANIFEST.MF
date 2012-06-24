@@ -3,7 +3,7 @@ Bundle-ManifestVersion: 2
 Bundle-Name: Dependency KLighD Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd;singleton:=true
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.DependenciesKLighDPlugin
+Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.SyncChartsCodegenDependenciesKLighDPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
