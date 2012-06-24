@@ -4,7 +4,6 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            category="de.cau.cs.kieler"
             categoryId="de.cau.cs.kieler"
             defaultHandler="de.cau.cs.kieler.synccharts.codegen.sc.SCGenerator"
             description="Generate SC code"
