@@ -24,19 +24,6 @@
                priority="7">
          </editor>
       </executionFile>
-      <executionFile
-            file="execution/synccharts_ptolemy_validation.execution">
-         <editor
-               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
-               name="SyncCharts Diagram Editor"
-               priority="8">
-         </editor>
-         <editor
-               id="de.cau.cs.kieler.synccharts.presentation.SyncchartsEditorID"
-               name="SyncCharts Model Editor"
-               priority="7">
-         </editor>
-      </executionFile>
    </extension>
 
 </plugin>

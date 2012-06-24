@@ -11,7 +11,6 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
 import org.eclipse.core.resources.IResource;
@@ -48,50 +47,74 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.MomlWriter;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava;
 
 /**
- * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager
- * DataComponent. <BR>
- * Within its {@link #initialize()} method it performs the model2model Xtend
- * transformation to create a semantically equivalent but executable Ptolemy
- * model out of the SimpleRailCtrl EMF model instance. It also loads the Ptolemy
- * model within a PtolemyExecutor and adapts the port and host for connecting to
- * the model railway simulation engine. <BR>
- * Within its {@link #step(JSONObject)} method it then triggers a step of the
- * PtolemyExecutor. Because this is done asynchronously the triggering of a
- * consecutive step may lead to an KiemExecutionError be thrown that was
- * initially the consequence of the last (async) call to the step method of the
- * PtolemyExecutor.
+ * The class SimpleRailCtrl DataComponent implements a KIELER Execution Manager DataComponent. <BR>
+ * Within its {@link #initialize()} method it performs the model2model Xtend transformation to
+ * create a semantically equivalent but executable Ptolemy model out of the SimpleRailCtrl EMF model
+ * instance. It also loads the Ptolemy model within a PtolemyExecutor and adapts the port and host
+ * for connecting to the model railway simulation engine. <BR>
+ * Within its {@link #step(JSONObject)} method it then triggers a step of the PtolemyExecutor.
+ * Because this is done asynchronously the triggering of a consecutive step may lead to an
+ * KiemExecutionError be thrown that was initially the consequence of the last (async) call to the
+ * step method of the PtolemyExecutor.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de
  */
 @SuppressWarnings("restriction")
-public class SyncchartsSimDataComponent extends
-        JSONObjectSimulationDataComponent {
+public class SyncchartsSimDataComponent extends JSONObjectSimulationDataComponent {
 
-    /** The Ptolemy Executor */
-    private ExecutePtolemyModel PTOEXE;
+    /** The Ptolemy Executor. */
+    private ExecutePtolemyModel ptoExe;
 
     /** The Ptolemy model. */
     private Resource ptolemyModel;
 
+    /** The Constant KIEM_PROPERTY_STATENAME. */
+    private static final int KIEM_PROPERTY_STATENAME = 0;
+
+    /** The Constant KIEM_PROPERTY_TRANSITIONNAME. */
+    private static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
+
+    /** The Constant KIEM_PROPERTY_RAISELOCALSIGNALS. */
+    private static final int KIEM_PROPERTY_RAISELOCALSIGNALS = 2;
+
+    /** The Constant KIEM_PROPERTY_INPUTOUTPUTTRANSFORMATION. */
+    private static final int KIEM_PROPERTY_INPUTOUTPUTTRANSFORMATION = 3;
+
+    /** The Constant KIEM_PROPERTY_OPTIMIZEINPUTSIGNALS. */
+    private static final int KIEM_PROPERTY_OPTIMIZEINPUTSIGNALS = 4;
+
+    /** The Constant KIEM_PROPERTY_OPTIMIZEOUTPUTSIGNALS. */
+    private static final int KIEM_PROPERTY_OPTIMIZEOUTPUTSIGNALS = 5;
+
+    /** The Constant KIEM_PROPERTY_NUMBER. */
+    private static final int KIEM_PROPERTY_NUMBER = 6;
+
+    /** Number of tasks for M2M transformation monitor. */
+    private static final int TASKS = 3;
+
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new SimpleRailCtrl DataComponent for the KIELER Execution
-     * Manager.
+     * Instantiates a new SimpleRailCtrl DataComponent for the KIELER Execution Manager.
      */
     public SyncchartsSimDataComponent() {
     }
 
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
+    /**
+     * Ptolemy Model Transformation Monitor.
+     * 
+     * @author cmot
+     * 
+     */
     class M2MProgressMonitor implements ProgressMonitor {
 
         private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
         private int numberOfComponentsDone = 0;
 
-        public M2MProgressMonitor(
-                final ProgressMonitorAdapter kielerProgressMonitorParam,
+        public M2MProgressMonitor(final ProgressMonitorAdapter kielerProgressMonitorParam,
                 final int numberOfComponentsParam) {
             kielerProgressMonitor = kielerProgressMonitorParam;
             numberOfComponents = numberOfComponentsParam;
@@ -148,18 +171,13 @@ public class SyncchartsSimDataComponent extends
     // -----------------------------------------------------------------------------
     // -----------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * de.cau.cs.kieler.sim.kiem.extension.IJSONObjectDataComponent#step(de.cau.cs.kieler.sim.kiem
-     * .json.JSONObject)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public JSONObject doStep(final JSONObject jSONObject)
-            throws KiemExecutionException {
+    public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
 
-        SyncchartsSimPtolemyPlugin.DEBUG("Step in Ptolemy Model...");
+        SyncchartsSimPtolemyPlugin.debug("Step in Ptolemy Model...");
 
         // the return object to construct
         JSONObject returnObj = new JSONObject();
@@ -169,39 +187,38 @@ public class SyncchartsSimDataComponent extends
 
         // contains the currently active transitions
         String activeTransitions = "";
-        
+
         try {
             // set current input data
-            PTOEXE.setData(jSONObject);
+            ptoExe.setData(jSONObject);
 
             // perform an synchronous step in PtolemyExecutor
-            PTOEXE.executionStep();
+            ptoExe.executionStep();
 
             // get the currently active states
-            activeStates = PTOEXE.getActiveStates();
+            activeStates = ptoExe.getActiveStates();
             // get the currently active transitions
-            activeTransitions = PTOEXE.getActiveTransitions();
+            activeTransitions = ptoExe.getActiveTransitions();
 
         } catch (Exception e) {
-            throw (new KiemExecutionException(
-                    "Ptolemy Model cannot make a step.\n\n"
-                            + "Please ensure that all simulation warnings in the "
-                            + "respective Eclipse Problems View have been cleared. If"
-                            + " all warings have been cleared and still 'unknown "
-                            + " inputs remain', possibly your model is not constructive.\n\n",
-                    true, e));
+            throw (new KiemExecutionException("Ptolemy Model cannot make a step.\n\n"
+                    + "Please ensure that all simulation warnings in the "
+                    + "respective Eclipse Problems View have been cleared. If"
+                    + " all warings have been cleared and still 'unknown "
+                    + " inputs remain', possibly your model is not constructive.\n\n", true, e));
         }
 
         // get the output present signals
-        String[] presentSignals = PTOEXE.getModelOutputPresentSignals();
+        String[] presentSignals = ptoExe.getModelOutputPresentSignals();
         for (int c = 0; c < presentSignals.length; c++) {
             String signalName = presentSignals[c];
-            SyncchartsSimPtolemyPlugin.DEBUG("Present:" + signalName);
+            SyncchartsSimPtolemyPlugin.debug("Present:" + signalName);
             try {
                 JSONObject signalObject = JSONSignalValues.newValue(true);
                 try {
                     returnObj.accumulate(signalName, signalObject);
                 } catch (Exception e) {
+                    // ignore
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -209,72 +226,73 @@ public class SyncchartsSimDataComponent extends
         }
 
         // get the output absent signals
-        String[] absentSignals = PTOEXE.getModelOutputAbsentSignals();
+        String[] absentSignals = ptoExe.getModelOutputAbsentSignals();
         for (int c = 0; c < absentSignals.length; c++) {
             String signalName = absentSignals[c];
-            SyncchartsSimPtolemyPlugin.DEBUG("Absent:" + signalName);
+            SyncchartsSimPtolemyPlugin.debug("Absent:" + signalName);
             try {
                 JSONObject signalObject = JSONSignalValues.newValue(false);
                 try {
                     returnObj.accumulate(signalName, signalObject);
                 } catch (Exception e) {
+                    // ignore
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
 
-        SyncchartsSimPtolemyPlugin.DEBUG(returnObj.toString());
+        SyncchartsSimPtolemyPlugin.debug(returnObj.toString());
 
         // the stateName is the second KIEM property
         String stateName = this.getProperties()[1].getValue();
 
         // the transitionName is the third KIEM property
         String transitionName = this.getProperties()[2].getValue();
-        
+
         try {
-            returnObj.accumulate(stateName, activeStates );
+            returnObj.accumulate(stateName, activeStates);
         } catch (Exception e) {
+            // ignore
         }
         try {
             returnObj.accumulate(transitionName, activeTransitions);
         } catch (Exception e) {
+            // ignore
         }
         return returnObj;
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent #
-     * doModel2ModelTransform(de.cau.cs.kieler.core.ui.ProgressMonitorAdapter)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
-            throws Exception {
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor) throws Exception {
 
         ResourceSet resourceSet = new ResourceSetImpl();
-//        URI fileUri = URI.createFileURI(new File("generated" + randomNumber
-//                + ".moml").getAbsolutePath());
-        
-        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
+        // URI fileUri = URI.createFileURI(new File("generated" + randomNumber
+        // + ".moml").getAbsolutePath());
+
+        URI fileUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(
+                this.getModelFilePath().toString()).toString());
         // also support kits files
         String extension = ".kixs";
         if (!fileUri.toString().contains(extension)) {
-        	extension = ".kits";
-        	if (!fileUri.toString().contains(extension)) {
-        		throw new KiemInitializationException(
-                        "Ptolemy Model could not be generated\n\n"
-                                + "unsupported model file. Only *.kixs and *.kits files are supported.\n\n",
-                        true, null);
-        	}
+            extension = ".kits";
+            if (!fileUri.toString().contains(extension)) {
+                throw new KiemInitializationException("Ptolemy Model could not be generated\n\n"
+                        + "unsupported model file. Only *.kixs "
+                        + "and *.kits files are supported.\n\n", true, null);
+            }
         }
-        fileUri = URI.createURI(fileUri.toString().substring(0,fileUri.toString().lastIndexOf(extension)) + ".moml");
-        
+        fileUri = URI.createURI(fileUri.toString().substring(0,
+                fileUri.toString().lastIndexOf(extension))
+                + ".moml");
+
         ptolemyModel = resourceSet.createResource(fileUri);
-        
+
         System.out.println(ptolemyModel);
 
         // Workflow
@@ -282,7 +300,8 @@ public class SyncchartsSimDataComponent extends
 
         // EMF reader
         Reader emfReader = new Reader();
-        URI fileInputUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(this.getModelFilePath().toString()).toString());
+        URI fileInputUri = KiemUtil.getFileStringAsEMFURI(KiemUtil.resolveBundleOrWorkspaceFile(
+                this.getModelFilePath().toString()).toString());
         emfReader.setUri(fileInputUri.toString());
         emfReader.setModelSlot("emfmodel");
         // DO NOT USE THE SAME INPUT RESOUCRCE SET
@@ -301,14 +320,19 @@ public class SyncchartsSimDataComponent extends
                 de.cau.cs.kieler.core.kexpressions.KExpressionsPackage.eINSTANCE);
         EmfMetaModel metaModel1 = new EmfMetaModel(
                 de.cau.cs.kieler.synccharts.SyncchartsPackage.eINSTANCE);
-        EmfMetaModel metaModel2 = new EmfMetaModel(
-                org.ptolemy.moml.MomlPackage.eINSTANCE);
+        EmfMetaModel metaModel2 = new EmfMetaModel(org.ptolemy.moml.MomlPackage.eINSTANCE);
 
         // Global options for model transformation alternatives
-        XtendJava.setRaiseLocalSignals(this.getProperties()[3].getValueAsBoolean());
-        XtendJava.setInputOutputTransformation(this.getProperties()[4].getValueAsBoolean());
-        XtendJava.setOptimizeInputSignals(this.getProperties()[5].getValueAsBoolean());
-        XtendJava.setOptimizeOutputSignals(this.getProperties()[6].getValueAsBoolean());
+        XtendJava.setRaiseLocalSignals(this.getProperties()[KIEM_PROPERTY_RAISELOCALSIGNALS
+                + KIEM_PROPERTY_DIFF].getValueAsBoolean());
+        XtendJava
+                .setInputOutputTransformation(this.getProperties()[
+                        KIEM_PROPERTY_INPUTOUTPUTTRANSFORMATION
+                        + KIEM_PROPERTY_DIFF].getValueAsBoolean());
+        XtendJava.setOptimizeInputSignals(this.getProperties()[KIEM_PROPERTY_OPTIMIZEINPUTSIGNALS
+                + KIEM_PROPERTY_DIFF].getValueAsBoolean());
+        XtendJava.setOptimizeOutputSignals(this.getProperties()[KIEM_PROPERTY_OPTIMIZEOUTPUTSIGNALS
+                + KIEM_PROPERTY_DIFF].getValueAsBoolean());
 
         // XtendComponent
         XtendComponent xtendComponent = new XtendComponent();
@@ -318,11 +342,10 @@ public class SyncchartsSimDataComponent extends
         xtendComponent.setInvoke("synccharts2moml::transform(emfmodel)");
         xtendComponent.setOutputSlot("momlmodel");
 
-        
         // workflow
         WorkflowContext wfx = new WorkflowContextDefaultImpl();
         Issues issues = new org.eclipse.emf.mwe.core.issues.IssuesImpl();
-        M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, 3);
+        M2MProgressMonitor m2mMonitor = new M2MProgressMonitor(monitor, TASKS);
 
         workflow.addComponent(emfReader);
         workflow.addComponent(xtendComponent);
@@ -330,41 +353,35 @@ public class SyncchartsSimDataComponent extends
         // workflow.invoke(wfx, (ProgressMonitor)monitor.subTask(80), issues);
         workflow.invoke(wfx, m2mMonitor, issues);
 
-        SyncchartsSimPtolemyPlugin.DEBUG(xtendComponent.getLogMessage());
-        SyncchartsSimPtolemyPlugin.DEBUG(issues.getInfos().toString());
-        SyncchartsSimPtolemyPlugin.DEBUG(issues.getIssues().toString());
-        SyncchartsSimPtolemyPlugin.DEBUG(issues.getWarnings().toString());
-        SyncchartsSimPtolemyPlugin.DEBUG(issues.getErrors().toString());
+        SyncchartsSimPtolemyPlugin.debug(xtendComponent.getLogMessage());
+        SyncchartsSimPtolemyPlugin.debug(issues.getInfos().toString());
+        SyncchartsSimPtolemyPlugin.debug(issues.getIssues().toString());
+        SyncchartsSimPtolemyPlugin.debug(issues.getWarnings().toString());
+        SyncchartsSimPtolemyPlugin.debug(issues.getErrors().toString());
 
         // Refresh the file explorer
         try {
-            ResourcesPlugin.getWorkspace().getRoot()
-                    .refreshLocal(IResource.DEPTH_INFINITE, null);
+            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
         } catch (CoreException e2) {
             e2.printStackTrace();
         }
     }
-    
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent
-     * #checkModelValidation (org.eclipse.emf.ecore.EObject)
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public boolean checkModelValidation(final EObject rootEObject) throws KiemInitializationException {
+    public boolean checkModelValidation(final EObject rootEObject)
+            throws KiemInitializationException {
         // Enable KlePto checks in possibly open GMF SyncCharts editor
-        ValidationManager
-                .enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");
+        ValidationManager.enableCheck("de.cau.cs.kieler.synccharts.KleptoChecks");
         ValidationManager.validateActiveEditor();
-        
+
         if (!(rootEObject instanceof Region)) {
-    		throw new KiemInitializationException(
-                    "SyncCharts Ptolemy Simulator can only be used with a SyncCharts editor.\n\n"
-                            ,
+            throw new KiemInitializationException(
+                    "SyncCharts Ptolemy Simulator can only be used with a SyncCharts editor.\n\n",
                     true, null);
         }
 
@@ -383,12 +400,14 @@ public class SyncchartsSimDataComponent extends
 
     // -------------------------------------------------------------------------
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public JSONObject doProvideInitialVariables()
-            throws KiemInitializationException {
+    public JSONObject doProvideInitialVariables() throws KiemInitializationException {
         // do the initialization prior to providing the interface keys
         // this may rise an exception
-        PTOEXE = null;
+        ptoExe = null;
         System.gc();
 
         loadAndExecuteModel();
@@ -396,60 +415,47 @@ public class SyncchartsSimDataComponent extends
         JSONObject returnObj = new JSONObject();
 
         String[] keys = null;
-        keys = PTOEXE.getInterfaceSignals();
+        keys = ptoExe.getInterfaceSignals();
 
         try {
             loadAndExecuteModel();
-            keys = PTOEXE.getInterfaceSignals();
+            keys = ptoExe.getInterfaceSignals();
             for (String key : keys) {
                 returnObj.accumulate(key, JSONSignalValues.newValue(false));
             }
         } catch (Exception e) {
-            throw new KiemInitializationException(
-                    "Ptolemy Model could not be generated\n\n"
-                            + "Please ensure that all simulation warnings in the "
-                            + "respective Eclipse Problems View have been cleared.\n\n",
-                    true, e);
+            throw new KiemInitializationException("Ptolemy Model could not be generated\n\n"
+                    + "Please ensure that all simulation warnings in the "
+                    + "respective Eclipse Problems View have been cleared.\n\n", true, e);
         }
         return returnObj;
     }
 
     // -------------------------------------------------------------------------
 
-//    @Override
-//    public URL resolveBundelFile(final String relativePath) {
-//        Bundle bundle = Platform
-//                .getBundle(SyncchartsSimPtolemyPlugin.PLUGIN_ID);
-//        if (!BundleUtility.isReady(bundle)) {
-//            return null;
-//        }
-//        URL fullPathString = BundleUtility.find(bundle, relativePath);
-//        return fullPathString;
-//    }
-
-    // -------------------------------------------------------------------------
-
+    /**
+     * Loads and executes the Ptolemy model.
+     * 
+     * @throws KiemInitializationException
+     *             a KiemInitializationException
+     */
     public void loadAndExecuteModel() throws KiemInitializationException {
         String ptolemyModelFile = ptolemyModel.getURI().toFileString();
 
-        SyncchartsSimPtolemyPlugin.DEBUG("Now creating Ptolemy Model ..."
-                + ptolemyModel);
+        SyncchartsSimPtolemyPlugin.debug("Now creating Ptolemy Model ..." + ptolemyModel);
 
-        SyncchartsSimPtolemyPlugin.DEBUG("Now loading Ptolemy Model..."
-                + ptolemyModelFile);
+        SyncchartsSimPtolemyPlugin.debug("Now loading Ptolemy Model..." + ptolemyModelFile);
         // load the Ptolemy Model
-        PTOEXE = new ExecutePtolemyModel(ptolemyModelFile);
-        SyncchartsSimPtolemyPlugin.DEBUG("Now initializing Ptolemy Model...");
-        PTOEXE.executionInitialize();
-        SyncchartsSimPtolemyPlugin.DEBUG("Now executing Ptolemy Model...");
+        ptoExe = new ExecutePtolemyModel(ptolemyModelFile);
+        SyncchartsSimPtolemyPlugin.debug("Now initializing Ptolemy Model...");
+        ptoExe.executionInitialize();
+        SyncchartsSimPtolemyPlugin.debug("Now executing Ptolemy Model...");
     }
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#initialize()
+    /**
+     * {@inheritDoc}
      */
     @Override
     public void initialize() throws KiemInitializationException {
@@ -457,19 +463,17 @@ public class SyncchartsSimDataComponent extends
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see de.cau.cs.kieler.sim.kiem.extension.IDataComponent#wrapup()
+    /**
+     * {@inheritDoc}
      */
     public void wrapup() {
         // stop the model and unlink the PtolemyExecutor thread
         try {
-            PTOEXE.executionStop();
+            ptoExe.executionStop();
         } catch (Exception e) {
             // we expect no serious errors here
         }
-        PTOEXE = null;
+        ptoExe = null;
         System.gc();
     }
 
@@ -482,13 +486,16 @@ public class SyncchartsSimDataComponent extends
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        KiemProperty[] properties = new KiemProperty[6];
-        properties[0] = new KiemProperty("State Name", "state");
-        properties[1] = new KiemProperty("Transition Name", "transition");
-        properties[2] = new KiemProperty("Raise local signals", true);
-        properties[3] = new KiemProperty("Allow write inputs, read outputs", true);
-        properties[4] = new KiemProperty("Optimize signal input ports", true);
-        properties[5] = new KiemProperty("Optimize signal output ports (not always possible)", false);
+        KiemProperty[] properties = new KiemProperty[KIEM_PROPERTY_NUMBER];
+        properties[KIEM_PROPERTY_STATENAME] = new KiemProperty("State Name", "state");
+        properties[KIEM_PROPERTY_TRANSITIONNAME] = new KiemProperty("Transition Name", "transition");
+        properties[KIEM_PROPERTY_RAISELOCALSIGNALS] = new KiemProperty("Raise local signals", true);
+        properties[KIEM_PROPERTY_INPUTOUTPUTTRANSFORMATION] = new KiemProperty(
+                "Allow write inputs, read outputs", true);
+        properties[KIEM_PROPERTY_OPTIMIZEINPUTSIGNALS] = new KiemProperty(
+                "Optimize signal input ports", true);
+        properties[KIEM_PROPERTY_OPTIMIZEOUTPUTSIGNALS] = new KiemProperty(
+                "Optimize signal output ports (not always possible)", false);
         return properties;
     }
 

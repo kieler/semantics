@@ -18,6 +18,7 @@ import java.util.LinkedList;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
+import org.ptolemy.moml.EntityType;
 
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.OperatorExpression;
@@ -33,63 +34,152 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.Transition;
 import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
 
-import org.ptolemy.moml.*;
-
 /**
- * The class XtendJava implements some Java escape code used in the model2model
- * Xtend transformation.
+ * The class XtendJava implements some Java escape code used in the model2model Xtend
+ * transformation.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  */
-public class XtendJava {
+public final class XtendJava {
 
-    static LinkedList<EntityType> modalModels = null;
-    static LinkedList<String> portNames = null;
+    /** The modal models. */
+    private static LinkedList<EntityType> modalModels = null;
+
+    /** The port names. */
+    private static LinkedList<String> portNames = null;
+
+    /** The inputoutputtransformation. */
+    private static boolean inputoutputtransformation = true;
+
+    /** The raiselocalsignals. */
+    private static boolean raiselocalsignals = true;
+
+    /** The optimizeinputsignals. */
+    private static boolean optimizeinputsignals = true;
+
+    /** The optimizeoutputsignals. */
+    private static boolean optimizeoutputsignals = false;
     
-    static boolean inputoutputtransformation = true;
-    static boolean raiselocalsignals = true;
-    static boolean optimizeinputsignals = true;
-    static boolean optimizeoutputsignals = false;
+    private static final int SLEEP_TIME = 10; 
+
+    //-------------------------------------------------------------------------
     
-    public static void setInputOutputTransformation(boolean enable) {
+    /**
+     * Utility class should not be instantiated.
+     */
+    private XtendJava() {
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the input output transformation.
+     * 
+     * @param enable
+     *            the new input output transformation
+     */
+    public static void setInputOutputTransformation(final boolean enable) {
         inputoutputtransformation = enable;
     }
 
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the input output transformation.
+     * 
+     * @return the input output transformation
+     */
     public static boolean getInputOutputTransformation() {
         return inputoutputtransformation;
     }
-    
-    public static void setRaiseLocalSignals(boolean enable) {
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the raise local signals.
+     * 
+     * @param enable
+     *            the new raise local signals
+     */
+    public static void setRaiseLocalSignals(final boolean enable) {
         raiselocalsignals = enable;
     }
-    
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the raise local signals.
+     * 
+     * @return the raise local signals
+     */
     public static boolean getRaiseLocalSignals() {
         return raiselocalsignals;
     }
-
-    public static void setOptimizeInputSignals(boolean enable) {
+    
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Sets the optimize input signals.
+     * 
+     * @param enable
+     *            the new optimize input signals
+     */
+    public static void setOptimizeInputSignals(final boolean enable) {
         optimizeinputsignals = enable;
     }
+
+    //-------------------------------------------------------------------------
     
+    /**
+     * Gets the optimize input signals.
+     * 
+     * @return the optimize input signals
+     */
     public static boolean getOptimizeInputSignals() {
         return optimizeinputsignals;
     }
 
-    public static void setOptimizeOutputSignals(boolean enable) {
+    //-------------------------------------------------------------------------
+
+    /**
+     * Sets the optimize output signals.
+     * 
+     * @param enable
+     *            the new optimize output signals
+     */
+    public static void setOptimizeOutputSignals(final boolean enable) {
         optimizeoutputsignals = enable;
     }
-    
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the optimize output signals.
+     * 
+     * @return the optimize output signals
+     */
     public static boolean getOptimizeOutputSignals() {
         return optimizeoutputsignals;
     }
+
+    //-------------------------------------------------------------------------
     
-    
-    public final static void resetQueue2Delete() {
+    /**
+     * Reset queue2 delete.
+     */
+    public static void resetQueue2Delete() {
         modalModels = null;
         portNames = null;
     }
 
-    public final static int getQueueSize2Delete() {
+    //-------------------------------------------------------------------------
+
+    /**
+     * Gets the queue size2 delete.
+     * 
+     * @return the queue size2 delete
+     */
+    public static int getQueueSize2Delete() {
         if (modalModels == null) {
             return 0;
         } else {
@@ -97,8 +187,17 @@ public class XtendJava {
         }
     }
 
-    public final static void enqueue2Delete(final EntityType modalModel,
-            final String portName) {
+    //-------------------------------------------------------------------------
+    
+    /**
+     * Enqueue2 delete.
+     * 
+     * @param modalModel
+     *            the modal model
+     * @param portName
+     *            the port name
+     */
+    public static void enqueue2Delete(final EntityType modalModel, final String portName) {
         if (modalModels == null) {
             modalModels = new LinkedList<EntityType>();
             portNames = new LinkedList<String>();
@@ -107,7 +206,14 @@ public class XtendJava {
         portNames.push(portName);
     }
 
-    public final static String popPortName2Delete() {
+    //-------------------------------------------------------------------------
+
+    /**
+     * Pop port name2 delete.
+     * 
+     * @return the string
+     */
+    public static String popPortName2Delete() {
         if (portNames == null || portNames.size() > 0) {
             return portNames.pop();
         } else {
@@ -115,7 +221,14 @@ public class XtendJava {
         }
     }
 
-    public final static EntityType popModalModel2Delete() {
+    //-------------------------------------------------------------------------
+
+    /**
+     * Pop modal model2 delete.
+     * 
+     * @return the entity type
+     */
+    public static EntityType popModalModel2Delete() {
         if (modalModels == null || modalModels.size() > 0) {
             return modalModels.pop();
         } else {
@@ -125,12 +238,16 @@ public class XtendJava {
 
     // --------------------------------------------------------------------
 
-    static int sem = 0;
+    /** The sem. */
+    private static int sem = 0;
 
-    public synchronized final static void P() {
+    /**
+     * P.
+     */
+    public static synchronized void semP() {
         while (sem > 0) {
             try {
-                Thread.sleep(100);
+                Thread.sleep(SLEEP_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -138,11 +255,19 @@ public class XtendJava {
         sem++;
     }
 
-    public synchronized final static void V() {
+    /**
+     * V.
+     */
+    public static synchronized void semV() {
         sem--;
     }
 
-    /** The hash table used to remember marked states. */
+    /**
+     * The hash table used to remember marked states.
+     * 
+     * @param aString
+     *            the a string
+     */
     // static Hashtable<Integer,Node> ht = new Hashtable<Integer,Node>();
 
     // -------------------------------------------------------------------------
@@ -153,12 +278,18 @@ public class XtendJava {
      * @param aString
      *            the a string
      */
-    public final static void dump(final String aString) {
-        SyncchartsSimPtolemyPlugin.DEBUG(aString);
+    public static void dump(final String aString) {
+        SyncchartsSimPtolemyPlugin.debug(aString);
     }
 
-    public final static void dumpI(final Integer anInteger) {
-        SyncchartsSimPtolemyPlugin.DEBUG(anInteger + "");
+    /**
+     * Dump i.
+     * 
+     * @param anInteger
+     *            the an integer
+     */
+    public static void dumpI(final Integer anInteger) {
+        SyncchartsSimPtolemyPlugin.debug(anInteger + "");
     }
 
     // -------------------------------------------------------------------------
@@ -166,12 +297,11 @@ public class XtendJava {
     /**
      * Gets the URIFragment of a Node.
      * 
-     * @param myNode
-     *            the Node
-     * 
+     * @param myState
+     *            the my state
      * @return the URIFragment
      */
-    public final static String getURIFragment(final State myState) {
+    public static String getURIFragment(final State myState) {
         // Returns the URI fragment that, when passed to getEObject will
         // return the given object.
         return myState.eResource().getURIFragment(myState).toString();
@@ -182,49 +312,25 @@ public class XtendJava {
     /**
      * Gets the URIFragment of a Transition.
      * 
-     * @param myNode
-     *            the Node
-     * 
+     * @param myTransition
+     *            the my transition
      * @return the URIFragment
      */
-    public final static String getURIFragment(final Transition myTransition) {
+    public static String getURIFragment(final Transition myTransition) {
         // Returns the URI fragment that, when passed to getEObject will
         // return the given object.
         return myTransition.eResource().getURIFragment(myTransition).toString();
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Returns a hash value of a Node.
-     * 
-     * @param myState
-     *            the my state
-     * 
-     * @return the hash value as a String
-     */
-    // public final static String hash(Node myNode) {
-    // //int i = myNode.eContainer().eContents().indexOf(myNode);
-    // //return ""+i;//myNode.hashCode();
-    // return ""+myNode.hashCode();
-    // }
-
     // -------------------------------------------------------------------------
 
     /**
-     * Returns a hash value of a Transition.
-     * 
-     * @param myTransition
-     *            the Transition
-     * 
-     * @return the hash value as a String
+     * Removes the blancs.
+     *
+     * @param inText the in text
+     * @return the string
      */
-    // public final static String hash(Transition myTransition) {
-    // return ""+myTransition.hashCode();
-    // }
-
-    // -------------------------------------------------------------------------
-    
     public static String removeBlancs(final String inText) {
         if (inText == null) {
             return "";
@@ -234,7 +340,14 @@ public class XtendJava {
 
     // -------------------------------------------------------------------------
 
-    public final static String getStateId(final State myState) {
+    /**
+     * Gets the state id.
+     * 
+     * @param myState
+     *            the my state
+     * @return the state id
+     */
+    public static String getStateId(final State myState) {
         if (myState == null) {
             return "";
         }
@@ -242,11 +355,11 @@ public class XtendJava {
         if ((myState.getLabel() != null) && (myState.getLabel().length() > 0)) {
             returnId = (removeBlancs(myState.getLabel()) + "_" + hash(getURIFragment(myState)));
         } else {
-            returnId =  (removeBlancs(myState.getId()) + "_" + hash(getURIFragment(myState)));
+            returnId = (removeBlancs(myState.getId()) + "_" + hash(getURIFragment(myState)));
         }
-//        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + returnId);
+        // System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + returnId);
         return returnId;
-        
+
         // return hash(getURIFragment(myState));
     }
 
@@ -260,7 +373,7 @@ public class XtendJava {
      * 
      * @return the hash value as a String
      */
-    public final static String hash(final String string) {
+    public static String hash(final String string) {
         String hashCode = string.hashCode() + "";
         if (hashCode.startsWith("-")) {
             hashCode = hashCode.substring(1);
@@ -269,63 +382,27 @@ public class XtendJava {
     }
 
     // -------------------------------------------------------------------------
-
-    /**
-     * Builds the trigger of a Transition.
-     * 
-     * @param myTransition
-     *            the Transition
-     * 
-     * @return the trigger as a String
-     */
-    // public final static String buildTrigger(Transition myTransition) {
-    // String myTrigger = "";
-    // if (myTransition.eClass().getName().equals("EventWait")) {
-    // EventWait event = (EventWait)myTransition;
-    // myTrigger = "count > 25*"+event.getSeconds();
-    // }
-    // if (myTransition.eClass().getName().equals("EventContact")) {
-    // EventContact event = (EventContact)myTransition;
-    // int track = event.getTrack().getValue();
-    // int pos = event.getPosition().getValue();
-    // myTrigger = "contact(" + track + ") == " + pos;
-    // }
-    // if (myTransition.eClass().getName().equals("EventOccupied")) {
-    // EventOccupied event = (EventOccupied)myTransition;
-    // EList<TRACK> trackList = event.getTrack();
-    // String condition = event.getCondition().getLiteral();
-    // String conjunction = event.getConjunction().getLiteral();
-    // if(condition.equals("IF_NOT")) condition = "!(";
-    // else condition = "(";
-    // if(conjunction.equals("AND")) conjunction = " && ";
-    // else conjunction = " || ";
-    // myTrigger = condition;
-    // for (int c = 0; c < trackList.size(); c++) {
-    // if (c > 0) myTrigger += conjunction;
-    // int track = ((TRACK)trackList.get(c)).getValue();
-    // myTrigger += "occupied("+track+") == 1";
-    // }
-    // myTrigger += ")";
-    // }
-    // return myTrigger;
-    // }
-
     // -------------------------------------------------------------------------
 
-    // 0 == not used
-    // 1 == input, used in expressions, trigger
-    // 2 == output, used in effects
-    // -1 == error, used in in expression AND effects
-    public final static int getPortType(final Signal signal, final Region region) {
-        SyncchartsSimPtolemyPlugin.DEBUG("Checking "
-                + region.getStates().size() + " inner states for signal:"
-                + signal.getName());
+    /**
+     * Gets the port type.
+     * 
+     *    0 == not used
+     *    1 == input, used in expressions, trigger
+     *    2 == output, used in effects
+     *   -1 == error, used in in expression AND effects
+     *
+     * @param signal the signal
+     * @param region the region
+     * @return the port type
+     */
+    public static int getPortType(final Signal signal, final Region region) {
+        SyncchartsSimPtolemyPlugin.debug("Checking " + region.getStates().size()
+                + " inner states for signal:" + signal.getName());
         boolean isOutput = isOutputPort(signal, region);
-        SyncchartsSimPtolemyPlugin.DEBUG("Again Checking for signal:"
-                + signal.getName());
+        SyncchartsSimPtolemyPlugin.debug("Again Checking for signal:" + signal.getName());
         boolean isInput = isInputPort(signal, region);
-        SyncchartsSimPtolemyPlugin
-                .DEBUG("out:" + isOutput + ",  in:" + isInput);
+        SyncchartsSimPtolemyPlugin.debug("out:" + isOutput + ",  in:" + isInput);
         if (isOutput && isInput) {
             return -1;
         } else if (isInput) {
@@ -337,8 +414,16 @@ public class XtendJava {
         }
     }
 
-    public final static boolean isOutputPort(final Signal signal,
-            final Region region) {
+    /**
+     * Checks if is output port.
+     * 
+     * @param signal
+     *            the signal
+     * @param region
+     *            the region
+     * @return true, if is output port
+     */
+    public static boolean isOutputPort(final Signal signal, final Region region) {
         EList<State> innerStates = region.getStates();
         for (int c = 0; c < innerStates.size(); c++) {
             State innerState = innerStates.get(c);
@@ -349,20 +434,28 @@ public class XtendJava {
                 if (isSignalInEffect(signal, transition.getEffects())) {
                     return true;
                 }
-            }// next transition
+            } // next transition
              // search inner regions recursively
             EList<Region> innerRegions = innerState.getRegions();
             for (int cc = 0; cc < innerRegions.size(); cc++) {
                 if (isOutputPort(signal, innerRegions.get(cc))) {
                     return true;
                 }
-            }// next inner region
+            } // next inner region
         }
         return false;
     }
 
-    private final static boolean isSignalInEffect(final Signal signal,
-            final EList<Effect> effects) {
+    /**
+     * Checks if is signal in effect.
+     * 
+     * @param signal
+     *            the signal
+     * @param effects
+     *            the effects
+     * @return true, if is signal in effect
+     */
+    private static boolean isSignalInEffect(final Signal signal, final EList<Effect> effects) {
         for (int c = 0; c < effects.size(); c++) {
             if (effects.get(c) instanceof Emission) {
                 Emission emission = (Emission) effects.get(c);
@@ -374,13 +467,27 @@ public class XtendJava {
         return false;
     }
 
-    public static EList<String> movedSignalNames;
+    /** The moved signal names. */
+    private static EList<String> movedSignalNames;
 
-    public final static EList<String> getMovedSignalNames() {
+    /**
+     * Gets the moved signal names.
+     * 
+     * @return the moved signal names
+     */
+    public static EList<String> getMovedSignalNames() {
         return movedSignalNames;
     }
 
-    public final static void moveToSignalList(final EList<Signal> newList,
+    /**
+     * Move to signal list.
+     * 
+     * @param newList
+     *            the new list
+     * @param signalList
+     *            the signal list
+     */
+    public static void moveToSignalList(final EList<Signal> newList,
             final EList<Signal> signalList) {
         movedSignalNames = new BasicEList<String>();
         if (signalList == null) {
@@ -392,8 +499,16 @@ public class XtendJava {
         }
     }
 
-    public final static boolean isInputPort(final Signal signal,
-            final Region region) {
+    /**
+     * Checks if is input port.
+     * 
+     * @param signal
+     *            the signal
+     * @param region
+     *            the region
+     * @return true, if is input port
+     */
+    public static boolean isInputPort(final Signal signal, final Region region) {
         EList<State> innerStates = region.getStates();
         for (int c = 0; c < innerStates.size(); c++) {
             State innerState = innerStates.get(c);
@@ -404,25 +519,33 @@ public class XtendJava {
                 if (isSignalInExpression(signal, transition.getTrigger())) {
                     return true;
                 }
-            }// next transition
+            } // next transition
              // search inner regions recursively
             EList<Region> innerRegions = innerState.getRegions();
             for (int cc = 0; cc < innerRegions.size(); cc++) {
                 if (isInputPort(signal, innerRegions.get(cc))) {
                     return true;
                 }
-            }// next inner region
+            } // next inner region
         }
         return false;
     }
 
-    private final static boolean isSignalInExpression(final Signal signal,
+    /**
+     * Checks if is signal in expression.
+     * 
+     * @param signal
+     *            the signal
+     * @param expression
+     *            the expression
+     * @return true, if is signal in expression
+     */
+    private static boolean isSignalInExpression(final Signal signal,
             final Expression expression) {
         boolean returnValue = false;
         if (expression instanceof OperatorExpression) {
             OperatorExpression operatorExpression = (OperatorExpression) expression;
-            EList<Expression> subExpressionList = operatorExpression
-                    .getSubExpressions();
+            EList<Expression> subExpressionList = operatorExpression.getSubExpressions();
             for (int c = 0; c < subExpressionList.size(); c++) {
                 Expression subExpression = subExpressionList.get(c);
                 returnValue |= isSignalInExpression(signal, subExpression);
@@ -431,12 +554,10 @@ public class XtendJava {
                 }
             }
         } else if (expression instanceof ValuedObjectReference) {
-            ValuedObject valObj = ((ValuedObjectReference) expression)
-                    .getValuedObject();
+            ValuedObject valObj = ((ValuedObjectReference) expression).getValuedObject();
             if (valObj instanceof Signal) {
                 Signal sig = (Signal) valObj;
-                SyncchartsSimPtolemyPlugin.DEBUG(sig.getName() + "=="
-                        + signal.getName());
+                SyncchartsSimPtolemyPlugin.debug(sig.getName() + "==" + signal.getName());
                 if (sig == signal) {
                     return true;
                     // SyncchartsSimPtolemyPlugin.DEBUG("-> NO");
@@ -448,7 +569,16 @@ public class XtendJava {
 
     // -------------------------------------------------------------------------
 
-    public final static String buildTrigger(final Expression expression,
+    /**
+     * Builds the trigger.
+     * 
+     * @param expression
+     *            the expression
+     * @param terminatedURIHash
+     *            the terminated uri hash
+     * @return the string
+     */
+    public static String buildTrigger(final Expression expression,
             final String terminatedURIHash) {
         String trigger = buildExpression(expression);
         if (!terminatedURIHash.equals("")) {
@@ -459,11 +589,27 @@ public class XtendJava {
         return trigger;
     }
 
+    /**
+     * Checks if is local.
+     * 
+     * @param signal
+     *            the signal
+     * @return true, if is local
+     */
     public static boolean isLocal(final Signal signal) {
         return (!signal.isIsInput() && (!signal.isIsOutput()));
     }
 
-    public final static String buildEffect(final EList<Effect> myEffectList,
+    /**
+     * Builds the effect.
+     * 
+     * @param myEffectList
+     *            the my effect list
+     * @param terminatedURIHash
+     *            the terminated uri hash
+     * @return the string
+     */
+    public static String buildEffect(final EList<Effect> myEffectList,
             final String terminatedURIHash) {
         String myEmission = "";
         for (int c = 0; c < myEffectList.size(); c++) {
@@ -493,7 +639,14 @@ public class XtendJava {
         return myEmission;
     }
 
-    public final static String buildExpression(final Expression expression) {
+    /**
+     * Builds the expression.
+     * 
+     * @param expression
+     *            the expression
+     * @return the string
+     */
+    public static String buildExpression(final Expression expression) {
         String expressionString = "";
         if (expression instanceof Value) {
             expressionString = ((Value) expression).toString();
@@ -501,13 +654,11 @@ public class XtendJava {
             OperatorExpression operatorExpression = (OperatorExpression) expression;
             OperatorType operator = operatorExpression.getOperator();
             String operatorString = translateOperator(operator.getLiteral());
-            EList<Expression> subExpressionList = operatorExpression
-                    .getSubExpressions();
+            EList<Expression> subExpressionList = operatorExpression.getSubExpressions();
             expressionString += "(";
             for (int c = 0; c < subExpressionList.size(); c++) {
                 Expression subExpression = subExpressionList.get(c);
-                if ((!expressionString.equals("(") || (operatorString
-                        .equals("!")))) {
+                if ((!expressionString.equals("(") || (operatorString.equals("!")))) {
                     expressionString += " " + operatorString + " ";
                 }
                 expressionString += buildExpression(subExpression);
@@ -531,8 +682,16 @@ public class XtendJava {
         return expressionString;
     }
 
-    private static final String translateOperator(String syncchartsOperator) {
-        SyncchartsSimPtolemyPlugin.DEBUG("OP   :   " + syncchartsOperator);
+    /**
+     * Translate operator.
+     * 
+     * @param syncchartsOperator
+     *            the synccharts operator
+     * @return the string
+     */
+    private static String translateOperator(final String syncchartsOperatorParam) {
+        String syncchartsOperator = syncchartsOperatorParam;
+        SyncchartsSimPtolemyPlugin.debug("OP   :   " + syncchartsOperator);
         syncchartsOperator = syncchartsOperator.trim();
         if (syncchartsOperator.equalsIgnoreCase("EQ")) {
             return "==";
@@ -581,109 +740,5 @@ public class XtendJava {
         }
         return "";
     }
-
-    // public final static String buildEmission(Node myNode) {
-    // String myEmission = "";
-    // if (myNode.eClass().getName().equals("SetSpeed")) {
-    // SetSpeed setSpeed = (SetSpeed)myNode;
-    // int speed = setSpeed.getSpeed();
-    // int motormode = setSpeed.getDirection().getValue();
-    // EList<TRACK> trackList = setSpeed.getTrack();
-    // myEmission += "tracks={";
-    // for (int c = 0; c < trackList.size(); c++) {
-    // if (c > 0) myEmission += ",";
-    // int track = ((TRACK)trackList.get(c)).getValue();
-    // //myEmission += "track"+track+"={speed="+speed+"}";
-    // myEmission += "track"+track
-    // +"={speed="+speed+", motormode="+motormode+"}";
-    // }
-    // myEmission += "};";
-    // if (trackList.size() == 0)
-    // myEmission = "tracks={track12345={speed=0, motormode=0}};";
-    // myEmission += "signals={signal12345={lights=0}};";
-    // myEmission += "points={point12345={turn=0}}";
-    // //myEmission += "tracks={track12345={speed=0, motormode=0}}";
-    // }
-    //
-    // if (myNode.eClass().getName().equals("SetPoint")) {
-    // SetPoint setPoint = (SetPoint)myNode;
-    // int turn = setPoint.getDirection().getValue();
-    // EList<POINT> pointList = setPoint.getPoint();
-    // myEmission += "points={";
-    // for (int c = 0; c < pointList.size(); c++) {
-    // if (c > 0) myEmission += ",";
-    // int point = ((POINT)pointList.get(c)).ordinal();
-    // myEmission += "point"+point+"={turn="+turn+"}";
-    // }
-    // myEmission += "};";
-    // if (pointList.size() == 0)
-    // myEmission = "points={point12345={turn=0}};";
-    // myEmission += "signals={signal12345={lights=0}};";
-    // //myEmission += "points={point12345={turn=0}}";
-    // myEmission += "tracks={track12345={speed=0, motormode=0}}";
-    // }
-    //
-    // if (myNode.eClass().getName().equals("SetSignal")) {
-    // SetSignal setSignal = (SetSignal)myNode;
-    // int color = setSignal.getColor().getValue();
-    // boolean position0 = false;
-    // boolean position1 = false;
-    // EList<POSITION> positionList = setSignal.getPosition();
-    // for (int c = 0; c < positionList.size(); c++){
-    // int posval = ((POSITION)positionList.get(c)).getValue();
-    // if (posval == 0) position0 = true;
-    // if (posval == 1) position1 = true;
-    // }
-    // EList<TRACK> trackList = setSignal.getTrack();
-    // myEmission += "signals={";
-    // for (int c = 0; c < trackList.size(); c++) {
-    // if (c > 0) myEmission += ",";
-    // int track = ((TRACK)trackList.get(c)).getValue();
-    // if (position0) {
-    // myEmission += "signal"+track+"a={lights="+color+"}";
-    // }
-    // if (position0 && position1) {
-    // myEmission += ",";
-    // }
-    // if (position1) {
-    // myEmission += "signal"+track+"b={lights="+color+"}";
-    // }
-    // }
-    // myEmission += "};";
-    // if (trackList.size() == 0)
-    // myEmission = "signals={signal12345={lights=0}};";
-    // myEmission += "points={point12345={turn=0}};";
-    // myEmission += "tracks={track12345={speed=0, motormode=0}}";
-    // }
-    //
-    // return myEmission;
-    // }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Mark a state Node. This puts the Node myNode into the hash table to
-     * remember it.
-     * 
-     * @param myNode
-     *            the Node to mark
-     */
-    // public final static void markState(Node myNode) {
-    // ht.put(myNode.hashCode(), myNode);
-    // }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Checks whether a state Node myNode is marked.
-     * 
-     * @param myNode
-     *            the Node to check
-     * 
-     * @return true, if state is marked
-     */
-    // public final static boolean isMarked(Node myNode) {
-    // return ht.contains(myNode);
-    // }
 
 }
