@@ -445,6 +445,9 @@ public class Execution extends Job {
         if (step < 1) {
             return false;
         }
+        if (this.stop) {
+            return false;
+        }
         // if this is already the current step
         if (step == this.stepCounter) {
             return true;
@@ -499,6 +502,9 @@ public class Execution extends Job {
         if (step < 0) {
             return false;
         }
+        if (this.stop) {
+            return false;
+        }
         // if this is already the current step
         if (step == this.stepCounter) {
             return true;
@@ -543,6 +549,9 @@ public class Execution extends Job {
 
         // do not block if currently doing step
         if (this.steps != NO_STEPS) {
+            return false;
+        }
+        if (this.stop) {
             return false;
         }
 
@@ -595,6 +604,9 @@ public class Execution extends Job {
         if (this.steps != NO_STEPS) {
             return false;
         }
+        if (this.stop) {
+            return false;
+        }
 
         synchronized (this) {
             if (this.steps == NO_STEPS) {
@@ -632,6 +644,9 @@ public class Execution extends Job {
      * informed about the pause command.
      */
     public void pauseExecutionSync() {
+        if (this.stop) {
+            return;
+        }
         pausedCommand = true;
 
         synchronized (this) {
@@ -667,6 +682,9 @@ public class Execution extends Job {
      * that is done the DataComponents are informed about the run command.
      */
     public synchronized void runExecutionSync() {
+        if (this.stop) {
+            return;
+        }
         pausedCommand = false;
 
         synchronized (this) {
