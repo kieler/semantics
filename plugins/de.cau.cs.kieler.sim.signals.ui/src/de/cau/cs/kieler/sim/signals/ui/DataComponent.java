@@ -250,7 +250,6 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
 
                     // only if this is a synchronous signal
                     if (isSignal) {
-                        System.out.println("");
                         if (!signalList.containsSignal(name)) {
                             signalList.add(new Signal(name, maximalTicks));
                         }
