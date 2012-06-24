@@ -278,7 +278,13 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram = myModel;
+            Program transformedProgram =  myModel;
+
+            // Calculate output path for possible S-m2m
+            // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
+            String inputPathString = this.getModelFilePath().toString();
+            URI input = URI.createPlatformResourceURI(inputPathString, true);
+            sOutput = URI.createURI(input.toString());
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -289,33 +295,30 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 // 'Full Debug Mode' is turned ON
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
-            }
 
-            // Calculate output path
-            // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
-            String inputPathString = this.getModelFilePath().toString();
-            URI input = URI.createPlatformResourceURI(inputPathString, true);
+                // Because we transformed the S program we need to save a different file
+                // and pass this new file to the SC simulation instead.
+                sOutput = sOutput.trimFragment();
+                sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.s");
+                
+                try {
+                    // Write out copy/transformation of S program
+                    Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+                    Map<String, Object> m = reg.getExtensionToFactoryMap();
+                    m.put("daform", new XMIResourceFactoryImpl());
+                    ResourceSet resSet = new ResourceSetImpl();
+                    Resource resource = resSet.createResource(sOutput);
+                    resource.getContents().add(transformedProgram);
+                    resource.save(Collections.EMPTY_MAP);
+                } catch (IOException e) {
+                    throw new KiemInitializationException("Cannot write output S file.", true, null);
+                }
+            } 
 
-            sOutput = URI.createURI(input.toString());
-            sOutput = sOutput.trimFragment();
-            sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.s");
-
+            // Calculate output path for SC-m2t
             scOutput = URI.createURI(input.toString());
             scOutput = scOutput.trimFragment();
             scOutput = scOutput.trimFileExtension().appendFileExtension("c");
-
-            try {
-                // Write out copy/transformation of S program
-                Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-                Map<String, Object> m = reg.getExtensionToFactoryMap();
-                m.put("daform", new XMIResourceFactoryImpl());
-                ResourceSet resSet = new ResourceSetImpl();
-                Resource resource = resSet.createResource(sOutput);
-                resource.getContents().add(transformedProgram);
-                resource.save(Collections.EMPTY_MAP);
-            } catch (IOException e) {
-                throw new KiemInitializationException("Cannot write output S file.", true, null);
-            }
 
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
