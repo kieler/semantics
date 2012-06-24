@@ -28,11 +28,18 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static SyncChartsSimSPlugin plugin;
+    
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in S2Simulation.xtend. Both
+     * TAGs must match
+     */
+    public static final String AUXILIARY_VARIABLE_TAG 
+                           = "oSYNCCHARTSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
     // -------------------------------------------------------------------------
 
     /**
-     * The constructor
+     * The constructor.
      */
     public SyncChartsSimSPlugin() {
     }
@@ -42,7 +49,7 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void start(BundleContext context) throws Exception {
+    public void start(final BundleContext context) throws Exception {
         super.start(context);
         plugin = this;
     }
@@ -52,7 +59,7 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
     /**
      * {@inheritDoc}
      */
-    public void stop(BundleContext context) throws Exception {
+    public void stop(final BundleContext context) throws Exception {
         plugin = null;
         super.stop(context);
     }
@@ -60,7 +67,7 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
     // -------------------------------------------------------------------------
 
     /**
-     * Returns the shared instance
+     * Returns the shared instance.
      * 
      * @return the shared instance
      */

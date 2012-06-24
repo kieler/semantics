@@ -6,6 +6,9 @@ Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Require-Bundle: org.eclipse.ui,
- org.eclipse.core.runtime
+ org.eclipse.core.runtime,
+ org.eclipse.xtend.util.stdlib;bundle-version="1.2.0",
+ org.eclipse.xtend2.lib;bundle-version="2.2.1",
+ de.cau.cs.kieler.synccharts;bundle-version="0.5.1"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-ActivationPolicy: lazy
