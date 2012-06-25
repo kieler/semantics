@@ -491,11 +491,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      */
     private java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        
+        System.out.println("convertEMFtoJavaURI 1" );
 
         IPath path = new Path(uri.toPlatformString(false));
+        System.out.println("convertEMFtoJavaURI 2" + path );
         IFile file = myWorkspaceRoot.getFile(path);
+        System.out.println("convertEMFtoJavaURI 3" + file.toString()); 
 
         IPath fullPath = file.getLocation();
+        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString()); 
 
         return new java.net.URI(fullPath.toString());
     }
@@ -521,14 +526,18 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     private java.net.URI compileEsterelToC(final URI strlFile, final File outFile,
             final EsterelSimulationProgressMonitor monitor) throws IOException, URISyntaxException {
         monitor.subTask("Reading Esterel file");
+        System.out.println("Compile 1" + strlFile.toString() +" , "+ outFile.toString());
         java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
 
+        System.out.println("Compile 2" + inputURI.toString());
         InputStream strl = CEC.runSTRL(inputURI);
+        System.out.println("Compile 3");
         monitor.worked(1);
         if (monitor.isCanceled()) {
             strl.close();
             return null;
         }
+        System.out.println("Compile 4");
         monitor.subTask("Parsing Esterel file");
         InputStream strlxml = CEC.runSTRLXML(strl);
         monitor.worked(1);
@@ -536,6 +545,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 5");
         monitor.subTask("Expanding Esterel file");
         InputStream expandmodule = CEC.runEXPANDMODULE(strlxml);
         monitor.worked(1);
@@ -543,6 +553,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 6");
         monitor.subTask("Dismantle Esterel file");
         InputStream dismantle = CEC.runDISMANTLE(expandmodule);
         monitor.worked(1);
@@ -550,6 +561,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 7");
         monitor.subTask("ASTGRC");
         InputStream astgrc = CEC.runASTGRC(dismantle);
         monitor.worked(1);
@@ -557,6 +569,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 8");
         monitor.subTask("GRCOPT");
         InputStream grcopt = CEC.runGRCOPT(astgrc);
         monitor.worked(1);
@@ -578,6 +591,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 9");
         monitor.subTask("EEC");
         InputStream eec = CEC.runEEC(pdgccfg);
         monitor.worked(1);
@@ -592,8 +606,10 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             strl.close();
             return null;
         }
+        System.out.println("Compile 10");
         monitor.subTask("Generating C code");
         java.net.URI uri = CEC.runCODEGEN(scfgc, outFile);
+        System.out.println("Compile 11" + uri);
         monitor.worked(1);
         strl.close();
         return uri;
