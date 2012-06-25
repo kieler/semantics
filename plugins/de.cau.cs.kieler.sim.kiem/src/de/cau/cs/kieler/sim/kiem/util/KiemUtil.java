@@ -17,8 +17,10 @@ package de.cau.cs.kieler.sim.kiem.util;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -135,6 +137,25 @@ public final class KiemUtil {
      * @return the input stream
      * @throws FileNotFoundException the file not found exception
      */
+    public static OutputStream createWorkspaceFile(final IPath relativeFilePath) 
+            throws FileNotFoundException {
+        IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
+        IFile relativeFile = myWorkspaceRoot.getFile(relativeFilePath);
+        IPath rawLocation = relativeFile.getRawLocation();
+        OutputStream outputStream;
+        outputStream = new FileOutputStream(rawLocation.toString());
+        return outputStream; //relativeFile.getContents(true);
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * Open a bundle file and returns an InputStream.
+     *
+     * @param relativeFilePath the relative file path
+     * @return the input stream
+     * @throws FileNotFoundException the file not found exception
+     */
     public static InputStream openWorkspaceFile(final IPath relativeFilePath) 
             throws FileNotFoundException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
@@ -144,7 +165,7 @@ public final class KiemUtil {
         inputStream = new FileInputStream(rawLocation.toString());
         return inputStream; //relativeFile.getContents(true);
     }
-
+    
     // -------------------------------------------------------------------------
 
     /**
