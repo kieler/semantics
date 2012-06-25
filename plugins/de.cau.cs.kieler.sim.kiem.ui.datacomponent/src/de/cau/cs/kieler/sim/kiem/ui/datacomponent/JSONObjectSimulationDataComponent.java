@@ -555,6 +555,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             // then do the provide initial variables
             returnObj = doProvideInitialVariables();
         } catch (Exception e) {
+            e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
                     + "respective Eclipse Problems View have been cleared.\n\n", true, e);
