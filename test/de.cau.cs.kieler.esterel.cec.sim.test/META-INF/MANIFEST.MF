@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test Plugin for Esterel
+Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.sim.test
+Bundle-Version: 0.1.0.qualifier
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: de.cau.cs.kieler.esterel;bundle-version="0.2.0",
+ de.cau.cs.kieler.esterel.cec.sim;bundle-version="0.1.1",
+ de.cau.cs.kieler.sim.kiem;bundle-version="0.5.1",
+ de.cau.cs.kieler.sim.kiem.test;bundle-version="0.1.0"

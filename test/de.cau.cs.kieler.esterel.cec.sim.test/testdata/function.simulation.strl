@@ -1,0 +1,16 @@
+module FunctionTest:
+function ADDONE(integer) : integer;
+function INVERSE(boolean) : boolean;
+input A, B, R;
+output V1 : combine integer with +;
+output V2 : combine boolean with and;
+output O;
+
+loop
+  [ await A || await B ];
+  emit O;
+  emit V1(ADDONE(3));
+  emit V2(INVERSE(false))
+each R
+
+end module
