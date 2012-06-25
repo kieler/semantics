@@ -13,10 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.codegen.esterel;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eclipse.core.commands.ExecutionEvent;
@@ -28,7 +26,6 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
@@ -38,102 +35,120 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.TreeSelection;
 import org.eclipse.ui.PlatformUI;
 
-import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.esterel.esterel.Program;
+import de.cau.cs.kieler.synccharts.Region;
 import de.cau.cs.kieler.synccharts.codegen.esterel.xtend.Synccharts2Esterel;
 
-// Needed for @Inject tags for modularization (e.g., the Helper.xtend file)
-import com.google.inject.AbstractModule;
-import com.google.inject.Guice;
-
 /**
+ * Generate Esterel Code from a SyncChart.
+ * 
+ * This is currently is just a stub. Implementing this might be part of a future student or research
+ * project.
+ * 
  * @author cmot
  * 
- *         Generate S Code from a SyncChart using new Xtend language.
- * 
  */
+@SuppressWarnings("restriction")
 public class EsterelGenerator implements IHandler {
 
-	public void addHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
+    /**
+     * {@inheritDoc}
+     */
+    public void addHandlerListener(final IHandlerListener handlerListener) {
+    }
 
-	}
+    // ---------------------------------------------------------------------
 
-	public void dispose() {
-		// TODO Auto-generated method stub
+    /**
+     * {@inheritDoc}
+     */
+    public void dispose() {
+    }
 
-	}
+    // ---------------------------------------------------------------------
 
-	public Object execute(ExecutionEvent event) throws ExecutionException {
+    /**
+     * {@inheritDoc}
+     */
+    public Object execute(final ExecutionEvent event) throws ExecutionException {
 
-		// get input model from currently selected file in Explorer
-		ISelection selection = PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getSelectionService()
-				.getSelection();
-		File file = (File) ((TreeSelection) selection).getFirstElement();
-		URI input = URI.createPlatformResourceURI(
-				file.getFullPath().toString(), true);
-		URI output = URI.createURI("");
+        // get input model from currently selected file in Explorer
+        //TODO: In the end there should be a better integration than using the file
+        //explorer, e.g., a Simulation of SyncCharts with KIEM using Esterel.
+        ISelection selection = PlatformUI.getWorkbench().getActiveWorkbenchWindow()
+                .getSelectionService().getSelection();
+        File file = (File) ((TreeSelection) selection).getFirstElement();
+        URI input = URI.createPlatformResourceURI(file.getFullPath().toString(), true);
+        URI output = URI.createURI("");
 
-		// Try to load synccharts model
-		XMIResourceImpl inputResource = new XMIResourceImpl(input);
-		try {
-			// Load synccharts model
-			inputResource.load(null);
-			Region rootRegion = (Region) inputResource.getContents().get(0);
+        // Try to load synccharts model
+        XMIResourceImpl inputResource = new XMIResourceImpl(input);
+        try {
+            // Load synccharts model
+            inputResource.load(null);
+            Region rootRegion = (Region) inputResource.getContents().get(0);
 
-			// Apply transformation
-			// Because for @Inject tags we cannot use the standard NEW keyword
-			//    Synccharts2S transform = new Synccharts2S();
-			Synccharts2Esterel transform = Guice.createInjector().getInstance(Synccharts2Esterel.class);
-			Program program = transform.transform(rootRegion);
+            // Apply transformation
+            Synccharts2Esterel transform = new Synccharts2Esterel();
+            Program program = transform.transform(rootRegion);
 
-			// Calculate output path
-			output = URI.createURI(input.toString());
-			output = output.trimFragment();
-			output = output.trimFileExtension().appendFileExtension("strl");
+            // Calculate output path
+            output = URI.createURI(input.toString());
+            output = output.trimFragment();
+            output = output.trimFileExtension().appendFileExtension("strl");
 
-			try {
-				// Write out Esterel program
-				Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
-				Map<String, Object> m = reg.getExtensionToFactoryMap();
-				m.put("daform", new XMIResourceFactoryImpl());
-				ResourceSet resSet = new ResourceSetImpl();
-				Resource resource = resSet.createResource(output);
-				resource.getContents().add(program);
-				resource.save(Collections.EMPTY_MAP);
-			} catch (IOException e) {
-				throw new ExecutionException("Cannot write output file.");
-			}
-		} catch (IOException e) {
-			throw new ExecutionException("Cannot read input file.");
-		}
+            try {
+                // Write out Esterel program
+                Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+                Map<String, Object> m = reg.getExtensionToFactoryMap();
+                m.put("daform", new XMIResourceFactoryImpl());
+                ResourceSet resSet = new ResourceSetImpl();
+                Resource resource = resSet.createResource(output);
+                resource.getContents().add(program);
+                resource.save(Collections.EMPTY_MAP);
+            } catch (IOException e) {
+                throw new ExecutionException("Cannot write output file.");
+            }
+        } catch (IOException e) {
+            throw new ExecutionException("Cannot read input file.");
+        }
 
-		// Refresh the file explorer
-		try {
-			ResourcesPlugin.getWorkspace().getRoot()
-					.refreshLocal(IResource.DEPTH_INFINITE, null);
-		} catch (CoreException e2) {
-			e2.printStackTrace();
-		}
+        // Refresh the file explorer
+        try {
+            ResourcesPlugin.getWorkspace().getRoot().refreshLocal(IResource.DEPTH_INFINITE, null);
+        } catch (CoreException e2) {
+            e2.printStackTrace();
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	public boolean isEnabled() {
-		return true;
-	}
+    // ---------------------------------------------------------------------
 
-	public boolean isHandled() {
-		return true;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isEnabled() {
+        return true;
+    }
 
-	public void removeHandlerListener(IHandlerListener handlerListener) {
-		// TODO Auto-generated method stub
+    // ---------------------------------------------------------------------
 
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isHandled() {
+        return true;
+    }
+    
+    // ---------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void removeHandlerListener(final IHandlerListener handlerListener) {
+    }
+
+    // ---------------------------------------------------------------------
 
 }
