@@ -66,6 +66,6 @@ public class SSimSCAutomatedJUnitTest extends KiemAutomatedJUnitTest {
      * {@inheritDoc}
      */
     protected String getExecutionFileName() {
-        return "automated.execution";
+        return "s_sc_validation_headless.execution";
     }
 }
