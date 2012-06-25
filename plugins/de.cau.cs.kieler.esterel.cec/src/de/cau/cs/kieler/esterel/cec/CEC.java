@@ -168,6 +168,8 @@ public final class CEC {
                     + "it seems that your platform is not supported by the CEC", null);
         }
         Bundle compiler = fragments[0];
+        
+        System.out.println("compiler" + compiler);
 
         String path;
         path = FileLocator.getBundleFile(compiler).getAbsolutePath();
