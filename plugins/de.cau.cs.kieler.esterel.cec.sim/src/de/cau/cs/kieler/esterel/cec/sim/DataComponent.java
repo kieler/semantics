@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collections;
@@ -72,7 +71,6 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
 import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataComponent;
-import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 /**
@@ -688,7 +686,8 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             throws KiemInitializationException {
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
-        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = new EsterelSimulationProgressMonitor(
+        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor 
+        = new EsterelSimulationProgressMonitor(
                 monitor, EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
         File executable = null;
