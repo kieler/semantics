@@ -684,19 +684,23 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
+        System.out.println("M2M 1");
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
         EsterelSimulationProgressMonitor esterelSimulationProgressMonitor 
         = new EsterelSimulationProgressMonitor(
                 monitor, EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
+        
 
         File executable = null;
         String compile = "";
+        System.out.println("M2M 2");
 
         try {
 
             myModel = (Program) this.getModelRootElement();
 
+            System.out.println("M2M 3");
             if (myModel == null) {
                 throw new KiemInitializationException(
                         "Cannot simulate active editor using the CEC", true, null);
@@ -705,6 +709,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             URI esterelOutput = URI.createURI("");
             // By default there is no additional transformation necessary
             Program transformedProgram = myModel;
+            System.out.println("M2M 4");
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -718,14 +723,17 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         Esterel2Simulation.class);
                 transformedProgram = transform.transform2Simulation(myModel);
             }
+            System.out.println("M2M 5");
 
             // Calculate output path
             URI input = URI.createPlatformResourceURI(this.getModelFilePath().toString(), true);
+            System.out.println("M2M 6" + input.toString());
 
             esterelOutput = URI.createURI(input.toString());
             esterelOutput = esterelOutput.trimFragment();
             esterelOutput = esterelOutput.trimFileExtension()
                     .appendFileExtension("simulation.strl");
+            System.out.println("M2M 7" + esterelOutput.toString());
 
             try {
                 // Write out copy/transformation of Esterel program
@@ -740,16 +748,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                 throw new KiemInitializationException("Cannot write output Esterel file.", true,
                         null);
             }
+            System.out.println("M2M 8");
 
             // Compile Esterel to C
             URL output = this.compileEsterelToC(esterelOutput, CEC.getDefaultOutFile(),
                     esterelSimulationProgressMonitor).toURL();
+            System.out.println("M2M 9");
 
             // Possibly add #include for a header file
             if (myModel.getModules() != null && myModel.getModules().size() > 0) {
                 String mainModuleName = myModel.getModules().get(0).getName();
                 output = copyPossibleHeaderFile(mainModuleName, input, output);
             }
+            System.out.println("M2M 10");
 
             // Cannot be done before because otherwise the new model cannot be serialized
             // Do this on a copy to not destroy original program;
@@ -758,15 +769,19 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                     InterfaceDeclarationFix.class);
             Program fixedTransformedProgram = (Program) CloningExtensions.clone(transformedProgram);
             interfaceDeclarationFix.fix(fixedTransformedProgram);
+            System.out.println("M2M 11");
 
             // Generate data.c
             URL data = generateCSimulationInterface(fixedTransformedProgram, esterelOutput);
+            System.out.println("M2M 12");
 
             // Compile C code
             Bundle bundle = Platform.getBundle(EsterelCECSimPlugin.PLUGIN_ID);
+            System.out.println("M2M 13");
 
             URL fileUrl = FileLocator.find(bundle, new Path(SIMULATION_SUBPATH), null);
             URL bundleLocation = FileLocator.toFileURL(fileUrl);
+            System.out.println("M2M 14");
 
             String compiler = (getProperties()[KIEM_PROPERTY_CCOMPILER
                     + JSONObjectSimulationDataComponent.KIEM_PROPERTY_DIFF]).getValue();
@@ -787,6 +802,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
                         + " " + SIMULATION_COMPILER_OPTIONS + " " + executable;
             }
 
+            System.out.println("M2M 15" + compile);
             simFile = executable;
 
             // Compile the code with the settings from above
@@ -799,6 +815,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
             while ((line = br.readLine()) != null) {
                 errorString.append("\n" + line);
             }
+            System.out.println("M2M 16");
 
             int exitValue = process.waitFor();
 
