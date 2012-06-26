@@ -150,7 +150,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     /**
      * The Class M2MProgressMonitor.
      */
-    protected class M2MProgressMonitor implements ProgressMonitor {
+    protected static class M2MProgressMonitor implements ProgressMonitor {
 
         /** The kieler progress monitor. */
         private ProgressMonitorAdapter kielerProgressMonitor;
@@ -531,7 +531,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      * {@inheritDoc}
      */
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
-        JSONObject returnObj = new JSONObject();
+        JSONObject returnObj = null;
 
         // Do validation only for (opened) EMF editors
         if (this.getModelRootElement() != null) {
@@ -554,13 +554,13 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             performModelTransformation();
             // then do the provide initial variables
             returnObj = doProvideInitialVariables();
+            return returnObj;
         } catch (Exception e) {
             e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
                     + "respective Eclipse Problems View have been cleared.\n\n", true, e);
         }
-        return returnObj;
     }
 
     // -------------------------------------------------------------------------
