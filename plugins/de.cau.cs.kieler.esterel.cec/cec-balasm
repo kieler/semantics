@@ -1,0 +1,145 @@
+#!/bin/awk -f
+
+BEGIN {
+
+  if (ARGV[1] == "--print") {
+    dump = 1;
+    ARGV[1] = "";
+  } else dump = 0;
+
+  if (ARGV[1] == "--c") {
+    genc = 1;
+    ARGV[1] = "";
+  } else genc = 0;
+
+  FS = "[ \t]+";
+  caddr = 0;
+
+  # symboltable[symbol] = its address
+  # reference[offset] = symbol to place at that offset (forward references)
+}
+
+{
+  original_line = $0;
+  sub(/[ \t]*;.*$/,""); # strip comments (; to end-of-line)
+  if (dump) printf("%.4x ", caddr);
+}
+
+/^INITIAL STATE/ {
+  byte($3);
+}
+
+# Label
+
+/^[0-9a-zA-Z_]+:/ {
+  label = substr($0, 1, index($0, ":") - 1);
+  symboltable[label] = caddr;
+}
+
+$2 == "EMIT" { byte(0); byte($3); }
+$2 == "RST"  { byte(1); byte($3); }
+$2 == "SET"  { byte(2); byte($3); byte($4); }
+$2 == "STRT" { byte(3); byte($3); addr($4); }
+$2 == "TICK" { byte(4); }
+$2 == "JMP"  { byte(5); addr($3); }
+$2 == "BST"  { byte(6); byte($3);
+  for (i = 4 ; i <= NF ; i++) addr($i); }
+$2 == "BCC"  { byte(7); byte($3);
+  for (i = 4 ; i <= NF ; i++) addr($i); }
+$2 == "BNZ"  { byte(8); addr($3); }
+$2 == "SWC"  { byte(9); byte($3); }
+
+$2 == "TRM"  { byte(11); byte($3); byte($4); }
+$2 == "LDI"  { byte(12); word($3); }
+$2 == "LDS"  { byte(13); byte($3); }
+$2 == "LDR"  { byte(14); byte($3); }
+$2 == "STR"  { byte(15); byte($3); }
+$2 == "ADD"  { byte(16); }
+$2 == "SUB"  { byte(17); }
+$2 == "MUL"  { byte(18); }
+$2 == "DIV"  { byte(19); }
+$2 == "MOD"  { byte(20); }
+$2 == "CMP"  { byte(21); }
+$2 == "NEQ"  { byte(22); }
+$2 == "LT"   { byte(23); }
+$2 == "LEQ"  { byte(24); }
+$2 == "GT"   { byte(25); }
+$2 == "GEQ"  { byte(26); }
+$2 == "AND"  { byte(27); }
+$2 == "OR"   { byte(28); }
+$2 == "NEG"  { byte(29); }
+$2 == "NOT"  { byte(30); }
+$2 == "CDEC" { byte(31); byte($3); }
+
+{
+  if (dump)
+    print "     " original_line;
+}
+
+END {
+  # Resolve forward references
+
+  if (dump) {
+    print "";
+    print "SYMBOL TABLE";
+    print "";
+    for (symbol in symboltable) {
+      printf("%.4x %s\n", symboltable[symbol], symbol);
+    }
+
+    print "";
+    print "RESOLVED ADDRESSES";
+    print "";
+  }
+
+  unresolved = 0;
+
+  for (offset in reference) {
+    symbol = reference[offset];
+    address = symboltable[symbol];
+    if (address=="") {
+      print("ERROR: " symbol " unresolved") > "/dev/stderr";
+      unresolved = 1;
+    }
+    mem[offset] = rshift(address,8);
+    mem[offset+1] = and(address,255);
+    if (dump) printf("%.4x <- %.2x %.2x (%s)\n", offset, mem[offset], mem[offset+1], symbol);
+  }
+
+  # Dump the contents of memory
+
+  if (!dump && !genc)
+    for (i = 0 ; i < caddr ; i++) {
+      printf("%c", mem[i]);
+    }
+
+  if (genc) {
+    printf("unsigned char *program = (unsigned char *)\n\"");
+    for (i = 0 ; i < caddr; i++) {
+      printf("\\x%.2x", mem[i]);
+      if (i % 8 == 7) printf("\"\n\"");
+    }
+    printf("\";\n");
+  }
+
+  exit unresolved;
+}
+
+
+function byte(b) {
+  mem[caddr] = b;
+  ++caddr;
+
+  if (dump) printf("%.2x ", b);
+}
+
+function word(w) {
+  byte(rshift(w,8));
+  byte(and(w,255));
+}
+
+function addr(symbol) {
+  reference[caddr] = symbol;
+  caddr += 2;
+  if (dump) printf("?? ?? ");
+}
