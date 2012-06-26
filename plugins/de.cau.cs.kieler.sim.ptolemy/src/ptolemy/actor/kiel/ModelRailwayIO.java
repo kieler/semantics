@@ -202,13 +202,17 @@ public class ModelRailwayIO extends TypedAtomicActor {
             		try{
             			RecordToken token2 = (RecordToken)token.get("track"+i);
             			if (token2 != null) {
-                        	int paraMotormode = RI.MOTORMODE_PRIMARY; //1
+                        	int paraMotormode = RailwayInterface.MOTORMODE_PRIMARY; //1
                         	int paraSpeed = 0;
                         	try{paraMotormode = ((IntToken)token2.get("motormode")).intValue();}
-                        	catch(Exception e){}
+                        	catch(Exception e){
+                        	    e.printStackTrace();
+                        	}
                         	try{paraSpeed = ((IntToken)token2.get("speed")).intValue();}
-                        	catch(Exception e){}
-                        	RI.SetTrack(i,paraMotormode,paraSpeed);
+                        	catch(Exception e){
+                                    e.printStackTrace();
+                        	}
+                        	railwayInterface.SetTrack(i,paraMotormode,paraSpeed);
                         	System.out.println("track"+i+" "+paraMotormode+" "+paraSpeed);
             			}
             		}
@@ -218,13 +222,17 @@ public class ModelRailwayIO extends TypedAtomicActor {
         		try{
         			RecordToken token2 = (RecordToken)token.get("tracks");
         			if (token2 != null) {
-                    	int paraMotormode = RI.MOTORMODE_PRIMARY; //1
+                    	int paraMotormode = RailwayInterface.MOTORMODE_PRIMARY; //1
                     	int paraSpeed = 0;
                     	try{paraMotormode = ((IntToken)token2.get("motormode")).intValue();}
-                    	catch(Exception e){}
+                    	catch(Exception e){
+                            e.printStackTrace();
+                    	}
                     	try{paraSpeed = ((IntToken)token2.get("speed")).intValue();}
-                    	catch(Exception e){}
-                    	RI.SetTrack(-1,paraMotormode,paraSpeed);
+                    	catch(Exception e){
+                            e.printStackTrace();
+                    	}
+                    	railwayInterface.SetTrack(-1,paraMotormode,paraSpeed);
                     	System.out.println("tracks "+paraMotormode+" "+paraSpeed);
         			}
         		}
@@ -242,8 +250,10 @@ public class ModelRailwayIO extends TypedAtomicActor {
             			if (token2 != null) {
                         	int paraTurn = 0; //RI.POINT_STRAIGHT
                         	try{paraTurn = ((IntToken)token2.get("turn")).intValue();}
-                        	catch(Exception e){}
-                        	RI.SetPoint(i, (paraTurn==1));
+                        	catch(Exception e){
+                                    e.printStackTrace();
+                        	}
+                        	railwayInterface.SetPoint(i, (paraTurn==1));
             			}
             		}
                 	catch(Exception e){e.printStackTrace();}
@@ -254,8 +264,10 @@ public class ModelRailwayIO extends TypedAtomicActor {
         			if (token2 != null) {
                     	int paraTurn = 0; //RI.POINT_STRAIGHT
                     	try{paraTurn = ((IntToken)token2.get("turn")).intValue();}
-                    	catch(Exception e){}
-                    	RI.SetPoint(-1, (paraTurn==1));
+                    	catch(Exception e){
+                            e.printStackTrace();
+                    	}
+                    	railwayInterface.SetPoint(-1, (paraTurn==1));
         			}
         		}
             	catch(Exception e){}
@@ -270,10 +282,12 @@ public class ModelRailwayIO extends TypedAtomicActor {
             		try{
             			RecordToken token2 = (RecordToken)token.get("signal"+i+"a");
             			if (token2 != null) {
-                        	int paraLights = RI.SIGNAL_RED; //1
+                        	int paraLights = RailwayInterface.SIGNAL_RED; //1
                         	try{paraLights = ((IntToken)token2.get("lights")).intValue();}
-                        	catch(Exception e){}
-                        	RI.SetSignal(i, 0, paraLights);
+                        	catch(Exception e){
+                                    e.printStackTrace();
+                        	}
+                        	railwayInterface.SetSignal(i, 0, paraLights);
             			}
             		}
                 	catch(Exception e){}
@@ -282,10 +296,12 @@ public class ModelRailwayIO extends TypedAtomicActor {
             		try{
             			RecordToken token2 = (RecordToken)token.get("point"+i+"b");
             			if (token2 != null) {
-                        	int paraLights = RI.SIGNAL_RED; //1
+                        	int paraLights = RailwayInterface.SIGNAL_RED; //1
                         	try{paraLights = ((IntToken)token2.get("lights")).intValue();}
-                        	catch(Exception e){}
-                        	RI.SetSignal(i, 1, paraLights);
+                        	catch(Exception e){
+                                    e.printStackTrace();
+                        	}
+                        	railwayInterface.SetSignal(i, 1, paraLights);
             			}
             		}
                 	catch(Exception e){}
@@ -294,11 +310,13 @@ public class ModelRailwayIO extends TypedAtomicActor {
         		try{
         			RecordToken token2 = (RecordToken)token.get("signals");
         			if (token2 != null) {
-                    	int paraLights = RI.SIGNAL_RED; //1
+                    	int paraLights = RailwayInterface.SIGNAL_RED; //1
                     	try{paraLights = ((IntToken)token2.get("lights")).intValue();}
-                    	catch(Exception e){}
-                    	RI.SetSignal(-1, 0, paraLights);
-                    	RI.SetSignal(-1, 1, paraLights);
+                    	catch(Exception e){
+                            e.printStackTrace();
+                    	}
+                    	railwayInterface.SetSignal(-1, 0, paraLights);
+                    	railwayInterface.SetSignal(-1, 1, paraLights);
         			}
         		}
             	catch(Exception e){}
@@ -314,7 +332,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
             while ((found && !this._stopRequested)&&(foundcnt < maxfound)) {
             	found = false;
             	try {
-            		RailwayInterface.Contact scancontact = RI.ScanContact(-1, -1, true);
+            		RailwayInterface.Contact scancontact = railwayInterface.ScanContact(-1, -1, true);
                 	if ((scancontact.tracknum > -1)&&(scancontact.tracknum < 48)) {
                			tokenArray[scancontact.tracknum] = new IntToken(scancontact.contactno);
                 		found = true;
@@ -340,7 +358,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
         while ((found && !this._stopRequested)&&(foundcnt < maxfound)) {
         	found = false;
         	try {
-        		currentTrack = RI.ScanTrackUsed(currentTrack);
+        		currentTrack = railwayInterface.ScanTrackUsed(currentTrack);
         	}catch(Exception e){e.printStackTrace();}
         	if (currentTrack > -1) {
        			tokenArray[currentTrack] = new IntToken(1);
@@ -367,8 +385,8 @@ public class ModelRailwayIO extends TypedAtomicActor {
     public void initialize() throws IllegalActionException {
 
     	try {
-    	if (RI == null)
-    		RI = new RailwayInterface(((StringToken)host.getToken()).stringValue(),
+    	if (railwayInterface == null)
+    		railwayInterface = new RailwayInterface(((StringToken)host.getToken()).stringValue(),
         	  						  ((IntToken)port.getToken()).intValue());
     	}catch(Exception e){
     		IllegalActionException e2 = new IllegalActionException(e.getMessage());
@@ -386,15 +404,15 @@ public class ModelRailwayIO extends TypedAtomicActor {
      *  @exception IllegalActionException Not thrown in this base class.
      */
     public void wrapup() throws IllegalActionException {
-    	RI.AbortTCPConnection();
-    	RI = null;
+    	railwayInterface.AbortTCPConnection();
+    	railwayInterface = null;
     	super.wrapup();
     }
 
 
     ///////////////////////////////////////////////////////////////////
     ////                         private variables                 ////
-    private RailwayInterface RI;
+    private RailwayInterface railwayInterface;
 
 
  // ============================================================================
@@ -410,7 +428,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
    The class below defines similar methods to be used in Java programs. An
    attached SampleController.java shows an example of how to use this class.
    Each method is described below. Often there are predefined constants that
-   should be used in order to clearify the resulting programming code.
+   should be used in order to clarify the resulting programming code.
 
    An instance of this class connects over the given host/port to the tcp
    interface program. The simulation cannot be started by the controller. There
@@ -425,83 +443,83 @@ public class ModelRailwayIO extends TypedAtomicActor {
   // ==========================================================================
 
 
- public class RailwayInterface {
+ public static class RailwayInterface {
 
- 	  public final int IC_JCT_0 = 0;  //!< track segment constant
- 	  public final int IC_LN_0 = 1;   //!< track segment constant
- 	  public final int IC_LN_1 = 2;   //!< track segment constant
- 	  public final int IC_LN_2 = 3;   //!< track segment constant
- 	  public final int IC_LN_3 = 4;   //!< track segment constant
- 	  public final int IC_LN_4 = 5;   //!< track segment constant
- 	  public final int IC_LN_5 = 6;   //!< track segment constant
- 	  public final int IC_ST_0 = 7;   //!< track segment constant
- 	  public final int IC_ST_1 = 8;   //!< track segment constant
- 	  public final int IC_ST_2 = 9;   //!< track segment constant
- 	  public final int IC_ST_3 = 10;  //!< track segment constant
- 	  public final int IC_ST_4 = 11;  //!< track segment constant
- 	  public final int IO_LN_0 = 12;  //!< track segment constant
- 	  public final int IO_LN_1 = 13;  //!< track segment constant
- 	  public final int IO_LN_2 = 14;  //!< track segment constant
- 	  public final int KH_LN_0 = 15;  //!< track segment constant
- 	  public final int KH_LN_1 = 16;  //!< track segment constant
- 	  public final int KH_LN_2 = 17;  //!< track segment constant
- 	  public final int KH_LN_3 = 18;  //!< track segment constant
- 	  public final int KH_LN_4 = 19;  //!< track segment constant
- 	  public final int KH_LN_5 = 20;  //!< track segment constant
- 	  public final int KH_LN_6 = 21;  //!< track segment constant
- 	  public final int KH_LN_7 = 22;  //!< track segment constant
- 	  public final int KH_LN_8 = 23;  //!< track segment constant
- 	  public final int KH_ST_0 = 24;  //!< track segment constant
- 	  public final int KH_ST_1 = 25;  //!< track segment constant
- 	  public final int KH_ST_2 = 26;  //!< track segment constant
- 	  public final int KH_ST_3 = 27;  //!< track segment constant
- 	  public final int KH_ST_4 = 28;  //!< track segment constant
- 	  public final int KH_ST_5 = 29;  //!< track segment constant
- 	  public final int KH_ST_6 = 30;  //!< track segment constant
- 	  public final int KIO_LN_0 = 31; //!< track segment constant
- 	  public final int KIO_LN_1 = 32; //!< track segment constant
- 	  public final int OC_JCT_0 = 33; //!< track segment constant
- 	  public final int OC_LN_0 = 34;  //!< track segment constant
- 	  public final int OC_LN_1 = 35;  //!< track segment constant
- 	  public final int OC_LN_2 = 36;  //!< track segment constant
- 	  public final int OC_LN_3 = 37;  //!< track segment constant
- 	  public final int OC_LN_4 = 38;  //!< track segment constant
- 	  public final int OC_LN_5 = 39;  //!< track segment constant
- 	  public final int OC_ST_0 = 40;  //!< track segment constant
- 	  public final int OC_ST_1 = 41;  //!< track segment constant
- 	  public final int OC_ST_2 = 42;  //!< track segment constant
- 	  public final int OC_ST_3 = 43;  //!< track segment constant
- 	  public final int OC_ST_4 = 44;  //!< track segment constant
- 	  public final int OI_LN_0 = 45;  //!< track segment constant
- 	  public final int OI_LN_1 = 46;  //!< track segment constant
- 	  public final int OI_LN_2 = 47;  //!< track segment constant
+ 	  public static final int IC_JCT_0 = 0;  //!< track segment constant
+ 	  public static final int IC_LN_0 = 1;   //!< track segment constant
+ 	  public static final int IC_LN_1 = 2;   //!< track segment constant
+ 	  public static final int IC_LN_2 = 3;   //!< track segment constant
+ 	  public static final int IC_LN_3 = 4;   //!< track segment constant
+ 	  public static final int IC_LN_4 = 5;   //!< track segment constant
+ 	  public static final int IC_LN_5 = 6;   //!< track segment constant
+ 	  public static final int IC_ST_0 = 7;   //!< track segment constant
+ 	  public static final int IC_ST_1 = 8;   //!< track segment constant
+ 	  public static final int IC_ST_2 = 9;   //!< track segment constant
+ 	  public static final int IC_ST_3 = 10;  //!< track segment constant
+ 	  public static final int IC_ST_4 = 11;  //!< track segment constant
+ 	  public static final int IO_LN_0 = 12;  //!< track segment constant
+ 	  public static final int IO_LN_1 = 13;  //!< track segment constant
+ 	  public static final int IO_LN_2 = 14;  //!< track segment constant
+ 	  public static final int KH_LN_0 = 15;  //!< track segment constant
+ 	  public static final int KH_LN_1 = 16;  //!< track segment constant
+ 	  public static final int KH_LN_2 = 17;  //!< track segment constant
+ 	  public static final int KH_LN_3 = 18;  //!< track segment constant
+ 	  public static final int KH_LN_4 = 19;  //!< track segment constant
+ 	  public static final int KH_LN_5 = 20;  //!< track segment constant
+ 	  public static final int KH_LN_6 = 21;  //!< track segment constant
+ 	  public static final int KH_LN_7 = 22;  //!< track segment constant
+ 	  public static final int KH_LN_8 = 23;  //!< track segment constant
+ 	  public static final int KH_ST_0 = 24;  //!< track segment constant
+ 	  public static final int KH_ST_1 = 25;  //!< track segment constant
+ 	  public static final int KH_ST_2 = 26;  //!< track segment constant
+ 	  public static final int KH_ST_3 = 27;  //!< track segment constant
+ 	  public static final int KH_ST_4 = 28;  //!< track segment constant
+ 	  public static final int KH_ST_5 = 29;  //!< track segment constant
+ 	  public static final int KH_ST_6 = 30;  //!< track segment constant
+ 	  public static final int KIO_LN_0 = 31; //!< track segment constant
+ 	  public static final int KIO_LN_1 = 32; //!< track segment constant
+ 	  public static final int OC_JCT_0 = 33; //!< track segment constant
+ 	  public static final int OC_LN_0 = 34;  //!< track segment constant
+ 	  public static final int OC_LN_1 = 35;  //!< track segment constant
+ 	  public static final int OC_LN_2 = 36;  //!< track segment constant
+ 	  public static final int OC_LN_3 = 37;  //!< track segment constant
+ 	  public static final int OC_LN_4 = 38;  //!< track segment constant
+ 	  public static final int OC_LN_5 = 39;  //!< track segment constant
+ 	  public static final int OC_ST_0 = 40;  //!< track segment constant
+ 	  public static final int OC_ST_1 = 41;  //!< track segment constant
+ 	  public static final int OC_ST_2 = 42;  //!< track segment constant
+ 	  public static final int OC_ST_3 = 43;  //!< track segment constant
+ 	  public static final int OC_ST_4 = 44;  //!< track segment constant
+ 	  public static final int OI_LN_0 = 45;  //!< track segment constant
+ 	  public static final int OI_LN_1 = 46;  //!< track segment constant
+ 	  public static final int OI_LN_2 = 47;  //!< track segment constant
 
- 	  public final int MOTORMODE_OFF       = 0;  //!< motormode constant
- 	  public final int MOTORMODE_PRIMARY   = 1;  //!< motormode constant
- 	  public final int MOTORMODE_SECONDARY = 2;  //!< motormode constant
- 	  public final int MOTORMODE_BRAKE     = 3;  //!< motormode constant
+ 	  public static final int MOTORMODE_OFF       = 0;  //!< motormode constant
+ 	  public static final int MOTORMODE_PRIMARY   = 1;  //!< motormode constant
+ 	  public static final int MOTORMODE_SECONDARY = 2;  //!< motormode constant
+ 	  public static final int MOTORMODE_BRAKE     = 3;  //!< motormode constant
 
- 	  public final int CONTACTEVENT_NONE = 0;    //!< contact event constant
- 	  public final int CONTACTEVENT_FWD  = 0;    //!< contact event constant
- 	  public final int CONTACTEVENT_REV  = 0;    //!< contact event constant
- 	  public final int CONTACTEVENT_UNI  = 0;    //!< contact event constant
+ 	  public static final int CONTACTEVENT_NONE = 0;    //!< contact event constant
+ 	  public static final int CONTACTEVENT_FWD  = 0;    //!< contact event constant
+ 	  public static final int CONTACTEVENT_REV  = 0;    //!< contact event constant
+ 	  public static final int CONTACTEVENT_UNI  = 0;    //!< contact event constant
 
- 	  public final int SIGNAL_RED    = 1;        //!< signal light constant
- 	  public final int SIGNAL_YELLOW = 2;        //!< signal light constant
- 	  public final int SIGNAL_GREEN  = 4;        //!< signal light constant
+ 	  public static final int SIGNAL_RED    = 1;        //!< signal light constant
+ 	  public static final int SIGNAL_YELLOW = 2;        //!< signal light constant
+ 	  public static final int SIGNAL_GREEN  = 4;        //!< signal light constant
 
- 	  public final boolean POINT_STRAIGHT = false;  //!< point state constant
- 	  public final boolean POINT_TURN     = true;   //!< point state constant
+ 	  public static final boolean POINT_STRAIGHT = false;  //!< point state constant
+ 	  public static final boolean POINT_TURN     = true;   //!< point state constant
 
- 	  public final int ALL_TRACKS  = -1;   //!< catch all tracks constant
- 	  public final int ALL_POINTS  = -1;   //!< catch all points constant
- 	  public final int ALL_SIGNALS = -1;   //!< catch all signals constant
+ 	  public static final int ALL_TRACKS  = -1;   //!< catch all tracks constant
+ 	  public static final int ALL_POINTS  = -1;   //!< catch all points constant
+ 	  public static final int ALL_SIGNALS = -1;   //!< catch all signals constant
 
- 	  public final int SIGNAL_FIRST  = 0;  //!< signal select constant
- 	  public final int SIGNAL_SECOND = 1;  //!< signal select constant
+ 	  public static final int SIGNAL_FIRST  = 0;  //!< signal select constant
+ 	  public static final int SIGNAL_SECOND = 1;  //!< signal select constant
 
- 	  public final int CONTACT_FIST = 0;   //!< contact select constant
- 	  public final int CONTACT_SECOND = 1; //!< contact select constant
+ 	  public static final int CONTACT_FIST = 0;   //!< contact select constant
+ 	  public static final int CONTACT_SECOND = 1; //!< contact select constant
 
        TAsyncCom TcpCommunication;
 
@@ -537,16 +555,16 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  }
  	  public void SetInitialTrain(int tracknum, boolean forward) {
  		  if (forward)
- 			  TcpCommunication.Send("SETINITIALTRAIN#"+tracknum+"\r\n");
+ 			  TcpCommunication.send("SETINITIALTRAIN#"+tracknum+"\r\n");
  		  else
- 			  TcpCommunication.Send("SETINITIALTRAINEX#"+tracknum+"#1\r\n");
+ 			  TcpCommunication.send("SETINITIALTRAINEX#"+tracknum+"#1\r\n");
  	  }
 
        //----------------------------------------------------------------------
  	  //! Clear all initial trains.
        //!
  	  public void ResetInitialTrains() {
- 		  TcpCommunication.Send("RESETINITIALTRAINS\r\n");
+ 		  TcpCommunication.send("RESETINITIALTRAINS\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -556,7 +574,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //! The interface program will exit its tcp interface thread.
        //!
  	  public void AbortInterface() {
- 		  TcpCommunication.Send("ABORTINTERFACE\r\n");
+ 		  TcpCommunication.send("ABORTINTERFACE\r\n");
  		  try{TcpCommunication.socket.close();}catch(Exception e){
  			  e.printStackTrace();
  		  }
@@ -573,7 +591,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //! The interface program will exit its GUI interface thread.
        //!
  	  public void AbortSimulation() {
- 		  TcpCommunication.Send("ABORTSIMULATION\r\n");
+ 		  TcpCommunication.send("ABORTSIMULATION\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -581,7 +599,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //! restart the simulation. (see below)
        //!
  	  public void ResetSimulation() {
- 		  TcpCommunication.Send("RESETSIMULATION\r\n");
+ 		  TcpCommunication.send("RESETSIMULATION\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -589,7 +607,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //! contact events and restart the simulation at tick 0.
        //!
  	  public void RestartSimulation() {
- 		  TcpCommunication.Send("RESTARTSIMULATION\r\n");
+ 		  TcpCommunication.send("RESTARTSIMULATION\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -604,7 +622,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public int GetSimulationTick() {
  		  int tick = -1;
  		  try {
- 			  tick = new Integer(TcpCommunication.SendAndReceive(
+ 			  tick = new Integer(TcpCommunication.sendAndReceive(
  					  			 "GETSIMULATIONTICK\r\n")).intValue();
  		  }catch(Exception e){}
 // 		  try{Thread.sleep(10);}catch(Exception e){}
@@ -617,7 +635,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //! of the simulation
        //!
  	  public void RailwayStopControl() {
- 		  TcpCommunication.Send("RAILWAYSTOPCONTROL\r\n");
+ 		  TcpCommunication.send("RAILWAYSTOPCONTROL\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -632,7 +650,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public boolean RailwayAlive() {
  		  int value = -1;
  		  try {
- 			  value = new Integer(TcpCommunication.SendAndReceive(
+ 			  value = new Integer(TcpCommunication.sendAndReceive(
  					  			  "RAILWAYALIVE\r\n")).intValue();
  		  }catch(Exception e){}
 // 		  try{Thread.sleep(10);}catch(Exception e){}
@@ -651,7 +669,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public int GetSpeed(int tracknum) {
  		  int value = -1;
  		  try {
- 			  value = new Integer(TcpCommunication.SendAndReceive("GETSPEED#"
+ 			  value = new Integer(TcpCommunication.sendAndReceive("GETSPEED#"
  					  			  +tracknum+"\r\n")).intValue();
  		  }catch(Exception e){}
 // 		  try{Thread.sleep(10);}catch(Exception e){}
@@ -672,9 +690,11 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public boolean TrackUsed(int tracknum) {
  		  int value = -1;
  		  try {
- 			  value = new Integer(TcpCommunication.SendAndReceive("TRACKUSED#"
+ 			  value = new Integer(TcpCommunication.sendAndReceive("TRACKUSED#"
  					  			  +tracknum+"\r\n")).intValue();
- 		  }catch(Exception e){}
+ 		  }catch(Exception e){
+ 		      e.printStackTrace();
+ 		  }
 // 		  try{Thread.sleep(10);}catch(Exception e){}
  		  return (value == 1);
  	  }
@@ -693,9 +713,11 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public int ScanTrackUsed(int tracknum) {
  		  int value = -1;
  		  try {
- 			  value = new Integer(TcpCommunication.SendAndReceive("SCANTRACKUSED#"
+ 			  value = new Integer(TcpCommunication.sendAndReceive("SCANTRACKUSED#"
  					  			  +tracknum+"\r\n")).intValue();
- 		  }catch(Exception e){}
+ 		  }catch(Exception e){
+                      e.printStackTrace();
+ 		  }
 // 		  try{Thread.sleep(10);}catch(Exception e){}
  		  return value;
  	  }
@@ -731,7 +753,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  		  int clearint = 0;
  		  if (clear) clearint = 1;
  		  try {
- 			 value = new Integer(TcpCommunication.SendAndReceive("GETCONTACT#"
+ 			 value = new Integer(TcpCommunication.sendAndReceive("GETCONTACT#"
  					  			  +tracknum+"#"+contact+"#"+clearint
  					  			  +"\r\n")).intValue();
  		  }catch(Exception e){e.printStackTrace();}
@@ -769,10 +791,12 @@ public class ModelRailwayIO extends TypedAtomicActor {
  		 int clearint = 0;
  		 if (clear) clearint = 1;
  		 try {
- 		   value = TcpCommunication.SendAndReceive("SCANCONTACT#"+tracknum
+ 		   value = TcpCommunication.sendAndReceive("SCANCONTACT#"+tracknum
  					  								  +"#"+contact+"#"+clearint
  					  								  +"\r\n");
- 		 }catch(Exception e){}
+ 		 }catch(Exception e){
+                     e.printStackTrace();
+ 		 }
  		 Contact returnvalue = new Contact();
  		 returnvalue.contactvalue= new Integer(value.split("#")[0]).intValue();
  		 returnvalue.tracknum    = new Integer(value.split("#")[1]).intValue();
@@ -781,7 +805,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  		 return returnvalue;
  	  }
 
- 	  class Contact {
+ 	  static class Contact {
  		  int tracknum;
  		  int contactno;
  		  int contactvalue;
@@ -802,7 +826,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  public void SetPoint(int pointnum, boolean turn) {
  		  int turnint = 0;
  		  if (turn) turnint = 1;
- 		  TcpCommunication.Send("SETPOINT#"+pointnum+"#"+turnint+"\r\n");
+ 		  TcpCommunication.send("SETPOINT#"+pointnum+"#"+turnint+"\r\n");
  	  }
 
        //----------------------------------------------------------------------
@@ -824,7 +848,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //!           fast the train is moved driving there
        //!
  	  public void SetTrack(int tracknum, int motormode, int speed) {
- 		  TcpCommunication.Send("SETTRACK#"+tracknum+"#"+motormode+"#"
+ 		  TcpCommunication.send("SETTRACK#"+tracknum+"#"+motormode+"#"
  				  			    +speed+"\r\n");
  	  }
 
@@ -854,7 +878,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	  //!			defines which lights the signal should show (s.a.)
        //!
  	  public void SetSignal(int tracknum, int signal, int lights) {
- 		  TcpCommunication.Send("SETSIGNAL#"+tracknum+"#"+signal
+ 		  TcpCommunication.send("SETSIGNAL#"+tracknum+"#"+signal
  				  				+"#"+lights+"\r\n");
  	  }
 
@@ -894,8 +918,8 @@ public class ModelRailwayIO extends TypedAtomicActor {
  		//! @return
  		//!				string answer received from tcp connection
  		//!
- 		public synchronized String SendAndReceive(String Command) {
- 	 	   String Result = "";
+ 		public synchronized String sendAndReceive(String Command) {
+ 	 	   String result = "";
 
  	       try {
  				  //send command
@@ -905,13 +929,13 @@ public class ModelRailwayIO extends TypedAtomicActor {
  	           	  //read answer
  		  	  	  String line = "";
  				  if ((line = reader.readLine()) != null){
- 				 	  Result = line;
+ 				 	  result = line;
  				  }//end while
  			}
  			catch(Exception e){e.printStackTrace();}
   		    //System.out.println(Command+" "+Result);
   		    //System.out.println("----------------------------------");
- 	        return Result;
+ 	        return result;
  		}
 
 
@@ -923,11 +947,11 @@ public class ModelRailwayIO extends TypedAtomicActor {
  		//! @param Command
  		//!				string command to send over tcp
  		//!
- 		public synchronized void Send(String Command) {
+ 		public synchronized void send(String command) {
  		   //System.out.println("send command"+Command);
  	       try {
  				//send command
- 				writer.print(Command);
+ 				writer.print(command);
  		  	  	writer.flush();
  			}
  			catch(Exception e){e.printStackTrace();}
