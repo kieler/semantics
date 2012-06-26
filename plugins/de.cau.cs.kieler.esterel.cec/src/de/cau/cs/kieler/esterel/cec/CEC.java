@@ -174,7 +174,7 @@ public final class CEC {
         if (fileURL == null) {
             System.out.println("fileURL: NULL");
         } else {
-            System.out.println("fileURL:" + fileURL.getFile());
+            System.out.println("fileURL:" + fileURL.toString());
         }
         
         return fileURL;
@@ -190,12 +190,12 @@ public final class CEC {
     private static String resolveFragmentCECModule(final MODULE module) {
         try {
             // first try the non-windows case
-            URL resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
-                    + CEC_PREFIX + module, "de.cau.cs.kieler.esterel.cec");
+            URL resolvedFileName = resolveBundleOrWorkspaceFile(
+                     CEC_PREFIX + module, "de.cau.cs.kieler.esterel.cec");
             if (resolvedFileName == null) {
                 // second try the windows case
-                resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
-                        + CEC_PREFIX + module + WINDOWS_EXTENSION, "de.cau.cs.kieler.esterel.cec");
+                resolvedFileName = resolveBundleOrWorkspaceFile(
+                         CEC_PREFIX + module + WINDOWS_EXTENSION, "de.cau.cs.kieler.esterel.cec");
 
             }
             if (resolvedFileName != null) {
