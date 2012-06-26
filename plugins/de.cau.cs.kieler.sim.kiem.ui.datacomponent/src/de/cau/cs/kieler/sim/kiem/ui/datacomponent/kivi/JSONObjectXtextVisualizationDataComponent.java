@@ -352,7 +352,7 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                 return doStep(jSONObject);
             }
         } catch (KiemInitializationException e) {
-            new KiemExecutionException("Fail silent recovery from user editor change failed.",
+            throw new KiemExecutionException("Fail silent recovery from user editor change failed.",
                     false, e);
         }
 
