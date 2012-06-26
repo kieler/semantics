@@ -24,6 +24,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.Platform;
+import org.osgi.framework.Bundle;
+
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
@@ -156,6 +160,22 @@ public final class CEC {
     private static final String CEC_PREFIX = "cec-";
 
     // -------------------------------------------------------------------------
+    
+    private static URL resolveBundleOrWorkspaceFile(String file, String pluginId) {
+        // if the bundle is not ready then there is no image
+        final Bundle bundle = Platform.getBundle(pluginId);
+        
+        System.out.println("Bundle:" + bundle.getBundleId() + "///" + bundle.getSymbolicName());
+
+        // first try to resolve bundle files (give preference to bundle files)
+        URL fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(file),
+                null);
+        
+        System.out.println("fileURL:" + fileURL.getFile());
+        
+        return fileURL;
+    }
+    
 
     /**
      * Resolve the path to the executable in a fragment for a specific CEC module.
@@ -164,14 +184,13 @@ public final class CEC {
      * @return the string
      */
     private static String resolveFragmentCECModule(final MODULE module) {
-
         try {
             // first try the non-windows case
-            URL resolvedFileName = KiemUtil.resolveBundleOrWorkspaceFile(File.separator
+            URL resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
                     + CEC_PREFIX + module + ".exe", "de.cau.cs.kieler.esterel.cec");
             if (resolvedFileName == null) {
                 // second try the windows case
-                resolvedFileName = KiemUtil.resolveBundleOrWorkspaceFile(File.separator
+                resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
                         + CEC_PREFIX + module + WINDOWS_EXTENSION, "de.cau.cs.kieler.esterel.cec");
 
             }
@@ -182,9 +201,9 @@ public final class CEC {
                 String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
                 return resolvedModuleExecutable;
             }
-        } catch (URISyntaxException e) {
-            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
-                    e);
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+//                    e);
         } catch (MalformedURLException e) {
             throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
                     e);
