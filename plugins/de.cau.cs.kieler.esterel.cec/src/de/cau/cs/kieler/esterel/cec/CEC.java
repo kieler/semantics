@@ -170,8 +170,12 @@ public final class CEC {
         // first try to resolve bundle files (give preference to bundle files)
         URL fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(file),
                 null);
-        
-        System.out.println("fileURL:" + fileURL.getFile());
+
+        if (fileURL == null) {
+            System.out.println("fileURL: NULL");
+        } else {
+            System.out.println("fileURL:" + fileURL.getFile());
+        }
         
         return fileURL;
     }
@@ -187,7 +191,7 @@ public final class CEC {
         try {
             // first try the non-windows case
             URL resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
-                    + CEC_PREFIX + module + ".exe", "de.cau.cs.kieler.esterel.cec");
+                    + CEC_PREFIX + module, "de.cau.cs.kieler.esterel.cec");
             if (resolvedFileName == null) {
                 // second try the windows case
                 resolvedFileName = resolveBundleOrWorkspaceFile(File.separator
