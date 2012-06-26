@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -25,7 +25,7 @@ import de.cau.cs.kieler.sj.exceptions.SignalNotDeclaredException;
 import de.cau.cs.kieler.sj.exceptions.ThreadException;
 import de.cau.cs.kieler.sj.util.PriorityQueue;
 
-import static de.cau.cs.kieler.sj.SJLogger.LogMsgTyp.*;
+//import static de.cau.cs.kieler.sj.SJLogger.LogMsgTyp.*;
 
 /**
  * Basic class for synchronous programming in java. Use this class via <code>extends</code> to write
@@ -142,9 +142,10 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         this.logger = myLogger;
 
         if (myLogger != null) {
-            myLogger.log(PROGRAM_INFO, "\"programName\":\"" + this.getClass().toString() + "\"");
+            myLogger.log(LogMsgTyp.PROGRAM_INFO, "\"programName\":\"" + this.getClass().toString()
+                    + "\"");
 
-            myLogger.log(TICK_INFO, "\"ticklabels\":[\"" + startLabel.name() + "\"]");
+            myLogger.log(LogMsgTyp.TICK_INFO, "\"ticklabels\":[\"" + startLabel.name() + "\"]");
         }
         labelsToExecute = "\"ticklabels\":[";
 
@@ -270,7 +271,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         }
         if (logger != null) {
             logMsg += "]";
-            logger.log(PROGRAM_INFO, logMsg);
+            logger.log(LogMsgTyp.PROGRAM_INFO, logMsg);
         }
     }
 
@@ -302,7 +303,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         }
         if (logger != null) {
             logMsg += "]";
-            logger.log(PROGRAM_INFO, logMsg);
+            logger.log(LogMsgTyp.PROGRAM_INFO, logMsg);
         }
     }
 
@@ -351,26 +352,26 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
 
         // logging
         if (logger != null) {
-            logger.log(TICK_INFO, "\"ticknr\":" + tickNr);
+            logger.log(LogMsgTyp.TICK_INFO, "\"ticknr\":" + tickNr);
 
             String signalString = "\"signals\":[";
             for (Signal s : signals) {
-                
+
                 // ################################################################################
                 // --------------------------------- changed by ybe -------------------------------
                 //
                 // Entries in JSON-Arrays must be comma separated!
                 //
                 // signalString += s.toJSONString();
-            // }
-            // signalString += "]";
+                // }
+                // signalString += "]";
                 // --------------------------------------------------------------------------------
                 signalString += s.toJSONString() + ",";
             }
-            signalString = signalString.substring(0, signalString.length()-1) + "]";
+            signalString = signalString.substring(0, signalString.length() - 1) + "]";
             // ####################################################################################
-            
-            logger.log(SIGNALS, signalString);
+
+            logger.log(LogMsgTyp.SIGNALS, signalString);
         }
 
         tick();
@@ -379,28 +380,28 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // the logging stuff
             String signalString = "\"signals\":[";
             for (Signal s : signals) {
-                
+
                 // ################################################################################
                 // --------------------------------- changed by ybe -------------------------------
                 //
                 // Entries in JSON-Arrays must be comma separated!
                 //
                 // signalString += s.toJSONString();
-            // }
-            // signalString += "]";
+                // }
+                // signalString += "]";
                 // --------------------------------------------------------------------------------
                 signalString += s.toJSONString() + ",";
             }
-            signalString = signalString.substring(0, signalString.length()-1) + "]";
+            signalString = signalString.substring(0, signalString.length() - 1) + "]";
             // ####################################################################################
-            
-            logger.log(SIGNALS, signalString);
+
+            logger.log(LogMsgTyp.SIGNALS, signalString);
 
             // if the string with the labels ends with ',' then ...
             if (labelsToExecute.charAt(labelsToExecute.length() - 1) == ',') {
                 labelsToExecute = labelsToExecute.substring(0, (labelsToExecute.length() - 1));
             }
-            logger.log(TICK_INFO, labelsToExecute + "]");
+            logger.log(LogMsgTyp.TICK_INFO, labelsToExecute + "]");
         }
         labelsToExecute = "\"ticklabels\":[";
 
@@ -474,22 +475,19 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         String s;
 
         s = "The SJ program " + "" + this.getClass().toString() + " is at tick " + tickNr + ".\n";
-        s +=
-                ((curThread == null) ? "There is cuurenty no thread running"
-                        : "Currently the thread " + curThread.getLabel().name() + " is running")
-                        + ".\n";
+        s += ((curThread == null) ? "There is cuurenty no thread running" : "Currently the thread "
+                + curThread.getLabel().name() + " is running")
+                + ".\n";
 
-        s +=
-                (threadsCurTick.isEmpty()) ? "Threre are no threads to execute in this tick.\n"
-                        : "Threads to execute in this tick:\n";
+        s += (threadsCurTick.isEmpty()) ? "Threre are no threads to execute in this tick.\n"
+                : "Threads to execute in this tick:\n";
         for (SJThread<StateLabel> t : threadsCurTick) {
             s += t.toString();
             // s += t.getName() + " " + t.getPriority() + "\n";
         }
 
-        s +=
-                (threadsNextTick.isEmpty()) ? "Threre are no threads to execute in the next tick.\n"
-                        : "Threads to execute in the next tick:\n";
+        s += (threadsNextTick.isEmpty()) ? "Threre are no threads to execute in the next tick.\n"
+                : "Threads to execute in the next tick:\n";
         for (SJThread<StateLabel> t : threadsNextTick) {
             s += t.toString();
             // s += t.getName() + " " + t.getPriority() + "\n";
@@ -565,9 +563,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
     /**
      * Waits for a signal after an initial pause. If the signal is present and an initial pause is
      * already done this method will return <code>true</code>. Otherwise it will do a pause checked
-     * in the next tick again and return false. For the check of await in the next tick
-     * await has to be the first statement after a case so that we can return exactly to this
-     * statement in the next tick.
+     * in the next tick again and return false. For the check of await in the next tick await has to
+     * be the first statement after a case so that we can return exactly to this statement in the
+     * next tick.
      * 
      * @param signal
      *            the signal to check
@@ -588,7 +586,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
             // the return value
             boolean ret, initialExecution;
-            
+
             // ####################################################################################
             // ----------------------------------- changed by ybe ---------------------------------
             //
@@ -601,8 +599,8 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // class has been set.
             // After the internally used method Signal.isPresent() returns, the logger variable
             // in the Signal class is to be set back, using the logger saved in the local variable.
-            SJLogger curLogger = signal.program.getLogger();
-            signal.program.setLogger(null);
+            SJLogger curLogger = signal.getProgram().getLogger();
+            signal.getProgram().setLogger(null);
             // ####################################################################################
 
             if (!curThread.isInitialPauseDone()) {
@@ -619,7 +617,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                 // This is the initial execution for this await statement. We
                 // need this to know for logging
                 initialExecution = true;
-                
+
             } else if (signal.isPresent()) { // initial pause is done and given
                 // signal present
 
@@ -645,18 +643,18 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
                 // need this to know for logging
                 initialExecution = false;
             }
-            
+
             // ####################################################################################
             // ----------------------------------- changed by ybe ---------------------------------
             //
             // Setting the logger of the Signal class to the way it was prior the internal use of
             // Signal.isPresent(). For details v.s.
-            signal.program.setLogger(curLogger);
+            signal.getProgram().setLogger(curLogger);
             // ####################################################################################
-            
+
             // creating JSON string
             if (logger != null) {
-                logger.log(INSTRUCTION, "\"await\":" + "{\"label\":\""
+                logger.log(LogMsgTyp.INSTRUCTION, "\"await\":" + "{\"label\":\""
                         + curThread.getLabel().name() + "\",\"prio\":" + curThread.getPriority()
                         + ",\"initialExcecution\":" + ((initialExecution) ? "true" : "false")
                         + ",\"param\":[" + signal.toJSONString() + "],\"retval\":"
@@ -703,11 +701,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         curThread.addDescendant(thread);
 
         if (logger != null) {
-            logger.log(
-                    INSTRUCTION,
-                    "\"fork\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
-                            + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
-                            + label.name() + "\"," + prio + "]}");
+            logger.log(LogMsgTyp.INSTRUCTION, "\"fork\":" + "{\"label\":\""
+                    + curThread.getLabel().name() + "\"," + "\"prio\":" + curThread.getPriority()
+                    + ",\"param\":[\"" + label.name() + "\"," + prio + "]}");
         }
 
     }
@@ -726,10 +722,10 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         if (curThread == null) {
             throw new ThreadException("There is no thread running.");
         } else if (!curThread.getDescendants().isEmpty()) {
-            
+
             // ####################################################################################
             // ----------------------------------- changed by ybe ---------------------------------
-            // 
+            //
             // Save the old label of the current thread. Needed for the logger in order to be able
             // to log the correct label. Label of the current thread is changed just bellow this
             // block.
@@ -745,22 +741,20 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // ----------------------------------- changed by ybe ---------------------------------
             //
             // if (logger != null) {
-            //     logger.log(
-            //             INSTRUCTION,
-            //             "\"forke\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
-            //                     + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
-            //                     + label.name() + "\"]}");
+            // logger.log(
+            // INSTRUCTION,
+            // "\"forke\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
+            // + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
+            // + label.name() + "\"]}");
             // }
             // ------------------------------------------------------------------------------------
             if (logger != null) {
-                logger.log(
-                        INSTRUCTION,
-                        "\"forke\":" + "{\"label\":\"" + oldLabel + "\","
-                                + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
-                                + label.name() + "\"]}");
+                logger.log(LogMsgTyp.INSTRUCTION, "\"forke\":" + "{\"label\":\"" + oldLabel + "\","
+                        + "\"prio\":" + curThread.getPriority() + ",\"param\":[\"" + label.name()
+                        + "\"]}");
             }
             // ####################################################################################
-            
+
             curThread = null;
         } else {
             throw new ThreadException("You can not use forke without a fork before.");
@@ -784,7 +778,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
             if (logger != null) {
                 logger.log(
-                        INSTRUCTION,
+                        LogMsgTyp.INSTRUCTION,
                         "\"goto\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
                                 + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
                                 + label.name() + "\"]}");
@@ -805,8 +799,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
 
             if (logger != null) {
-                logger.log(INSTRUCTION, "\"halt\":" + "{\"label\":\"" + curThread.getLabel().name()
-                        + "\"," + "\"prio\":" + curThread.getPriority() + "}");
+                logger.log(LogMsgTyp.INSTRUCTION,
+                        "\"halt\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
+                                + "\"prio\":" + curThread.getPriority() + "}");
             }
 
             curThread.setLabel(curThread.getLabel());
@@ -843,9 +838,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
 
         // creating JSON string
         if (logger != null) {
-            logger.log(INSTRUCTION, "\"joinDone\":" + "{\"label\":\"" + curThread.getLabel().name()
-                    + "\"," + "\"prio\":" + curThread.getPriority() + ",\"retval\":"
-                    + ((ret) ? "true" : "false") + "}");
+            logger.log(LogMsgTyp.INSTRUCTION, "\"joinDone\":" + "{\"label\":\""
+                    + curThread.getLabel().name() + "\"," + "\"prio\":" + curThread.getPriority()
+                    + ",\"retval\":" + ((ret) ? "true" : "false") + "}");
         }
 
         // if there is no join done we have to terminate the currentThread.
@@ -881,9 +876,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         labelsToExecute += "\"" + curThread.getLabel().name() + "\",";
         // creating JSON string
         if (logger != null) {
-            logger.log(INSTRUCTION, "\"pause\":" + "{\"label\":\"" + curThread.getLabel().name()
-                    + "\"," + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
-                    + resumeLabel.name() + "\"]}");
+            logger.log(LogMsgTyp.INSTRUCTION, "\"pause\":" + "{\"label\":\""
+                    + curThread.getLabel().name() + "\"," + "\"prio\":" + curThread.getPriority()
+                    + ",\"param\":[\"" + resumeLabel.name() + "\"]}");
         }
         curThread = null;
 
@@ -920,7 +915,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // creating JSON string
             if (logger != null) {
                 logger.log(
-                        INSTRUCTION,
+                        LogMsgTyp.INSTRUCTION,
                         "\"prio\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
                                 + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
                                 + label.name() + "\"," + prio + "]}");
@@ -947,7 +942,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             }
             // creating a JSON string representation
             if (logger != null) {
-                logger.log(INSTRUCTION,
+                logger.log(LogMsgTyp.INSTRUCTION,
                         "\"suspend\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
                                 + "\"prio\":" + curThread.getPriority() + "}");
             }
@@ -990,8 +985,9 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
         } else {
             // creating JSON string
             if (logger != null) {
-                logger.log(INSTRUCTION, "\"term\":" + "{\"label\":\"" + curThread.getLabel().name()
-                        + "\"," + "\"prio\":" + curThread.getPriority() + "}");
+                logger.log(LogMsgTyp.INSTRUCTION,
+                        "\"term\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
+                                + "\"prio\":" + curThread.getPriority() + "}");
             }
             curThread = null;
         }
@@ -1022,7 +1018,7 @@ public abstract class EmbeddedSJProgram<StateLabel extends Enum<?>> {
             // create JSON string
             if (logger != null) {
                 logger.log(
-                        INSTRUCTION,
+                        LogMsgTyp.INSTRUCTION,
                         "\"trans\":" + "{\"label\":\"" + curThread.getLabel().name() + "\","
                                 + "\"prio\":" + curThread.getPriority() + ",\"param\":[\""
                                 + label.name() + "\"]}");
