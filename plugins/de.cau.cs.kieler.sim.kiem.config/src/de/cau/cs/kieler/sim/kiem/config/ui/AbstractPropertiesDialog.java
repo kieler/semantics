@@ -98,9 +98,9 @@ public abstract class AbstractPropertiesDialog<T> extends Dialog {
             final String[] newLabels, final String[] toolTipsParam,
             final String newTitle) {
         super(parent, SWT.BORDER | SWT.DIALOG_TRIM | SWT.ICON_QUESTION);
-        this.labels = newLabels;
+        this.labels = newLabels.clone();
         this.title = newTitle;
-        this.tooltips = toolTipsParam;
+        this.tooltips = toolTipsParam.clone();
         results = new String[labels.length];
         textFields = new Text[labels.length];
     }
@@ -199,7 +199,7 @@ public abstract class AbstractPropertiesDialog<T> extends Dialog {
             }
         }
         // Return the entered value, or null
-        return results;
+        return results.clone();
     }
 
     /**

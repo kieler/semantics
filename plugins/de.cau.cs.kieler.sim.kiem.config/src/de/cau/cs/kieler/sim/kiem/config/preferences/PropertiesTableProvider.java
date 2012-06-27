@@ -56,7 +56,7 @@ public class PropertiesTableProvider extends LabelProvider implements
     public PropertiesTableProvider(final TableViewer thetableViewer,
             final String[] headers) {
         this.priorityTableViewer = thetableViewer;
-        this.tableHeaders = headers;
+        this.tableHeaders = headers.clone();
         refresh();
     }
 
