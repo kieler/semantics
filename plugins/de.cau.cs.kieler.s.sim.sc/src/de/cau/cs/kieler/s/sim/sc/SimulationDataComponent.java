@@ -105,6 +105,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
         // Collect active statements
         String activeStatements = "";
+        StringBuffer activeStatementsBuf = new StringBuffer();
 
         if (!scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
@@ -143,11 +144,11 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                                         .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
 
                                 // Insert a "," if not the first statement
-                                if (activeStatements.length() != 0) {
-                                    activeStatements += ",";
+                                if (activeStatementsBuf.length() != 0) {
+                                    activeStatementsBuf.append(",");
                                 }
 
-                                activeStatements += statementWithoutAuxiliaryVariableTag;
+                                activeStatementsBuf.append(statementWithoutAuxiliaryVariableTag);
 
                             } catch (Exception e) {
                                 // ignore error
@@ -157,6 +158,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
                     }
                 }
+                activeStatements = activeStatementsBuf.toString();
 
                 // Then add normal output signals
                 for (String outputSignal : outputSignalList) {
@@ -334,7 +336,13 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
             scExecution.compile(generatedSCFiles);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (IOException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (InterruptedException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }
