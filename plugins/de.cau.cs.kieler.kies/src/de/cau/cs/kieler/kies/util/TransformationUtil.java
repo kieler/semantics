@@ -111,7 +111,7 @@ public final class TransformationUtil {
 
     // CHECKSTYLEOFF VisibilityModifier - convenience logger
     /** KIES's own logger. */
-    public static Logger logger = Logger.getLogger("kies");
+    public static final Logger logger = Logger.getLogger("kies");
     // CHECKSTYLEON
 
     /** injector used for serialization. */
@@ -611,14 +611,19 @@ public final class TransformationUtil {
                 dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
             }
 
+            if (dc == null) {
+                // success == false
+                return false;
+            }
             // then initialize
             dc.setHeadless(true);
             dc.initialize();
             dc.setRootState(root);
             // set global variables
             if (globalVars != null) {
-                for (String var : globalVars.keySet()) {
-                    dc.setGlobalVariable(var, globalVars.get(var));
+                for (String key : globalVars.keySet()) {
+                    boolean var = globalVars.get(key);
+                    dc.setGlobalVariable(key, var);
                 }
             }
 

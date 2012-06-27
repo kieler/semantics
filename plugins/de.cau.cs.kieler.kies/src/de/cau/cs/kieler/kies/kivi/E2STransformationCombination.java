@@ -197,6 +197,8 @@ public class E2STransformationCombination extends AbstractCombination {
             process(buttonState.getButtonId());
 
             setButtonEnabling(true);
+        default:
+            throw new RuntimeException("KIES Error: This should never happen!");
         }
     }
 
