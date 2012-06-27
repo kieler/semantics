@@ -577,47 +577,52 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         transformationError = false;
         exception = null;
 
-        if (KiemUtil.isHeadlessRun()) {
+// Problem: 26.06.2012
+// 1. Strange Blocking (Deadlock) when running regression tests with UI, non-headless
+// 2. Popup of progress monitor needs much longer than the actual transformation for
+//    small models
+// Removed this code for now.        
+        
+//        if (KiemUtil.isHeadlessRun()) {
             // headless run - sequential in current thread
             model2ModelTransform(new ProgressMonitorAdapter(new NullProgressMonitor()));
-        } else {
-            // normal run - concurrent to UI thread
-            Display.getDefault().asyncExec(new Runnable() {
-                public void run() {
-
-                    final Maybe<IStatus> status = new Maybe<IStatus>();
-                    try {
-                        PlatformUI.getWorkbench().getProgressService()
-                                .run(false, false, new IRunnableWithProgress() {
-                                    public void run(final IProgressMonitor monitor) {
-                                        try {
-                                            status.set(model2ModelTransform(new ProgressMonitorAdapter(
-                                                    monitor)));
-                                        } catch (KiemInitializationException e) {
-                                            transformationError = true;
-                                            exception = e;
-                                        }
-                                    }
-                                });
-                    } catch (InvocationTargetException e) {
-                        transformationError = true;
-                        exception = e;
-                    } catch (InterruptedException e) {
-                        transformationError = true;
-                        exception = e;
-                    }
-                }
-            });
-
-            // wait until error or transformation completed
-            while (!transformationCompleted && !transformationError) {
-                try {
-                    Thread.sleep(SLEEP_TIME);
-                } catch (InterruptedException e) { 
-                    // hide sleep error
-                }
-            } // end while
-        } // end if NOT headless
+//        } else {
+//            // normal run - concurrent to UI thread
+//            Display.getDefault().asyncExec(new Runnable() {
+//                public void run() {
+//                    final Maybe<IStatus> status = new Maybe<IStatus>();
+//                    try {
+//                        PlatformUI.getWorkbench().getProgressService()
+//                                .run(true, true, new IRunnableWithProgress() {
+//                                    public void run(final IProgressMonitor monitor) {
+//                                        try {
+//                                            status.set(model2ModelTransform(new ProgressMonitorAdapter(
+//                                                    monitor)));
+//                                        } catch (KiemInitializationException e) {
+//                                            transformationError = true;
+//                                            exception = e;
+//                                        }
+//                                    }
+//                                });
+//                    } catch (InvocationTargetException e) {
+//                        transformationError = true;
+//                        exception = e;
+//                    } catch (InterruptedException e) {
+//                        transformationError = true;
+//                        exception = e;
+//                    }
+//                }
+//            });
+//
+//            // wait until error or transformation completed
+//            while (!transformationCompleted && !transformationError) {
+//                try {
+//                    Thread.sleep(SLEEP_TIME);
+//                } catch (InterruptedException e) { 
+//                    // hide sleep error
+//                }
+//            } // end while
+//        } // end if NOT headless
 
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {
