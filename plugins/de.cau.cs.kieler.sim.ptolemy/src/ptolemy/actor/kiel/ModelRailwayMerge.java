@@ -1,37 +1,15 @@
-/* An actor that is designed to merge action commands for the
-   ModelRailwayIO actor which interacts w/ the Model Railway
-   (and its simulation) of the Department of Computer Science
-   of Kiel University, Germany.
-
-   The Model Railway can be found here:
-   http://www.informatik.uni-kiel.de/~railway/
-
-   The simulation of the Model Railway can be found here:
-   http://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/cmot-st.pdf
-
- Copyright (c) 2006-2009 The Regents of the University of California.
- All rights reserved.
- Permission is hereby granted, without written agreement and without
- license or royalty fees, to use, copy, modify, and distribute this
- software and its documentation for any purpose, provided that the above
- copyright notice and the following two paragraphs appear in all copies
- of this software.
-
- IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
- FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
- ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
- THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.
-
- THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
- INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
- PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
- CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
- ENHANCEMENTS, OR MODIFICATIONS.
- PT_COPYRIGHT_VERSION_2
- COPYRIGHTENDKEY
-
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2012 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package ptolemy.actor.kiel;
 
@@ -65,7 +43,15 @@ public class ModelRailwayMerge extends TypedAtomicActor {
 
     private static final long serialVersionUID = -9020218510188527454L;
 
-    public ModelRailwayMerge(CompositeEntity container, String name)
+    /**
+     * Instantiates a new model railway merge.
+     *
+     * @param container the container
+     * @param name the name
+     * @throws NameDuplicationException the name duplication exception
+     * @throws IllegalActionException the illegal action exception
+     */
+    public ModelRailwayMerge(final CompositeEntity container, final String name)
             throws NameDuplicationException, IllegalActionException {
         super(container, name);
 
@@ -135,11 +121,13 @@ public class ModelRailwayMerge extends TypedAtomicActor {
     /**
      * This is a multiport of type RecordToken that will be merged.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort input;
 
     /**
      * This will contain all merged RecordTokens, if there are any.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort output;
 
     // /////////////////////////////////////////////////////////////////

@@ -1,35 +1,15 @@
-/* An actor that interacts with the Model Railway (and its simulation) of
-   the Department of Computer Science of Kiel University, Germany.
-
-   The Model Railway can be found here:
-   http://www.informatik.uni-kiel.de/~railway/
-
-   The simulation of the Model Railway can be found here:
-   http://rtsys.informatik.uni-kiel.de/~biblio/downloads/theses/cmot-st.pdf
-
- Copyright (c) 2006-2009 The Regents of the University of California.
- All rights reserved.
- Permission is hereby granted, without written agreement and without
- license or royalty fees, to use, copy, modify, and distribute this
- software and its documentation for any purpose, provided that the above
- copyright notice and the following two paragraphs appear in all copies
- of this software.
-
- IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
- FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
- ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
- THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF
- SUCH DAMAGE.
-
- THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
- INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
- PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
- CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
- ENHANCEMENTS, OR MODIFICATIONS.
- PT_COPYRIGHT_VERSION_2
- COPYRIGHTENDKEY
-
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ *
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2012 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
  */
 package ptolemy.actor.kiel;
 
@@ -52,7 +32,6 @@ import ptolemy.kernel.util.IllegalActionException;
 import ptolemy.kernel.util.NameDuplicationException;
 
 
-// TODO: Auto-generated Javadoc
 //////////////////////////////////////////////////////////////////////////
 //// ModelRailwayIO
 
@@ -168,6 +147,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
      * is running. Often this is set to the string value 'localhost' for the host and 2000 for the
      * port.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public Parameters
     public Parameter host;
 
     /**
@@ -175,11 +155,13 @@ public class ModelRailwayIO extends TypedAtomicActor {
      * is running. Often this is set to the string value 'localhost' for the host and 2000 for the
      * port.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public Parameters
     public Parameter port;
 
     /**
      * This may trigger the actor in a DE domain.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort trigger;
 
     /**
@@ -187,12 +169,14 @@ public class ModelRailwayIO extends TypedAtomicActor {
      * where motormode can be off(0), primary(1), secondary(2) or brake(3) DEFAULT is primary(1) and
      * speed is a value between 0 .. 100 DEFAULT is 0
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort tracks;
 
     /**
      * Set a point using RecordTokens like port={point21={turn=0}} where a turn value of 0 indicates
      * straight and a turn value of 1 indicates turn position DEFAULT is straight(0).
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort points;
 
     /**
@@ -200,15 +184,18 @@ public class ModelRailwayIO extends TypedAtomicActor {
      * second signal in default driving direction of the selected track (here 2) and lights can be
      * off(0), red(1), yellowgreen(2), green(4) DEFAULT is red(1).
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort signals;
 
     /**
      * This will hold ArrayTokens of reed contact values of not triggered(-1), triggered first(0)
      * and triggered second(1) in default driving direction.
      */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort contact;
 
     /** This will hold ArrayTokens of occupied values of not occupied(0) or occupied(1). */
+    // SUPPRESS CHECKSTYLE NEXT Visibility Modifier - Ptolemy needs public TypedIOPorts
     public TypedIOPort occupied;
 
     /** The Constant MAXTRACKS. */
