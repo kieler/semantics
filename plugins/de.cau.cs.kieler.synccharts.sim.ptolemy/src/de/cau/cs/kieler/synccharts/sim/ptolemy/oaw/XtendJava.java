@@ -43,10 +43,10 @@ import de.cau.cs.kieler.synccharts.sim.ptolemy.SyncchartsSimPtolemyPlugin;
 public final class XtendJava {
 
     /** The modal models. */
-    private static LinkedList<EntityType> modalModels = null;
+    private static LinkedList<EntityType> modalModels =  new LinkedList<EntityType>();;
 
     /** The port names. */
-    private static LinkedList<String> portNames = null;
+    private static LinkedList<String> portNames = new LinkedList<String>();;
 
     /** The inputoutputtransformation. */
     private static boolean inputoutputtransformation = true;
@@ -198,10 +198,6 @@ public final class XtendJava {
      *            the port name
      */
     public static void enqueue2Delete(final EntityType modalModel, final String portName) {
-        if (modalModels == null) {
-            modalModels = new LinkedList<EntityType>();
-            portNames = new LinkedList<String>();
-        }
         modalModels.push(modalModel);
         portNames.push(portName);
     }
@@ -214,7 +210,7 @@ public final class XtendJava {
      * @return the string
      */
     public static String popPortName2Delete() {
-        if (portNames == null || portNames.size() > 0) {
+        if (portNames != null && portNames.size() > 0) {
             return portNames.pop();
         } else {
             return null;
@@ -229,7 +225,7 @@ public final class XtendJava {
      * @return the entity type
      */
     public static EntityType popModalModel2Delete() {
-        if (modalModels == null || modalModels.size() > 0) {
+        if (modalModels != null && modalModels.size() > 0) {
             return modalModels.pop();
         } else {
             return null;
@@ -611,32 +607,32 @@ public final class XtendJava {
      */
     public static String buildEffect(final EList<Effect> myEffectList,
             final String terminatedURIHash) {
-        String myEmission = "";
+        StringBuffer myEmissionBuf = new StringBuffer();
         for (int c = 0; c < myEffectList.size(); c++) {
             if (myEffectList.get(c) instanceof Emission) {
                 Emission emission = (Emission) myEffectList.get(c);
-                if (myEmission != "") {
-                    myEmission += "; ";
+                if (myEmissionBuf.length() > 0) {
+                    myEmissionBuf.append("; ");
                 }
-                myEmission += emission.getSignal().getName();
+                myEmissionBuf.append(emission.getSignal().getName());
                 if (isLocal(emission.getSignal())) {
                     // local signal -> set output signal -> signalo
-                    myEmission += "_o";
+                    myEmissionBuf.append("_o");
                 }
                 if (emission.getNewValue() == null) {
-                    myEmission += "=1"; // pure signals
+                    myEmissionBuf.append("=1"); // pure signals
                 } else {
-                    myEmission += "=" + buildExpression(emission.getNewValue());
+                    myEmissionBuf.append("=" + buildExpression(emission.getNewValue()));
                 }
             }
         }
         if (!terminatedURIHash.equals("")) {
-            if (!myEmission.equals("")) {
-                myEmission += "; ";
+            if (myEmissionBuf.length() > 0) {
+                myEmissionBuf.append("; ");
             }
-            myEmission += "terminated" + terminatedURIHash + "=1";
+            myEmissionBuf.append("terminated" + terminatedURIHash + "=1");
         }
-        return myEmission;
+        return myEmissionBuf.toString();
     }
 
     /**
@@ -647,23 +643,24 @@ public final class XtendJava {
      * @return the string
      */
     public static String buildExpression(final Expression expression) {
-        String expressionString = "";
+        //String expressionString = "";
+        StringBuffer expressionStringBuf = new StringBuffer();
         if (expression instanceof Value) {
-            expressionString = ((Value) expression).toString();
+            expressionStringBuf.append(((Value) expression).toString());
         } else if (expression instanceof OperatorExpression) {
             OperatorExpression operatorExpression = (OperatorExpression) expression;
             OperatorType operator = operatorExpression.getOperator();
             String operatorString = translateOperator(operator.getLiteral());
             EList<Expression> subExpressionList = operatorExpression.getSubExpressions();
-            expressionString += "(";
+            expressionStringBuf.append("(");
             for (int c = 0; c < subExpressionList.size(); c++) {
                 Expression subExpression = subExpressionList.get(c);
-                if ((!expressionString.equals("(") || (operatorString.equals("!")))) {
-                    expressionString += " " + operatorString + " ";
+                if ((!expressionStringBuf.toString().equals("(") || (operatorString.equals("!")))) {
+                    expressionStringBuf.append(" " + operatorString + " ");
                 }
-                expressionString += buildExpression(subExpression);
+                expressionStringBuf.append(buildExpression(subExpression));
             }
-            expressionString += ")";
+            expressionStringBuf.append(")");
         } else if (expression instanceof ValuedObjectReference) {
             ValuedObjectReference signalReference = (ValuedObjectReference) expression;
             ValuedObject valObj = signalReference.getValuedObject();
@@ -676,10 +673,10 @@ public final class XtendJava {
                     // local signal -> set input signal -> signal i
                     signalName += "_i";
                 }
-                expressionString += signalName + "_isPresent";
+                expressionStringBuf.append(signalName + "_isPresent");
             }
         }
-        return expressionString;
+        return expressionStringBuf.toString();
     }
 
     /**

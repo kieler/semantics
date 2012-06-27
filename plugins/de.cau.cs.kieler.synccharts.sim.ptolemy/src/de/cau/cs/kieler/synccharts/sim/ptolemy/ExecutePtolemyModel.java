@@ -56,7 +56,7 @@ public class ExecutePtolemyModel {
     /**
      * The Class ModelOutput.
      */
-    public class ModelOutput {
+    public static class ModelOutput {
         
         /** The signal name. */
         private String signalName;
@@ -344,7 +344,7 @@ public class ExecutePtolemyModel {
      *
      * @see PresentTokenEvent
      */
-    class PresentTokenListener implements IOPortEventListener {
+    static class PresentTokenListener implements IOPortEventListener {
         
         /** The model output. */
         private ModelOutput modelOutput;
@@ -528,7 +528,7 @@ public class ExecutePtolemyModel {
                     SyncchartsSimPtolemyPlugin.debug("---> CALL INNER STATES (null)");
                     // for active states only search deeper!
                     searchForActiveStatesAndTransitions(compositeActor.entityList(),
-                            activeStateName);
+                            null);
                 } else if (compositeActorName.equals(activeStateName)) {
                     SyncchartsSimPtolemyPlugin.debug("---> CALL INNER STATES (name active)");
                     // for active states only search deeper!
