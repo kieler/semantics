@@ -1017,6 +1017,7 @@ public class ModelRailwayIO extends TypedAtomicActor {
             private int contactno;
 
             /** The contactvalue. */
+            @SuppressWarnings("unused")
             private int contactvalue;
         }
 
