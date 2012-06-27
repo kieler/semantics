@@ -534,7 +534,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         JSONObject returnObj = null;
 
         // Do validation only for (opened) EMF editors
-        if (this.getModelRootElement() != null) {
+        if (this.getModelEditor() != null) {
             // Check if the model conforms to all check files and no warnings left!
             EObject rootEObject = this.getModelRootElement();
             boolean ok = checkModelValidation(rootEObject);
