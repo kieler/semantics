@@ -53,14 +53,7 @@ public class GraphitiHighlightEffect extends AbstractEffect {
 
     private int originalWidth = -1;
 
-    private int widthIncrease = 1;
-
-    // SUPPRESS CHECKSTYLE NEXT MagicNumber
-    private int widthMax = 5;
-
     private int originalStyle = -1;
-
-    private int style = -1;
 
     private Color originalColor;
 
@@ -69,10 +62,6 @@ public class GraphitiHighlightEffect extends AbstractEffect {
     private Color originalBackgroundColor;
 
     private Color backgroundColor;
-
-    private boolean highlightChildren = false;
-
-    private boolean changeWidth = true;
 
     /**
      * Create a new instance for the given edit part using the given color.
@@ -101,11 +90,11 @@ public class GraphitiHighlightEffect extends AbstractEffect {
      *            the editor to highlight in
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
+     * FIXME the line style is not implemented yet
      */
     public GraphitiHighlightEffect(final EObject eObject,
             final DiagramEditor editor, final int lineStyle) {
         this(eObject, editor);
-        style = lineStyle;
         color = null;
     }
 
@@ -120,12 +109,12 @@ public class GraphitiHighlightEffect extends AbstractEffect {
      *            the color to use for highlighting
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
+     * FIXME the line style is not implemented yet
      */
     public GraphitiHighlightEffect(final EObject eObject,
             final DiagramEditor editor, final Color highlightColor,
             final int lineStyle) {
         this(eObject, editor, highlightColor);
-        style = lineStyle;
     }
 
     /**
@@ -141,6 +130,7 @@ public class GraphitiHighlightEffect extends AbstractEffect {
      *            the color to use for painting the background
      * @param lineStyle
      *            the line style to use for borders (black/white mode)
+     * FIXME the line style is not implemented yet
      */
     public GraphitiHighlightEffect(final EObject eObject,
             final DiagramEditor editor, final Color highlightColor,
@@ -201,7 +191,6 @@ public class GraphitiHighlightEffect extends AbstractEffect {
             final DiagramEditor editor, final Color highlightColor,
             final boolean children) {
         this(eObject, editor, highlightColor);
-        highlightChildren = children;
     }
 
     /**
@@ -272,12 +261,7 @@ public class GraphitiHighlightEffect extends AbstractEffect {
                     f.setForegroundColor(color);
                 }
             }
-        }, true); // TODO investigate whether false works - would be massively
-                  // faster
-                  // TODO false does *not* work, leads to a huge queue of
-                  // highlights in the UI
-                  // thread
-        // targetFigure.repaint();
+        }, true);
     }
 
     @Override
@@ -330,36 +314,6 @@ public class GraphitiHighlightEffect extends AbstractEffect {
      */
     public void setColor(final Color c) {
         color = c;
-    }
-
-    /**
-     * Specify whether the outline width is increased during highlight or not.
-     * 
-     * @param change
-     *            true if width shall be increased
-     */
-    public void setChangeWidth(final boolean change) {
-        changeWidth = change;
-    }
-
-    /**
-     * Set the line width increase.
-     * 
-     * @param newIncrease
-     *            new line width increase in pixel
-     */
-    public void setWidthIncrease(final int newIncrease) {
-        widthIncrease = newIncrease;
-    }
-
-    /**
-     * Set the maximum line width.
-     * 
-     * @param newMaximum
-     *            new maximum line width in pixel
-     */
-    public void setWidthMaximum(final int newMaximum) {
-        widthMax = newMaximum;
     }
 
     @Override

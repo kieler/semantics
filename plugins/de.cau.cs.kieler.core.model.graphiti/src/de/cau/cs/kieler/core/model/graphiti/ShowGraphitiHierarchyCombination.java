@@ -39,6 +39,7 @@ public class ShowGraphitiHierarchyCombination extends AbstractCombination {
      * @param button
      *            kivi button trigger
      */
+    @SuppressWarnings("restriction")
     public void execute(final ButtonState button/*
                                                  * , final SelectionState selection
                                                  * enables editing in color, causes some overhead
@@ -80,7 +81,6 @@ public class ShowGraphitiHierarchyCombination extends AbstractCombination {
                             null, new RGB(360.0f / (maxLevel + 1) * level,
                                     1.0f, 0.9f)));
             // CHECKSTYLEON MagicNumber
-            effect.setChangeWidth(false);
             schedule(effect);
         }
     }

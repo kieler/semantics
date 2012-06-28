@@ -28,13 +28,9 @@ import org.eclipse.graphiti.mm.algorithms.Rectangle;
 import org.eclipse.graphiti.mm.algorithms.Text;
 import org.eclipse.graphiti.mm.algorithms.styles.Color;
 import org.eclipse.graphiti.mm.algorithms.styles.Font;
-import org.eclipse.graphiti.mm.pictograms.ContainerShape;
 import org.eclipse.graphiti.mm.pictograms.Diagram;
-import org.eclipse.graphiti.mm.pictograms.PictogramElement;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.services.IGaService;
-import org.eclipse.graphiti.services.IPeCreateService;
-import org.eclipse.graphiti.services.IPeService;
 import org.eclipse.graphiti.util.IColorConstant;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -46,11 +42,9 @@ import org.w3c.dom.NodeList;
  * Class to read an svg document and return some graphiti pictogram.
  * 
  * @author ckru
- *
  */
-public class FigureParserGraphiti {
+public final class FigureParserGraphiti {
 
-    private static IPeCreateService peCreateService = Graphiti.getPeCreateService();
     private static IGaService gaService = Graphiti.getGaService();
 
     /**
@@ -63,33 +57,24 @@ public class FigureParserGraphiti {
     /**
      * Create an draw2d figure out of an svg document.
      * 
-     * @param doc
-     *            the svg document
-     * @return the draw2d figure equivalent to the svg
+     * @param doc the svg document
+     * @param container the container
+     * @param diagram the diagram
      */
-    public static void createFigure(final Document doc, final GraphicsAlgorithmContainer container, final Diagram diagram) {
+    public static void createFigure(final Document doc, final GraphicsAlgorithmContainer container,
+            final Diagram diagram) {
         Element svgElement = (Element) doc.getElementsByTagName("svg").item(0);
-        // Make an invisible container to hold the visible figures because we don't know the
-        // structure of the svg.
-        //GraphicsAlgorithm rootFigure = gaService.createInvisibleRectangle(root);
-        //peCreateService.createContainerShape(null, true);
-       // rootFigure.setWidth(
-       //         (int) Math.abs(Float.parseFloat(svgElement.getAttribute("width"))));
-       // rootFigure.setWidth(
-       //         (int) Math.abs(Float.parseFloat(svgElement.getAttribute("height"))));
-      //  rootFigure = buildFigure(svgElement, rootFigure);
         if (container instanceof Rectangle) {
             Rectangle rec = (Rectangle) container;
             try {
-            rec.setHeight((int) Math.abs(Float.parseFloat(svgElement.getAttribute("height"))));
-            rec.setWidth((int) Math.abs(Float.parseFloat(svgElement.getAttribute("width"))));
-            }catch (Exception e){
-                
+                rec.setHeight((int) Math.abs(Float.parseFloat(svgElement.getAttribute("height"))));
+                rec.setWidth((int) Math.abs(Float.parseFloat(svgElement.getAttribute("width"))));
+            } catch (Exception e) {
+                // ignore exception
             }
-            
+
         }
         buildFigure(svgElement, container, diagram);
-      //  return rootFigure;
     }
 
     /**
@@ -101,12 +86,12 @@ public class FigureParserGraphiti {
      *            an invisible figure as container for the actual figures
      * @return a hirachical figure representing the svg
      */
-    private static void buildFigure(final Element root, final GraphicsAlgorithmContainer parentFigure, final Diagram diagram) {
+    private static void buildFigure(final Element root,
+            final GraphicsAlgorithmContainer parentFigure, final Diagram diagram) {
         NodeList childList = root.getChildNodes();
         for (int i = 0; i < childList.getLength(); i++) {
             Node child = childList.item(i);
             if (child instanceof Element) {
-                //ContainerShape shape = peCreateService.createContainerShape(parentFigure, true);
                 Element childElement = (Element) child;
                 String tag = childElement.getTagName();
                 // make a RectangleFigure from a rectangle element
@@ -122,7 +107,7 @@ public class FigureParserGraphiti {
                     figure.setX((int) Math.abs(x));
                     figure.setY((int) Math.abs(y));
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
+                    // shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
                     // make a CircleFigure from a circle element.
                     // structure is different between draw2d and svg so positions are a bit hacked
@@ -137,7 +122,6 @@ public class FigureParserGraphiti {
                     figure.setWidth(r.intValue() * 2);
                     figure.setHeight(r.intValue() * 2);
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
                     // make a CircleFigure from a ellipse element.
                     // structure is different between draw2d and svg so positions are a bit hacked
@@ -153,7 +137,6 @@ public class FigureParserGraphiti {
                     figure.setWidth(rx.intValue() * 2);
                     figure.setHeight(ry.intValue() * 2);
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
                     // make a PolyLineShape from a line element
                 } else if (tag.equals("line")) {
@@ -166,9 +149,7 @@ public class FigureParserGraphiti {
                             new int[] { (int) Math.abs(x1), (int) Math.abs(y1), (int) Math.abs(x2),
                                     (int) Math.abs(y2) });
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
-                    // figure.getBounds().setSize(figure.getParent().getBounds().getSize().getCopy());
                     // make a PolylineShape from a polyline element.
                 } else if (tag.equals("polyline")) {
                     String allpoints = childElement.getAttribute("points");
@@ -185,9 +166,7 @@ public class FigureParserGraphiti {
                     Polyline figure = gaService
                             .createPolyline(parentFigure, pointList.toIntArray());
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
-                    // figure.getBounds().setSize(figure.getParent().getBounds().getSize().getCopy());
                     // make a PolygonShape from a polygon element
                 } else if (tag.equals("polygon")) {
                     String allpoints = childElement.getAttribute("points");
@@ -202,9 +181,7 @@ public class FigureParserGraphiti {
                     }
                     Polygon figure = gaService.createPolygon(parentFigure, pointList.toIntArray());
                     applyStyle(figure, style, diagram);
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
-                    // figure.getBounds().setSize(figure.getParent().getBounds().getSize().getCopy());
                     // make a Label from a text element
                     // TODO weird behavior of y value
                 } else if (tag.equals("text")) {
@@ -218,36 +195,12 @@ public class FigureParserGraphiti {
                     applyTextStyle(figure, style, diagram);
                     figure.setX((int) Math.abs(x));
                     figure.setY((int) Math.abs(y));
-                    //shape.setGraphicsAlgorithm(figure);
                     buildFigure(childElement, figure, diagram);
-                    // figure.getBounds().setLocation(new PrecisionPoint(x, y -
-                    // (figure.getTextBounds().getSize().height - 2)));
-                    // figure.getBounds().setSize(figure.getTextBounds().getSize());
-                    // figure.setLayoutManager(new BorderLayout());
-                    // make an ImageFigureEx out of an image element
-                } else if (tag.equals("image")) {
-                    // TODO currently not supported
-                    /*
-                     * Double x = Double.parseDouble(childElement.getAttribute("x")); Double y =
-                     * Double.parseDouble(childElement.getAttribute("y")); Double width =
-                     * Double.parseDouble(childElement.getAttribute("width")); Double height =
-                     * Double.parseDouble(childElement.getAttribute("height")); String link =
-                     * (String) childElement.getAttribute("xlink:href"); String style = (String)
-                     * childElement.getAttribute("style"); URL url =
-                     * ClassLoader.getSystemResource(link); if (url == null) { try { url = new
-                     * URL(link); } catch (MalformedURLException e) { e.printStackTrace(); } } Image
-                     * img = null; ImageFigureEx figure = null; try { img = new Image(null,
-                     * url.openStream()); figure = new ImageFigureEx(img); } catch (IOException e) {
-                     * // TODO Auto-generated catch block e.printStackTrace(); }
-                     * figure.setBounds(new Rectangle(new PrecisionPoint(x, y), new PrecisionPoint(
-                     * width, height))); applyStyle(figure, style);
-                     * parentFigure.add(buildFigure(childElement, figure));
-                     */
                 }
 
             }
         }
-     //   return parentFigure;
+        // return parentFigure;
     }
 
     /**
@@ -258,7 +211,8 @@ public class FigureParserGraphiti {
      * @param style
      *            the style as a string
      */
-    private static void applyStyle(final GraphicsAlgorithm ga, final String style, final Diagram diagram) {
+    private static void applyStyle(final GraphicsAlgorithm ga, final String style,
+            final Diagram diagram) {
         if (style != null) {
             StringTokenizer t = new StringTokenizer(style, ";");
             while (t.hasMoreTokens()) {
@@ -287,7 +241,8 @@ public class FigureParserGraphiti {
      * @param style
      *            the style as a string
      */
-    private static void applyTextStyle(final GraphicsAlgorithm ga, final String style, final Diagram diagram) {
+    private static void applyTextStyle(final GraphicsAlgorithm ga, final String style,
+            final Diagram diagram) {
         if (style != null) {
             StringTokenizer t = new StringTokenizer(style, ";");
 
@@ -304,11 +259,6 @@ public class FigureParserGraphiti {
                     int size = Integer.parseInt(value);
                     if (ga instanceof AbstractText) {
                         AbstractText text = (AbstractText) ga;
-                        // FontData[] fonts = PlatformUI.getWorkbench().getDisplay()
-                        // .getFontList("arial", true);
-                        // FontData fd = fonts[0];
-                        // fd.setHeight(size - 2);
-                        // Font font = new Font(PlatformUI.getWorkbench().getDisplay(), fd);
 
                         Font font = gaService.manageFont(diagram, "arial", size);
                         text.setFont(font);
@@ -356,7 +306,7 @@ public class FigureParserGraphiti {
             Color c = gaService.manageColor(diagram, IColorConstant.BLACK);
             return c;
         }
-        
+
     }
 
 }
