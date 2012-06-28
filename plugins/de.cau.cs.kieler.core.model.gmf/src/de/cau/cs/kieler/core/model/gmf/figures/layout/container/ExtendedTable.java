@@ -35,12 +35,12 @@ public class ExtendedTable {
     public Cell[][] table;
 
     /** Provides the alignment for every row and for the whole table. */
-    public int[] horizontalAlignment;
+    private int[] horizontalAlignment;
     /** vertical alignment. */
-    public int verticalAlignment;
+    private int verticalAlignment;
 
     /** Defines the one cell which shall be adjustable resp. variable in size. */
-    public int adjustableCanvas;
+    private int adjustableCanvas;
 
     /** Defines the minimum height and width ob the table. */
     private int minHeight;
@@ -50,7 +50,7 @@ public class ExtendedTable {
      * The padding defines the space between the outer border and the content, atm has only effect
      * on separators.
      */
-    public int padding;
+    private int padding;
 
     /**
      * Defines if a Layout can be freely resized, ie. the user can enlarge a figure.
@@ -167,6 +167,86 @@ public class ExtendedTable {
      */
     public ExtendedTable setUserResizeable(final boolean theuserResizeable) {
         this.userResizeable = theuserResizeable;
+        return this;
+    }
+    
+    /**
+     * The Vertical alignment.
+     * 
+     * @return the vertical alignment
+     */
+    public int getVerticalAlignment() {
+        return verticalAlignment;
+    }
+    
+    /**
+     * Set the vertical alignment.
+     * 
+     * @param theverticalAlignment the vertical alignment
+     * @return this
+     */
+    public ExtendedTable setVerticalAlignment(final int theverticalAlignment) {
+        this.verticalAlignment = theverticalAlignment;
+        return this;
+    }
+    
+    /**
+     * The adjustable canvas, that is the cell index of the cell that is variable in size.
+     * 
+     * @return the adjustable canvas
+     */
+    public int getAdjustableCanvas() {
+        return adjustableCanvas;
+    }
+    
+    /**
+     * Set the adjustable canvas.
+     * 
+     * @param theadjustableCanvas the adjustable canvas
+     * @return this
+     */
+    public ExtendedTable setAdjustableCanvas(final int theadjustableCanvas) {
+        this.adjustableCanvas = theadjustableCanvas;
+        return this;
+    }
+    
+    /**
+     * The horizontal alignment for each row.
+     * 
+     * @return the horizontal alignment
+     */
+    public int[] getHorizontalAlignment() {
+        return horizontalAlignment;
+    }
+    
+    /**
+     * Set the horizontal alignment.
+     * 
+     * @param theHorizontalAlignment the horizontal alignment
+     * @return this
+     */
+    public ExtendedTable setHorizontalAlignment(final int[] theHorizontalAlignment) {
+        this.horizontalAlignment = theHorizontalAlignment;
+        return this;
+    }
+    
+    /**
+     * The padding.
+     * 
+     * @return the padding
+     */
+    public int getPadding() {
+        return padding;
+    }
+    
+    /**
+     * Set the padding.
+     * 
+     * @param thepadding the padding
+     * @return this
+     */
+    public ExtendedTable setPadding(final int thepadding) {
+        this.padding = thepadding;
         return this;
     }
     

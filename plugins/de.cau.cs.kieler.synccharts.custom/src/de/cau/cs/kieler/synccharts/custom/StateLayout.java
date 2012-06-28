@@ -130,9 +130,9 @@ public class StateLayout extends AbstractTableLayout {
 
                 /** If the state is final we have to set a padding */
                 if (state.isIsFinal()) {
-                    layout.padding(DoubleRoundedRectangle.BORDER_WIDTH);
+                    layout.setPadding(DoubleRoundedRectangle.BORDER_WIDTH);
                 } else {
-                    layout.padding(0);
+                    layout.setPadding(0);
                 }
                 return layout;
             }
