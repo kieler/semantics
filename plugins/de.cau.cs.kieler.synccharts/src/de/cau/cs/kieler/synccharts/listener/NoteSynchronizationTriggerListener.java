@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import java.util.HashMap;
@@ -31,47 +44,53 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
  * if it is an Annotatable.
  * 
  * @author haf
- * 
  */
 public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener {
 
-    static final NotificationFilter addedAnnotationFilter = NotificationFilter
+    static final NotificationFilter ADDED_ANNOTATION_FILTER = NotificationFilter
         .createFeatureFilter(AnnotationsPackage.eINSTANCE.getAnnotatable_Annotations())
         .or(NotificationFilter.createFeatureFilter(AnnotationsPackage.eINSTANCE
             .getStringAnnotation_Value()))
         .or(NotificationFilter.createFeatureFilter(AnnotationsPackage.eINSTANCE
             .getNamedObject_Name()));
 
-    static final NotificationFilter addedNoteFilter = NotificationFilter.createEventTypeFilter(
+    static final NotificationFilter ADDED_NOTE_FILTER = NotificationFilter.createEventTypeFilter(
             Notification.ADD).and(
             NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
                 .getView_PersistedChildren()));
 
-    static final NotificationFilter conntectedNoteFilter = NotificationFilter.createEventTypeFilter(
+    static final NotificationFilter CONNECTED_NOTE_FILTER = NotificationFilter.createEventTypeFilter(
             Notification.SET).and(
                     NotificationFilter.createFeatureFilter(
                             NotationPackage.eINSTANCE.getView_SourceEdges()).or(
                             NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
                                     .getView_TargetEdges())));
 
-    static final NotificationFilter setDescriptionFilter = NotificationFilter
+    static final NotificationFilter SET_DESCRIPTION_FILTER = NotificationFilter
         .createEventTypeFilter(Notification.SET).and(
             NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
                 .getDescriptionStyle_Description()));
 
-    static final NotificationFilter removedNoteFilter = NotificationFilter.createEventTypeFilter(
+    static final NotificationFilter REMOVED_NOTE_FILTER = NotificationFilter.createEventTypeFilter(
         Notification.REMOVE).and(
         NotificationFilter.createFeatureFilter(NotationPackage.eINSTANCE
             .getView_PersistedChildren()));
 
-    Map<Shape, EObject> annotations = new HashMap<Shape, EObject>();
+    private Map<Shape, EObject> annotations = new HashMap<Shape, EObject>();
 
+    /**
+     * Constructor.
+     */
     public NoteSynchronizationTriggerListener() {
-        super(addedNoteFilter.or(removedNoteFilter).or(setDescriptionFilter));
+        super(ADDED_NOTE_FILTER.or(REMOVED_NOTE_FILTER).or(SET_DESCRIPTION_FILTER));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
         Object notifier = notification.getNotifier();
         Object newValue = notification.getNewValue();
         Object oldValue = notification.getOldValue();
@@ -102,7 +121,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      * Handle removing of notes in the diagram. Remove the corresponding edge deferred, i.e. in a
      * separate thread sometime later when it can be done outside this read-only transaction.
      */
-    private void removedNote(View notifier, Shape note) {
+    private void removedNote(final View notifier, final Shape note) {
         if (note.getType() != null && note.getType().equals("Note")) {
             EObject semanticPartner = annotations.get(note);
             if (semanticPartner != null) {
@@ -125,7 +144,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
     /**
      * Handle that a Shape has been added. It could be a Note, then handle that.
      */
-    private void addedShape(View notifier, Shape newValue) {
+    private void addedShape(final View notifier, final Shape newValue) {
         if (newValue.getType() != null && newValue.getType().equals("Note")) {
             handleNewDescription(newValue);
         }
@@ -134,24 +153,24 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
     /**
      * Add the StringAnnotation to an Annotatable for a given Note Shape.
      */
-    private void handleNewDescription(Shape note) {
+    private void handleNewDescription(final Shape note) {
         String description = note.getDescription();
-
-        View parent = (View) note.eContainer();
-        EObject semanticParent = (EObject) parent.getElement();
 
         View connectedNode = getConnectedView(note);
         if (connectedNode != null) {
             EObject semanticPartner = (EObject) connectedNode.getElement();
             addStringComment(semanticPartner, description, note);
-        } else {
-            /*
-             * TODO: this will add an annotation if there is no edge from the note this is a problem
-             * because initially every note will not have an edge. So when adding a new note it will
-             * be inserted twice
-             */
-            // addStringComment(semanticParent, description);
         }
+        /*
+         * TODO: this will add an annotation if there is no edge from the note this is a problem
+         * because initially every note will not have an edge. So when adding a new note it will
+         * be inserted twice
+         */
+//      else {
+//          View parent = (View) note.eContainer();
+//          EObject semanticParent = (EObject) parent.getElement();
+//          addStringComment(semanticParent, description);
+//      }
 
     }
 
@@ -160,7 +179,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      * empty key "". Will add a new such annotation iff the comment is not null. If it is null, then
      * this operation will simply remove former annotations.
      */
-    private void addStringComment(EObject target, String comment, Shape note) {
+    private void addStringComment(final EObject target, final String comment, final Shape note) {
         if (target instanceof Annotatable) {
             // remove a possible old annotation with no key. We currently support exactly 1 comment
             // annotation
@@ -186,7 +205,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      * For a given View get the first View that it is connected by an Edge. Useful to find the
      * object that a Note is connected to. This is exactly one.
      */
-    private View getConnectedView(View origin) {
+    private View getConnectedView(final View origin) {
         View connectedNode = null;
 
         for (Object edge : origin.getSourceEdges()) {
@@ -205,6 +224,8 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
         }
         return connectedNode;
     }
+    
+    // CHECKSTYLEOFF MagicNumber
 
     /**
      * Execute an EMF Command in a deferred way, i.e. do it in a separate Thread that tries on to
@@ -212,7 +233,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      * read-only transaction is over.
      */
     void deferredExecuteCommand(final Command cmd, final EditingDomain domain) {
-        new Thread() {
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -224,7 +245,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                         success = true;
                     } catch (Exception e) {
                         try {
-                            this.sleep(sleepTime);
+                            Thread.sleep(sleepTime);
                         } catch (InterruptedException e1) {
                             /* nothing */
                         }
@@ -234,7 +255,8 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                 }
 
             }
-        }.start();
+        };
+        thread.start();
     }
 
     /**
@@ -244,7 +266,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
      * won't work here.
      */
     void deferredRemoveAnnotation(final Annotatable annotatable, final Annotation annotation) {
-        new Thread() {
+        Thread thread = new Thread() {
             @Override
             public void run() {
                 super.run();
@@ -257,7 +279,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                     } catch (Exception e) {
                         e.printStackTrace();
                         try {
-                            sleep(sleepTime);
+                            Thread.sleep(sleepTime);
                         } catch (InterruptedException e1) {
                             /* nothing */
                         }
@@ -267,6 +289,7 @@ public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener 
                 }
 
             }
-        }.start();
+        };
+        thread.start();
     }
 }

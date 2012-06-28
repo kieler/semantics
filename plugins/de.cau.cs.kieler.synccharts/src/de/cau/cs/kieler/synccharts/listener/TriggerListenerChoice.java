@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import org.eclipse.emf.common.command.Command;
@@ -20,6 +33,9 @@ import de.cau.cs.kieler.synccharts.Transition;
  */
 public class TriggerListenerChoice extends FireOnceTriggerListener {
 
+    /**
+     * Constructor.
+     */
     public TriggerListenerChoice() {
         // either the type is changed explicitly or a new Conditional state is
         // inserted in a region
@@ -34,6 +50,9 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
                                 .getState_OutgoingTransitions())));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected Command trigger(final TransactionalEditingDomain domain,
             final Notification notification) {
@@ -56,7 +75,7 @@ public class TriggerListenerChoice extends FireOnceTriggerListener {
         }
         if (notification.getFeature().equals(
                 SyncchartsPackage.eINSTANCE.getRegion_States())) {
-            if(notification.getNewValue() instanceof State){
+            if (notification.getNewValue() instanceof State) {
                 state = (State) notification.getNewValue();
             }
             // state might be null if a state is removed and not added

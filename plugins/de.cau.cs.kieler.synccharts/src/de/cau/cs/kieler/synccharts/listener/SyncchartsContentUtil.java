@@ -1,6 +1,6 @@
 /*
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2009 by
@@ -10,8 +10,7 @@
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import java.util.ArrayList;
@@ -50,7 +49,8 @@ public final class SyncchartsContentUtil {
     private SyncchartsContentUtil() {
     }
 
-    private final static Map<TransactionalEditingDomain, List<ResourceSetListener>> listeners = new HashMap<TransactionalEditingDomain, List<ResourceSetListener>>();
+    private static final Map<TransactionalEditingDomain, List<ResourceSetListener>> LISTENERS
+            = new HashMap<TransactionalEditingDomain, List<ResourceSetListener>>();
 
     /**
      * Add all TriggerListener classes that are registered via the corresponding extension point as
@@ -58,7 +58,7 @@ public final class SyncchartsContentUtil {
      * 
      * @param domain the given TransactionalEditingDomain
      */
-    public static void addTriggerListeners(TransactionalEditingDomain domain) {
+    public static void addTriggerListeners(final TransactionalEditingDomain domain) {
         IConfigurationElement[] elements = Platform.getExtensionRegistry()
             .getConfigurationElementsFor("de.cau.cs.kieler.synccharts.triggerListener");
         List<ResourceSetListener> tempListeners = new ArrayList<ResourceSetListener>(
@@ -78,20 +78,27 @@ public final class SyncchartsContentUtil {
         }
         // cleanup the cache in order to avoid memory leaks
         List<TransactionalEditingDomain> stuffToRemove = new ArrayList<TransactionalEditingDomain>();
-        for (TransactionalEditingDomain oldDomain : listeners.keySet()) {
+        for (TransactionalEditingDomain oldDomain : LISTENERS.keySet()) {
             if (oldDomain.getID() == null) {
                 // avoid concurrent modification exception
                 stuffToRemove.add(oldDomain);
             }
         }
         for (TransactionalEditingDomain oldDomain : stuffToRemove) {
-            listeners.remove(oldDomain);
+            LISTENERS.remove(oldDomain);
         }
-        listeners.put(domain, tempListeners);
+        LISTENERS.put(domain, tempListeners);
     }
 
-    public static List<ResourceSetListener> getTriggerListeners(TransactionalEditingDomain domain) {
-        return listeners.get(domain);
+    /**
+     * Returns the trigger LISTENERS.
+     * 
+     * @param domain the editing domain
+     * @return the trigger LISTENERS
+     */
+    public static List<ResourceSetListener> getTriggerListeners(
+            final TransactionalEditingDomain domain) {
+        return LISTENERS.get(domain);
     }
 
     /**
@@ -99,12 +106,12 @@ public final class SyncchartsContentUtil {
      * underscores '_' and add an underscore prefix if the String does not start with a
      * word-character.
      * 
-     * @param label
-     * @return
+     * @param label a label
+     * @return an id
      */
     public static String getValidId(final String label) {
         String newId = label;
-        if(newId == null){
+        if (newId == null) {
             newId = "";
         }
         newId = newId.replaceAll("\\W", " "); // strip all special symbols, \\W = non word-char
@@ -124,11 +131,12 @@ public final class SyncchartsContentUtil {
      * @param target given EObject to look for a unique ID
      * @param attribute the feature in which the String is stored, e.g. a "name" feature of a State
      * @param prefix A String Prefix with which the unique String should start.
+     * @param cache a string cache
      * @return a new unique ID within the State
      * @deprecated use the more specific {@link #getNewUniqueString(Scope,String,UniqueStringCache)}
      */
-    public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix,
-        UniqueStringCache cache) {
+    public static String getNewUniqueString(final EObject target, final EAttribute attribute,
+            final String prefix, final UniqueStringCache cache) {
         String id = prefix;
         EObject parent = target.eContainer();
         if (parent == null) {
@@ -179,10 +187,12 @@ public final class SyncchartsContentUtil {
      * 
      * @param target given Scope to look for a unique ID
      * @param prefix A String Prefix with which the unique String should start.
+     * @param cache a string cache
      * @return a new unique ID within the parent Scope
      * @author haf
      */
-    public static String getNewUniqueString(Scope target, String prefix, UniqueStringCache cache) {
+    public static String getNewUniqueString(final Scope target, final String prefix,
+            final UniqueStringCache cache) {
         String id = prefix;
         Scope parent = (Scope) target.eContainer();
         if (parent == null) {
@@ -195,7 +205,7 @@ public final class SyncchartsContentUtil {
             // avoid checking also the target itself
             if (sibling instanceof Scope && sibling != target) {
                 String siblingId = ((Scope) sibling).getId();
-                if(siblingId != null){
+                if (siblingId != null) {
                     ids.add(siblingId);
                 }
             }
@@ -204,7 +214,7 @@ public final class SyncchartsContentUtil {
             ids.addAll(cache.getList());
         }
         boolean conflict;
-        do{
+        do {
             conflict = false;
             for (String string : ids) {
                 String siblingId = string.trim();
@@ -229,7 +239,7 @@ public final class SyncchartsContentUtil {
      * @return a new unique priority
      */
     public static int getUniquePrio(final Transition transition) {
-        if(transition == null){
+        if (transition == null) {
             return 1;
         }
         int currentPrio = transition.getPriority();
@@ -237,7 +247,7 @@ public final class SyncchartsContentUtil {
             currentPrio = 1; // Prios should start at 1
         }
         // corner case
-        if(transition.getSourceState() == null){
+        if (transition.getSourceState() == null) {
             return 1;
         }
         EList<Transition> transitions = transition.getSourceState().getOutgoingTransitions();
