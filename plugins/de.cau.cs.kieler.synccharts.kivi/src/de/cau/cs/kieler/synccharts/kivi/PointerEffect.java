@@ -33,6 +33,7 @@ import org.eclipse.ui.IEditorPart;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
+import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
@@ -62,6 +63,8 @@ public class PointerEffect extends AbstractEffect {
     private static final int DEFAULT_LENGTH = 10;
 
     private static PointList template = new PointList();
+    
+    // CHECKSTYLEOFF MagicNumber
 
     static {
         template.addPoint(-2, -2);
@@ -118,7 +121,7 @@ public class PointerEffect extends AbstractEffect {
         IEditorPart editorPart = EditorUtils.getLastActiveEditor();
         if (editorPart instanceof DiagramEditor) {
             DiagramEditPart diagram = ((DiagramEditor) editorPart).getDiagramEditPart();
-            target = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, theTarget);
+            target = (GraphicalEditPart) GmfFrameworkBridge.getEditPart(diagram, theTarget);
             if (target instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;

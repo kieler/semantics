@@ -37,6 +37,7 @@ import de.cau.cs.kieler.core.util.Pair;
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
+import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 
 /**
@@ -48,6 +49,8 @@ import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 public class ArrowEffect extends AbstractEffect {
 
     private static PointList template = new PointList();
+    
+    // CHECKSTYLEOFF MagicNumber
 
     static {
         template.addPoint(-2, -2);
@@ -94,7 +97,7 @@ public class ArrowEffect extends AbstractEffect {
         IEditorPart editorPart = EditorUtils.getLastActiveEditor();
         if (editorPart instanceof DiagramEditor) {
             DiagramEditPart diagram = ((DiagramEditor) editorPart).getDiagramEditPart();
-            source = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, s);
+            source = (GraphicalEditPart) GmfFrameworkBridge.getEditPart(diagram, s);
             if (source instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;
@@ -109,7 +112,7 @@ public class ArrowEffect extends AbstractEffect {
                 }
                 source = potential;
             }
-            target = (GraphicalEditPart) GmfModelingUtil.getEditPart(diagram, t);
+            target = (GraphicalEditPart) GmfFrameworkBridge.getEditPart(diagram, t);
             if (target instanceof ConnectionEditPart) {
                 // attempt to find a label
                 LabelEditPart potential = null;
