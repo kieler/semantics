@@ -125,7 +125,7 @@ public final class SyncchartsContentUtil {
      * @param attribute the feature in which the String is stored, e.g. a "name" feature of a State
      * @param prefix A String Prefix with which the unique String should start.
      * @return a new unique ID within the State
-     * @deprecated use the more specific {@link getNewUniqueString(Scope,String,UniqueStringCache)}
+     * @deprecated use the more specific {@link #getNewUniqueString(Scope,String,UniqueStringCache)}
      */
     public static String getNewUniqueString(EObject target, EAttribute attribute, String prefix,
         UniqueStringCache cache) {

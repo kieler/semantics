@@ -58,14 +58,17 @@ public final class FixSyncChartUtils {
     /** Identifier for fixing transitions with priority zero. */
     public static final String FIX_TRANSITION_PRIORITY_IS_ZERO = "fixTransitionPriorityIsZero";
     /** Identifier for fixing the transition priorities. */
-    public static final String FIX_TRANSITION_PRIORITY_BASED_ON_TYPE = "fixTransitionPriorityBasedOnType";
+    public static final String FIX_TRANSITION_PRIORITY_BASED_ON_TYPE
+            = "fixTransitionPriorityBasedOnType";
     /**
      * Identifier for fixing transition types of transitions leaving simple
      * states.
      */
-    public static final String FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE = "fixTransitionTypeLeavingSimpleState";
+    public static final String FIX_TRANSITION_TYPES_LEAVING_SIMPLE_STATE
+            = "fixTransitionTypeLeavingSimpleState";
     /** Identifier for turning normal terminations with trigger into weakaborts. */
-    public static final String NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT = "normalTerminationWithTriggerToWeakAbort";
+    public static final String NORMAL_TERMINATION_WITH_TRIGGER_TO_WEAK_ABORT
+            = "normalTerminationWithTriggerToWeakAbort";
 
     /** Identifier for removing signals and variables that are not used. */
     public static final String REMOVE_UNUSED_SIGNALS_AND_VARIABLES = "removeUnusedSignalsAndVariables";
@@ -74,11 +77,14 @@ public final class FixSyncChartUtils {
      * Identifier for choosing what to do with normal terminations leaving
      * complex states.
      */
-    public static final String FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE = "fixNormalTerminationLeavingComplexState";
+    public static final String FIX_NORMAL_TERMINATION_LEAVING_COMPLEX_STATE
+            = "fixNormalTerminationLeavingComplexState";
     /** Identifier for removing the trigger from normal termination transitions. */
-    public static final String REMOVE_TRIGGER_FROM_NORMAL_TERMINATION = "removeTriggerFromNormalTermination";
+    public static final String REMOVE_TRIGGER_FROM_NORMAL_TERMINATION
+            = "removeTriggerFromNormalTermination";
     /** Identifier for turning normal terminations into weak aborts. */
-    public static final String TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT = "turnNormalTerminationIntoWeakAbort";
+    public static final String TURN_NORMAL_TERMINATION_INTO_WEAK_ABORT
+            = "turnNormalTerminationIntoWeakAbort";
 
     /** Identifier for doing nothing. */
     public static final String DO_NOTHING = "doNothing";
@@ -189,7 +195,7 @@ public final class FixSyncChartUtils {
      */
     public static void saveConfiguration() {
         if (store != null) {
-            IEclipsePreferences prefs = new InstanceScope()
+            IEclipsePreferences prefs = InstanceScope.INSTANCE
                     .getNode(SyncchartsKsbasePlugin.PLUGIN_ID);
             for (String key : keys) {
                 Boolean value = store.getBoolean(key);
@@ -216,7 +222,7 @@ public final class FixSyncChartUtils {
     public static void loadConfiguration() {
         if (store == null) {
             store = SyncchartsKsbasePlugin.getDefault().getPreferenceStore();
-            IEclipsePreferences prefs = new InstanceScope()
+            IEclipsePreferences prefs = InstanceScope.INSTANCE
                     .getNode(SyncchartsKsbasePlugin.PLUGIN_ID);
             for (String key : getKeys()) {
                 boolean value = prefs.getBoolean(key, false);
