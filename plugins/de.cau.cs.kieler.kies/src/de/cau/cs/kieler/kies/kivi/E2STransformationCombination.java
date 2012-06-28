@@ -162,7 +162,7 @@ public class E2STransformationCombination extends AbstractCombination {
             return;
 
         case THIRD: // transformation state
-            TransformationUtil.logger.info("\t #### Transformation finished with result: "
+            TransformationUtil.LOGGER.info("\t #### Transformation finished with result: "
                     + transformationState.getEffect().getResult());
             postTransformation(transformationState.getEffect());
             return;
@@ -197,6 +197,8 @@ public class E2STransformationCombination extends AbstractCombination {
             process(buttonState.getButtonId());
 
             setButtonEnabling(true);
+        default:
+            throw new RuntimeException("KIES Error: This should never happen!");
         }
     }
 
@@ -283,7 +285,7 @@ public class E2STransformationCombination extends AbstractCombination {
                 TransformationEffect effect = new TransformationEffect(lastContext, lastDescriptor,
                         monitored);
                 long end = System.currentTimeMillis();
-                TransformationUtil.logger.info("\t ##### Initialize Time: " + (end - start));
+                TransformationUtil.LOGGER.info("\t ##### Initialize Time: " + (end - start));
                 effect.schedule();
             }
         } catch (KiemExecutionException e) {

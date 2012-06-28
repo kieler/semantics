@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -52,17 +52,17 @@ public class Signal {
     /**
      * The current state of the signal.
      */
-    protected boolean present;
+    private boolean present;
 
     /**
      * The last assignment of the signal used to get older states of the signal.
      */
-    protected Boolean[] lastSignalAssignments;
+    private Boolean[] lastSignalAssignments;
 
     /**
      * Index to manage the last signal assignments.
      */
-    protected int index;
+    private int index;
 
     /**
      * To assure that a signal is only emited once during a tick every signal must belong to a
@@ -78,13 +78,13 @@ public class Signal {
      * Used for a causality check to find out if a signal status is first checked and then emitted
      * in the same tick.
      */
-    protected boolean hasStateChecked;
+    private boolean hasStateChecked;
 
     /**
      * The program that belongs to the signal.
      * 
      */
-    protected EmbeddedSJProgram<?> program;
+    private EmbeddedSJProgram<?> program;
 
     /**
      * Creates a new signal with a given name. The state of a new signal is always {@link #ABSENT}
@@ -156,6 +156,24 @@ public class Signal {
     }
 
     /**
+     * Gets the last signal assignments.
+     * 
+     * @return the last signal assignments
+     */
+    public Boolean[] getLastSignalAssignments() {
+        return lastSignalAssignments;
+    }
+
+    /**
+     * Gets the program.
+     * 
+     * @return the program
+     */
+    public EmbeddedSJProgram<?> getProgram() {
+        return program;
+    }
+
+    /**
      * Checks if a <em>Signal</em> is {@link #PRESENT}.
      * 
      * Can used like this: ... if(signal1.present()){ ... }else{ ... }
@@ -184,7 +202,46 @@ public class Signal {
             return present;
         }
     }
-    
+
+    /**
+     * Gets the index.
+     * 
+     * @return the index
+     */
+    public int getIndex() {
+        return index;
+    }
+
+    /**
+     * Sets the index.
+     * 
+     * @param index
+     *            the new index
+     */
+    public void setIndex(final int index) {
+        this.index = index;
+    }
+
+    /**
+     * Sets the present.
+     * 
+     * @param present
+     *            the new present
+     */
+    public void setPresent(final boolean present) {
+        this.present = present;
+    }
+
+    /**
+     * Sets the checks for state checked.
+     * 
+     * @param hasStateChecked
+     *            the new checks for state checked
+     */
+    public void setHasStateChecked(final boolean hasStateChecked) {
+        this.hasStateChecked = hasStateChecked;
+    }
+
     /**
      * Emits a signal. Changes the status of the signal for the current tick to to {@link #PRESENT}.
      * It will <b>not</b> be checked if a signal is emitted twice in a tick or has more than one
@@ -199,23 +256,23 @@ public class Signal {
             throw new CausalityException(
                     "You are not allowed to emit a signal that already has been read in this tick");
         } else {
-            
-        	// ####################################################################################
+
+            // ####################################################################################
             // --------------------------------- changed by ybe -----------------------------------
             //
-        	// Signal must be set to PRESENT prior status logging!
-        	//
+            // Signal must be set to PRESENT prior status logging!
+            //
             // if (program.isThreadRunning() && program.getLogger() != null) {
-                // program.getLogger().log(
-                        // INSTRUCTION,
-                        // "\"emit\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
-                                // + "\",\"prio\":" + program.getCurThread().getPriority()
-                                // + ",\"param\":[" + toJSONString() + "]}");
+            // program.getLogger().log(
+            // INSTRUCTION,
+            // "\"emit\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
+            // + "\",\"prio\":" + program.getCurThread().getPriority()
+            // + ",\"param\":[" + toJSONString() + "]}");
             // }
             // this.present = PRESENT;
-        	// ------------------------------------------------------------------------------------
-        	this.present = PRESENT;
-        	if (program.isThreadRunning() && program.getLogger() != null) {
+            // ------------------------------------------------------------------------------------
+            this.present = PRESENT;
+            if (program.isThreadRunning() && program.getLogger() != null) {
                 program.getLogger().log(
                         INSTRUCTION,
                         "\"emit\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
@@ -223,7 +280,7 @@ public class Signal {
                                 + ",\"param\":[" + toJSONString() + "]}");
             }
             // ####################################################################################
-            
+
         }
     }
 
@@ -289,17 +346,16 @@ public class Signal {
                 // create a history for the signal pre returns
                 history = new Boolean[lastSignalAssignments.length - 1];
                 for (int i = 0; i < (lastSignalAssignments.length - 1); i++) {
-                    history[(history.length - i) % history.length] =
-                            lastSignalAssignments[(index - 2 - i + 2 * lastSignalAssignments.length)
-                                    % lastSignalAssignments.length];
+                    history[(history.length - i) % history.length] = lastSignalAssignments[(index
+                            - 2 - i + 2 * lastSignalAssignments.length)
+                            % lastSignalAssignments.length];
 
                 }
             }
 
-            Signal retVal =
-                    new Signal(name,
-                            lastSignalAssignments[(index + lastSignalAssignments.length - 1)
-                                    % lastSignalAssignments.length], program, history);
+            Signal retVal = new Signal(name, lastSignalAssignments[(index
+                    + lastSignalAssignments.length - 1)
+                    % lastSignalAssignments.length], program, history);
 
             // JSON logging
             if (program.isThreadRunning() && program.getLogger() != null) {

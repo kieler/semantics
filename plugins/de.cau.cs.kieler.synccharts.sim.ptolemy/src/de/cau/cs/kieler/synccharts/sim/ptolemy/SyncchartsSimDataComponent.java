@@ -13,6 +13,8 @@
  */
 package de.cau.cs.kieler.synccharts.sim.ptolemy;
 
+import java.util.Arrays;
+
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -108,7 +110,7 @@ public class SyncchartsSimDataComponent extends JSONObjectSimulationDataComponen
      * @author cmot
      * 
      */
-    class M2MProgressMonitor implements ProgressMonitor {
+    static class M2MProgressMonitor implements ProgressMonitor {
 
         private ProgressMonitorAdapter kielerProgressMonitor;
         private int numberOfComponents = 1;
@@ -354,10 +356,10 @@ public class SyncchartsSimDataComponent extends JSONObjectSimulationDataComponen
         workflow.invoke(wfx, m2mMonitor, issues);
 
         SyncchartsSimPtolemyPlugin.debug(xtendComponent.getLogMessage());
-        SyncchartsSimPtolemyPlugin.debug(issues.getInfos().toString());
-        SyncchartsSimPtolemyPlugin.debug(issues.getIssues().toString());
-        SyncchartsSimPtolemyPlugin.debug(issues.getWarnings().toString());
-        SyncchartsSimPtolemyPlugin.debug(issues.getErrors().toString());
+        SyncchartsSimPtolemyPlugin.debug(Arrays.toString(issues.getInfos()));
+        SyncchartsSimPtolemyPlugin.debug(Arrays.toString(issues.getIssues()));
+        SyncchartsSimPtolemyPlugin.debug(Arrays.toString(issues.getWarnings()));
+        SyncchartsSimPtolemyPlugin.debug(Arrays.toString(issues.getErrors()));
 
         // Refresh the file explorer
         try {

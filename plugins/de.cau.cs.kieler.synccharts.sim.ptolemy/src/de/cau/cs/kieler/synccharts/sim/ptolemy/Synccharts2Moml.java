@@ -21,6 +21,9 @@ import java.io.File;
  * @author cmot
  */
 public final class Synccharts2Moml {
+    
+    /** The Constant DEFAULT_MOML_FILE. */
+    private static final String DEFAULT_MOML_FILE = "generated.moml";
 
     /**
      * Utility class should not be instantiated.
@@ -38,7 +41,7 @@ public final class Synccharts2Moml {
      *            the arguments
      */
     public static void main(final String[] args) {
-        File file = new File("c:\\generated.moml");
+        File file = new File(DEFAULT_MOML_FILE);
         MOMLBuilder builder = new MOMLBuilder();
 
         builder.writeMomlTo(file);

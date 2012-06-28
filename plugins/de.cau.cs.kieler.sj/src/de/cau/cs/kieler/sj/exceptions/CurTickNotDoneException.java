@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -15,8 +15,8 @@ package de.cau.cs.kieler.sj.exceptions;
 
 /**
  * Exception thrown if a current tick not done. This is for example the case if the method
- * {@link de.cau.cs.kieler.sj.EmbeddedSJProgram#doTick(de.cau.cs.kieler.sj.Signal...)} is called and not all threads of the current
- * tick are terminated.
+ * {@link de.cau.cs.kieler.sj.EmbeddedSJProgram#doTick(de.cau.cs.kieler.sj.Signal...)} is called and
+ * not all threads of the current tick are terminated.
  * 
  * @author mhei
  * 

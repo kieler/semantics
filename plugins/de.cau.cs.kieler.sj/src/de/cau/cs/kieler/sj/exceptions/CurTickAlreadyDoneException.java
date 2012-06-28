@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -15,7 +15,8 @@ package de.cau.cs.kieler.sj.exceptions;
 
 /**
  * Exception thrown if tick is already done and someone tries to do something in the tick. This is
- * for example the case if a tick is done and the method {@link de.cau.cs.kieler.sj.SJProgram#gotoB(Enum)} is called.
+ * for example the case if a tick is done and the method
+ * {@link de.cau.cs.kieler.sj.SJProgram#gotoB(Enum)} is called.
  * 
  * @author mhei
  * 

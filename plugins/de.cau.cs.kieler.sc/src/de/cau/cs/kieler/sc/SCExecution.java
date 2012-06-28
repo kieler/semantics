@@ -109,6 +109,9 @@ public class SCExecution {
         } catch (IOException e2) {
             e2.printStackTrace();
         }
+        if (url == null) {
+            return;
+        }
         String bundleLocation = url.getFile();
 
         // Windows vs. Linux: Exchange possibly wrong slash/backslash
@@ -126,9 +129,11 @@ public class SCExecution {
         try {
             String compile = compiler;
 
+            StringBuffer compileBuf = new StringBuffer();
             for (String filePath : filePaths) {
-                compile = compile + " " + filePath;
+                compileBuf.append(" " + filePath);
             }
+            compile += compileBuf.toString();
 
             compile += " "
                     // + outPath
@@ -179,6 +184,7 @@ public class SCExecution {
             while ((line = br.readLine()) != null) {
                 setCompileError(getCompileError() + "\n" + line);
             }
+            br.close();
 
             // TODO: -D_SC_SUPPRESS_ERROR_DETECT: error messages detecting
             // (use own buffer)
