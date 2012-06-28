@@ -25,7 +25,7 @@ import org.eclipse.ui.IEditorPart;
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
-public class KIEMLaunchShortcut implements ILaunchShortcut {
+public class KiemLaunchShortcut implements ILaunchShortcut {
 
     /** The constant KIEM_LAUNCH_TYPE. */
     public static final String KIEM_LAUNCH_TYPE = "de.cau.cs.kieler.sim.kiem.ui.launching.KIEM";

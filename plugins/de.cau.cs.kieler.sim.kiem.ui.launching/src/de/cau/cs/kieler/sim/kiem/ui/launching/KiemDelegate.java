@@ -37,7 +37,7 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
-public class KIEMDelegate implements ILaunchConfigurationDelegate {
+public class KiemDelegate implements ILaunchConfigurationDelegate {
 
     /**
      * {@inheritDoc}
