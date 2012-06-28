@@ -6,8 +6,6 @@
  */
 package de.cau.cs.kieler.core.kexpressions;
 
-import de.cau.cs.kieler.core.annotations.Annotatable;
-
 
 /**
  * <!-- begin-user-doc -->
