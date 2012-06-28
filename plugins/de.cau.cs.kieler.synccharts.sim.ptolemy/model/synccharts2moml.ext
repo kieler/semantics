@@ -1942,13 +1942,13 @@ List[String] getMovedSignalNames():
 
 //Do some java console output for debugging purpose. 
 Void P() :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.P()
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.semP()
 //	null
 ;
 
 //Do some java console output for debugging purpose. 
 Void V() :
-	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.V()
+	JAVA de.cau.cs.kieler.synccharts.sim.ptolemy.oaw.XtendJava.semV()
 //	null
 ;
 

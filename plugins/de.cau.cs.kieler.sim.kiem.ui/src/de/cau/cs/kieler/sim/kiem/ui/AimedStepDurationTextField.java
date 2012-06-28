@@ -172,6 +172,9 @@ public class AimedStepDurationTextField extends ControlContribution implements K
         if (textfield == null) {
             return;
         }
+        if (textfield.isDisposed()) {
+            return;
+        }
         try {
             String text = textfield.getText().trim();
             text = text.replaceAll("ms", "");
