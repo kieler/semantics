@@ -25,7 +25,8 @@ import org.osgi.framework.BundleContext;
 public class ModelGmfPlugin implements BundleActivator {
 
     /** the plug-in identifier. */
-    public static final String PLUGIN_ID = "de.cau.cs.kieler.core.model.gmf.policies.BalloonPopupEditPolicyProvider";
+    public static final String PLUGIN_ID
+            = "de.cau.cs.kieler.core.model.gmf.policies.BalloonPopupEditPolicyProvider";
     
     private static BundleContext context;
 
