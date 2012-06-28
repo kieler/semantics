@@ -26,6 +26,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.JSONStringDataComponent;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 import de.cau.cs.kieler.sim.table.views.DataTableView;
 import de.cau.cs.kieler.sim.table.views.TableData;
@@ -150,8 +151,8 @@ public class DataObserver extends JSONStringDataComponent implements IJSONString
                 }
 
             }
-        } catch (Exception e) {
-            // this should not happen
+        } catch (JSONException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
