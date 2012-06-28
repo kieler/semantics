@@ -5,7 +5,7 @@ import "http://kieler.cs.cau.de/kexpressions/0.1.2" as kexpressions
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
 
 //	root rule. an esterel file can contain multiple modules
-Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+Program hidden(ESTEREL_SL_COMMENT, ESTEREL_ML_COMMENT, WS):
 	(modules+=Module)*;
 
 	// a module consists of an interface and a body
@@ -506,11 +506,11 @@ ExecCase:
 Tick:
 	"tick";
 
-terminal Esterel_SL_Comment:
+terminal ESTEREL_SL_COMMENT:
 	'%' !('\n' |
 	'\r')* ('\r'? '\n')?;
 
-terminal Esterel_ML_Comment:
+terminal ESTEREL_ML_COMMENT:
 	('%' '{')->('}' '%');
 
 	// allow escaping by double quotes ( "this is a ""quote"", how nice." ) - esterelstyle
