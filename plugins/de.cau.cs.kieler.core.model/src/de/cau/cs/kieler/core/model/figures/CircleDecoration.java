@@ -44,7 +44,7 @@ public class CircleDecoration extends PolygonDecoration {
     @Override
     protected void outlineShape(final Graphics g) {
         Rectangle ovalBounds = getBounds().getCopy();
-        ovalBounds.crop(new Insets(1));
+        ovalBounds.shrink(new Insets(1));
         g.drawOval(ovalBounds);
     }
 
@@ -54,7 +54,7 @@ public class CircleDecoration extends PolygonDecoration {
     @Override
     protected void fillShape(final Graphics g) {
         Rectangle ovalBounds = getBounds().getCopy();
-        ovalBounds.crop(new Insets(1));
+        ovalBounds.shrink(new Insets(1));
         g.fillOval(ovalBounds);
     }
 

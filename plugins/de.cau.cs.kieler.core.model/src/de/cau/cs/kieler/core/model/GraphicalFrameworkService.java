@@ -17,7 +17,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-import org.eclipse.core.expressions.PropertyTester;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.Platform;
@@ -31,6 +30,8 @@ import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 /**
  * A service for providing bridges to graphical editing frameworks.
  * 
+ * FIXME this service is still to specific and should be generalized
+ * 
  * @author msp
  */
 public final class GraphicalFrameworkService {
@@ -41,7 +42,8 @@ public final class GraphicalFrameworkService {
     public static final String FW_GRAPHITI = "graphiti";
     
     /** the extension point identifier. */
-    public static final String EXTENSION_POINT_ID = "de.cau.cs.kieler.core.model.graphicalFrameworkBridges";
+    public static final String EXTENSION_POINT_ID
+            = "de.cau.cs.kieler.core.model.graphicalFrameworkBridges";
 
     /** the singleton instance. **/
     private static GraphicalFrameworkService instance;
