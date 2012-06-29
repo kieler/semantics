@@ -32,6 +32,8 @@ import de.cau.cs.kieler.core.math.KielerMath;
  * @author mmu
  */
 public final class SplineUtilities {
+    
+    // CHECKSTYLEOFF MagicNumber
 
     /**
      * Experimental value to determine the number of bend points for
@@ -65,7 +67,6 @@ public final class SplineUtilities {
         PointList points = new PointList();
         points.addPoint(control.getFirstPoint());
         int i = 1;
-        // CHECKSTYLEOFF MagicNumber
         // code needs lots of 3s and 4s for splines consisting of 3/4 points
         for (; i < control.size() - 2; i += 3) {
             List<KVector> spline = new ArrayList<KVector>(4);
@@ -92,7 +93,6 @@ public final class SplineUtilities {
             break;
         default: // nothing
         }
-        // CHECKSTYLEON MagicNumber
         return points;
     }
 
@@ -132,7 +132,6 @@ public final class SplineUtilities {
      * @return reference point
      */
     public static Point sourceReferencePoint(final PointList points, final int distance) {
-        // CHECKSTYLEOFF MagicNumber
         if (points.size() < 3) { // line
             return points.getLastPoint();
         }
@@ -153,7 +152,6 @@ public final class SplineUtilities {
             SplineUtilities.nearestPointOnSpline(points.getPoint(0), points.getPoint(1), points
                     .getPoint(2), scaledPoint, splinePoint);
         }
-        // CHECKSTYLEON MagicNumber
         return splinePoint;
 
     }
@@ -168,7 +166,6 @@ public final class SplineUtilities {
      * @return reference point
      */
     public static Point targetReferencePoint(final PointList points, final int distance) {
-        // CHECKSTYLEOFF MagicNumber
         if (points.size() < 3) {
             return points.getFirstPoint();
         }
@@ -193,15 +190,13 @@ public final class SplineUtilities {
         } else { // straight section
             return points.getPoint(size - 2);
         }
-        // CHECKSTYLEON MagicNumber
         return splinePoint;
     }
 
     private static final int MAXDEPTH = 64; // Maximum depth for recursion
     private static final double EPSILON = 1.0 * Math.pow(2, -MAXDEPTH - 1); // Flatness
     private static final int DEGREE = 3; // Cubic Bezier curve
-    private static final int W_DEGREE = 5; // Degree of equation to find roots
-    // of
+    private static final int W_DEGREE = 5; // Degree of equation to find roots of
     private static final double[][] CUBIC_Z = { { 1.0, 0.6, 0.3, 0.1 }, { 0.4, 0.6, 0.6, 0.4 },
             { 0.1, 0.3, 0.6, 1.0 }, }; // Precomputed "z" for cubics
 
@@ -244,10 +239,8 @@ public final class SplineUtilities {
         // bump quadratic spline up to cubic spline
         // new control points are two thirds of the way from start (end) to the
         // single control point of the quadratic spline
-        // CHECKSTYLEOFF MagicNumber
         Point c1 = new Point((start.x + 2 * c.x) / 3, (start.y + 2 * c.y) / 3);
         Point c2 = new Point((end.x + 2 * c.x) / 3, (end.y + 2 * c.y) / 3);
-        // CHECKSTYLEON MagicNumber
         return nearestPointOnSpline(start, c1, c2, end, needle, nearest);
     }
 
@@ -387,10 +380,8 @@ public final class SplineUtilities {
         double[] leftT = new double[W_DEGREE + 1]; // Solutions from kids
         double[] rightT = new double[W_DEGREE + 1];
 
-        // CHECKSTYLEOFF MagicNumber
         // start in the middle of the bezier curve, t=0.5
         bezier(w, degree, 0.5, left, right);
-        // CHECKSTYLEON MagicNumber
         int leftCount = findRoots(left, degree, leftT, depth + 1);
         int rightCount = findRoots(right, degree, rightT, depth + 1);
 
@@ -642,9 +633,21 @@ public final class SplineUtilities {
     /////////////Temporary gmf bugfix//////////////////////
     //https://bugs.eclipse.org/bugs/show_bug.cgi?id=345886
     ///////////////////////////////////////////////////////
+    
     private static final int DEFAULT_CORNER_APPROXIMATION_PTS = 15;
-    public static PointList calcRoundedCornersPolyline(PointList points, int r, 
-            Hashtable<Integer, Integer> rForBendpoint, boolean calculateAppoxPoints) {
+    
+    /**
+     * Calculate rounded corners polyline.
+     * 
+     * @param points the points
+     * @param radius the radius
+     * @param rForBendpoint the radious for bend points
+     * @param calculateAppoxPoints whether to calculate approximation points
+     * @return a point list
+     */
+    public static PointList calcRoundedCornersPolyline(final PointList points, final int radius, 
+            final Hashtable<Integer, Integer> rForBendpoint, final boolean calculateAppoxPoints) {
+        int r = radius;
         PointList newPoints = new PointList();
         // First, clean up the points list if needed. Each segment is defined by two end points,
         // so if it happens that the segment has points in between, remove them since there is no

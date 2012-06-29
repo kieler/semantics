@@ -105,7 +105,7 @@ public class SignalFlowCombination extends AbstractCombination {
             effects = new ArrayList<Pair<Signal, Transition>>();
 
             // traverse over all EObjects
-            EObject diagramElement = ((DiagramEditor) selection.getDiagramEditor()).getDiagram()
+            EObject diagramElement = ((DiagramEditor) selection.getWorkbenchPart()).getDiagram()
                     .getElement();
             for (Iterator<EObject> iterator = diagramElement.eAllContents(); iterator.hasNext();) {
                 EObject current = iterator.next();

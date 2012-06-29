@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import org.eclipse.core.runtime.IStatus;
@@ -20,20 +33,31 @@ import org.eclipse.ui.statushandlers.StatusManager;
  * executed correctly and will not be disturbed by this TriggerListener.
  * 
  * @author haf
- * 
  */
-abstract public class FailSafeTriggerListener extends TriggerListener {
+public abstract class FailSafeTriggerListener extends TriggerListener {
 
+    /**
+     * Constructor.
+     */
     public FailSafeTriggerListener() {
         super();
     }
 
-    public FailSafeTriggerListener(NotificationFilter filter) {
+    /**
+     * Constructor.
+     * 
+     * @param filter a filter
+     */
+    public FailSafeTriggerListener(final NotificationFilter filter) {
         super(filter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Command transactionAboutToCommit(ResourceSetChangeEvent event) throws RollbackException {
+    public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
+            throws RollbackException {
         try {
             return super.transactionAboutToCommit(event);
         } catch (Exception e) {

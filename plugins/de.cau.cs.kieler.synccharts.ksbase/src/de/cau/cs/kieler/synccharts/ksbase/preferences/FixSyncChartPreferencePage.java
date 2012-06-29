@@ -70,7 +70,6 @@ public class FixSyncChartPreferencePage extends FieldEditorPreferencePage
 
     private String[][] getInput(final String key) {
         List<String> options = FixSyncChartUtils.getChoices(key);
-        String choice = getPreferenceStore().getString(key);
 
         String[][] input = new String[options.size()][2];
         for (int i = 0; i < options.size(); i++) {

@@ -98,8 +98,8 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      * @param thediagramTypeName
      *            the diagram type name of the graphiti diagram
      */
-    public GraphitiNewWizard(final String name, final String diagExt,
-            final String domainExt, final String thediagramTypeName) {
+    public GraphitiNewWizard(final String name, final String diagExt, final String domainExt,
+            final String thediagramTypeName) {
         this.wizardName = name;
         this.diagramFileExtension = diagExt;
         this.domainFileExtension = domainExt;
@@ -118,12 +118,11 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      * @param thediagramTypeName
      *            the diagram type of the graphiti diagram
      * @param theeditorId
-     *            identifier of the diagram editor, or {@code null} if no editor
-     *            shall be opened after model creation
+     *            identifier of the diagram editor, or {@code null} if no editor shall be opened
+     *            after model creation
      */
-    public GraphitiNewWizard(final String name, final String diagExt,
-            final String domainExt, final String thediagramTypeName,
-            final String theeditorId) {
+    public GraphitiNewWizard(final String name, final String diagExt, final String domainExt,
+            final String thediagramTypeName, final String theeditorId) {
         this(name, diagExt, domainExt, thediagramTypeName);
         this.editorId = theeditorId;
     }
@@ -140,16 +139,15 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      * @param thediagramTypeName
      *            the diagram type name of the graphiti diagram
      * @param theeditorId
-     *            identifier of the diagram editor, or {@code null} if no editor
-     *            shall be opened after model creation
+     *            identifier of the diagram editor, or {@code null} if no editor shall be opened
+     *            after model creation
      * @param thegridSize
      *            the grid size (0 means no grid)
      * @param thesnapToGrid
      *            the setting for snapping to grid
      */
-    public GraphitiNewWizard(final String name, final String diagExt,
-            final String domainExt, final String thediagramTypeName,
-            final String theeditorId, final int thegridSize,
+    public GraphitiNewWizard(final String name, final String diagExt, final String domainExt,
+            final String thediagramTypeName, final String theeditorId, final int thegridSize,
             final boolean thesnapToGrid) {
         this(name, diagExt, domainExt, thediagramTypeName, theeditorId);
         this.gridSize = thegridSize;
@@ -159,8 +157,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
     /**
      * {@inheritDoc}
      */
-    public final void init(final IWorkbench theworkbench,
-            final IStructuredSelection theselection) {
+    public final void init(final IWorkbench theworkbench, final IStructuredSelection theselection) {
         this.workbench = theworkbench;
         this.selection = theselection;
         setWindowTitle("New " + wizardName + " Diagram");
@@ -172,18 +169,16 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      */
     @Override
     public final void addPages() {
-        diagramModelFilePage = new CreationWizardPage("DiagramModelFile",
-                selection, diagramFileExtension);
+        diagramModelFilePage = new CreationWizardPage("DiagramModelFile", selection,
+                diagramFileExtension);
         diagramModelFilePage.setTitle("Create " + wizardName + " Diagram");
-        diagramModelFilePage
-                .setDescription("Select file that will contain diagram model.");
+        diagramModelFilePage.setDescription("Select file that will contain diagram model.");
         addPage(diagramModelFilePage);
 
-        domainModelFilePage = new CreationWizardPage("DomainModelFile",
-                selection, domainFileExtension);
+        domainModelFilePage = new CreationWizardPage("DomainModelFile", selection,
+                domainFileExtension);
         domainModelFilePage.setTitle("Create " + wizardName + " Domain Model");
-        domainModelFilePage
-                .setDescription("Select file that will contain domain model.");
+        domainModelFilePage.setDescription("Select file that will contain domain model.");
         addPage(domainModelFilePage);
     }
 
@@ -195,18 +190,16 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
         final Maybe<Resource> diagramResource = new Maybe<Resource>();
         IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
             @Override
-            protected void execute(final IProgressMonitor monitor)
-                    throws CoreException, InterruptedException {
-                diagramResource.set(createDiagram(
-                        diagramModelFilePage.getURI(),
+            protected void execute(final IProgressMonitor monitor) throws CoreException,
+                    InterruptedException {
+                diagramResource.set(createDiagram(diagramModelFilePage.getURI(),
                         domainModelFilePage.getURI(), monitor));
                 if (diagramResource.get() != null && editorId != null) {
                     try {
                         openDiagram(diagramResource.get());
                     } catch (PartInitException exception) {
                         ErrorDialog.openError(getContainer().getShell(),
-                                "Error opening diagram editor", null,
-                                exception.getStatus());
+                                "Error opening diagram editor", null, exception.getStatus());
                     }
                 }
             }
@@ -217,14 +210,11 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
             return false;
         } catch (InvocationTargetException exception) {
             if (exception.getTargetException() instanceof CoreException) {
-                ErrorDialog.openError(getContainer().getShell(),
-                        "Creation Problems", null, ((CoreException) exception
-                                .getTargetException()).getStatus());
+                ErrorDialog.openError(getContainer().getShell(), "Creation Problems", null,
+                        ((CoreException) exception.getTargetException()).getStatus());
             } else {
-                IStatus status = new Status(IStatus.ERROR,
-                        ModelGraphitiPlugin.PLUGIN_ID,
-                        "Error creating diagram",
-                        exception.getTargetException());
+                IStatus status = new Status(IStatus.ERROR, ModelGraphitiPlugin.PLUGIN_ID,
+                        "Error creating diagram", exception.getTargetException());
                 StatusManager.getManager().handle(status, StatusManager.LOG);
             }
             return false;
@@ -258,8 +248,8 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
             commandStack.execute(new RecordingCommand(editingDomain) {
                 @Override
                 protected void doExecute() {
-                    createModel(diagramResource, diagramURI.lastSegment(),
-                            modelResource, modelURI.lastSegment());
+                    createModel(diagramResource, diagramURI.lastSegment(), modelResource,
+                            modelURI.lastSegment());
                 }
             });
             progressMonitor.worked(1);
@@ -268,10 +258,8 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
                 modelResource.save(createSaveOptions());
                 diagramResource.save(createSaveOptions());
             } catch (IOException exception) {
-                IStatus status = new Status(IStatus.ERROR,
-                        ModelGraphitiPlugin.PLUGIN_ID,
-                        "Unable to store model and diagram resources",
-                        exception);
+                IStatus status = new Status(IStatus.ERROR, ModelGraphitiPlugin.PLUGIN_ID,
+                        "Unable to store model and diagram resources", exception);
                 StatusManager.getManager().handle(status);
             }
             setCharset(WorkspaceSynchronizer.getFile(modelResource));
@@ -306,8 +294,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
                 file.setCharset("UTF-8", new NullProgressMonitor());
             }
         } catch (CoreException e) {
-            StatusManager.getManager()
-                    .handle(e, ModelGraphitiPlugin.PLUGIN_ID);
+            StatusManager.getManager().handle(e, ModelGraphitiPlugin.PLUGIN_ID);
         }
     }
 
@@ -319,16 +306,13 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      * @throws PartInitException
      *             if the diagram could not be opened
      */
-    private void openDiagram(final Resource diagramResource)
-            throws PartInitException {
+    private void openDiagram(final Resource diagramResource) throws PartInitException {
         String path = diagramResource.getURI().toPlatformString(true);
         IResource workspaceResource = ResourcesPlugin.getWorkspace().getRoot()
                 .findMember(new Path(path));
         if (workspaceResource instanceof IFile) {
-            IWorkbenchPage page = workbench.getActiveWorkbenchWindow()
-                    .getActivePage();
-            page.openEditor(new FileEditorInput((IFile) workspaceResource),
-                    editorId);
+            IWorkbenchPage page = workbench.getActiveWorkbenchWindow().getActivePage();
+            page.openEditor(new FileEditorInput((IFile) workspaceResource), editorId);
         }
     }
 
@@ -344,29 +328,29 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
      * @param modelName
      *            name of the domain model
      */
-    private void createModel(final Resource diagramResource,
-            final String diagramName, final Resource modelResource,
-            final String modelName) {
+    private void createModel(final Resource diagramResource, final String diagramName,
+            final Resource modelResource, final String modelName) {
         modelResource.setTrackingModification(true);
         EObject domainModel = createModel(modelName);
         modelResource.getContents().add(domainModel);
         diagramResource.setTrackingModification(true);
-        Diagram diagram = Graphiti.getPeCreateService().createDiagram(
-                diagramTypeName, diagramName, gridSize, snapToGrid);
+        Diagram diagram = Graphiti.getPeCreateService().createDiagram(diagramTypeName, diagramName,
+                gridSize, snapToGrid);
         PictogramLink link = PictogramsFactory.eINSTANCE.createPictogramLink();
         link.setPictogramElement(diagram);
         link.getBusinessObjects().add(domainModel);
         configureDiagram(diagram);
         diagramResource.getContents().add(diagram);
     }
-    
+
     /**
      * Configure the diagram. May be overridden by subclasses.
      * 
-     * @param diagram the top-level element of the pictogram model
+     * @param diagram
+     *            the top-level element of the pictogram model
      */
     protected void configureDiagram(final Diagram diagram) {
-    	// the default implementation does nothing
+        // the default implementation does nothing
     }
 
     /**

@@ -90,7 +90,14 @@ public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
         plugin = value;
     }
 
+    /**
+     * Sets a transition label.
+     * 
+     * @param trans the transition
+     * @param label the label
+     */
     public static void setLabel(final Action trans, final String label) {
         trans.setLabel(label);
     }
+    
 }

@@ -16,7 +16,6 @@ package de.cau.cs.kieler.core.model.triggers;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IPartListener;
-import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -218,8 +217,8 @@ public class DiagramTrigger extends AbstractTrigger implements IPartListener {
         }
 
         /**
-         * Get the type ID of the diagram. I.e. in an editor it is the same as the Editor ID. TODO:
-         * should be adopted to views if views get supported
+         * Get the type ID of the diagram. I.e. in an editor it is the same as the Editor ID.
+         * TODO: should be adopted to views if views get supported
          * 
          * @return String ID of the diagram type
          */

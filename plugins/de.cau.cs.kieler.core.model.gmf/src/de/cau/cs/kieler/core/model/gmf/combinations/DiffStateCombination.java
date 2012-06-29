@@ -37,14 +37,17 @@ public class DiffStateCombination extends AbstractCombination {
     public static final String IS_COLOR = DiffStateCombination.class.getCanonicalName() + "isColor";
     
     /** The preference key for the highlight color for the "original states". */
-    public static final String SHALL_COLOR = DiffStateCombination.class.getCanonicalName() + "shallColor";
+    public static final String SHALL_COLOR = DiffStateCombination.class.getCanonicalName()
+            + "shallColor";
     
-    /** Properties this combination offers to the user */
+    /** Properties this combination offers to the user. */
     private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
         new CombinationParameter<RGB>(IS_COLOR, getPreferenceStore(), "Is states color",
-                "The color to use for (erroneous) \"new\" states in a simulation", ColorConstants.red.getRGB()),
+                "The color to use for (erroneous) \"new\" states in a simulation",
+                ColorConstants.red.getRGB()),
         new CombinationParameter<RGB>(SHALL_COLOR, getPreferenceStore(), "Shall states color",
-                "The color to use for \"original\" states in a simulation recording", ColorConstants.yellow.getRGB()) };
+                "The color to use for \"original\" states in a simulation recording",
+                ColorConstants.yellow.getRGB()) };
     
     /**
      * Creates a SyncCharts simulation combination.
@@ -74,12 +77,14 @@ public class DiffStateCombination extends AbstractCombination {
     /**
      * Execute this combination using the original and new states.
      * 
-     * @param activeStates
+     * @param errorStates
      *            the original and new states
      */
     public void execute(final DiffStates errorStates) {
-        Color isColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(), IS_COLOR));
-        Color shallColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(), SHALL_COLOR));
+        Color isColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                IS_COLOR));
+        Color shallColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
+                SHALL_COLOR));
         
         // Undo previous colorizations
         undoRecordedEffects();
@@ -97,12 +102,12 @@ public class DiffStateCombination extends AbstractCombination {
         }*/
         
         // colorize all "is" states
-        for(EObject obj : errorStates.getIsStates()) {
+        for (EObject obj : errorStates.getIsStates()) {
             schedule(new HighlightEffect(obj, errorStates.getDiagramEditor(), isColor));
         }
         
         // colorize all "shall" states
-        for(EObject obj : errorStates.getShallStates()) {
+        for (EObject obj : errorStates.getShallStates()) {
             schedule(new HighlightEffect(obj, errorStates.getDiagramEditor(), shallColor));
         }
     }

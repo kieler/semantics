@@ -229,7 +229,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                  * If the figure is the adjustable layout-element then assign a statically minimum
                  * size if it is empty
                  */
-                if (cell.figure == layout.adjustableCanvas) {
+                if (cell.figure == layout.getAdjustableCanvas()) {
                     if (cell.isEmpty) {
                         minimumSize = new Dimension(layout.getMinWidth(),
                                 layout.getMinHeight());
@@ -280,7 +280,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                     /*
                      * Separators have no height and no width, all others get their preferred ones
                      */
-                } else if (layout.horizontalAlignment[row] != ExtendedTable.SEPARATOR) {
+                } else if (layout.getHorizontalAlignment()[row] != ExtendedTable.SEPARATOR) {
                     if (!cell.isEmpty) {
                         preferredSize = child.getPreferredSize();
 
@@ -363,7 +363,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
          * Vertical Alignment is only concerned state-wide, which means that all cells can be
          * vertically centered or justified from top to bottom
          */
-        if (layout.verticalAlignment == ExtendedTable.JUSTIFY) {
+        if (layout.getVerticalAlignment() == ExtendedTable.JUSTIFY) {
             offsetY = 0;
         } else {
             offsetY = clientArea.height / 2 - minimumStateHeight / 2;
@@ -378,7 +378,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
             int rowHeight = 0;
 
             /* Decide which layout we have for this row */
-            if (layout.horizontalAlignment[row] == ExtendedTable.JUSTIFY) {
+            if (layout.getHorizontalAlignment()[row] == ExtendedTable.JUSTIFY) {
 
                 /*
                  * If justify then we have to search the last cell of the row which is not empty and
@@ -427,7 +427,7 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                 /*
                  * For centric row-layout we have to calculate the sum of all cell-widths
                  */
-            } else if (layout.horizontalAlignment[row] == ExtendedTable.CENTER) {
+            } else if (layout.getHorizontalAlignment()[row] == ExtendedTable.CENTER) {
                 /* sum up column-wise */
                 int rowWidth = 0;
                 for (int column = 0; column < layout.table[row].length; column++) {
@@ -458,19 +458,19 @@ public abstract class AbstractTableLayout extends AbstractHintLayout {
                  * Separators get their size set depending on the calculated state-width and the
                  * right x-position
                  */
-            } else if (layout.horizontalAlignment[row] == ExtendedTable.SEPARATOR) {
+            } else if (layout.getHorizontalAlignment()[row] == ExtendedTable.SEPARATOR) {
                 /* get the referenced separator */
                 Cell cell = table[row][0];
                 Polyline regionSeparator = (Polyline) children.get(cell.figure);
                 PointList points = new PointList();
 
                 /* full expanded from left to right */
-                int left = 1 + layout.padding;
+                int left = 1 + layout.getPadding();
                 /* TODO : had problems with old calculation via stateWidth, therefore fallback to
                  * getParent().getBounds() as this gives right result. Old calculation resulted in 
                  * separator overhanging the (right) state-border*/
                 Rectangle parentBounds = regionSeparator.getParent().getBounds();
-                int right = parentBounds.width - 1 - layout.padding;
+                int right = parentBounds.width - 1 - layout.getPadding();
 
                 /* It gets layouted direct under the predecessing row */
                 int regionSeparatorHeight = clientArea.y + offsetY;

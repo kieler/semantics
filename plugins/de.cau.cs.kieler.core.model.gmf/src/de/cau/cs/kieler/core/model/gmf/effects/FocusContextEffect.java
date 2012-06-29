@@ -25,7 +25,6 @@ import org.eclipse.gef.EditPart;
 import org.eclipse.ui.IWorkbenchPart;
 
 import de.cau.cs.kieler.core.kivi.AbstractCompoundEffect;
-import de.cau.cs.kieler.core.kivi.IEffectCompound;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 
@@ -84,7 +83,7 @@ public class FocusContextEffect extends AbstractCompoundEffect {
     /**
      * {@inheritDoc}
      */
-    public IEffect merge(IEffect otherEffect) {
+    public IEffect merge(final IEffect otherEffect) {
         if (otherEffect instanceof FocusContextEffect) {
             return this;
         }

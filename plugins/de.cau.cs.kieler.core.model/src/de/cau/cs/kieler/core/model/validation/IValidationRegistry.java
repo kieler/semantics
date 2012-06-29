@@ -31,7 +31,7 @@ public interface IValidationRegistry {
      * @param file the check file
      * @param isWrapExistingValidator True if the checkfile wraps around another checkfile and thus
      *            has to be added after it.
-     * @param referencedEPackageNsURIs
+     * @param referencedEPackageNsURIs the referenced package namespace URIs
      */
     void register(EPackage epackage, String file, boolean isWrapExistingValidator,
             List<String> referencedEPackageNsURIs);

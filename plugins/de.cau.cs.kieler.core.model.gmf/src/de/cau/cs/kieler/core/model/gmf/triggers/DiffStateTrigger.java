@@ -32,7 +32,8 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
  * @kieler.rating 2011-12-07 red
  */
 public class DiffStateTrigger extends AbstractTrigger {
-    /** The shared instance */
+    
+    /** The shared instance. */
     private static DiffStateTrigger instance;
 
     /**
@@ -61,7 +62,7 @@ public class DiffStateTrigger extends AbstractTrigger {
     }
 
     /**
-     * Give original and new objects to the view management
+     * Give original and new objects to the view management.
      * 
      * @param is
      *            the new object
@@ -96,21 +97,36 @@ public class DiffStateTrigger extends AbstractTrigger {
         }
     }
 
+    /**
+     * Diff states class.
+     */
     public static class DiffStates extends AbstractTriggerState {
-        /** List of the actually currently active states */
+        
+        /** List of the actually currently active states. */
         private List<EObject> isStates;
 
-        /** List of the states that should be active in the current step */
+        /** List of the states that should be active in the current step. */
         private List<EObject> shallStates;
 
-        /** The editor in which the states shall be colorized */
+        /** The editor in which the states shall be colorized. */
         private DiagramEditor diagramEditor;
 
+        /**
+         * Constructor.
+         */
         public DiffStates() {
             super();
         }
         
-        public DiffStates(List<EObject> is, List<EObject> shall, DiagramEditor editor) {
+        /**
+         * Constructor.
+         * 
+         * @param is the is state
+         * @param shall the shall state
+         * @param editor the editor
+         */
+        public DiffStates(final List<EObject> is, final List<EObject> shall,
+                final DiagramEditor editor) {
             isStates = is;
             shallStates = shall;
             diagramEditor = editor;
@@ -133,6 +149,11 @@ public class DiffStateTrigger extends AbstractTrigger {
             return diagramEditor;
         }
 
+        /**
+         * Return the is states.
+         * 
+         * @return the is states
+         */
         public List<EObject> getIsStates() {
             if (isStates != null) {
                 return isStates;
@@ -141,6 +162,11 @@ public class DiffStateTrigger extends AbstractTrigger {
             }
         }
 
+        /**
+         * Return the shall states.
+         * 
+         * @return the shall states
+         */
         public List<EObject> getShallStates() {
             if (shallStates != null) {
                 return shallStates;

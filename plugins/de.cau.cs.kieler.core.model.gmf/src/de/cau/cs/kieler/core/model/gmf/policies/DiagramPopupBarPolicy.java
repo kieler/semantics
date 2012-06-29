@@ -1,3 +1,4 @@
+// SUPPRESS CHECKSTYLE NEXT Header
 /******************************************************************************
  * Copyright (c) 2005, 2007 IBM Corporation and others.
  * All rights reserved. This program and the accompanying materials
@@ -172,6 +173,7 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
      * @param palContainer
      *            the <code>PaletteContainer</code>
      */
+    @SuppressWarnings("deprecation")
     protected void fillWithPaletteToolsInContainer(
             final PaletteContainer palContainer) {
         if (palContainer != null) {
@@ -231,6 +233,7 @@ public class DiagramPopupBarPolicy extends PopupBarPolicy implements
         int count = 0;
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
+                // SUPPRESS CHECKSTYLE NEXT MagicNumber
                 if (((srcImageData.maskData[count >> 3] >> (7 - (count % 8))) & 1) == 0) {
                     srcImageData.setPixel(x, y, backgroundColor);
                 }

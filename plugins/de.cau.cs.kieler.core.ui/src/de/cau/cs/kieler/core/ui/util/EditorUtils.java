@@ -39,7 +39,7 @@ public final class EditorUtils {
     private static boolean doneGetLastActiveEditor = true;
 
     /** The Constant WAIT_SLEEP_TIME for finding the last active editor. */
-    private final static int WAIT_SLEEP_TIME = 10;
+    private static final int WAIT_SLEEP_TIME = 10;
 
     /** The last found editor. */
     private static Maybe<IEditorPart> editor = Maybe.create();
