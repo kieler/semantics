@@ -65,7 +65,7 @@ public class DataReplayComponent extends JSONObjectSimulationDataComponent imple
     public static final String KIEM_PROPERTY_MODEFILE = "ESO Model File";
 
     /** The number of the current step. */
-    private static volatile long step;
+    private long step;
 
     /** Name of the ESO file to be replayed/recorded from/to. */
     private IPath esoFilePath;

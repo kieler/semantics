@@ -139,6 +139,9 @@ public final class KartConstants {
     /** The Constant ERR_NOTFOUND_TITLE. */
     public static final String ERR_NOTFOUND_TITLE = "Trace file could not be found";
 
+    /** The Constant ERR_NOTDELETE_TITLE. */
+    public static final String ERR_NOTDELETE_TITLE = "Trace file could not be deleted";
+    
     /** The Constant ERR_NOTFOUND. */
     public static final String ERR_NOTFOUND = "The trace file could not be found. Do you want to"
             + " switch to training mode?";
