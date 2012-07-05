@@ -157,7 +157,7 @@ public class MaudeSession {
      *             Signals that an I/O exception has occurred.
      */
     public String queryMaude(final String queryRequest, final int wait) throws IOException {
-        String returnValue = "";
+        StringBuffer returnValueBuf = new StringBuffer();
 
         if (queryRequest != null) {
             toMaude.write(queryRequest);
@@ -177,12 +177,12 @@ public class MaudeSession {
 
         while (!done) {
             while (error.ready()) {
-                returnValue += (((char) error.read() + ""));
+                returnValueBuf.append(((char) error.read() + ""));
             }
             while (fromMaude.ready()) {
-                returnValue += ((char) fromMaude.read() + "");
+                returnValueBuf.append((char) fromMaude.read() + "");
             }
-            if (returnValue.contains("Maude>")) {
+            if (returnValueBuf.toString().contains("Maude>")) {
                 done = true;
             }
             if (System.currentTimeMillis() - startTime > MAUDETIMEOUT) {
@@ -190,7 +190,7 @@ public class MaudeSession {
             }
         }
 
-        return returnValue;
+        return returnValueBuf.toString();
     }
 
     // -------------------------------------------------------------------------
