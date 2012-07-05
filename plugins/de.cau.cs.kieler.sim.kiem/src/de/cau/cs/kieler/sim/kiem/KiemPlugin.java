@@ -1669,7 +1669,6 @@ public class KiemPlugin extends AbstractUIPlugin {
      * @param currentModelFile the new current model file
      */
     public static void setCurrentModelFile(final IPath currentModelFile) {
-        System.out.println("Current Model File" + currentModelFile);
         KiemPlugin.currentModelFile = currentModelFile;
     }
 
