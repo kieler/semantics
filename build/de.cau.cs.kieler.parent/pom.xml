@@ -8,7 +8,7 @@
   <packaging>pom</packaging>
 
   <properties>
-    <tycho-version>0.14.0</tycho-version>
+    <tycho-version>0.15.0</tycho-version>
     <targetJdk>1.5</targetJdk>
   </properties>
 
@@ -18,62 +18,101 @@
     <module>../../plugins</module>
     <module>../../features</module>
     <module>../de.cau.cs.kieler.repository</module>
+    <!--    <module>../de.cau.cs.kieler.target</module> -->
     <module>../de.cau.cs.kieler.kwebs.repository</module>
   </modules>
 
-<!-- p2 and maven repositories to resolve plugin dependencies -->
-  <repositories>
-    <repository>
-      <id>p2.eclipse.indigo</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/indigo</url>
-    </repository>
-    <repository>
-      <id>p2.google.guava</id>
-      <layout>p2</layout>
-      <url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
-    </repository>
-    <repository>
-      <id>p2.itemis.antlr</id>
-      <layout>p2</layout>
-      <url>http://download.itemis.com/updates/</url>
-    </repository>
-    <repository>
-      <id>p2.graphiti</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/graphiti/updates/0.8.1</url>
-    </repository>
-    <repository>
-      <id>p2.eclipse.updates</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/eclipse/updates/3.7</url>
-    </repository>
-    <repository>
-      <id>p2.papyrus</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo</url>
-    </repository>
-    <repository>
-      <id>p2.ptolemy2</id>
-      <layout>p2</layout>
-      <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</url>
-    </repository>
-    <repository>
-      <id>p2.orbit</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository</url>
-    </repository>
-    <repository>
-      <id>p2.xpandd</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/m2t/xpand/updates/milestones</url>
-    </repository>
-    <repository>
-      <id>p2.xtextt</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
-    </repository>
-  </repositories>
+  <profiles>
+    <profile>
+      <id>indigo</id>
+    <!-- p2 and maven repositories to resolve plugin dependencies -->
+      <repositories>
+        <repository>
+          <id>p2.eclipse.indigo</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/indigo</url>
+        </repository>
+        <repository>
+          <id>p2.google.guava</id>
+          <layout>p2</layout>
+          <url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
+        </repository>
+        <repository>
+          <id>p2.itemis.antlr</id>
+          <layout>p2</layout>
+          <url>http://download.itemis.com/updates/</url>
+        </repository>
+        <repository>
+          <id>p2.graphiti</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/graphiti/updates/0.8.1</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.updates</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/eclipse/updates/3.7</url>
+        </repository>
+        <repository>
+          <id>p2.papyrus</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo</url>
+        </repository>
+        <repository>
+          <id>p2.ptolemy2</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</url>
+        </repository>
+        <repository>
+          <id>p2.orbit</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository</url>
+        </repository>
+        <repository>
+          <id>p2.xpandd</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/m2t/xpand/updates/milestones</url>
+        </repository>
+        <repository>
+          <id>p2.xtextt</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
+        </repository> 
+      </repositories>
+    </profile>
+
+    <profile>
+      <id>juno38</id>
+      <repositories>
+        <repository>
+          <id>p2.juno38</id>
+          <layout>p2</layout>
+          <url>file:/home/java/repository/juno382/</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.juno</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/juno</url>
+        </repository>
+      </repositories>
+    </profile>
+    
+    <profile>
+      <id>juno42</id>
+      <repositories>
+        <repository>
+          <id>p2.juno38</id>
+          <layout>p2</layout>
+          <url>file:/home/java/repository/juno422/</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.juno</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/juno</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
 
 <!-- maven plugin repositories -->
   <pluginRepositories>
@@ -181,6 +220,14 @@
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
+          <!-- <target>
+            <artifact>
+              <groupId>de.cau.cs.kieler</groupId>
+              <artifactId>de.cau.cs.kieler.target</artifactId>
+              <version>0.0.1-SNAPSHOT</version>
+              <classifier>indigo</classifier>
+            </artifact>
+          </target> -->
           <environments>
             <environment>
               <os>linux</os>
