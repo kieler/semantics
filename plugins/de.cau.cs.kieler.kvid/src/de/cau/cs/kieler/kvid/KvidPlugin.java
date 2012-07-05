@@ -28,15 +28,9 @@ public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
     /** The ID of this plugin. */
     public static final String PLUGIN_ID = "de.cau.cs.kieler.kvid"; //$NON-NLS-1$
 
-    /** The {@link BundleContext} of this plugin. */
-    private static BundleContext context;
-
     /** The shared instance. */
     private static KvidPlugin plugin;
 
-    static BundleContext getContext() {
-        return context;
-    }
 
     /*
      * (non-Javadoc)
@@ -44,7 +38,6 @@ public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
      */
     @Override
     public void start(final BundleContext bundleContext) throws Exception {
-        KvidPlugin.context = bundleContext;
         plugin = this;
     }
 
@@ -54,7 +47,6 @@ public class KvidPlugin extends AbstractUIPlugin implements BundleActivator {
      */
     @Override
     public void stop(final BundleContext bundleContext) throws Exception {
-        KvidPlugin.context = null;
     }
 
     /**

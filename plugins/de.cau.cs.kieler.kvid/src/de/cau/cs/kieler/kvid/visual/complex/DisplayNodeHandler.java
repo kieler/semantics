@@ -95,27 +95,29 @@ public class DisplayNodeHandler extends AbstractHandler {
                 return ((RootEditPart) container).getContents();
             }
             //Create the respective command
-            Command createDisplayCommand = container.getCommand(createScopeRequest);
-            CompositeCommand noteAttachmentCC = new CompositeCommand("Create a note attachment");
+            if (container != null) {
+                Command createDisplayCommand = container.getCommand(createScopeRequest);
+                CompositeCommand noteAttachmentCC = new CompositeCommand("Create a note attachment");
 
-            @SuppressWarnings("rawtypes")
-            IAdaptable noteViewAdapter =
-                (IAdaptable) ((List) createScopeRequest.getNewObject()).get(0);
-            //Create a command for connecting the new node to the selected one
-            noteAttachmentCC.compose(
-                    new DeferredCreateConnectionViewCommand(targetEditPart.getEditingDomain(),
-                            ViewType.NOTEATTACHMENT,
-                            noteViewAdapter,
-                            new EObjectAdapter((EObject) targetEditPart.getModel()),
-                            diagEditor.getDiagramGraphicalViewer(),
-                            PreferencesHint.USE_DEFAULTS));
-            
-            //Add both commands to a compound command
-            CompoundCommand cc = new CompoundCommand();
-            cc.add(createDisplayCommand);
-            cc.add(new ICommandProxy(noteAttachmentCC));
-            cc.setLabel(displayNodeType.getDisplayName());
-            diagEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+                @SuppressWarnings("rawtypes")
+                IAdaptable noteViewAdapter =
+                    (IAdaptable) ((List) createScopeRequest.getNewObject()).get(0);
+                //Create a command for connecting the new node to the selected one
+                noteAttachmentCC.compose(
+                        new DeferredCreateConnectionViewCommand(targetEditPart.getEditingDomain(),
+                                ViewType.NOTEATTACHMENT,
+                                noteViewAdapter,
+                                new EObjectAdapter((EObject) targetEditPart.getModel()),
+                                diagEditor.getDiagramGraphicalViewer(),
+                                PreferencesHint.USE_DEFAULTS));
+                
+                //Add both commands to a compound command
+                CompoundCommand cc = new CompoundCommand();
+                cc.add(createDisplayCommand);
+                cc.add(new ICommandProxy(noteAttachmentCC));
+                cc.setLabel(displayNodeType.getDisplayName());
+                diagEditor.getDiagramEditDomain().getDiagramCommandStack().execute(cc);
+            }
         }
         return null;
     }

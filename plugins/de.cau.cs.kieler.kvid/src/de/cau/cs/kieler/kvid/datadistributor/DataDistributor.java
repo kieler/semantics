@@ -200,7 +200,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             if (listener != null) {
                 listener.triggerDataChanged(isHistoryStep);
             } else {
-                removeDataListener(listener);
+                removeDataListener(null);
             }
         }
     }
@@ -234,17 +234,17 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         //Find node that matches URI
         String[] uriParts = uri.getElementUri().split("\\.");
         int currentUriPart = 1;
-        String currentFoundUri = ".";
+        StringBuffer currentFoundUriBuf = new StringBuffer(".");
         KNode currentNode = currentDiagramLayout.getLayoutGraph();
-        while (!currentFoundUri.equals(uri.getElementUri()) && !currentNode.getChildren().isEmpty()) {
+        while (!currentFoundUriBuf.toString().equals(uri.getElementUri()) && !currentNode.getChildren().isEmpty()) {
             for (KNode node : currentNode.getChildren()) {
                 if (!node.getLabels().isEmpty()
                         && node.getLabels().get(0).getText().equals(uriParts[currentUriPart])) {
                     currentNode = node;
-                    currentFoundUri += node.getLabels().get(0).getText();
+                    currentFoundUriBuf.append(node.getLabels().get(0).getText());
                     currentUriPart++;
                     if (currentUriPart < uriParts.length) {
-                        currentFoundUri += ".";
+                        currentFoundUriBuf.append(".");
                     }
                     break;
                 }
@@ -252,7 +252,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
         }
         
         //If no node was found, return null
-        if (!currentFoundUri.equals(uri.getElementUri())) {
+        if (!currentFoundUriBuf.toString().equals(uri.getElementUri())) {
             return null;
         }
         
@@ -365,7 +365,7 @@ public final class DataDistributor implements IProviderListener, ResourceSetList
             if (listener != null) {
                 listener.triggerWrapup();
             } else {
-                removeDataListener(listener);
+                removeDataListener(null);
             }
         }
     }
