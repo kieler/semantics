@@ -113,7 +113,6 @@
     <module>de.cau.cs.kieler.kwebs.jaxws</module>
     <module>de.cau.cs.kieler.kwebs.server</module>
     <module>de.cau.cs.kieler.maude</module>
-    <module>de.cau.cs.kieler.papyrus</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sim.kivi</module>
@@ -158,10 +157,6 @@
     <module>de.cau.cs.kieler.synccharts.text</module>
     <module>de.cau.cs.kieler.synccharts.text.bridge</module>
     <module>de.cau.cs.kieler.synccharts.text.ui</module>
-    <module>de.cau.cs.kieler.uml2</module>
-    <module>de.cau.cs.kieler.uml2.examples</module>
-    <module>de.cau.cs.kieler.uml2.kivi</module>
-    <module>de.cau.cs.kieler.uml2.sim.maude</module>
     <module>de.tu_berlin.cs.tfs.muvitorkit</module>
     <module>de.unido.ls5.eti.client</module>
     <module>de.unido.ls5.eti.common</module>

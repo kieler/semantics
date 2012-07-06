@@ -7,11 +7,6 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
-  <properties>
-    <tycho-version>0.15.0</tycho-version>
-    <targetJdk>1.5</targetJdk>
-  </properties>
-
 <!-- all plugins need to be listed as module -->
 
   <modules>
@@ -25,6 +20,11 @@
   <profiles>
     <profile>
       <id>indigo</id>
+  <properties>
+    <tycho-version>0.14.0</tycho-version>
+    <targetJdk>1.5</targetJdk>
+  </properties>
+
     <!-- p2 and maven repositories to resolve plugin dependencies -->
       <repositories>
         <repository>
@@ -82,6 +82,11 @@
 
     <profile>
       <id>juno38</id>
+  <properties>
+    <tycho-version>0.15.0</tycho-version>
+    <targetJdk>1.5</targetJdk>
+  </properties>
+
       <repositories>
         <repository>
           <id>p2.juno38</id>
@@ -98,6 +103,11 @@
     
     <profile>
       <id>juno42</id>
+  <properties>
+    <tycho-version>0.15.0</tycho-version>
+    <targetJdk>1.5</targetJdk>
+  </properties>
+
       <repositories>
         <repository>
           <id>p2.juno38</id>
@@ -267,9 +277,9 @@
       <plugins>
         <!-- maven xtend plugin to tell maven how to compile xtend code -->
         <plugin>
-          <groupId>org.eclipse.xtend2</groupId>
+          <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
-          <version>2.2.1</version>
+          <version>2.3.0</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
           </configuration>

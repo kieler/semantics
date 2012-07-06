@@ -10,12 +10,12 @@
    <feature url="features/net.ogdf.bin_1.0.0.qualifier.jar" id="net.ogdf.bin.feature" version="1.0.0.qualifier" os="linux,macosx,solaris,win32" arch="sparc,x86,x86_64">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
+   <!--   <feature url="features/de.cau.cs.kieler.uml2_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
       <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
-   </feature>
+   </feature> -->
    <feature url="features/de.cau.cs.kieler.kaom_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
