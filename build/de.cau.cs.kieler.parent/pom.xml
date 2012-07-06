@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>parent</artifactId>
@@ -20,12 +20,12 @@
   <profiles>
     <profile>
       <id>indigo</id>
-  <properties>
-    <tycho-version>0.14.0</tycho-version>
-    <targetJdk>1.5</targetJdk>
-  </properties>
+      <properties>
+        <tycho-version>0.14.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
 
-    <!-- p2 and maven repositories to resolve plugin dependencies -->
+      <!-- p2 and maven repositories to resolve plugin dependencies -->
       <repositories>
         <repository>
           <id>p2.eclipse.indigo</id>
@@ -82,10 +82,10 @@
 
     <profile>
       <id>juno38</id>
-  <properties>
-    <tycho-version>0.15.0</tycho-version>
-    <targetJdk>1.5</targetJdk>
-  </properties>
+      <properties>
+        <tycho-version>0.15.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
 
       <repositories>
         <repository>
@@ -100,13 +100,13 @@
         </repository>
       </repositories>
     </profile>
-    
+
     <profile>
       <id>juno42</id>
-  <properties>
-    <tycho-version>0.15.0</tycho-version>
-    <targetJdk>1.5</targetJdk>
-  </properties>
+      <properties>
+        <tycho-version>0.15.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
 
       <repositories>
         <repository>
@@ -132,7 +132,7 @@
       <url>http://build.eclipse.org/common/xtend/maven</url>
     </pluginRepository>
   </pluginRepositories>
-    
+
 
   <build>
     <plugins>
@@ -147,7 +147,7 @@
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
-	<version>${tycho-version}</version>
+        <version>${tycho-version}</version>
         <executions>
           <execution>
             <id>plugin-source</id>
@@ -164,7 +164,7 @@
         <version>2.9.1</version>
         <configuration>
           <configLocation>checks.xml</configLocation>
-	  <sourceDirectory>src</sourceDirectory>
+          <sourceDirectory>src</sourceDirectory>
         </configuration>
       </plugin>
 
@@ -175,7 +175,7 @@
         <configuration>
           <targetJdk>1.5</targetJdk>
           <format>xml</format>
-	  <!--  <aggregate>true</aggregate> -->
+          <!--  <aggregate>true</aggregate> -->
         </configuration>
       </plugin>
 
@@ -196,23 +196,23 @@
           </execution>
         </executions>
       </plugin>
- 
+
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.8.1</version>
         <configuration>
-              <doclet>de.cau.cs.kieler.doclets.RatingDoclet</doclet>
-              <docletArtifact>
-                <groupId>de.cau.cs.kieler</groupId>
-                <artifactId>de.cau.cs.kieler.doclets</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-              </docletArtifact>
-              <useStandardDocletOptions>false</useStandardDocletOptions>
+          <doclet>de.cau.cs.kieler.doclets.RatingDoclet</doclet>
+          <docletArtifact>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.doclets</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+          </docletArtifact>
+          <useStandardDocletOptions>false</useStandardDocletOptions>
         </configuration>
 
-	<!--        <executions>
+        <!--        <executions>
           <execution>
             <id>aggregate</id>
             <goals>
@@ -220,10 +220,10 @@
             </goals>
             <phase>integration-test</phase>
           </execution>
-	</executions> -->
+        </executions> -->
       </plugin>
 
-    
+
       <!-- as we have platform specific fragments we need to tell tycho about target platforms -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
