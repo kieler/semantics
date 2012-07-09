@@ -9,3 +9,6 @@ Export-Package: de.cau.cs.kieler.sj,
  de.cau.cs.kieler.sj.examples,
  de.cau.cs.kieler.sj.exceptions,
  de.cau.cs.kieler.sj.util
+Bundle-ClassPath: jar/EmbeddedSJ.jar,
+ jar/SJ.jar,
+ .

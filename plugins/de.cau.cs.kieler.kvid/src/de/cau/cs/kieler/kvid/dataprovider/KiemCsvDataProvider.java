@@ -55,7 +55,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
     
     
     private String[] getCsvLines() {
-        String cache = "";
+        StringBuffer cacheBuf = new StringBuffer();
         if (inputCsvFile != null) {
             try {
                 String line = null;
@@ -63,9 +63,9 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
                 InputStreamReader reader = new InputStreamReader(input);
                 BufferedReader buf = new BufferedReader(reader);
                 while ((line = buf.readLine()) != null) {
-                    cache += line + "\n";
+                    cacheBuf.append(line + "\n");
                 }
-                cache = cache.trim();
+                buf.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -73,7 +73,7 @@ public class KiemCsvDataProvider extends JSONObjectDataComponent implements
             // FIXME throw a more specific exception
             throw new RuntimeException("Please chose an existing CSV file as source.");
         }
-        return cache.split("\n");
+        return cacheBuf.toString().trim().split("\n");
     }
     
     /**

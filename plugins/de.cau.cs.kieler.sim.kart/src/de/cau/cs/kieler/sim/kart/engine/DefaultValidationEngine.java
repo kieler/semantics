@@ -129,25 +129,25 @@ public class DefaultValidationEngine implements IValidationEngine {
             final String errSignalVar, final JSONObject retval) {
 
         Iterator<String> signals = recSignals.keySet().iterator();
-        String errSignals = "";
+        StringBuffer errSignalsBuf = new StringBuffer();
 
         while (signals.hasNext()) {
             String signal = signals.next();
 
             if (!(simSignals.containsKey(signal) && ((recSignals.get(signal) == null) || Utilities
                     .compareValues(recSignals.get(signal), simSignals.get(signal))))) {
-                if (!errSignals.isEmpty()) {
-                    errSignals += ", ";
+                if (errSignalsBuf.length() != 0) {
+                    errSignalsBuf.append(", ");
                 }
-                errSignals += signal;
+                errSignalsBuf.append(signal);
             }
             simSignals.remove(signal);
         }
 
-        if (!errSignals.isEmpty()) {
+        if (errSignalsBuf.length() != 0) {
             if (!isHistoryStep) {
                 KiemPlugin.getDefault().showError(
-                        "Validation error: The signals " + errSignals
+                        "Validation error: The signals " + errSignalsBuf.toString()
                                 + " were produced erroneously, they were either not "
                                 + "present when they should "
                                 + "have been or in the case of valued signals were"
@@ -156,31 +156,31 @@ public class DefaultValidationEngine implements IValidationEngine {
             }
         }
 
-        String excessSignals = "";
+        StringBuffer excessSignalsBuf = new StringBuffer();
         if (!(ignoreAdditionalSignals || simSignals.isEmpty())) {
             Iterator<String> it2 = simSignals.keySet().iterator();
             while (it2.hasNext()) {
                 String signal = it2.next();
-                excessSignals += signal;
+                excessSignalsBuf.append(signal);
 
                 if (it2.hasNext()) {
-                    excessSignals += ", ";
+                    excessSignalsBuf.append(", ");
                 }
             }
             if (!isHistoryStep) {
                 KiemPlugin.getDefault().showError(
-                        "Validation error: The signal(s) " + excessSignals
+                        "Validation error: The signal(s) " + excessSignalsBuf.toString()
                                 + " were not recorded, but generated in the simulation",
                         KartConstants.PLUGINID, null, KartConstants.ERR_SILENT);
             }
         }
 
-        if (!errSignals.isEmpty()) {
-            errSignals += ", ";
+        if (errSignalsBuf.length() != 0) {
+            errSignalsBuf.append(", ");
         }
 
         try {
-            retval.accumulate(errSignalVar, errSignals + excessSignals);
+            retval.accumulate(errSignalVar, errSignalsBuf.toString() + excessSignalsBuf.toString());
         } catch (JSONException e) {
             // do nothing
         }

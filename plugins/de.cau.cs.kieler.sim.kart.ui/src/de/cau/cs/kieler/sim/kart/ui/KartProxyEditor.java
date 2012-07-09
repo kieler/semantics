@@ -77,14 +77,9 @@ public class KartProxyEditor extends MultiPageEditorPart {
         this.editorInput = editorInputParam;
 
         // bring KIEM view to the front (lazy loading)
-        try {
-            IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
-            IViewPart vP = window.getActivePage().showView(KIEMVIEWID);
-            vP.setFocus();
-        } catch (Exception e) {
-            // do nothing, let it stay in the background
-            // this normally only happens during startup
-        }
+        IWorkbenchWindow window = this.getSite().getWorkbenchWindow();
+        IViewPart vP = window.getActivePage().showView(KIEMVIEWID);
+        vP.setFocus();
 
         boolean suc = updateProperty();
 
@@ -165,16 +160,12 @@ public class KartProxyEditor extends MultiPageEditorPart {
     public void closeEditor() {
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {
-                try {
-                    IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
-                    IWorkbenchPage page = window.getActivePage();
-                    IEditorPart editor = page.findEditor(editorInput);
-                    if (editor != null) {
-                        // page.activate(editor);
-                        page.closeEditor(editor, false);
-                    }
-                } catch (Exception e) {
-                    // In an unlikely case of an error leave the editor open//
+                IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
+                IWorkbenchPage page = window.getActivePage();
+                IEditorPart editor = page.findEditor(editorInput);
+                if (editor != null) {
+                    // page.activate(editor);
+                    page.closeEditor(editor, false);
                 }
             }
         });

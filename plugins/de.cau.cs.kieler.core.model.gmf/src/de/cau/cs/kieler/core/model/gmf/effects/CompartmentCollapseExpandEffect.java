@@ -33,6 +33,7 @@ import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
@@ -40,7 +41,6 @@ import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.model.gmf.IAdvancedRenderingEditPart;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
@@ -174,11 +174,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 getCollapseCommand(doCollapse).execute();
             }
         } else {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     justExecuted = applyCollapseState(doCollapse);
                 }
-            }, true);
+            });
         }
     }
 
@@ -191,11 +191,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 getCollapseCommand(originalCollapseState).execute();
             }
         } else {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     justExecuted = applyCollapseState(originalCollapseState);
                 }
-            }, true);
+            });
         }
     }
 
