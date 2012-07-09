@@ -29,6 +29,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
@@ -36,7 +37,6 @@ import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
@@ -170,11 +170,11 @@ public class PointerEffect extends AbstractEffect {
             connection.setStart(anchors.getFirst());
             connection.setEnd(anchors.getSecond());
 
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     parent.add(connection);
                 }
-            }, false);
+            });
         }
     }
 
@@ -183,13 +183,13 @@ public class PointerEffect extends AbstractEffect {
      */
     public void undo() {
         if (connection != null && parent != null) {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
                 public void run() {
                     connection.getParent().remove(connection);
                     connection = null;
                     parent = null;
                 }
-            }, false);
+            });
         }
     }
 

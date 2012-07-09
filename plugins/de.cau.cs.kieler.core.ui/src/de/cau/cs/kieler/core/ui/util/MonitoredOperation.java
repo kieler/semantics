@@ -117,7 +117,7 @@ public abstract class MonitoredOperation {
      * 
      * @param monitor the progress monitor for the operation, or {@code null} if the operation
      *     is not run in monitored mode
-     * @return a status indicating success or failure, or {@code null}
+     * @return a status indicating success or failure
      */
     protected abstract IStatus execute(IProgressMonitor monitor);
     
@@ -156,40 +156,94 @@ public abstract class MonitoredOperation {
     }
     
     /**
-     * Run the operation in the current thread without any progress monitor.
+     * Run the operation without any progress monitor. If the current thread is the UI thread,
+     * the actual operation is executed in a new thread that runs in parallel. Otherwise the
+     * operation is executed directly and a handler for the progress monitor is executed in the
+     * parallel UI thread. In either case the method returns only after execution of
+     * the operation is done.
      * 
      */
     public final void runUnmonitored() {
+        Display display = Display.getCurrent();
+        if (display == null) {
+            display = PlatformUI.getWorkbench().getDisplay();
+            runUnmonitored(display, false);
+        } else {
+            runUnmonitored(display, true);
+        }
+    }
+    
+    /**
+     * Run the operation from the current thread without a progress monitor. 
+     * 
+     * @param display the display that runs the UI thread
+     * @param isUiThread if true, the current thread is the UI thread
+     */
+    private void runUnmonitored(final Display display, final boolean isUiThread) {
         final Maybe<IStatus> status = new Maybe<IStatus>();
         
-        // execute UI code prior to the actual operation
-        runInUI(new Runnable() {
-            public void run() {
-                try {
-                    preUIexec();
-                } catch (Throwable throwable) {
-                    status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
-                            "Error in monitored operation", throwable));
-                }
-            }
-        }, true);
-        
-        if (status.get() == null) {
-            // execute the actual operation without progress monitor
-            status.set(execute(null));
-            
-            if (status.get() == null || status.get().getSeverity() == IStatus.OK) {
-                // execute UI code after the actual operation
-                runInUI(new Runnable() {
+        if (isUiThread) {
+            try {
+                // execute UI code prior to the actual operation
+                preUIexec();
+
+                // execute the actual operation without progress monitor
+                Thread thread = new Thread("Monitored Operation") { //$NON-NLS-1$
                     public void run() {
-                        try {
-                            postUIexec();
-                        } catch (Throwable throwable) {
-                            status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
-                                    "Error in monitored operation", throwable));
-                        }
+                        status.set(execute(null));
+                        assert status.get() != null;
                     }
-                }, true);
+                };
+                thread.start();
+                
+                while (status.get() == null) {
+                    boolean hasMoreToDispatch;
+                    do {
+                        hasMoreToDispatch = display.readAndDispatch();
+                    } while (hasMoreToDispatch && status.get() == null);
+                    if (status.get() == null) {
+                        display.sleep();
+                    }
+                }
+                
+                if (status.get().getSeverity() == IStatus.OK) {
+                    // execute UI code after the actual operation
+                    postUIexec();
+                }
+            } catch (Throwable throwable) {
+                status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                        "Error in monitored operation", throwable));
+            }
+        } else {
+            // execute UI code prior to the actual operation
+            display.syncExec(new Runnable() {
+                public void run() {
+                    try {
+                        preUIexec();
+                    } catch (Throwable throwable) {
+                        status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                                "Error in monitored operation", throwable));
+                    }
+                }
+            });
+            
+            if (status.get() == null) {
+                // execute the actual operation without progress monitor
+                status.set(execute(null));
+                
+                if (status.get().getSeverity() == IStatus.OK) {
+                    // execute UI code after the actual operation
+                    display.syncExec(new Runnable() {
+                        public void run() {
+                            try {
+                                postUIexec();
+                            } catch (Throwable throwable) {
+                                status.set(new Status(IStatus.ERROR, CoreUIPlugin.PLUGIN_ID,
+                                        "Error in monitored operation", throwable));
+                            }
+                        }
+                    });
+                }
             }
         }
         
@@ -271,6 +325,7 @@ public abstract class MonitoredOperation {
             }
             if (status.get() == null) {
                 status.set(execute(monitor.get()));
+                assert status.get() != null;
             }
         } finally {
             synchronized (status) {
@@ -391,7 +446,8 @@ public abstract class MonitoredOperation {
      * 
      * @param runnable a runnable
      * @param synch if true or if the current thread is the UI thread, the method returns
-     *     only after execution of the runnable, else it returns immediately 
+     *     only after execution of the runnable, else it returns immediately
+     * @deprecated use {@link Display#syncExec(Runnable)} or {@link Display#asyncExec(Runnable)} instead
      */
     public static final void runInUI(final Runnable runnable, final boolean synch) {
         Display display = Display.getCurrent();

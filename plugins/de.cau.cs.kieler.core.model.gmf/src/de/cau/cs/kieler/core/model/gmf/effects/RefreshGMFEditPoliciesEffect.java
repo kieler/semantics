@@ -24,9 +24,9 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
 import org.eclipse.gmf.runtime.notation.View;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * KiVi effect refreshing the edit policies of the passed {@link DiagramEditor}. Undo functionality
@@ -71,7 +71,7 @@ public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
     }
 
     private void refreshPolicies() {
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 if (activeEditor instanceof IDiagramWorkbenchPart) {
                     EObject obj = ((View) ((IDiagramWorkbenchPart) activeEditor)
@@ -86,7 +86,7 @@ public class RefreshGMFEditPoliciesEffect extends AbstractEffect {
                     graphViewer.flush();
                 }
             }
-        }, false);
+        });
     }
 
     /**

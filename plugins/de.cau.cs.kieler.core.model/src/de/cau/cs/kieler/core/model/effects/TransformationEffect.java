@@ -85,7 +85,7 @@ public class TransformationEffect extends AbstractEffect {
                     protected IStatus execute(final IProgressMonitor monitor) {
                         context.execute(descriptor);
                         TransformationObserver.getInstance().notifyListeners(context, descriptor);
-                        return null;
+                        return Status.OK_STATUS;
                     }
                 };
                 operation.runMonitored();
