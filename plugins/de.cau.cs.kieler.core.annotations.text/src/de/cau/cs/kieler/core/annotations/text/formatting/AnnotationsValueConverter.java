@@ -21,8 +21,13 @@ import org.eclipse.xtext.util.Strings;
 import org.eclipse.xtext.nodemodel.INode;
 
 /**
- * @author chsch
+ * TODO: Document.
  * 
+ * <p><em>Note:</em> FindBugs complains about method names beginning with capital letters in this
+ * class. This seems to be necessary, however, since the method names have to match the names of
+ * the actual annotations whose value they extract.
+ * 
+ * @author chsch
  */
 public class AnnotationsValueConverter extends DefaultTerminalConverters {
 
