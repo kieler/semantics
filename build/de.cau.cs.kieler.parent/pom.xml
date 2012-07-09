@@ -45,7 +45,7 @@
         <repository>
           <id>p2.graphiti</id>
           <layout>p2</layout>
-          <url>http://download.eclipse.org/graphiti/updates/0.8.1</url>
+          <url>http://download.eclipse.org/graphiti/updates/0.9.0</url>
         </repository>
         <repository>
           <id>p2.eclipse.updates</id>
