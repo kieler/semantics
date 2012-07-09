@@ -142,7 +142,7 @@ public final class EclipseJSVGCanvas extends JSVGCanvas {
         nextDocumentLoader = new SVGDocumentLoader(url2, loader);
         nextDocumentLoader.setPriority(Thread.MIN_PRIORITY);
 
-        Iterator it = svgDocumentLoaderListeners.iterator();
+        Iterator<?> it = svgDocumentLoaderListeners.iterator();
         while (it.hasNext()) {
             nextDocumentLoader.addSVGDocumentLoaderListener((SVGDocumentLoaderListener) it.next());
         }

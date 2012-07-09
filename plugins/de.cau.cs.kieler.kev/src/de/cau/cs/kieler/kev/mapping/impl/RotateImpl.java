@@ -11,26 +11,20 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.Scanner;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.json.JSONObject;
+import org.w3c.dom.DOMException;
+import org.w3c.dom.Element;
+import org.w3c.dom.svg.SVGDocument;
+import org.w3c.dom.svg.SVGLocatable;
 
 import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.MappingPackage;
 import de.cau.cs.kieler.kev.mapping.Rotate;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
-
 import de.cau.cs.kieler.kev.views.EclipseJSVGCanvas;
-
-import org.apache.batik.dom.svg.SVGOMPoint;
-import org.eclipse.emf.common.notify.Notification;
-
-import org.eclipse.emf.ecore.EClass;
-
-import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.w3c.dom.DOMException;
-import org.w3c.dom.Element;
-import org.w3c.dom.svg.SVGDocument;
-import org.w3c.dom.svg.SVGLocatable;
-import org.w3c.dom.svg.SVGPoint;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Rotate</b></em>'. <!--
