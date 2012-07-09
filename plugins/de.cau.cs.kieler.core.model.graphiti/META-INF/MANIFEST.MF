@@ -5,8 +5,8 @@ Bundle-SymbolicName: de.cau.cs.kieler.core.model.graphiti;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
-Require-Bundle: org.eclipse.graphiti;bundle-version="0.8.0",
- org.eclipse.graphiti.ui;bundle-version="0.8.0",
+Require-Bundle: org.eclipse.graphiti;bundle-version="0.9.0",
+ org.eclipse.graphiti.ui;bundle-version="0.9.0",
  org.eclipse.core.runtime;bundle-version="3.6.0",
  org.eclipse.core.resources;bundle-version="3.6.0",
  org.eclipse.jface;bundle-version="3.6.0",

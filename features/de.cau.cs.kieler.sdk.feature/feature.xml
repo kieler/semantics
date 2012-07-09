@@ -235,15 +235,6 @@ litigation.
 	 optional="true"/>
 
    <includes
-         id="de.cau.cs.kieler.uml2.feature"
-         version="0.0.0"/>
-
-   <includes
-         id="de.cau.cs.kieler.uml2.feature.source"
-         version="0.0.0"
-	 optional="true"/>
-
-   <includes
          id="de.cau.cs.kieler.keg.feature"
          version="0.0.0"/>
 

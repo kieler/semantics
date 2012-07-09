@@ -64,8 +64,8 @@ import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.mm.pictograms.Shape;
 import org.eclipse.graphiti.services.Graphiti;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
-import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
 import org.eclipse.graphiti.ui.internal.parts.DiagramEditPart;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
@@ -211,7 +211,7 @@ public abstract class AbstractInitGraphitiDiagramHandler extends
      */
     @Override
     protected TransactionalEditingDomain createEditingDomain() {
-        return DiagramEditorFactory.createResourceSetAndEditingDomain();
+        return GraphitiUi.getEmfService().createResourceSetAndEditingDomain();
     }
 
     /**

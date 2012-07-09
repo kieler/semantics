@@ -47,8 +47,8 @@
     <module>de.cau.cs.kieler.sdk.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature</module>
     <module>de.cau.cs.kieler.synccharts.feature.source</module>
-    <module>de.cau.cs.kieler.uml2.feature</module>
-    <module>de.cau.cs.kieler.uml2.feature.source</module>
+    <!-- <module>de.cau.cs.kieler.uml2.feature</module>
+    <module>de.cau.cs.kieler.uml2.feature.source</module> -->
     <module>de.unido.ls5.eti.toolserver.feature</module>
     <module>net.ogdf.bin.feature</module>
     <module>net.ogdf.bin.feature.source</module>
