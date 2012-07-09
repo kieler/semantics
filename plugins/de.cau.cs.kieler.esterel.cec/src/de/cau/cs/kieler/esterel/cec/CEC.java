@@ -160,7 +160,7 @@ public final class CEC {
 
     // -------------------------------------------------------------------------
     
-    private static URL resolveBundleOrWorkspaceFile(String file, String pluginId) {
+    private static URL resolveBundleOrWorkspaceFile(final String file, final String pluginId) {
         // if the bundle is not ready then there is no image
         final Bundle bundle = Platform.getBundle(pluginId);
         
