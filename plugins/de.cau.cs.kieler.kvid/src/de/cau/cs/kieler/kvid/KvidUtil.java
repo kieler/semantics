@@ -122,7 +122,7 @@ public final class KvidUtil {
                 result.append("/");
                 String currentUri = tokenizer.nextToken();
 
-                String currentResult = new String(result.toString());
+                String currentResult = result.toString();
                 for (EObject eo : root.eContents()) {
                     // iterate through the current level and find the NamedObject with the same name
                     if (eo instanceof NamedObject) {
@@ -135,7 +135,7 @@ public final class KvidUtil {
                         }
                     }
                 }
-                if (currentResult.equals(result)) {
+                if (currentResult.equals(result.toString())) {
                     // Element wasn't found, although this was the right level
                     // Return null then
                     return null;

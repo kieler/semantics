@@ -47,7 +47,7 @@ public class Property {
      */
     public Property(final String thename, final String[] thevalues) {
         this.name = thename;
-        this.values = thevalues;
+        this.values = thevalues.clone();
         if (0 < thevalues.length) {
             currentValue = thevalues[0];
         }
@@ -143,7 +143,7 @@ public class Property {
      * @return All possible options represented by a string array.
      */
     public String[] getValueNames() {
-        return values;
+        return values.clone();
     }
     
     /**
