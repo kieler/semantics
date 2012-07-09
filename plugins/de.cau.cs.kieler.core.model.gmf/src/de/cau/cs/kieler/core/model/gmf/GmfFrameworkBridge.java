@@ -37,7 +37,6 @@ import org.eclipse.ui.IWorkbenchWindow;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Maybe;
 
 /**
@@ -169,7 +168,7 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
             return (EditPart) adaptable.getAdapter(EditPart.class);
         } else {
             final Maybe<EditPart> editPart = new Maybe<EditPart>();
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     IWorkbenchWindow workbenchWindow = PlatformUI.getWorkbench()
                             .getActiveWorkbenchWindow();
@@ -189,7 +188,7 @@ public class GmfFrameworkBridge implements IGraphicalFrameworkBridge {
                         }
                     }
                 }
-            }, true);
+            });
             return editPart.get();
         }
     }

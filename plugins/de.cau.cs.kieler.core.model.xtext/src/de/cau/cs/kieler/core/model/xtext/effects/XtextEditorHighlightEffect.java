@@ -35,7 +35,6 @@ import org.eclipse.xtext.util.concurrent.IUnitOfWork;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.model.xtext.ModelXtextPlugin;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * Initial implementation of a highlight effect for Xtext editors.
@@ -63,7 +62,7 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
         final IPath path = new Path(this.element.eResource().getURI().toPlatformString(false));
         final IFile file = ResourcesPlugin.getWorkspace().getRoot().getFile(path);
 
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 IWorkbenchPage page =
                         PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
@@ -107,8 +106,7 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
                 // bring it to foreground
                 page.bringToTop(xEditor);
             }
-        }, true);
-            
+        });
     }
 
 }

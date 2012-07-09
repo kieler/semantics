@@ -26,13 +26,13 @@ import org.eclipse.gef.editparts.AbstractGraphicalEditPart;
 import org.eclipse.graphiti.ui.editor.DiagramEditor;
 import org.eclipse.graphiti.ui.internal.figures.GFAbstractShape;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 import de.cau.cs.kieler.core.util.Pair;
 
 /**
@@ -219,7 +219,7 @@ public class GraphitiHighlightEffect extends AbstractEffect {
      * {@inheritDoc}
      */
     public void execute() {
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
             public void run() {
                 if (targetEditPart == null) {
@@ -261,12 +261,12 @@ public class GraphitiHighlightEffect extends AbstractEffect {
                     f.setForegroundColor(color);
                 }
             }
-        }, true);
+        });
     }
 
     @Override
     public void undo() {
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
             public void run() {
                 if (targetEditPart == null) {
                     return;
@@ -302,8 +302,7 @@ public class GraphitiHighlightEffect extends AbstractEffect {
                     f.setForegroundColor(colors.getFirst());
                 }
             }
-        }, true);
-
+        });
     }
 
     /**

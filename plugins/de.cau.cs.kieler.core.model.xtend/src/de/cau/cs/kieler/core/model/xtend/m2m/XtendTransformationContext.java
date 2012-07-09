@@ -17,13 +17,13 @@ import java.util.Map;
 
 import org.eclipse.emf.common.command.CommandStack;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.xtend.XtendFacade;
 import org.eclipse.xtend.expression.Variable;
 
 import de.cau.cs.kieler.core.model.m2m.ITransformationContext;
 import de.cau.cs.kieler.core.model.m2m.TransformationDescriptor;
 import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * {@link ITransformationContext} for the execution of Xtend transformations.
@@ -82,7 +82,7 @@ public class XtendTransformationContext implements ITransformationContext {
 
         if (editingDomain != null && editingDomain.getCommandStack() != null) {
             // FIXME workaround to avoid deadlock with FireOnceTriggerListener
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
 
                 public void run() {
                     XtendTransformationCommand command = new XtendTransformationCommand(
@@ -95,7 +95,7 @@ public class XtendTransformationContext implements ITransformationContext {
                     }
 
                 }
-            }, true);
+            });
         } else {
             Object o = xtendFacade.call(descriptor.getTransformationName(),
                     descriptor.getParameters());

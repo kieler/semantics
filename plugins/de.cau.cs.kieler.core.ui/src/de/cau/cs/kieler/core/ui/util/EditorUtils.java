@@ -15,6 +15,7 @@
 package de.cau.cs.kieler.core.ui.util;
 
 import org.eclipse.core.runtime.IStatus;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IWorkbenchPage;
@@ -67,7 +68,8 @@ public final class EditorUtils {
             return editor.get();
         }
         doneGetLastActiveEditor = false;
-        MonitoredOperation.runInUI(new Runnable() {
+
+        Runnable runnable = new Runnable() {
             public void run() {
                 IWorkbenchWindow window = PlatformUI.getWorkbench().getActiveWorkbenchWindow();
                 if (window == null) {
@@ -88,15 +90,25 @@ public final class EditorUtils {
                 }
                 doneGetLastActiveEditor = true;
             }
-        }, false);
-        while (!doneGetLastActiveEditor) {
-            // blocking wait until UI thread got the last active editor
-            try {
-                Thread.sleep(WAIT_SLEEP_TIME);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+        };
+        
+        Display display = Display.getCurrent();
+        if (display == null) {
+            display = PlatformUI.getWorkbench().getDisplay();
+            display.asyncExec(runnable);
+            while (!doneGetLastActiveEditor) {
+                // blocking wait until UI thread got the last active editor
+                try {
+                    Thread.sleep(WAIT_SLEEP_TIME);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
+        } else {
+            // we are currently in the UI thread, so just execute the code
+            runnable.run();
         }
+        
         return editor.get();
     }
 

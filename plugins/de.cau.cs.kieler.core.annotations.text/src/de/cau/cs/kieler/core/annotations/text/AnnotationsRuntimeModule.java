@@ -15,12 +15,14 @@ package de.cau.cs.kieler.core.annotations.text;
 
 /**
  * @author chsch
- * 
  */
 public class AnnotationsRuntimeModule extends
         de.cau.cs.kieler.core.annotations.text.AbstractAnnotationsRuntimeModule {
 
-    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+    @Override
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService>
+        bindIValueConverterService() {
+        
         return de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsValueConverter.class;
     }
 
