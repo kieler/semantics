@@ -40,7 +40,7 @@ import org.eclipse.graphiti.mm.pictograms.Diagram;
 import org.eclipse.graphiti.mm.pictograms.PictogramLink;
 import org.eclipse.graphiti.mm.pictograms.PictogramsFactory;
 import org.eclipse.graphiti.services.Graphiti;
-import org.eclipse.graphiti.ui.editor.DiagramEditorFactory;
+import org.eclipse.graphiti.ui.services.GraphitiUi;
 import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -237,7 +237,7 @@ public abstract class GraphitiNewWizard extends Wizard implements INewWizard {
             final IProgressMonitor progressMonitor) {
         progressMonitor.beginTask("Creating diagram and model files", 2);
         // create a resource set and editing domain
-        TransactionalEditingDomain editingDomain = DiagramEditorFactory
+        TransactionalEditingDomain editingDomain = GraphitiUi.getEmfService()
                 .createResourceSetAndEditingDomain();
         ResourceSet resourceSet = editingDomain.getResourceSet();
         CommandStack commandStack = editingDomain.getCommandStack();
