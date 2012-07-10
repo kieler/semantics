@@ -69,9 +69,9 @@ public class AnnotationsSemanticHighlightingCalculator implements ISemanticHighl
         //   AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION
         if (grammarElement == g.getKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_2_0()
                 || grammarElement == g.getTypedKeyStringValueAnnotationAccess().getValueEStringParserRuleCall_5_0()
-                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()
+                || grammarElement == g.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()
                 || grammarElement == g.getKeyIntValueAnnotationAccess().getValueINTTerminalRuleCall_2_0()
-                || grammarElement == g.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()) {
+                || grammarElement == g.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()) {
             acceptor.addPosition(node.getOffset(), node.getLength(),
                     AnnotationsHighlightingConfiguration.COMMENT_ANNOTATION);
         }

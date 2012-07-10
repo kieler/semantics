@@ -7991,7 +7991,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             lv_value_0_0=(Token)match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleFloatValue6427); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+              			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -8003,7 +8003,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"Float");
+                      		"FLOAT");
               	    
             }
 
@@ -8093,7 +8093,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             lv_value_0_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_ruleBooleanValue6518); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+              			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -8105,7 +8105,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_0_0, 
-                      		"Boolean");
+                      		"BOOLEAN");
               	    
             }
 
@@ -11639,7 +11639,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             lv_value_2_0=(Token)match(input,RULE_BOOLEAN,FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation9155); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+              			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -11651,7 +11651,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_2_0, 
-                      		"Boolean");
+                      		"BOOLEAN");
               	    
             }
 
@@ -12115,7 +12115,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             lv_value_2_0=(Token)match(input,RULE_FLOAT,FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation9505); if (state.failed) return current;
             if ( state.backtracking==0 ) {
 
-              			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+              			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
               		
             }
             if ( state.backtracking==0 ) {
@@ -12127,7 +12127,7 @@ public class InternalSParser extends AbstractInternalAntlrParser {
                      			current, 
                      			"value",
                       		lv_value_2_0, 
-                      		"Float");
+                      		"FLOAT");
               	    
             }
 
@@ -14512,8 +14512,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             "\1\1\43\uffff\1\2",
             "",
             "\1\3",
-            "\1\10\1\7\1\uffff\1\6\1\5\1\11\1\10\5\uffff\2\11\33\uffff"+
-            "\1\11\1\12\1\uffff\1\4",
+            "\1\10\1\7\1\uffff\1\6\1\5\1\11\1\10\5\uffff\2\11\33\uffff\1"+
+            "\11\1\12\1\uffff\1\4",
             "\1\13",
             "",
             "",
@@ -14521,8 +14521,8 @@ public class InternalSParser extends AbstractInternalAntlrParser {
             "",
             "",
             "",
-            "\1\10\1\7\1\uffff\1\6\1\5\1\11\1\10\5\uffff\2\11\33\uffff"+
-            "\1\11\1\12\1\uffff\1\4"
+            "\1\10\1\7\1\uffff\1\6\1\5\1\11\1\10\5\uffff\2\11\33\uffff\1"+
+            "\11\1\12\1\uffff\1\4"
     };
 
     static final short[] DFA57_eot = DFA.unpackEncodedString(DFA57_eotS);

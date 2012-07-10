@@ -28,7 +28,7 @@ import de.cau.cs.kieler.core.model.xtend.util.XtendTransformationUtil;
  * Xtend implementation of an {@link TransformationEffect}.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 green
+ * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */
 public class XtendTransformationEffect extends TransformationEffect {

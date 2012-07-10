@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.s.ui.internal.SActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class SExecutableExtensionFactory extends AbstractGuiceAwareExecutableExt
 
 	@Override
 	protected Bundle getBundle() {
-		return de.cau.cs.kieler.s.ui.internal.SActivator.getInstance().getBundle();
+		return SActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return de.cau.cs.kieler.s.ui.internal.SActivator.getInstance().getInjector("de.cau.cs.kieler.s.S");
+		return SActivator.getInstance().getInjector(SActivator.DE_CAU_CS_KIELER_S_S);
 	}
 	
 }

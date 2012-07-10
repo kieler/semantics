@@ -14,7 +14,6 @@
 package de.cau.cs.kieler.sim.kivi;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
@@ -26,248 +25,292 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.execution.JSONDataPool;
 import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kivi.StateMachineSimulationTrigger.StateMachineSimulationState;
 
 /**
- * A data component that observes the activity (active and error states) of
- * SyncCharts during simulation.
+ * A data component that observes the activity (active and error states) of SyncCharts during
+ * simulation.
  * 
  * @author mmu, cmot
  * 
  */
-public abstract class StateMachineKiViDataComponent extends
-		JSONObjectDataComponent implements IJSONObjectDataComponent {
+public abstract class StateMachineKiViDataComponent extends JSONObjectDataComponent implements
+        IJSONObjectDataComponent {
 
-	private static final int DEFAULT_STEPS = 3;
+    /** The Constant DEFAULT_STEPS. */
+    private static final int DEFAULT_STEPS = 3;
 
-	private static final String DEFAULT_STATE_KEY = "state";
+    /** The Constant DEFAULT_STATE_KEY. */
+    private static final String DEFAULT_STATE_KEY = "state";
 
-	private static final String DEFAULT_ERROR_STATE_KEY = "errorState";
+    /** The Constant DEFAULT_ERROR_STATE_KEY. */
+    private static final String DEFAULT_ERROR_STATE_KEY = "errorState";
 
-	private DiagramEditor diagramEditor;
+    /** The Constant KIEM_PROPERTY_STATENAME. */
+    private static final int KIEM_PROPERTY_STATENAME = 0;
 
-	private Resource resource;
+    /** The Constant KIEM_PROPERTY_ERRORSTATENAME. */
+    private static final int KIEM_PROPERTY_ERRORSTATENAME = 1;
 
-	private int steps;
+    /** The Constant KIEM_PROPERTY_HISTORYSTEPS. */
+    private static final int KIEM_PROPERTY_HISTORYSTEPS = 2;
 
-	private String stateKey;
+    /** The Constant KIEM_PROPERTY_MAX. */
+    private static final int KIEM_PROPERTY_MAX = 3;
 
-	private String errorStateKey;
+    /** The diagram editor. */
+    private DiagramEditor diagramEditor;
 
-	private DataComponentWrapper wrapper;
+    /** The resource. */
+    private Resource resource;
 
-	/** Remember when wrapup() was executed. */
-	private boolean wrapupDone = false;
+    /** The steps. */
+    private int steps;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void initialize() throws KiemInitializationException {
-		synchronized (this) {
-			wrapupDone = false;
-		}
-		diagramEditor = getActiveEditor();
-		if (diagramEditor == null) {
-			return;
-		}
-		resource = ((View) diagramEditor.getDiagramEditPart().getModel())
-				.getElement().eResource();
-		steps = getProperties()[0].getValueAsInt();
-		stateKey = getProperties()[0].getValue();
-		errorStateKey = getProperties()[1].getValue();
-		for (DataComponentWrapper w : KiemPlugin.getDefault()
-				.getDataComponentWrapperList()) {
-			if (w.getDataComponent() == this) {
-				wrapper = w;
-				break;
-			}
-		}
-		if (wrapper == null) {
-			throw new KiemInitializationException(
-					"Can't find wrapper for Statemachine Visualization Data Component",
-					true, null);
-		}
-	}
+    /** The state key. */
+    private String stateKey;
 
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Synchronized to avoid wrapup() finishing while step() still is running.
-	 * This would lead to bad highlighting order: wrapup() undos all highlights,
-	 * then step() executes a couple of new highlights that will remain active
-	 * until the next simulation starts.
-	 */
-	public synchronized void wrapup() throws KiemInitializationException {
-		if (diagramEditor == null) {
-			return;
-		}
-		if (StateActivityTrigger.getInstance() != null) {
-			StateActivityTrigger.getInstance().step(null, null, diagramEditor);
-		}
-		wrapupDone = true;
-		StateMachineSimulationTrigger.getInstance().stopSimulationState(
-				diagramEditor);
-	}
+    /** The error state key. */
+    private String errorStateKey;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isProducer() {
-		return false;
-	}
+    /** The wrapper. */
+    private DataComponentWrapper wrapper;
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public boolean isObserver() {
-		return true;
-	}
+    /** Remember when wrapup() was executed. */
+    private boolean wrapupDone = false;
 
-	@Override
-	public boolean isHistoryObserver() {
-		return true;
-	}
+    // ------------------------------------------------------------------------
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public KiemProperty[] provideProperties() {
-		KiemProperty[] properties = new KiemProperty[3];
-		properties[0] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
-		properties[1] = new KiemProperty("Error State Name",
-				DEFAULT_ERROR_STATE_KEY);
-		properties[2] = new KiemProperty("History Steps", DEFAULT_STEPS);
-		return properties;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public void initialize() throws KiemInitializationException {
+        synchronized (this) {
+            wrapupDone = false;
+        }
+        diagramEditor = getActiveEditor();
+        if (diagramEditor == null) {
+            return;
+        }
+        resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
+        steps = getProperties()[0].getValueAsInt();
+        stateKey = getProperties()[0].getValue();
+        errorStateKey = getProperties()[1].getValue();
+        for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
+            if (w.getDataComponent() == this) {
+                wrapper = w;
+                break;
+            }
+        }
+        if (wrapper == null) {
+            throw new KiemInitializationException(
+                    "Can't find wrapper for Statemachine Visualization Data Component", true, null);
+        }
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public JSONObject step(final JSONObject jSONObject)
-			throws KiemExecutionException {
-		if (diagramEditor == null) {
-			return null;
-		}
-		// get a new simulation state that we will manipulate in the following
-		StateMachineSimulationState simState = StateMachineSimulationTrigger
-				.getInstance().getCurrentSimulationState(diagramEditor, true);
+    // ------------------------------------------------------------------------
 
-		JSONDataPool pool = KiemPlugin.getDefault().getExecution()
-				.getDataPool();
-		long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
+    /**
+     * {@inheritDoc}
+     * 
+     * Synchronized to avoid wrapup() finishing while step() still is running. This would lead to
+     * bad highlighting order: wrapup() undos all highlights, then step() executes a couple of new
+     * highlights that will remain active until the next simulation starts.
+     */
+    public synchronized void wrapup() throws KiemInitializationException {
+        if (diagramEditor == null) {
+            return;
+        }
+        if (StateActivityTrigger.getInstance() != null) {
+            StateActivityTrigger.getInstance().step(null, null, diagramEditor);
+        }
+        wrapupDone = true;
+        StateMachineSimulationTrigger.getInstance().stopSimulationState(diagramEditor);
+    }
 
-		List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
-		List<List<EObject>> errorStatesByStep = new ArrayList<List<EObject>>();
-		List<EObject> currentStepObjects = new ArrayList<EObject>();
-		List<EObject> currentErrorStepObjects = new ArrayList<EObject>();
-		JSONObject currentJSONObject = jSONObject;
-		try {
-			for (int i = 0; i <= steps; i++) {
-				// ACTIVE STATES
-				if (currentJSONObject.has(stateKey)) {
-					String stateString = currentJSONObject.get(stateKey)
-							.toString();
-					String[] states = stateString.replaceAll("\\s", "").split(
-							",");
-					for (String state : states) {
-						if (state.length() > 1) {
-							EObject active = resource.getEObject(state);
-							if (active != null) {
-								if (!contains(statesByStep, active)) { // filter
-																		// out
-																		// newer
-									currentStepObjects.add(active);
-									// haf: here add a new state to the
-									// simulation state
-									// simState.addObject("state", i, active);
-								}
-							}
-						}
-					}
-					statesByStep.add(currentStepObjects);
-					currentStepObjects = new ArrayList<EObject>();
-				}
-				// ERRROR STATES
-				if (currentJSONObject.has(errorStateKey)) {
-					String stateString = currentJSONObject.get(errorStateKey)
-							.toString();
-					String[] states = stateString.replaceAll("\\s", "").split(
-							",");
-					for (String state : states) {
-						if (state.length() > 1) {
-							EObject active = resource.getEObject(state);
-							if (active != null) {
-								if (!contains(statesByStep, active)) { // filter
-																		// out
-																		// newer
-									currentStepObjects.add(active);
-									// haf: here add a new state to the
-									// simulation state
-									// simState.addObject("state", i, active);
-								}
-							}
-						}
-					}
-					errorStatesByStep.add(currentErrorStepObjects);
-					currentErrorStepObjects = new ArrayList<EObject>();
-				}
-				// add present signals to the
-				Iterator iter = currentJSONObject.keys();
-				for (Object key = null; iter.hasNext(); key = iter.next()) {
-					if (key instanceof String) {
-						Object o = currentJSONObject.get((String) key);
-						if (JSONSignalValues.isSignalValue(o)
-								&& JSONSignalValues.isPresent(o)) {
+    // ------------------------------------------------------------------------
 
-						}
-					}
-				}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isProducer() {
+        return false;
+    }
 
-				long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
-				currentJSONObject = pool.getData(null, index);
-			}
+    // ------------------------------------------------------------------------
 
-			// if (StateActivityTrigger.getInstance() != null) {
-			/*
-			 * Synchronized to avoid wrapup() finishing while step() still is
-			 * running. This would lead to bad highlighting order: wrapup()
-			 * undos all highlights, then step() executes a couple of new
-			 * highlights that will remain active until the next simulation
-			 * starts.
-			 */
-			synchronized (this) {
-				if (!wrapupDone) {
-					StateMachineSimulationTrigger.getInstance().commitStep(
-							diagramEditor);
-					// StateActivityTrigger.getInstance().step(statesByStep,
-					// diagramEditor);
-				}
-			}
-			// }
-		} catch (JSONException e) {
-			// never happens because JSON.get() is checked by JSON.has()
-		}
-		return null;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    public boolean isObserver() {
+        return true;
+    }
 
-	private boolean contains(final List<List<EObject>> statesByStep,
-			final EObject active) {
-		for (List<EObject> list : statesByStep) {
-			for (EObject e : list) {
-				if (e.equals(active)) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+    // ------------------------------------------------------------------------
 
-	protected abstract DiagramEditor getActiveEditor();
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isHistoryObserver() {
+        return true;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public KiemProperty[] provideProperties() {
+        KiemProperty[] properties = new KiemProperty[KIEM_PROPERTY_MAX];
+        properties[KIEM_PROPERTY_STATENAME] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
+        properties[KIEM_PROPERTY_ERRORSTATENAME] = new KiemProperty("Error State Name",
+                DEFAULT_ERROR_STATE_KEY);
+        properties[KIEM_PROPERTY_HISTORYSTEPS] = new KiemProperty("History Steps", DEFAULT_STEPS);
+        return properties;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public JSONObject step(final JSONObject jSONObject) throws KiemExecutionException {
+        if (diagramEditor == null) {
+            return null;
+        }
+
+         // get a new simulation state that we will manipulate in the following
+         StateMachineSimulationTrigger.getInstance()
+         .getCurrentSimulationState(diagramEditor, true);
+
+        JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
+        long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
+
+        List<List<EObject>> statesByStep = new ArrayList<List<EObject>>();
+        List<List<EObject>> errorStatesByStep = new ArrayList<List<EObject>>();
+        List<EObject> currentStepObjects = new ArrayList<EObject>();
+        List<EObject> currentErrorStepObjects = new ArrayList<EObject>();
+        JSONObject currentJSONObject = jSONObject;
+        try {
+            for (int i = 0; i <= steps; i++) {
+                // ACTIVE STATES
+                if (currentJSONObject.has(stateKey)) {
+                    String stateString = currentJSONObject.get(stateKey).toString();
+                    String[] states = stateString.replaceAll("\\s", "").split(",");
+                    for (String state : states) {
+                        if (state.length() > 1) {
+                            EObject active = resource.getEObject(state);
+                            if (active != null) {
+                                if (!contains(statesByStep, active)) { // filter
+                                                                       // out
+                                                                       // newer
+                                    currentStepObjects.add(active);
+                                    // haf: here add a new state to the
+                                    // simulation state
+                                    // simState.addObject("state", i, active);
+                                }
+                            }
+                        }
+                    }
+                    statesByStep.add(currentStepObjects);
+                    currentStepObjects = new ArrayList<EObject>();
+                }
+                // ERRROR STATES
+                if (currentJSONObject.has(errorStateKey)) {
+                    String stateString = currentJSONObject.get(errorStateKey).toString();
+                    String[] states = stateString.replaceAll("\\s", "").split(",");
+                    for (String state : states) {
+                        if (state.length() > 1) {
+                            EObject active = resource.getEObject(state);
+                            if (active != null) {
+                                if (!contains(statesByStep, active)) { // filter
+                                                                       // out
+                                                                       // newer
+                                    currentStepObjects.add(active);
+                                    // haf: here add a new state to the
+                                    // simulation state
+                                    // simState.addObject("state", i, active);
+                                }
+                            }
+                        }
+                    }
+                    errorStatesByStep.add(currentErrorStepObjects);
+                    currentErrorStepObjects = new ArrayList<EObject>();
+                }
+
+                // cmot: Obsolete/unused/useless code??
+                // // add present signals
+                // Iterator<?> iter = currentJSONObject.keys();
+                // for (Object key = null; iter.hasNext(); key = iter.next()) {
+                // if (key instanceof String) {
+                // Object o = currentJSONObject.get((String) key);
+                // if (JSONSignalValues.isSignalValue(o) && JSONSignalValues.isPresent(o)) {
+                //
+                // }
+                // }
+                // }
+
+                long index = wrapper.getPoolIndex(currentStep - i - 1 + 0);
+                currentJSONObject = pool.getData(null, index);
+            }
+
+            // if (StateActivityTrigger.getInstance() != null) {
+            /*
+             * Synchronized to avoid wrapup() finishing while step() still is running. This would
+             * lead to bad highlighting order: wrapup() undos all highlights, then step() executes a
+             * couple of new highlights that will remain active until the next simulation starts.
+             */
+            synchronized (this) {
+                if (!wrapupDone) {
+                    StateMachineSimulationTrigger.getInstance().commitStep(diagramEditor);
+                    // StateActivityTrigger.getInstance().step(statesByStep,
+                    // diagramEditor);
+                }
+            }
+            // }
+        } catch (JSONException e) {
+            // never happens because JSON.get() is checked by JSON.has()
+        }
+        return null;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Contains.
+     * 
+     * @param statesByStep
+     *            the states by step
+     * @param active
+     *            the active
+     * @return true, if successful
+     */
+    private boolean contains(final List<List<EObject>> statesByStep, final EObject active) {
+        for (List<EObject> list : statesByStep) {
+            for (EObject e : list) {
+                if (e.equals(active)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // ------------------------------------------------------------------------
+
+    /**
+     * Gets the active editor.
+     * 
+     * @return the active editor
+     */
+    protected abstract DiagramEditor getActiveEditor();
+
+    // ------------------------------------------------------------------------
+
 }

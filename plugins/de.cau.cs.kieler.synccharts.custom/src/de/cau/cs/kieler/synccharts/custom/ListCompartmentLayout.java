@@ -30,7 +30,6 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
  * A layout for compartments that lays out the compartment's children in rows,
  * which are wrapped around if they are longer than the available space.
  * 
- * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  * @author msp
  */

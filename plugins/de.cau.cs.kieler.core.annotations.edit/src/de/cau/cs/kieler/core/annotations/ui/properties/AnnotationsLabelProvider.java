@@ -80,6 +80,9 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
                 }
             case FLOAT:
                 return getImage("prop_float");
+            default:
+                throw new IllegalArgumentException(
+                        "Annotation type must not be CONTAINMENT, REFERENCE, or NONE.");
             }
         }
         return null;
@@ -120,9 +123,12 @@ public class AnnotationsLabelProvider extends BaseLabelProvider implements ITabl
                 if (object != null) {
                     return object.eClass().getName();
                 }
+            default:
+                return null;
             }
+        default:
+            return null;
         }
-        return null;
     }
     
     /**

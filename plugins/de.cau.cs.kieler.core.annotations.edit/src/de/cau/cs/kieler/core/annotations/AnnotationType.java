@@ -118,6 +118,9 @@ public enum AnnotationType {
                 ((BooleanAnnotation) annotation).setValue((Boolean) value);
             }
             break;
+        default:
+            throw new IllegalArgumentException(
+                    "Annotation type must not be CONTAINMENT, REFERENCE, or NONE.");
         }
     }
     

@@ -4009,11 +4009,11 @@ protected class IntValue_ValueAssignment extends AssignmentToken  {
  * //NIntValue returns IntValue:
  * //	value=NINT;
  * FloatValue:
- * 	value=Float;
+ * 	value=FLOAT;
  *
  **/
 
-// value=Float
+// value=FLOAT
 protected class FloatValue_ValueAssignment extends AssignmentToken  {
 	
 	public FloatValue_ValueAssignment(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4038,9 +4038,9 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 			return null;
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0();
+			element = grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0();
 			return obj;
 		}
 		return null;
@@ -4054,11 +4054,11 @@ protected class FloatValue_ValueAssignment extends AssignmentToken  {
 /************ begin Rule BooleanValue ****************
  *
  * BooleanValue:
- * 	value=Boolean;
+ * 	value=BOOLEAN;
  *
  **/
 
-// value=Boolean
+// value=BOOLEAN
 protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 	
 	public BooleanValue_ValueAssignment(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -4083,9 +4083,9 @@ protected class BooleanValue_ValueAssignment extends AssignmentToken  {
 			return null;
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0();
+			element = grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0();
 			return obj;
 		}
 		return null;
@@ -8069,11 +8069,11 @@ protected class TypedKeyStringValueAnnotation_RightParenthesisKeyword_6_2 extend
  *
  * // e.g.: @visible true;
  * KeyBooleanValueAnnotation returns BooleanAnnotation:
- * 	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?
 protected class KeyBooleanValueAnnotation_Group extends GroupToken {
 	
 	public KeyBooleanValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8158,7 +8158,7 @@ protected class KeyBooleanValueAnnotation_NameAssignment_1 extends AssignmentTok
 
 }
 
-// value=Boolean
+// value=BOOLEAN
 protected class KeyBooleanValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 	
 	public KeyBooleanValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8182,9 +8182,9 @@ protected class KeyBooleanValueAnnotation_ValueAssignment_2 extends AssignmentTo
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0();
+			element = grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0();
 			return obj;
 		}
 		return null;
@@ -8559,11 +8559,11 @@ protected class KeyIntValueAnnotation_RightParenthesisKeyword_3_2 extends Keywor
  *
  * // e.g.: @minSpace 10.0;    
  * KeyFloatValueAnnotation returns FloatAnnotation:
- * 	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+ * 	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
  *
  **/
 
-// "@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?
+// "@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?
 protected class KeyFloatValueAnnotation_Group extends GroupToken {
 	
 	public KeyFloatValueAnnotation_Group(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8648,7 +8648,7 @@ protected class KeyFloatValueAnnotation_NameAssignment_1 extends AssignmentToken
 
 }
 
-// value=Float
+// value=FLOAT
 protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToken  {
 	
 	public KeyFloatValueAnnotation_ValueAssignment_2(AbstractToken lastRuleCallOrigin, AbstractToken next, int transitionIndex, IEObjectConsumer eObjectConsumer) {
@@ -8672,9 +8672,9 @@ protected class KeyFloatValueAnnotation_ValueAssignment_2 extends AssignmentToke
 	public IEObjectConsumer tryConsume() {
 		if((value = eObjectConsumer.getConsumable("value",true)) == null) return null;
 		IEObjectConsumer obj = eObjectConsumer.cloneAndConsume("value");
-		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0(), value, null)) {
+		if(valueSerializer.isValid(obj.getEObject(), grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0(), value, null)) {
 			type = AssignmentType.TERMINAL_RULE_CALL;
-			element = grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0();
+			element = grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0();
 			return obj;
 		}
 		return null;

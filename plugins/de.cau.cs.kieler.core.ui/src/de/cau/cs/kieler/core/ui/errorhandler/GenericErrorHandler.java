@@ -50,7 +50,6 @@ import de.cau.cs.kieler.core.ui.Messages;
  * TODO: Augment by more useful error messages customized to KIELER users.
  * 
  * @author haf
- * @kieler.rating 2010-02-12 proposed yellow
  */
 public class GenericErrorHandler extends WorkbenchErrorHandler {
 
@@ -387,7 +386,6 @@ public class GenericErrorHandler extends WorkbenchErrorHandler {
      * {@link StatusManager#LOG} {@link StatusManager#NONE}
      * 
      * @author soh
-     * @kieler.rating 2010-02-12 proposed yellow
      */
     public interface StatusListener {
 

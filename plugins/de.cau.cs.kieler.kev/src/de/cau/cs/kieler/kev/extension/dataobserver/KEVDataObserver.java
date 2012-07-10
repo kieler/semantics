@@ -35,9 +35,6 @@ import org.json.JSONObject;
  */
 public class KEVDataObserver extends JSONObjectDataComponent implements IJSONObjectDataComponent {
 
-    /** Sets the sleep time for the step-method. */
-    private static final int SLEEP_TIME = 10;
-
     /**
      * Applies the JSON data to the SVG document.
      * 

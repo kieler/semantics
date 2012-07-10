@@ -18,7 +18,7 @@ package de.cau.cs.kieler.core.model.m2m;
  * transformation.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 green
+ * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */
 public interface ITransformationContext {

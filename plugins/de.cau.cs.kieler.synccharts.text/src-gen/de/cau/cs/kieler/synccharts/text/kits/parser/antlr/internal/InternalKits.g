@@ -3986,7 +3986,7 @@ ruleFloatValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3996,7 +3996,7 @@ ruleFloatValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )
@@ -4025,7 +4025,7 @@ ruleBooleanValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -4035,7 +4035,7 @@ ruleBooleanValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -4060,12 +4060,12 @@ ruleAnyType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(    this_Boolean_0=RULE_BOOLEAN    {
-		$current.merge(this_Boolean_0);
+(    this_BOOLEAN_0=RULE_BOOLEAN    {
+		$current.merge(this_BOOLEAN_0);
     }
 
     { 
-    newLeafNode(this_Boolean_0, grammarAccess.getAnyTypeAccess().getBooleanTerminalRuleCall_0()); 
+    newLeafNode(this_BOOLEAN_0, grammarAccess.getAnyTypeAccess().getBOOLEANTerminalRuleCall_0()); 
     }
 
     |    this_INT_1=RULE_INT    {
@@ -4076,12 +4076,12 @@ ruleAnyType returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()
     newLeafNode(this_INT_1, grammarAccess.getAnyTypeAccess().getINTTerminalRuleCall_1()); 
     }
 
-    |    this_Float_2=RULE_FLOAT    {
-		$current.merge(this_Float_2);
+    |    this_FLOAT_2=RULE_FLOAT    {
+		$current.merge(this_FLOAT_2);
     }
 
     { 
-    newLeafNode(this_Float_2, grammarAccess.getAnyTypeAccess().getFloatTerminalRuleCall_2()); 
+    newLeafNode(this_FLOAT_2, grammarAccess.getAnyTypeAccess().getFLOATTerminalRuleCall_2()); 
     }
 
     |    this_ID_3=RULE_ID    {
@@ -4787,6 +4787,8 @@ ruleAnnotation returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation returns [EObject current=null] 
 	:
@@ -5135,7 +5137,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -5145,7 +5147,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -5309,7 +5311,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -5319,7 +5321,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )

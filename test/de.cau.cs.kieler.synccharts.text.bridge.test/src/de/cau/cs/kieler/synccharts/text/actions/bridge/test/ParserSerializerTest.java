@@ -44,9 +44,6 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelParseCommand;
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its serializer.
  * 
  * @author haf
- * 
- * @kieler.rating 2010-01-19 [proposed] yellow proposed by haf
- * 
  */
 public class ParserSerializerTest {
 

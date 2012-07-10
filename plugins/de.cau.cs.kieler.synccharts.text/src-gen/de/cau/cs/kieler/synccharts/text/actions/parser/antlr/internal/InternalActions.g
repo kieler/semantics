@@ -1869,7 +1869,7 @@ ruleFloatValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1879,7 +1879,7 @@ ruleFloatValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )
@@ -1908,7 +1908,7 @@ ruleBooleanValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -1918,7 +1918,7 @@ ruleBooleanValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -2843,6 +2843,8 @@ ruleAnnotation returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation returns [EObject current=null] 
 	:
@@ -3191,7 +3193,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3201,7 +3203,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -3365,7 +3367,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -3375,7 +3377,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )

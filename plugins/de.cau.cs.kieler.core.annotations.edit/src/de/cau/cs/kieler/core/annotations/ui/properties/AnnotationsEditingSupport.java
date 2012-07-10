@@ -110,8 +110,9 @@ public class AnnotationsEditingSupport extends EditingSupport {
             ComboBoxCellEditor boolEditor = new ComboBoxCellEditor(parent,
                     BOOLEAN_CHOICES, SWT.READ_ONLY);
             return boolEditor;
+        default:
+            return null;
         }
-        return null;
     }
 
     /**
@@ -130,8 +131,9 @@ public class AnnotationsEditingSupport extends EditingSupport {
         case BOOLEAN:
             return ((BooleanAnnotation) element).isValue()
                     ? Integer.valueOf(1) : Integer.valueOf(0);
+        default:
+            return null;
         }
-        return null;
     }
 
     /**

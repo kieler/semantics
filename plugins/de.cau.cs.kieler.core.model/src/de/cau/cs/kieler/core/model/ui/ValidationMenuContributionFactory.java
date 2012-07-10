@@ -39,7 +39,6 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * validate action on the toolbar. Each action corresponds to a check file.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ValidationMenuContributionFactory extends
         ExtensionContributionFactory {

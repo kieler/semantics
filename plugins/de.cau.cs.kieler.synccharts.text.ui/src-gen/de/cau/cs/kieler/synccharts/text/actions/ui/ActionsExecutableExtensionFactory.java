@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.synccharts.text.actions.ui.internal.ActionsActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class ActionsExecutableExtensionFactory extends AbstractGuiceAwareExecuta
 
 	@Override
 	protected Bundle getBundle() {
-		return de.cau.cs.kieler.synccharts.text.actions.ui.internal.ActionsActivator.getInstance().getBundle();
+		return ActionsActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return de.cau.cs.kieler.synccharts.text.actions.ui.internal.ActionsActivator.getInstance().getInjector("de.cau.cs.kieler.synccharts.text.actions.Actions");
+		return ActionsActivator.getInstance().getInjector(ActionsActivator.DE_CAU_CS_KIELER_SYNCCHARTS_TEXT_ACTIONS_ACTIONS);
 	}
 	
 }

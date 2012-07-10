@@ -22,7 +22,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A rectangle figure that can be configured to draw only specific
  * outline sides, e.g. omit drawing one or multiple lines.
  * 
- * @kieler.rating 2010-01-27 proposed yellow msp
  * @author haf
  */
 public class OpenRectangleFigure extends Shape {

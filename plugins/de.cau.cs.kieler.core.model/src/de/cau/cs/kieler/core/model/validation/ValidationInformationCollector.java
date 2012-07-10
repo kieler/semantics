@@ -39,7 +39,6 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
  * extension point.
  * 
  * @author soh
- * @kieler.rating 2010-07-01 proposed yellow soh
  */
 public class ValidationInformationCollector implements IStartup, IPartListener {
 

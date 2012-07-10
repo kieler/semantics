@@ -23,9 +23,7 @@ import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
  * An implementation of an unweighted, directed graph using an adjacency matrix or an adjacency list
  * for encoding the set of edges.
  * 
- * @kieler.rating 2010-06-14 proposed yellow
- * 
- * @author contributions by tam
+ * @author tam
  */
 public class Graph {
 
