@@ -146,18 +146,18 @@ IntValue returns IntValue:
 
 
 FloatValue returns FloatValue:
-	value=Float;
+	value=FLOAT;
 
 
 BooleanValue returns BooleanValue:
-	value=Boolean;
+	value=BOOLEAN;
 
 
 // data type rule allowing any kind of value to be accepted,
 // e.g. as initialValues of valuedObjects
 // used in Kits.xtext 
 AnyType returns ecore::EString:
-    Boolean | INT |Float | ID | STRING;
+    BOOLEAN | INT | FLOAT | ID | STRING;
 
 
 // --------------------------

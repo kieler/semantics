@@ -7,6 +7,8 @@ package de.cau.cs.kieler.core.kexpressions.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -779,43 +781,43 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	public class FloatValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "FloatValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueFloatTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		private final RuleCall cValueFLOATTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		////NIntValue returns IntValue:
 		////	value=NINT;
 		//FloatValue:
-		//	value=Float;
+		//	value=FLOAT;
 		public ParserRule getRule() { return rule; }
 
-		//value=Float
+		//value=FLOAT
 		public Assignment getValueAssignment() { return cValueAssignment; }
 
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_0() { return cValueFloatTerminalRuleCall_0; }
+		//FLOAT
+		public RuleCall getValueFLOATTerminalRuleCall_0() { return cValueFLOATTerminalRuleCall_0; }
 	}
 
 	public class BooleanValueElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "BooleanValue");
 		private final Assignment cValueAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cValueBooleanTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
+		private final RuleCall cValueBOOLEANTerminalRuleCall_0 = (RuleCall)cValueAssignment.eContents().get(0);
 		
 		//BooleanValue:
-		//	value=Boolean;
+		//	value=BOOLEAN;
 		public ParserRule getRule() { return rule; }
 
-		//value=Boolean
+		//value=BOOLEAN
 		public Assignment getValueAssignment() { return cValueAssignment; }
 
-		//Boolean
-		public RuleCall getValueBooleanTerminalRuleCall_0() { return cValueBooleanTerminalRuleCall_0; }
+		//BOOLEAN
+		public RuleCall getValueBOOLEANTerminalRuleCall_0() { return cValueBOOLEANTerminalRuleCall_0; }
 	}
 
 	public class AnyTypeElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "AnyType");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBooleanTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cBOOLEANTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cINTTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cFloatTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cFLOATTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cIDTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cSTRINGTerminalRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
@@ -823,20 +825,20 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 		//// e.g. as initialValues of valuedObjects
 		//// used in Kits.xtext 
 		//AnyType returns ecore::EString:
-		//	Boolean | INT | Float | ID | STRING;
+		//	BOOLEAN | INT | FLOAT | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
-		//Boolean | INT | Float | ID | STRING
+		//BOOLEAN | INT | FLOAT | ID | STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Boolean
-		public RuleCall getBooleanTerminalRuleCall_0() { return cBooleanTerminalRuleCall_0; }
+		//BOOLEAN
+		public RuleCall getBOOLEANTerminalRuleCall_0() { return cBOOLEANTerminalRuleCall_0; }
 
 		//INT
 		public RuleCall getINTTerminalRuleCall_1() { return cINTTerminalRuleCall_1; }
 
-		//Float
-		public RuleCall getFloatTerminalRuleCall_2() { return cFloatTerminalRuleCall_2; }
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall_2() { return cFLOATTerminalRuleCall_2; }
 
 		//ID
 		public RuleCall getIDTerminalRuleCall_3() { return cIDTerminalRuleCall_3; }
@@ -1773,19 +1775,36 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	private CombineOperatorElements unknownRuleCombineOperator;
 	private TerminalRule tHOSTCODE;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	private AnnotationsGrammarAccess gaAnnotations;
 
 	@Inject
 	public KExpressionsGrammarAccess(GrammarProvider grammarProvider,
 		AnnotationsGrammarAccess gaAnnotations) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaAnnotations = gaAnnotations;
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("de.cau.cs.kieler.core.kexpressions.KExpressions".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
@@ -2041,7 +2060,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	////NIntValue returns IntValue:
 	////	value=NINT;
 	//FloatValue:
-	//	value=Float;
+	//	value=FLOAT;
 	public FloatValueElements getFloatValueAccess() {
 		return (pFloatValue != null) ? pFloatValue : (pFloatValue = new FloatValueElements());
 	}
@@ -2051,7 +2070,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanValue:
-	//	value=Boolean;
+	//	value=BOOLEAN;
 	public BooleanValueElements getBooleanValueAccess() {
 		return (pBooleanValue != null) ? pBooleanValue : (pBooleanValue = new BooleanValueElements());
 	}
@@ -2064,7 +2083,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | ID | STRING;
+	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public AnyTypeElements getAnyTypeAccess() {
 		return (pAnyType != null) ? pAnyType : (pAnyType = new AnyTypeElements());
 	}
@@ -2380,7 +2399,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaAnnotations.getKeyBooleanValueAnnotationAccess();
 	}
@@ -2402,7 +2421,7 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaAnnotations.getKeyFloatValueAnnotationAccess();
 	}
@@ -2473,17 +2492,17 @@ public class KExpressionsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	//terminal Float returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
-	public TerminalRule getFloatRule() {
-		return gaAnnotations.getFloatRule();
+	public TerminalRule getFLOATRule() {
+		return gaAnnotations.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	//terminal Boolean returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
-	public TerminalRule getBooleanRule() {
-		return gaAnnotations.getBooleanRule();
+	public TerminalRule getBOOLEANRule() {
+		return gaAnnotations.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings

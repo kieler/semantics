@@ -3,7 +3,7 @@
  *
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2010 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -37,14 +37,14 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
      * @return dedicated value converter
      */
     @ValueConverter(rule = "COMMENT_ANNOTATION")
-    public IValueConverter<String> CommentAnnotation() {
+    public IValueConverter<String> convertCommentAnnotation() {
         return new IValueConverter<String>() {
 
-            public String toValue(String string, INode node) {
+            public String toValue(final String string, final INode node) {
                 return string.replace("/**", "").replace("*/", "").trim();
             }
 
-            public String toString(String value) {
+            public String toString(final String value) {
                 if (Strings.isEmpty(value)) {
                     return null;
                 } else {
@@ -53,41 +53,41 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
             }
         };
     }
-
-    /**
-     * Provides comment annotation converter dropping/attaching the leading/trailing characters.
-     * 
-     * @return dedicated value converter
-     */
-    // CHSCH: registration disabled since TypeId is now realized by means of a data type rule 
-    //  @ValueConverter(rule = "TypeId")
-    public IValueConverter<String> TypeId() {
-        return new IValueConverter<String>() {
-
-            public String toValue(String string, INode node) {
-                return string.substring(1, string.length() - 1).trim();
-            }
-
-            public String toString(String value) {
-                if (Strings.isEmpty(value)) {
-                    return "[]";
-                } else {
-                    return "[" + value + "]";
-                }
-            }
-        };
-    }
-
+    
+//    /**
+//     * Provides comment annotation converter dropping/attaching the leading/trailing characters.
+//     * 
+//     * @return dedicated value converter
+//     */
+//    // CHSCH: registration disabled since TypeId is now realized by means of a data type rule 
+//    //  @ValueConverter(rule = "TypeId")
+//    public IValueConverter<String> TypeId() {
+//        return new IValueConverter<String>() {
+//
+//            public String toValue(String string, INode node) {
+//                return string.substring(1, string.length() - 1).trim();
+//            }
+//
+//            public String toString(String value) {
+//                if (Strings.isEmpty(value)) {
+//                    return "[]";
+//                } else {
+//                    return "[" + value + "]";
+//                }
+//            }
+//        };
+//    }
+    
     /**
      * Provides EString converter dropping/attaching the leading/trailing character.
      * 
      * @return dedicated value converter
      */
     @ValueConverter(rule = "EString")
-    public IValueConverter<String> EString() {
+    public IValueConverter<String> convertEString() {
         return new IValueConverter<String>() {
 
-            public String toValue(String string, INode node) {
+            public String toValue(final String string, final INode node) {
                 if (!Strings.isEmpty(string)) {
                     if (string.startsWith("\"") || string.startsWith("'")) {
                         return string.substring(1, string.length() - 1);
@@ -98,7 +98,7 @@ public class AnnotationsValueConverter extends DefaultTerminalConverters {
                 return "";
             }
 
-            public String toString(String value) {
+            public String toString(final String value) {
                 String res = "\"\"";
                 if (!Strings.isEmpty(value)) {
                     try {
