@@ -20,7 +20,6 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @kieler.rating 2010-01-27 proposed yellow msp
  * @author msp
  */
 public class SyncChartsCustomPlugin extends Plugin {

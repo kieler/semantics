@@ -49,7 +49,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * interact with the different clipboards. *
  * 
  * @author soh
- * @kieler.rating 2010-06-15 yellow msp, cmot
+ * @kieler.design 2010-06-15 msp, cmot
  */
 public final class Utils {
 

@@ -26,7 +26,6 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
  * This is the figure for objects that are not supposed to be seen,
  * such as the background figures needed for signal and action labels.
  * 
- * @kieler.rating 2010-01-27 proposed yellow msp
  * @author schm
  */
 public class InvisibleLabelFigure extends Shape {

@@ -29,9 +29,7 @@ import org.eclipse.ui.PlatformUI;
  * A simple class to invoke the process of generating SC-Code.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 @SuppressWarnings("restriction")
 public class SCGenerator extends AbstractHandler implements IHandler {

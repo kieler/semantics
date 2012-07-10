@@ -19,9 +19,7 @@ package de.cau.cs.kieler.synccharts.codegen.sc;
  * hierarchical dependencies and signal dependencies.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 public class Dependency {
     private StatePlusTransition first;

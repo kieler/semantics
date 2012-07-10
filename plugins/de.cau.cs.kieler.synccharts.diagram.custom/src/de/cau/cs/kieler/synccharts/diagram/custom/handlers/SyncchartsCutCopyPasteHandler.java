@@ -32,7 +32,6 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.TransitionEditPart;
  * whether or not a selection is valid and creates a command factory.
  * 
  * @author soh
- * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsCutCopyPasteHandler extends AbstractCutCopyPasteHandler {
 

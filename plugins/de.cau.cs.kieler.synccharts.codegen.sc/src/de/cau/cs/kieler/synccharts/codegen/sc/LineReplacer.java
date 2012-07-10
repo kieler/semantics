@@ -26,10 +26,7 @@ import java.util.ArrayList;
 /**
  * A class to replace lines by rules in text files.
  * 
- * @kieler.rating 2010-06-14 proposed yellow
- * 
  * @author tam
- * 
  */
 public class LineReplacer {
 

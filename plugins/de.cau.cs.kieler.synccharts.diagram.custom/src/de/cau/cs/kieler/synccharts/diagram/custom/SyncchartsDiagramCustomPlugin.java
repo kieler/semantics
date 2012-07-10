@@ -39,7 +39,6 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * The main plugin class.
  * 
  * @author soh
- * @kieler.rating 2010-06-14 proposed yellow
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         IPageListener, IPartListener {

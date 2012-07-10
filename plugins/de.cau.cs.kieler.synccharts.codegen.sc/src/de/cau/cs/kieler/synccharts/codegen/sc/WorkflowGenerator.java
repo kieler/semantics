@@ -61,9 +61,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * define the out path of the generated files and the model for which to generate code.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 @SuppressWarnings("restriction")
 public class WorkflowGenerator {

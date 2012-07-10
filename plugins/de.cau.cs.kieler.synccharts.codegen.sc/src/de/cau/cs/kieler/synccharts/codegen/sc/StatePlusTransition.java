@@ -21,9 +21,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * An implementation of a "triple" with a state, its type and one of its transitions.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 public class StatePlusTransition {
     private State lokalState;

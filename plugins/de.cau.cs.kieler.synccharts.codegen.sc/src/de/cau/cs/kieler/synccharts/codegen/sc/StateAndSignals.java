@@ -22,9 +22,7 @@ import de.cau.cs.kieler.core.kexpressions.Signal;
  * An implementation of a "triple" with a state, its trigger signals and effect signals.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 public class StateAndSignals {
     private StatePlusTransition statePlusTransition;
