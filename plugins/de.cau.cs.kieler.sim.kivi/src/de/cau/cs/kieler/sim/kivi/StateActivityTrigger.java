@@ -84,6 +84,7 @@ public class StateActivityTrigger extends AbstractTrigger {
 
     @Override
     public void register() {
+        // Write to static field necessary by KiVi design
         instance = this;
     }
 
@@ -91,6 +92,7 @@ public class StateActivityTrigger extends AbstractTrigger {
 
     @Override
     public void unregister() {
+        // Write to static field necessary by KiVi design
         instance = null;
     }
 
