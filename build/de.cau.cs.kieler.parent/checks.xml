@@ -75,6 +75,8 @@
 
 		<property name="header"
 			value="^/\\*\n.*KIELER - Kiel Integrated Environment for Layout Eclipse Rich\s?Client.*\n" />
+		<property name="fileExtensions"
+			value="java,c,xtext,xtend"/>
 	</module>
 
 	<!-- Checks that a package-info.java file exists for each package. -->
