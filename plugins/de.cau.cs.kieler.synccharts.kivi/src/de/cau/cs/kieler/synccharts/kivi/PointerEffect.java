@@ -35,7 +35,6 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.gmf.GmfFrameworkBridge;
-import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
 import de.cau.cs.kieler.core.util.Pair;
 
@@ -118,6 +117,8 @@ public class PointerEffect extends AbstractEffect {
      */
     public PointerEffect(final EObject theTarget, final Color theColor, final int theLength,
             final boolean isTowards, final Direction theDirection, final boolean connectionLayer) {
+        // Everything is deprecated with KLighD
+        @SuppressWarnings("deprecation")
         IEditorPart editorPart = EditorUtils.getLastActiveEditor();
         if (editorPart instanceof DiagramEditor) {
             DiagramEditPart diagram = ((DiagramEditor) editorPart).getDiagramEditPart();
