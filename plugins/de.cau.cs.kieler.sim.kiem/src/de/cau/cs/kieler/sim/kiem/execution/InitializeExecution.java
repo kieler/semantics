@@ -32,7 +32,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * cancellation.
  * 
  * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
- * @kieler.rating 2009-01-15 proposedyellow
+ * @kieler.rating 2009-01-15 proposed yellow
  * 
  */
 public class InitializeExecution implements Runnable {

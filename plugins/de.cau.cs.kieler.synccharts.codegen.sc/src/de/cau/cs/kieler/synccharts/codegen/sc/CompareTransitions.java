@@ -23,9 +23,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * A simple Class to compare Transitions.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 public class CompareTransitions implements Comparator<Transition> {
 

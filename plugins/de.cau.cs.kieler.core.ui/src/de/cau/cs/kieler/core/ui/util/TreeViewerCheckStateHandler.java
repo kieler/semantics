@@ -21,7 +21,6 @@ import org.eclipse.jface.viewers.CheckboxTreeViewer;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
-
 /**
  * Manages check states of checked tree viewers. When an item is checked,
  * the check state manager goes up the hierarchy and updates the check state

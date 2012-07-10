@@ -70,7 +70,6 @@ import de.cau.cs.kieler.core.util.Maybe;
  * 
  * @author soh
  * @author msp
- * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public abstract class AbstractInitDiagramHandler extends AbstractHandler {
 
@@ -414,7 +413,6 @@ public abstract class AbstractInitDiagramHandler extends AbstractHandler {
      * done.
      * 
      * @author soh
-     * @kieler.rating 2010-03-01 proposed yellow
      */
     private static class WaitUntilDoneMonitor implements IProgressMonitor {
 

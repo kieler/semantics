@@ -50,7 +50,6 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * has one outgoing transition.
  * 
  * @author soh
- * @kieler.rating 2010-06-14 proposed yellow
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 

@@ -28,7 +28,7 @@ import de.cau.cs.kieler.synccharts.diagram.custom.SyncchartsDiagramCustomPlugin;
  * Creates the cut, copy and paste commands from ksbase.
  * 
  * @author soh
- * @kieler.rating 2010-06-15 yellow msp, cmot
+ * @kieler.design 2010-06-15 msp, cmot
  */
 public class SyncchartsCutCopyPasteCommandFactory extends AbstractCutCopyPasteCommandFactory {
 

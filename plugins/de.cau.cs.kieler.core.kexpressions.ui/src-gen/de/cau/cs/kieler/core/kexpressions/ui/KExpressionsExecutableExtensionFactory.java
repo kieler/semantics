@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class KExpressionsExecutableExtensionFactory extends AbstractGuiceAwareEx
 
 	@Override
 	protected Bundle getBundle() {
-		return de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator.getInstance().getBundle();
+		return KExpressionsActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return de.cau.cs.kieler.core.kexpressions.ui.internal.KExpressionsActivator.getInstance().getInjector("de.cau.cs.kieler.core.kexpressions.KExpressions");
+		return KExpressionsActivator.getInstance().getInjector(KExpressionsActivator.DE_CAU_CS_KIELER_CORE_KEXPRESSIONS_KEXPRESSIONS);
 	}
 	
 }

@@ -16,8 +16,6 @@ package de.cau.cs.kieler.core.product;
 import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
-
-
 /**
  * Activator class for the KIELER core product plugin.
  * 

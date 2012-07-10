@@ -1155,7 +1155,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             {
             lv_value_2_0=(Token)match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_ruleKeyBooleanValueAnnotation1053); 
 
-            			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+            			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             		
 
             	        if (current==null) {
@@ -1165,7 +1165,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"value",
                     		lv_value_2_0, 
-                    		"Boolean");
+                    		"BOOLEAN");
             	    
 
             }
@@ -1583,7 +1583,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
             {
             lv_value_2_0=(Token)match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_ruleKeyFloatValueAnnotation1403); 
 
-            			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+            			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             		
 
             	        if (current==null) {
@@ -1593,7 +1593,7 @@ public class InternalAnnotationsParser extends AbstractInternalAntlrParser {
                    			current, 
                    			"value",
                     		lv_value_2_0, 
-                    		"Float");
+                    		"FLOAT");
             	    
 
             }

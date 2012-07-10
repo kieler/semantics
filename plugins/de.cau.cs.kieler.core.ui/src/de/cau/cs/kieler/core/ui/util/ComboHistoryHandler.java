@@ -11,7 +11,6 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-
 package de.cau.cs.kieler.core.ui.util;
 
 import java.util.ArrayList;
@@ -30,10 +29,11 @@ import org.eclipse.swt.widgets.Combo;
  * settings using a {@code DialogSettings} instance.
  * 
  * @author cds
- * @kieler.rating yellow 2010-03-14
+ * @kieler.rating 2010-03-14
  *      reviewed by msp, pkl
  */
 public class ComboHistoryHandler {
+    
     /**
      * History size.
      */

@@ -38,13 +38,7 @@ import de.cau.cs.kieler.synccharts.TransitionType;
 /**
  * The Helper class provides some helping functions for the generation of code.
  * 
- * @kieler.rating 2010-06-14 proposed yellow
- * 
  * @author tam
- * 
- *         TODO: Discuss the usage of classes with just static variables (thread
- *         unsafe).
- * 
  */
 public final class Helper {
 

@@ -22716,11 +22716,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7910:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+               before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
             match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__FloatValue__ValueAssignment16046); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+               after(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
             }
 
             }
@@ -22757,11 +22757,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:7925:1: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+               before(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
             match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__BooleanValue__ValueAssignment16077); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+               after(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
             }
 
             }
@@ -24443,11 +24443,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8495:1: RULE_BOOLEAN
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+               before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
             match(input,RULE_BOOLEAN,FollowSets000.FOLLOW_RULE_BOOLEAN_in_rule__KeyBooleanValueAnnotation__ValueAssignment_217255); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+               after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
             }
 
             }
@@ -24705,11 +24705,11 @@ public class InternalKExpressionsParser extends AbstractInternalContentAssistPar
             // ../de.cau.cs.kieler.core.kexpressions.ui/src-gen/de/cau/cs/kieler/core/kexpressions/ui/contentassist/antlr/internal/InternalKExpressions.g:8585:1: RULE_FLOAT
             {
             if ( state.backtracking==0 ) {
-               before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+               before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
             match(input,RULE_FLOAT,FollowSets000.FOLLOW_RULE_FLOAT_in_rule__KeyFloatValueAnnotation__ValueAssignment_217441); if (state.failed) return ;
             if ( state.backtracking==0 ) {
-               after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+               after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
             }
 
             }

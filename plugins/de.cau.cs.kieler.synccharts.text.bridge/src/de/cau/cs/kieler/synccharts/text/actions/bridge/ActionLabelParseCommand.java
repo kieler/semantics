@@ -46,8 +46,6 @@ import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
  * command on a GEF/GMF command stack.
  * 
  * @author haf
- * 
- * @kieler.rating 2010-01-19 proposed yellow proposed by haf
  */
 public class ActionLabelParseCommand extends AbstractCommand {
 

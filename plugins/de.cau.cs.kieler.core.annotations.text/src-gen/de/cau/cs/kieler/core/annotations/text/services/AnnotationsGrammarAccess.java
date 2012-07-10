@@ -7,6 +7,8 @@ package de.cau.cs.kieler.core.annotations.text.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -293,7 +295,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueBooleanTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueBOOLEANTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -302,10 +304,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @visible true;
 		//KeyBooleanValueAnnotation returns BooleanAnnotation:
-		//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -317,11 +319,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=Boolean
+		//value=BOOLEAN
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//Boolean
-		public RuleCall getValueBooleanTerminalRuleCall_2_0() { return cValueBooleanTerminalRuleCall_2_0; }
+		//BOOLEAN
+		public RuleCall getValueBOOLEANTerminalRuleCall_2_0() { return cValueBOOLEANTerminalRuleCall_2_0; }
 
 		//("(" annotations+=Annotation* ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -399,7 +401,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
 		private final RuleCall cNameExtendedIDParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
 		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cValueFloatTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueFLOATTerminalRuleCall_2_0 = (RuleCall)cValueAssignment_2.eContents().get(0);
 		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
 		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
 		private final Assignment cAnnotationsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
@@ -408,10 +410,10 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		
 		//// e.g.: @minSpace 10.0;    
 		//KeyFloatValueAnnotation returns FloatAnnotation:
-		//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+		//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 		public ParserRule getRule() { return rule; }
 
-		//"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?
+		//"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?
 		public Group getGroup() { return cGroup; }
 
 		//"@"
@@ -423,11 +425,11 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 		//ExtendedID
 		public RuleCall getNameExtendedIDParserRuleCall_1_0() { return cNameExtendedIDParserRuleCall_1_0; }
 
-		//value=Float
+		//value=FLOAT
 		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 
-		//Float
-		public RuleCall getValueFloatTerminalRuleCall_2_0() { return cValueFloatTerminalRuleCall_2_0; }
+		//FLOAT
+		public RuleCall getValueFLOATTerminalRuleCall_2_0() { return cValueFLOATTerminalRuleCall_2_0; }
 
 		//("(" annotations+=Annotation* ")")?
 		public Group getGroup_3() { return cGroup_3; }
@@ -535,23 +537,40 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	private TerminalRule tCOMMENT_ANNOTATION;
 	private TerminalRule tML_COMMENT;
 	private TerminalRule tINT;
-	private TerminalRule tFloat;
-	private TerminalRule tBoolean;
+	private TerminalRule tFLOAT;
+	private TerminalRule tBOOLEAN;
 	private TerminalRule tSTRING;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	private TerminalsGrammarAccess gaTerminals;
 
 	@Inject
 	public AnnotationsGrammarAccess(GrammarProvider grammarProvider,
 		TerminalsGrammarAccess gaTerminals) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("de.cau.cs.kieler.core.annotations.text.Annotations".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
@@ -633,7 +652,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return (pKeyBooleanValueAnnotation != null) ? pKeyBooleanValueAnnotation : (pKeyBooleanValueAnnotation = new KeyBooleanValueAnnotationElements());
 	}
@@ -655,7 +674,7 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return (pKeyFloatValueAnnotation != null) ? pKeyFloatValueAnnotation : (pKeyFloatValueAnnotation = new KeyFloatValueAnnotationElements());
 	}
@@ -726,17 +745,17 @@ public class AnnotationsGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	//terminal Float returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
-	public TerminalRule getFloatRule() {
-		return (tFloat != null) ? tFloat : (tFloat = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Float"));
+	public TerminalRule getFLOATRule() {
+		return (tFLOAT != null) ? tFLOAT : (tFLOAT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "FLOAT"));
 	} 
 
 	//// introduce boolean values
-	//terminal Boolean returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
-	public TerminalRule getBooleanRule() {
-		return (tBoolean != null) ? tBoolean : (tBoolean = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Boolean"));
+	public TerminalRule getBOOLEANRule() {
+		return (tBOOLEAN != null) ? tBOOLEAN : (tBOOLEAN = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "BOOLEAN"));
 	} 
 
 	//// custom terminal rule for strings

@@ -7,6 +7,8 @@ package de.cau.cs.kieler.synccharts.text.kitsState.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -35,19 +37,36 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private RootStateElements pRootState;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	private KitsGrammarAccess gaKits;
 
 	@Inject
 	public KitsStateGrammarAccess(GrammarProvider grammarProvider,
 		KitsGrammarAccess gaKits) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKits = gaKits;
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("de.cau.cs.kieler.synccharts.text.kitsState.KitsState".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
@@ -547,7 +566,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	////NIntValue returns IntValue:
 	////	value=NINT;
 	//FloatValue:
-	//	value=Float;
+	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
 		return gaKits.getFloatValueAccess();
 	}
@@ -557,7 +576,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanValue:
-	//	value=Boolean;
+	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
 		return gaKits.getBooleanValueAccess();
 	}
@@ -570,7 +589,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | ID | STRING;
+	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKits.getAnyTypeAccess();
 	}
@@ -799,6 +818,17 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//ValuedAnnotation returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaKits.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
@@ -845,7 +875,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKits.getKeyBooleanValueAnnotationAccess();
 	}
@@ -867,7 +897,7 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKits.getKeyFloatValueAnnotationAccess();
 	}
@@ -938,17 +968,17 @@ public class KitsStateGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	//terminal Float returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
-	public TerminalRule getFloatRule() {
-		return gaKits.getFloatRule();
+	public TerminalRule getFLOATRule() {
+		return gaKits.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	//terminal Boolean returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
-	public TerminalRule getBooleanRule() {
-		return gaKits.getBooleanRule();
+	public TerminalRule getBOOLEANRule() {
+		return gaKits.getBOOLEANRule();
 	} 
 
 	//// custom terminal rule for strings
