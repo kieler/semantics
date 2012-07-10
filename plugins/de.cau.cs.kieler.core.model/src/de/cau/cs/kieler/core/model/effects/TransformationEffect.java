@@ -29,7 +29,7 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * A KiVi effect that executes a specific transformation.
  * 
  * @author uru
- * @kieler.rating 2011-02-14 green
+ * @kieler.rating 2011-02-14 yellow
  *      review by msp, haf
  */
 public class TransformationEffect extends AbstractEffect {

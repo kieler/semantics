@@ -29,8 +29,7 @@ import de.cau.cs.kieler.core.model.gmf.triggers.DiffStateTrigger.DiffStates;
 /**
  * 
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
- * @kieler.rating 2011-12-07 red
+ * @author ssc
  */
 public class DiffStateCombination extends AbstractCombination {
     /** The preference key for the highlight color for the "new states". */

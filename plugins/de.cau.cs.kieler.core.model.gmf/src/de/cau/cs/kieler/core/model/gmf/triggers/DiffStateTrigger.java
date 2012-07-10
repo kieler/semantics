@@ -28,8 +28,7 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
  * This trigger contains an "original" EObject and a "new" EObject. Both of them will be colorized
  * in the diagram.
  * 
- * @author Sebastian Schäfer - ssc AT informatik.uni-kiel.de
- * @kieler.rating 2011-12-07 red
+ * @author ssc
  */
 public class DiffStateTrigger extends AbstractTrigger {
     

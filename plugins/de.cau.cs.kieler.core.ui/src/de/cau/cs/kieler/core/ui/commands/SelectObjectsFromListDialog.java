@@ -29,9 +29,7 @@ import org.eclipse.ui.dialogs.ListSelectionDialog;
  * Dialog for selecting object from a list of objects.
  * 
  * @author soh
- * @param <Type>
- *            The type of object
- * @kieler.rating 2010-06-14 proposed yellow soh
+ * @param <Type> The type of object
  */
 public class SelectObjectsFromListDialog<Type> implements
         IStructuredContentProvider, ILabelProvider {
