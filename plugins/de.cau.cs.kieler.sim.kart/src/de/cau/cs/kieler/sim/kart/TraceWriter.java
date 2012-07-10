@@ -91,6 +91,7 @@ public class TraceWriter {
                     true)));
 
             if (inputs.size() != outputs.size()) {
+                outWriter.close();
                 throw new KiemInitializationException("The number of steps for input ("
                         + inputs.size() + ") and output (" + outputs.size()
                         + ") signals and state information does not match", true, null);
