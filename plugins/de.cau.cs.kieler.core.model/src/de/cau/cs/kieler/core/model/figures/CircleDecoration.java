@@ -22,7 +22,6 @@ import org.eclipse.draw2d.geometry.Rectangle;
 /**
  * A decoration that depicts a circle.
  * 
- * @kieler.rating 2010-01-26 proposed yellow msp
  * @author schm
  */
 public class CircleDecoration extends PolygonDecoration {

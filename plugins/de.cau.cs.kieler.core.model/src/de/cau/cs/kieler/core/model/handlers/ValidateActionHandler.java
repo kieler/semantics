@@ -23,7 +23,6 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * Handler for triggering the validate action in the checkfile manager.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ValidateActionHandler extends AbstractHandler {
 

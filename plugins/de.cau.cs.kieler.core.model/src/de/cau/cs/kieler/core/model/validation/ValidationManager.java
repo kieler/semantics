@@ -35,7 +35,6 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
  * Handler for managing check files and validate actions.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public final class ValidationManager {
 

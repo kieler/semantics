@@ -22,7 +22,6 @@ import org.eclipse.swt.widgets.Shell;
  * Dialog for selecting the files affected by a reinitialization operation.
  * 
  * @author soh
- * @kieler.rating 2010-06-14 proposed yellow soh
  */
 public class AffectedFileSelectionDialog extends
         SelectObjectsFromListDialog<IFile> {

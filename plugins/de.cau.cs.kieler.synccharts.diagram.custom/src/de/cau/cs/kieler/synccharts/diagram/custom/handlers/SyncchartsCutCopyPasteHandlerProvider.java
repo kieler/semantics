@@ -22,7 +22,6 @@ import de.cau.cs.kieler.core.model.gmf.handlers.AbstractCutCopyPasteHandlerProvi
  * handler if applicable.
  * 
  * @author soh
- * @kieler.rating 2010-03-01 proposed yellow
  */
 public class SyncchartsCutCopyPasteHandlerProvider extends
         AbstractCutCopyPasteHandlerProvider {

@@ -26,7 +26,6 @@ import org.eclipse.swt.widgets.ToolBar;
  * This class contains an abstract menu item with a selection listener.
  * 
  * @author soh
- * @kieler.rating 2010-06-21 proposed yellow soh
  */
 public abstract class AbstractContributionItem implements SelectionListener,
         IContributionItem {
