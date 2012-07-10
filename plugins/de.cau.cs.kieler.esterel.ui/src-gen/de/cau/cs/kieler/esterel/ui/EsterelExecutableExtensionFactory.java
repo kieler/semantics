@@ -8,6 +8,8 @@ import org.osgi.framework.Bundle;
 
 import com.google.inject.Injector;
 
+import de.cau.cs.kieler.esterel.ui.internal.EsterelActivator;
+
 /**
  * This class was generated. Customizations should only happen in a newly
  * introduced subclass. 
@@ -16,12 +18,12 @@ public class EsterelExecutableExtensionFactory extends AbstractGuiceAwareExecuta
 
 	@Override
 	protected Bundle getBundle() {
-		return de.cau.cs.kieler.esterel.ui.internal.EsterelActivator.getInstance().getBundle();
+		return EsterelActivator.getInstance().getBundle();
 	}
 	
 	@Override
 	protected Injector getInjector() {
-		return de.cau.cs.kieler.esterel.ui.internal.EsterelActivator.getInstance().getInjector("de.cau.cs.kieler.esterel.Esterel");
+		return EsterelActivator.getInstance().getInjector(EsterelActivator.DE_CAU_CS_KIELER_ESTEREL_ESTEREL);
 	}
 	
 }

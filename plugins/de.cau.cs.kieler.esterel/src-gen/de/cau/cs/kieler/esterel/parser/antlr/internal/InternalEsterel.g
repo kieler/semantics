@@ -1953,20 +1953,20 @@ ruleConstantLiteral returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRul
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(    this_Float_0=RULE_FLOAT    {
-		$current.merge(this_Float_0);
+(    this_FLOAT_0=RULE_FLOAT    {
+		$current.merge(this_FLOAT_0);
     }
 
     { 
-    newLeafNode(this_Float_0, grammarAccess.getConstantLiteralAccess().getFloatTerminalRuleCall_0()); 
+    newLeafNode(this_FLOAT_0, grammarAccess.getConstantLiteralAccess().getFLOATTerminalRuleCall_0()); 
     }
 
-    |    this_Boolean_1=RULE_BOOLEAN    {
-		$current.merge(this_Boolean_1);
+    |    this_BOOLEAN_1=RULE_BOOLEAN    {
+		$current.merge(this_BOOLEAN_1);
     }
 
     { 
-    newLeafNode(this_Boolean_1, grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); 
+    newLeafNode(this_BOOLEAN_1, grammarAccess.getConstantLiteralAccess().getBOOLEANTerminalRuleCall_1()); 
     }
 
     |    this_ID_2=RULE_ID    {
@@ -8963,7 +8963,7 @@ ruleExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+(((	ruleBooleanExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -8975,7 +8975,7 @@ ruleExpression returns [EObject current=null]
         $current = $this_BooleanExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-
+)
     |
 	{ 
 	  /* */ 
@@ -9198,7 +9198,7 @@ ruleCompareOperation returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-((
+((((	ruleNotOrValuedExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -9210,7 +9210,7 @@ ruleCompareOperation returns [EObject current=null]
         $current = $this_NotOrValuedExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-((
+)((
 	{ 
 	  /* */ 
 	}
@@ -9289,7 +9289,7 @@ ruleNotOrValuedExpression returns [EObject current=null]
     @init { enterRule(); 
     }
     @after { leaveRule(); }:
-(
+(((	ruleValuedExpression)=>
 	{ 
 	  /* */ 
 	}
@@ -9301,7 +9301,7 @@ ruleNotOrValuedExpression returns [EObject current=null]
         $current = $this_ValuedExpression_0.current; 
         afterParserOrEnumRuleCall();
     }
-
+)
     |
 	{ 
 	  /* */ 
@@ -9942,11 +9942,12 @@ ruleAtomicValuedExpression returns [EObject current=null]
         afterParserOrEnumRuleCall();
     }
 
-    |(	otherlv_2='(' 
+    |(((	'(' 
+)=>	otherlv_2='(' 
     {
     	newLeafNode(otherlv_2, grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0());
     }
-
+)
 	{ 
 	  /* */ 
 	}
@@ -10274,7 +10275,7 @@ ruleFloatValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -10284,7 +10285,7 @@ ruleFloatValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )
@@ -10313,7 +10314,7 @@ ruleBooleanValue returns [EObject current=null]
 (
 		lv_value_0_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); 
+			newLeafNode(lv_value_0_0, grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -10323,7 +10324,7 @@ ruleBooleanValue returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_0_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -11011,6 +11012,8 @@ ruleAnnotation returns [EObject current=null]
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation returns [EObject current=null] 
 	:
@@ -11359,7 +11362,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_BOOLEAN
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -11369,7 +11372,7 @@ ruleKeyBooleanValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Boolean");
+        		"BOOLEAN");
 	    }
 
 )
@@ -11533,7 +11536,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
 (
 		lv_value_2_0=RULE_FLOAT
 		{
-			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); 
+			newLeafNode(lv_value_2_0, grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); 
 		}
 		{
 	        if ($current==null) {
@@ -11543,7 +11546,7 @@ ruleKeyFloatValueAnnotation returns [EObject current=null]
        			$current, 
        			"value",
         		lv_value_2_0, 
-        		"Float");
+        		"FLOAT");
 	    }
 
 )
