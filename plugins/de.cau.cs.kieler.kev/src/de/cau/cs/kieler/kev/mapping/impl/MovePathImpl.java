@@ -390,11 +390,7 @@ public class MovePathImpl extends AnimationImpl implements MovePath {
                         
                         Double currentValue = Double.parseDouble(jsonValue) % path.getTotalLength();
                         SVGPoint currentPoint;
-                        if (path != null) {
-                            currentPoint = path.getPointAtLength(currentValue.floatValue());//new point
-                        } else {
-                            return;
-                        }
+                        currentPoint = path.getPointAtLength(currentValue.floatValue());//new point
        
                         if (lastPoint != null) {
                             angleValue = computeAngle(currentPoint, lastPoint);

@@ -491,16 +491,16 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
      */
     private java.net.URI convertEMFtoJavaURI(final URI uri) throws URISyntaxException {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
-        
-        System.out.println("convertEMFtoJavaURI 1" );
+
+        System.out.println("convertEMFtoJavaURI 1");
 
         IPath path = new Path(uri.toPlatformString(false));
-        System.out.println("convertEMFtoJavaURI 2" + path );
+        System.out.println("convertEMFtoJavaURI 2" + path);
         IFile file = myWorkspaceRoot.getFile(path);
-        System.out.println("convertEMFtoJavaURI 3" + file.toString()); 
+        System.out.println("convertEMFtoJavaURI 3" + file.toString());
 
         IPath fullPath = file.getLocation();
-        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString()); 
+        System.out.println("convertEMFtoJavaURI 4" + fullPath.toString());
 
         return new java.net.URI(fullPath.toString());
     }
@@ -526,7 +526,7 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
     private java.net.URI compileEsterelToC(final URI strlFile, final File outFile,
             final EsterelSimulationProgressMonitor monitor) throws IOException, URISyntaxException {
         monitor.subTask("Reading Esterel file");
-        System.out.println("Compile 1" + strlFile.toString() +" , "+ outFile.toString());
+        System.out.println("Compile 1" + strlFile.toString() + " , " + outFile.toString());
         java.net.URI inputURI = convertEMFtoJavaURI(strlFile);
 
         System.out.println("Compile 2" + inputURI.toString());
@@ -703,10 +703,9 @@ public class DataComponent extends JSONObjectSimulationDataComponent {
         System.out.println("M2M 1");
         monitor.begin("Esterel Simulation", EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
 
-        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor 
-        = new EsterelSimulationProgressMonitor(
+        EsterelSimulationProgressMonitor esterelSimulationProgressMonitor = 
+                new EsterelSimulationProgressMonitor(
                 monitor, EsterelSimulationProgressMonitor.NUMBER_OF_TASKS);
-        
 
         File executable = null;
         String compile = "";
