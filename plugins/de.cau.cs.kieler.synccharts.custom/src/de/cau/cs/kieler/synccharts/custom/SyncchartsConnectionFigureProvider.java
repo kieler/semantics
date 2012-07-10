@@ -43,10 +43,8 @@ import org.eclipse.gmf.runtime.notation.LineStyle;
 import org.eclipse.gmf.runtime.notation.NotationPackage;
 import org.eclipse.gmf.runtime.notation.Style;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.LineAttributes;
 
 import de.cau.cs.kieler.core.model.figures.CircleDecoration;
-import de.cau.cs.kieler.core.model.gmf.figures.SplineConnection;
 import de.cau.cs.kieler.karma.IRenderingProvider;
 
 /**
@@ -232,8 +230,8 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
         return historyDecoration;
     }
 
-    public LayoutManager getLayoutManagerByString(String input, LayoutManager oldLayoutManager,
-            EObject object) {
+    public LayoutManager getLayoutManagerByString(final String input,
+            final LayoutManager oldLayoutManager, final EObject object) {
         // TODO Auto-generated method stub
         return oldLayoutManager;
     }
@@ -243,7 +241,8 @@ public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
         return null;
     }
 
-    public BorderItemLocator getBorderItemLocatorByString(String input,final IFigure parent, final Object locator, final EObject object, final CollapseStatus collapseStatus) {
+    public BorderItemLocator getBorderItemLocatorByString(final String input, final IFigure parent,
+            final Object locator, final EObject object, final CollapseStatus collapseStatus) {
         // TODO Auto-generated method stub
         return null;
     }

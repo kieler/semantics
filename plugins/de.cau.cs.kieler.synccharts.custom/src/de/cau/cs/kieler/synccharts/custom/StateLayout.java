@@ -43,9 +43,9 @@ public class StateLayout extends AbstractTableLayout {
     public static final int COND_WIDTH = 20;
 
     /** the layout elements resp. the indices of the children */
+    //public static final int BODYTEXT = 2;
     public static final int STATELABEL = 0;
     public static final int POLYLINE = 1;
-    //public static final int BODYTEXT = 2;
     public static final int INTERFACEDECL = 2;
     public static final int SIGNALS = 3;
     public static final int ENTRYACTIONS = 4;
@@ -63,8 +63,6 @@ public class StateLayout extends AbstractTableLayout {
     
     /**
      * Creates a state layout.
-     * 
-     * @param modelElementInput the model element that will be layouted
      */
     public StateLayout() {
             super();
@@ -222,7 +220,7 @@ public class StateLayout extends AbstractTableLayout {
      * A container for the class variables. Provides easy exchange of different
      * layout-styles.
      */
-    public static abstract class AbstractSyncChartsConfiguration {
+    public abstract static  class AbstractSyncChartsConfiguration {
         public ExtendedTable referenceStateLayout;
         public ExtendedTable simpleStateLayout;
         public ExtendedTable complexStateLayout;
@@ -230,11 +228,11 @@ public class StateLayout extends AbstractTableLayout {
         public ExtendedTable textualStateLayout;
     }
 
-    public void setCorrespondingLayout(ExtendedTable layout) {
+    public void setCorrespondingLayout(final ExtendedTable layout) {
         correspondingLayout = layout;
     }
     
-    public void setModelElement(Notifier theModelElement) {
+    public void setModelElement(final Notifier theModelElement) {
         modelElement = theModelElement;
         
     }

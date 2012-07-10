@@ -639,6 +639,9 @@
          <package
                class="de.cau.cs.kieler.core.annotations.AnnotationsPackage">
          </package>
+         
+         <!-- These warnings can safely be ignored. In fact, adding synccharts.diagram as a dependency
+              will introduce a dependency cycle. -->
          <editPart
                editPart="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
          </editPart>
