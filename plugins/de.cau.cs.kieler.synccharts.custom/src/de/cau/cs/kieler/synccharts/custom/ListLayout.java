@@ -20,8 +20,8 @@ import org.eclipse.draw2d.geometry.Dimension;
 
 /**
  * A Layout similar to the FlowLayout, however, it will set a minimum size according to its
- * children's preffered sizes. It could be used to place Text Labels into som other figure. The parent then will
- * get the size of the bounding box of the text labels.
+ * children's preffered sizes. It could be used to place Text Labels into som other figure. The parent
+ * then will get the size of the bounding box of the text labels.
  * 
  * @author haf
  */
@@ -36,15 +36,14 @@ public class ListLayout extends FlowLayout {
         for (Object child : container.getChildren()) {
             if (child instanceof IFigure) {
                 Dimension d = ((IFigure) child).getPreferredSize();
-                if(this.isHorizontal()){
+                if (this.isHorizontal()) {
                     width += d.width;
-                    if(height < d.height){
+                    if (height < d.height) {
                         height = d.height;
                     }
-                }
-                else{
+                } else {
                     height += d.height;
-                    if(width < d.width){
+                    if (width < d.width) {
                         width = d.width;
                     }
                 }

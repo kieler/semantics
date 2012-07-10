@@ -43,13 +43,15 @@
                   type="de.cau.cs.kieler.core.annotations.Annotatable">
             </input>
             <input
+                  type="org.eclipse.core.runtime.PlatformObject">
+            </input>
+            
+            <!-- The following references generate a warning, but we can safely ignore that. -->
+            <input
                   type="org.eclipse.gmf.runtime.notation.View">
             </input>
             <input
                   type="org.eclipse.gef.EditPart">
-            </input>
-            <input
-                  type="org.eclipse.core.runtime.PlatformObject">
             </input>
          </propertySection>
       </propertySections>
