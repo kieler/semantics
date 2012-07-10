@@ -77,7 +77,7 @@ public class FocusContextEffect extends AbstractCompoundEffect {
      */
     @Override
     public boolean isMergeable() {
-        return true;
+        return false;
     }
     
     /**

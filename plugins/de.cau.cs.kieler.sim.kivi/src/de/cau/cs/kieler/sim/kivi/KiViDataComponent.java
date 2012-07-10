@@ -183,6 +183,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return null;
         }
+        
         // only do this if execution is currently active
         if (KiemPlugin.getDefault().getExecution() != null) {
             JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();

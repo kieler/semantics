@@ -185,10 +185,9 @@ public abstract class StateMachineKiViDataComponent extends JSONObjectDataCompon
             return null;
         }
 
-        // cmot: Obsolete/unused/useless code??
-        // // get a new simulation state that we will manipulate in the following
-        // StateMachineSimulationState simState = StateMachineSimulationTrigger.getInstance()
-        // .getCurrentSimulationState(diagramEditor, true);
+         // get a new simulation state that we will manipulate in the following
+         StateMachineSimulationTrigger.getInstance()
+         .getCurrentSimulationState(diagramEditor, true);
 
         JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
         long currentStep = KiemPlugin.getDefault().getExecution().getSteps();
