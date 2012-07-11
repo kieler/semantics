@@ -502,6 +502,11 @@ public abstract class JSONObjectXtextVisualizationDataComponent extends
                     // and get its length
                     int length = NodeModelUtils.findLeafNodeAtOffset(xtextNode, offset).getLength();
 
+                    if (localXtextEditor.getInternalSourceViewer() == null) {
+                        // Editor might be closed
+                        return;
+                    }
+                    
                     localXtextEditor.getInternalSourceViewer().setRangeIndication(offset, length,
                             true);
                     localXtextEditor.getInternalSourceViewer().revealRange(offset, length);
