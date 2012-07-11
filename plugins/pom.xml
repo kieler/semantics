@@ -14,7 +14,6 @@
     <relativePath>../build/de.cau.cs.kieler.parent/pom.xml</relativePath>
   </parent>
 
-<!-- stupid comment -->
 <!-- all plugins need to be listed as module -->
 
   <modules>
