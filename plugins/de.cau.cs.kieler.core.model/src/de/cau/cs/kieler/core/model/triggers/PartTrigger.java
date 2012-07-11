@@ -96,6 +96,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
         // @cmot: if a part is activated for the first time, Eclipse does not
         // call partActivated but partOpened instead. This trigger should
         // execution in both cases.
+        System.out.println("partOpened" + part);
         partActivated(part);
     }
 
@@ -103,13 +104,18 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      * {@inheritDoc}
      */
     public void partBroughtToTop(final IWorkbenchPart part) {
-        // this.partChanged(part);
+        // @cmot: if one selects a different opened tab and bing
+        // another part to the front, this method should also
+        // delegate to partActivated
+        System.out.println("partBroughtToTop" + part);
+        partActivated(part);
     }
 
     /**
      * {@inheritDoc}
      */
     public void partActivated(final IWorkbenchPart part) {
+        System.out.println("partActivated" + part);
         this.currentActivePart = part;
         boolean isEditorReference = false;
         EventType type = null;
