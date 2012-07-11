@@ -20,8 +20,12 @@ import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IWorkbench;
+import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
+import org.eclipse.ui.IWorkbenchWindow;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.FileEditorInput;
 
 import de.cau.cs.kieler.core.kivi.AbstractTrigger;
@@ -93,18 +97,31 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        // @cmot: if a part is activated for the first time, Eclipse does not
+        IWorkbench wb = PlatformUI.getWorkbench();
+        IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
+        IWorkbenchPage page = win.getActivePage();
+        IWorkbenchPart activePart = page.getActivePart();
+        // cmot: do the following for the activePart not for the part;
+        // this is necessary because partOpenend is called several
+        // times when Eclipse started for every opened editor
+        // but in an unpredictable order, so that the last time
+        // usually NOT corresponds to the currently active part
+        // - this way partActivated might be called several times
+        // but we assure it is only called for the active
+        // editor
+
+        // cmot: if a part is activated for the first time, Eclipse does not
         // call partActivated but partOpened instead. This trigger should
         // execution in both cases.
-        System.out.println("partOpened" + part);
-        partActivated(part);
+        System.out.println("partOpened" + activePart);
+        partActivated(activePart);
     }
 
     /**
      * {@inheritDoc}
      */
     public void partBroughtToTop(final IWorkbenchPart part) {
-        // @cmot: if one selects a different opened tab and bing
+        // cmot: if one selects a different opened tab and bing
         // another part to the front, this method should also
         // delegate to partActivated
         System.out.println("partBroughtToTop" + part);
@@ -123,6 +140,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
         if (part instanceof IEditorPart) {
             this.currentActiveEditor = (IEditorPart) part;
+            currentActiveEditor.setFocus();
             type = EventType.EDITOR_ACTIVATED;
             isEditorReference = true;
         }
