@@ -298,7 +298,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
                 sOutput = sOutput.trimFragment();
-                sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.s");
+                sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.kixs");
 
                 try {
                     // Write out copy/transformation of S program
@@ -310,38 +310,39 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                     resource.getContents().add(transformedModel);
                     resource.save(Collections.EMPTY_MAP);
                 } catch (IOException e) {
-                    throw new KiemInitializationException("Cannot write output SyncChart file.", true, null);
+                    throw new KiemInitializationException("Cannot write output SyncChart file.",
+                            true, null);
                 }
             }
 
-//            // Calculate output path for SC-m2t
-//            scOutput = URI.createURI(input.toString());
-//            scOutput = scOutput.trimFragment();
-//            scOutput = scOutput.trimFileExtension().appendFileExtension("c");
-//
-//            // Set a random output folder for the compiled files
-//            String outputFolder = KiemUtil.generateRandomTempOutputFolder();
-//
-//            // Generate SC code
-//            IPath scOutputPath = new Path(scOutput.toPlatformString(false));
-//            IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-//            String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-//            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
-//
-//            // Compile
-//            scExecution = new SCExecution(outputFolder);
-//            LinkedList<String> generatedSCFiles = new LinkedList<String>();
-//            generatedSCFiles.add(scOutputString);
-//            scExecution.compile(generatedSCFiles);
+            // // Calculate output path for SC-m2t
+            // scOutput = URI.createURI(input.toString());
+            // scOutput = scOutput.trimFragment();
+            // scOutput = scOutput.trimFileExtension().appendFileExtension("c");
+            //
+            // // Set a random output folder for the compiled files
+            // String outputFolder = KiemUtil.generateRandomTempOutputFolder();
+            //
+            // // Generate SC code
+            // IPath scOutputPath = new Path(scOutput.toPlatformString(false));
+            // IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
+            // String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
+            // S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
+            //
+            // // Compile
+            // scExecution = new SCExecution(outputFolder);
+            // LinkedList<String> generatedSCFiles = new LinkedList<String>();
+            // generatedSCFiles.add(scOutputString);
+            // scExecution.compile(generatedSCFiles);
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
-//        } catch (IOException e) {
-//            throw new KiemInitializationException("Error compiling S program:\n\n "
-//                    + e.getMessage() + "\n\n" + compile, true, e);
-//        } catch (InterruptedException e) {
-//            throw new KiemInitializationException("Error compiling S program:\n\n "
-//                    + e.getMessage() + "\n\n" + compile, true, e);
+            // } catch (IOException e) {
+            // throw new KiemInitializationException("Error compiling S program:\n\n "
+            // + e.getMessage() + "\n\n" + compile, true, e);
+            // } catch (InterruptedException e) {
+            // throw new KiemInitializationException("Error compiling S program:\n\n "
+            // + e.getMessage() + "\n\n" + compile, true, e);
         }
     }
 
@@ -352,46 +353,46 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      */
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
-//
-//        // start execution of compiled program
-//        if (scExecution.isCompiled()) {
-//            try {
-//                scExecution.startExecution();
-//            } catch (IOException e) {
-//                throw new KiemInitializationException(
-//                        "S program could not be started sucessfully.\n\n", true, e);
-//            }
-//        } else {
-//            throw new KiemInitializationException("S program was not compiled sucessfully.\n\n",
-//                    true, null);
-//        }
-//
-//        if (!scExecution.isStarted()) {
-//            throw new KiemInitializationException(
-//                    "Error running S program. Compiled simulation does not exist.\n", true, null);
-//        }
+        //
+        // // start execution of compiled program
+        // if (scExecution.isCompiled()) {
+        // try {
+        // scExecution.startExecution();
+        // } catch (IOException e) {
+        // throw new KiemInitializationException(
+        // "S program could not be started sucessfully.\n\n", true, e);
+        // }
+        // } else {
+        // throw new KiemInitializationException("S program was not compiled sucessfully.\n\n",
+        // true, null);
+        // }
+        //
+        // if (!scExecution.isStarted()) {
+        // throw new KiemInitializationException(
+        // "Error running S program. Compiled simulation does not exist.\n", true, null);
+        // }
 
         // Build the list of interface output signals
         outputSignalList = new LinkedList<String>();
         JSONObject res = new JSONObject();
-//        try {
-//            if (myModel != null && myModel.getSignals() != null) {
-//                for (Signal signal : myModel.getSignals()) {
-//                    if (signal.isIsInput()) {
-//                        res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
-//                    }
-//                    if (signal.isIsOutput()) {
-//                        String signalName = signal.getName();
-//                        if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
-//                            res.accumulate(signalName, JSONSignalValues.newValue(false));
-//                            outputSignalList.add(signalName);
-//                        }
-//                    }
-//                }
-//            }
-//        } catch (JSONException e) {
-//            // ignore
-//        }
+        // try {
+        // if (myModel != null && myModel.getSignals() != null) {
+        // for (Signal signal : myModel.getSignals()) {
+        // if (signal.isIsInput()) {
+        // res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
+        // }
+        // if (signal.isIsOutput()) {
+        // String signalName = signal.getName();
+        // if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
+        // res.accumulate(signalName, JSONSignalValues.newValue(false));
+        // outputSignalList.add(signalName);
+        // }
+        // }
+        // }
+        // }
+        // } catch (JSONException e) {
+        // // ignore
+        // }
         return res;
     }
 

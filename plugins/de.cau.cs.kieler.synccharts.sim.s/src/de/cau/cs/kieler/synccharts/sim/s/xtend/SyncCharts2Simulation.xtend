@@ -19,6 +19,9 @@ import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
 import de.cau.cs.kieler.synccharts.Transition
+import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory
+import de.cau.cs.kieler.synccharts.SyncchartsFactory;
+import de.cau.cs.kieler.core.kexpressions.ValueType
 
 /**
  * Transformation of a SyncChart to another SyncChart
@@ -90,6 +93,25 @@ class SyncCharts2Simulation {
 	
 	def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
 		
+		// auxiliary signal
+		var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+		//var auxiliaryValuedObjectReference = KExpressionsFactory::eINSTANCE.createValuedObjectReference();
+		var auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+		
+		// Setup the auxiliarySignal as an OUTPUT to the module
+		auxiliarySignal.setName(UID);
+		auxiliarySignal.setIsInput(false);
+		auxiliarySignal.setIsOutput(true);
+		auxiliarySignal.setType(ValueType::PURE);
+		// Set the auxliiarySignal for emission 
+		//auxiliaryValuedObjectReference.setValuedObject(auxiliarySignal);
+		auxiliaryEmission.setSignal(auxiliarySignal);
+		
+		// Add emission of auxiliary Signal to tansition
+		transition.effects.add(auxiliaryEmission);
+
+		// Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+		targetRootRegion.states.get(0).signals.add(auxiliarySignal);
 	}
 	
 	def void transformState(State state, Region targetRootRegion, String UID) {
