@@ -18,15 +18,25 @@ import org.eclipse.xtend.util.stdlib.CloningExtensions
 import de.cau.cs.kieler.synccharts.sim.s.SyncChartsSimSPlugin
 import de.cau.cs.kieler.synccharts.Region
 import de.cau.cs.kieler.synccharts.State
+import de.cau.cs.kieler.synccharts.Transition
 
 /**
- * Transformation of S code into S code that is
- * enriched with additional signals for each s statement.
+ * Transformation of a SyncChart to another SyncChart
+ * enriched with additional signals for each state and
+ * each transition.
  * 
- * These signals, here HP, are generated in the following fashion for a 
- * statement P:
+ * These signals are HS for auxiliary state signals
+ * and HT for auxiliary transition signals.
  * 
- * Emit HP; P
+ * Signals HS are generated in the following fashion for a 
+ * state S:
+ * 
+ * 1. For every incoming transition, add an output-emit action for HS
+ * 2. Create an auxiliary region that has one state and a self-loop 
+ *    emitting HS.
+ * 
+ * Signal HT are generated in the following fashion for a
+ * transition T:
  * 
  * As names for the signals are randomly generated and must be unique
  * there must be a mapping that keeps track which signal (name) belongs to
@@ -45,8 +55,11 @@ class SyncCharts2Simulation {
 
 		var originalStates = rootRegion.eAllContents().toIterable().filter(typeof(State));
 		var targetStates = target.eAllContents().toIterable().filter(typeof(State)).toList();
+
+		var originalTransitions = rootRegion.eAllContents().toIterable().filter(typeof(Transition));
+		var targetTransitions = target.eAllContents().toIterable().filter(typeof(Transition)).toList();
 		
-		// For every instruction in the S program do the transformation
+		// For every state in the SyncChart do the transformation
 		// Iterate over a copy of the list	
 		var i = 0;	
 		var originalStatesList = originalStates.toList;
@@ -54,14 +67,30 @@ class SyncCharts2Simulation {
 			var originalState = originalStatesList.get(i);
 			i = i + 1;
 			val originalStateURIFragment = originalState.eResource.getURIFragment(originalState);
-			var statementUID = AUXILIARY_VARIABLE_TAG + originalStateURIFragment.hashCode.toString().replace("-","M");
+			var stateUID = AUXILIARY_VARIABLE_TAG + originalStateURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
-			targetState.transformState(target, statementUID);
+			targetState.transformState(target, stateUID);
+		}
+
+		// For every state in the SyncChart do the transformation
+		// Iterate over a copy of the list	
+		i = 0;	
+		var originalTransitionList = originalTransitions.toList;
+		for(targetTransition : targetTransitions) {
+			var originalTransition = originalTransitionList.get(i);
+			i = i + 1;
+			val originalTransitionURIFragment = originalTransition.eResource.getURIFragment(originalTransition);
+			var transitionUID = AUXILIARY_VARIABLE_TAG + originalTransitionURIFragment.hashCode.toString().replace("-","M");
+			// This statement we want to modify
+			targetTransition.transformTransition(target, transitionUID);
 		}
 		
 		target;
 	}	
 	
+	def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
+		
+	}
 	
 	def void transformState(State state, Region targetRootRegion, String UID) {
 		
