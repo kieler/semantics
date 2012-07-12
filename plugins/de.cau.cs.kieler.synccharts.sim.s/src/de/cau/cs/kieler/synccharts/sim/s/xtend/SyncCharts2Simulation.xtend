@@ -62,7 +62,8 @@ class SyncCharts2Simulation {
     
     // General method to create the enriched S simulation code.
    	def Region transform2Simulation (Region rootRegion) {
-   		var AUXILIARY_VARIABLE_TAG = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG
+   		var AUXILIARY_VARIABLE_TAG_STATE = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_STATE
+   		var AUXILIARY_VARIABLE_TAG_TRANSITION = SyncChartsSimSPlugin::AUXILIARY_VARIABLE_TAG_TRANSITION
    		
 		// Clone the complete SyncCharts region 
    		var target = CloningExtensions::clone(rootRegion) as Region;
@@ -81,7 +82,7 @@ class SyncCharts2Simulation {
 			val originalTransition = originalTransitionList.get(i);
 			i = i + 1;
 			val originalTransitionURIFragment = originalTransition.eResource.getURIFragment(originalTransition);
-			val transitionUID = AUXILIARY_VARIABLE_TAG + originalTransitionURIFragment.hashCode.toString().replace("-","M");
+			val transitionUID = AUXILIARY_VARIABLE_TAG_TRANSITION + originalTransitionURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetTransition.transformTransition(target, transitionUID);
 		}
@@ -95,7 +96,7 @@ class SyncCharts2Simulation {
 			val originalState = originalStatesList.get(i);
 			i = i + 1;
 			val originalStateURIFragment = originalState.eResource.getURIFragment(originalState);
-			val stateUID = AUXILIARY_VARIABLE_TAG + originalStateURIFragment.hashCode.toString().replace("-","M");
+			val stateUID = AUXILIARY_VARIABLE_TAG_STATE + originalStateURIFragment.hashCode.toString().replace("-","M");
 			// This statement we want to modify
 			targetState.transformState(target, stateUID);
 		}

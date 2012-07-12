@@ -45,6 +45,8 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
+import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
+
 import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
 
@@ -69,6 +71,8 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
 
+    private SSCSimulationDataComponent sSCSimDataComponent = new SSCSimulationDataComponent();
+
     // -------------------------------------------------------------------------
 
     /**
@@ -92,6 +96,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+        sSCSimDataComponent.initialize();
     }
 
     // -------------------------------------------------------------------------
@@ -102,104 +107,92 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     public JSONObject doStep(final JSONObject jSONObject) throws KiemExecutionException {
         // The return object to construct
         JSONObject returnObj = new JSONObject();
-        //
-        // // Collect active statements
-        // String activeStatements = "";
-        // StringBuffer activeStatementsBuf = new StringBuffer();
-        //
-        // if (!scExecution.isStarted()) {
-        // throw new KiemExecutionException("No S simulation is running", true, null);
-        // }
-        // try {
-        //
-        // scExecution.getExecutionInterfaceToSC().write(jSONObject.toString() + "\n");
-        // scExecution.getExecutionInterfaceToSC().flush();
-        // while (scExecution.getExecutionInterfaceError().ready()) {
-        // // Error output, if any
-        // System.out.print(scExecution.getExecutionInterfaceError().read());
-        // }
-        //
-        // String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
-        //
-        // if (receivedMessage != null) {
-        // JSONObject sSignalOutput = new JSONObject(receivedMessage);
-        // JSONArray sSignalOutputArray = sSignalOutput.names();
-        //
-        // if (sSignalOutputArray != null) {
-        // // First add auxiliary signals
-        // for (int i = 0; i < sSignalOutputArray.length(); i++) {
-        // String sSignalOutputName = sSignalOutputArray.getString(i);
-        // boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
-        // .getJSONObject(sSignalOutputName));
-        //
-        // // Test if the output variable is an auxiliary signal
-        // // that is only there to mark the current S statement
-        // // in full_simulation mode of the simulator.
-        // //
-        // // These auxiliary signals must be encapsulated in a state variable.
-        // if (sSignalOutputName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)
-        // && sSignalIsPresent) {
-        // try {
-        // String statementWithoutAuxiliaryVariableTag = sSignalOutputName
-        // .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
-        //
-        // // Insert a "," if not the first statement
-        // if (activeStatementsBuf.length() != 0) {
-        // activeStatementsBuf.append(",");
-        // }
-        //
-        // activeStatementsBuf.append(statementWithoutAuxiliaryVariableTag);
-        //
-        // } catch (Exception e) {
-        // // ignore error
-        // }
-        //
-        // }
-        //
-        // }
-        // }
-        // activeStatements = activeStatementsBuf.toString();
-        //
-        // // Then add normal output signals
-        // for (String outputSignal : outputSignalList) {
-        // if (sSignalOutput.has(outputSignal)) {
-        //
-        // // retrieve jsonSignal
-        // JSONObject jsonSignal = sSignalOutput.getJSONObject(outputSignal);
-        // boolean sSignalIsPresent = JSONSignalValues.isPresent(jsonSignal);
-        //
-        // if (jsonSignal.has("value")) {
-        // Object value = jsonSignal.get("value");
-        // // valued signals
-        // returnObj.accumulate(outputSignal,
-        // JSONSignalValues.newValue(value, true));
-        // } else {
-        // // pure signals
-        // returnObj.accumulate(outputSignal,
-        // JSONSignalValues.newValue(sSignalIsPresent));
-        // }
-        // } else {
-        // returnObj.accumulate(outputSignal, JSONSignalValues.newValue(false));
-        // }
-        // }
-        // } else {
-        // throw new KiemExecutionException("No S simulation is running", true, null);
-        //
-        // }
-        //
-        // // Finally accumulate all active Statements (activeStatements)
-        // // under the statementName
-        // String statementName = this.getProperties()[1].getValue();
-        // returnObj.accumulate(statementName, activeStatements);
-        //
-        // } catch (IOException e) {
-        // System.err.println(e.getMessage());
-        // scExecution.stopExecution();
-        // } catch (JSONException e) {
-        // e.printStackTrace();
-        // scExecution.stopExecution();
-        // }
-        //
+
+        // Collect active statements
+        String activeStates = "";
+        String activeTransitions = "";
+        StringBuffer activeStatesBuf = new StringBuffer();
+        StringBuffer activeTransitionsBuf = new StringBuffer();
+
+        JSONObject signalOutput = sSCSimDataComponent.doStep(jSONObject);
+        if (signalOutput != null) {
+            JSONArray signalOutputArray = signalOutput.names();
+
+            if (signalOutputArray != null) {
+                // First add auxiliary signals
+                for (int i = 0; i < signalOutputArray.length(); i++) {
+                    String signalName;
+                    try {
+                        signalName = signalOutputArray.getString(i);
+                        JSONObject signalValue = signalOutput.getJSONObject(signalName);
+                        boolean signalIsPresent = JSONSignalValues.isPresent(signalValue);
+
+                        // Test if the output variable is an auxiliary signal
+                        // that is only there to mark the current S statement
+                        // in full_simulation mode of the simulator.
+                        //
+                        // These auxiliary signals must be encapsulated in a state variable.
+                        if (signalName
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                && signalIsPresent) {
+                            try {
+                                String statementWithoutAuxiliaryVariableTag = signalName
+                                        .substring(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE
+                                                .length());
+                                // Insert a "," if not the first statement
+                                if (activeStatesBuf.length() != 0) {
+                                    activeStatesBuf.append(",");
+                                }
+                                activeStatesBuf.append(statementWithoutAuxiliaryVariableTag);
+                            } catch (Exception e) {
+                                // ignore error
+                            }
+                        } else if (signalName
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)
+                                && signalIsPresent) {
+                            try {
+                                String statementWithoutAuxiliaryVariableTag = signalName
+                                        .substring(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION
+                                                .length());
+                                // Insert a "," if not the first statement
+                                if (activeTransitionsBuf.length() != 0) {
+                                    activeTransitionsBuf.append(",");
+                                }
+                                activeTransitionsBuf.append(statementWithoutAuxiliaryVariableTag);
+                            } catch (Exception e) {
+                                // ignore error
+                            }
+                        } else if (!signalName
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                && !signalName
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                            // add/pass-through normal signals directly
+                            returnObj.accumulate(signalName, signalValue);
+                        }
+                    } catch (JSONException e) {
+                        // ignore error
+                    }
+                }
+                activeStates = activeStatesBuf.toString();
+                activeTransitions = activeTransitionsBuf.toString();
+
+                // Finally accumulate all active Statements (activeStatements)
+                // under the statementName
+                String statementName = this.getProperties()[1].getValue();
+                try {
+                    returnObj.accumulate(statementName, activeStates);
+                } catch (JSONException e) {
+                    // ignore error
+                }
+                String transitionName = this.getProperties()[2].getValue();
+                try {
+                    returnObj.accumulate(transitionName, activeTransitions);
+                } catch (JSONException e) {
+                    // ignore error
+                }
+            }
+        }
+
         return returnObj;
     }
 
@@ -230,7 +223,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
     public KiemProperty[] doProvideProperties() {
         final int nProperties = 3;
         KiemProperty[] properties = new KiemProperty[nProperties];
-        properties[0] = new KiemProperty("State Name", "statement");
+        properties[0] = new KiemProperty("State Name", "state");
         properties[1] = new KiemProperty("Transition Name", "transition");
 
         properties[2] = new KiemProperty("Full Debug Mode", true);
@@ -244,7 +237,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        // scExecution.stopExecution();
+        sSCSimDataComponent.wrapup();
     }
 
     // -------------------------------------------------------------------------
@@ -278,7 +271,6 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
 
             URI syncChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
-            URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
             Region transformedModel = myModel;
 
@@ -324,7 +316,7 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             // Transform SyncChart into S code
             Program program = new Synccharts2S().transform(transformedModel);
 
-            // Calculate outout path
+            // Calculate out path
             sOutput = URI.createURI(input.toString());
             sOutput = sOutput.trimFragment();
             sOutput = sOutput.trimFileExtension().appendFileExtension("s");
@@ -341,39 +333,13 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
             } catch (IOException e) {
                 throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
-            
-            
-            //SSCSimulationDataComponent
-            
 
-            // // Calculate output path for SC-m2t
-            // scOutput = URI.createURI(input.toString());
-            // scOutput = scOutput.trimFragment();
-            // scOutput = scOutput.trimFileExtension().appendFileExtension("c");
-            //
-            // // Set a random output folder for the compiled files
-            // String outputFolder = KiemUtil.generateRandomTempOutputFolder();
-            //
-            // // Generate SC code
-            // IPath scOutputPath = new Path(scOutput.toPlatformString(false));
-            // IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
-            // String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            // S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
-            //
-            // // Compile
-            // scExecution = new SCExecution(outputFolder);
-            // LinkedList<String> generatedSCFiles = new LinkedList<String>();
-            // generatedSCFiles.add(scOutputString);
-            // scExecution.compile(generatedSCFiles);
+            // Use the SSCSimulationDataComponent
+            sSCSimDataComponent.doModel2ModelTransform(monitor, program, false);
+
         } catch (RuntimeException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
-            // } catch (IOException e) {
-            // throw new KiemInitializationException("Error compiling S program:\n\n "
-            // + e.getMessage() + "\n\n" + compile, true, e);
-            // } catch (InterruptedException e) {
-            // throw new KiemInitializationException("Error compiling S program:\n\n "
-            // + e.getMessage() + "\n\n" + compile, true, e);
         }
     }
 
@@ -384,59 +350,37 @@ public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationData
      */
     @Override
     public JSONObject doProvideInitialVariables() throws KiemInitializationException {
-        //
-        // // start execution of compiled program
-        // if (scExecution.isCompiled()) {
-        // try {
-        // scExecution.startExecution();
-        // } catch (IOException e) {
-        // throw new KiemInitializationException(
-        // "S program could not be started sucessfully.\n\n", true, e);
-        // }
-        // } else {
-        // throw new KiemInitializationException("S program was not compiled sucessfully.\n\n",
-        // true, null);
-        // }
-        //
-        // if (!scExecution.isStarted()) {
-        // throw new KiemInitializationException(
-        // "Error running S program. Compiled simulation does not exist.\n", true, null);
-        // }
+        JSONObject initialSignals = sSCSimDataComponent.doProvideInitialVariables();
 
-        // Build the list of interface output signals
-        outputSignalList = new LinkedList<String>();
-        JSONObject res = new JSONObject();
-        // try {
-        // if (myModel != null && myModel.getSignals() != null) {
-        // for (Signal signal : myModel.getSignals()) {
-        // if (signal.isIsInput()) {
-        // res.accumulate(signal.getName(), JSONSignalValues.newValue(false));
-        // }
-        // if (signal.isIsOutput()) {
-        // String signalName = signal.getName();
-        // if (!signalName.startsWith(SSimSCPlugin.AUXILIARY_VARIABLE_TAG)) {
-        // res.accumulate(signalName, JSONSignalValues.newValue(false));
-        // outputSignalList.add(signalName);
-        // }
-        // }
-        // }
-        // }
-        // } catch (JSONException e) {
-        // // ignore
-        // }
-        return res;
-    }
+        // filter away signals used for debugging
+        // The return object to construct
+        JSONObject returnObj = new JSONObject();
 
-    // -------------------------------------------------------------------------
+        if (initialSignals != null) {
+            JSONArray signalArray = initialSignals.names();
 
-    /**
-     * Checks whether the system is based on windows.
-     * 
-     * @return true, if is windows
-     */
-    public static boolean isWindows() {
-        String os = System.getProperty("os.name").toLowerCase();
-        return (os.indexOf("win") >= 0);
+            if (signalArray != null) {
+                for (int i = 0; i < signalArray.length(); i++) {
+                    String signalName;
+                    try {
+                        signalName = signalArray.getString(i);
+                        JSONObject signalValue = initialSignals.getJSONObject(signalName);
+
+                        // Filter here
+                        if (!signalName
+                                .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_STATE)
+                                && !signalName
+                                        .startsWith(SyncChartsSimSPlugin.AUXILIARY_VARIABLE_TAG_TRANSITION)) {
+                            returnObj.accumulate(signalName, signalValue);
+                        }
+                    } catch (JSONException e) {
+                        // ignore error
+                    }
+                }
+            }
+        }
+
+        return returnObj;
     }
 
     // -------------------------------------------------------------------------
