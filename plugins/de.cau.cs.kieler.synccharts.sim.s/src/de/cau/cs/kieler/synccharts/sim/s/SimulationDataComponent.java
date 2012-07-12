@@ -18,6 +18,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Map;
 
+import org.eclipse.core.commands.ExecutionException;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
@@ -33,6 +34,7 @@ import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
+import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -42,6 +44,7 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
+import de.cau.cs.kieler.synccharts.codegen.s.xtend.Synccharts2S;
 import de.cau.cs.kieler.synccharts.sim.s.xtend.SyncCharts2Simulation;
 
 import de.cau.cs.kieler.synccharts.Region;
@@ -272,6 +275,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // Make a copy of the S program in case it was from
             // an active Editor
 
+            URI syncChartOutput = URI.createURI("");
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
@@ -281,7 +285,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
             String inputPathString = this.getModelFilePath().toString();
             URI input = URI.createPlatformResourceURI(inputPathString, true);
-            sOutput = URI.createURI(input.toString());
+            syncChartOutput = URI.createURI(input.toString());
 
             // If 'Full Debug Mode' is turned on then the user wants to have
             // also states visualized.
@@ -297,22 +301,44 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
                 // Because we transformed the S program we need to save a different file
                 // and pass this new file to the SC simulation instead.
-                sOutput = sOutput.trimFragment();
-                sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.kixs");
+                syncChartOutput = syncChartOutput.trimFragment();
+                syncChartOutput = syncChartOutput.trimFileExtension().appendFileExtension(
+                        "simulation.kixs");
 
                 try {
-                    // Write out copy/transformation of S program
+                    // Write out copy/transformation of syncchart program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
                     Map<String, Object> m = reg.getExtensionToFactoryMap();
                     m.put("daform", new XMIResourceFactoryImpl());
                     ResourceSet resSet = new ResourceSetImpl();
-                    Resource resource = resSet.createResource(sOutput);
+                    Resource resource = resSet.createResource(syncChartOutput);
                     resource.getContents().add(transformedModel);
                     resource.save(Collections.EMPTY_MAP);
                 } catch (IOException e) {
                     throw new KiemInitializationException("Cannot write output SyncChart file.",
                             true, null);
                 }
+            }
+
+            // Transform SyncChart into S code
+            Program program = new Synccharts2S().transform(transformedModel);
+
+            // Calculate outout path
+            sOutput = URI.createURI(input.toString());
+            sOutput = sOutput.trimFragment();
+            sOutput = sOutput.trimFileExtension().appendFileExtension("s");
+
+            try {
+                // Write out S program
+                Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
+                Map<String, Object> m = reg.getExtensionToFactoryMap();
+                m.put("daform", new XMIResourceFactoryImpl());
+                ResourceSet resSet = new ResourceSetImpl();
+                Resource resource = resSet.createResource(sOutput);
+                resource.getContents().add(program);
+                resource.save(Collections.EMPTY_MAP);
+            } catch (IOException e) {
+                throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
 
             // // Calculate output path for SC-m2t
