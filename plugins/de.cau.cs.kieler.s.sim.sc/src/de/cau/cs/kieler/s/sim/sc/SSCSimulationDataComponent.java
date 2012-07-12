@@ -53,7 +53,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * 
  * @author cmot
  */
-public class SimulationDataComponent extends JSONObjectSimulationDataComponent implements
+public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The S program is the considered model to simulate. */
