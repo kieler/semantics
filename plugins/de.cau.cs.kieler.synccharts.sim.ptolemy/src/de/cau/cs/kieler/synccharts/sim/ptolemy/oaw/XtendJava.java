@@ -168,8 +168,14 @@ public final class XtendJava {
      * Reset queue2 delete.
      */
     public static void resetQueue2Delete() {
-        modalModels = null;
-        portNames = null;
+        if (modalModels == null) {
+            modalModels = new LinkedList<EntityType>();;
+        }
+        modalModels.clear();
+        if (portNames == null) {
+            portNames = new LinkedList<String>();;
+        }
+        portNames.clear();
     }
 
     //-------------------------------------------------------------------------
