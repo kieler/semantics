@@ -35,6 +35,7 @@ import org.json.JSONObject;
 import de.cau.cs.kieler.core.kexpressions.Signal;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
+import de.cau.cs.kieler.s.sim.sc.SSCSimulationDataComponent;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
@@ -54,7 +55,7 @@ import de.cau.cs.kieler.synccharts.Region;
  * 
  * @author cmot
  */
-public class SimulationDataComponent extends JSONObjectSimulationDataComponent implements
+public class SyncChartsSSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The SyncChart is the considered model to simulate. */
@@ -340,6 +341,10 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             } catch (IOException e) {
                 throw new KiemInitializationException("Cannot write output S file.", true, null);
             }
+            
+            
+            //SSCSimulationDataComponent
+            
 
             // // Calculate output path for SC-m2t
             // scOutput = URI.createURI(input.toString());
