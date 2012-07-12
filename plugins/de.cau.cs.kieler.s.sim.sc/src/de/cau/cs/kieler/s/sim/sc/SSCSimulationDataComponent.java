@@ -255,13 +255,23 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
+        // get active editor
+        doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
+            final boolean debug) throws KiemInitializationException {
+        this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
         String compile = "";
-
         try {
-            // get active editor
-            myModel = (Program) this.getModelRootElement();
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -280,7 +290,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram =  myModel;
+            Program transformedProgram = myModel;
 
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
@@ -292,7 +302,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // also states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
-            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean()) {
+            if (debug) {
                 // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
@@ -302,7 +312,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 // and pass this new file to the SC simulation instead.
                 sOutput = sOutput.trimFragment();
                 sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.s");
-                
+
                 try {
                     // Write out copy/transformation of S program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
@@ -315,7 +325,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                 } catch (IOException e) {
                     throw new KiemInitializationException("Cannot write output S file.", true, null);
                 }
-            } 
+            }
 
             // Calculate output path for SC-m2t
             scOutput = URI.createURI(input.toString());
