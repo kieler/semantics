@@ -1,6 +1,11 @@
 /*! \file sc-generic.h
  *
- * Header file to be included by sc.h and by generic SC files.
+ * Header file to be included by sc.h and by generic SC files (eg sc.c).
+ *
+ * Unlike sc.h, this header file does not depend on
+ * application-specific constants (such as the highest thread ID in
+ * use). Hence, it can be included by the generic SC files that are
+ * compiled separately from application-specific files.
  * 
  * See README.txt for general information.
  * See LICENSE.txt for licensing information.
@@ -13,6 +18,42 @@
 #include <stdio.h>
 #include <limits.h>
 
+// Question: does it make sense to ABORT without terminating child threads? Or should ABORT be made part of TERM?
+
+// ===================================================================
+// Alternative syntax
+#define MainThread TICKSTART
+
+#define State(label) label:
+
+#define Thread(label) TERM; label:
+
+#define FORKEND do {							\
+    trace0t("FORKEND:", "ends fork\n")					\
+    FORKE_(__LABEL__); _case __LABEL__:   ;				\
+  } while (0)
+
+#define FORK1(label1, prio1)                                 \
+  FORK(label1, prio1);					     \
+  FORKEND
+
+#define FORK2(label1, prio1, label2, prio2)			\
+  FORK(label1, prio1);						\
+  FORK(label2, prio2);						\
+  FORKEND
+
+#define FORK3(label1, prio1, label2, prio2, label3, prio3)			\
+  FORK(label1, prio1);						\
+  FORK(label2, prio2);						\
+  FORK(label3, prio3);						\
+  FORKEND
+
+#define FORK4(label1, prio1, label2, prio2, label3, prio3, label4, prio4)	\
+  FORK(label1, prio1);						\
+  FORK(label2, prio2);						\
+  FORK(label3, prio3);						\
+  FORK(label4, prio4);						\
+  FORKEND
 
 // ===================================================================
 // Type definitions
@@ -94,8 +135,27 @@ idtype       _cid;                   //!< Id of current thread
 
 // ===================================================================
 // Representing sets of thread ids
+
+// Figure out how many bits are in an unsigned int.
+#ifndef WORD_BIT
+# if UINT_MAX == 65535
+#  define WORD_BIT	16
+# elif UINT_MAX == 4294967295
+#   define WORD_BIT	32
+// Else WORD_BIT is left undefined, and this definition must be
+// adapted to whatever strange architecture/compiler this is running
+// on/compiled with
+# endif
+#endif
+
+// Figure out how many bits are in an unsigned long int.
 #ifndef LONG_BIT
-#define LONG_BIT 32
+# if ULONG_MAX == 4294967295
+#  define LONG_BIT	32
+# elif UINT_MAX == 18,446,744,073,709,551,615
+#   define LONG_BIT	64
+// Else LONG_BIT is left undefined (see WORD_BIT)
+# endif
 #endif
 
 typedef unsigned long _setPartType;
@@ -154,6 +214,17 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
 #define _sigPtr2str(setPtr)          _set2str(_setstr, _sigMax, setPtr)
 #define _sigPtr2str2(setPtr)         _set2str(_setstr2, _sigMax, setPtr)
 
+// The following macros cast a _setPartType down to an unsigned int if needed
+#define castSignals(signals) \
+  ((_sigMax < WORD_BIT) ? ((unsigned int) signals) : (signals))
+
+#define sigCopyFrom(dest, source)			\
+  if (_sigMax < WORD_BIT) {				\
+    *((unsigned int *) &dest) = source;			\
+  } else {						\
+    dest = source;					\
+  }
+
 
 // ===================================================================
 // Low-level routines
@@ -162,7 +233,7 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
 /*! This implementation is fast and simple, BUT limits the max thread
  * ID and max signal ID to the word width of the machine (eg 32).
  */
-#define u2b(u)                       (1 << (u))
+#define u2b(u)                       ((unsigned long) 1 << (u))
 
 
 // ===================================================================
@@ -176,13 +247,14 @@ char *_set2str(char *str, int max, _setPartType *setPtr);   // Defined in sc.c
 #define _setDel(set, i)              (set &= ~u2b(i))
 #define _setAddSet(set1, set2)       (set1 |= set2)
 #define _setDelSet(set1, set2)       (set1 &= ~set2)
-#define _setContains(set, i)         (set & u2b(i))
+//#define _setContains(set, i)         (printf("set=%ld, u2b=%lu, set & u2b(i)=%ld",set, (unsigne
+#define _setContains(set, i)         ((set & u2b(i)) != 0)
 #define _setNotOnlyElem0(set)        (set != u2b(0))
 #define _setIsDisjoint(set1, set2)   ((set1 & set2) == 0)
 //#define _setIsNotDisjoint(set1, set2) ((set1 & set2) != 0)
 #define _setCopyFrom(set1, set2)     (set1 = set2)
 
-_setPartType *enabledPtr, *signalsPtr, *tickInputsPtr, *tickOutputsPtr, *tickSignalsPtr;
+_setPartType * enabledPtr, *signalsPtr, *tickInputsPtr, *tickOutputsPtr, *tickSignalsPtr;
 
 extern char _setstr[], _setstr2[];   // Strings for printing sets
 
@@ -276,7 +348,7 @@ int tick();
 //#define _setContains(set, i)         (set & u2b(i))
 #define _DEF_setContains(TYPE)						\
   int TYPE ## Contains(_setPartType set[], int i) {			\
-    return set[i / _setPartSize] & u2b(i % _setPartSize);		\
+    return (set[i / _setPartSize] & u2b(i % _setPartSize)) != 0;		\
   }
 
 //#define _setNotOnlyElem0(set, i)  (set != u2b(0))
@@ -365,7 +437,7 @@ int tick();
  * Two variants for this, depending on whether we have a BSR assembler
  * instruction at our disposal or not.
  */
-
+/*
 #if ((defined __i386__ || defined __amd64__ || defined __x86_64__) && defined __GNUC__ && !defined _SC_NOASSEMBLER)
 // Version 1: x86 + gcc available.
 // Use fast Bit Scan Reverse assembler instruction.
@@ -373,14 +445,33 @@ int tick();
 // - This requires 'set' to be a plain integer (not, eg, an array reference such as _descs[...])
 // - If 'set' is 0, the result of 'i' is undefined!
 // - Compare also with "63 - __builtin_clzll(set)"
-#define _BitScanReverse(set, i)			\
+#define _BitScanReverse32(set, i)			\
   __asm volatile("bsrl %1,%0\n"			\
 		 : "=r" (i)			\
-		 : "c" (set)			\
+		 : "r" (set)			\
 		 )
 
-#else  // Version 2: x86 + gcc not available.
+#define _BitScanReverse64(set, i)			\
+    _setPartType i;				      \
+    bit = 0;				      \
+    for (i = set; i > 1; i >>= 1)	      \
+      bit++;				      \
+  }
 
+#if (WORD_BIT == 32)
+# define _BitScanReverseUInt(set, bit)  _BitScanReverse32(set, bit)
+#elif  (WORD_BIT == 64)
+# define _BitScanReverseUInt(set, bit)  _BitScanReverse64(set, bit)
+#endif
+
+#if (_setPartSize == 32)
+# define _BitScanReverseSetPartType(set, bit)  _BitScanReverse32(set, bit)
+#elif  (_setPartSize == 64)
+# define _BitScanReverseSetPartType(set, bit)  _BitScanReverse64(set, bit)
+#endif
+
+#else  // Version 2: x86 + gcc not available.
+*/
 // ===================================================================
 //! Compute the highest bit (largest element) in a set.
 /*! Uses obvious algorithm, run time linear in position of highest bit.
@@ -388,14 +479,17 @@ int tick();
  * See eg http://graphics.stanford.edu/~seander/bithacks.html#IntegerLog .
  * Which is actually faster depends on application.
  */
-
-#define _BitScanReverse(set, bit) {	      \
-    int i;				      \
+/*
+setType _;
+#define _BitScanReverseType(setType, set, bit) {	      \
     bit = 0;				      \
     for (i = set; i > 1; i >>= 1)	      \
       bit++;				      \
   }
+#define _BitScanReverseUInt(set, bit)            _BitScanReverseType(unsigned int, set, bit)
+#define _BitScanReverseSetPartType(set, bit) _BitScanReverseType(_setPartType, set, bit)
 #endif
+*/
 
 #define dispatch()       selectCid(); _goto(_deref(_pc[_cid]))
 
@@ -632,15 +726,11 @@ _L_DISPATCH: dispatch();
   } while (0)
 
 
-//  disable(_cid);							\
-//  deactivate(_cid);							\
-//  disableSet(_descs[_cid]);						\
-//  deactivateSet(_descs[_cid]); \
-
-
 //! Helper function (if/else-unsafe)
 #ifdef _SC_INLINE_DISPATCH
 #define TERM_								\
+  disable(_cid);							\
+  deactivate(_cid);							\
   trace1t("TERM:", "terminates, enabled = %s\n", _id2str(enabled, _cid)) \
   dispatch_
 #else
@@ -689,6 +779,7 @@ _L_DISPATCH: dispatch();
     _pid = _ppid;							\
   }									\
   dispatch_
+
 
 //! Join completed child threads.
 /*! IF all descendants have terminated,
@@ -1402,10 +1493,10 @@ void _checkSIG_ID(sigtype s, sigtype max);      // Defined in sc.c
 
 #else
 
-void set2names(char *prefix, char* suffix, void *setPtr, int setmax, char *names[]);  // Defined in sc.c
+void set2names(char *prefix, char* suffix, void *setPtr, int setmax, char *names[], void (*printValFunc)(int));  // Defined in sc.c
 
-#define id2names(prefix, suffix, setPtr)    set2names(prefix, suffix, setPtr, _idMax, state)
-#define sig2names(prefix, suffix, setPtr)   set2names(prefix, suffix, setPtr, _sigMax, (char **) s2signame)
+#define id2names(prefix, suffix, setPtr)    set2names(prefix, suffix, setPtr, _idMax, state, NULL)
+#define sig2names(prefix, suffix, setPtr)   set2names(prefix, suffix, setPtr, _sigMax, (char **) s2signame, printVal)
 #endif
 
 
