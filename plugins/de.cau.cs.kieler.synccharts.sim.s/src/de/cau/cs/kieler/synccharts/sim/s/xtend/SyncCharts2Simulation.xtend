@@ -46,11 +46,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
  * 
  * ATTENTION: Iff the state has an outgoing normal termination then
  * we cannot do (2.) because this would also corrupt the semantics
- * and the normal termination will never trigger.
- * In this case we need another construct (3.):
- * a) for every concurrent region we need a state representing its running or dead
- * b) 
- * 
+ * The normal termination is transformed into a weak abort - this is the
+ * best approximation 
  * 
  * Signal HT are generated in the following fashion for a
  * transition T:
@@ -129,9 +126,10 @@ class SyncCharts2Simulation {
 	
 	// Transform a state as described in 2.
 	def void transformState(State state, Region targetRootRegion, String UID) {
-		// Final states will be transformed if there is a normal termination with a self loop
 		if (state.isFinal) {
 			state.setIsFinal(false);
+			// Final states will be transformed if there is a normal termination with a self loop
+			// so we do not want to add a superfluous self loop and return here.
 			return;
 		}
 
