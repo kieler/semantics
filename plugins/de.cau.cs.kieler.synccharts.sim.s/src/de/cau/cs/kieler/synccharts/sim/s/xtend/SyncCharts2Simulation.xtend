@@ -39,6 +39,8 @@ import de.cau.cs.kieler.core.kexpressions.OperatorType
  * 1. For every incoming transition, add an output-emit action for HS
  * 2. Create an auxiliary region that has one state and a self-loop 
  *    emitting HS.
+ * 3. Initial states need new initial states connected with an
+ *    immediate transition that emits the signal HS.
  * 
  * ATTENTION: Iff the state is a final state, then do not emit the
  * in-state-auxiliary signal inside (2.) because the thread in this case
@@ -131,7 +133,7 @@ class SyncCharts2Simulation {
 			state.setIsFinal(false);
 			// Final states will be transformed if there is a normal termination with a self loop
 			// so we do not want to add a superfluous self loop and return here.
-			return;
+//			return;
 		}
 
 		// Do the following only for NON-final states
@@ -179,7 +181,13 @@ class SyncCharts2Simulation {
 					triggerExpression.subExpressions.add(valuedObjectReference);
 				}
 			
-				normalTerminationTransition.setTrigger(triggerExpression);
+				if (triggerExpression.subExpressions.size == 1) {
+					// if there is just one signal, we do not need an AND!
+					normalTerminationTransition.setTrigger(triggerExpression.subExpressions.get(0));
+				}
+				else if (triggerExpression.subExpressions.size > 1) {
+					normalTerminationTransition.setTrigger(triggerExpression);
+				}
 			}
 
 			
@@ -199,6 +207,25 @@ class SyncCharts2Simulation {
    				auxiliaryEmission.setSignal(auxiliarySignal);
 	   			// Add emission to effect of incoming transition
 				transition.effects.add(auxiliaryEmission);
+			}
+
+			// If the state is an initial state, then we need an NEW initial state
+			// connected with an immediate transition that outputs the auxiliary signal.			
+			if (state.isInitial) {
+				val initialState  = SyncchartsFactory::eINSTANCE.createState();
+				val initialTransition =  SyncchartsFactory::eINSTANCE.createTransition();
+				val initialEmission = SyncchartsFactory::eINSTANCE.createEmission();
+				initialState.setId("init" + state.hashCode);
+				initialTransition.setTargetState(state);
+				initialTransition.setPriority(1);
+				initialTransition.setDelay(0);
+				initialTransition.setIsImmediate(true);
+				initialState.setIsInitial(true);
+				state.setIsInitial(false);
+				initialState.outgoingTransitions.add(initialTransition);
+   				initialEmission.setSignal(auxiliarySignal);
+				initialTransition.effects.add(initialEmission);
+				state.parentRegion.states.add(initialState);
 			}
 		
 			// 2. Create auxiliary region and an inner state with a self-loop
