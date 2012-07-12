@@ -38,7 +38,9 @@ import de.cau.cs.kieler.core.kexpressions.ValueType
  * 2. Create an auxiliary region that has one state and a self-loop 
  *    emitting HS.
  * 
- * ATTENTION: Iff the incoming transition
+ * ATTENTION: Iff the state is a final state, then do not emit the
+ * in-state-auxiliary signal inside (2.) because the thread in this case
+ * cannot terminate! (This would change the semantics)
  * 
  * Signal HT are generated in the following fashion for a
  * transition T:
@@ -94,6 +96,7 @@ class SyncCharts2Simulation {
 		target;
 	}	
 	
+	// Transform a transition as described in 1.
 	def void transformTransition(Transition transition, Region targetRootRegion, String UID) {
 		// auxiliary signal
 		var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
@@ -114,47 +117,52 @@ class SyncCharts2Simulation {
 		targetRootRegion.states.get(0).signals.add(auxiliarySignal);
 	}
 	
+	// Transform a state as described in 2.
 	def void transformState(State state, Region targetRootRegion, String UID) {
-		// auxiliary signal
-		var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
+		// Do the following only for NON-final states (as described above)
+		if (!state.isFinal) {
+			// auxiliary signal
+			var auxiliarySignal = KExpressionsFactory::eINSTANCE.createSignal();
 		
-		// Setup the auxiliarySignal as an OUTPUT to the module
-		auxiliarySignal.setName(UID);
-		auxiliarySignal.setIsInput(false);
-		auxiliarySignal.setIsOutput(true);
-		auxiliarySignal.setType(ValueType::PURE);
+			// Setup the auxiliarySignal as an OUTPUT to the module
+			auxiliarySignal.setName(UID);
+			auxiliarySignal.setIsInput(false);
+			auxiliarySignal.setIsOutput(true);
+			auxiliarySignal.setType(ValueType::PURE);
 		
-		// 1. Add emission of auxiliary Signal to every incoming transition
-		for (transition : state.incomingTransitions) {
+			// 1. Add emission of auxiliary Signal to every incoming transition
+			for (transition : state.incomingTransitions) {
+				// Set the auxliiarySignal for emission 
+				var auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
+   				auxiliaryEmission.setSignal(auxiliarySignal);
+	   			// Add emission to effect of incoming transition
+				transition.effects.add(auxiliaryEmission);
+			}
+		
+			// 2. Create auxiliary region and an inner state with a self-loop
+			// emitting the signal
+			var auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
+			var auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
+			var auxiliarySelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
+		
+			auxiliarySelfLoop.setTargetState(auxiliaryState);
+			auxiliarySelfLoop.setPriority(1);
+			auxiliarySelfLoop.setDelay(1);
 			// Set the auxliiarySignal for emission 
 			var auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-   			auxiliaryEmission.setSignal(auxiliarySignal);
-   			// Add emission to effect of incoming transition
-			transition.effects.add(auxiliaryEmission);
+			auxiliaryEmission.setSignal(auxiliarySignal);
+			auxiliarySelfLoop.effects.add(auxiliaryEmission);
+		
+			auxiliaryState.setId("state" + UID);
+			auxiliaryState.setIsInitial(true);
+			auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
+		
+			auxiliaryRegion.states.add(auxiliaryState);
+			state.regions.add(auxiliaryRegion);
+		
+			// Add auxiliarySignal to first (and only) root region state SyncCharts main interface
+  			targetRootRegion.states.get(0).signals.add(auxiliarySignal);
 		}
-		
-		// 2. Create auxiliary region and an inner state with a self-loop
-		// emitting the signal
-		var auxiliaryRegion = SyncchartsFactory::eINSTANCE.createRegion()
-		var auxiliaryState  = SyncchartsFactory::eINSTANCE.createState();
-		var auxiliarySelfLoop =  SyncchartsFactory::eINSTANCE.createTransition();
-		
-		auxiliarySelfLoop.setTargetState(auxiliaryState);
-		// Set the auxliiarySignal for emission 
-		var auxiliaryEmission = SyncchartsFactory::eINSTANCE.createEmission();
-		auxiliaryEmission.setSignal(auxiliarySignal);
-		auxiliarySelfLoop.effects.add(auxiliaryEmission);
-		
-		auxiliaryState.setId("state" + UID);
-		auxiliaryState.setIsInitial(true);
-		auxiliaryState.outgoingTransitions.add(auxiliarySelfLoop);
-		
-		auxiliaryRegion.states.add(auxiliaryState);
-		
-		state.regions.add(auxiliaryRegion);
-		
-		// Add auxiliarySignal to first (and only) root region state SyncCharts main interface
-		targetRootRegion.states.get(0).signals.add(auxiliarySignal);
 		
 	}
 	
