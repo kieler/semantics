@@ -294,7 +294,7 @@ unsigned long _longBit;
 #else
 # define _BitScanReverse(set, bit)				      \
   bit = 0;							      \
-  for (_setPart = set; _setPart > 1; _setPart >>= 1)		      \
+  for (_setPart = set; _setPart > 1; _setPart >>= 1) {		      \
     bit++;							      \
   }
 #endif

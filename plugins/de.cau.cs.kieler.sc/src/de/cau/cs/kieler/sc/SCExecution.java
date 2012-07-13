@@ -133,6 +133,7 @@ public class SCExecution {
             for (String filePath : filePaths) {
                 compileBuf.append(" " + filePath);
             }
+
             compile += compileBuf.toString();
 
             compile += " "
@@ -142,11 +143,11 @@ public class SCExecution {
                     // + "sim_data.c "
                     // + outPath
                     // + "misc.c "
-                    + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + "-I "
+                    + bundleLocation + "sc.c " + bundleLocation + "cJSON.c " + " -I "
                     + bundleLocation + " " + "-o " + outputPath + getExecutableName()
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
-                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE";
+                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -D_SC_NOASSEMBLER";
             /*
              * -m32"; REMOVED due to error with surefire on 64bit machine:
              * 
@@ -174,6 +175,7 @@ public class SCExecution {
              * bits/predefs.h: No such file or directory build 11-Jun-2012 11:42:26 compilation
              * terminated.
              */
+            System.out.println(compile);
             executionProcess = Runtime.getRuntime().exec(compile);
 
             InputStream stderr = executionProcess.getErrorStream();

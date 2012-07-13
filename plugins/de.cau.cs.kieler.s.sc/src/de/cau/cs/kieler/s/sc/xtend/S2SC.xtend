@@ -100,13 +100,21 @@ class S2SC {
 	«/* Signal constants */»
 	«sSignalConstant(program)»
 	
+# define _BitScanReverse(set, bit)				      \
+  bit = 0;							      \
+  for (_setPart = set; _setPart > 1; _setPart >>= 1) {		      \
+    bit++;							      \
+  }
+
+	
 	// Highest thread id in use;
-	#define _SC_ID_MAX «program.eAllContents.filter(typeof(State)).toList.size» 
+	#define _SC_ID_MAX «program.priority» 
 
 	// Highest signal id in use;
 	#define _SC_SIG_MAX «program.getSignals().size» 
 
 	#include "sc.h"
+
 
 	cJSON* output = 0;
 	cJSON* value = 0;
