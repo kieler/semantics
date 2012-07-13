@@ -95,21 +95,24 @@ class S2SC {
 	#include <stdlib.h>
 	#include <stdio.h>
 
-	#include "sc.h"
 	#include "cJSON.h"
 	
 	«/* Signal constants */»
 	«sSignalConstant(program)»
 	
+	// Highest thread id in use;
+	#define _SC_ID_MAX «program.eAllContents.filter(typeof(State)).toList.size» 
 
 	// Highest signal id in use;
-	#define _SC_valSigInt_SIZE «program.getSignals().size» 
+	#define _SC_SIG_MAX «program.getSignals().size» 
+
+	#include "sc.h"
 
 	cJSON* output = 0;
 	cJSON* value = 0;
 	
-	int valSigInt[_SC_valSigInt_SIZE];
-	int valSigIntPre[_SC_valSigInt_SIZE];
+	int valSigInt[_SC_SIG_MAX];
+	int valSigIntPre[_SC_SIG_MAX];
 	
 	''' 
    }
@@ -118,9 +121,11 @@ class S2SC {
    
    // Generate signal constants.
    def sSignalConstant(Program program) {
-   	'''typedef enum {«FOR signal : program.getSignals() SEPARATOR ", "»sig_«signal.name»«ENDFOR»} signaltype;
+   	'''typedef enum {«FOR signal : program.getSignals() SEPARATOR ",
+ "»sig_«signal.name»«ENDFOR»} signaltype;
    	
-   	const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", "»"sig_«signal.name»"«ENDFOR»};'''
+   	const char *s2signame[] = {«FOR signal : program.getSignals() SEPARATOR ", 
+"»"sig_«signal.name»"«ENDFOR»};'''
    }
    
    // Generate simple reset.
@@ -142,7 +147,11 @@ class S2SC {
    	''' 
 	«FOR signal : program.getSignals().filter(e|e.isInput||e.isOutput)»
 void simple_INPUT_«signal.name»() {
-	signals = signals | (1 << sig_«signal.name»);
+	   _sigAdd(signals, sig_«signal.name»);
+«//     signalsPtr[sig_«signal.name»] = u2b(«signal.name»);
+»
+« //	signals = signals | (1 << sig_«signal.name»); 
+»
 }
 	«ENDFOR»
 '''
@@ -155,9 +164,11 @@ void simple_INPUT_«signal.name»() {
    	'''
 	void callOutputs() {
 	«FOR signal : program.getSignals().filter(e|e.isOutput)»
-		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
+	simple_OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));
+«//		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
+»
 	«ENDFOR»
-		signals=0;
+		//signals=0;
 	}
    	'''
    }

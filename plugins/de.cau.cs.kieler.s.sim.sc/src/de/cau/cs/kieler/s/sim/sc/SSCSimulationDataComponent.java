@@ -132,6 +132,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
                                 .getJSONObject(sSignalOutputName));
 
+//                        returnObj.accumulate(sSignalOutputName, sSignalOutput
+//                                .getJSONObject(sSignalOutputName));
+                        
                         // Test if the output variable is an auxiliary signal
                         // that is only there to mark the current S statement
                         // in full_simulation mode of the simulator.
@@ -152,6 +155,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
                             } catch (Exception e) {
                                 // ignore error
+                                e.printStackTrace();
                             }
 
                         }

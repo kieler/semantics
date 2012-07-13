@@ -42,7 +42,7 @@ int main()
       getInputs(runCnt, tickCnt);
 
       for (i = 0; i < sigsetSize; i++) {
-	tickInputsPtr[i] = signalsPtr[i];
+	sigCopyFrom(tickInputsPtr[i], signalsPtr[i]);
       }
 
       trace2("==== TICK %d STARTS, inputs = %s",
@@ -60,23 +60,23 @@ int main()
       trace2("==== TICK %d terminates after %d instructions.\n",
 	     tickCnt, tickInstrCnt);
       id2names("==== Enabled (id/state): ", "\n", enabledPtr);
-      sig2names("==== Resulting signals (name/id): ", "", signalsPtr);
+      sig2names("==== Resulting signals (id/name): ", "", signalsPtr);
       outputsOK = checkOutputs(runCnt, tickCnt, tickOutputsPtr);
       if (outputsOK) {
-
 	for (i = 0; i < sigsetSize; i++) {
-	  tickSignalsPtr[i] = tickInputsPtr[i] | tickOutputsPtr[i];
+	  sigCopyFrom(tickSignalsPtr[i], castSignals(tickInputsPtr[i]) | castSignals(tickOutputsPtr[i]));
 	}
-	for (ok = 1, i = 0; ok && (i < sigsetSize); i++) {
-	  ok = (signalsPtr[i] == tickSignalsPtr[i]);
+	for (i = 0; outputsOK && (i < sigsetSize); i++) {
+	  outputsOK = (castSignals(signalsPtr[i]) == castSignals(tickSignalsPtr[i]));
 	}
-	if (ok) {
-	  trace0(", Outputs OK.\n\n");
-	} else {
+	if (!outputsOK) {
 	  sig2names(", Outputs NOT OK - expected signals ", "!!\n\n",
-		 tickSignalsPtr);
-	  outputsOK = 0;
+		    tickSignalsPtr);
 	}
+      }
+
+      if (outputsOK) {
+	trace0(", Outputs OK.\n\n");
       } else {
 	notDone = 0;
       }
