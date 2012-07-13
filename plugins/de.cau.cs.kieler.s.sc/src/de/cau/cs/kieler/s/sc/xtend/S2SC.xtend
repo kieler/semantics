@@ -163,12 +163,20 @@ void simple_INPUT_«signal.name»() {
    def sSetOutputFunction(Program program) {
    	'''
 	void callOutputs() {
+		int i = 0;
 	«FOR signal : program.getSignals().filter(e|e.isOutput)»
 	simple_OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));
 «//		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
 »
 	«ENDFOR»
 		//signals=0;
+		_sigClear(signals);
+		
+	«FOR signal : program.getSignals().filter(e|e.isOutput)»
+	_sigDel(signals, sig_«signal.name»);
+«//		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
+»
+	«ENDFOR»
 	}
    	'''
    }
