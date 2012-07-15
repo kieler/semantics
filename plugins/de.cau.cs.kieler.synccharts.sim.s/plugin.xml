@@ -11,6 +11,14 @@
                priority="11">
          </editor>
       </executionFile>
+      <executionFile
+            file="execution/synccharts_s_no_visualization.execution">
+         <editor
+               id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
+               name="SyncChart Diagram Editor"
+               priority="10">
+         </editor>
+      </executionFile>
    </extension>
    <extension
          point="de.cau.cs.kieler.sim.kiem.json.datacomponent">
