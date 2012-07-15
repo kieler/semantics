@@ -8,7 +8,7 @@
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                name="SyncChart Diagram Editor"
-               priority="11">
+               priority="12">
          </editor>
       </executionFile>
       <executionFile
@@ -16,7 +16,7 @@
          <editor
                id="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID"
                name="SyncChart Diagram Editor"
-               priority="10">
+               priority="11">
          </editor>
       </executionFile>
    </extension>
