@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi;
+package de.cau.cs.kieler.sim.kiem.config.kivi;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -36,6 +36,8 @@ import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
 
@@ -46,10 +48,13 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * @author cmot
  * 
  */
-public class KIEMModelSelectionCombination extends AbstractCombination {
+public class KIEMModelSelectionCombination extends AbstractCombination implements IKiemEventListener {
 
     /** The time to sleep during blocking wait. */
     public static final int SLEEP_WAIT_TIME = 50;
+    
+    /** The deferred editor part that may be set while KIEM was executing or initializing. */
+    public static IEditorPart deferredEditorPart = null;
 
     // -------------------------------------------------------------------------
 
@@ -87,8 +92,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             // if no execution is running or is about to run
             if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
                     .getExecution() != null)) {
-
+                // reset any deferred partState
+                deferredEditorPart = null;
                 refreshKIEMActiveAndOpenedModels(activeEditorPart);
+            } else {
+                // defer the partState until KIEM is stopping
+                // then a KIEM event will trigger this combination
+                deferredEditorPart = activeEditorPart;
             }
         }
 
@@ -230,6 +240,31 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             }
         }
         return fullPath;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void notifyEvent(final KiemEvent event) {
+      if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
+          // In case of erroneous or intended execution stops
+          // trigger to select the NOW current model
+          if (deferredEditorPart != null) {
+              refreshKIEMActiveAndOpenedModels(deferredEditorPart);
+          }
+      }
+    }
+    
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP};
+        return new KiemEvent(events);
     }
 
     // -------------------------------------------------------------------------

@@ -70,5 +70,26 @@
             name="KIEM Execution Schedule Autoload">
       </combination>
    </extension>
+   <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.KIEMModelSelectionCombination"
+            description="Provides Simulators with the currently Active and Opened Model Files"
+            name="KIEM Model Selection">
+      </combination>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi.KIEMModelSelectionCombination">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination">
+      </content>
+   </extension>
 
 </plugin>
