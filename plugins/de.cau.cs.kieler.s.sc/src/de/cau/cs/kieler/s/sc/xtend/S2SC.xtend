@@ -45,7 +45,7 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
 class S2SC { 
     
     // General method to create the c simulation interface.
-	def transform (Program program, String outputFolder) {
+	def transform (Program program, String outputFolder, String bufferSize) {
        '''
 	   «/* Generate the C header */»
        «scHeader(outputFolder, program)»
@@ -59,7 +59,7 @@ class S2SC {
 
 	   «/* Generate input functions that are then called my the main function's
 		   tick function of the module */»
-       «sSetInputsFunction(program)»
+       «sSetInputsFunction(program, bufferSize)»
 
 	   «/* Generate output functions for each S signal */» 
        «sSetOutputFunction(program)»
@@ -191,10 +191,10 @@ void simple_INPUT_«signal.name»() {
    
    // Generate input functions that are then called my the main function's
    // tick function of the module.
-   def sSetInputsFunction(Program program) {
+   def sSetInputsFunction(Program program, String bufferSize) {
 '''
 void setInputs(){
-  char buffer[2048];
+  char buffer[«bufferSize»];
   int i=0;
   char c;
   // read next line

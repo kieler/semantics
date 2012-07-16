@@ -39,7 +39,7 @@ public class SCExecution {
 
     private static final String COMPILER_DEFAULT = "gcc";
     private static final String EXECUTABLE_PREFIX = "SC-GENERATED-EXECUTABLE-";
-
+    
     private Process executionProcess = null;
     private PrintWriter executionInterfaceToSC;
     private BufferedReader executionInterfaceFromSC;
@@ -242,6 +242,8 @@ public class SCExecution {
 
         // start compiled sc code
         String executable = outputPath + getExecutableName() + " ";
+        //executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
+
         executionProcess = Runtime.getRuntime().exec(executable);
 
         setExecutionInterfaceToSC(new PrintWriter(new OutputStreamWriter(
