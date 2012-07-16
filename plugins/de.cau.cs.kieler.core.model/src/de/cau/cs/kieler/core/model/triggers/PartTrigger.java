@@ -98,13 +98,20 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      */
     public void partOpened(final IWorkbenchPart part) {
         IWorkbench wb = PlatformUI.getWorkbench();
-        IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
-        IWorkbenchPage page = win.getActivePage();
-        // get the last editor'
-        IEditorPart activeEditorPart = page.getActiveEditor();
-        IWorkbenchPart activePart = page.getActivePart();
-        currentActiveEditor = activeEditorPart;
-        currentActivePart = activePart;
+        if (wb != null) {
+            IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
+            if (win != null) {
+                IWorkbenchPage page = win.getActivePage();
+                if (page != null) {
+                    // get the (last) active editor and view part
+                    IEditorPart activeEditorPart = page.getActiveEditor();
+                    IWorkbenchPart activePart = page.getActivePart();
+                    currentActiveEditor = activeEditorPart;
+                    currentActivePart = activePart;
+                }
+            }
+            
+        }
         
         // cmot: if a part is activated for the first time, Eclipse does not
         // call partActivated but partOpened instead. This trigger should

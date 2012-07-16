@@ -18,7 +18,6 @@ import java.util.List;
 import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
@@ -49,7 +48,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
     /**
      * Execute.
      *
-     * @param editorState the editor state
+     * @param partState the part state
      */
     public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
