@@ -151,7 +151,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
         try {
             System.out.println(jSONObject.toString());
 
-            String out = "";//jSONObject.toString();
+            String out = jSONObject.toString();
             scExecution.getExecutionInterfaceToSC().write(out + "\n");
             scExecution.getExecutionInterfaceToSC().flush();
             while (scExecution.getExecutionInterfaceError().ready()) {
@@ -160,6 +160,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             }
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+            
+            System.out.println(receivedMessage);
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);

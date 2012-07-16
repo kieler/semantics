@@ -30,7 +30,7 @@ public class SSimSCPlugin extends AbstractUIPlugin {
      * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in S2Simulation.xtend. Both
      * TAGs must match
      */
-    public static final String AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+    public static final String AUXILIARY_VARIABLE_TAG = "oSoAUXILIARYo";
 
     /** The shared instance. */
     private static SSimSCPlugin plugin;

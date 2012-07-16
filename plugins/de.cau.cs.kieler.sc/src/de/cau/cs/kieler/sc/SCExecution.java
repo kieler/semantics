@@ -147,7 +147,13 @@ public class SCExecution {
                     + bundleLocation + " " + "-o " + outputPath + getExecutableName()
                     // -m32 = 32 bit compatibility mode to prevent compiler errors on
                     // 64bit machines/architectures.
-                    + " -lm -D_SC_NOTRACE -D_SC_SUPPRESS_ERROR_DETECT -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+                    + " -lm -D_SC_NOTRACE  -D_SC_USE_PRE -D_SC_NOASSEMBLER";
+            
+            // -D_SC_SUPPRESS_ERROR_DETECT
+            // cmot: removed this option for now because of strange error
+            // in causality-test @ #define _checkEMIT(s) in sc-generic.h
+            // EMAIL to rvh on 16. Jul 2012
+            
             /*
              * -m32"; REMOVED due to error with surefire on 64bit machine:
              * 

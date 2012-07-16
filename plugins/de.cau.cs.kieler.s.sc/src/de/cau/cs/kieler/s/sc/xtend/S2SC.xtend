@@ -51,9 +51,9 @@ class S2SC {
        «scHeader(outputFolder, program)»
 
 	   «/* Simple Signal Reset, Input Output */»
-	   «sSimpleReset(program)»
+	   «sReset(program)»
 
-       «sSimpleInputs(program)»
+       «sInputs(program)»
 
        «sSimpleOutputs(program)»
 
@@ -61,9 +61,11 @@ class S2SC {
 		   tick function of the module */»
        «sSetInputsFunction(program, bufferSize)»
 
-	   «/* Generate output functions for each S signal */» 
+	   «/* Generate output functions and reset functions for each S signal */» 
        «sSetOutputFunction(program)»
-	   
+
+	   «sResetOutputs(program)»
+
 	   «/* Generate the main function */»
 	   «mainFunction(program)»
 
@@ -137,9 +139,9 @@ class S2SC {
    }
    
    // Generate simple reset.
-   def sSimpleReset(Program program) {
+   def sReset(Program program) {
    	   	''' 
-   	int simple_reset() {
+   	int reset() {
 	RESET();
 	/* initialize all valued integer signals */
 	«FOR signal : program.getSignals()»
@@ -151,10 +153,10 @@ class S2SC {
    }
    
    // Generate simple signal inputs.
-   def sSimpleInputs(Program program) {
+   def sInputs(Program program) {
    	''' 
 	«FOR signal : program.getSignals().filter(e|e.isInput||e.isOutput)»
-void simple_INPUT_«signal.name»() {
+void INPUT_«signal.name»() {
 	   _sigAdd(signals, sig_«signal.name»);
 «//     signalsPtr[sig_«signal.name»] = u2b(«signal.name»);
 »
@@ -171,19 +173,25 @@ void simple_INPUT_«signal.name»() {
    def sSetOutputFunction(Program program) {
    	'''
 	void callOutputs() {
-		int i = 0;
 	«FOR signal : program.getSignals().filter(e|e.isOutput)»
-	simple_OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));
-«//		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
-»
+		OUTPUT_«signal.name»(_sigContains(signals, sig_«signal.name»));«/*OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»)); */»
 	«ENDFOR»
+		}
+   	'''
+   }
+
+
+
+   // -------------------------------------------------------------------------
+   // Generate simple signal outputs.
+   def sResetOutputs(Program program) {
+   	'''
+	void resetOutputs() {
 		//signals=0;
 		_sigClear(signals);
-		
+		//_checkTickInit;
 	«FOR signal : program.getSignals().filter(e|e.isOutput)»
-	_sigDel(signals, sig_«signal.name»);
-«//		simple_OUTPUT_«signal.name»(signals & (1 << sig_«signal.name»));
-»
+	  _sigDel(signals, sig_«signal.name»);
 	«ENDFOR»
 	}
    	'''
@@ -221,7 +229,7 @@ void setInputs(){
    // Generate the main function.
    def mainFunction(Program program) {
    	'''int main(int argc, const char* argv[]) {
-		simple_reset();
+		reset();
 		output = cJSON_CreateObject();
 		RESET();
 		setInputs();
@@ -232,7 +240,7 @@ void setInputs(){
 			strip_white_spaces(outString);
 			printf("%s\n", outString);
 			fflush(stdout);
-			//reset();
+			resetOutputs();
 			output = cJSON_CreateObject();
 			setInputs();
 			tick();
@@ -266,13 +274,14 @@ void setInputs(){
    // Define output functions to return JSON for each s signal.
    def sSimpleOutputs(Program program) {
 	'''«'''«FOR signal : program.signals.filter(e | e.isOutput)»
-		void simple_OUTPUT_«signal.name»(int status){
+		void OUTPUT_«signal.name»(int status){
 		value = cJSON_CreateObject();
 		cJSON_AddItemToObject(value, "present", status?cJSON_CreateTrue():cJSON_CreateFalse());
 	«IF signal.type == ValueType::INT»
 cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»)));
 	«ENDIF»
 		cJSON_AddItemToObject(output, "«signal.name»", value);
+		//printf("«signal.name»:%d\n", status);
 		}
 	«ENDFOR»'''»
 	'''
@@ -287,7 +296,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
 			present = cJSON_GetObjectItem(child, "present");
 			value = cJSON_GetObjectItem(child, "value");
 			if (present != NULL && present->type) {
-				simple_INPUT_«signal.name»();
+				INPUT_«signal.name»();
 			}
 		}   
    	   
