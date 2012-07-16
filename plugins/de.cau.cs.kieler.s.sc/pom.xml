@@ -20,7 +20,7 @@
         <executions>
           <execution>
             <goals>
-              <goal>compile</goal>
+              <goal>compile2</goal>
             </goals>
           </execution>
         </executions>
