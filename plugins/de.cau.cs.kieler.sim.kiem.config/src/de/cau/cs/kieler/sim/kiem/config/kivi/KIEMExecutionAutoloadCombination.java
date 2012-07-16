@@ -19,6 +19,7 @@ import org.eclipse.ui.IEditorSite;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
+import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.config.data.EditorIdWrapper;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
@@ -50,7 +51,7 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
      *
      * @param editorState the editor state
      */
-    public void execute(final EditorState editorState) {
+    public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
         // components may require UI access, do not execution at this point
         if (KiemPlugin.getDefault().isInitializingExecution()) {
@@ -58,10 +59,10 @@ public class KIEMExecutionAutoloadCombination extends AbstractCombination {
         }
 
         // if currently active editor is also the active part
-        if (editorState != null && editorState.editorIsActivePart()) {
+        if (partState != null) {
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
-            if (editorState.getEditorPart() instanceof KiemProxyEditor) {
+            if (partState.getEditorPart() instanceof KiemProxyEditor) {
                 return;
             }
 

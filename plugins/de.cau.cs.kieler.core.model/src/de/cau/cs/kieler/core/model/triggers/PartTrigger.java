@@ -97,25 +97,19 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
-        
         IWorkbench wb = PlatformUI.getWorkbench();
         IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
         IWorkbenchPage page = win.getActivePage();
         // get the last editor'
-        IWorkbenchPart activePart = page.getActiveEditor();
-        // cmot: do the following for the activePart not for the part;
-        // this is necessary because partOpenend is called several
-        // times when Eclipse started for every opened editor
-        // but in an unpredictable order, so that the last time
-        // usually NOT corresponds to the currently active part
-        // - this way partActivated might be called several times
-        // but we assure it is only called for the active
-        // editor
+        IEditorPart activeEditorPart = page.getActiveEditor();
+        IWorkbenchPart activePart = page.getActivePart();
+        currentActiveEditor = activeEditorPart;
+        currentActivePart = activePart;
         
         // cmot: if a part is activated for the first time, Eclipse does not
         // call partActivated but partOpened instead. This trigger should
         // execution in both cases.
-        partActivated(activePart);
+        partActivated(part);
     }
 
     /**
@@ -139,7 +133,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
 
         if (part instanceof IEditorPart) {
             this.currentActiveEditor = (IEditorPart) part;
-            currentActiveEditor.setFocus();
+//            currentActiveEditor.setFocus();
             type = EventType.EDITOR_ACTIVATED;
             isEditorReference = true;
         }

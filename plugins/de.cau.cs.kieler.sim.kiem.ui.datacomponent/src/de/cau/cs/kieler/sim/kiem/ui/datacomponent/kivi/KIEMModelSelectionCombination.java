@@ -34,6 +34,7 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
+import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
@@ -66,7 +67,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
      * @param editorState
      *            the editor state
      */
-    public void execute(final EditorState editorState) {
+    public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
         // components may require UI access, do not execution at this point
         if (KiemPlugin.getDefault().isInitializingExecution()) {
@@ -74,10 +75,12 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         }
 
         // if currently active editor is also the active part
-        if (editorState != null && editorState.editorIsActivePart()) {
+        if (partState != null) {
+            // Select the active editor
+            IEditorPart activeEditorPart = partState.getEditorPart();
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
-            if (editorState.getEditorPart() instanceof KiemProxyEditor) {
+            if (activeEditorPart instanceof KiemProxyEditor) {
                 return;
             }
 
@@ -85,7 +88,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
                     .getExecution() != null)) {
 
-                refreshKIEMActiveAndOpenedModels(editorState);
+                refreshKIEMActiveAndOpenedModels(activeEditorPart);
             }
         }
 
@@ -97,7 +100,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
      * Refresh KIEM's the active and the list of opened models that serves as an input for the model
      * selection KIEMProperty of simulator components.
      */
-    private void refreshKIEMActiveAndOpenedModels(final EditorState editorState) {
+    private void refreshKIEMActiveAndOpenedModels(final IEditorPart activeEditorPart) {
         // By default reset opened editors (also no active one)
         KiemPlugin.getOpenedModelFiles().clear();
         KiemPlugin.setCurrentModelFile(null);
@@ -114,7 +117,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             IPath inputModelPath = getInputModelPath(editorPart);
 
             // this is the active editor if any
-            if (editorPart == editorState.getEditorPart()) {
+            if (editorPart == activeEditorPart) {
                 KiemPlugin.setCurrentModelFile(inputModelPath);
             }
 
