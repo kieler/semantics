@@ -33,7 +33,6 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
 import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
 import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
@@ -54,7 +53,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
     public static final int SLEEP_WAIT_TIME = 50;
     
     /** The deferred editor part that may be set while KIEM was executing or initializing. */
-    public static IEditorPart deferredEditorPart = null;
+    private static IEditorPart deferredEditorPart = null;
 
     // -------------------------------------------------------------------------
 
@@ -68,9 +67,8 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
 
     /**
      * Execute.
-     * 
-     * @param editorState
-     *            the editor state
+     *
+     * @param partState the part state
      */
     public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
@@ -85,7 +83,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
             IEditorPart activeEditorPart = partState.getEditorPart();
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
-            if (activeEditorPart instanceof KiemProxyEditor) {
+            if (activeEditorPart == null || activeEditorPart instanceof KiemProxyEditor) {
                 return;
             }
 
