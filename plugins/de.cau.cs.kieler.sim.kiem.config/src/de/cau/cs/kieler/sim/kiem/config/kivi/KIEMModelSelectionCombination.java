@@ -223,11 +223,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination implement
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IPath fullPath = null;
         if (model != null) {
-            // EMF model case
-            org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-            IPath path = new Path(uri.toPlatformString(false));
-            IFile file = myWorkspaceRoot.getFile(path);
-            fullPath = file.getFullPath();
+            if (model.eResource() != null) {
+                // EMF model case
+                org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
+                IPath path = new Path(uri.toPlatformString(false));
+                IFile file = myWorkspaceRoot.getFile(path);
+                fullPath = file.getFullPath();
+            }
         } else {
             // Other editors
             IEditorInput editorInput = editorPart.getEditorInput();
