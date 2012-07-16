@@ -147,7 +147,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
-            System.out.println(jSONObject.toString());
+            //System.out.println(jSONObject.toString());
 
             String out = jSONObject.toString();
             scExecution.getExecutionInterfaceToSC().write(out + "\n");
@@ -159,7 +159,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
 
-            System.out.println(receivedMessage);
+            //System.out.println(receivedMessage);
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
