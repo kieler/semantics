@@ -722,7 +722,8 @@ public final class ScheduleManager extends AbstractManager implements IRefactori
         if (scheduleData == null) {
             scheduleData = new LinkedList<ScheduleData>();
 
-            loadFromPrefStore();
+            // simplified by cmot, only show predefined schedules to the User
+            //loadFromPrefStore();
             loadFromExtensionPoint();
         }
     }
