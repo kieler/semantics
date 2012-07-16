@@ -16,10 +16,12 @@ package de.cau.cs.kieler.core.model.triggers;
 import java.util.Map;
 
 import org.eclipse.core.runtime.IPath;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IStartup;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
@@ -97,10 +99,12 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      * {@inheritDoc}
      */
     public void partOpened(final IWorkbenchPart part) {
+        
         IWorkbench wb = PlatformUI.getWorkbench();
         IWorkbenchWindow win = wb.getActiveWorkbenchWindow();
         IWorkbenchPage page = win.getActivePage();
-        IWorkbenchPart activePart = page.getActivePart();
+        // get the last editor'
+        IWorkbenchPart activePart = page.getActiveEditor();
         // cmot: do the following for the activePart not for the part;
         // this is necessary because partOpenend is called several
         // times when Eclipse started for every opened editor
@@ -109,7 +113,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
         // - this way partActivated might be called several times
         // but we assure it is only called for the active
         // editor
-
+        
         // cmot: if a part is activated for the first time, Eclipse does not
         // call partActivated but partOpened instead. This trigger should
         // execution in both cases.
@@ -292,6 +296,7 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
      */
     public void partBroughtToTop(final IWorkbenchPartReference partRef) {
     }
+    
 
     /**
      * {@inheritDoc}
@@ -572,5 +577,6 @@ public class PartTrigger extends AbstractTrigger implements IPartListener {
             super(theCurrentActivePart, theCurrentActiveEditorPart, theEventType);
         }
     }
+
 
 }
