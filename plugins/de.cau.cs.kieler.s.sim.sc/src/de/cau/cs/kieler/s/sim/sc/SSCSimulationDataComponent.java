@@ -289,7 +289,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        scExecution.stopExecution();
+        if (scExecution != null) {
+            scExecution.stopExecution();
+        }
     }
 
     // -------------------------------------------------------------------------
