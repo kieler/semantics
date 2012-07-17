@@ -46,15 +46,15 @@ public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
 
         // plot signal data
         for (Signal signal : signalList) {
-            String currentLine = "";
+            StringBuffer currentLineBuf = new StringBuffer();
             for (long tick = minTick; tick <= maxTick; tick++) {
                 if (signal.isPresent(tick)) {
-                    currentLine += createSpacedLabel(signal.getName(), spaceLength, 0);
+                    currentLineBuf.append(createSpacedLabel(signal.getName(), spaceLength, 0));
                 } else {
-                    currentLine += getSpaceCharacters(spaceLength);
+                    currentLineBuf.append(getSpaceCharacters(spaceLength));
                 }
             }
-            stringList.add(currentLine);
+            stringList.add(currentLineBuf.toString());
         }
 
         // space line

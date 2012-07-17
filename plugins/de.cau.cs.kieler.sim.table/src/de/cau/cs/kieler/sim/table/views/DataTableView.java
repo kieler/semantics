@@ -82,9 +82,6 @@ public class DataTableView extends ViewPart {
     /** The tree table viewer. */
     private DataTableViewer viewer;
 
-    /** The table list containing the data. */
-    private TableDataList tableDataList;
-
     /** The action for a new entry. */
     private Action actionNew;
 
@@ -122,17 +119,6 @@ public class DataTableView extends ViewPart {
      */
     public static DataTableView getInstance() {
         return dataTableView;
-    }
-
-    // -------------------------------------------------------------------------
-
-    /**
-     * Gets the single instance of the TableDataList.
-     * 
-     * @return the table data list
-     */
-    public TableDataList getTableDataList() {
-        return tableDataList;
     }
 
     // -------------------------------------------------------------------------

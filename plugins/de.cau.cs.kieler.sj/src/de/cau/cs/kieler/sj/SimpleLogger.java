@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel

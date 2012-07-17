@@ -26,13 +26,13 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
-public class AbstractLaunchConfigurationTabGroup extends
+public class KiemAbstractLaunchConfigurationTabGroup extends
         org.eclipse.debug.ui.AbstractLaunchConfigurationTabGroup {
 
     /**
      * Instantiates a new abstract launch configuration tab group.
      */
-    public AbstractLaunchConfigurationTabGroup() {
+    public KiemAbstractLaunchConfigurationTabGroup() {
     }
 
     // --------------------------------------------------------------------------

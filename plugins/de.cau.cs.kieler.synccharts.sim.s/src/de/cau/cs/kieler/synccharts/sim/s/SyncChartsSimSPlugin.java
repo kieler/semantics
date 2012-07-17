@@ -30,12 +30,17 @@ public class SyncChartsSimSPlugin extends AbstractUIPlugin {
     private static SyncChartsSimSPlugin plugin;
     
     /**
-     * The Constant AUXILIARY_VARIABLE_TAG. This TAG is also defined in S2Simulation.xtend. Both
-     * TAGs must match
+     * The Constant AUXILIARY_VARIABLE_TAG for a Transition.
      */
-    public static final String AUXILIARY_VARIABLE_TAG 
-                           = "oSYNCCHARTSoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+    public static final String AUXILIARY_VARIABLE_TAG_TRANSITION 
+                           = "oSYNCCHARTSoTRANSITIONoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
 
+    /**
+     * The Constant AUXILIARY_VARIABLE_TAG for a State.
+     */
+    public static final String AUXILIARY_VARIABLE_TAG_STATE 
+                           = "oSYNCCHARTSoSTATEoAUXILIARYoVARIABLEoTAGoWILLoBEoREMOVEDo";
+    
     // -------------------------------------------------------------------------
 
     /**

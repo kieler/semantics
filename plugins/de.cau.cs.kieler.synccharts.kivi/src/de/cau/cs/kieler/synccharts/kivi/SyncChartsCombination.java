@@ -18,14 +18,15 @@ import java.util.List;
 
 import org.eclipse.draw2d.ColorConstants;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceConverter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.RGB;
 
-import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
+import de.cau.cs.kieler.core.kivi.CombinationParameter;
 import de.cau.cs.kieler.core.model.gmf.effects.FocusContextEffect;
 import de.cau.cs.kieler.core.model.gmf.effects.HighlightEffect;
 import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
@@ -51,8 +52,8 @@ public class SyncChartsCombination extends AbstractCombination {
     /**
      * The preference key for the highlight color.
      */
-    public static final String ERROR_HIGHLIGHT_COLOR = SyncChartsCombination.class.getCanonicalName()
-            + ".errorHighlightColor";
+    public static final String ERROR_HIGHLIGHT_COLOR = SyncChartsCombination.class
+            .getCanonicalName() + ".errorHighlightColor";
 
     /**
      * The preference key for the history color.
@@ -100,14 +101,14 @@ public class SyncChartsCombination extends AbstractCombination {
     private static final String ZOOM_TO_FIT = "de.cau.cs.kieler.kiml.zoomToFit";
     /** parameter id for progress bar. */
     private static final String PROGRESS_BAR = "de.cau.cs.kieler.kiml.progressBar";
-    
+
     /**
-     * Creates a SyncCharts simulation combination. 
+     * Creates a SyncCharts simulation combination.
      */
     public SyncChartsCombination() {
         this.enableEffectRecording();
     }
-    
+
     private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter<RGB>(ERROR_HIGHLIGHT_COLOR, getPreferenceStore(),
                     "Error Highlight Color", "The color to use for highlighting erroneous states",
@@ -135,8 +136,7 @@ public class SyncChartsCombination extends AbstractCombination {
             new CombinationParameter<Boolean>(BW_MODE, getPreferenceStore(), "Black && White",
                     "Dashed lines for active states, dotted lines for history states.", false),
             new CombinationParameter<Boolean>(FC_MODE, getPreferenceStore(), "Focus && Context",
-                    "Collapse inactive states, expand active/history states.", true)
-    };
+                    "Collapse inactive states, expand active/history states.", true) };
 
     /**
      * Execute this combination using the active states state.
@@ -153,30 +153,27 @@ public class SyncChartsCombination extends AbstractCombination {
         boolean animate = layoutPrefStore.getBoolean(ANIMATE);
         boolean zoom = layoutPrefStore.getBoolean(ZOOM_TO_FIT);
         boolean progressBar = layoutPrefStore.getBoolean(PROGRESS_BAR);
-        
+
         // reset all formerly painted states
         undoRecordedEffects();
+
         // if there are no active states, the simulation has finished.
-        if ((activeStates.getActiveStates().isEmpty()
-                || activeStates.getActiveStates().get(0).isEmpty())
-                && (activeStates.getErrorStates().isEmpty()
-                || activeStates.getErrorStates().get(0).isEmpty())) {
+        if ((activeStates.getActiveStates().isEmpty() || activeStates.getActiveStates().get(0)
+                .isEmpty())
+                && (activeStates.getErrorStates().isEmpty() || activeStates.getErrorStates().get(0)
+                        .isEmpty())) {
             // schedule layout effect to ensure that layout is triggered after simulation is
-            //completed and all undos are executed
-            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-                    false, animate));
+            // completed and all undos are executed
+            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom,
+                    progressBar, false, animate));
+
+            // possibly do F&C here
+            doFocusAndContext(activeStates.getDiagramEditor(), null, zoom, progressBar, animate);
             return;
         }
 
-        // collapse / expand states as necessary and perform a new layout
-        if (getPreferenceStore().getBoolean(FC_MODE)) {
-            FocusContextEffect focusEffect = new FocusContextEffect(activeStates.getDiagramEditor());
-            focusEffect.addFocus(activeStates.getHistoryStates(), 0);
-            focusEffect.addFocus(activeStates.getErrorStates().get(0), 0);
-            this.schedule(focusEffect);
-            this.schedule(new LayoutEffect(activeStates.getDiagramEditor(), null, zoom, progressBar,
-                    false, animate));
-        }
+        // possibly do F&C here
+        doFocusAndContext(activeStates.getDiagramEditor(), activeStates, zoom, progressBar, animate);
 
         // coloring all states inactive/gray
         EObject root = activeStates.getDiagramEditor().getDiagram().getElement();
@@ -195,34 +192,71 @@ public class SyncChartsCombination extends AbstractCombination {
         // highlight history states
         // these were most recently active i steps ago
         for (int i = 0; i < activeStates.getActiveStates().size(); i++) {
-            //Active states
+            // Active states
             List<EObject> currentEObjectList = activeStates.getActiveStates().get(i);
             for (EObject eObject : currentEObjectList) {
                 if (getPreferenceStore().getBoolean(BW_MODE) && i != 0) {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), getColor(i,
-                            activeStates.getActiveStates().size()), getBackgroundColor(i,
-                            activeStates.getActiveStates().size()), SWT.LINE_DASH));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(),
+                            getColor(i, activeStates.getActiveStates().size()), getBackgroundColor(
+                                    i, activeStates.getActiveStates().size()), SWT.LINE_DASH));
                 } else {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), getColor(i,
-                            activeStates.getActiveStates().size()), getBackgroundColor(i,
-                            activeStates.getActiveStates().size())));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(),
+                            getColor(i, activeStates.getActiveStates().size()), getBackgroundColor(
+                                    i, activeStates.getActiveStates().size())));
                 }
             }
-            //Error states
+            // Error states
             List<EObject> errorEObjectList = activeStates.getErrorStates().get(i);
             Color errorColor = new Color(null, PreferenceConverter.getColor(getPreferenceStore(),
                     ERROR_HIGHLIGHT_COLOR));
             for (EObject eObject : errorEObjectList) {
                 if (getPreferenceStore().getBoolean(BW_MODE) && i != 0) {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor,
-                            getBackgroundColor(i, activeStates.getErrorStates().size()), SWT.LINE_DOT));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(),
+                            errorColor,
+                            getBackgroundColor(i, activeStates.getErrorStates().size()),
+                            SWT.LINE_DOT));
                 } else {
-                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(), errorColor,
-                            getBackgroundColor(i, activeStates.getErrorStates().size())));
+                    schedule(new HighlightEffect(eObject, activeStates.getDiagramEditor(),
+                            errorColor, getBackgroundColor(i, activeStates.getErrorStates().size())));
                 }
             }
         }
-        
+
+    }
+
+    /**
+     * Do focus and context effect, if activeStates == null, do a reset.
+     * 
+     * @param activeStates
+     *            the active states
+     * @param zoom
+     *            the zoom
+     * @param progressBar
+     *            the progress bar
+     * @param animate
+     *            the animate
+     */
+    private void doFocusAndContext(final DiagramEditor editor, final ActiveStates activeStates,
+            final boolean zoom, final boolean progressBar, final boolean animate) {
+        // collapse / expand states as necessary and perform a new layout
+        if (getPreferenceStore().getBoolean(FC_MODE)) {
+            FocusContextEffect focusEffect = new FocusContextEffect(editor);
+            if (activeStates != null) {
+                focusEffect.addFocus(activeStates.getHistoryStates(), 0);
+                if (activeStates.getErrorStates().size() > 0) {
+                    focusEffect.addFocus(activeStates.getErrorStates().get(0), 0);
+                }
+            } else {
+                // schedule a focus effect including ALL states in the editor
+                EObject root = editor.getDiagram().getElement();
+                for (Iterator<EObject> i = root.eAllContents(); i.hasNext();) {
+                    EObject current = i.next();
+                    focusEffect.addFocus(current, 0);
+                }
+            }
+            this.schedule(focusEffect);
+            this.schedule(new LayoutEffect(editor, null, zoom, progressBar, false, animate));
+        }
     }
 
     /**
@@ -284,5 +318,5 @@ public class SyncChartsCombination extends AbstractCombination {
             return new Color(null, new RGB(current[0], current[1], current[2]));
         }
     }
-    
+
 }

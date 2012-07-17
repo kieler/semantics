@@ -21,7 +21,7 @@ import java.util.LinkedList;
  * 
  * @author cmot
  */
-public class Signal {
+public class Signal implements Cloneable {
 
     /** The name of the signal. */
     private String name;

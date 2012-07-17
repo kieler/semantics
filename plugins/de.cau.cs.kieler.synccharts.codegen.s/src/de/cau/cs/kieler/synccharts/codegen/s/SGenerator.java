@@ -105,6 +105,9 @@ public class SGenerator implements IHandler {
         }
 
         // Ensure it is absolute
+        if (fullPath == null) {
+            return null;
+        }
         fullPath.makeAbsolute();
 
         java.io.File javaFile = new java.io.File(fullPath.toString().replaceAll("%20", " "));

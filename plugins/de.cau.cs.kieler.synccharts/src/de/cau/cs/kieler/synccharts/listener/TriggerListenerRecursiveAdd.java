@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import java.util.ArrayList;
@@ -32,21 +45,32 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * States/Regions/Signals/Transitions/...
  * 
  * @author haf
- * 
  */
 public class TriggerListenerRecursiveAdd extends FireOnceTriggerListener {
 
+    /**
+     * Constructor.
+     */
     public TriggerListenerRecursiveAdd() {
         super(NotificationFilter.createEventTypeFilter(Notification.ADD).or(
                 NotificationFilter.createEventTypeFilter(Notification.ADD_MANY)));
     }
 
-    public TriggerListenerRecursiveAdd(NotificationFilter filter) {
+    /**
+     * Constructor.
+     * 
+     * @param filter a filter
+     */
+    public TriggerListenerRecursiveAdd(final NotificationFilter filter) {
         super(filter);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         // System.out.println("Recursive: " + notification);
         Object newValue = notification.getNewValue();

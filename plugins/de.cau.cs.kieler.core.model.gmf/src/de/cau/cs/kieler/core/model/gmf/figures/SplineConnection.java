@@ -39,9 +39,11 @@ import de.cau.cs.kieler.core.model.gmf.util.SplineUtilities;
  * GMF.
  * 
  * @author mmu, ckru
- * 
  */
 public class SplineConnection extends PolylineConnectionEx {
+    
+    // CHECKSTYLEOFF MagicNumber
+    
     /**
      * Mode for spline drawing.
      */
@@ -99,7 +101,6 @@ public class SplineConnection extends PolylineConnectionEx {
             return false;
         }
 
-        // CHECKSTYLEOFF MagicNumber
         if (getSplineMode() == SPLINE_CUBIC) {
             PointList points = getPoints();
             int i = 1;
@@ -113,7 +114,8 @@ public class SplineConnection extends PolylineConnectionEx {
                 splineBound = splineBound.getUnion(new Rectangle(c1, c2));
                 splineBound.expand(calculatedTolerance, calculatedTolerance);
                 if (splineBound.contains(x, y)
-                        && SplineUtilities.distanceFromSpline(start, c1, c2, end, new Point(x, y)) < calculatedTolerance) {
+                        && SplineUtilities.distanceFromSpline(start, c1, c2, end, new Point(x, y))
+                        < calculatedTolerance) {
                     return true;
                 }
             }
@@ -123,7 +125,8 @@ public class SplineConnection extends PolylineConnectionEx {
                 if (SplineUtilities.distanceFromSpline(
                         getPoints().getPoint(getPoints().size() - 3),
                         getPoints().getPoint(getPoints().size() - 2),
-                        getPoints().getPoint(getPoints().size() - 1), new Point(x, y)) < calculatedTolerance) {
+                        getPoints().getPoint(getPoints().size() - 1), new Point(x, y))
+                        < calculatedTolerance) {
                     return true;
                 }
             } else if (i == getPoints().size() - 1) {
@@ -142,7 +145,6 @@ public class SplineConnection extends PolylineConnectionEx {
                 }
             }
         }
-        // CHECKSTYLEON MagicNumber
 
         return super.containsPoint(x, y);
     }
@@ -195,7 +197,7 @@ public class SplineConnection extends PolylineConnectionEx {
             MapModeUtil.getMapMode(this).DPtoLP(absTol);
         }
 
-        return absTol.width + lineWidth / 2;
+        return absTol.width + getLineWidth() / 2;
     }
 
     /**
@@ -299,13 +301,11 @@ public class SplineConnection extends PolylineConnectionEx {
 
                 // draw cubic sections
                 int pI = 1;
-                // CHECKSTYLEOFF MagicNumber
                 for (; pI < size - 2; pI += 3) {
                     p.cubicTo(points.getPoint(pI).x, points.getPoint(pI).y,
                             points.getPoint(pI + 1).x, points.getPoint(pI + 1).y,
                             points.getPoint(pI + 2).x, points.getPoint(pI + 2).y);
                 }
-                // CHECKSTYLEON MagicNumber
 
                 // draw remaining sections, won't happen if DOT was applied
                 // size-1: one straight line
@@ -332,42 +332,42 @@ public class SplineConnection extends PolylineConnectionEx {
         } else if (getSplineMode() == SPLINE_CUBIC_APPROX) {
             g.drawPolyline(SplineUtilities.approximateSpline(getPoints()));
         } else if (isRoundingBendpoints()) {
-            /*if (!this.canRoundBendpoints(this.getPoints())) {
-                int origBendpointRadius = this.getRoundedBendpointsRadius();
-                this.setRoundedBendpointsRadius(0);
-                super.outlineShape(g);
-                this.setRoundedBendpointsRadius(origBendpointRadius);
-            } else {*/
-        		int radius = this.getRoundedBendpointsRadius();
-                // TODO Auto-generated method stub
-                // super.outlineShape(g);
+            /*
+             * if (!this.canRoundBendpoints(this.getPoints())) { int origBendpointRadius =
+             * this.getRoundedBendpointsRadius(); this.setRoundedBendpointsRadius(0);
+             * super.outlineShape(g); this.setRoundedBendpointsRadius(origBendpointRadius); } else {
+             */
+            int radius = this.getRoundedBendpointsRadius();
+            // TODO Auto-generated method stub
+            // super.outlineShape(g);
 
-                PointList originalPoints = getPoints();
-                PointList newPoints = new PointList();
-                newPoints.addPoint(originalPoints.getFirstPoint());
-                for (int i = 1; i < originalPoints.size() - 1; i++) {
-                  Point refPoint = originalPoints.getPoint(i);
-                  Point prevPoint = originalPoints.getPoint(i - 1);
-                  Point nextPoint = originalPoints.getPoint(i + 1);
+            PointList originalPoints = getPoints();
+            PointList newPoints = new PointList();
+            newPoints.addPoint(originalPoints.getFirstPoint());
+            for (int i = 1; i < originalPoints.size() - 1; i++) {
+                Point refPoint = originalPoints.getPoint(i);
+                Point prevPoint = originalPoints.getPoint(i - 1);
+                Point nextPoint = originalPoints.getPoint(i + 1);
 
-                  int lengPrevious = Math.max(Math.abs(refPoint.x - prevPoint.x), Math.abs(refPoint.y - prevPoint.y));
-                  int lengNext = Math.max(Math.abs(refPoint.x - nextPoint.x), Math.abs(refPoint.y - nextPoint.y));
-                  // The bend radius is reduced to 6 from 10
-                  int r = Math.min(Math.min(lengPrevious / 2, lengNext / 2), radius);
+                int lengPrevious = Math.max(Math.abs(refPoint.x - prevPoint.x),
+                        Math.abs(refPoint.y - prevPoint.y));
+                int lengNext = Math.max(Math.abs(refPoint.x - nextPoint.x),
+                        Math.abs(refPoint.y - nextPoint.y));
+                // The bend radius is reduced to 6 from 10
+                int r = Math.min(Math.min(lengPrevious / 2, lengNext / 2), radius);
 
-                  int dxPrev = r * sign(prevPoint.x - refPoint.x);
-                  int dyPrev = r * sign(prevPoint.y - refPoint.y);
-                  int dxNext = r * sign(nextPoint.x - refPoint.x);
-                  int dyNext = r * sign(nextPoint.y - refPoint.y);
+                int dxPrev = r * sign(prevPoint.x - refPoint.x);
+                int dyPrev = r * sign(prevPoint.y - refPoint.y);
+                int dxNext = r * sign(nextPoint.x - refPoint.x);
+                int dyNext = r * sign(nextPoint.y - refPoint.y);
 
-                  Point prevLineEnd = new Point(refPoint.x + dxPrev, refPoint.y + dyPrev);
-                  newPoints.addPoint(prevLineEnd);
-                  Point nextLineStart = new Point(refPoint.x + dxNext, refPoint.y + dyNext);
+                Point prevLineEnd = new Point(refPoint.x + dxPrev, refPoint.y + dyPrev);
+                newPoints.addPoint(prevLineEnd);
+                Point nextLineStart = new Point(refPoint.x + dxNext, refPoint.y + dyNext);
 
-                  if (r < 3) { // too small radius
+                if (r < 3) { // too small radius
                     g.drawLine(prevLineEnd, nextLineStart);
-                  }
-                  else {
+                } else {
                     int arcCenterX = refPoint.x + dxNext + dxPrev;
                     int arcCenterY = refPoint.y + dyNext + dyPrev;
 
@@ -375,29 +375,31 @@ public class SplineConnection extends PolylineConnectionEx {
                     double step = Math.min(Math.max(Math.PI / r, 0.08), 0.05);
                     Point arcPoint = null;
                     for (double rad = 0.0; rad <= Math.PI / 2; rad += step) {
-                      Point newArcPoint =
-                          new Point(arcCenterX - (int) Math.round(r * Math.cos(rad)) * sign(dxNext + dxPrev), arcCenterY -
-                              (int) Math.round(r * Math.sin(rad)) * sign(dyNext + dyPrev));
-                      if (arcPoint != null) {
-                        g.drawLine(arcPoint, newArcPoint);
-                      }
-                      else {
-                        g.drawLine(newArcPoint, (newArcPoint.getDistance(prevLineEnd) < newArcPoint.getDistance(nextLineStart))
-                            ? prevLineEnd : nextLineStart);
-                      }
-                      arcPoint = newArcPoint;
+                        Point newArcPoint = new Point(arcCenterX
+                                - (int) Math.round(r * Math.cos(rad)) * sign(dxNext + dxPrev),
+                                arcCenterY - (int) Math.round(r * Math.sin(rad))
+                                        * sign(dyNext + dyPrev));
+                        if (arcPoint != null) {
+                            g.drawLine(arcPoint, newArcPoint);
+                        } else {
+                            g.drawLine(newArcPoint,
+                                    (newArcPoint.getDistance(prevLineEnd) < newArcPoint
+                                            .getDistance(nextLineStart)) ? prevLineEnd
+                                            : nextLineStart);
+                        }
+                        arcPoint = newArcPoint;
                     }
-                    g.drawLine(arcPoint, (arcPoint.getDistance(prevLineEnd) < arcPoint.getDistance(nextLineStart)) ? prevLineEnd
-                        : nextLineStart);
-                  }
-                  newPoints.addPoint(nextLineStart);
+                    g.drawLine(arcPoint, (arcPoint.getDistance(prevLineEnd) < arcPoint
+                            .getDistance(nextLineStart)) ? prevLineEnd : nextLineStart);
                 }
-                newPoints.addPoint(originalPoints.getLastPoint());
-                for (int i = 0; i < newPoints.size(); i += 2) {
-                  g.drawLine(newPoints.getPoint(i), newPoints.getPoint(i + 1));
-                }
-              
-            //}
+                newPoints.addPoint(nextLineStart);
+            }
+            newPoints.addPoint(originalPoints.getLastPoint());
+            for (int i = 0; i < newPoints.size(); i += 2) {
+                g.drawLine(newPoints.getPoint(i), newPoints.getPoint(i + 1));
+            }
+
+            // }
         } else {
             super.outlineShape(g);
         }
@@ -405,21 +407,25 @@ public class SplineConnection extends PolylineConnectionEx {
 
     private int sign(final int test) {
         if (test > 0) {
-          return 1;
+            return 1;
         }
         if (test < 0) {
-          return -1;
+            return -1;
         }
         return 0;
-      }
+    }
+
     /**
      * Method to determine whether the connection meets all requirements to do rounded bendpoints or
      * not. Requirements are: - connection is othogonal - connection has no small bends
+     * 
+     * FIXME this isn't used anymore
      * 
      * @param bendpoints
      *            the bendpoints of the connection to check
      * @return true if connection meets requirements
      */
+    @SuppressWarnings("unused")
     private boolean canRoundBendpoints(final PointList bendpoints) {
         boolean canRound = true;
         boolean horizontal;
@@ -517,6 +523,7 @@ public class SplineConnection extends PolylineConnectionEx {
      */
     private void drawJoinPointDecoration() {
         IFigure parent = this.getParent();
+        @SuppressWarnings("unchecked")
         List<IFigure> children = parent.getChildren();
         // compare yourself with all the other connections
         for (IFigure child : children) {
@@ -633,7 +640,6 @@ public class SplineConnection extends PolylineConnectionEx {
                     // int size = (arrow.getBounds().height + arrow.getBounds().width) / 2;
                     // this caused the wobbling arrowheads
                     // FIXME find a better mechanism of determining the size of an arrowhead
-                    // SUPPRESS CHECKSTYLE NEXT MagicNumber
                     int size = 10;
                     if (getAlignment() == SOURCE) {
                         arrow.setReferencePoint(SplineUtilities.sourceReferencePoint(points, size));

@@ -13,8 +13,6 @@
  */
 package de.cau.cs.kieler.core.model.xtext.util;
 
-import java.util.List;
-
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.widgets.Display;
@@ -27,11 +25,10 @@ import org.eclipse.xtext.ui.editor.model.XtextDocument;
 import org.eclipse.xtext.parser.IParseResult;
 import org.eclipse.xtext.resource.XtextResource;
 import org.eclipse.xtext.util.concurrent.IUnitOfWork;
-import org.eclipse.xtext.util.concurrent.IUnitOfWork.Void;
 
 /**
  * Utility class for Xtext modeling.
- *
+ * 
  * @author msp, cmot
  */
 public final class XtextModelingUtil {
@@ -41,33 +38,35 @@ public final class XtextModelingUtil {
      */
     private XtextModelingUtil() {
     }
-    
 
     /**
      * Get the model from a given xtext editor.
-     *
-     * @param xtextEditor the Xtext editor
-     * @param ignoreDirtyEditor the ignore dirty editor
+     * 
+     * @param xtextEditor
+     *            the Xtext editor
+     * @param ignoreDirtyEditor
+     *            the ignore dirty editor
      * @return the EObject of the root part of the model
      */
-    public static EObject getModelFromXtextEditor(final XtextEditor xtextEditor, boolean ignoreDirtyEditor) {
+    public static EObject getModelFromXtextEditor(final XtextEditor xtextEditor,
+            final boolean ignoreDirtyEditor) {
 
         if (!ignoreDirtyEditor) {
             checkForDirtyEditor(xtextEditor);
         }
-        
+
         IXtextDocument xtextDocument = xtextEditor.getDocument();
 
         if (xtextDocument instanceof XtextDocument) {
-    		IParseResult result = null;
-    		IUnitOfWork<IParseResult, XtextResource> work = new IUnitOfWork<IParseResult, XtextResource>() {
-    			public IParseResult exec(final XtextResource xtextResource)
-    					throws Exception {
-    				return xtextResource.getParseResult();
-    			}
-    		};
-    		result = xtextDocument.readOnly(work);
-    		return result.getRootASTElement();
+            IParseResult result = null;
+            IUnitOfWork<IParseResult, XtextResource> work
+                    = new IUnitOfWork<IParseResult, XtextResource>() {
+                public IParseResult exec(final XtextResource xtextResource) throws Exception {
+                    return xtextResource.getParseResult();
+                }
+            };
+            result = xtextDocument.readOnly(work);
+            return result.getRootASTElement();
         }
         return null;
     }

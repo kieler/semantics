@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.test.runners.KielerTestRunner;
  * It further provides names for the tests derived from their corresponding ESO file's path names.
  * 
  * @author cmot
+ * @kieler.rating 2012-06-07 yellow KI-13
  * 
  */
 public class KiemTestRunner extends KielerTestRunner {

@@ -39,7 +39,7 @@ import org.eclipse.gmf.runtime.notation.View;
  * or not at all.
  * 
  * @author soh
- * @kieler.rating 2010-06-15 yellow msp, cmot
+ * @kieler.design 2010-06-15 msp, cmot
  */
 public abstract class AbstractDeletionPolicyProvider extends AbstractProvider
         implements IEditPolicyProvider {

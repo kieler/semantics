@@ -26,9 +26,7 @@ import java.util.ArrayList;
  * The optimization includes only the reduction of used integers.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- *
  */
 public class PriorityOptimizer {
 

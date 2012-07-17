@@ -237,7 +237,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.xtext.xtend2.sdk"
+         id="org.eclipse.xtend.sdk"
          version="0.0.0"/>
 
    <plugin

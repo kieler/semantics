@@ -43,7 +43,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * Started by the signal flow button, visualizes the flow of signals in a SyncChart diagram.
  * Depending on the currently selected objects only signals concerning these objects are displayed.
  * 
- * @author mmu
+ * @author mmu, haf, cmot
  * 
  */
 public class SignalFlowCombination extends AbstractCombination {
@@ -54,10 +54,18 @@ public class SignalFlowCombination extends AbstractCombination {
     public static final String ARROW_COLOR = SignalFlowCombination.class.getCanonicalName()
             + ".arrowColor";
 
+    /**
+     * The preference key for showing input signals.
+     */
+    public static final String SHOW_INPUT_SIGNALS = SignalFlowCombination.class.getCanonicalName()
+            + ".showInputSignals";
+
     private static final CombinationParameter<?>[] PARAMETERS = new CombinationParameter[] {
             new CombinationParameter<RGB>(ARROW_COLOR, getPreferenceStore(), "Arrow Color",
-                    "The color to paint the signal flow arrows in", ColorConstants.red.getRGB())
-    };
+                    "The color to paint the signal flow arrows in", ColorConstants.red.getRGB()),
+            new CombinationParameter<Boolean>(SHOW_INPUT_SIGNALS, getPreferenceStore(),
+                    "Show Input Signals",
+                    "If set to true, the visualization will consider input signals as well", false) };
 
     private static final int DEFAULT_LENGTH = 15;
 
@@ -105,7 +113,7 @@ public class SignalFlowCombination extends AbstractCombination {
             effects = new ArrayList<Pair<Signal, Transition>>();
 
             // traverse over all EObjects
-            EObject diagramElement = ((DiagramEditor) selection.getDiagramEditor()).getDiagram()
+            EObject diagramElement = ((DiagramEditor) selection.getWorkbenchPart()).getDiagram()
                     .getElement();
             for (Iterator<EObject> iterator = diagramElement.eAllContents(); iterator.hasNext();) {
                 EObject current = iterator.next();
@@ -145,19 +153,22 @@ public class SignalFlowCombination extends AbstractCombination {
                 }
             }
 
-            // haf: handle global inputs and outputs
-            for (Pair<Signal, Transition> trigger : triggers) {
-                if (trigger.getFirst().isIsInput()
-                        && isRelevant(selection.getSelectedObjects(), trigger.getSecond())) {
-                    schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH,
-                            true, PointerEffect.Direction.NORTH, false));
+            // cmot: only if this flag is set to true, handle global inputs and outputs
+            if (isShowInputSignals()) {
+                // haf: handle global inputs and outputs
+                for (Pair<Signal, Transition> trigger : triggers) {
+                    if (trigger.getFirst().isIsInput()
+                            && isRelevant(selection.getSelectedObjects(), trigger.getSecond())) {
+                        schedule(new PointerEffect(trigger.getSecond(), getColor(), DEFAULT_LENGTH,
+                                true, PointerEffect.Direction.NORTH, false));
+                    }
                 }
-            }
-            for (Pair<Signal, Transition> effect : effects) {
-                if (effect.getFirst().isIsOutput()
-                        && isRelevant(selection.getSelectedObjects(), effect.getSecond())) {
-                    schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH,
-                            false, PointerEffect.Direction.SOUTH, false));
+                for (Pair<Signal, Transition> effect : effects) {
+                    if (effect.getFirst().isIsOutput()
+                            && isRelevant(selection.getSelectedObjects(), effect.getSecond())) {
+                        schedule(new PointerEffect(effect.getSecond(), getColor(), DEFAULT_LENGTH,
+                                false, PointerEffect.Direction.SOUTH, false));
+                    }
                 }
             }
         }
@@ -208,6 +219,10 @@ public class SignalFlowCombination extends AbstractCombination {
             }
         }
         return true;
+    }
+
+    private static boolean isShowInputSignals() {
+        return getPreferenceStore().getBoolean(SHOW_INPUT_SIGNALS);
     }
 
     private static Color getColor() {

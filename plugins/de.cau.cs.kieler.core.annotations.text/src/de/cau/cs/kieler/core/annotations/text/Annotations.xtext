@@ -62,7 +62,7 @@ TypedKeyStringValueAnnotation returns TypedStringAnnotation:
 
 // e.g.: @visible true;
 KeyBooleanValueAnnotation returns BooleanAnnotation:
-	'@' name=ExtendedID value=Boolean
+	'@' name=ExtendedID value=BOOLEAN
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -78,7 +78,7 @@ KeyIntValueAnnotation returns IntAnnotation:
 
 // e.g.: @minSpace 10.0;    
 KeyFloatValueAnnotation returns FloatAnnotation:
-	'@' name=ExtendedID value=Float
+	'@' name=ExtendedID value=FLOAT
     ('('
         (annotations+=Annotation)*
     ')')?;
@@ -126,13 +126,13 @@ terminal INT returns ecore::EInt:
 
 
 // make sure the Float rule does not shadow the INT rule
-terminal Float returns ecore::EFloatObject :
+terminal FLOAT returns ecore::EFloatObject :
  '-'?('0'..'9')+ ("."('0'..'9')*) (("e"|"E")("+"|"-")?('0'..'9')+)? "f"? |
  '-'?('0'..'9')+"f";
     
     
 // introduce boolean values
-terminal Boolean returns ecore::EBooleanObject :
+terminal BOOLEAN returns ecore::EBooleanObject :
     "true" | "false";
 
 

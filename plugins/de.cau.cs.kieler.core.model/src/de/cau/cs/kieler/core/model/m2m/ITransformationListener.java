@@ -18,12 +18,12 @@ package de.cau.cs.kieler.core.model.m2m;
  * immediately after a transformation was executed.
  * 
  * @author ckru
- *
  */
 public interface ITransformationListener {
 
     /**
-     * This method will be called after a transformation was executed
+     * This method will be called after a transformation was executed.
+     * 
      * @param transformationName the name of the executed transformation
      * @param parameters the parameters with which the transformation was executed 
      * @param result the result of the transformation

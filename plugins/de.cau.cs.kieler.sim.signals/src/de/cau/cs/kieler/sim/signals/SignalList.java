@@ -108,6 +108,7 @@ public class SignalList extends LinkedList<Signal> {
      * {@inheritDoc}
      */
     public SignalList clone() {
+        super.clone();
         SignalList clonedSignalList = new SignalList(maximalTicks);
         for (Signal signal : this) {
             Signal clonedSignal = signal.clone();

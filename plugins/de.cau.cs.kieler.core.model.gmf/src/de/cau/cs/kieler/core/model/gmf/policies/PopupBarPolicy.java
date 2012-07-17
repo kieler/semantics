@@ -37,6 +37,7 @@ import org.eclipse.gef.Tool;
 import org.eclipse.gef.requests.CreateRequest;
 import org.eclipse.gef.tools.SelectionTool;
 import org.eclipse.gmf.runtime.common.ui.services.icon.IconService;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.DiagramAssistantEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.editpolicies.PopupBarEditPolicy;
 import org.eclipse.gmf.runtime.diagram.ui.internal.editparts.ISurfaceEditPart;
@@ -45,6 +46,7 @@ import org.eclipse.gmf.runtime.diagram.ui.preferences.IPreferenceConstants;
 import org.eclipse.gmf.runtime.diagram.ui.tools.AbstractPopupBarTool;
 import org.eclipse.gmf.runtime.emf.type.core.IElementType;
 import org.eclipse.gmf.runtime.emf.ui.services.modelingassistant.ModelingAssistantService;
+import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Control;
@@ -898,13 +900,19 @@ public class PopupBarPolicy extends DiagramAssistantEditPolicy {
 
         }
     }
-
+    
     /**
-     * 
-     * @return the preference name
+     * {@inheritDoc}
      */
-    public String getPreferenceName() {
-        return IPreferenceConstants.PREF_SHOW_POPUP_BARS;
+    @Override
+    protected boolean isPreferenceOn() {
+        String prefName = IPreferenceConstants.PREF_SHOW_POPUP_BARS;
+        if (prefName == null) {
+                return true;
+        }
+        IPreferenceStore preferenceStore = (IPreferenceStore) ((IGraphicalEditPart) getHost())
+                .getDiagramPreferencesHint().getPreferenceStore();
+        return preferenceStore.getBoolean(prefName);
     }
 
     /**

@@ -3,19 +3,13 @@ package de.cau.cs.kieler.kev.extension.dataobserver;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import de.cau.cs.kieler.kev.Activator;
 import de.cau.cs.kieler.kev.mapping.animations.MapAnimations;
-import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeBool;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeChoice;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeFile;
-import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeWorkspaceFile;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
-import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
 import de.cau.cs.kieler.sim.kiem.KiemInitializationException;
+import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
+import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
 //import de.cau.cs.kieler.kev.mapping.animations.SVGLoadingStatusListener;
 

@@ -27,14 +27,14 @@ tick:
  * I. e. 'valued' is set to true if a value could be read.
  */
 signal:
-    name=(AlphaNumSpecial)
+    name=(ALPHANUMSPECIAL)
     valued ?= '('? 
     (val = (EsoInt | EsoFloat | EsoBool | EsoString) ')')?;
 
 kvpair:
     {kvpair}
     '%%'
-    key=(AlphaNumSpecial)
+    key=(ALPHANUMSPECIAL)
     ':'
     value=(EsoJson | EsoString | EsoFloat | EsoBool | EsoInt);
     
@@ -55,10 +55,10 @@ EsoBool:
 ;
 
 EsoJson:
-    value = AlphaNumSpecial
+    value = ALPHANUMSPECIAL
 ;
 
-terminal Special:
+terminal SPECIAL:
     ',' | '.' | '/' | '@' | '#' | '$' | '&' | '*' | '=' | '+' | '-';
     
 terminal BOOL returns ecore::EBoolean:
@@ -69,8 +69,8 @@ terminal FLOAT returns ecore::EFloat:
 
 terminal INT returns ecore::EInt: ('0'..'9')+;
 
-terminal AlphaNumSpecial:
-    ('0'..'9')* ('a'..'z' | 'A'..'Z' | Special) ('a'..'z' | 'A'..'Z' | '0'..'9' | Special)*
+terminal ALPHANUMSPECIAL:
+    ('0'..'9')* ('a'..'z' | 'A'..'Z' | SPECIAL) ('a'..'z' | 'A'..'Z' | '0'..'9' | SPECIAL)*
 ;
 
 terminal STRING : 

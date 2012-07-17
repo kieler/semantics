@@ -48,7 +48,6 @@ import de.cau.cs.kieler.core.ui.errorhandler.GenericErrorHandler.StatusListener;
  * 
  * @author haf
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ModelErrorHandler implements StatusListener, IStartup {
 
@@ -208,6 +207,7 @@ public class ModelErrorHandler implements StatusListener, IStartup {
                             myMarkers.add(marker);
                         } else {
                             count++;
+                            // CHECKSTYLEOFF MagicNumber
                             if (count < 4) {
                                 thisJob.schedule(count * 5000);
                             }

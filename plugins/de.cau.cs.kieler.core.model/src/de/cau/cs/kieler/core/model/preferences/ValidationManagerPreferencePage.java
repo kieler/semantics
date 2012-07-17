@@ -32,7 +32,6 @@ import de.cau.cs.kieler.core.model.validation.ValidationManager;
  * validate the different diagrams.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public class ValidationManagerPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {

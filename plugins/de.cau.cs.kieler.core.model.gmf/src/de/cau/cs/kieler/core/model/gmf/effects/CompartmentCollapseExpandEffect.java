@@ -33,6 +33,7 @@ import org.eclipse.gmf.runtime.diagram.ui.l10n.DiagramUIMessages;
 import org.eclipse.gmf.runtime.emf.core.util.EObjectAdapter;
 import org.eclipse.gmf.runtime.notation.DrawerStyle;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
@@ -40,7 +41,6 @@ import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.model.gmf.IAdvancedRenderingEditPart;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * This Effect collapses or expands compartments. The execute() method expands while the undo method
@@ -48,12 +48,11 @@ import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
  * 
  * @author haf, mmu
  */
+@SuppressWarnings("restriction")
 public class CompartmentCollapseExpandEffect extends AbstractEffect {
 
-    /**
-     * hierarchy level. 0 means only exactly the given EditPart. TODO implement compartment levels
-     */
-    private int compartmentLevel = 0;
+    // TODO implement compartment levels; hierarchy level 0 means only exactly the given EditPart.
+    
     /** edit parts that can be collapsed or expanded. */
     private List<IResizableCompartmentEditPart> targetEditParts;
     /** the feature of the EObject to doCollapse/expand. */
@@ -92,7 +91,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
             final EStructuralFeature thefeatureToCollapse, final int theCompartmentLevel,
             final boolean collapse) {
-        this.compartmentLevel = theCompartmentLevel;
         this.doCollapse = collapse;
         this.targetEditor = editor;
         this.targetNode = node;
@@ -120,7 +118,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
     public CompartmentCollapseExpandEffect(final IWorkbenchPart editor, final EObject node,
             final EStructuralFeature thefeatureToCollapse, final int theCompartmentLevel,
             final boolean collapse, final boolean persistent) {
-        this.compartmentLevel = theCompartmentLevel;
         this.doCollapse = collapse;
         this.targetEditor = editor;
         this.targetNode = node;
@@ -137,18 +134,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
      * called).
      */
     private void init() {
-        // FIXME: Why does this method sometimes lead to a Invalid Thread Access
-        // error? It is sometimes *NOT* called from the UI thread. The following
-        // should guard against this as a temporary workaround.
-        // Ticket #1891
-        // if (Display.getCurrent() != null
-        // && Display.getCurrent().getThread() != null
-        // && Thread.currentThread() != null) {
-        // if (!Display.getCurrent().getThread()
-        // .equals(Thread.currentThread())) {
-        // return;
-        // }
-        // }
         if (!initialized) {
             this.initialized = true;
             EditPart parentPart = bridge.getEditPart(this.targetNode);
@@ -189,11 +174,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 getCollapseCommand(doCollapse).execute();
             }
         } else {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     justExecuted = applyCollapseState(doCollapse);
                 }
-            }, true);
+            });
         }
     }
 
@@ -206,11 +191,11 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                 getCollapseCommand(originalCollapseState).execute();
             }
         } else {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     justExecuted = applyCollapseState(originalCollapseState);
                 }
-            }, true);
+            });
         }
     }
 
@@ -250,7 +235,7 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         return changed;
     }
 
-    private void triggerEvents(EditPart part, Notification n) {
+    private void triggerEvents(final EditPart part, final Notification n) {
         if (n != null && part instanceof IAdvancedRenderingEditPart) {
             ((IAdvancedRenderingEditPart) part).handleNotificationEvent(n);
         }
@@ -323,8 +308,6 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
                     return this;
                 }
             }
-        } else if (otherEffect instanceof CompartmentCollapseExpandEffect) {
-           // return otherEffect;
         }
         return null;
     }

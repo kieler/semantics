@@ -94,6 +94,7 @@ import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
  * maximum!
  * 
  * @author cmot
+ * @kieler.rating 2012-06-07 yellow KI-13
  * 
  */
 @RunWith(KiemTestRunner.class)
@@ -405,9 +406,14 @@ public abstract class KiemAutomatedJUnitTest {
         IPath modelFilePath = modelFile.get(esoFilePath);
 
         // Try to open it
-        if (!KiemUtil.isHeadlessRun()) {
-            openModelFile(modelFilePath);
-        }
+//        if (!KiemUtil.isHeadlessRun()) {
+//            openModelFile(modelFilePath);
+//            try {
+//                Thread.sleep(1000);
+//            } catch (InterruptedException e) {
+//                // ignore
+//            }
+//        }
 
         // Set modelFile in execution manager
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
@@ -756,7 +762,7 @@ public abstract class KiemAutomatedJUnitTest {
      * @param modelFilePath
      *            the model file path
      */
-    private static void openModelFile(final IPath modelFilePath) {
+    public static void openModelFile(final IPath modelFilePath) {
         modelFilePathString = modelFilePath.toString();
         Display.getDefault().asyncExec(new Runnable() {
             public void run() {

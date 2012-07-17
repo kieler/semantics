@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import java.util.ArrayList;
@@ -31,11 +44,10 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * set ID)
  * 
  * @author haf
- * 
  */
 public class TriggerListenerIDs extends FireOnceTriggerListener {
 
-    List<UniqueStringCache> caches = new ArrayList<UniqueStringCache>();
+    private List<UniqueStringCache> caches = new ArrayList<UniqueStringCache>();
 
     /**
      * Public constructor setting up filters to react only on necessary events.
@@ -85,8 +97,8 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (scope != null) {
             // we decided to allow empty Region IDs, so don't force them here
-            if(scope instanceof Region && 
-                    (scope.getLabel() == null || scope.getLabel().equals(""))) {
+            if (scope instanceof Region
+                    && (scope.getLabel() == null || scope.getLabel().equals(""))) {
                 cc.append(new SetCommand(getTarget(), scope,
                     SyncchartsPackage.eINSTANCE.getScope_Id(), "")); // empty ID
                 return cc;
@@ -127,7 +139,6 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         UniqueStringCache cache = null;
         EAttribute attribute = SyncchartsPackage.eINSTANCE.getScope_Id();
         for (UniqueStringCache c : caches) {
-            // cmot, added "(parent != null && c.getParent() != null) &&" because of a possible null-pointer exception
             if ((parent == null && c.getParent() == null)
                     || (parent != null && c.getParent() != null) && c.getParent().equals(parent)
                     && c.getAttribute().equals(attribute)) {
@@ -144,6 +155,9 @@ public class TriggerListenerIDs extends FireOnceTriggerListener {
         return temp;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public Command transactionAboutToCommit(final ResourceSetChangeEvent event)
             throws RollbackException {

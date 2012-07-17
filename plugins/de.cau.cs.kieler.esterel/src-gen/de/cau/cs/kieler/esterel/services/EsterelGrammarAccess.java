@@ -7,6 +7,8 @@ package de.cau.cs.kieler.esterel.services;
 import com.google.inject.Singleton;
 import com.google.inject.Inject;
 
+import java.util.List;
+
 import org.eclipse.xtext.*;
 import org.eclipse.xtext.service.GrammarProvider;
 import org.eclipse.xtext.service.AbstractElementFinder.*;
@@ -24,7 +26,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cModulesModuleParserRuleCall_0 = (RuleCall)cModulesAssignment.eContents().get(0);
 		
 		////	root rule. an esterel file can contain multiple modules
-		//Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+		//Program hidden(ESTEREL_SL_COMMENT, ESTEREL_ML_COMMENT, WS):
 		//	modules+=Module*;
 		public ParserRule getRule() { return rule; }
 
@@ -1120,23 +1122,23 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	public class ConstantLiteralElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "ConstantLiteral");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cFloatTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cBooleanTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cFLOATTerminalRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cBOOLEANTerminalRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cIDTerminalRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSTRINGTerminalRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//ConstantLiteral:
-		//	Float | Boolean | ID | STRING;
+		//	FLOAT | BOOLEAN | ID | STRING;
 		public ParserRule getRule() { return rule; }
 
-		//Float | Boolean | ID | STRING
+		//FLOAT | BOOLEAN | ID | STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 
-		//Float
-		public RuleCall getFloatTerminalRuleCall_0() { return cFloatTerminalRuleCall_0; }
+		//FLOAT
+		public RuleCall getFLOATTerminalRuleCall_0() { return cFLOATTerminalRuleCall_0; }
 
-		//Boolean
-		public RuleCall getBooleanTerminalRuleCall_1() { return cBooleanTerminalRuleCall_1; }
+		//BOOLEAN
+		public RuleCall getBOOLEANTerminalRuleCall_1() { return cBOOLEANTerminalRuleCall_1; }
 
 		//ID
 		public RuleCall getIDTerminalRuleCall_2() { return cIDTerminalRuleCall_2; }
@@ -5562,23 +5564,40 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	private ExecBodyElements pExecBody;
 	private ExecCaseElements pExecCase;
 	private TickElements pTick;
-	private TerminalRule tEsterel_SL_Comment;
-	private TerminalRule tEsterel_ML_Comment;
+	private TerminalRule tESTEREL_SL_COMMENT;
+	private TerminalRule tESTEREL_ML_COMMENT;
 	private TerminalRule tSTRING;
 	
-	private final GrammarProvider grammarProvider;
+	private final Grammar grammar;
 
 	private KExpressionsGrammarAccess gaKExpressions;
 
 	@Inject
 	public EsterelGrammarAccess(GrammarProvider grammarProvider,
 		KExpressionsGrammarAccess gaKExpressions) {
-		this.grammarProvider = grammarProvider;
+		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaKExpressions = gaKExpressions;
 	}
 	
-	public Grammar getGrammar() {	
-		return grammarProvider.getGrammar(this);
+	protected Grammar internalFindGrammar(GrammarProvider grammarProvider) {
+		Grammar grammar = grammarProvider.getGrammar(this);
+		while (grammar != null) {
+			if ("de.cau.cs.kieler.esterel.Esterel".equals(grammar.getName())) {
+				return grammar;
+			}
+			List<Grammar> grammars = grammar.getUsedGrammars();
+			if (!grammars.isEmpty()) {
+				grammar = grammars.iterator().next();
+			} else {
+				return null;
+			}
+		}
+		return grammar;
+	}
+	
+	
+	public Grammar getGrammar() {
+		return grammar;
 	}
 	
 
@@ -5588,7 +5607,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	
 	////	root rule. an esterel file can contain multiple modules
-	//Program hidden(Esterel_SL_Comment, Esterel_ML_Comment, WS):
+	//Program hidden(ESTEREL_SL_COMMENT, ESTEREL_ML_COMMENT, WS):
 	//	modules+=Module*;
 	public ProgramElements getProgramAccess() {
 		return (pProgram != null) ? pProgram : (pProgram = new ProgramElements());
@@ -5854,7 +5873,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//ConstantLiteral:
-	//	Float | Boolean | ID | STRING;
+	//	FLOAT | BOOLEAN | ID | STRING;
 	public ConstantLiteralElements getConstantLiteralAccess() {
 		return (pConstantLiteral != null) ? pConstantLiteral : (pConstantLiteral = new ConstantLiteralElements());
 	}
@@ -6892,16 +6911,16 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getTickAccess().getRule();
 	}
 
-	//terminal Esterel_SL_Comment:
+	//terminal ESTEREL_SL_COMMENT:
 	//	"%" !("\n" | "\r")* ("\r"? "\n")?;
-	public TerminalRule getEsterel_SL_CommentRule() {
-		return (tEsterel_SL_Comment != null) ? tEsterel_SL_Comment : (tEsterel_SL_Comment = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Esterel_SL_Comment"));
+	public TerminalRule getESTEREL_SL_COMMENTRule() {
+		return (tESTEREL_SL_COMMENT != null) ? tESTEREL_SL_COMMENT : (tESTEREL_SL_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ESTEREL_SL_COMMENT"));
 	} 
 
-	//terminal Esterel_ML_Comment:
+	//terminal ESTEREL_ML_COMMENT:
 	//	("%" "{")->("}" "%");
-	public TerminalRule getEsterel_ML_CommentRule() {
-		return (tEsterel_ML_Comment != null) ? tEsterel_ML_Comment : (tEsterel_ML_Comment = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "Esterel_ML_Comment"));
+	public TerminalRule getESTEREL_ML_COMMENTRule() {
+		return (tESTEREL_ML_COMMENT != null) ? tESTEREL_ML_COMMENT : (tESTEREL_ML_COMMENT = (TerminalRule) GrammarUtil.findRuleForName(getGrammar(), "ESTEREL_ML_COMMENT"));
 	} 
 
 	//// allow escaping by double quotes ( "this is a ""quote"", how nice." ) - esterelstyle
@@ -7148,7 +7167,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	////NIntValue returns IntValue:
 	////	value=NINT;
 	//FloatValue:
-	//	value=Float;
+	//	value=FLOAT;
 	public KExpressionsGrammarAccess.FloatValueElements getFloatValueAccess() {
 		return gaKExpressions.getFloatValueAccess();
 	}
@@ -7158,7 +7177,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	}
 
 	//BooleanValue:
-	//	value=Boolean;
+	//	value=BOOLEAN;
 	public KExpressionsGrammarAccess.BooleanValueElements getBooleanValueAccess() {
 		return gaKExpressions.getBooleanValueAccess();
 	}
@@ -7171,7 +7190,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	//// e.g. as initialValues of valuedObjects
 	//// used in Kits.xtext 
 	//AnyType returns ecore::EString:
-	//	Boolean | INT | Float | ID | STRING;
+	//	BOOLEAN | INT | FLOAT | ID | STRING;
 	public KExpressionsGrammarAccess.AnyTypeElements getAnyTypeAccess() {
 		return gaKExpressions.getAnyTypeAccess();
 	}
@@ -7409,6 +7428,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 		return getAnnotationAccess().getRule();
 	}
 
+	//ValuedAnnotation returns Annotation:
+	//	CommentAnnotation | KeyStringValueAnnotation | TypedKeyStringValueAnnotation | KeyBooleanValueAnnotation |
+	//	KeyIntValueAnnotation | KeyFloatValueAnnotation;
+	public AnnotationsGrammarAccess.ValuedAnnotationElements getValuedAnnotationAccess() {
+		return gaKExpressions.getValuedAnnotationAccess();
+	}
+	
+	public ParserRule getValuedAnnotationRule() {
+		return getValuedAnnotationAccess().getRule();
+	}
+
 	//// e.g.: / ** semantic comment * /
 	//CommentAnnotation returns StringAnnotation:
 	//	value=COMMENT_ANNOTATION;
@@ -7455,7 +7485,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @visible true;
 	//KeyBooleanValueAnnotation returns BooleanAnnotation:
-	//	"@" name=ExtendedID value=Boolean ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=BOOLEAN ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyBooleanValueAnnotationElements getKeyBooleanValueAnnotationAccess() {
 		return gaKExpressions.getKeyBooleanValueAnnotationAccess();
 	}
@@ -7477,7 +7507,7 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 
 	//// e.g.: @minSpace 10.0;    
 	//KeyFloatValueAnnotation returns FloatAnnotation:
-	//	"@" name=ExtendedID value=Float ("(" annotations+=Annotation* ")")?;
+	//	"@" name=ExtendedID value=FLOAT ("(" annotations+=Annotation* ")")?;
 	public AnnotationsGrammarAccess.KeyFloatValueAnnotationElements getKeyFloatValueAnnotationAccess() {
 		return gaKExpressions.getKeyFloatValueAnnotationAccess();
 	}
@@ -7548,17 +7578,17 @@ public class EsterelGrammarAccess extends AbstractGrammarElementFinder {
 	} 
 
 	//// make sure the Float rule does not shadow the INT rule
-	//terminal Float returns ecore::EFloatObject:
+	//terminal FLOAT returns ecore::EFloatObject:
 	//	"-"? "0".."9"+ ("." "0".."9"*) (("e" | "E") ("+" | "-")? "0".."9"+)? "f"? | "-"? "0".."9"+ "f";
-	public TerminalRule getFloatRule() {
-		return gaKExpressions.getFloatRule();
+	public TerminalRule getFLOATRule() {
+		return gaKExpressions.getFLOATRule();
 	} 
 
 	//// introduce boolean values
-	//terminal Boolean returns ecore::EBooleanObject:
+	//terminal BOOLEAN returns ecore::EBooleanObject:
 	//	"true" | "false";
-	public TerminalRule getBooleanRule() {
-		return gaKExpressions.getBooleanRule();
+	public TerminalRule getBOOLEANRule() {
+		return gaKExpressions.getBOOLEANRule();
 	} 
 
 	//terminal ID:

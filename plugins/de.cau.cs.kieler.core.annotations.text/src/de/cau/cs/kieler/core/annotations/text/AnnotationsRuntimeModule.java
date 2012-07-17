@@ -3,7 +3,7 @@
  * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2010 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
@@ -15,12 +15,14 @@ package de.cau.cs.kieler.core.annotations.text;
 
 /**
  * @author chsch
- * 
  */
 public class AnnotationsRuntimeModule extends
         de.cau.cs.kieler.core.annotations.text.AbstractAnnotationsRuntimeModule {
 
-    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService> bindIValueConverterService() {
+    @Override
+    public Class<? extends org.eclipse.xtext.conversion.IValueConverterService>
+        bindIValueConverterService() {
+        
         return de.cau.cs.kieler.core.annotations.text.formatting.AnnotationsValueConverter.class;
     }
 

@@ -4086,6 +4086,8 @@ finally {
 
 
 
+
+
 // Entry rule entryRuleCommentAnnotation
 entryRuleCommentAnnotation 
 :
@@ -4908,15 +4910,15 @@ rule__ConstantLiteral__Alternatives
     }
 :
 (
-{ before(grammarAccess.getConstantLiteralAccess().getFloatTerminalRuleCall_0()); }
+{ before(grammarAccess.getConstantLiteralAccess().getFLOATTerminalRuleCall_0()); }
 	RULE_FLOAT
-{ after(grammarAccess.getConstantLiteralAccess().getFloatTerminalRuleCall_0()); }
+{ after(grammarAccess.getConstantLiteralAccess().getFLOATTerminalRuleCall_0()); }
 )
 
     |(
-{ before(grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); }
+{ before(grammarAccess.getConstantLiteralAccess().getBOOLEANTerminalRuleCall_1()); }
 	RULE_BOOLEAN
-{ after(grammarAccess.getConstantLiteralAccess().getBooleanTerminalRuleCall_1()); }
+{ after(grammarAccess.getConstantLiteralAccess().getBOOLEANTerminalRuleCall_1()); }
 )
 
     |(
@@ -5813,7 +5815,7 @@ rule__Expression__Alternatives
 :
 (
 { before(grammarAccess.getExpressionAccess().getBooleanExpressionParserRuleCall_0()); }
-	ruleBooleanExpression
+(	ruleBooleanExpression)
 { after(grammarAccess.getExpressionAccess().getBooleanExpressionParserRuleCall_0()); }
 )
 
@@ -5857,7 +5859,7 @@ rule__NotOrValuedExpression__Alternatives
 :
 (
 { before(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
-	ruleValuedExpression
+(	ruleValuedExpression)
 { after(grammarAccess.getNotOrValuedExpressionAccess().getValuedExpressionParserRuleCall_0()); }
 )
 
@@ -6086,6 +6088,7 @@ rule__Annotation__Alternatives
 finally {
 	restoreStackSize(stackSize);
 }
+
 
 rule__EString__Alternatives
     @init {
@@ -22545,7 +22548,7 @@ rule__CompareOperation__Group_0__0__Impl
 :
 (
 { before(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
-	ruleNotOrValuedExpression
+(	ruleNotOrValuedExpression)
 { after(grammarAccess.getCompareOperationAccess().getNotOrValuedExpressionParserRuleCall_0_0()); }
 )
 
@@ -23663,9 +23666,9 @@ rule__AtomicValuedExpression__Group_2__0__Impl
 :
 (
 { before(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); }
-
+(
 	'(' 
-
+)
 { after(grammarAccess.getAtomicValuedExpressionAccess().getLeftParenthesisKeyword_2_0()); }
 )
 
@@ -31814,8 +31817,8 @@ rule__FloatValue__ValueAssignment
     }
 :
 (
-{ before(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); }
-	RULE_FLOAT{ after(grammarAccess.getFloatValueAccess().getValueFloatTerminalRuleCall_0()); }
+{ before(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); }
+	RULE_FLOAT{ after(grammarAccess.getFloatValueAccess().getValueFLOATTerminalRuleCall_0()); }
 )
 
 ;
@@ -31829,8 +31832,8 @@ rule__BooleanValue__ValueAssignment
     }
 :
 (
-{ before(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); }
-	RULE_BOOLEAN{ after(grammarAccess.getBooleanValueAccess().getValueBooleanTerminalRuleCall_0()); }
+{ before(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); }
+	RULE_BOOLEAN{ after(grammarAccess.getBooleanValueAccess().getValueBOOLEANTerminalRuleCall_0()); }
 )
 
 ;
@@ -32264,8 +32267,8 @@ rule__KeyBooleanValueAnnotation__ValueAssignment_2
     }
 :
 (
-{ before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); }
-	RULE_BOOLEAN{ after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBooleanTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); }
+	RULE_BOOLEAN{ after(grammarAccess.getKeyBooleanValueAnnotationAccess().getValueBOOLEANTerminalRuleCall_2_0()); }
 )
 
 ;
@@ -32354,8 +32357,8 @@ rule__KeyFloatValueAnnotation__ValueAssignment_2
     }
 :
 (
-{ before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); }
-	RULE_FLOAT{ after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFloatTerminalRuleCall_2_0()); }
+{ before(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); }
+	RULE_FLOAT{ after(grammarAccess.getKeyFloatValueAnnotationAccess().getValueFLOATTerminalRuleCall_2_0()); }
 )
 
 ;

@@ -105,7 +105,7 @@ public class EsterelToSyncChartDataComponent extends AbstractTransformationDataC
 
         // fetch the root model elements
         fetchRootRegionAndState();
-        TransformationUtil.logger.info("Added First Statement");
+        TransformationUtil.LOGGER.info("Added First Statement");
     }
 
     /**

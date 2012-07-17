@@ -35,7 +35,6 @@ import de.cau.cs.kieler.core.model.CoreModelPlugin;
  * Handler for managing check files and validate actions.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public final class ValidationManager {
 
@@ -237,7 +236,7 @@ public final class ValidationManager {
             value = store.getBoolean(key);
         } else {
             // if value not found try accessing the persistent memory on disc
-            IEclipsePreferences prefs = new InstanceScope()
+            IEclipsePreferences prefs = InstanceScope.INSTANCE
                     .getNode(CoreModelPlugin.PLUGIN_ID);
             value = prefs.getBoolean(key, isEnabledByDefault);
             store.setValue(key, value);
@@ -509,7 +508,7 @@ public final class ValidationManager {
             String pref = PREFERENCE_PREFIX + id;
             boolean oldValue = enabled;
             enabled = enabledParam;
-            new InstanceScope().getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
+            InstanceScope.INSTANCE.getNode(CoreModelPlugin.PLUGIN_ID).putBoolean(
                     pref, enabled);
             IPreferenceStore store = CoreModelPlugin.getDefault()
                     .getPreferenceStore();

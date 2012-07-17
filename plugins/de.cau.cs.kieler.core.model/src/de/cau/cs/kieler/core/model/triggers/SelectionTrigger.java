@@ -32,7 +32,6 @@ import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
 import de.cau.cs.kieler.core.model.IGraphicalFrameworkBridge;
 import de.cau.cs.kieler.core.ui.UnsupportedPartException;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * Listens for selection and deselection of graphical elements.
@@ -60,12 +59,12 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      */
     public void register() {
         final ISelectionListener isl = this;
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
                         .addSelectionListener(isl);
             }
-        }, false);
+        });
     }
 
     /**
@@ -73,12 +72,12 @@ public class SelectionTrigger extends AbstractTrigger implements ISelectionListe
      */
     public void unregister() {
         final ISelectionListener isl = this;
-        MonitoredOperation.runInUI(new Runnable() {
+        PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
             public void run() {
                 PlatformUI.getWorkbench().getActiveWorkbenchWindow().getSelectionService()
                         .removeSelectionListener(isl);
             }
-        }, false);
+        });
     }
 
     /**

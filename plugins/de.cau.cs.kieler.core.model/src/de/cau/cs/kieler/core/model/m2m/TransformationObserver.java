@@ -20,9 +20,8 @@ import java.util.List;
  * Register yourself to this class to get notified about recently executed transformations.
  * 
  * @author ckru
- *
  */
-public class TransformationObserver {
+public final class TransformationObserver {
 
     /**
      * the listeners registered to the observer.
@@ -30,9 +29,9 @@ public class TransformationObserver {
     private List<ITransformationListener> listeners = new LinkedList<ITransformationListener>();
     
     /**
-     * the singleton instance
+     * the singleton instance.
      */
-    private static TransformationObserver INSTANCE = new TransformationObserver();
+    private static final TransformationObserver INSTANCE = new TransformationObserver();
     
     /**
      * constructor invisible since this is singleton.
@@ -51,9 +50,10 @@ public class TransformationObserver {
     
     /**
      * Registered listeners will be notified after transformation execution.
+     * 
      * @param listener the listener to be registered
      */
-    public void register(ITransformationListener listener) {
+    public void register(final ITransformationListener listener) {
         if (!listeners.contains(listener)) {
             listeners.add(listener);
         }
@@ -61,9 +61,10 @@ public class TransformationObserver {
     
     /**
      * deregister here if you want to stop being notified.
+     * 
      * @param listener the listener to be deregistered
      */
-    public void deregister(ITransformationListener listener) {
+    public void deregister(final ITransformationListener listener) {
         if (listeners.contains(listener)) {
             listeners.remove(listener);
         }
@@ -71,12 +72,15 @@ public class TransformationObserver {
     
     /**
      * Notify the registered listeners of a recently executed transformation.
+     * 
      * @param context the context of the executed transformation
      * @param descriptor the descriptor of the executed transformation
      */
-    public void notifyListeners(ITransformationContext context, TransformationDescriptor descriptor) {
+    public void notifyListeners(final ITransformationContext context,
+            final TransformationDescriptor descriptor) {
         for (ITransformationListener listener: listeners) {
-            listener.transformationExecuted(descriptor.getTransformationName(), descriptor.getParameters(), descriptor.getResult());
+            listener.transformationExecuted(descriptor.getTransformationName(),
+                    descriptor.getParameters(), descriptor.getResult());
         }
     }
     

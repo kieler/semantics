@@ -268,7 +268,7 @@ public class Colors {
             if (!(this.signalColor.containsKey(signalName))) {
                 return defaultColor;
             }
-            return this.signalTickColor.get(signalName);
+            return this.signalTickColor.get(key);
         }
         return this.signalTickColor.get(key);
     }

@@ -19,10 +19,15 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URI;
-import org.eclipse.core.runtime.FileLocator;
+import java.net.URL;
+
+import org.eclipse.core.runtime.Path;
 import org.eclipse.core.runtime.Platform;
 import org.osgi.framework.Bundle;
+
+import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 
 /**
  * Wrapper class to execute CEC executables.
@@ -147,6 +152,71 @@ public final class CEC {
     /** The Constant STEP_TIME. */
     private static final int STEP_TIME = 50;
 
+    /** The extension for executable module files in the windows fragment . */
+    private static final String WINDOWS_EXTENSION = ".exe";
+
+    /** The Constant CEC_PREFIX. */
+    private static final String CEC_PREFIX = "cec-";
+
+    // -------------------------------------------------------------------------
+    
+    private static URL resolveBundleOrWorkspaceFile(final String file, final String pluginId) {
+        // if the bundle is not ready then there is no image
+        final Bundle bundle = Platform.getBundle(pluginId);
+        
+        System.out.println("Bundle:" + bundle.getBundleId() + "///" + bundle.getSymbolicName());
+
+        // first try to resolve bundle files (give preference to bundle files)
+        URL fileURL = org.eclipse.core.runtime.FileLocator.find(bundle, new Path(file),
+                null);
+
+        if (fileURL == null) {
+            System.out.println("fileURL: NULL");
+        } else {
+            System.out.println("fileURL:" + fileURL.toString());
+        }
+        
+        return fileURL;
+    }
+    
+
+    /**
+     * Resolve the path to the executable in a fragment for a specific CEC module.
+     *
+     * @param module the module
+     * @return the string
+     */
+    private static String resolveFragmentCECModule(final MODULE module) {
+        try {
+            // first try the non-windows case
+            URL resolvedFileName = resolveBundleOrWorkspaceFile(
+                     CEC_PREFIX + module, "de.cau.cs.kieler.esterel.cec");
+            if (resolvedFileName == null) {
+                // second try the windows case
+                resolvedFileName = resolveBundleOrWorkspaceFile(
+                         CEC_PREFIX + module + WINDOWS_EXTENSION, "de.cau.cs.kieler.esterel.cec");
+
+            }
+            if (resolvedFileName != null) {
+                resolvedFileName = KiemUtil.getAbsoluteBundlePath(resolvedFileName);
+            }
+            if (resolvedFileName != null) {
+                String resolvedModuleExecutable = KiemUtil.getAbsoluteFilePath(resolvedFileName);
+                return resolvedModuleExecutable;
+            }
+//        } catch (URISyntaxException e) {
+//            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+//                    e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+                    e);
+        } catch (IOException e) {
+            throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'",
+                    e);
+        }
+        throw new RuntimeException("Cannot resolve executable of CEC module '" + module + "'");
+    }
+
     // -------------------------------------------------------------------------
 
     /**
@@ -161,18 +231,23 @@ public final class CEC {
      *             thrown for any execution error
      */
     public static InputStream exec(final MODULE module, final InputStream input) throws IOException {
-        Bundle[] fragments = Platform.getFragments(CECPlugin.getDefault().getBundle());
 
-        if (fragments.length != 1) {
-            throw new UnsupportedOperationException("cec native fragment not found, "
-                    + "it seems that your platform is not supported by the CEC", null);
-        }
-        Bundle compiler = fragments[0];
+        String cmd = resolveFragmentCECModule(module);
 
-        String path;
-        path = FileLocator.getBundleFile(compiler).getAbsolutePath();
-
-        String cmd = path + File.separator + "cec-" + module;
+        // Bundle[] fragments = Platform.getFragments(CECPlugin.getDefault().getBundle());
+        //
+        // if (fragments.length != 1) {
+        // throw new UnsupportedOperationException("cec native fragment not found, "
+        // + "it seems that your platform is not supported by the CEC", null);
+        // }
+        // Bundle compiler = fragments[0];
+        //
+        // System.out.println("compiler" + compiler);
+        //
+        // String path;
+        // path = FileLocator.getBundleFile(compiler).getAbsolutePath();
+        //
+        // String cmd = path + File.separator + ;
 
         System.out.println(cmd);
 
@@ -388,9 +463,10 @@ public final class CEC {
 
     /**
      * Gets the default out file.
-     *
+     * 
      * @return the default out file
-     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
      */
     public static File getDefaultOutFile() throws IOException {
         File outFile = File.createTempFile("strl", ".c");

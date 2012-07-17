@@ -11,10 +11,7 @@
    <extension
          point="de.cau.cs.kieler.karma">
       <configuration
-            FeatureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFeatureProvider"
-            FigureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFigureProvider"
-            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFigureProvider"
-            editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsFigureProvider">
          <conditions>
             <featureValueCondition
                   feature="type"
@@ -639,6 +636,9 @@
          <package
                class="de.cau.cs.kieler.core.annotations.AnnotationsPackage">
          </package>
+         
+         <!-- These warnings can safely be ignored. In fact, adding synccharts.diagram as a dependency
+              will introduce a dependency cycle. -->
          <editPart
                editPart="de.cau.cs.kieler.synccharts.diagram.edit.parts.StateEditPart">
          </editPart>
@@ -647,10 +647,7 @@
          </editPart>
       </configuration>
       <configuration
-            FeatureProvider="de.cau.cs.kieler.synccharts.custom.FeatureProvider1"
-            FigureProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsConnectionFigureProvider"
-            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsConnectionFigureProvider"
-            editorId="de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditorID">
+            RenderingProvider="de.cau.cs.kieler.synccharts.custom.SyncchartsConnectionFigureProvider">
          <conditions>
             <compoundCondition
                   figureParam="weakAbortHistory"

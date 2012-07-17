@@ -46,7 +46,6 @@ import de.cau.cs.kieler.core.ui.CoreUIPlugin;
  * performs actions when files of interest are affected.
  * 
  * @author soh
- * @kieler.rating 2010-02-18 proposed yellow soh
  */
 public class RefactoringListener implements IRefactoringHistoryListener {
 

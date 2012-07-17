@@ -43,7 +43,8 @@ import de.cau.cs.kieler.core.model.xtend.transformation.ITransformationFramework
 /**
  * An implementation of the ITransformationFramework interface for the use with the Xtend framework.
  * 
- * FIXME this class depends on a GMF utility class; after it has been removed, the dependency to core.model.gmf should be deleted
+ * FIXME this class depends on a GMF utility class; after it has been removed, the dependency to
+ * core.model.gmf should be deleted
  * 
  * @author mim
  * @deprecated This class is used by KSBasE. For new implementations extend the
@@ -134,7 +135,7 @@ public class XtendTransformationFramework implements ITransformationFramework {
                             }
                         }
                     } catch (Exception e) {
-                        //Fixing: #1697 with try-catch now to ensure valid values
+                        // Fixing: #1697 with try-catch now to ensure valid values
                     }
                 }
                 if (listParameterEntries.size() > 0) {
@@ -149,11 +150,11 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 EObject buffer = null;
                 for (EObject next : slist) {
                     try {
-                    	// FIXME: this simply compares the class name with the parameter type name this fails
-                    	// for many cases, e.g. subclasses or implemented classes like:
-                    	// type: Node, parameter: NodeImpl
-                    	// type: Node, parameter: MyNode extends Node
-                    	// this is really bad! (haf)
+                        // FIXME: this simply compares the class name with the parameter type name
+                        // this fails for many cases, e.g. subclasses or implemented classes like:
+                        // type: Node, parameter: NodeImpl
+                        // type: Node, parameter: MyNode extends Node
+                        // this is really bad! (haf)
                         if (next.eClass().getName().equals(param)) {
                             buffer = next;
                             params.add(next);
@@ -268,7 +269,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
      * Executes a transformation.
      * 
      * @return The return value from XtendFacade.call()
-     * @throws TransformException in case the transformation fails
+     * @throws TransformException
+     *             in case the transformation fails
      */
     public Object executeTransformation() throws TransformException {
         Object result = null;
@@ -307,8 +309,8 @@ public class XtendTransformationFramework implements ITransformationFramework {
                 Reader reader = new InputStreamReader(fileName.openStream());
                 Object o = parser.parse(reader, "features.ext"); //$NON-NLS-1$
                 if (o != null) {
-                    LinkedList<AbstractTransformation> transformations =
-                            new LinkedList<AbstractTransformation>();
+                    LinkedList<AbstractTransformation> transformations
+                            = new LinkedList<AbstractTransformation>();
                     XtendFile xtFile = (XtendFile) o;
                     for (Extension ext : xtFile.getExtensions()) {
                         // Only read in-place methods

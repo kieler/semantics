@@ -39,7 +39,6 @@ import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
  * extension point.
  * 
  * @author soh
- * @kieler.rating 2010-07-01 proposed yellow soh
  */
 public class ValidationInformationCollector implements IStartup, IPartListener {
 
@@ -269,6 +268,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
                 Object o = validateActions.get(key);
 
                 if (o != null && o instanceof List<?>) {
+                    @SuppressWarnings("unchecked")
                     List<IValidationActionFactory> list = (List<IValidationActionFactory>) o;
 
                     for (IValidationActionFactory fact : list) {
@@ -302,6 +302,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             Object o = validateActions.get(key);
 
             if (o != null && o instanceof List<?>) {
+                @SuppressWarnings("unchecked")
                 List<IValidationActionFactory> factories = (List<IValidationActionFactory>) o;
 
                 for (IValidationActionFactory fact : factories) {
@@ -354,6 +355,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
         Object o = validateActions.get(key);
 
         if (o != null && o instanceof List<?>) {
+            @SuppressWarnings("unchecked")
             List<IValidationActionFactory> factories = (List<IValidationActionFactory>) o;
 
             for (IValidationActionFactory fact : factories) {
@@ -379,6 +381,7 @@ public class ValidationInformationCollector implements IStartup, IPartListener {
             Object o = checkfiles.get(key);
 
             if (o != null && o instanceof Map<?, ?>) {
+                @SuppressWarnings("unchecked")
                 Map<String, CheckfileDefinition> map = (Map<String, CheckfileDefinition>) o;
 
                 if (map.containsKey(id)) {

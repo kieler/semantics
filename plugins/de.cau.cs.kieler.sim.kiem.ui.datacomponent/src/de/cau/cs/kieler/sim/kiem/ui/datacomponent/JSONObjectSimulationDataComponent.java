@@ -15,13 +15,11 @@
 package de.cau.cs.kieler.sim.kiem.ui.datacomponent;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.IPath;
-import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
@@ -29,7 +27,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.mwe.core.monitor.ProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorPart;
@@ -40,7 +37,6 @@ import org.eclipse.ui.PlatformUI;
 import org.json.JSONObject;
 
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
-import de.cau.cs.kieler.core.util.Maybe;
 import de.cau.cs.kieler.sim.kiem.IJSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.JSONObjectDataComponent;
 import de.cau.cs.kieler.sim.kiem.KiemExecutionException;
@@ -150,7 +146,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
     /**
      * The Class M2MProgressMonitor.
      */
-    protected class M2MProgressMonitor implements ProgressMonitor {
+    protected static class M2MProgressMonitor implements ProgressMonitor {
 
         /** The kieler progress monitor. */
         private ProgressMonitorAdapter kielerProgressMonitor;
@@ -531,10 +527,10 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      * {@inheritDoc}
      */
     public final JSONObject provideInitialVariables() throws KiemInitializationException {
-        JSONObject returnObj = new JSONObject();
+        JSONObject returnObj = null;
 
         // Do validation only for (opened) EMF editors
-        if (this.getModelRootElement() != null) {
+        if (this.getModelEditor() != null) {
             // Check if the model conforms to all check files and no warnings left!
             EObject rootEObject = this.getModelRootElement();
             boolean ok = checkModelValidation(rootEObject);
@@ -554,12 +550,13 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
             performModelTransformation();
             // then do the provide initial variables
             returnObj = doProvideInitialVariables();
+            return returnObj;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new KiemInitializationException("Model could not be generated\n\n"
                     + "Please ensure that all simulation warnings in the "
                     + "respective Eclipse Problems View have been cleared.\n\n", true, e);
         }
-        return returnObj;
     }
 
     // -------------------------------------------------------------------------
@@ -576,47 +573,52 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
         transformationError = false;
         exception = null;
 
-        if (KiemUtil.isHeadlessRun()) {
+// Problem: 26.06.2012
+// 1. Strange Blocking (Deadlock) when running regression tests with UI, non-headless
+// 2. Popup of progress monitor needs much longer than the actual transformation for
+//    small models
+// Removed this code for now.        
+        
+//        if (KiemUtil.isHeadlessRun()) {
             // headless run - sequential in current thread
             model2ModelTransform(new ProgressMonitorAdapter(new NullProgressMonitor()));
-        } else {
-            // normal run - concurrent to UI thread
-            Display.getDefault().asyncExec(new Runnable() {
-                public void run() {
-
-                    final Maybe<IStatus> status = new Maybe<IStatus>();
-                    try {
-                        PlatformUI.getWorkbench().getProgressService()
-                                .run(false, false, new IRunnableWithProgress() {
-                                    public void run(final IProgressMonitor monitor) {
-                                        try {
-                                            status.set(model2ModelTransform(new ProgressMonitorAdapter(
-                                                    monitor)));
-                                        } catch (KiemInitializationException e) {
-                                            transformationError = true;
-                                            exception = e;
-                                        }
-                                    }
-                                });
-                    } catch (InvocationTargetException e) {
-                        transformationError = true;
-                        exception = e;
-                    } catch (InterruptedException e) {
-                        transformationError = true;
-                        exception = e;
-                    }
-                }
-            });
-
-            // wait until error or transformation completed
-            while (!transformationCompleted && !transformationError) {
-                try {
-                    Thread.sleep(SLEEP_TIME);
-                } catch (InterruptedException e) { 
-                    // hide sleep error
-                }
-            } // end while
-        } // end if NOT headless
+//        } else {
+//            // normal run - concurrent to UI thread
+//            Display.getDefault().asyncExec(new Runnable() {
+//                public void run() {
+//                    final Maybe<IStatus> status = new Maybe<IStatus>();
+//                    try {
+//                        PlatformUI.getWorkbench().getProgressService()
+//                                .run(true, true, new IRunnableWithProgress() {
+//                                    public void run(final IProgressMonitor monitor) {
+//                                        try {
+//                                            status.set(model2ModelTransform(new ProgressMonitorAdapter(
+//                                                    monitor)));
+//                                        } catch (KiemInitializationException e) {
+//                                            transformationError = true;
+//                                            exception = e;
+//                                        }
+//                                    }
+//                                });
+//                    } catch (InvocationTargetException e) {
+//                        transformationError = true;
+//                        exception = e;
+//                    } catch (InterruptedException e) {
+//                        transformationError = true;
+//                        exception = e;
+//                    }
+//                }
+//            });
+//
+//            // wait until error or transformation completed
+//            while (!transformationCompleted && !transformationError) {
+//                try {
+//                    Thread.sleep(SLEEP_TIME);
+//                } catch (InterruptedException e) { 
+//                    // hide sleep error
+//                }
+//            } // end while
+//        } // end if NOT headless
 
         if (transformationError) {
             if (exception instanceof KiemInitializationException) {

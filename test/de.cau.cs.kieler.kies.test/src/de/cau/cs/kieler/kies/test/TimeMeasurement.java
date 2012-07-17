@@ -173,7 +173,7 @@ public class TimeMeasurement {
      * @throws Exception the exception
      */
     public void test() throws Exception {
-        TransformationUtil.logger.setLevel(Level.OFF);
+        TransformationUtil.LOGGER.setLevel(Level.OFF);
         fw = new FileWriter(outputFile);
 
         for (File f : filesTest) {
@@ -217,7 +217,7 @@ public class TimeMeasurement {
                 + " ; recursive + dc setup ; just stepwise execution ");
         fw.close();
 
-        TransformationUtil.logger.setLevel(Level.OFF);
+        TransformationUtil.LOGGER.setLevel(Level.OFF);
         List<File> reversed = Lists.newArrayList(filesTest);
         Collections.sort(reversed);
         // Collections.reverse(reversed);
@@ -401,7 +401,7 @@ public class TimeMeasurement {
                 ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                         ActionLabelProcessorWrapper.PARSE);
             } catch (Exception e) {
-                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+                TransformationUtil.LOGGER.info("Parse or serialization error." + e.getMessage());
             }
 
             resource.save(null);
@@ -488,7 +488,7 @@ public class TimeMeasurement {
                 ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                         ActionLabelProcessorWrapper.PARSE);
             } catch (Exception e) {
-                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+                TransformationUtil.LOGGER.info("Parse or serialization error." + e.getMessage());
             }
 
             resource.save(null);
@@ -586,7 +586,7 @@ public class TimeMeasurement {
                 ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                         ActionLabelProcessorWrapper.PARSE);
             } catch (Exception e) {
-                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+                TransformationUtil.LOGGER.info("Parse or serialization error." + e.getMessage());
             }
 
             resource.save(null);
@@ -610,7 +610,7 @@ public class TimeMeasurement {
      */
     @SuppressWarnings("deprecation")
     public void calLevels() throws Exception {
-        TransformationUtil.logger.setLevel(Level.OFF);
+        TransformationUtil.LOGGER.setLevel(Level.OFF);
         List<File> reversed = Lists.newArrayList(filesTest);
         // Collections.reverse(reversed);
         for (final File f : reversed) {

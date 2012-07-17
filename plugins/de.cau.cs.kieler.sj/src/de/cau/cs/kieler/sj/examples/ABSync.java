@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -20,7 +20,7 @@ import static de.cau.cs.kieler.sj.examples.ABSync.StateLabel.*;
 
 /**
  * 
- * The program ABSync program from Charles Andres Paper
+ * The program ABSync program from Charles Andres Paper.
  * 
  * @author cmot
  * 
@@ -31,8 +31,9 @@ public class ABSync extends SJProgram<StateLabel> {
      * The labels used for the different parts of the program.
      */
     enum StateLabel {
-    	DetectionThreadMain, DetectionThreadMain1, DetectionThreadMain2, dA, dB, done, idle, cnt1, cnt2, WaitAandB, Timer, WaitThreadMain,
-        DetectionThread, TimerThread, WaitThread, wAThread, wBThread, 
+        DetectionThreadMain, DetectionThreadMain1, DetectionThreadMain2, dA, dB, done, idle, 
+        cnt1, cnt2, WaitAandB, Timer, WaitThreadMain, DetectionThread, TimerThread, WaitThread,
+        wAThread, wBThread,
     }
 
     /**
@@ -76,14 +77,14 @@ public class ABSync extends SJProgram<StateLabel> {
 
             case wAThread:
                 if (awaitCB(A)) {
-                	arm.emit();
+                    arm.emit();
                     termB();
                 }
                 break;
 
             case wBThread:
                 if (awaitCB(B)) {
-                	arm.emit();
+                    arm.emit();
                     termB();
                 }
                 break;
@@ -96,34 +97,32 @@ public class ABSync extends SJProgram<StateLabel> {
                 break;
 
             case TimerThread:
-            	if (awaitCB(arm)) {
-            		pauseB(cnt1);
-            	}
-            	break;
+                if (awaitCB(arm)) {
+                    pauseB(cnt1);
+                }
+                break;
 
             case cnt1:
-            	pauseB(cnt2);
-            	break;
-            	
+                pauseB(cnt2);
+                break;
+
             case cnt2:
-            	disarm.emit();
-            	termB();
-            	break;
+                disarm.emit();
+                termB();
+                break;
 
             case DetectionThreadMain:
-        		if (Reset.isPresent()) {
-        			abort();
-        			transB(DetectionThread);
-        			break;
-        		}
-        		else if (disarm.isPresent()) {
+                if (Reset.isPresent()) {
+                    abort();
                     transB(DetectionThread);
+                    break;
+                } else if (disarm.isPresent()) {
+                    transB(DetectionThread);
+                } else {
+                    prioB(DetectionThread, 2);
                 }
-        		else {
-        			prioB(DetectionThread, 2);
-        		}
-        		break;
-        }
+                break;
+            }
         }
     }
 }

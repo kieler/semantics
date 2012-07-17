@@ -24,3 +24,4 @@ Require-Bundle: org.eclipse.ui,
  de.cau.cs.kieler.sc
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ActivationPolicy: lazy
+Export-Package: de.cau.cs.kieler.s.sim.sc

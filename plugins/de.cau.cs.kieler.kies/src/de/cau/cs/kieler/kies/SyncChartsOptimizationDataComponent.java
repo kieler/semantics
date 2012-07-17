@@ -209,7 +209,7 @@ public class SyncChartsOptimizationDataComponent extends AbstractTransformationD
         }
 
         if (!flattenedStates.isEmpty()) {
-            TransformationUtil.logger.info(" ######### foo " + flattenedStates.size() + " "
+            TransformationUtil.LOGGER.info(" ######### foo " + flattenedStates.size() + " "
                     + flattenedStates.get(0));
 
             TransformationDescriptor descriptor = new TransformationDescriptor("ruleAll",

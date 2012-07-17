@@ -14,7 +14,6 @@
     <relativePath>../build/de.cau.cs.kieler.parent/pom.xml</relativePath>
   </parent>
 
-<!-- stupid comment -->
 <!-- all plugins need to be listed as module -->
 
   <modules>
@@ -95,10 +94,9 @@
     <module>de.cau.cs.kieler.klay.force</module>
     <module>de.cau.cs.kieler.klay.layered</module>
     <module>de.cau.cs.kieler.klay.planar</module>
-    <module>de.cau.cs.kieler.klay.rail</module>
     <module>de.cau.cs.kieler.klighd</module>
     <module>de.cau.cs.kieler.klighd.gmf</module>
-    <module>de.cau.cs.kieler.klighd.graphiti</module>
+    <!--    <module>de.cau.cs.kieler.klighd.graphiti</module> -->
     <module>de.cau.cs.kieler.klighd.piccolo</module>
     <module>de.cau.cs.kieler.klighd.xtext</module>
     <module>de.cau.cs.kieler.klots</module>
@@ -114,7 +112,6 @@
     <module>de.cau.cs.kieler.kwebs.jaxws</module>
     <module>de.cau.cs.kieler.kwebs.server</module>
     <module>de.cau.cs.kieler.maude</module>
-    <module>de.cau.cs.kieler.papyrus</module>
     <module>de.cau.cs.kieler.s</module>
     <module>de.cau.cs.kieler.s.sc</module>
     <module>de.cau.cs.kieler.s.sim.kivi</module>
@@ -159,10 +156,6 @@
     <module>de.cau.cs.kieler.synccharts.text</module>
     <module>de.cau.cs.kieler.synccharts.text.bridge</module>
     <module>de.cau.cs.kieler.synccharts.text.ui</module>
-    <module>de.cau.cs.kieler.uml2</module>
-    <module>de.cau.cs.kieler.uml2.examples</module>
-    <module>de.cau.cs.kieler.uml2.kivi</module>
-    <module>de.cau.cs.kieler.uml2.sim.maude</module>
     <module>de.tu_berlin.cs.tfs.muvitorkit</module>
     <module>de.unido.ls5.eti.client</module>
     <module>de.unido.ls5.eti.common</module>

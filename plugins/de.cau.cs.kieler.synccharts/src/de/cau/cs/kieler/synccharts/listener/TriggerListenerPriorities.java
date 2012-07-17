@@ -1,3 +1,16 @@
+/*
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
+ * 
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
+ * 
+ * Copyright 2009 by
+ * + Christian-Albrechts-University of Kiel
+ *   + Department of Computer Science
+ *     + Real-Time and Embedded Systems Group
+ * 
+ * This code is provided under the terms of the Eclipse Public License (EPL).
+ * See the file epl-v10.html for the license text.
+ */
 package de.cau.cs.kieler.synccharts.listener;
 
 import org.eclipse.emf.common.command.Command;
@@ -28,7 +41,6 @@ import de.cau.cs.kieler.synccharts.Transition;
  * transitions at the involved states.
  *  
  * @author haf
- *
  */
 public class TriggerListenerPriorities extends FireOnceTriggerListener {
 
@@ -40,12 +52,17 @@ public class TriggerListenerPriorities extends FireOnceTriggerListener {
         super(NotificationFilter.createFeatureFilter(
                 SyncchartsPackage.eINSTANCE.getTransition_Priority()).or(
                 NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
-                        .getState_OutgoingTransitions())).or(NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
+                        .getState_OutgoingTransitions())).or(
+                                NotificationFilter.createFeatureFilter(SyncchartsPackage.eINSTANCE
                             .getRegion_States())));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    protected Command trigger(TransactionalEditingDomain domain, Notification notification) {
+    protected Command trigger(final TransactionalEditingDomain domain,
+            final Notification notification) {
         PossiblyEmptyCompoundCommand cc = new PossiblyEmptyCompoundCommand();
         if (notification.getFeature().equals(SyncchartsPackage.eINSTANCE.getTransition_Priority())
                 && notification.getNewIntValue() != notification.getOldIntValue()) {
@@ -62,9 +79,9 @@ public class TriggerListenerPriorities extends FireOnceTriggerListener {
             }
             // fix prios of all outgoing transitions
             cc.append(handleStateFixPriorities((State) notification.getNotifier()));
-        }
-        else if (notification.getFeature().equals(
-            SyncchartsPackage.eINSTANCE.getRegion_States()) && notification.getEventType() == Notification.ADD) {
+        } else if (notification.getFeature().equals(
+            SyncchartsPackage.eINSTANCE.getRegion_States())
+            && notification.getEventType() == Notification.ADD) {
             // a new state has been added that might already have some outgoing transitions.
             // fix prios of all outgoing transitions
             cc.append(handleStateFixPriorities((State) notification.getNewValue()));

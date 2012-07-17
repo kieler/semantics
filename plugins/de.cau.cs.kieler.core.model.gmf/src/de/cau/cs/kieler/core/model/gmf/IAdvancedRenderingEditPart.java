@@ -19,20 +19,22 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EObject;
 
 /**
+ * Advanced rendering edit part interface.
  * 
  * @author ckru
- *
  */
 public interface IAdvancedRenderingEditPart {
     
     /**
      * Override this method from the edit part. Is called every time something in the edit part changes.
+     * 
      * @param notification observer notification
      */
     void handleNotificationEvent(final Notification notification);
     
     /**
      * Method that updates the given figures appearance.
+     * 
      * @param figure the figure to be updated
      * @return True if figure was actually changed. False if nothing happened.
      */
@@ -40,9 +42,16 @@ public interface IAdvancedRenderingEditPart {
 
     /**
      * Provides easier access to the model element.
+     * 
      * @return the model element
      */
     EObject getModelElement();
     
+    /**
+     * Returns the primary shape.
+     * 
+     * @return the primary shape
+     */
     IFigure getPrimaryShape();
+    
 }

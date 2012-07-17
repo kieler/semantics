@@ -4,7 +4,7 @@
    <extension
          point="org.eclipse.debug.ui.launchShortcuts">
       <shortcut
-            class="de.cau.cs.kieler.sim.kiem.ui.launching.KIEMLaunchShortcut"
+            class="de.cau.cs.kieler.sim.kiem.ui.launching.KiemLaunchShortcut"
             icon="icons/kiemIcon.png"
             id="de.cau.cs.kieler.sim.kiem.ui.launching.KIEMLaunchShortcut"
             label="KIEM Execution"
@@ -24,7 +24,7 @@
  <extension point="org.eclipse.debug.core.launchConfigurationTypes">
   <launchConfigurationType
    id="de.cau.cs.kieler.sim.kiem.ui.launching.KIEM"
-   delegate="de.cau.cs.kieler.sim.kiem.ui.launching.KIEMDelegate"
+   delegate="de.cau.cs.kieler.sim.kiem.ui.launching.KiemDelegate"
    modes="run,debug"
    name="KIELER Execution"
    delegateName="KIELER Exceution Manager Launch Tooling"
@@ -36,7 +36,7 @@
   <launchConfigurationTabGroup
       id="com.example.ExampleTabGroup"
       type="de.cau.cs.kieler.sim.kiem.ui.launching.KIEM"
-      class="de.cau.cs.kieler.sim.kiem.ui.launching.AbstractLaunchConfigurationTabGroup">
+      class="de.cau.cs.kieler.sim.kiem.ui.launching.KiemAbstractLaunchConfigurationTabGroup">
   </launchConfigurationTabGroup>
  </extension>
 

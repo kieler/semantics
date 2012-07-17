@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.synccharts.kivi;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
@@ -48,6 +49,16 @@ public class SyncChartsDataComponent extends KiViDataComponent {
             }
         });
         return maybe.get();
+    }
+
+    @Override
+    protected String getEncodedEObjectId(EObject eObject) {
+        if (eObject.eResource() != null) {
+            String uri = eObject.eResource().getURIFragment(eObject);
+            uri = (uri.hashCode() + "").replace("-", "M");
+            return uri;
+        }
+        return null;
     }
     
     

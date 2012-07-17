@@ -60,11 +60,11 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
         IJSONObjectDataComponent, IKiemEventListener {
 
     /** The Constant DATA_REPLAY_COMPONENT_ID. */
-    public static final String DATA_VALIDATION_COMPONENT_ID 
-                                 = "de.cau.cs.kieler.sim.kart.DataValidationComponent";
+    public static final String DATA_VALIDATION_COMPONENT_ID =
+            "de.cau.cs.kieler.sim.kart.DataValidationComponent";
 
     /** The number of the current step. */
-    private static volatile long step;
+    private long step;
 
     /** The name of the ESI/ESO file the trace shall be read/written from/to. */
     private IPath esoFilePath;
@@ -234,11 +234,14 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
 
     /**
      * Possibly display the overwrite-file-dialog if ui-plugin is loaded.
-     *
-     * @param file the file
-     * @throws KiemInitializationException the kiem initialization exception
+     * 
+     * @param file
+     *            the file
+     * @throws KiemInitializationException
+     *             the kiem initialization exception
      */
-    private void possiblyDisplayOverwriteFileDialog(final File file) throws KiemInitializationException {
+    private void possiblyDisplayOverwriteFileDialog(final File file)
+            throws KiemInitializationException {
         IConfigurationElement[] contributors = Platform.getExtensionRegistry()
                 .getConfigurationElementsFor(KartConstants.KART_EXTENSION_MESSAGEDIALOG);
 
@@ -248,7 +251,10 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
                 IMessageDialog msg = (IMessageDialog) (contributors[0]
                         .createExecutableExtension("class"));
                 if (msg.question(KartConstants.OVERWRITE_TITLE, KartConstants.OVERWRITE)) {
-                    file.delete();
+                    if (!file.delete()) {
+                        throw new KiemInitializationException(KartConstants.ERR_NOTDELETE_TITLE,
+                                true, null);
+                    }
                 }
             } catch (CoreException e) {
                 throw new KiemInitializationException(KartConstants.OVERWRITE_TITLE, true, e);
@@ -264,8 +270,9 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     /**
      * Sets the step number according to the button the user pressed. This is needed to correctly
      * handle history steps or jumps.
-     *
-     * @param event the event
+     * 
+     * @param event
+     *            the event
      */
     @SuppressWarnings("unchecked")
     @Override
@@ -446,7 +453,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Save the contents of the data pool, i. e. signals and variables, for later use. This method
      * automatically filters out KART-internal data pool variables.
@@ -542,8 +549,7 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
 
                     try {
                         JSONObject outputSignal = output.getJSONObject(outputKey);
-                        if (outputSignal.has("present")
-                                && outputSignal.getBoolean("present")) {
+                        if (outputSignal.has("present") && outputSignal.getBoolean("present")) {
                             // it actually is a present signal
                             outputSignals.put(outputKey, outputSignal.opt("value"));
                         }
@@ -562,13 +568,15 @@ public class DataValidationComponent extends JSONObjectDataComponent implements
     }
 
     // -------------------------------------------------------------------------
-    
+
     /**
      * Check whether the user actually selected an ESI or ESO file or messed up. This does not
      * actually try to read the file, it just checks for the correct extension.
-     *
-     * @param properties the properties
-     * @throws KiemPropertyException when the user messed up and did not select an ESI or ESO file
+     * 
+     * @param properties
+     *            the properties
+     * @throws KiemPropertyException
+     *             when the user messed up and did not select an ESI or ESO file
      */
     @Override
     public void checkProperties(final KiemProperty[] properties) throws KiemPropertyException {

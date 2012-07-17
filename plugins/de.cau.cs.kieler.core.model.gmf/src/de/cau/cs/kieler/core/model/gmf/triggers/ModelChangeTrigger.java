@@ -63,6 +63,10 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
 
     private IWorkbenchPart currentEditor;
 
+    /**
+     * {@inheritDoc}
+     */
+    @SuppressWarnings("deprecation")
     @Override
     public void register() {
         CombinedWorkbenchListener.addPartListener(this);
@@ -77,6 +81,9 @@ public class ModelChangeTrigger extends AbstractTrigger implements IPartListener
         trigger(new ActiveEditorState(part, part, null));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void unregister() {
         CombinedWorkbenchListener.removePartListener(this);

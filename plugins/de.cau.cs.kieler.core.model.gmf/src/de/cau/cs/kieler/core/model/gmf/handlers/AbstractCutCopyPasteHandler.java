@@ -45,7 +45,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * creates the commands corresponding to the requests made by the UI.
  * 
  * @author soh
- * @kieler.rating 2010-06-15 yellow msp, cmot
+ * @kieler.design 2010-06-15 msp, cmot
  */
 @SuppressWarnings("restriction")
 public abstract class AbstractCutCopyPasteHandler extends

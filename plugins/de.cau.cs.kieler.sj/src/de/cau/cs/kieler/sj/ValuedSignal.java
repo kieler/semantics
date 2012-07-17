@@ -1,7 +1,7 @@
 /*
- * SJ - Synchronous Java.
+ * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
  *
- * http://www.informatik.uni-kiel.de/rtsys/
+ * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
  * Copyright 2010 by
  * + Christian-Albrechts-University of Kiel
@@ -117,52 +117,54 @@ public class ValuedSignal extends Signal {
         if (!isDeclared()) {
             throw new SignalNotDeclaredException(
                     "The Signal has not declared in the SJProgram that belongs to the Signal");
-        } else if (lastSignalAssignments == null || lastSignalAssignments.length == 0) {
+        } else if (getLastSignalAssignments() == null || getLastSignalAssignments().length == 0) {
             throw new NoPreSignalException(
                     "There is no pre signal existing. Your history is too small");
-        } else if (lastSignalAssignments[(index + lastSignalAssignments.length - 1)
-                % lastSignalAssignments.length] == null) {
+        } else if (getLastSignalAssignments()[(getIndex() + getLastSignalAssignments().length - 1)
+                % getLastSignalAssignments().length] == null) {
             throw new NoPreSignalException(
                     "There is no pre signal existing. Not enougth ticks done");
         } else {
             Boolean[] signalHistory;
             Number[] valueHistory;
-            if ((lastSignalAssignments.length) - 1 <= 0) {
+            if ((getLastSignalAssignments().length) - 1 <= 0) {
                 // if there is only 1 element in the history thats the one pre
                 // will return and we do not need a history for that element.
                 valueHistory = null;
                 signalHistory = null;
             } else {
                 // create a history for the signal pre returns
-                valueHistory = new Number[lastSignalAssignments.length - 1];
-                signalHistory = new Boolean[lastSignalAssignments.length - 1];
-                for (int i = 0; i < (lastSignalAssignments.length - 1); i++) {
-                    valueHistory[(valueHistory.length - i) % valueHistory.length] =
-                            lastSignalValues[(index - 2 - i + 2 * lastSignalValues.length)
-                                    % lastSignalValues.length];
+                valueHistory = new Number[getLastSignalAssignments().length - 1];
+                signalHistory = new Boolean[getLastSignalAssignments().length - 1];
+                for (int i = 0; i < (getLastSignalAssignments().length - 1); i++) {
+                    valueHistory[(valueHistory.length - i) % valueHistory.length]
+                            = lastSignalValues[(getIndex()
+                            - 2 - i + 2 * lastSignalValues.length)
+                            % lastSignalValues.length];
 
-                    signalHistory[(signalHistory.length - i) % signalHistory.length] =
-                            lastSignalAssignments[(index - 2 - i + 2 * lastSignalAssignments.length)
-                                    % lastSignalAssignments.length];
+                    signalHistory[(signalHistory.length - i) % signalHistory.length] 
+                            = getLastSignalAssignments()[(getIndex()
+                            - 2 - i + 2 * getLastSignalAssignments().length)
+                            % getLastSignalAssignments().length];
 
                 }
             }
 
-            ValuedSignal retVal =
-                    new ValuedSignal(getName(), lastSignalAssignments[(index
-                            + lastSignalAssignments.length - 1)
-                            % lastSignalAssignments.length], lastSignalValues[(index
-                            + lastSignalValues.length - 1)
-                            % lastSignalValues.length], program, signalHistory, valueHistory);
+            ValuedSignal retVal = new ValuedSignal(getName(),
+                    getLastSignalAssignments()[(getIndex() + getLastSignalAssignments().length - 1)
+                            % getLastSignalAssignments().length], lastSignalValues[(getIndex()
+                            + getLastSignalAssignments().length - 1)
+                            % getLastSignalAssignments().length], getProgram(), signalHistory,
+                    valueHistory);
 
             // JSON logging
-            if (program.isThreadRunning() && program.getLogger() != null) {
-                program.getLogger().log(
+            if (getProgram().isThreadRunning() && getProgram().getLogger() != null) {
+                getProgram().getLogger().log(
                         INSTRUCTION,
-                        "\"pre\":" + "{\"label\":\"" + program.getCurThread().getLabel().name()
-                                + "\",\"prio\":" + program.getCurThread().getPriority()
-                                + "\",\"param\":[" + toJSONString() + "],\"retval\":"
-                                + retVal.toJSONString() + "}");
+                        "\"pre\":" + "{\"label\":\""
+                                + getProgram().getCurThread().getLabel().name() + "\",\"prio\":"
+                                + getProgram().getCurThread().getPriority() + "\",\"param\":["
+                                + toJSONString() + "],\"retval\":" + retVal.toJSONString() + "}");
             }
 
             return retVal;
@@ -176,15 +178,15 @@ public class ValuedSignal extends Signal {
         }
 
         // if we want to use a history
-        if (lastSignalAssignments != null) {
-            lastSignalAssignments[index] = present;
-            lastSignalValues[index] = this.value;
-            index = (index + 1) % lastSignalAssignments.length;
+        if (getLastSignalAssignments() != null) {
+            getLastSignalAssignments()[getIndex()] = isPresent();
+            lastSignalValues[getIndex()] = this.value;
+            setIndex((getIndex() + 1) % getLastSignalAssignments().length);
         }
 
         // reset signal values to default
-        this.present = ABSENT;
-        this.hasStateChecked = false;
+        setPresent(ABSENT);
+        setHasStateChecked(false);
         this.value = startValue;
 
     }
@@ -250,7 +252,7 @@ public class ValuedSignal extends Signal {
      */
     @Override
     public String toJSONString() {
-        return "{\"" + getName() + "\"" + ":{\"present\":" + ((present) ? "true" : "false")
+        return "{\"" + getName() + "\"" + ":{\"present\":" + ((isPresent()) ? "true" : "false")
                 + ((value != null) ? ",\"value\":" + value.toString() : "") + "}}";
     }
 

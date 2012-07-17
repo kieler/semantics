@@ -111,7 +111,7 @@ public final class TransformationUtil {
 
     // CHECKSTYLEOFF VisibilityModifier - convenience logger
     /** KIES's own logger. */
-    public static Logger logger = Logger.getLogger("kies");
+    public static final Logger LOGGER = Logger.getLogger("kies");
     // CHECKSTYLEON
 
     /** injector used for serialization. */
@@ -131,7 +131,7 @@ public final class TransformationUtil {
 
     static {
         // turn off logging
-        logger.setLevel(Level.OFF);
+        LOGGER.setLevel(Level.OFF);
     }
 
     /** utility class. */
@@ -449,7 +449,7 @@ public final class TransformationUtil {
             final URI kixsURI = URI.createPlatformResourceURI(newKixsFile.getFullPath().toString(),
                     false);
 
-            logger.info("Creating new SyncCharts Diagram.");
+            LOGGER.info("Creating new SyncCharts Diagram.");
 
             // create a new SyncCharts Diagram.
             final IRunnableWithProgress op = new WorkspaceModifyOperation(null) {
@@ -460,7 +460,7 @@ public final class TransformationUtil {
                     try {
                         diagram.save(null);
                     } catch (Exception e) {
-                        logger.severe(e.fillInStackTrace().getLocalizedMessage());
+                        LOGGER.severe(e.fillInStackTrace().getLocalizedMessage());
                         Status myStatus = new Status(IStatus.ERROR, Activator.PLUGIN_ID,
                                 "Problem creating a new SyncChartsDiagram.", e);
                         StatusManager.getManager().handle(myStatus, StatusManager.SHOW);
@@ -509,7 +509,7 @@ public final class TransformationUtil {
                         .addFileExtension("kixs");
                 kixsFile = workspaceRoot.getFile(kixsPath);
 
-                logger.info(strlFile.toString());
+                LOGGER.info(strlFile.toString());
                 // create all the elements
                 IFile created = TransformationUtil.createSyncchartDiagram(kixsFile);
                 if (created == null) {
@@ -523,7 +523,7 @@ public final class TransformationUtil {
                 TransformationUtil.doInitialEsterelTransformation(strlFile, kixsFile);
 
                 long total = System.currentTimeMillis() - start;
-                logger.info("Initial Transformation took: " + total + " Sek: " + total + "ms");
+                LOGGER.info("Initial Transformation took: " + total + " Sek: " + total + "ms");
 
             }
         }, true);
@@ -611,14 +611,19 @@ public final class TransformationUtil {
                 dc.setGlobalVariable(SyncChartsOptimizationDataComponent.GLOBALVAR_REC, true);
             }
 
+            if (dc == null) {
+                // success == false
+                return false;
+            }
             // then initialize
             dc.setHeadless(true);
             dc.initialize();
             dc.setRootState(root);
             // set global variables
             if (globalVars != null) {
-                for (String var : globalVars.keySet()) {
-                    dc.setGlobalVariable(var, globalVars.get(var));
+                for (String key : globalVars.keySet()) {
+                    boolean var = globalVars.get(key);
+                    dc.setGlobalVariable(key, var);
                 }
             }
 
@@ -632,7 +637,7 @@ public final class TransformationUtil {
             long start = System.currentTimeMillis();
             effect.execute();
             long end = System.currentTimeMillis();
-            TransformationUtil.logger.info("time: " + kixsFile.getName() + ": " + (end - start));
+            TransformationUtil.LOGGER.info("time: " + kixsFile.getName() + ": " + (end - start));
 
             // process action labels
             try {
@@ -641,7 +646,7 @@ public final class TransformationUtil {
                 ActionLabelProcessorWrapper.processActionLabels(rootRegion,
                         ActionLabelProcessorWrapper.PARSE);
             } catch (Exception e) {
-                TransformationUtil.logger.info("Parse or serialization error." + e.getMessage());
+                TransformationUtil.LOGGER.info("Parse or serialization error." + e.getMessage());
             }
 
             resource.save(null);

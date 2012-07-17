@@ -91,6 +91,7 @@ public class TraceWriter {
                     true)));
 
             if (inputs.size() != outputs.size()) {
+                outWriter.close();
                 throw new KiemInitializationException("The number of steps for input ("
                         + inputs.size() + ") and output (" + outputs.size()
                         + ") signals and state information does not match", true, null);
@@ -133,17 +134,17 @@ public class TraceWriter {
      * @return a string representing all variables and their values in the map in ESO format
      */
     private String getSpecialString(final HashMap<String, String> signals) {
-        String retval = "";
+        StringBuffer retvalBuf = new StringBuffer();
         Iterator<String> it = signals.keySet().iterator();
 
         while (it.hasNext()) {
             String key = it.next();
             String value = signals.get(key);
 
-            retval += "%% " + key + " : " + value.toString() + "\n";
+            retvalBuf.append("%% " + key + " : " + value.toString() + "\n");
         }
 
-        return retval;
+        return retvalBuf.toString();
     }
 
     // -------------------------------------------------------------------------
@@ -156,7 +157,7 @@ public class TraceWriter {
      * @return the String representation of the input signal map
      */
     private String getSignalString(final Map<String, Object> map) {
-        String retval = "";
+        StringBuffer retvalBuf = new StringBuffer();
 
         Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
 
@@ -164,12 +165,12 @@ public class TraceWriter {
             Map.Entry<String, Object> entry = it.next();
 
             if (entry.getValue() == null) {
-                retval += entry.getKey() + " ";
+                retvalBuf.append(entry.getKey() + " ");
             } else {
-                retval += entry.getKey() + " (" + entry.getValue().toString() + ") ";
+                retvalBuf.append(entry.getKey() + " (" + entry.getValue().toString() + ") ");
             }
         }
-        return retval;
+        return retvalBuf.toString();
     }
 
     // -------------------------------------------------------------------------
@@ -183,7 +184,7 @@ public class TraceWriter {
      * @see getSignalString()
      */
     private String getOutputSignalString(final Map<String, String> map) {
-        String retval = "% Output: ";
+        StringBuffer retvalBuf = new StringBuffer("% Output: ");
 
         Iterator<Map.Entry<String, String>> it = map.entrySet().iterator();
 
@@ -191,12 +192,12 @@ public class TraceWriter {
             Map.Entry<String, String> entry = it.next();
 
             if (entry.getValue() == null) {
-                retval += entry.getKey() + " ";
+                retvalBuf.append(entry.getKey() + " ");
             } else {
-                retval += entry.getKey() + " (" + entry.getValue().toString() + ") ";
+                retvalBuf.append(entry.getKey() + " (" + entry.getValue().toString() + ") ");
             }
         }
-        return retval;
+        return retvalBuf.toString();
     }
 
     // -------------------------------------------------------------------------

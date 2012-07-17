@@ -20,7 +20,6 @@ import org.eclipse.ui.IEditorPart;
  * Factory for creating the validate actions used in the validation.
  * 
  * @author soh
- * @kieler.rating 2010-06-11 proposed yellow soh
  */
 public interface IValidationActionFactory {
 

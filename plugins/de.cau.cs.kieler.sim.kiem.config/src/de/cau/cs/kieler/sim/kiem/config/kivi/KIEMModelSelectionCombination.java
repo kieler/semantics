@@ -11,7 +11,7 @@
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
  */
-package de.cau.cs.kieler.sim.kiem.ui.datacomponent.kivi;
+package de.cau.cs.kieler.sim.kiem.config.kivi;
 
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IWorkspaceRoot;
@@ -33,8 +33,10 @@ import org.eclipse.xtext.ui.editor.XtextEditor;
 
 import de.cau.cs.kieler.core.kivi.AbstractCombination;
 import de.cau.cs.kieler.core.model.gmf.util.GmfModelingUtil;
-import de.cau.cs.kieler.core.model.triggers.PartTrigger.EditorState;
+import de.cau.cs.kieler.core.model.triggers.PartTrigger.PartState;
 import de.cau.cs.kieler.core.model.xtext.util.XtextModelingUtil;
+import de.cau.cs.kieler.sim.kiem.IKiemEventListener;
+import de.cau.cs.kieler.sim.kiem.KiemEvent;
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
 
@@ -45,10 +47,13 @@ import de.cau.cs.kieler.sim.kiem.internal.KiemProxyEditor;
  * @author cmot
  * 
  */
-public class KIEMModelSelectionCombination extends AbstractCombination {
+public class KIEMModelSelectionCombination extends AbstractCombination implements IKiemEventListener {
 
     /** The time to sleep during blocking wait. */
     public static final int SLEEP_WAIT_TIME = 50;
+    
+    /** The deferred editor part that may be set while KIEM was executing or initializing. */
+    private static IEditorPart deferredEditorPart = null;
 
     // -------------------------------------------------------------------------
 
@@ -62,11 +67,10 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
 
     /**
      * Execute.
-     * 
-     * @param editorState
-     *            the editor state
+     *
+     * @param partState the part state
      */
-    public void execute(final EditorState editorState) {
+    public void execute(final PartState partState) {
         // to prevent UI thread deadlocks (editorIsActivePart) because during initialization
         // components may require UI access, do not execution at this point
         if (KiemPlugin.getDefault().isInitializingExecution()) {
@@ -74,18 +78,25 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         }
 
         // if currently active editor is also the active part
-        if (editorState != null && editorState.editorIsActivePart()) {
+        if (partState != null) {
+            // Select the active editor
+            IEditorPart activeEditorPart = partState.getEditorPart();
 
             // this is a special editor and we do'nt want to adjust kiem when it is loaded
-            if (editorState.getEditorPart() instanceof KiemProxyEditor) {
+            if (activeEditorPart == null || activeEditorPart instanceof KiemProxyEditor) {
                 return;
             }
 
             // if no execution is running or is about to run
             if (!(KiemPlugin.getDefault().isInitializingExecution() || KiemPlugin.getDefault()
                     .getExecution() != null)) {
-
-                refreshKIEMActiveAndOpenedModels(editorState);
+                // reset any deferred partState
+                deferredEditorPart = null;
+                refreshKIEMActiveAndOpenedModels(activeEditorPart);
+            } else {
+                // defer the partState until KIEM is stopping
+                // then a KIEM event will trigger this combination
+                deferredEditorPart = activeEditorPart;
             }
         }
 
@@ -97,7 +108,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
      * Refresh KIEM's the active and the list of opened models that serves as an input for the model
      * selection KIEMProperty of simulator components.
      */
-    private void refreshKIEMActiveAndOpenedModels(final EditorState editorState) {
+    private void refreshKIEMActiveAndOpenedModels(final IEditorPart activeEditorPart) {
         // By default reset opened editors (also no active one)
         KiemPlugin.getOpenedModelFiles().clear();
         KiemPlugin.setCurrentModelFile(null);
@@ -114,7 +125,7 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             IPath inputModelPath = getInputModelPath(editorPart);
 
             // this is the active editor if any
-            if (editorPart == editorState.getEditorPart()) {
+            if (editorPart == activeEditorPart) {
                 KiemPlugin.setCurrentModelFile(inputModelPath);
             }
 
@@ -212,11 +223,13 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
         IWorkspaceRoot myWorkspaceRoot = ResourcesPlugin.getWorkspace().getRoot();
         IPath fullPath = null;
         if (model != null) {
-            // EMF model case
-            org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
-            IPath path = new Path(uri.toPlatformString(false));
-            IFile file = myWorkspaceRoot.getFile(path);
-            fullPath = file.getFullPath();
+            if (model.eResource() != null) {
+                // EMF model case
+                org.eclipse.emf.common.util.URI uri = model.eResource().getURI();
+                IPath path = new Path(uri.toPlatformString(false));
+                IFile file = myWorkspaceRoot.getFile(path);
+                fullPath = file.getFullPath();
+            }
         } else {
             // Other editors
             IEditorInput editorInput = editorPart.getEditorInput();
@@ -227,6 +240,31 @@ public class KIEMModelSelectionCombination extends AbstractCombination {
             }
         }
         return fullPath;
+    }
+
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void notifyEvent(final KiemEvent event) {
+      if (event.isEvent(KiemEvent.ERROR_STOP) || event.isEvent(KiemEvent.EXECUTION_STOP)) {
+          // In case of erroneous or intended execution stops
+          // trigger to select the NOW current model
+          if (deferredEditorPart != null) {
+              refreshKIEMActiveAndOpenedModels(deferredEditorPart);
+          }
+      }
+    }
+    
+    //-------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public KiemEvent provideEventOfInterest() {
+        int[] events = { KiemEvent.EXECUTION_STOP, KiemEvent.ERROR_STOP};
+        return new KiemEvent(events);
     }
 
     // -------------------------------------------------------------------------

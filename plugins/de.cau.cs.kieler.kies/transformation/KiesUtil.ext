@@ -5,7 +5,7 @@ import synccharts;
 import utilities; 
 import esterel; 
 
-extension feature;
+//extension feature;
 extension org::eclipse::xtend::util::stdlib::io; // provides clone functionality
 extension org::eclipse::xtend::util::stdlib::cloning; // provides clone functionality
 
@@ -351,6 +351,21 @@ Boolean isParallelMacroState(State s):
 	s.regions.size > 1	
 ;
 
+// determine whether a scope contains signals or variables
+Boolean scopeHasSignalsVariables(Scope scope):
+ (scope.signals.size > 0 || scope.variables.size > 0)
+;
+
+// delegate methods
+Boolean hasSignalsVariables(Region region):
+ scopeHasSignalsVariables(region)
+;
+Boolean hasSignalsVariables(State state):
+ scopeHasSignalsVariables(state)
+;
+
+
+
 Boolean isSimpleState(State s):
  	!s.hasSignalsVariables() 
     && s.regions.isEmpty 
@@ -360,7 +375,7 @@ Boolean isSimpleState(State s):
     && s.suspensionTrigger == null
 ;
 
-Boolean hasSignalsVariables(State state):
+Boolean hasSignalXXXsVariables(State state):
 	state.scopeHasSignalsVariables()
 ;
 

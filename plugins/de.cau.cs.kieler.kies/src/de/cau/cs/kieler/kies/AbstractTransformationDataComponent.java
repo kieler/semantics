@@ -182,7 +182,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
         currentDescriptor = getNextTransformation();
         currentContext = null;
         if (currentDescriptor != null) {
-            TransformationUtil.logger.info("Trigger");
+            TransformationUtil.LOGGER.info("Trigger");
             if (facade == null) {
                 Status status = new Status(Status.ERROR, Activator.PLUGIN_ID,
                         "XtendFacade has not been initialized properly!");
@@ -196,7 +196,7 @@ public abstract class AbstractTransformationDataComponent extends JSONObjectData
 
             // if normally used by KIEM, execute the transformation
             if (!kiviMode) {
-                TransformationUtil.logger.info("Transformation in KIEM mode");
+                TransformationUtil.LOGGER.info("Transformation in KIEM mode");
                 processTransformation();
             }
         } else {

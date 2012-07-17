@@ -69,20 +69,17 @@ public class S2SCPlugin extends AbstractUIPlugin {
     /**
      * Generate SC code for a given S program and write it into the outputFile in the output Folder.
      * The output folder is necessary because header paths are also generated.
-     * 
-     * @param program
-     *            the program
-     * @param outputFile
-     *            the output file
-     * @param outputFolder
-     *            the output folder
-     * @throws IOException
-     *             Signals that an I/O exception has occurred.
+     *
+     * @param program the program
+     * @param outputFile the output file
+     * @param outputFolder the output folder
+     * @param bufferSize the buffer size
+     * @throws IOException Signals that an I/O exception has occurred.
      */
     public static void generateSCCode(final Program program, final String outputFile,
-            final String outputFolder) throws IOException {
+            final String outputFolder, final String bufferSize) throws IOException {
         S2SC s2SC = new S2SC();
-        String ccode = s2SC.transform(program, outputFolder).toString();
+        String ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
 
         // Write out c program
         FileWriter fileWriter = new FileWriter(outputFile);

@@ -33,7 +33,13 @@ char *_set2str(char *str, int setmax, _setPartType *setPtr) {
   int          first = 1;
   _setPartType setPart;
 
-  if (setmax >= _setPartSize) {
+  if (setmax < WORD_BIT) {
+    sprintf(str, "0%o", (unsigned int) *setPtr);
+  }
+  else if (setmax < _setPartSize) {
+    sprintf(str, "0%lo", (_setPartType) *setPtr);
+  }
+  else {
     for (i = setmax / _setPartSize; i >= 0; i--) {
       setPart = setPtr[i];
       if (first) {
@@ -47,9 +53,6 @@ char *_set2str(char *str, int setmax, _setPartType *setPtr) {
       }
     } 
   } 
-  else {
-    sprintf(str, "0%lo", (_setPartType) *setPtr);
-  }
   
   return str;
 }
@@ -63,22 +66,25 @@ _DEF_setContains(_setarray)
 // ===================================================================
 //! Print sets.
 
-void set2names(char *prefix, char* suffix, void *setPtr, int setmax, char *names[])
+void set2names(char *prefix, char* suffix, void *setPtr, int setmax, char *names[], void (*printValFunc)(int))
 {
   int i;
   int first = 1;
  
   printf("%s", prefix);
   for (i = 0; i <= setmax; i++) {
-    if ((setmax >= _setPartSize)
-	? _setarrayContains((_setPartType *) setPtr, i)
-	: _setContains(*(_setPartType *) setPtr, i)) {
+    if ((setmax < _setPartSize)
+	? _setContains(*(_setPartType *) setPtr, i)
+	: _setarrayContains((_setPartType *) setPtr, i)) {
       if (first) {
 	first = 0;
       } else {
 	printf(", ");
       }
       printf("%d/%s", i, names[i]);
+      if (printValFunc) {
+	printValFunc(i);
+      }
     }
   }
 

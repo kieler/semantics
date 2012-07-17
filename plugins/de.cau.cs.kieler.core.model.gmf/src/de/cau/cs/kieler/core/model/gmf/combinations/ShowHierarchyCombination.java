@@ -90,7 +90,7 @@ public class ShowHierarchyCombination extends AbstractCombination {
         }
         if (level > 0) {
             HighlightEffect effect = new HighlightEffect(element, editor, new Color(null, new RGB(
-                    360.0f / (maxLevel + 1) * level, 1.0f, 0.9f)));
+                    360.0f / (maxLevel + 1) * level, 1.0f, 0.9f))); // SUPPRESS CHECKSTYLE MagicNumber
             effect.setChangeWidth(false);
             schedule(effect);
         }

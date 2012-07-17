@@ -20,8 +20,8 @@ import de.cau.cs.kieler.core.IKielerPreferenceStore;
 /**
  * Wrapper class for Eclipse preference stores.
  * 
- * @kieler.rating 2009-12-11 proposed yellow msp
  * @author msp
+ * @deprecated this isn't used anywhere
  */
 public class KielerPreferenceStore implements IKielerPreferenceStore {
 

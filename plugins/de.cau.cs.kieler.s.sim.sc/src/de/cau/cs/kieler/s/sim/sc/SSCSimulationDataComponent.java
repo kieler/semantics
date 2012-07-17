@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -53,7 +54,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * 
  * @author cmot
  */
-public class SimulationDataComponent extends JSONObjectSimulationDataComponent implements
+public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
 
     /** The S program is the considered model to simulate. */
@@ -69,6 +70,15 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
     private static final int NUMBER_OF_TASKS = 10;
 
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
+
+    /** The estimated maximum size used for a pure signal. */
+    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
+
+    /** The estimated maximum size used for a valued signal. */
+    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
+    
+    /** The Constant MINIMAL_BUFFER_SIZE. */
+    private static final double MINIMAL_BUFFER_SIZE = 2048;
 
     // -------------------------------------------------------------------------
 
@@ -92,6 +102,32 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+
+        // String executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
+        // Process executionProcess;
+        // try {
+        // executionProcess = Runtime.getRuntime().exec(executable);
+        //
+        // PrintWriter out = new PrintWriter(new OutputStreamWriter(
+        // executionProcess.getOutputStream()));
+        // BufferedReader in = new BufferedReader(new InputStreamReader(
+        // executionProcess.getInputStream()));
+        // BufferedReader err = new BufferedReader(new InputStreamReader(
+        // executionProcess.getErrorStream()));
+        //
+        //
+        // for (int tick = 0; tick < 10; tick++) {
+        // out.print("\n");
+        // out.flush();
+        // String line = in.readLine();
+        // System.out.println(line);
+        // }
+        //
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+
     }
 
     // -------------------------------------------------------------------------
@@ -105,13 +141,16 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
 
         // Collect active statements
         String activeStatements = "";
+        StringBuffer activeStatementsBuf = new StringBuffer();
 
         if (!scExecution.isStarted()) {
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
+            //System.out.println(jSONObject.toString());
 
-            scExecution.getExecutionInterfaceToSC().write(jSONObject.toString() + "\n");
+            String out = jSONObject.toString();
+            scExecution.getExecutionInterfaceToSC().write(out + "\n");
             scExecution.getExecutionInterfaceToSC().flush();
             while (scExecution.getExecutionInterfaceError().ready()) {
                 // Error output, if any
@@ -119,6 +158,8 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             }
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+
+            //System.out.println(receivedMessage);
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
@@ -130,6 +171,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                         String sSignalOutputName = sSignalOutputArray.getString(i);
                         boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
                                 .getJSONObject(sSignalOutputName));
+
+                        // returnObj.accumulate(sSignalOutputName, sSignalOutput
+                        // .getJSONObject(sSignalOutputName));
 
                         // Test if the output variable is an auxiliary signal
                         // that is only there to mark the current S statement
@@ -143,20 +187,22 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                                         .substring(SSimSCPlugin.AUXILIARY_VARIABLE_TAG.length());
 
                                 // Insert a "," if not the first statement
-                                if (activeStatements.length() != 0) {
-                                    activeStatements += ",";
+                                if (activeStatementsBuf.length() != 0) {
+                                    activeStatementsBuf.append(",");
                                 }
 
-                                activeStatements += statementWithoutAuxiliaryVariableTag;
+                                activeStatementsBuf.append(statementWithoutAuxiliaryVariableTag);
 
                             } catch (Exception e) {
                                 // ignore error
+                                e.printStackTrace();
                             }
 
                         }
 
                     }
                 }
+                activeStatements = activeStatementsBuf.toString();
 
                 // Then add normal output signals
                 for (String outputSignal : outputSignalList) {
@@ -243,7 +289,9 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        scExecution.stopExecution();
+        if (scExecution != null) {
+            scExecution.stopExecution();
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -253,13 +301,23 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
      */
     public void doModel2ModelTransform(final ProgressMonitorAdapter monitor)
             throws KiemInitializationException {
+        // get active editor
+        doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean());
+    }
+
+    // -------------------------------------------------------------------------
+
+    /**
+     * {@inheritDoc}
+     */
+    public void doModel2ModelTransform(final ProgressMonitorAdapter monitor, final Program model,
+            final boolean debug) throws KiemInitializationException {
+        this.myModel = model;
         monitor.begin("S Simulation", NUMBER_OF_TASKS);
 
         String compile = "";
-
         try {
-            // get active editor
-            myModel = (Program) this.getModelRootElement();
 
             if (myModel == null) {
                 throw new KiemInitializationException(
@@ -278,7 +336,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             URI sOutput = URI.createURI("");
             URI scOutput = URI.createURI("");
             // By default there is no additional transformation necessary
-            Program transformedProgram =  myModel;
+            Program transformedProgram = myModel;
 
             // Calculate output path for possible S-m2m
             // FileEditorInput editorInput = (FileEditorInput) editorPart.getEditorInput();
@@ -290,7 +348,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // also states visualized.
             // Hence some pre-processing is needed and done by the
             // Esterl2Simulation Xtend2 model transformation
-            if (this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean()) {
+            if (debug) {
                 // Try to load SyncCharts model
                 // 'Full Debug Mode' is turned ON
                 S2Simulation transform = Guice.createInjector().getInstance(S2Simulation.class);
@@ -300,7 +358,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 // and pass this new file to the SC simulation instead.
                 sOutput = sOutput.trimFragment();
                 sOutput = sOutput.trimFileExtension().appendFileExtension("simulation.s");
-                
+
                 try {
                     // Write out copy/transformation of S program
                     Resource.Factory.Registry reg = Resource.Factory.Registry.INSTANCE;
@@ -313,7 +371,7 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
                 } catch (IOException e) {
                     throw new KiemInitializationException("Cannot write output S file.", true, null);
                 }
-            } 
+            }
 
             // Calculate output path for SC-m2t
             scOutput = URI.createURI(input.toString());
@@ -323,18 +381,41 @@ public class SimulationDataComponent extends JSONObjectSimulationDataComponent i
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
+            // Calculate buffersize for SC program
+            int bufferSizeInt = 0;
+            for (Signal signal : transformedProgram.getSignals()) {
+                if (signal.getType() == ValueType.PURE) {
+                    bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
+                } else {
+                    bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
+                }
+            }
+            double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));
+            double bufferSizeDouble = Math.ceil(Math.pow(2, log + 1));
+            if (bufferSizeDouble < MINIMAL_BUFFER_SIZE) {
+                bufferSizeDouble = MINIMAL_BUFFER_SIZE;
+            }
+            String bufferSize = bufferSizeDouble + "";
+            bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
+
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize);
 
             // Compile
             scExecution = new SCExecution(outputFolder);
             LinkedList<String> generatedSCFiles = new LinkedList<String>();
             generatedSCFiles.add(scOutputString);
             scExecution.compile(generatedSCFiles);
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (IOException e) {
+            throw new KiemInitializationException("Error compiling S program:\n\n "
+                    + e.getMessage() + "\n\n" + compile, true, e);
+        } catch (InterruptedException e) {
             throw new KiemInitializationException("Error compiling S program:\n\n "
                     + e.getMessage() + "\n\n" + compile, true, e);
         }

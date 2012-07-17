@@ -86,9 +86,7 @@ public class GenerateDefaultCombination extends AbstractCombination implements R
                     out = new FileOutputStream(file);
                     if (out != null) {
                         if (!file.exists()) {
-                            if (!file.createNewFile()) {
-                                // error
-                            }
+                            file.createNewFile();
                         }
 
                         out.write(contentBuffer.toString().getBytes());

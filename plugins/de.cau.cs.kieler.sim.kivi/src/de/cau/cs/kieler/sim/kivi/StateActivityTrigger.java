@@ -18,7 +18,6 @@ import java.util.List;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
-import org.eclipse.gmf.runtime.draw2d.ui.figures.ListScrollBar;
 
 import com.google.common.collect.Lists;
 
@@ -27,186 +26,213 @@ import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 
 /**
- * A trigger notifying the view management about the active states during
- * simulation.
+ * A trigger notifying the view management about the active states during simulation.
  * 
  * @author mmu, cmot
  * 
  */
 public class StateActivityTrigger extends AbstractTrigger {
 
-	private static StateActivityTrigger instance;
+    private static StateActivityTrigger instance;
 
-	/**C
-	 * Convenience method to get the current instance of this trigger.
-	 * 
-	 * @return instance of this trigger
-	 */
-	public static StateActivityTrigger getInstance() {
-		return instance;
-	}
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Give map of active states to the view management.
-	 * 
-	 * @param aS
-	 *            map of active states
-	 * @param editor
-	 *            the diagram editor
-	 */
-	public void step(final List<List<EObject>> aS,
-			final List<List<EObject>> eS, final DiagramEditor editor) {
-		trigger(new ActiveStates(aS, eS, editor));
-	}
+    /**
+     * Convenience method to get the current instance of this trigger.
+     * 
+     * @return instance of this trigger
+     */
+    public static StateActivityTrigger getInstance() {
+        return instance;
+    }
 
-	/**
-	 * Give map of active states to the view management. Same as
-	 * {@link #step(List, DiagramEditor)}, but the thread will block until all
-	 * KiVi effects corresponding to this triggering have been finished
-	 * executing. So this can be used to create back pressure.
-	 * 
-	 * @param aS
-	 *            map of active states
-	 * @param eS
-	 *            map of error states
-	 * @param editor
-	 *            the diagram editor
-	 */
-	public void synchronizedStep(final List<List<EObject>> aS,
-			final List<List<EObject>> eS, final DiagramEditor editor) {
-		try {
-			synchronizedTrigger(new ActiveStates(aS, eS, editor));
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-	}
+    // ------------------------------------------------------------------------
 
-	@Override
-	public void register() {
-		instance = this;
-	}
+    /**
+     * Give map of active states to the view management.
+     *
+     * @param aS map of active states
+     * @param eS the e s
+     * @param editor the diagram editor
+     */
+    public void step(final List<List<EObject>> aS, final List<List<EObject>> eS,
+            final DiagramEditor editor) {
+        trigger(new ActiveStates(aS, eS, editor));
+    }
 
-	@Override
-	public void unregister() {
-		instance = null;
-	}
+    // ------------------------------------------------------------------------
 
-	/**
-	 * Contains the currently active states.
-	 * 
-	 * @author mmu
-	 * 
-	 */
-	public static final class ActiveStates extends AbstractTriggerState {
+    /**
+     * Give map of active states to the view management. Same as {@link #step(List, DiagramEditor)},
+     * but the thread will block until all KiVi effects corresponding to this triggering have been
+     * finished executing. So this can be used to create back pressure.
+     *
+     * @param aS the a s
+     * @param eS map of error states
+     * @param editor the diagram editor
+     */
+    public void synchronizedStep(final List<List<EObject>> aS, final List<List<EObject>> eS,
+            final DiagramEditor editor) {
+        try {
+            synchronizedTrigger(new ActiveStates(aS, eS, editor));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-		private List<List<EObject>> activeStates;
+    // ------------------------------------------------------------------------
 
-		private List<List<EObject>> errorStates;
+    @Override
+    public void register() {
+        // Write to static field necessary by KiVi design
+        instance = this;
+    }
 
-		private DiagramEditor diagramEditor;
+    // ------------------------------------------------------------------------
 
-		/**
-		 * Default Constructor.
-		 */
-		public ActiveStates() {
+    @Override
+    public void unregister() {
+        // Write to static field necessary by KiVi design
+        instance = null;
+    }
 
-		}
+    // ------------------------------------------------------------------------
 
-		private ActiveStates(final List<List<EObject>> activeStates,
-				final List<List<EObject>> errorStates,
-				final DiagramEditor editor) {
-			this.activeStates = activeStates;
-			this.errorStates = errorStates;
-			diagramEditor = editor;
-		}
+    /**
+     * Contains the currently active states.
+     * 
+     * @author mmu
+     * 
+     */
+    public static final class ActiveStates extends AbstractTriggerState {
 
-		/**
-		 * {@inheritDoc}
-		 */
-		public Class<? extends ITrigger> getTriggerClass() {
-			return StateActivityTrigger.class;
-		}
+        private List<List<EObject>> activeStates;
 
-		/**
-		 * Get the list of states that were erroneous in a specific step, i.e. a
-		 * list of lists. The outer list corresponds to the steps.
-		 * 
-		 * @return the list of lists of active states
-		 */
-		public List<List<EObject>> getErrorStates() {
-			if (errorStates != null) {
-				return errorStates;
-			} else {
-				return new ArrayList<List<EObject>>();
-			}
-		}
+        private List<List<EObject>> errorStates;
 
-		/**
-		 * Get the list of states that were active in a specific step, i.e. a
-		 * list of lists. The outer list corresponds to the steps.
-		 * 
-		 * @return the list of lists of active states
-		 */
-		public List<List<EObject>> getActiveStates() {
-			if (activeStates != null) {
-				return activeStates;
-			} else {
-				return new ArrayList<List<EObject>>();
-			}
-		}
+        private DiagramEditor diagramEditor;
 
-		/**
-		 * Get list of currently active states in this step.
-		 * 
-		 * @return list of active states
-		 */
-		public List<EObject> getCurrentActiveStates() {
-			List<List<EObject>> all = getActiveStates();
-			if (!all.isEmpty()) {
-				return all.get(0);
-			} else {
-				return new ArrayList<EObject>();
-			}
-		}
+        // --------------------------------------------------------------------
 
-		/**
-		 * Get list of currently error states in this step.
-		 * 
-		 * @return list of active states
-		 */
-		public List<EObject> getCurrentErrorStates() {
-			List<List<EObject>> all = getErrorStates();
-			if (!all.isEmpty()) {
-				return all.get(0);
-			} else {
-				return new ArrayList<EObject>();
-			}
-		}
+        /**
+         * Default Constructor.
+         */
+        public ActiveStates() {
 
-		/**
-		 * Get list of all states that are active or that have been active.
-		 * 
-		 * @return list of active and history states
-		 */
-		public List<EObject> getHistoryStates() {
-			List<List<EObject>> all = getActiveStates();
-			List<EObject> history = Lists.newArrayList();
-			for (List<EObject> list : all) {
-				history.addAll(list);
-			}
-			return history;
-		}
+        }
 
-		/**
-		 * Get the diagram editor where the simulation is running.
-		 * 
-		 * @return the diagram editor
-		 */
-		public DiagramEditor getDiagramEditor() {
-			// no useful default value
-			return diagramEditor;
-		}
+        // --------------------------------------------------------------------
 
-	}
+        private ActiveStates(final List<List<EObject>> activeStates,
+                final List<List<EObject>> errorStates, final DiagramEditor editor) {
+            this.activeStates = activeStates;
+            this.errorStates = errorStates;
+            diagramEditor = editor;
+        }
 
+        // --------------------------------------------------------------------
+
+        /**
+         * {@inheritDoc}
+         */
+        public Class<? extends ITrigger> getTriggerClass() {
+            return StateActivityTrigger.class;
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get the list of states that were erroneous in a specific step, i.e. a list of lists. The
+         * outer list corresponds to the steps.
+         * 
+         * @return the list of lists of active states
+         */
+        public List<List<EObject>> getErrorStates() {
+            if (errorStates != null) {
+                return errorStates;
+            } else {
+                return new ArrayList<List<EObject>>();
+            }
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get the list of states that were active in a specific step, i.e. a list of lists. The
+         * outer list corresponds to the steps.
+         * 
+         * @return the list of lists of active states
+         */
+        public List<List<EObject>> getActiveStates() {
+            if (activeStates != null) {
+                return activeStates;
+            } else {
+                return new ArrayList<List<EObject>>();
+            }
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get list of currently active states in this step.
+         * 
+         * @return list of active states
+         */
+        public List<EObject> getCurrentActiveStates() {
+            List<List<EObject>> all = getActiveStates();
+            if (!all.isEmpty()) {
+                return all.get(0);
+            } else {
+                return new ArrayList<EObject>();
+            }
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get list of currently error states in this step.
+         * 
+         * @return list of active states
+         */
+        public List<EObject> getCurrentErrorStates() {
+            List<List<EObject>> all = getErrorStates();
+            if (!all.isEmpty()) {
+                return all.get(0);
+            } else {
+                return new ArrayList<EObject>();
+            }
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get list of all states that are active or that have been active.
+         * 
+         * @return list of active and history states
+         */
+        public List<EObject> getHistoryStates() {
+            List<List<EObject>> all = getActiveStates();
+            List<EObject> history = Lists.newArrayList();
+            for (List<EObject> list : all) {
+                history.addAll(list);
+            }
+            return history;
+        }
+
+        // --------------------------------------------------------------------
+
+        /**
+         * Get the diagram editor where the simulation is running.
+         * 
+         * @return the diagram editor
+         */
+        public DiagramEditor getDiagramEditor() {
+            // no useful default value
+            return diagramEditor;
+        }
+
+        // --------------------------------------------------------------------
+    }
+
+    // --------------------------------------------------------------------
 }

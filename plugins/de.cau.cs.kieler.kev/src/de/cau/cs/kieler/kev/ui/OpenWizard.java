@@ -215,7 +215,7 @@ public class OpenWizard extends Wizard {
                 examplePath = b.getEntry("examples").toString();
             }
 
-            Enumeration e = b.findEntries("examples", "*.mapping", false);
+            Enumeration<URL> e = b.findEntries("examples", "*.mapping", false);
             while (e.hasMoreElements()) {
                 URL url = (URL) e.nextElement();
                 String fileName = url.getPath();
@@ -274,6 +274,8 @@ public class OpenWizard extends Wizard {
             this.setControl(composite);
         }
 
+        // Might be used in the future
+        @SuppressWarnings("unused")
         private Map<String, URL> getImageURLs() {
             Map<String, URL> images = new HashMap<String, URL>();
             IConfigurationElement[] configElements = Platform.getExtensionRegistry()

@@ -145,11 +145,13 @@ public class DataProducer extends JSONStringDataComponent implements IJSONString
     public void wrapup() {
         // clear table
         TableDataList tableDataList = TableDataList.getInstance();
-        for (int c = tableDataList.size() - 1; c >= 0; c--) {
-            TableData tableData = tableDataList.get(c);
-            TableDataList.getInstance().remove(tableData.getKey());
+        if (tableDataList != null) {
+            for (int c = tableDataList.size() - 1; c >= 0; c--) {
+                TableData tableData = tableDataList.get(c);
+                TableDataList.getInstance().remove(tableData.getKey());
+            }
+            TableDataList.getInstance().updateViewAsync();
         }
-        TableDataList.getInstance().updateViewAsync();
     }
 
 }

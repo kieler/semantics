@@ -53,5 +53,8 @@ A B R
 % Output: 
 ;
 A B 
-% Output: O 
+% Output: O
+;
+A B 
+% Output:  
 ;

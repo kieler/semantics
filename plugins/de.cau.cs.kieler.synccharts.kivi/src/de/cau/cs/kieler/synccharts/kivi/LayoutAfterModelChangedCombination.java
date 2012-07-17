@@ -70,11 +70,6 @@ public class LayoutAfterModelChangedCombination extends AbstractCombination {
                     .getScope_Variables()))
             .or(NotificationFilter.createFeatureFilter(KExpressionsPackage.eINSTANCE
                     .getValuedObject_Name()));
-    
-    /** parameter id for animation. */
-    private static final String ANIMATE = "de.cau.cs.kieler.kiml.animate";
-    /** parameter id for zoom to fit. */
-    private static final String ZOOM_TO_FIT = "de.cau.cs.kieler.kiml.zoomToFit";
 
     /**
      * Apply automatic layout every time the model changed state is updated.

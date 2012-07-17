@@ -34,8 +34,8 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      * 
      * @return value converter for standard Java style booleans
      */
-    @ValueConverter(rule = "Boolean")
-    public IValueConverter<Boolean> Boolean() {
+    @ValueConverter(rule = "BOOLEAN")
+    public IValueConverter<Boolean> _boolean() {
         return new IValueConverter<Boolean>() {
 
             public Boolean toValue(String string, INode node) {
@@ -62,7 +62,7 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      * @return value converter for standard Java style ints
      */
     @ValueConverter(rule = "INT")
-    public IValueConverter<Integer> INT() {
+    public IValueConverter<Integer> _int() {
         return new org.eclipse.xtext.conversion.impl.INTValueConverter() {
             public String toString(Integer value) {
                 if (value == null)
@@ -88,8 +88,8 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      * 
      * @return value converter for standard Java style floats
      */
-    @ValueConverter(rule = "Float")
-    public IValueConverter<Float> Float() {
+    @ValueConverter(rule = "FLOAT")
+    public IValueConverter<Float> _float() {
         return new IValueConverter<Float>() {
 
             public Float toValue(String string, INode node) {
@@ -117,7 +117,7 @@ public class KExpressionsValueConverter extends AnnotationsValueConverter {
      * {@link org.eclipse.xtext.conversion.impl.STRINGValueConverter}
      */
     @ValueConverter(rule = "HOSTCODE")
-    public IValueConverter<String> HOSTCODE() {
+    public IValueConverter<String> _hostcode() {
         return new org.eclipse.xtext.conversion.impl.STRINGValueConverter() {
             public String toString(String value) {
                 if (value == null)

@@ -23,9 +23,9 @@ import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
-import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * 
@@ -161,7 +161,7 @@ public class PanningEffect extends AbstractEffect {
         }
         final Point finalCoords = coords;
         if (finalCoords != null) {
-            MonitoredOperation.runInUI(new Runnable() {
+            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
                 public void run() {
                     if (zoom) {
                         zoomManager.setZoom(zoomLevel);
@@ -175,7 +175,7 @@ public class PanningEffect extends AbstractEffect {
                                 (int) (finalCoords.y * zoomManager.getZoom()));
                     }
                 }
-            }, false);
+            });
         }
     }
 

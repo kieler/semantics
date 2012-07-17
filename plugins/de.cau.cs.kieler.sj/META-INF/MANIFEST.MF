@@ -3,10 +3,12 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER Synchronous Java (SJ)
 Bundle-SymbolicName: de.cau.cs.kieler.sj;singleton:=true
 Bundle-Version: 0.2.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.sj.test.SJPlugin
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Export-Package: de.cau.cs.kieler.sj,
  de.cau.cs.kieler.sj.examples,
  de.cau.cs.kieler.sj.exceptions,
  de.cau.cs.kieler.sj.util
+Bundle-ClassPath: jar/EmbeddedSJ.jar,
+ jar/SJ.jar,
+ .

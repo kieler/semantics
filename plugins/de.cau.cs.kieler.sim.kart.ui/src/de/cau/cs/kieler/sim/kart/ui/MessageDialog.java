@@ -57,7 +57,7 @@ public class MessageDialog implements IMessageDialog {
     /**
      * DialogRunnable concurrently displays the dialog in the current shell.
      */
-    private class DialogRunnable implements Runnable {
+    private static class DialogRunnable implements Runnable {
         private Exchanger<Boolean> ex;
         private String title;
         private String message;

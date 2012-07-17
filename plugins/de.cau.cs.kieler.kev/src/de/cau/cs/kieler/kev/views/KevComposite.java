@@ -25,20 +25,13 @@ import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
-import java.awt.event.MouseMotionListener;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-
-import java.lang.reflect.InvocationTargetException;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
@@ -51,9 +44,6 @@ import org.apache.batik.bridge.ExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadExternalResourceSecurity;
 import org.apache.batik.bridge.NoLoadScriptSecurity;
 import org.apache.batik.bridge.ScriptSecurity;
-import org.apache.batik.bridge.UpdateManagerAdapter;
-import org.apache.batik.bridge.UpdateManagerEvent;
-import org.apache.batik.bridge.UpdateManagerListener;
 import org.apache.batik.swing.JSVGCanvas;
 import org.apache.batik.swing.gvt.GVTTreeRendererAdapter;
 import org.apache.batik.swing.gvt.GVTTreeRendererEvent;
@@ -94,7 +84,6 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.statushandlers.StatusManager;
-
 import org.w3c.dom.Element;
 
 import de.cau.cs.kieler.kev.Activator;
@@ -169,7 +158,6 @@ public class KevComposite extends Composite implements ISelectionListener {
 
         try {
             userAgent = new MyUserAgent();
-            int timeout = 0;
             if (EclipseJSVGCanvas.getInstance() == null) {
                 // while (!EclipseJSVGCanvas.createSingleInstance(userAgent, true, true)) {
                 // //Do nothing until the single instance is successfully created
@@ -203,12 +191,12 @@ public class KevComposite extends Composite implements ISelectionListener {
                 // public void documentLoadingCompleted(SVGDocumentLoaderEvent e) {
                 // System.out.println("Loading svg file... complete!");
                 // }
-                //                    
+                //
                 // public void documentLoadingCancelled(SVGDocumentLoaderEvent e) {
                 // System.out.println("Loading svg file... cancelled!");
                 //
                 // }
-                //                    
+                //
                 // public void documentLoadingFailed(SVGDocumentLoaderEvent e) {
                 // System.out.println("Loading svg file... failed!");
                 // }
@@ -231,9 +219,6 @@ public class KevComposite extends Composite implements ISelectionListener {
                         MapAnimations.getInstance().createHashMap();
                     }
                 });
-                
-                
-                
 
                 svgCanvas.addMouseListener(new MouseAdapter() {
                     public void mouseClicked(MouseEvent e) {
@@ -245,22 +230,22 @@ public class KevComposite extends Composite implements ISelectionListener {
                                 saveSVGDocument();
                             }
                         }
-//                         System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY());
-//                         +" XOnScreenPos: "+ svgCanvas.getX() + " YOnScreenPos: "+
-//                         svgCanvas.getY());
+                        // System.out.println("XPos: "+ e.getX() + " YPos: "+ e.getY());
+                        // +" XOnScreenPos: "+ svgCanvas.getX() + " YOnScreenPos: "+
+                        // svgCanvas.getY());
                     }
 
                 });
-                
-//                svgCanvas.addMouseMotionListener(new MouseMotionAdapter() {
-//
-//                    public void mouseMoved(MouseEvent arg0) {
-//                        // TODO Auto-generated method stub
-//                        System.out.println(arg0.getX()+","+arg0.getY());
-//                    }
-//                    
-//                });
-                
+
+                // svgCanvas.addMouseMotionListener(new MouseMotionAdapter() {
+                //
+                // public void mouseMoved(MouseEvent arg0) {
+                // // TODO Auto-generated method stub
+                // System.out.println(arg0.getX()+","+arg0.getY());
+                // }
+                //
+                // });
+
             } else {// Otherwise set the sourcepath to the current document uri
                 svgCanvas = EclipseJSVGCanvas.getInstance();
                 // If svgDocument already exists, set the current svgURI for the refresh button
@@ -277,6 +262,8 @@ public class KevComposite extends Composite implements ISelectionListener {
             }
 
             Panel panel = new Panel(new BorderLayout()) {
+                private static final long serialVersionUID = -3473742040625838717L;
+
                 public void update(java.awt.Graphics g) {
                     /* Do not erase the background */
                     paint(g);
@@ -433,7 +420,6 @@ public class KevComposite extends Composite implements ISelectionListener {
                 if (docDelta == null) {
                     return;
                 }
-                final ArrayList changed = new ArrayList();
                 IResourceDeltaVisitor visitor = new IResourceDeltaVisitor() {
                     public boolean visit(IResourceDelta delta) {
                         // only interested in changed resources (not added or
@@ -465,9 +451,7 @@ public class KevComposite extends Composite implements ISelectionListener {
                     // open error dialog with syncExec or print to plugin log file
                 }
                 // nothing more to do if there were no changed text files
-                if (changed.size() == 0) {
-                    return;
-                }
+                return;
             }
         }
     }

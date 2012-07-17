@@ -14,8 +14,10 @@
 package de.cau.cs.kieler.sim.kivi;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import org.eclipse.emf.common.util.TreeIterator;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
@@ -33,8 +35,8 @@ import de.cau.cs.kieler.sim.kiem.internal.DataComponentWrapper;
 import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
 
 /**
- * A data component that observes the activity (active and error states and transitions)
- *  of SyncCharts during simulation.
+ * A data component that observes the activity (active and error states and transitions) of
+ * SyncCharts during simulation.
  * 
  * @author mmu, cmot
  * 
@@ -52,10 +54,23 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
 
     private static final String DEFAULT_ERROR_TRANSITION_KEY = "errorTransition";
 
+    static final int KIEM_PROPERTY_STATENAME = 0;
+    
+    static final int KIEM_PROPERTY_TRANSITIONNAME = 1;
+    
+    static final int KIEM_PROPERTY_ERRORSTATENAME = 2;
+    
+    static final int KIEM_PROPERTY_ERRORTRANSITIONNAME = 3;
+    
+    static final int KIEM_PROPERTY_HISTORYSTEPS = 4;
+    
+    static final int KIEM_PROPERTY_MAX = 5;    
     
     private DiagramEditor diagramEditor;
 
     private Resource resource;
+    
+    private EObject modelRoot;
 
     private int steps;
 
@@ -66,11 +81,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
     private String errorStateKey;
 
     private String errorTransitionKey;
-    
+
     private DataComponentWrapper wrapper;
 
     /** Remember when wrapup() was executed. */
     private boolean wrapupDone = false;
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -83,12 +100,13 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return;
         }
-        resource = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement().eResource();
-        stateKey = getProperties()[0].getValue();
-        transitionKey = getProperties()[1].getValue();
-        errorStateKey = getProperties()[2].getValue();
-        errorTransitionKey = getProperties()[3].getValue();
-        steps = getProperties()[4].getValueAsInt();
+        modelRoot = ((View) diagramEditor.getDiagramEditPart().getModel()).getElement();
+        resource = modelRoot.eResource();
+        stateKey = getProperties()[KIEM_PROPERTY_STATENAME].getValue();
+        transitionKey = getProperties()[KIEM_PROPERTY_TRANSITIONNAME].getValue();
+        errorStateKey = getProperties()[KIEM_PROPERTY_ERRORSTATENAME].getValue();
+        errorTransitionKey = getProperties()[KIEM_PROPERTY_ERRORTRANSITIONNAME].getValue();
+        steps = getProperties()[KIEM_PROPERTY_HISTORYSTEPS].getValueAsInt();
         for (DataComponentWrapper w : KiemPlugin.getDefault().getDataComponentWrapperList()) {
             if (w.getDataComponent() == this) {
                 wrapper = w;
@@ -99,7 +117,10 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             throw new KiemInitializationException(
                     "Can't find wrapper for State Activity Data Component", true, null);
         }
+        refreshEObjectMap();
     }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -115,13 +136,17 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         wrapupDone = true;
     }
 
+    // --------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public boolean isProducer() {
-         return false;
-        //return true;
+        return false;
+        // return true;
     }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -130,23 +155,32 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         return true;
     }
 
+    // --------------------------------------------------------------------------
+
     @Override
     public boolean isHistoryObserver() {
         return true;
     }
 
+    // --------------------------------------------------------------------------
+
     /**
      * {@inheritDoc}
      */
     public KiemProperty[] provideProperties() {
-        KiemProperty[] properties = new KiemProperty[5];
-        properties[0] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
-        properties[1] = new KiemProperty("Transition Name", DEFAULT_TRANSITION_KEY);
-        properties[2] = new KiemProperty("Error State Name", DEFAULT_ERROR_STATE_KEY);
-        properties[3] = new KiemProperty("Error Transition Name", DEFAULT_ERROR_TRANSITION_KEY);
-        properties[4] = new KiemProperty("History Steps", DEFAULT_STEPS);
+        KiemProperty[] properties = new KiemProperty[KIEM_PROPERTY_MAX];
+        properties[KIEM_PROPERTY_STATENAME] = new KiemProperty("State Name", DEFAULT_STATE_KEY);
+        properties[KIEM_PROPERTY_TRANSITIONNAME] = new KiemProperty("Transition Name",
+                DEFAULT_TRANSITION_KEY);
+        properties[KIEM_PROPERTY_ERRORSTATENAME] = new KiemProperty("Error State Name",
+                DEFAULT_ERROR_STATE_KEY);
+        properties[KIEM_PROPERTY_ERRORTRANSITIONNAME] = new KiemProperty("Error Transition Name",
+                DEFAULT_ERROR_TRANSITION_KEY);
+        properties[KIEM_PROPERTY_HISTORYSTEPS] = new KiemProperty("History Steps", DEFAULT_STEPS);
         return properties;
     }
+
+    // --------------------------------------------------------------------------
 
     /**
      * {@inheritDoc}
@@ -155,6 +189,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         if (diagramEditor == null) {
             return null;
         }
+        
         // only do this if execution is currently active
         if (KiemPlugin.getDefault().getExecution() != null) {
             JSONDataPool pool = KiemPlugin.getDefault().getExecution().getDataPool();
@@ -167,13 +202,17 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
             JSONObject currentJSONObject = jSONObject;
             try {
                 for (int i = 0; i <= steps; i++) {
-                	// ACTIVE STATES AND TRANSITIONS
+                    // ACTIVE STATES AND TRANSITIONS
                     if (currentJSONObject.has(stateKey)) {
                         String stateString = currentJSONObject.get(stateKey).toString();
                         String[] states = stateString.replaceAll("\\s", "").split(",");
                         for (String state : states) {
                             if (state.length() > 1) {
                                 EObject active = resource.getEObject(state);
+                                if (active == null) {
+                                    // try alternative (compact) representation
+                                    active = getEObject(state);
+                                }
                                 if (active != null) {
                                     if (!contains(statesByStep, active)) { // filter out newer
                                         currentStepObjects.add(active);
@@ -183,11 +222,15 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         }
                     }
                     if (currentJSONObject.has(transitionKey)) {
-                        String stateString = currentJSONObject.get(transitionKey).toString();
-                        String[] states = stateString.replaceAll("\\s", "").split(",");
-                        for (String state : states) {
-                            if (state.length() > 1) {
-                                EObject active = resource.getEObject(state);
+                        String transitionString = currentJSONObject.get(transitionKey).toString();
+                        String[] transitions = transitionString.replaceAll("\\s", "").split(",");
+                        for (String transition : transitions) {
+                            if (transition.length() > 1) {
+                                EObject active = resource.getEObject(transition);
+                                if (active == null) {
+                                    // try alternative (compact) representation
+                                    active = getEObject(transition);
+                                }
                                 if (active != null) {
                                     if (!contains(statesByStep, active)) { // filter out newer
                                         currentStepObjects.add(active);
@@ -196,7 +239,7 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                             }
                         }
                     }
-                    
+
                     // ERROR STATES AND ERROR TRANSITIONS
                     if (currentJSONObject.has(errorStateKey)) {
                         String stateString = currentJSONObject.get(errorStateKey).toString();
@@ -204,32 +247,43 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                         for (String state : states) {
                             if (state.length() > 1) {
                                 EObject errorState = resource.getEObject(state);
+                                if (errorState == null) {
+                                    // try alternative (compact) representation
+                                    errorState = getEObject(state);
+                                }
                                 if (errorState != null) {
-                                    if (!contains(errorStatesByStep, errorState)) { // filter out newer
-                                    	currentErrorStepObjects.add(errorState);
+                                    if (!contains(errorStatesByStep, errorState)) { // filter out
+                                                                                    // newer
+                                        currentErrorStepObjects.add(errorState);
                                     }
                                 }
                             }
                         }
                     }
                     if (currentJSONObject.has(errorTransitionKey)) {
-                        String stateString = currentJSONObject.get(errorTransitionKey).toString();
-                        String[] states = stateString.replaceAll("\\s", "").split(",");
-                        for (String state : states) {
-                            if (state.length() > 1) {
-                                EObject errorState = resource.getEObject(state);
+                        String transitionString = currentJSONObject.get(errorTransitionKey).toString();
+                        String[] transitions = transitionString.replaceAll("\\s", "").split(",");
+                        for (String transition : transitions) {
+                            if (transition.length() > 1) {
+                                EObject errorState = resource.getEObject(transition);
+                                if (errorState == null) {
+                                    // try alternative (compact) representation
+                                    errorState = getEObject(transition);
+                                }
                                 if (errorState != null) {
-                                    if (!contains(errorStatesByStep, errorState)) { // filter out newer
-                                    	currentErrorStepObjects.add(errorState);
+                                    if (!contains(errorStatesByStep, errorState)) { // filter out
+                                                                                    // newer
+                                        currentErrorStepObjects.add(errorState);
                                     }
                                 }
                             }
                         }
                     }
-                    
+
                     // redeclare/reset for the next step (save history)
-                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey) ||
-                   		currentJSONObject.has(errorStateKey) || currentJSONObject.has(errorTransitionKey)) {
+                    if (currentJSONObject.has(stateKey) || currentJSONObject.has(transitionKey)
+                            || currentJSONObject.has(errorStateKey)
+                            || currentJSONObject.has(errorTransitionKey)) {
                         statesByStep.add(currentStepObjects);
                         errorStatesByStep.add(currentErrorStepObjects);
                         currentErrorStepObjects = new ArrayList<EObject>();
@@ -247,8 +301,8 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
                          * until all effects have finished executing that are caused by this
                          * triggering. This way we create back pressure from the effects to KIEM.
                          */
-                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep, errorStatesByStep,
-                                diagramEditor);
+                        StateActivityTrigger.getInstance().synchronizedStep(statesByStep,
+                                errorStatesByStep, diagramEditor);
                     }
                 }
             } catch (JSONException e) {
@@ -258,7 +312,18 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         return null;
     }
 
-    private boolean contains(final List<List<EObject>> statesByStep, final EObject active) {
+    // --------------------------------------------------------------------------
+
+    /**
+     * Utility method telling wether an active EObject is part of a list.
+     * 
+     * @param statesByStep
+     *            the states by step
+     * @param active
+     *            the active
+     * @return true, if successful
+     */
+    private static boolean contains(final List<List<EObject>> statesByStep, final EObject active) {
         for (List<EObject> list : statesByStep) {
             for (EObject e : list) {
                 if (e.equals(active)) {
@@ -269,5 +334,96 @@ public abstract class KiViDataComponent extends JSONObjectDataComponent implemen
         return false;
     }
 
+    // --------------------------------------------------------------------------
+
+    /**
+     * Implements a getter for the active editor.
+     * 
+     * @return the active editor
+     */
     protected abstract DiagramEditor getActiveEditor();
+    
+
+    // --------------------------------------------------------------------------
+    // -----------------------------------------------------------------------------
+
+    
+    /**
+     * Gets the encoded id to compare objects to the ones produced by the simulation
+     * of the corresponding Xtext editor. The names of the statements and
+     * error statements produced by the simulator must match these IDs.
+     * 
+     * @param eObject
+     *            the EObject
+     * @return the encoded EObject ID
+     */
+    protected abstract String getEncodedEObjectId(final EObject eObject);
+
+    // -----------------------------------------------------------------------------
+    
+    private HashMap<String, EObject> eObjectMap = new HashMap<String, EObject>();
+
+    /**
+     * Gets the eObject to an eObjectID cached by the hash map. With a first call of this function
+     * the hash map is lazily filled.
+     * 
+     * @param eObjectID
+     *            the EObject ID
+     * @return the EObject
+     */
+    private EObject getEObject(final String eObjectID) {
+        if ((eObjectID == null) || eObjectID.equals("")) {
+            return null;
+        } else if (eObjectMap.containsKey(eObjectID)) {
+            // only do this if editor input has not changed
+            return eObjectMap.get(eObjectID);
+        } else {
+            // Refresh the map and try again
+            refreshEObjectMap();
+            if (eObjectMap.containsKey(eObjectID)) {
+                return eObjectMap.get(eObjectID);
+            }
+        }
+
+        return null;
+    }
+
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Refreshes and totally rebuilds the eObject hash map.
+     */
+    protected final void refreshEObjectMap() {
+        eObjectMap.clear();
+        refreshEObjectMap(this.modelRoot);
+    }
+    
+    // -----------------------------------------------------------------------------
+
+    /**
+     * Recursively calls itself on eObjects that contain children to rebuild the eObject hash map.
+     * 
+     * @param baseObj
+     *            the base EObject
+     */
+    private void refreshEObjectMap(final EObject baseObj) {
+        // Add this item
+        String baseObjID = this.getEncodedEObjectId(baseObj);
+        if (!eObjectMap.containsKey(baseObjID)) {
+            eObjectMap.put(baseObjID, baseObj);
+
+            // Add all children
+            TreeIterator<EObject> treeIterator = baseObj.eAllContents();
+            while (treeIterator.hasNext()) {
+                EObject treeIteratorObject = treeIterator.next();
+                refreshEObjectMap(treeIteratorObject);
+                // for (EObject treeIteratorObjectChild :
+                // treeIteratorObject.eContents()) {
+                // }
+            }
+        }
+
+    }
+    
+    // -----------------------------------------------------------------------------
 }

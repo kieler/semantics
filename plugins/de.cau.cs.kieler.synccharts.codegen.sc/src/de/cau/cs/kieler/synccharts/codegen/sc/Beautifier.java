@@ -28,9 +28,7 @@ import java.io.IOException;
  * and written out by formating it with some rules.
  * 
  * @kieler.rating 2010-06-14 yellow
- * 
  * @author tam
- * 
  */
 public class Beautifier {
 

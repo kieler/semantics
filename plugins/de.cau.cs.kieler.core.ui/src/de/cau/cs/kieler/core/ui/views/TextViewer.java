@@ -35,10 +35,8 @@ import de.cau.cs.kieler.core.ui.Messages;
  * A Viewer for displaying some sort of text content.
  * 
  * @author msp, ctr
- * 
- * @kieler.rating 2010-03-09 yellow 
+ * @kieler.design 2010-03-09 yellow 
  *   review by msp, soh
- *   
  */
 public class TextViewer extends ContentViewer {
 

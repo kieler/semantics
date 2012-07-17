@@ -18,15 +18,5 @@
            name="Eso writer">
      </content>
   </extension>
-  <extension
-        point="de.cau.cs.kieler.sim.trace.traceprovider">
-     <provider
-           class="de.cau.cs.kieler.sim.eso.EsoFile"
-           id="de.cau.cs.kieler.sim.eso.provider">
-     </provider>
-  </extension>
-
-
-
 
 </plugin>

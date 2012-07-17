@@ -151,9 +151,9 @@ public class ScheduleData {
         String[] segments = newLocation.removeFileExtension().segments();
         result += segments[segments.length - 1];
         if (isImported()) {
-            result += "[IMPORTED]";
+            result += "";
         } else {
-            result += "[" + segments[0] + "]";
+            result += " [" + segments[0] + "]";
         }
         return result;
     }

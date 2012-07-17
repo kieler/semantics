@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>de.cau.cs.kieler</groupId>
   <artifactId>parent</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-
-  <properties>
-    <tycho-version>0.14.0</tycho-version>
-    <targetJdk>1.5</targetJdk>
-  </properties>
 
 <!-- all plugins need to be listed as module -->
 
@@ -18,62 +13,116 @@
     <module>../../plugins</module>
     <module>../../features</module>
     <module>../de.cau.cs.kieler.repository</module>
+    <!--    <module>../de.cau.cs.kieler.target</module> -->
     <module>../de.cau.cs.kieler.kwebs.repository</module>
   </modules>
 
-<!-- p2 and maven repositories to resolve plugin dependencies -->
-  <repositories>
-    <repository>
-      <id>p2.eclipse.indigo</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/releases/indigo</url>
-    </repository>
-    <repository>
-      <id>p2.google.guava</id>
-      <layout>p2</layout>
-      <url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
-    </repository>
-    <repository>
-      <id>p2.itemis.antlr</id>
-      <layout>p2</layout>
-      <url>http://download.itemis.com/updates/</url>
-    </repository>
-    <repository>
-      <id>p2.graphiti</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/graphiti/updates/0.8.1</url>
-    </repository>
-    <repository>
-      <id>p2.eclipse.updates</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/eclipse/updates/3.7</url>
-    </repository>
-    <repository>
-      <id>p2.papyrus</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo</url>
-    </repository>
-    <repository>
-      <id>p2.ptolemy2</id>
-      <layout>p2</layout>
-      <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</url>
-    </repository>
-    <repository>
-      <id>p2.orbit</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository</url>
-    </repository>
-    <repository>
-      <id>p2.xpandd</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/m2t/xpand/updates/milestones</url>
-    </repository>
-    <repository>
-      <id>p2.xtextt</id>
-      <layout>p2</layout>
-      <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
-    </repository>
-  </repositories>
+  <profiles>
+    <profile>
+      <id>indigo</id>
+      <properties>
+        <tycho-version>0.14.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
+
+      <!-- p2 and maven repositories to resolve plugin dependencies -->
+      <repositories>
+        <repository>
+          <id>p2.eclipse.indigo</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/indigo</url>
+        </repository>
+        <repository>
+          <id>p2.google.guava</id>
+          <layout>p2</layout>
+          <url>http://guava-osgi.googlecode.com/svn/trunk/repository</url>
+        </repository>
+        <repository>
+          <id>p2.itemis.antlr</id>
+          <layout>p2</layout>
+          <url>http://download.itemis.com/updates/</url>
+        </repository>
+        <repository>
+          <id>p2.graphiti</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/graphiti/updates/0.9.0</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.updates</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/eclipse/updates/3.7</url>
+        </repository>
+        <repository>
+          <id>p2.papyrus</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/mdt/papyrus/updates/releases/indigo</url>
+        </repository>
+        <repository>
+          <id>p2.ptolemy2</id>
+          <layout>p2</layout>
+          <url>http://rtsys.informatik.uni-kiel.de/~kieler/updatesite/ptolemy</url>
+        </repository>
+        <repository>
+          <id>p2.orbit</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/tools/orbit/downloads/drops/R20120119162704/repository</url>
+        </repository>
+        <repository>
+          <id>p2.xpandd</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/m2t/xpand/updates/milestones</url>
+        </repository>
+        <repository>
+          <id>p2.xtextt</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/modeling/tmf/xtext/updates/composite/releases</url>
+        </repository> 
+      </repositories>
+    </profile>
+
+    <profile>
+      <id>juno38</id>
+      <properties>
+        <tycho-version>0.15.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
+
+      <repositories>
+        <repository>
+          <id>p2.juno38</id>
+          <layout>p2</layout>
+          <url>file:/home/java/repository/juno382/</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.juno</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/juno</url>
+        </repository>
+      </repositories>
+    </profile>
+
+    <profile>
+      <id>juno42</id>
+      <properties>
+        <tycho-version>0.15.0</tycho-version>
+        <targetJdk>1.5</targetJdk>
+      </properties>
+
+      <repositories>
+        <repository>
+          <id>p2.juno38</id>
+          <layout>p2</layout>
+          <url>file:/home/java/repository/juno422/</url>
+        </repository>
+        <repository>
+          <id>p2.eclipse.juno</id>
+          <layout>p2</layout>
+          <url>http://download.eclipse.org/releases/juno</url>
+        </repository>
+      </repositories>
+    </profile>
+  </profiles>
+
 
 <!-- maven plugin repositories -->
   <pluginRepositories>
@@ -83,7 +132,7 @@
       <url>http://build.eclipse.org/common/xtend/maven</url>
     </pluginRepository>
   </pluginRepositories>
-    
+
 
   <build>
     <plugins>
@@ -98,7 +147,7 @@
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>tycho-source-plugin</artifactId>
-	<version>${tycho-version}</version>
+        <version>${tycho-version}</version>
         <executions>
           <execution>
             <id>plugin-source</id>
@@ -115,7 +164,7 @@
         <version>2.9.1</version>
         <configuration>
           <configLocation>checks.xml</configLocation>
-	  <sourceDirectory>src</sourceDirectory>
+          <sourceDirectory>src</sourceDirectory>
         </configuration>
       </plugin>
 
@@ -126,7 +175,7 @@
         <configuration>
           <targetJdk>1.5</targetJdk>
           <format>xml</format>
-	  <!--  <aggregate>true</aggregate> -->
+          <!--  <aggregate>true</aggregate> -->
         </configuration>
       </plugin>
 
@@ -147,23 +196,23 @@
           </execution>
         </executions>
       </plugin>
- 
+
 
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>2.8.1</version>
         <configuration>
-              <doclet>de.cau.cs.kieler.doclets.RatingDoclet</doclet>
-              <docletArtifact>
-                <groupId>de.cau.cs.kieler</groupId>
-                <artifactId>de.cau.cs.kieler.doclets</artifactId>
-                <version>0.0.1-SNAPSHOT</version>
-              </docletArtifact>
-              <useStandardDocletOptions>false</useStandardDocletOptions>
+          <doclet>de.cau.cs.kieler.doclets.RatingDoclet</doclet>
+          <docletArtifact>
+            <groupId>de.cau.cs.kieler</groupId>
+            <artifactId>de.cau.cs.kieler.doclets</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+          </docletArtifact>
+          <useStandardDocletOptions>false</useStandardDocletOptions>
         </configuration>
 
-	<!--        <executions>
+        <!--        <executions>
           <execution>
             <id>aggregate</id>
             <goals>
@@ -171,16 +220,24 @@
             </goals>
             <phase>integration-test</phase>
           </execution>
-	</executions> -->
+        </executions> -->
       </plugin>
 
-    
+
       <!-- as we have platform specific fragments we need to tell tycho about target platforms -->
       <plugin>
         <groupId>org.eclipse.tycho</groupId>
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
+          <!-- <target>
+            <artifact>
+              <groupId>de.cau.cs.kieler</groupId>
+              <artifactId>de.cau.cs.kieler.target</artifactId>
+              <version>0.0.1-SNAPSHOT</version>
+              <classifier>indigo</classifier>
+            </artifact>
+          </target> -->
           <environments>
             <environment>
               <os>linux</os>
@@ -220,9 +277,9 @@
       <plugins>
         <!-- maven xtend plugin to tell maven how to compile xtend code -->
         <plugin>
-          <groupId>org.eclipse.xtend2</groupId>
+          <groupId>org.eclipse.xtend</groupId>
           <artifactId>xtend-maven-plugin</artifactId>
-          <version>2.2.1</version>
+          <version>2.3.0</version>
           <configuration>
             <outputDirectory>${basedir}/xtend-gen</outputDirectory>
           </configuration>

@@ -1,8 +1,4 @@
 /**
- * <copyright>
- * </copyright>
- *
-
  */
 package de.cau.cs.kieler.esterel.esterel;
 
