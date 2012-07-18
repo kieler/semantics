@@ -31,10 +31,11 @@ import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
-// SUPPRESS CHECKSTYLE NEXT LineLength
 import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
+
+// SUPPRESS CHECKSTYLE PREVIOUS 10 LineLength
 
 /**
  * Implementation of {@link ITrigger} dedicated to Xtext-based editors. Reacts on the following
