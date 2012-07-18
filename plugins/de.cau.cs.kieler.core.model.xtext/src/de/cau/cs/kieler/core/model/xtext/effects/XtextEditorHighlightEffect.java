@@ -49,7 +49,8 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
     
     /**
      * Constructor.
-     * @param theElement element
+     * @param theElement the element to be highlighted, must not be <b>null</b>
+     * @param theEditor the editor to be highlighted in, is considered as a hint, may be <b>null</b> 
      */
     public XtextEditorHighlightEffect(final EObject theElement, final XtextEditor theEditor) {
         this.element = theElement;
@@ -79,14 +80,14 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
 
                     // find an editor maintaining the document that defines 'element'
                     // if some is open in the current page
-                    Object editor = ResourceUtil.findEditor(page, file);
+                    Object anEditor = ResourceUtil.findEditor(page, file);
 
                     // if no such xtext editor exists open a new one
-                    if (!(editor instanceof XtextEditor)) {
+                    if (!(anEditor instanceof XtextEditor)) {
                         try {
                             IEditorPart part = IDE.openEditor(page, file);
                             if (part instanceof XtextEditor) {
-                                editor = part;
+                                anEditor = part;
                             } else {
                                 return;
                             }
@@ -99,7 +100,7 @@ public class XtextEditorHighlightEffect extends AbstractEffect {
                         }
 
                     }
-                    actualEditor = (XtextEditor) editor;
+                    actualEditor = (XtextEditor) anEditor;
                 }                
                 
                 // query the editor library for the position of the elements definition                
