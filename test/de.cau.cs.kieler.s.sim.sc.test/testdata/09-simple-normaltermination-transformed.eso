@@ -17,12 +17,6 @@ I
 
 % Output: 
 ;
-I 
-% Output: 
-;
-
-% Output: 
-;
 ! reset;
 I 
 % Output: 
@@ -31,11 +25,8 @@ I
 % Output: O 
 ;
 I 
-% Output: 
+% Output: O 
 ;
 I 
-% Output: 
-;
-I 
-% Output: 
+% Output: O 
 ;

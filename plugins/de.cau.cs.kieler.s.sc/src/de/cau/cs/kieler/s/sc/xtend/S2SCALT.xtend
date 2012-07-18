@@ -42,7 +42,7 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
  * 
  * @author cmot
  */
-class S2SC { 
+class S2SCALT { 
     
     // General method to create the c simulation interface.
 	def transform (Program program, String outputFolder) {

@@ -34,6 +34,7 @@ import org.json.JSONObject;
 import com.google.inject.Guice;
 
 import de.cau.cs.kieler.core.kexpressions.Signal;
+import de.cau.cs.kieler.core.kexpressions.ValueType;
 import de.cau.cs.kieler.core.ui.ProgressMonitorAdapter;
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.S2SCPlugin;
@@ -70,6 +71,15 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
     private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
 
+    /** The estimated maximum size used for a pure signal. */
+    private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
+
+    /** The estimated maximum size used for a valued signal. */
+    private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
+    
+    /** The Constant MINIMAL_BUFFER_SIZE. */
+    private static final double MINIMAL_BUFFER_SIZE = 2048;
+
     // -------------------------------------------------------------------------
 
     /**
@@ -92,6 +102,32 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
+
+        // String executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
+        // Process executionProcess;
+        // try {
+        // executionProcess = Runtime.getRuntime().exec(executable);
+        //
+        // PrintWriter out = new PrintWriter(new OutputStreamWriter(
+        // executionProcess.getOutputStream()));
+        // BufferedReader in = new BufferedReader(new InputStreamReader(
+        // executionProcess.getInputStream()));
+        // BufferedReader err = new BufferedReader(new InputStreamReader(
+        // executionProcess.getErrorStream()));
+        //
+        //
+        // for (int tick = 0; tick < 10; tick++) {
+        // out.print("\n");
+        // out.flush();
+        // String line = in.readLine();
+        // System.out.println(line);
+        // }
+        //
+        // } catch (IOException e) {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+
     }
 
     // -------------------------------------------------------------------------
@@ -111,8 +147,10 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
+            //System.out.println(jSONObject.toString());
 
-            scExecution.getExecutionInterfaceToSC().write(jSONObject.toString() + "\n");
+            String out = jSONObject.toString();
+            scExecution.getExecutionInterfaceToSC().write(out + "\n");
             scExecution.getExecutionInterfaceToSC().flush();
             while (scExecution.getExecutionInterfaceError().ready()) {
                 // Error output, if any
@@ -120,6 +158,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             }
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
+
+            //System.out.println(receivedMessage);
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
@@ -132,9 +172,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
                         boolean sSignalIsPresent = JSONSignalValues.isPresent(sSignalOutput
                                 .getJSONObject(sSignalOutputName));
 
-//                        returnObj.accumulate(sSignalOutputName, sSignalOutput
-//                                .getJSONObject(sSignalOutputName));
-                        
+                        // returnObj.accumulate(sSignalOutputName, sSignalOutput
+                        // .getJSONObject(sSignalOutputName));
+
                         // Test if the output variable is an auxiliary signal
                         // that is only there to mark the current S statement
                         // in full_simulation mode of the simulator.
@@ -249,7 +289,9 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void wrapup() throws KiemInitializationException {
-        scExecution.stopExecution();
+        if (scExecution != null) {
+            scExecution.stopExecution();
+        }
     }
 
     // -------------------------------------------------------------------------
@@ -339,11 +381,28 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             // Set a random output folder for the compiled files
             String outputFolder = KiemUtil.generateRandomTempOutputFolder();
 
+            // Calculate buffersize for SC program
+            int bufferSizeInt = 0;
+            for (Signal signal : transformedProgram.getSignals()) {
+                if (signal.getType() == ValueType.PURE) {
+                    bufferSizeInt += signal.getName().length() + PURE_SIGNAL_BUFFER_CONSTANT;
+                } else {
+                    bufferSizeInt += signal.getName().length() + VALUED_SIGNAL_BUFFER_CONSTANT;
+                }
+            }
+            double log = Math.ceil(Math.log(bufferSizeInt) / Math.log(2));
+            double bufferSizeDouble = Math.ceil(Math.pow(2, log + 1));
+            if (bufferSizeDouble < MINIMAL_BUFFER_SIZE) {
+                bufferSizeDouble = MINIMAL_BUFFER_SIZE;
+            }
+            String bufferSize = bufferSizeDouble + "";
+            bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
+
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder);
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize);
 
             // Compile
             scExecution = new SCExecution(outputFolder);

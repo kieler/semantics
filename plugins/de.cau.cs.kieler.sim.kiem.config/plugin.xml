@@ -54,6 +54,21 @@
       </content>
    </extension>
    <extension
+         point="de.cau.cs.kieler.core.kivi.combinations">
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination"
+            description="Provides Simulators with the currently Active and Opened Model Files"
+            name="KIEM Model Selection">
+      </combination>
+      <combination
+            active="true"
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination"
+            description="Automatically loads a matching execution schedule if the editor is changed"
+            name="KIEM Execution Schedule Autoload">
+      </combination>
+   </extension>
+   <extension
          point="de.cau.cs.kieler.sim.kiem.eventListener">
       <content
             class="de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener"
@@ -62,13 +77,16 @@
       </content>
    </extension>
    <extension
-         point="de.cau.cs.kieler.core.kivi.combinations">
-      <combination
-            active="true"
-            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination"
-            description="Automatically loads a matching execution schedule if the editor is changed"
-            name="KIEM Execution Schedule Autoload">
-      </combination>
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMModelSelectionCombination">
+      </content>
+   </extension>
+   <extension
+         point="de.cau.cs.kieler.sim.kiem.eventListener">
+      <content
+            class="de.cau.cs.kieler.sim.kiem.config.kivi.KIEMExecutionAutoloadCombination">
+      </content>
    </extension>
 
 </plugin>
