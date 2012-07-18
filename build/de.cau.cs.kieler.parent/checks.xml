@@ -43,11 +43,26 @@
 		<property name="checkFormat" value="$1" />
 		<property name="influenceFormat" value="0"/>
 	</module>
-	<module name="SuppressWithNearbyCommentFilter">
-		<property name="commentFormat" value="SUPPRESS CHECKSTYLE NEXT (\w+)"/>
-		<property name="checkFormat" value="$1" />
-		<property name="influenceFormat" value="1"/>
-	</module>
+    <module name="SuppressWithNearbyCommentFilter">
+        <property name="commentFormat" value="SUPPRESS CHECKSTYLE NEXT (\w+)"/>
+        <property name="checkFormat" value="$1" />
+        <property name="influenceFormat" value="1"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+        <property name="commentFormat" value="SUPPRESS CHECKSTYLE NEXT (\d+) (\w+)"/>
+        <property name="checkFormat" value="$2" />
+        <property name="influenceFormat" value="$1"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+        <property name="commentFormat" value="SUPPRESS CHECKSTYLE PREVIOUS (\w+)"/>
+        <property name="checkFormat" value="$1" />
+        <property name="influenceFormat" value="-1"/>
+    </module>
+    <module name="SuppressWithNearbyCommentFilter">
+        <property name="commentFormat" value="SUPPRESS CHECKSTYLE PREVIOUS (\d+) (\w+)"/>
+        <property name="checkFormat" value="$2" />
+        <property name="influenceFormat" value="-$1"/>
+    </module>
 	<module name="SuppressWithNearbyCommentFilter">
 		<property name="commentFormat" value="@generated"/>
 		<property name="checkFormat" value=".*"/>
