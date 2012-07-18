@@ -654,4 +654,9 @@ public class HighlightEffect extends AbstractEffect {
         return color.getRed() << 16 | color.getGreen() << 8 | color.getBlue();
     }
 
+    @Override
+    public String getName() {
+        return "HighlightEffect";
+    }
+    
 }
