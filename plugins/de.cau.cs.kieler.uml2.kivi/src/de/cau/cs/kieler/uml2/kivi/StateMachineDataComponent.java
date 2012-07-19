@@ -13,6 +13,7 @@
  */
 package de.cau.cs.kieler.uml2.kivi;
 
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.gmf.runtime.diagram.ui.parts.DiagramEditor;
 import org.eclipse.papyrus.editor.PapyrusMultiDiagramEditor;
 import org.eclipse.swt.widgets.Display;
@@ -51,5 +52,15 @@ public class StateMachineDataComponent extends KiViDataComponent {
             }
         });
         return maybe.get();
+    }
+
+    @Override
+    protected String getEncodedEObjectId(EObject eObject) {
+        if (eObject.eResource() != null) {
+            String uri = eObject.eResource().getURIFragment(eObject);
+            uri = (uri.hashCode() + "").replace("-", "M");
+            return uri;
+        }
+        return null;
     }
 }

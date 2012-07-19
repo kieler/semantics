@@ -6,7 +6,7 @@
       <content
             class="de.cau.cs.kieler.uml2.kivi.StateMachineDataComponent"
             id="de.cau.cs.kieler.uml2.kivi.statemachinedatacomponent"
-            name="StateMachine Visualization">
+            name="UML2 StateMachine Visualization">
       </content>
    </extension>
    <extension
@@ -14,7 +14,7 @@
       <combination
             class="de.cau.cs.kieler.uml2.kivi.StateMachineCombination"
             description="Highlights active states during simulation."
-            name="StateMachine Simulation Visualization">
+            name="UML2 StateMachine Simulation Visualization">
       </combination>
    </extension>
 
