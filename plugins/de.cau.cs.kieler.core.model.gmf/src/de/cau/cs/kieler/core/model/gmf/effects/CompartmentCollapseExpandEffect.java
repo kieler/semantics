@@ -364,4 +364,13 @@ public class CompartmentCollapseExpandEffect extends AbstractEffect {
         return b.toString();
     }
 
+    @Override
+    public String getName() {
+        if (this.doCollapse) {
+            return "CollapseEffect";
+        } else {
+            return "ExpandEffect";
+        }
+    }
+    
 }

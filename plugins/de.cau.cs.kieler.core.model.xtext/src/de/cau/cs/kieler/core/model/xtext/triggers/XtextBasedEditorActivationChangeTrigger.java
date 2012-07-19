@@ -31,9 +31,11 @@ import de.cau.cs.kieler.core.kivi.AbstractTrigger;
 import de.cau.cs.kieler.core.kivi.AbstractTriggerState;
 import de.cau.cs.kieler.core.kivi.ITrigger;
 import de.cau.cs.kieler.core.kivi.ITriggerState;
-import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType; // SUPPRESS CHECKSTYLE LineLength
+import de.cau.cs.kieler.core.model.xtext.triggers.XtextBasedEditorActivationChangeTrigger.XtextModelChangeState.EventType;
 import de.cau.cs.kieler.core.ui.util.CombinedWorkbenchListener;
 import de.cau.cs.kieler.core.ui.util.EditorUtils;
+
+// SUPPRESS CHECKSTYLE PREVIOUS 10 LineLength
 
 /**
  * Implementation of {@link ITrigger} dedicated to Xtext-based editors. Reacts on the following
@@ -63,6 +65,7 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
      * {@inheritDoc}
      */
     @Override
+    @SuppressWarnings("deprecation")
     public void register() {
         CombinedWorkbenchListener.addPartListener(this);
         this.partActivated(EditorUtils.getLastActiveEditor());
@@ -147,7 +150,8 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     }
 
     /*
-     * ------------------------------------------------------ the IXtextModelListener parts
+     * ------------------------------------------------------
+     *  the IXtextModelListener parts
      * ------------------------------------------------------
      */
 
@@ -162,7 +166,8 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     }
 
     /*
-     * ------------------------------------------------------ the IPartListener parts
+     * ------------------------------------------------------
+     *  the IPartListener parts
      * ------------------------------------------------------
      */
 
@@ -220,7 +225,8 @@ public class XtextBasedEditorActivationChangeTrigger extends AbstractTrigger imp
     }
 
     /*
-     * ------------------------------------------------------ the ITriggerState implementation
+     * ------------------------------------------------------
+     *  the ITriggerState implementation
      * ------------------------------------------------------
      */
 

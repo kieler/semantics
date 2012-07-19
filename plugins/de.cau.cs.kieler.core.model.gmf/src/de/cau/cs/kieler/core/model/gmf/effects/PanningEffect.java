@@ -179,4 +179,9 @@ public class PanningEffect extends AbstractEffect {
         }
     }
 
+    @Override
+    public String getName() {
+        return "Panning";
+    }
+    
 }

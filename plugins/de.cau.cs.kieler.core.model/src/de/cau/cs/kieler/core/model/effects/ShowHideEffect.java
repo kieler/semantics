@@ -108,4 +108,14 @@ public class ShowHideEffect extends AbstractEffect {
         return null;
     }
 
+    @Override
+    public String getName() {
+        if (hide) {
+            return "HideEffect";
+        } else {
+            return "ShowEffect";
+        }
+            
+    }
+    
 }
