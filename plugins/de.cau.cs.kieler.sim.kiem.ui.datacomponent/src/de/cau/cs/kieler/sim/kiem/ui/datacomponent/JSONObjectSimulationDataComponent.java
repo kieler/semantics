@@ -440,7 +440,7 @@ public abstract class JSONObjectSimulationDataComponent extends JSONObjectDataCo
      * 
      * @return the model root element
      */
-    public final EObject getModelRootElement() {
+    public EObject getModelRootElement() {
         IPath modelFilePath = this.getModelFilePath();
         if (modelFilePath == null) {
             return null;
