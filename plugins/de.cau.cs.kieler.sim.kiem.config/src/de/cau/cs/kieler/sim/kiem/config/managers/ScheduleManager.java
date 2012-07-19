@@ -51,7 +51,6 @@ import de.cau.cs.kieler.sim.kiem.config.data.KiemConfigEvent;
 import de.cau.cs.kieler.sim.kiem.config.data.MostRecentCollection;
 import de.cau.cs.kieler.sim.kiem.config.data.ScheduleData;
 import de.cau.cs.kieler.sim.kiem.config.data.Tools;
-import de.cau.cs.kieler.sim.kiem.config.exception.KiemParserException;
 import de.cau.cs.kieler.sim.kiem.config.exception.ScheduleFileMissingException;
 import de.cau.cs.kieler.sim.kiem.config.extension.KiemEventListener;
 import de.cau.cs.kieler.sim.kiem.config.ui.ExecutionFileMissingDialog;
@@ -815,26 +814,26 @@ public final class ScheduleManager extends AbstractManager implements IRefactori
         }
     }
 
-    /**
-     * Load the schedules from the preference store.
-     */
-    private void loadFromPrefStore() {
-        String input = super.load(Tools.SCHEDULE_CONFIGURATION_KEY, null);
-        if (input != null) {
-            String[] array = Tools.getValueList(Tools.SCHEDULE_DATA_NAME, input);
-            if (array != null) {
-                for (String s : array) {
-                    if (s != null && !s.contains("bundleentry:")) {
-                        try {
-                            scheduleData.add(ScheduleData.fromString(s));
-                        } catch (KiemParserException e0) {
-                            // can't parse, skip to next
-                        }
-                    }
-                }
-            }
-        }
-    }
+//    /**
+//     * Load the schedules from the preference store.
+//     */
+//    private void loadFromPrefStore() {
+//        String input = super.load(Tools.SCHEDULE_CONFIGURATION_KEY, null);
+//        if (input != null) {
+//            String[] array = Tools.getValueList(Tools.SCHEDULE_DATA_NAME, input);
+//            if (array != null) {
+//                for (String s : array) {
+//                    if (s != null && !s.contains("bundleentry:")) {
+//                        try {
+//                            scheduleData.add(ScheduleData.fromString(s));
+//                        } catch (KiemParserException e0) {
+//                            // can't parse, skip to next
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//    }
 
     // --------------------------------------------------------------------------
 

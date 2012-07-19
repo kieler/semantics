@@ -213,7 +213,6 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
                 editorName = editor.getRegisteredName();
             }
             if (editorId == null) {
-
                 editorId = EditorManager.getInstance().getDefaultEditorId();
                 editorName = EditorManager.getInstance().getDefaultEditorName();
             }
@@ -231,7 +230,7 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
             default:
                 data = null;
             }
-
+            
             if (data != null) {
                 boolean showHeader = showHeader();
                 // create the store for the schedule names
@@ -370,14 +369,14 @@ public class ScheduleSelector extends ControlContribution implements SelectionLi
      * {@inheritDoc}
      */
     public void focusGained(final FocusEvent e) {
-        setupCombo(false);
+        // do not do anything here
     }
 
     /**
      * {@inheritDoc}
      */
     public void focusLost(final FocusEvent e) {
-        setupCombo(false);
+        // do not do anything here
     }
 
     // --------------------------------------------------------------------------
