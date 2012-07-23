@@ -3,7 +3,6 @@ Bundle-ManifestVersion: 2
 Bundle-Name: KIELER SyncCharts Examples
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.examples;singleton:=true
 Bundle-Version: 0.3.0.qualifier
-Bundle-Activator: de.cau.cs.kieler.synccharts.examples.SyncChartsExamplesPlugin
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.ui.intro,

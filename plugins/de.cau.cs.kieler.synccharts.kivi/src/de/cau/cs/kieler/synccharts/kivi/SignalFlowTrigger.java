@@ -21,7 +21,7 @@ import de.cau.cs.kieler.core.kivi.ITrigger;
  * This trigger is informed whenever the button for the signal flow visualization is pushed.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SignalFlowTrigger extends AbstractTrigger {
 

@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * </p>
  * 
  * @author <a href="mailto:laurent.goubet@obeo.fr">Laurent Goubet</a>
+ * @kieler.ignore (excluded from review process)
  */
 public class MyModelElementChangeRightTargetMerger extends DefaultMerger {
 

@@ -47,6 +47,7 @@ import org.eclipse.swt.graphics.RGB;
  * bar.
  * 
  * @author cmahoney
+ * @kieler.ignore (excluded from review process)
  */
 @SuppressWarnings("restriction")
 public class DiagramPopupBarPolicy extends PopupBarPolicy implements

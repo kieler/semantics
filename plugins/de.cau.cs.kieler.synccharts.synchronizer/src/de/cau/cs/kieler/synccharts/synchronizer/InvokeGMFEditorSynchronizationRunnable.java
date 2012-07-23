@@ -24,6 +24,7 @@ import de.cau.cs.kieler.kiml.ui.diagram.DiagramLayoutEngine;
  * A Runnable encapsulating the activities for synchronizing a graphical view.
  *  
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class InvokeGMFEditorSynchronizationRunnable implements Runnable {
 

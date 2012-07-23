@@ -11,6 +11,9 @@ import org.eclipse.emf.transaction.TriggerListener;
 import de.cau.cs.kieler.core.annotations.AnnotationsPackage;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsPackage;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 public class ModelChangeTriggerListener extends TriggerListener {
 
     private static boolean enabled = false;

@@ -23,7 +23,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
  * added to a state.
  * 
  * @author haf
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class ChangedTriggerListener extends FireOnceTriggerListener {
 

@@ -44,7 +44,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * Depending on the currently selected objects only signals concerning these objects are displayed.
  * 
  * @author mmu, haf, cmot
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SignalFlowCombination extends AbstractCombination {
 

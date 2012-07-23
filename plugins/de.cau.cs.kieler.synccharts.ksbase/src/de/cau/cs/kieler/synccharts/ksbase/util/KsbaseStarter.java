@@ -19,6 +19,7 @@ import de.cau.cs.kieler.synccharts.diagram.custom.handlers.SyncchartsPropertyTes
 
 /**
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class KsbaseStarter implements IStartup {
 

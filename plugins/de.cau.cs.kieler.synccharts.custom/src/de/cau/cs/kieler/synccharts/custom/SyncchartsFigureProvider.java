@@ -54,10 +54,13 @@ import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
  * This class provides figures for the graphical synccharts representation.
  * 
  * @author ckru
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsFigureProvider implements IRenderingProvider {
 
+    /**
+     * A rounded rectangle with border.
+     */
     private static class RoundedRectangleWithBorder extends RoundedRectangle {
 
         /**

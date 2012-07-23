@@ -42,6 +42,7 @@ import org.eclipse.ui.texteditor.ResourceAction;
  *
  * @author Sebastian Zarnekow - Initial contribution and API
  * @author Mikaël Barbero - Changed from TextEditorAction to TextViewerAction as superclass.
+ * @kieler.ignore (excluded from review process)
  */
 public final class ToggleSLCommentAction extends Action implements IUpdate {
 

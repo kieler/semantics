@@ -26,6 +26,7 @@ import org.eclipse.emf.transaction.Transaction;
  * the usual notification loops.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class FireOnceTriggerListener extends FailSafeTriggerListener {
 

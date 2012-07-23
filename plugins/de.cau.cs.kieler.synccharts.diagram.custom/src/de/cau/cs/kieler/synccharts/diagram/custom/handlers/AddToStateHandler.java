@@ -59,6 +59,7 @@ import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
  * Handler that adds an element to a specific compartment.
  * 
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class AddToStateHandler extends AbstractHandler implements IHandler {
 

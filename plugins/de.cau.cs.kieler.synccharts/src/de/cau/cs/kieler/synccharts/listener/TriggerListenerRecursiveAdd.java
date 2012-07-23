@@ -45,6 +45,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * States/Regions/Signals/Transitions/...
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class TriggerListenerRecursiveAdd extends FireOnceTriggerListener {
 

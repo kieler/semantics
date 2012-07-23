@@ -39,6 +39,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * The main plugin class.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsDiagramCustomPlugin extends AbstractUIPlugin implements
         IPageListener, IPartListener {

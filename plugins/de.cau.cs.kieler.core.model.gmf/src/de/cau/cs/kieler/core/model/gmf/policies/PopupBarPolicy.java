@@ -60,6 +60,7 @@ import org.eclipse.swt.widgets.Display;
  * of balloons.
  * 
  * @author affrantz@us.ibm.com, cmahoney
+ * @kieler.ignore (excluded from review process)
  */
 @SuppressWarnings("restriction")
 public class PopupBarPolicy extends DiagramAssistantEditPolicy {

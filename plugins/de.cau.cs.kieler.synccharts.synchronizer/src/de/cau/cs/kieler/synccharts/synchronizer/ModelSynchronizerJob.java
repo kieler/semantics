@@ -54,6 +54,7 @@ import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class ModelSynchronizerJob extends Job {
 

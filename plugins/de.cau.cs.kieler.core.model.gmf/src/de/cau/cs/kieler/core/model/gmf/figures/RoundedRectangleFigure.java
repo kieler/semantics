@@ -27,6 +27,7 @@ import de.cau.cs.kieler.core.model.figures.IRoundedRectangleAnchorableFigure;
  * A 2D figure which provides anchoring on the outline of a rounded rectangle.
  * 
  * @author mri
+ * @kieler.ignore (excluded from review process)
  */
 public class RoundedRectangleFigure extends NodeFigure implements
         IRoundedRectangleAnchorableFigure {

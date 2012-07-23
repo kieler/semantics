@@ -22,7 +22,8 @@ import de.cau.cs.kieler.synccharts.Action;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author Michael Matzen - mim AT informatik.uni-kiel.de
+ * @author mim
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsKsbasePlugin extends AbstractUIPlugin {
 

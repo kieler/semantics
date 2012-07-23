@@ -17,7 +17,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.LabelParserBridgePlugin;
  * affected transition labels.
  * 
  * @author haf
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class RenamedSignalsListener extends FireOnceTriggerListener {
 

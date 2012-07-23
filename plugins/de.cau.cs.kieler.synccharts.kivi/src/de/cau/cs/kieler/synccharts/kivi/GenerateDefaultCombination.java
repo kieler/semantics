@@ -44,11 +44,10 @@ import de.cau.cs.kieler.synccharts.State;
 import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
 
 /**
- * 
  * This combination is used for creating a default state on empty synccharts regions.
  * 
  * @author ckru
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class GenerateDefaultCombination extends AbstractCombination implements ResourceSetListener {
 

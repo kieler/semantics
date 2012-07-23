@@ -24,6 +24,7 @@ import org.eclipse.draw2d.geometry.Dimension;
  * then will get the size of the bounding box of the text labels.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class ListLayout extends FlowLayout {
 

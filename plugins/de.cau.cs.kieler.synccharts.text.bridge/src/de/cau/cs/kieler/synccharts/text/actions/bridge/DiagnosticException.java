@@ -27,7 +27,7 @@ import de.cau.cs.kieler.core.KielerModelException;
  * determine concrete causes of errors
  * 
  * @author haf
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class DiagnosticException extends KielerModelException {
 

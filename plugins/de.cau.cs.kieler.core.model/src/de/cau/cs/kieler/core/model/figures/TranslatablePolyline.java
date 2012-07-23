@@ -20,6 +20,7 @@ import org.eclipse.draw2d.geometry.PointList;
  * A Polyline that reacts to translation.
  *
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class TranslatablePolyline extends org.eclipse.draw2d.Polyline {
 

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.synccharts.ksbase.util.FixSyncChartUtils;
 
 /**
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class FixSyncChartPreferencePage extends FieldEditorPreferencePage
         implements IWorkbenchPreferencePage {

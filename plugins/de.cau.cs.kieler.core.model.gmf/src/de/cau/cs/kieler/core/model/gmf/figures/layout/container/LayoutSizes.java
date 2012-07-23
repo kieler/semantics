@@ -19,6 +19,7 @@ import org.eclipse.draw2d.geometry.Dimension;
  * Class used as container by GenericTableLayout.
  * 
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public class LayoutSizes {
     

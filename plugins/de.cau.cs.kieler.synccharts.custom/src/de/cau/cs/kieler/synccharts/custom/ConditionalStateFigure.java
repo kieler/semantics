@@ -24,6 +24,7 @@ import org.eclipse.swt.graphics.Color;
  * A filled circle with a 'C' inside, used for conditional states.
  * 
  * @author schm
+ * @kieler.ignore (excluded from review process)
  */
 public class ConditionalStateFigure extends Ellipse {
 

@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
  * Merger for a {@link MoveModelElement} operation.
  * 
  * @author <a href="mailto:laurent.goubet@obeo.fr">Laurent Goubet</a>
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsMoveModelElementMerger extends DefaultMerger {
         /**

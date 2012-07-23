@@ -33,6 +33,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObject;
 import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 import de.cau.cs.kieler.synccharts.synchronizer.kitsView.KitsView;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 public class ModelSynchronizer implements IStartup {
 
     public static String MSG_MATCH_FAILED = "Comparison of match model failed.";

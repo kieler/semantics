@@ -22,6 +22,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * called by a synccharts editor.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsPropertyTester extends PropertyTester {
 

@@ -17,6 +17,7 @@ package de.cau.cs.kieler.core.model.gmf.figures.layout.container;
  * Represents a single cell of a table layout, used in ExtendedTable.
  * 
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public class Cell {
     

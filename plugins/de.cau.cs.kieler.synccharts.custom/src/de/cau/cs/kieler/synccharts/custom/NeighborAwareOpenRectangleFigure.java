@@ -33,6 +33,7 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.ShapeCompartmentFigure;
  * get clear bounds if the children are laid out sparsely.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class NeighborAwareOpenRectangleFigure extends OpenRectangleFigure {
 

@@ -43,7 +43,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * Draws a transient arrow from source to target edit part.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class ArrowEffect extends AbstractEffect {
 

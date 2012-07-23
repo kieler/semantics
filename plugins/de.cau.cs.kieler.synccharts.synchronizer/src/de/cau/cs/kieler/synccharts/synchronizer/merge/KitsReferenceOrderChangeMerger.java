@@ -37,6 +37,7 @@ import org.eclipse.emf.ecore.EObject;
  * 
  * @author <a href="mailto:laurent.goubet@obeo.fr">Laurent Goubet</a>
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsReferenceOrderChangeMerger extends DefaultMerger {
         /**

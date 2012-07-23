@@ -39,6 +39,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
  * 
  * @author mmu
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class LayoutAfterModelChangedCombination extends AbstractCombination {
 

@@ -35,6 +35,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * This combination hides or shows transition labels upon the press of a button.
  * 
  * @author cds
+ * @kieler.ignore (excluded from review process)
  */
 public class HideTransitionLabelsCombination extends AbstractCombination {
     

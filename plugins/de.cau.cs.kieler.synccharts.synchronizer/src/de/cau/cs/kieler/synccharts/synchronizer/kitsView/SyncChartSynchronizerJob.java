@@ -67,6 +67,7 @@ import de.cau.cs.kieler.synccharts.text.kits.scoping.KitsEmbeddedScopeProvider;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncChartSynchronizerJob extends Job implements ISelectionListener {
 
