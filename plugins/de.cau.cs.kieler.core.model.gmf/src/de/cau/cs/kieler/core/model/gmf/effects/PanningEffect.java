@@ -23,9 +23,11 @@ import org.eclipse.gef.ui.parts.ScrollingGraphicalViewer;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.GraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.render.editparts.RenderedDiagramRootEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 
 import de.cau.cs.kieler.core.kivi.AbstractEffect;
+import de.cau.cs.kieler.core.ui.util.MonitoredOperation;
 
 /**
  * 
@@ -146,37 +148,38 @@ public class PanningEffect extends AbstractEffect {
     public void execute() {
         final ZoomManager zoomManager = ((RenderedDiagramRootEditPart) editor.getDiagramEditPart()
                 .getRoot()).getZoomManager();
-        Point coords = null;
-        if (target != null) {
-            EditPart part = editor.getDiagramEditPart().findEditPart(editor.getDiagramEditPart(),
-                    target);
-            if (part instanceof GraphicalEditPart) {
-                GraphicalEditPart graphicalPart = (GraphicalEditPart) part;
-                coords = graphicalPart.getFigure().getBounds().getLocation().getCopy();
-                // graphicalPart.getFigure().translateToAbsolute(coords);
-                coords = this.getAbsoluteCoords(graphicalPart, coords);
-            }
-        } else if (coordinates != null) {
-            coords = coordinates;
-        }
-        final Point finalCoords = coords;
-        if (finalCoords != null) {
-            PlatformUI.getWorkbench().getDisplay().syncExec(new Runnable() {
+            Display.getDefault().asyncExec(new Runnable() {
                 public void run() {
+                        
+                        Point coords = null;
+                    GraphicalEditPart graphicalPart = null;
+                    if (target != null) {
+                        EditPart part = editor.getDiagramEditPart().findEditPart(editor.getDiagramEditPart(),
+                                target);
+                        if (part instanceof GraphicalEditPart) {
+                                graphicalPart = (GraphicalEditPart) part;
+                            coords = graphicalPart.getFigure().getBounds().getLocation().getCopy();
+                            // graphicalPart.getFigure().translateToAbsolute(coords);
+                            coords = PanningEffect.this.getAbsoluteCoords(graphicalPart, coords);
+                        }
+                    } else if (coordinates != null) {
+                        coords = coordinates;
+                    }
+                        if (coords != null) { 
                     if (zoom) {
                         zoomManager.setZoom(zoomLevel);
                     }
                     if (animate) {
-                        canvas.scrollSmoothTo((int) (finalCoords.x * zoomManager.getZoom()), 
-                                (int) (finalCoords.y * zoomManager.getZoom()));
+                        canvas.scrollSmoothTo((int) (coords.x * zoomManager.getZoom()), 
+                                (int) (coords.y * zoomManager.getZoom()));
 
                     } else {
-                        canvas.scrollTo((int) (finalCoords.x * zoomManager.getZoom()), 
-                                (int) (finalCoords.y * zoomManager.getZoom()));
+                        canvas.scrollTo((int) (coords.x * zoomManager.getZoom()), 
+                                (int) (coords.y * zoomManager.getZoom()));
                     }
+                        }
                 }
             });
-        }
     }
 
     @Override
