@@ -52,6 +52,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsVisualIDRegistry;
  * A command that reinitializes a diagram file from a given kixs file.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class InitSyncchartsDiagramHandler extends
         AbstractInitDiagramHandler {

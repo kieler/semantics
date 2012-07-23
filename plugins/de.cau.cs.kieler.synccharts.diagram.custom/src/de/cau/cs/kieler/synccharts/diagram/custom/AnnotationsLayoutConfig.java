@@ -36,6 +36,7 @@ import de.cau.cs.kieler.kiml.options.LayoutOptions;
  * A semantic layout configurations for annotations.
  *
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class AnnotationsLayoutConfig extends SemanticLayoutConfig {
     

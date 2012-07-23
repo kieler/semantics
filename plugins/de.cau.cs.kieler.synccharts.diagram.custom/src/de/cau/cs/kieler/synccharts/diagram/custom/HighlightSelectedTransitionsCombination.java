@@ -26,7 +26,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * Highlight selected transitions in SyncCharts.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class HighlightSelectedTransitionsCombination extends AbstractCombination {
 

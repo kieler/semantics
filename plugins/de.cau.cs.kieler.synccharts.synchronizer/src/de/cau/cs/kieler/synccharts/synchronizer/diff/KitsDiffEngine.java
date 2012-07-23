@@ -21,6 +21,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsDiffEngine extends GenericDiffEngine {
 

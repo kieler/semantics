@@ -38,6 +38,7 @@ import de.cau.cs.kieler.synccharts.listener.UniqueStringCache;
  * Utils for optimization.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public final class FixSyncChartUtils {
 

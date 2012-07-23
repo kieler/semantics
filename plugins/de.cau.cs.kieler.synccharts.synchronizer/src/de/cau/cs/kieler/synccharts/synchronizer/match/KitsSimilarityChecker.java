@@ -27,7 +27,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 
 /**
  * Customized {@link AbstractSimilarityChecker} allowing to influence the match behaviour.
+ * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsSimilarityChecker extends AbstractSimilarityChecker {
 

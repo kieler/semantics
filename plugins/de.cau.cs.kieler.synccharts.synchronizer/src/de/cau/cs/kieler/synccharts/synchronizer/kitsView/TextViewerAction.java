@@ -12,6 +12,9 @@ import org.eclipse.jface.text.ITextOperationTarget;
 import org.eclipse.jface.text.ITextViewer;
 import org.eclipse.ui.texteditor.IUpdate;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 class TextViewerAction extends Action implements IUpdate {
 
 	private int fOperationCode= -1;

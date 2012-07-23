@@ -26,6 +26,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * when the interface declaration is done using Xtext.
  *
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class ActionLayoutConfig extends SemanticLayoutConfig {
 

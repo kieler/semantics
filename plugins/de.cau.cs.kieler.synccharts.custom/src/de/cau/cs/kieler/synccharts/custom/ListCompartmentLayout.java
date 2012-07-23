@@ -32,6 +32,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
  * 
  * @author schm
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class ListCompartmentLayout extends XYLayout {
 

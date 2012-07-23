@@ -28,6 +28,7 @@ import de.cau.cs.kieler.core.WrappedException;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class SynchronizeXtextEditorUnitOfWork extends Void<XtextResource> {
     

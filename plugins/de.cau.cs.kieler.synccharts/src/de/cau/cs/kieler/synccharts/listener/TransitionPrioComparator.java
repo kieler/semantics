@@ -23,6 +23,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * Collections.sort(list, new TransitionPrioComparator())
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class TransitionPrioComparator implements Comparator<Transition> {
 

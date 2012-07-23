@@ -30,6 +30,7 @@ import org.eclipse.emf.compare.util.EMFCompareMap;
  * Provider of our customized mergers.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsMergerProvider implements IMergerProvider {
     

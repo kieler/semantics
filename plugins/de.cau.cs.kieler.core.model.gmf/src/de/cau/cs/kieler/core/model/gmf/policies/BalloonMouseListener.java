@@ -29,6 +29,7 @@ import org.eclipse.swt.widgets.Event;
  * MouseListener for listening to clicks on the custom popup balloons.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class BalloonMouseListener implements DragTracker {
 

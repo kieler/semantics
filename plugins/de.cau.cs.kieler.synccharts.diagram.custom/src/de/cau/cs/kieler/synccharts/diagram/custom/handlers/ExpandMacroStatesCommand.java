@@ -42,6 +42,7 @@ import org.eclipse.xtend.typesystem.emf.EmfMetaModel;
  * superstate to a new file <name>_EXPANDED.kixs
  * 
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public class ExpandMacroStatesCommand extends AbstractHandler {
 

@@ -22,6 +22,7 @@ import org.eclipse.swt.graphics.Image;
  * The interface for contributions to the balloon popup bar.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public interface IBalloonContribution {
 

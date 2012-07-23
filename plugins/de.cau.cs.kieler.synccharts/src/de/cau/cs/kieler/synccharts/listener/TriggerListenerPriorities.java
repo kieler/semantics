@@ -41,6 +41,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * transitions at the involved states.
  *  
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class TriggerListenerPriorities extends FireOnceTriggerListener {
 

@@ -22,6 +22,7 @@ import de.cau.cs.kieler.core.model.gmf.handlers.AbstractCutCopyPasteHandlerProvi
  * handler if applicable.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsCutCopyPasteHandlerProvider extends
         AbstractCutCopyPasteHandlerProvider {

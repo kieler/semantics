@@ -23,6 +23,7 @@ import org.eclipse.emf.ecore.EObject;
  * A cache for unique strings.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class UniqueStringCache {
 

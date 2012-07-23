@@ -18,6 +18,9 @@ import org.eclipse.emf.common.command.AbstractCommand;
 
 import de.cau.cs.kieler.synccharts.Action;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 public class ActionLabelSerializeCommand extends AbstractCommand {
 
     private Action action;

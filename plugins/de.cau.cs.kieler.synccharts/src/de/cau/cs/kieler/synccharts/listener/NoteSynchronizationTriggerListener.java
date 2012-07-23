@@ -44,6 +44,7 @@ import de.cau.cs.kieler.core.annotations.StringAnnotation;
  * if it is an Annotatable.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class NoteSynchronizationTriggerListener extends FireOnceTriggerListener {
 

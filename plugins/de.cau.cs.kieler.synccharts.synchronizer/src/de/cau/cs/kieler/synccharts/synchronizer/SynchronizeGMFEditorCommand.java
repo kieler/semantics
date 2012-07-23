@@ -33,6 +33,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  * Special {@link AbstractTransactionalCommand} merging changes into a GMF document.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class SynchronizeGMFEditorCommand extends AbstractTransactionalCommand {
 

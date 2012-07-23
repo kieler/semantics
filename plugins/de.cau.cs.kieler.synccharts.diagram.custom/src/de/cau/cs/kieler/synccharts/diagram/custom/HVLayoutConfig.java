@@ -29,6 +29,7 @@ import de.cau.cs.kieler.synccharts.Scope;
  * annotation "HVLayout" is present.
  *
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class HVLayoutConfig extends SemanticLayoutConfig {
     

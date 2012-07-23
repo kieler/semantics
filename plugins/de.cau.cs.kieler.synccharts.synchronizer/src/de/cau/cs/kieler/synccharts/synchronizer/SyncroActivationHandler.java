@@ -26,6 +26,7 @@ import org.eclipse.ui.handlers.HandlerUtil;
  * directly in charge of determining the state of the toggle button.  
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncroActivationHandler extends AbstractHandler {
 

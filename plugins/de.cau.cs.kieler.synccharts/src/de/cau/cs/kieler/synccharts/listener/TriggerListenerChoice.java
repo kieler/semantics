@@ -30,6 +30,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * set outgoing transitions of CONDITIONAL States to immediate.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class TriggerListenerChoice extends FireOnceTriggerListener {
 

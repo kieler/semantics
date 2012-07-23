@@ -122,6 +122,9 @@ import com.google.inject.name.Named;
 
 import de.cau.cs.kieler.core.WrappedException;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 public class EmbeddedXtextEditor {
 
 	private static final String XTEXT_UI_FORMAT_ACTION = "org.eclipse.xtext.ui.FormatAction";

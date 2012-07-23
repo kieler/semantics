@@ -20,6 +20,7 @@ import org.osgi.framework.BundleContext;
  * The activator class controls the plug-in life cycle.
  * 
  * @author mmu
+ * @kieler.ignore (excluded from review process)
  */
 public class Activator extends AbstractUIPlugin {
 

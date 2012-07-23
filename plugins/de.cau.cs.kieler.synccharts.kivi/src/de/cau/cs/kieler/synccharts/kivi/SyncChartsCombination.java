@@ -40,6 +40,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * A combination that visualizes the simulation of a SyncChart.
  * 
  * @author mmu, cmot
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncChartsCombination extends AbstractCombination {
 

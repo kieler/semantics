@@ -36,6 +36,7 @@ import de.cau.cs.kieler.synccharts.text.actions.bridge.ActionLabelProcessorWrapp
  * Utility class comprising several SyncCharts specific convenience methods.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public final class SyncchartsUtil {
 

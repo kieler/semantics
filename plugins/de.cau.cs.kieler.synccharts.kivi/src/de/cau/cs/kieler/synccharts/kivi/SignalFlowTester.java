@@ -22,7 +22,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * Tests whether the active editor is a SyncChart editor.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SignalFlowTester extends PropertyTester {
 

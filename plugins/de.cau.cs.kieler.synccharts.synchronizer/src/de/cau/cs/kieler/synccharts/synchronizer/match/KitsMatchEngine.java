@@ -20,6 +20,7 @@ import org.eclipse.emf.compare.match.engine.IMatchEngine;
  * Customized {@link IMatchEngine} registering customized filter and checker.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsMatchEngine extends GenericMatchEngine {
 

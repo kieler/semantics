@@ -33,12 +33,14 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
  * The class KIEMDelegate implements the launcher behavior when pressed on RUN/DEBUG button in the
  * launch wizard or via the shortcuts.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
 public class KiemDelegate implements ILaunchConfigurationDelegate {
 
+    // --------------------------------------------------------------------------
+    
     /**
      * {@inheritDoc}
      */
@@ -89,4 +91,5 @@ public class KiemDelegate implements ILaunchConfigurationDelegate {
         }
     }
 
+    // --------------------------------------------------------------------------
 }

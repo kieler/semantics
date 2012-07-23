@@ -28,7 +28,7 @@ import de.cau.cs.kieler.sim.kivi.KiViDataComponent;
  * A data component that observes the activity of syncchart states during simulation.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncChartsDataComponent extends KiViDataComponent {
     

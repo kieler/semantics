@@ -24,6 +24,7 @@ import de.cau.cs.kieler.synccharts.impl.SyncchartsPackageImpl;
  * 
  * @author soh
  * @kieler.design 2010-06-15 msp, cmot
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsDeletionPolicyProvider extends
         AbstractDeletionPolicyProvider {

@@ -27,6 +27,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * Customized merger for an {@link ModelElementChangeLeftTarget} operation.>
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class MyModelElementChangeLeftTargetMerger extends DefaultMerger {
     /**

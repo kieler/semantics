@@ -24,6 +24,7 @@ import de.cau.cs.kieler.core.model.effects.ShowHideEffect;
  * will become obsolete once KLighD arrives. All hail KLighD!
  * 
  * @author cds
+ * @kieler.ignore (excluded from review process)
  */
 public class VisibilityManagerShowHideEffect extends ShowHideEffect {
     
