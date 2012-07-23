@@ -22,7 +22,7 @@ import org.eclipse.debug.ui.ILaunchConfigurationTab;
  * The class AbstractLaunchConfigurationTabGroup creates the tabs for the launch configuration. By
  * convention a CommonTab is required to be created.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
@@ -46,4 +46,7 @@ public class KiemAbstractLaunchConfigurationTabGroup extends
         setTabs(tabs);
 
     }
+
+    // --------------------------------------------------------------------------
+
 }

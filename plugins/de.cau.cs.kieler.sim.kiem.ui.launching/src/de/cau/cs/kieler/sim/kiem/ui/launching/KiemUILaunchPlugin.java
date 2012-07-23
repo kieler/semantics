@@ -20,7 +20,7 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
@@ -38,6 +38,9 @@ public class KiemUILaunchPlugin extends AbstractUIPlugin {
 
     /** The shared instance. */
     private static KiemUILaunchPlugin plugin;
+    
+    /** If true, generate debug output. */
+    public static final boolean DEBUG = false;
 
     // --------------------------------------------------------------------------
 

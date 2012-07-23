@@ -19,9 +19,9 @@ import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.ui.IEditorPart;
 
 /**
- * The Class KIEMLaunchShortcut.
+ * The class KIEMLaunchShortcut is needed for extension point org.eclipse.debug.ui.launchShortcuts.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
  * @kieler.rating 2011-07-15 proposed yellow
  * 
  */
@@ -39,9 +39,9 @@ public class KiemLaunchShortcut implements ILaunchShortcut {
      * {@inheritDoc}
      */
     public void launch(final ISelection selection, final String mode) {
-        //System.out.println("LAUNCH SELECTION" + selection.toString() + ", " + mode);
-        //ILaunchManager lm = DebugPlugin.getDefault().getLaunchManager();
-        //ILaunchConfigurationType type = lm.getLaunchConfigurationType(KIEM_LAUNCH_TYPE);
+        if (KiemUILaunchPlugin.DEBUG) {
+            System.out.println("LAUNCH SELECTION" + selection.toString() + ", " + mode);
+        }
     }
 
     // --------------------------------------------------------------------------
@@ -50,7 +50,11 @@ public class KiemLaunchShortcut implements ILaunchShortcut {
      * {@inheritDoc}
      */
     public void launch(final IEditorPart editor, final String mode) {
-        //System.out.println("LAUNCH EDITOR" + editor.toString() + ", " + mode);
+        if (KiemUILaunchPlugin.DEBUG) {
+            System.out.println("LAUNCH EDITOR" + editor.toString() + ", " + mode);
+        }
     }
+
+    // --------------------------------------------------------------------------
 
 }
