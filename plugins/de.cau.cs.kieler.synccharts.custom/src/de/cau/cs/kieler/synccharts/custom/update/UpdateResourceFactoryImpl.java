@@ -64,7 +64,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * This class handles the migration from Synccharts 0.1 to 0.2.1.
  * 
  * @author soh
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class UpdateResourceFactoryImpl extends XMIResourceFactoryImpl {
 

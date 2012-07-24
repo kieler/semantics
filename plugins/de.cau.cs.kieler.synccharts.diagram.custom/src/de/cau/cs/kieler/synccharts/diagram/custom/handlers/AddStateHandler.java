@@ -44,8 +44,10 @@ import de.cau.cs.kieler.synccharts.diagram.edit.parts.StateRegionEditPart;
 import de.cau.cs.kieler.synccharts.diagram.providers.SyncchartsElementTypes;
 
 /**
+ * Add a state.
  * 
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class AddStateHandler extends AbstractHandler implements IHandler {
 

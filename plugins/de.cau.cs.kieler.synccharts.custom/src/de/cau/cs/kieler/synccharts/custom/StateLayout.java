@@ -30,6 +30,7 @@ import de.cau.cs.kieler.synccharts.custom.layout.SyncChartsConfiguration;
  * in synccharts.gmfgraph and its ecore model-object.
  * 
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public class StateLayout extends AbstractTableLayout {
 

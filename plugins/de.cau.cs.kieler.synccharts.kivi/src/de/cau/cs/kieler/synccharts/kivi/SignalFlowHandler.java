@@ -23,7 +23,7 @@ import org.eclipse.swt.widgets.ToolItem;
  * Handles the button for showing the signal flow.
  * 
  * @author mmu
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SignalFlowHandler extends AbstractHandler {
 

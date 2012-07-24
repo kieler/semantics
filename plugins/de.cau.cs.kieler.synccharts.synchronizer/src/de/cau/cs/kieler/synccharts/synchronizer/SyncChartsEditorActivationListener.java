@@ -30,7 +30,8 @@ import de.cau.cs.kieler.synccharts.presentation.SyncchartsEditor;
  * Custom {@link IPartListener} installing the known modelChangeListener on the
  * current active editor's semantic model.
  * 
- * @author chsch 
+ * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncChartsEditorActivationListener implements IPartListener {
 

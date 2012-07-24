@@ -24,6 +24,7 @@ import org.eclipse.draw2d.Graphics;
  * 
  * @author schm
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class CustomRegionFigure extends NeighborAwareOpenRectangleFigure {
 

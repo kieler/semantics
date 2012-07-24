@@ -46,7 +46,7 @@ import de.cau.cs.kieler.core.util.Pair;
  * Much code is copied from the {@link ArrowEffect}.
  * 
  * @author haf
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class PointerEffect extends AbstractEffect {
 

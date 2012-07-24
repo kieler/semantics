@@ -28,6 +28,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * 
  * @author soh
  * @kieler.design 2010-06-15 msp, cmot
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class AbstractCutCopyPasteHandlerProvider extends
         AbstractGlobalActionHandlerProvider {

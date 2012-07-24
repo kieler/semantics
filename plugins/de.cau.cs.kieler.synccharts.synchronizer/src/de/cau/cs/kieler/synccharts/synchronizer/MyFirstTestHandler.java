@@ -24,6 +24,9 @@ import org.eclipse.ui.internal.Workbench;
 
 import de.cau.cs.kieler.synccharts.Region;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 @SuppressWarnings("restriction")
 public class MyFirstTestHandler extends AbstractHandler {
 

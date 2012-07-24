@@ -35,6 +35,7 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  * Factory for constructing the validate actions for the actions grammar.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsValidationActionFactory extends
         AbstractXtextEditorValidationActionFactory {

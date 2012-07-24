@@ -27,6 +27,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.ValidateAction;
 
 /**
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsValidationActionFactory extends AbstractValidationActionFactory {
 

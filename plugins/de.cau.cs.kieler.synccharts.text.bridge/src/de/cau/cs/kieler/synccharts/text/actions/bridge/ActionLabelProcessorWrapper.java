@@ -41,6 +41,7 @@ import de.cau.cs.kieler.synccharts.text.actions.ActionsStandaloneSetup;
  * of states).
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class ActionLabelProcessorWrapper {
 

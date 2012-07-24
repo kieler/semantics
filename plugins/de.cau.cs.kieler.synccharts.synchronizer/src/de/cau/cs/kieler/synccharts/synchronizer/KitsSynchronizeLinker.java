@@ -43,6 +43,7 @@ import de.cau.cs.kieler.synccharts.util.SyncchartsSwitch;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsSynchronizeLinker {
 

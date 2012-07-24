@@ -24,6 +24,7 @@ import org.eclipse.gmf.runtime.diagram.ui.figures.BorderItemLocator;
  * A border item locator for entity and port labels.
  * 
  * @author msp
+ * @kieler.ignore (excluded from review process)
  */
 public class LabelLocator extends BorderItemLocator {
 

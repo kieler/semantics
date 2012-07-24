@@ -23,6 +23,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * outline sides, e.g. omit drawing one or multiple lines.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class OpenRectangleFigure extends Shape {
 

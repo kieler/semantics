@@ -22,6 +22,7 @@ import org.eclipse.draw2d.geometry.Rectangle;
  * A rounded rectangle with a double border.
  * 
  * @author schm
+ * @kieler.ignore (excluded from review process)
  */
 public class DoubleRoundedRectangle extends RoundedRectangle {
 

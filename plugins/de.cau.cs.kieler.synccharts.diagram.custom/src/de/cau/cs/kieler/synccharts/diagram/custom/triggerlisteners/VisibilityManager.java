@@ -36,6 +36,7 @@ import org.eclipse.ui.IWorkbenchPart;
  * region id labels.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public final class VisibilityManager {
 

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.synccharts.Emission;
  * yet work for the given grammar.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public final class ActionLabelSerializer {
 

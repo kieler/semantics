@@ -40,6 +40,7 @@ import de.cau.cs.kieler.kiml.kivi.LayoutEffect;
  * contents of the focus should be shown.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class ManualFocusCombination extends AbstractCombination {
 

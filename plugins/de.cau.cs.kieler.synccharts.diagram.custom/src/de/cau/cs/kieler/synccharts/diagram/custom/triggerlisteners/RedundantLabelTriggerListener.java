@@ -50,6 +50,7 @@ import de.cau.cs.kieler.synccharts.diagram.part.SyncchartsDiagramEditor;
  * has one outgoing transition.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public class RedundantLabelTriggerListener extends TriggerListener {
 

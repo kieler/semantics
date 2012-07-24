@@ -48,9 +48,10 @@ import de.cau.cs.kieler.core.model.figures.CircleDecoration;
 import de.cau.cs.kieler.karma.IRenderingProvider;
 
 /**
+ * Figure provider for SyncCharts connections.
  * 
  * @author ckru
- * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsConnectionFigureProvider implements IRenderingProvider {
 

@@ -37,6 +37,7 @@ import de.cau.cs.kieler.synccharts.Transition;
  * Static helper methods for Synccharts.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public final class SyncchartsContentUtil {
 

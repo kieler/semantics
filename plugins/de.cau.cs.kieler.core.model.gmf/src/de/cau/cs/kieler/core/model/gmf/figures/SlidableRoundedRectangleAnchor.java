@@ -30,6 +30,7 @@ import de.cau.cs.kieler.core.model.figures.IRoundedRectangleAnchorableFigure;
  * A slideable anchor for rounded rectangle figures.
  * 
  * @author mri
+ * @kieler.ignore (excluded from review process)
  */
 public class SlidableRoundedRectangleAnchor extends SlidableAnchor {
 

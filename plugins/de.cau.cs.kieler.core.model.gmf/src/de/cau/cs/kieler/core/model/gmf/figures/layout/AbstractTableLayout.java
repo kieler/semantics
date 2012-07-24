@@ -83,6 +83,7 @@ import de.cau.cs.kieler.core.model.gmf.figures.layout.container.LayoutSizes;
  * @author haf
  * @author msp
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class AbstractTableLayout extends AbstractHintLayout {
 

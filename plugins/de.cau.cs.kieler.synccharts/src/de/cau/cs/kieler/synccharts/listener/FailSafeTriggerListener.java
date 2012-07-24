@@ -33,6 +33,7 @@ import org.eclipse.ui.statushandlers.StatusManager;
  * executed correctly and will not be disturbed by this TriggerListener.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public abstract class FailSafeTriggerListener extends TriggerListener {
 

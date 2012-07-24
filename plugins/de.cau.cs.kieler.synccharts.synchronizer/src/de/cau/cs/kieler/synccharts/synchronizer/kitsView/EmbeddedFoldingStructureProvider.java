@@ -32,7 +32,8 @@ import com.google.inject.Inject;
  * Default implementation of interface {@link IFoldingStructureProvider}
  * 
  * @author Michael Clay - Initial contribution and API
- * @author Mikael Barbero - Dependant of Embedded XtextEditor 
+ * @author Mikael Barbero - Dependant of Embedded XtextEditor
+ * @kieler.ignore (excluded from review process)
  */
 public class EmbeddedFoldingStructureProvider implements IXtextModelListener {
 	@Inject

@@ -25,6 +25,7 @@ import de.cau.cs.kieler.core.WrappedException;
  * A Runnable encapsulating the activities for synchronizing a textual view.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class InvokeXtextEditorSynchronizationRunnable implements Runnable {
 

@@ -34,6 +34,7 @@ import de.cau.cs.kieler.synccharts.Region;
  * parses all action labels again and then serializes all again.
  * 
  * @author haf
+ * @kieler.ignore (excluded from review process)
  */
 public class ActionLabelParseHandler extends AbstractHandler {
 

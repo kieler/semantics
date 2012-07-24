@@ -4,7 +4,9 @@ import org.eclipse.core.runtime.Plugin;
 import org.osgi.framework.BundleContext;
 
 /**
- * The activator class controls the plug-in life cycle
+ * The activator class controls the plug-in life cycle.
+ * 
+ * @kieler.ignore (excluded from review process)
  */
 public class SyncchartsSynchronizerPlugin extends Plugin {
 

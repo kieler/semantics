@@ -27,6 +27,7 @@ import org.eclipse.gmf.runtime.draw2d.ui.figures.WrappingLabel;
  * such as the background figures needed for signal and action labels.
  * 
  * @author schm
+ * @kieler.ignore (excluded from review process)
  */
 public class InvisibleLabelFigure extends Shape {
 

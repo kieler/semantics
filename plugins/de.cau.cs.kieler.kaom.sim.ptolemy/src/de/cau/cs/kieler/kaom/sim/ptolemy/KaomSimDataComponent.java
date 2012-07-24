@@ -66,6 +66,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyTypeModel;
  * step method of the PtolemyExecutor.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  */
 @SuppressWarnings("restriction")
 public class KaomSimDataComponent extends JSONObjectDataComponent {

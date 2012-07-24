@@ -21,6 +21,7 @@ import com.google.inject.Provider;
 
 /**
  * @author Sebastian Zarnekow - Initial contribution and API
+ * @kieler.ignore (excluded from review process)
  */
 public class HighlightingHelper implements IPropertyChangeListener {
 

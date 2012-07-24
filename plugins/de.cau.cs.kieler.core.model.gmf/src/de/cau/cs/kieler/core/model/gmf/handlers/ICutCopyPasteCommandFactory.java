@@ -24,6 +24,7 @@ import org.eclipse.gmf.runtime.diagram.ui.parts.IDiagramWorkbenchPart;
  * given selections inside a diagram.
  * 
  * @author soh
+ * @kieler.ignore (excluded from review process)
  */
 public interface ICutCopyPasteCommandFactory {
 

@@ -32,6 +32,7 @@ import de.cau.cs.kieler.synccharts.text.ui.KitsUIPlugin;
  * The view serves as a SelectionListener to retrieve the graphical editors' models.
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class KitsView extends ViewPart {
 

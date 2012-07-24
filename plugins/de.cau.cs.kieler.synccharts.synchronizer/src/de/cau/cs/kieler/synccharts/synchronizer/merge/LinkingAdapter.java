@@ -26,6 +26,7 @@ import de.cau.cs.kieler.synccharts.SyncchartsPackage;
 /**
  * 
  * @author chsch
+ * @kieler.ignore (excluded from review process)
  */
 public class LinkingAdapter implements Adapter {
 

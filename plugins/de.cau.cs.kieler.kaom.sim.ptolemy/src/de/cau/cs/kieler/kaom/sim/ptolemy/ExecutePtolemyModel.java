@@ -48,6 +48,7 @@ import de.cau.cs.kieler.sim.signals.JSONSignalValues;
  * loading and executing (generated) Ptolemy models.
  * 
  * @author cmot
+ * @kieler.ignore (excluded from review process)
  */
 public class ExecutePtolemyModel {
 

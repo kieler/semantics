@@ -17,6 +17,7 @@ package de.cau.cs.kieler.core.model.gmf.figures.layout.container;
  * An instance of this class acts as a container for the layout information.
  * 
  * @author abl
+ * @kieler.ignore (excluded from review process)
  */
 public class ExtendedTable {
     

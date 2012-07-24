@@ -11,6 +11,9 @@ import de.cau.cs.kieler.core.kexpressions.ValuedObjectReference;
 import de.cau.cs.kieler.synccharts.Assignment;
 import de.cau.cs.kieler.synccharts.Emission;
 
+/**
+ * @kieler.ignore (excluded from review process)
+ */
 public class MyUpdateReferenceMerger extends DefaultMerger {
 
 	public boolean canApplyInOrigin() {
