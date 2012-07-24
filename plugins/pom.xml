@@ -88,6 +88,7 @@
     <module>de.cau.cs.kieler.kiml.graphviz.layouter</module>
     <module>de.cau.cs.kieler.kiml.kivi</module>
     <module>de.cau.cs.kieler.kiml.ogdf</module>
+    <module>de.cau.cs.kieler.kiml.smart</module>
     <module>de.cau.cs.kieler.kiml.service</module>
     <module>de.cau.cs.kieler.kiml.ui</module>
     <module>de.cau.cs.kieler.kiml.zest</module>
