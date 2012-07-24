@@ -108,7 +108,7 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 		}
 		else if (dependency instanceof ControlflowDependency) {
 			color.setBlue(230);
-			color2.setRed(255);
+			color2.setBlue(230);
 			if ((dependency as ControlflowDependency).immediate) {
 					color.setBlue(255);
 					color.setGreen(150);
@@ -120,8 +120,8 @@ class DependencyDiagramSynthesis extends AbstractTransformation<Dependencies, KN
 			color.setGreen(255);
 			color2.setGreen(255);
 		}
-		kEdge.KRendering.add(color2);
-		(kEdge.KRendering as KPolyline).addConnectionArrow(1, color, true);
+		kEdge.KRendering.add(color);
+		(kEdge.KRendering as KPolyline).addConnectionArrow(1, color2, true);
 		
 //		val ellipse = factory.createKEllipse;
 //		val dpd = factory.createKDecoratorPlacementData;
