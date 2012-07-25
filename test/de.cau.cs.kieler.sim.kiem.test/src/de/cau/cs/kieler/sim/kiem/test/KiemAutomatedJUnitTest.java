@@ -117,8 +117,11 @@ public abstract class KiemAutomatedJUnitTest {
     /** The Constant DEFAULT_ESO_FILE_EXTENSITION. */
     static final String DEFAULT_ESO_FILE_EXTENSITION = "eso";
 
-    /** The Apache lag4j logger. */
+    /** The Apache log4j logger. */
     private static Logger logger = Logger.getLogger(KiemAutomatedJUnitTest.class);
+
+    /** If in strict mode, require an ESO file for all model files and raise an error otehrwise. */
+    public static final boolean STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES = false;
 
     // -------------------------------------------------------------------------
     // ESO file an KART configuration
@@ -256,7 +259,7 @@ public abstract class KiemAutomatedJUnitTest {
 
         // New logger for the specific class instance
         logger = Logger.getLogger(this.getClass());
-        // Establish logging level 
+        // Establish logging level
         logger.setAdditivity(true);
         if (KiemPlugin.DEBUG) {
             logger.setLevel(Level.ALL);
@@ -406,14 +409,14 @@ public abstract class KiemAutomatedJUnitTest {
         IPath modelFilePath = modelFile.get(esoFilePath);
 
         // Try to open it
-//        if (!KiemUtil.isHeadlessRun()) {
-//            openModelFile(modelFilePath);
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                // ignore
-//            }
-//        }
+        // if (!KiemUtil.isHeadlessRun()) {
+        // openModelFile(modelFilePath);
+        // try {
+        // Thread.sleep(1000);
+        // } catch (InterruptedException e) {
+        // // ignore
+        // }
+        // }
 
         // Set modelFile in execution manager
         // modelFilePath = getWorkspaceFile(modelFilePath).getProjectRelativePath();
@@ -463,19 +466,6 @@ public abstract class KiemAutomatedJUnitTest {
                         JSONObject jSONData = execution.getDataPool().getData(null, poolCounter);
                         logger.debug(jSONData.toString());
                         if (jSONData != null) {
-
-                            // // Evaluate KIEM's getLastError()
-                            // if (KiemPlugin.getLastError() != null &&
-                            // !KiemPlugin.getLastError().equalsIgnoreCase("")) {
-                            // errorFlag = true;
-                            // errorInformation = "Error (" + (String) KiemPlugin.getLastError()
-                            // + ") in tick " + tick + " of trace " + traceNumber
-                            // + " of ESO file '" + esoFilePath.toString()
-                            // + "' during execution '"
-                            // + this.getExecutionFileName() + "'.";
-                            // break;
-                            //
-                            // }
 
                             // Evaluate KART-Diff
                             if (jSONData.has(KartConstants.CONFIGVAR)) {
@@ -653,16 +643,17 @@ public abstract class KiemAutomatedJUnitTest {
                     esoFiles.add(esoFilePath);
                     modelFile.put(esoFilePath, modelFilePath);
                 }
-                // Consider this only a test case if matching ESO files are found.
-                // Otherwise this model file is ignored
-                //
-                // if (!foundEsoFile) {
-                // throw new RuntimeException(
-                // "ESO file:'"
-                // + esoFilePath.toString()
-                // +
-                // "' can not be found but its corresponding model file was specified to be tested.");
-                // }
+
+                // In the NON-strict mode consider this only a test case if matching ESO files are
+                // found. Otherwise this model file is ignored
+                // In the strict mode, the above will raise an error.
+                if (STRICT_MODE_REQUIRE_ESO_FOR_ALL_MODEL_FILES) {
+                    if (!foundEsoFile) {
+                        throw new RuntimeException("ESO file:'" + esoFilePath.toString()
+                                + "' can not be found but its corresponding model file "
+                                + "was specified to be tested.");
+                    }
+                }
             }
 
         }
