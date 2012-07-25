@@ -45,6 +45,7 @@ import de.cau.cs.kieler.sim.signals.ui.SignalsUIPlugin;
  * The SignalView constructs the actual Eclipse View of the synchronous signal UI.
  * 
  * @author cmot
+ * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalsView extends ViewPart {
 

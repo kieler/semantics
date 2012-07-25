@@ -20,8 +20,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 /**
  * This implements a sample KiemPropertyType for an integer type.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemPropertyTypeInt extends KiemPropertyType implements IKiemPropertyType {

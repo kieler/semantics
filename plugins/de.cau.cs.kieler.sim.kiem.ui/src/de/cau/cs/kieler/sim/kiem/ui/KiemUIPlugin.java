@@ -20,7 +20,8 @@ import org.osgi.framework.BundleContext;
 /**
  * The activator class controls the plug-in life cycle.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.design 2009-12-08
  * @kieler.rating 2010-01-15 proposed yellow
  * 
  */

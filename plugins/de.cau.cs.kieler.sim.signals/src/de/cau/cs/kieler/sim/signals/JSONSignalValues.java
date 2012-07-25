@@ -37,7 +37,8 @@ import org.json.JSONObject;
  * b:{present:absent}<BR>
  * 
  * @author cmot
- * @kieler.rating 2009-01-15 proposed yellow
+ * @kieler.design 2009-01-15
+ * @kieler.rating 2012-07-25 yellow KI-21
  * 
  */
 public final class JSONSignalValues {

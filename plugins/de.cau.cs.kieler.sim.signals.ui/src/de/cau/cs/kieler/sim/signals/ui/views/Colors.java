@@ -34,6 +34,7 @@ import org.eclipse.swt.graphics.RGB;
  * <BR>
  * 
  * @author cmot
+ * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class Colors {
 

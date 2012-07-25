@@ -69,8 +69,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * execution thread it allows to access the KiemView for updating or refreshing the table or the
  * step information text field.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot, soh
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemPlugin extends AbstractUIPlugin {

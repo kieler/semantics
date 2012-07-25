@@ -21,9 +21,9 @@ import org.json.JSONObject;
  * The Class JSONMerger implements the merging functionality of used by the DataPool. It is able to
  * merge two JSONObjects (that are lists of key-value-pairs) into one object.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @author Stephan Knaur <skn@informatik.uni-kiel.de>
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot, skn
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class JSONMerger {

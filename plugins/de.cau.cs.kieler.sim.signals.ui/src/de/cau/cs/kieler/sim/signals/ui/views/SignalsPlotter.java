@@ -50,6 +50,7 @@ import de.cau.cs.kieler.sim.signals.SignalList;
  * org.eclipse.jface.viewers.ContentViewer and working with a content provider.
  * 
  * @author cmot
+ * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalsPlotter {
 

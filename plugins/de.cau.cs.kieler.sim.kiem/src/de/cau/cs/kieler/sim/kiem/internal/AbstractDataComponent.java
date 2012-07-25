@@ -33,8 +33,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * The DataComponent class implements the basic behavior of a data observer and/or data producer
  * component. Implemented components may want to override some of the here provided methods.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public abstract class AbstractDataComponent implements IDataComponent, IExecutableExtension {

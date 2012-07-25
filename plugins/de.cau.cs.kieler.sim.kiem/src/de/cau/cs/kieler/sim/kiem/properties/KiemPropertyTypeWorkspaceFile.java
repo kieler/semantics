@@ -32,8 +32,9 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * The Class KiemPropertyTypeWorkspaceFile. This implements a sample KiemPropertyType that uses a
  * customized Eclipse dialog to browse for a workspace file.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 @SuppressWarnings("restriction")

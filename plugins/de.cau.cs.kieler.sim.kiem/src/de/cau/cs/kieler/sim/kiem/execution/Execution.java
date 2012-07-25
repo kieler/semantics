@@ -40,8 +40,9 @@ import org.json.JSONObject;
  * component-method exceeds the maximum timeout and then terminates all executions w/ an error log
  * message.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class Execution extends Job {

@@ -22,8 +22,9 @@ import org.eclipse.swt.widgets.Table;
  * The Class KiemTableViewer. This is just a TreeViewer, where it is possible to add extensions or
  * modifications in the future within this class declaration.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemTableViewer extends TreeViewer {

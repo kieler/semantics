@@ -24,8 +24,8 @@ import de.cau.cs.kieler.sim.kiem.ui.views.KiemView;
 /**
  * The Event Listener for the KIELER Execution Manager.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2010-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
  * 
  */
 public class KiemEventListener implements IKiemEventListener {

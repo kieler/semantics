@@ -34,8 +34,9 @@ import org.json.JSONObject;
  * until the data is computed. <BR>
  * Note that this could also trigger a time out in the execution thread.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class ProducerExecution implements Runnable {

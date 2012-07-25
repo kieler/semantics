@@ -19,8 +19,9 @@ package de.cau.cs.kieler.sim.kiem.properties;
  * DataComponents if the properties are not correctly set. This is checked prior
  * to initialization of the DataComponents and will prevent any execution.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemPropertyException extends Exception {

@@ -28,8 +28,8 @@ import de.cau.cs.kieler.sim.kiem.KiemEvent;
  * The event manager holds several listener-lists for each available event.
  * These listeners can be easily notified with optionally attached information.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
  * 
  */
 public class EventManager {

@@ -24,8 +24,9 @@ import org.json.JSONObject;
  * execution manager with delta data information for it's delta observer DataComponents. This also
  * is necessary for the history steps.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class JSONDataPool {

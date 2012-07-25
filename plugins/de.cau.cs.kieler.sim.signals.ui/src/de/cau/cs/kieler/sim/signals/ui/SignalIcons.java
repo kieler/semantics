@@ -23,6 +23,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * types.
  * 
  * @author cmot
+ * @kieler.rating proposed 2012-08-08 yellow KI-22
  * 
  */
 public final class SignalIcons {

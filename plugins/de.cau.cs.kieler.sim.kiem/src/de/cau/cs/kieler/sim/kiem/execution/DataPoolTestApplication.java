@@ -20,7 +20,8 @@ import org.json.JSONObject;
  * The Class DataPoolTestApplication. It only exists for experimental use debug and testing of the
  * {@link JSONDataPool}.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.ignore This is just a test application and is not intended for production usage.
  * 
  */
 public final class DataPoolTestApplication {

@@ -31,8 +31,7 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemPropertyException;
  * This implements the concurrent initialization that can be aborted from outside e.g. by user
  * cancellation.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
  * 
  */
 public class InitializeExecution implements Runnable {

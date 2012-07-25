@@ -19,6 +19,7 @@ import java.util.LinkedList;
  * The SignalASCIITimeLinePlotter plots ASCII art signals to a text file.
  * 
  * @author cmot
+ * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class SignalASCIITimeLinePlotter extends SignalASCIIPlotter {
 

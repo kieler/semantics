@@ -22,8 +22,9 @@ import de.cau.cs.kieler.sim.kiem.internal.AbstractDataComponent;
  * The Class JSONObjectDataComponent. Implementation for the extension point JSONObjectDataComponent
  * that implements the interface {@link IJSONObjectDataComponent}.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public abstract class JSONObjectDataComponent extends AbstractDataComponent implements
