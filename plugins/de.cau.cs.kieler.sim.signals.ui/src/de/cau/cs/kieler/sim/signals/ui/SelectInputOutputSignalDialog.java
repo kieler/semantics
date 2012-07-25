@@ -41,9 +41,8 @@ import de.cau.cs.kieler.sim.signals.Signal;
 /**
  * The Class SelectInputOutputSignalDialog.
  * 
- * @kieler.rating proposed 2012-08-08 yellow KI-22\
- * 
  * @author cmot
+ * @kieler.rating proposed 2012-08-08 yellow KI-22
  * 
  */
 public class SelectInputOutputSignalDialog extends Dialog {
@@ -92,10 +91,8 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.window.Window#configureShell(org.eclipse.swt.widgets.Shell)
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected void configureShell(final Shell newShell) {
@@ -106,10 +103,8 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.dialogs.Dialog#createDialogArea(org.eclipse.swt.widgets.Composite)
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected Control createDialogArea(final Composite parent) {
@@ -193,10 +188,8 @@ public class SelectInputOutputSignalDialog extends Dialog {
 
     // -------------------------------------------------------------------------
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.eclipse.jface.dialogs.Dialog#getInitialSize()
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected Point getInitialSize() {
@@ -246,6 +239,14 @@ public class SelectInputOutputSignalDialog extends Dialog {
         item.setData(signal);
     }
 
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Test if the signals is already contained in the table.
+     *
+     * @param signal the signal
+     * @return true, if successful
+     */
     private boolean tableContains(final Signal signal) {
         TableItem[] allItems = table.getItems();
         for (int c = 0; c < allItems.length; c++) {
@@ -258,6 +259,8 @@ public class SelectInputOutputSignalDialog extends Dialog {
         return false;
     }
 
+    // -------------------------------------------------------------------------
+
     /**
      * Update table.
      */
@@ -266,12 +269,12 @@ public class SelectInputOutputSignalDialog extends Dialog {
             if (!tableContains(signal)) {
                 this.addToTable(signal, true);
             }
-        } // next signal
+        } 
         for (Signal signal : outputSignalList) {
             if (!tableContains(signal)) {
                 this.addToTable(signal, false);
             }
-        } // next signal
+        } 
     }
 
     // -------------------------------------------------------------------------

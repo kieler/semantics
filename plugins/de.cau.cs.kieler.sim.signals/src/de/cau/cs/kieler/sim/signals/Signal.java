@@ -19,9 +19,8 @@ import java.util.LinkedList;
 /**
  * The class Signal represents a synchronous pure signal and its history of present stati.
  * 
- * @kieler.rating 2012-07-25 yellow KI-21
- * 
  * @author cmot
+ * @kieler.rating 2012-07-25 yellow KI-21
  */
 public class Signal implements Cloneable {
 

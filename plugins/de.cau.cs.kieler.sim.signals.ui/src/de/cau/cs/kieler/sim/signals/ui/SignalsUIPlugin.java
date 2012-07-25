@@ -21,9 +21,8 @@ import org.osgi.framework.BundleContext;
 /**
  * The class SignalsUIPlugin is the activator of this plug-in.
  * 
- * @kieler.rating proposed 2012-08-08 yellow KI-22
- * 
  * @author cmot
+ * @kieler.rating proposed 2012-08-08 yellow KI-22
  */
 public class SignalsUIPlugin extends AbstractUIPlugin {
 
