@@ -33,6 +33,8 @@ import org.eclipse.swt.graphics.RGB;
  * colors.setSignalColor("S2", myColor );<BR>
  * <BR>
  * 
+ * @kieler.rating 2012-07-25 yellow KI-21
+ * 
  * @author cmot
  */
 public class Colors {

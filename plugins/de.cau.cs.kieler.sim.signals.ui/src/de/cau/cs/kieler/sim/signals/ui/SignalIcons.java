@@ -22,6 +22,8 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
  * {@link de.cau.cs.kieler.sim.kiem.properties.KiemPropertyType}s and are declared directly by those
  * types.
  * 
+ * @kieler.rating proposed 2012-08-08 yellow KI-22
+ * 
  * @author cmot
  * 
  */

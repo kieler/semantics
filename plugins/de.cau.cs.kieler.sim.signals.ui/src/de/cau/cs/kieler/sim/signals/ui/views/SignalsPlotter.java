@@ -49,6 +49,8 @@ import de.cau.cs.kieler.sim.signals.SignalList;
  * TODO: For a possible re-implementation, consider extending
  * org.eclipse.jface.viewers.ContentViewer and working with a content provider.
  * 
+ * @kieler.rating 2012-07-25 yellow KI-21
+ * 
  * @author cmot
  */
 public class SignalsPlotter {

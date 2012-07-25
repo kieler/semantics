@@ -20,6 +20,8 @@ import java.util.LinkedList;
 /**
  * The Class SignalList implements a list of synchronous pure signals.
  * 
+ * @kieler.rating 2012-07-25 yellow KI-21
+ * 
  * @author cmot
  */
 public class SignalList extends LinkedList<Signal> {

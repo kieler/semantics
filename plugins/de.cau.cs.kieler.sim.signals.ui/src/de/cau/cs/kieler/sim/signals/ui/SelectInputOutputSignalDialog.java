@@ -41,6 +41,8 @@ import de.cau.cs.kieler.sim.signals.Signal;
 /**
  * The Class SelectInputOutputSignalDialog.
  * 
+ * @kieler.rating proposed 2012-08-08 yellow KI-22\
+ * 
  * @author cmot
  * 
  */
