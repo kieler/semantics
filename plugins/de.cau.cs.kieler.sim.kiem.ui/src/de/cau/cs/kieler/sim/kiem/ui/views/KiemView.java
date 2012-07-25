@@ -78,8 +78,9 @@ import de.cau.cs.kieler.sim.kiem.config.managers.ContributionManager;
  * The Class KiemView is only instantiated once when the view part is registered in the Eclipse IDE.
  * It holds the DataComponent table list view and buttons to control the execution.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de, soh
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot, soh
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemView extends ViewPart implements ISaveablePart2 {

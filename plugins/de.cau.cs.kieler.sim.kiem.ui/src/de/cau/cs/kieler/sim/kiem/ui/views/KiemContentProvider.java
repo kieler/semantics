@@ -28,8 +28,9 @@ import de.cau.cs.kieler.sim.kiem.properties.KiemProperty;
  * DataComponentWrappers. It decides based on the type (DataComponentWrapper or KiemProperty) what
  * content has to be provided.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 proposed yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemContentProvider implements ITreeContentProvider {
