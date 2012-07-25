@@ -40,7 +40,7 @@ openFile</programArgsMac>
 -Xdock:icon=../Resources/kiel.icns</vmArgsMac>
    </launcherArgs>
 
-   <windowImages i16="/de.cau.cs.kieler.core.product/icons/kiel_16.gif" i32="/de.cau.cs.kieler.core.product/icons/kiel_32.gif" i48="/de.cau.cs.kieler.core.product/icons/kiel_48.gif" i64="/de.cau.cs.kieler.core.product/icons/kiel_64.gif" i128="/de.cau.cs.kieler.core.product/icons/kiel_128.gif"/>
+   <windowImages i16="/de.cau.cs.kieler.core.product/icons/kieler_16.gif" i32="/de.cau.cs.kieler.core.product/icons/kieler_32.gif" i48="/de.cau.cs.kieler.core.product/icons/kieler_48.gif" i64="/de.cau.cs.kieler.core.product/icons/kieler_64.gif" i128="/de.cau.cs.kieler.core.product/icons/kieler_128.gif"/>
 
    <splash
       location="de.cau.cs.kieler.core.product"
@@ -48,11 +48,11 @@ openFile</programArgsMac>
       startupMessageRect="7,252,445,20"
       startupForegroundColor="000000" />
    <launcher name="kieler">
-      <linux icon="/icons/kiel_64.xpm"/>
-      <macosx icon="/icons/kiel.icns"/>
+      <linux icon="/de.cau.cs.kieler.core.product/icons/kieler_64.xpm"/>
+      <macosx icon="/de.cau.cs.kieler.core.product/icons/kieler.icns"/>
       <solaris/>
       <win useIco="true">
-         <ico path="/icons/kiel.ico"/>
+         <ico path="/de.cau.cs.kieler.core.product/icons/kieler.ico"/>
          <bmp/>
       </win>
    </launcher>
@@ -172,8 +172,10 @@ This Agreement is governed by the laws of the State of New York and the intellec
    </features>
 
    <configurations>
-      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="4" />
       <property name="osgi.instance.area.default" value="@user.home/kieler-workspace" />
+      <plugin id="org.eclipse.core.runtime" autoStart="true" startLevel="2" />
+      <plugin id="org.eclipse.equinox.ds" autoStart="true" startLevel="3" />
+      <plugin id="org.eclipse.equinox.event" autoStart="true" startLevel="3" />
    </configurations>
 
 </product>
