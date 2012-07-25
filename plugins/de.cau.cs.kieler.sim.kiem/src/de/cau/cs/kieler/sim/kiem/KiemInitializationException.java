@@ -22,8 +22,9 @@ package de.cau.cs.kieler.sim.kiem;
  * <B>CANNOT</B> been started and the execution manager will not do so if any
  * DataComponent throws an error with this flag.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  */
 public class KiemInitializationException extends Exception {
 

@@ -23,8 +23,9 @@ package de.cau.cs.kieler.sim.kiem;
  * the execution manager and the eclipse instance is not affected as long as the left memory is
  * still enough.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  */
 public class KiemExecutionException extends Exception {
 

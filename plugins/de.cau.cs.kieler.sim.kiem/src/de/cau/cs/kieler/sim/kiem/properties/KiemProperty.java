@@ -21,8 +21,9 @@ import java.io.Serializable;
  * a key value pair of types String and also a KiemPropertyType. The contents of the KiemProperty
  * can be saved and loaded but the KiemPropertyType is recovered by its identifier.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemProperty implements Serializable {

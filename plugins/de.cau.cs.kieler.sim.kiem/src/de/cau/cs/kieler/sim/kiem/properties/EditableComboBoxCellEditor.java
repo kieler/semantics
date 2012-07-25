@@ -23,7 +23,8 @@ import org.eclipse.swt.widgets.Composite;
  * An editable version of a combo box cell editor.
  * 
  * @author cmot
- */
+ * @kieler.design 2009-12-08
+*/
 public class EditableComboBoxCellEditor extends ComboBoxCellEditor {
 
     /**

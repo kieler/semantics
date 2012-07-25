@@ -42,7 +42,8 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 /**
  * En editable DialogCell editor.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
+ * @author cmot
+ * @kieler.design 2009-12-08
  * @kieler.rating 2009-01-15 yellow
  * 
  */

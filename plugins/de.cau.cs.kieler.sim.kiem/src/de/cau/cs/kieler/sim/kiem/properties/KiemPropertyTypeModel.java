@@ -27,8 +27,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * The Class KiemPropertyTypeEditor. This implements a sample KiemPropertyType that uses a displays
  * a list of all open editors to choose from.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemPropertyTypeModel extends KiemPropertyType implements IKiemPropertyType {

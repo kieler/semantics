@@ -39,8 +39,9 @@ import de.cau.cs.kieler.sim.kiem.KiemPlugin;
  * this file extension and calls the openFile() method of the KiemPlugin. The latter then handles
  * the opening of the file. The editor is not needed anymore and closes itself immediately.
  * 
- * @author Christian Motika - cmot AT informatik.uni-kiel.de
- * @kieler.rating 2009-01-15 yellow
+ * @author cmot
+ * @kieler.design 2009-12-08
+ * @kieler.rating 2010-01-15 yellow
  */
 public class KiemProxyEditor extends MultiPageEditorPart {
 
