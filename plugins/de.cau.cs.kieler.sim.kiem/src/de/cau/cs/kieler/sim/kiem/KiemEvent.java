@@ -28,7 +28,6 @@ import java.util.List;
  * 
  * @author cmot
  * @kieler.design 2009-12-08
- * @kieler.rating 2010-01-15 yellow
  * 
  */
 public class KiemEvent {
