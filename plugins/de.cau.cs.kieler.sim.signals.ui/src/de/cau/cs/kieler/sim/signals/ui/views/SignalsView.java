@@ -14,8 +14,12 @@
 
 package de.cau.cs.kieler.sim.signals.ui.views;
 
+import java.io.IOException;
 import java.util.List;
 
+import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -27,6 +31,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.dialogs.SaveAsDialog;
 import org.eclipse.ui.part.ViewPart;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 import de.cau.cs.kieler.sim.kiem.KiemPlugin;
 import de.cau.cs.kieler.sim.signals.Signal;
@@ -54,7 +59,7 @@ public class SignalsView extends ViewPart {
 
     /** ZOOM_LEVEL_DIFF defines how much the zoom level is changed when clicking on + or -. */
     private static final int ZOOM_LEVEL_DIFF = 10;
-    
+
     /** The zoom level. */
     private static final int DEFAULT_ZOOM_LEVEL = 100;
     private int zoomLevel = DEFAULT_ZOOM_LEVEL;
@@ -75,7 +80,7 @@ public class SignalsView extends ViewPart {
     private SignalsPlotter signalsPlotter;
 
     /** The signals view instance. */
-    private static SignalsView signalsViewInstance = null;
+    private static SignalsView signalsViewInstance;
 
     /** The maximal number of ticks. */
     private static final long MAXIMALTICKS = 250;
@@ -125,6 +130,16 @@ public class SignalsView extends ViewPart {
 
         // add clear button
         contributeToActionBars();
+    }
+
+    // -------------------------------------------------------------------------
+    
+    /**
+     * {@inheritDoc}
+     */
+    public void dispose() {
+        super.dispose();
+        signalsPlotter.dispose();
     }
 
     // -------------------------------------------------------------------------
@@ -291,13 +306,21 @@ public class SignalsView extends ViewPart {
                     dlg.setBlockOnOpen(true);
                     dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName() + ".txt");
                     if (dlg.open() == SaveAsDialog.OK) {
-                        if (defaultMode) {
-                            new SignalASCIIChartPlotter().plotToTextFile(dlg.getResult(),
-                                    signalList);
-                        } else {
-                            new SignalASCIITimeLinePlotter().plotToTextFile(dlg.getResult(),
-                                    signalList);
+                        try {
+                            if (defaultMode) {
+                                new SignalASCIIChartPlotter().plotToTextFile(dlg.getResult(),
+                                        signalList);
+                            } else {
+                                new SignalASCIITimeLinePlotter().plotToTextFile(dlg.getResult(),
+                                        signalList);
 
+                            }
+                        } catch (IOException e) {
+                            IStatus status = new Status(IStatus.ERROR, SignalsUIPlugin.PLUGIN_ID,
+                                    "Cannot write to output file.", e);
+                            StatusManager.getManager().handle(status);
+                        } catch (CoreException e) {
+                            StatusManager.getManager().handle(e, SignalsUIPlugin.PLUGIN_ID);
                         }
                     }
                 }
@@ -338,8 +361,17 @@ public class SignalsView extends ViewPart {
                             dlg.setOriginalName(KiemPlugin.getDefault().getActiveProjectName()
                                     + ".eso");
                             if (dlg.open() == SaveAsDialog.OK) {
-                                new SignalASCIIChartPlotter().plotToEsoFile(dlg.getResult(),
-                                        signalList, inputSignalList, outputSignalList);
+                                try {
+                                    new SignalASCIIChartPlotter().plotToEsoFile(dlg.getResult(),
+                                            signalList, inputSignalList, outputSignalList);
+                                } catch (IOException e) {
+                                    IStatus status = new Status(IStatus.ERROR,
+                                            SignalsUIPlugin.PLUGIN_ID,
+                                            "Cannot write to output file.", e);
+                                    StatusManager.getManager().handle(status);
+                                } catch (CoreException e) {
+                                    StatusManager.getManager().handle(e, SignalsUIPlugin.PLUGIN_ID);
+                                }
                             }
                         }
                     }

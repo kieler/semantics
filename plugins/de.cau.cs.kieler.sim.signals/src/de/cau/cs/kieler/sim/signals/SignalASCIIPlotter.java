@@ -34,29 +34,32 @@ import org.eclipse.core.runtime.IPath;
  * 
  * @author cmot
  */
-public abstract class SignalASCIIPlotter {
+public class SignalASCIIPlotter {
 
     // -------------------------------------------------------------------------
 
     /**
-     * Creates the spaced label.
+     * Creates the spaced label with a blank fill character. The text is surrounded by the fill
+     * character, filled up to the defined length and aligned left, centered or right.
      * 
      * @param text
      *            the text
      * @param length
      *            the length
      * @param align
-     *            the align
-     * @return the string
+     *            the style, 0 centered, -1 left, 1 right
+     * @return the resulting label
      */
-    protected String createSpacedLabel(final String text, final int length, final int align) {
+    protected StringBuffer createSpacedLabel(final StringBuffer text, final int length,
+            final int align) {
         return createSpacedLabel(text, length, align, ' ');
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Creates the spaced label.
+     * Creates the spaced label. The text is surrounded by the fill character, filled up to the
+     * defined length and aligned left, centered or right.
      * 
      * @param text
      *            the text
@@ -66,43 +69,44 @@ public abstract class SignalASCIIPlotter {
      *            the style, 0 centered, -1 left, 1 right
      * @param fillChar
      *            the fill char
-     * @return the string
+     * @return the resulting label
      */
-    protected String createSpacedLabel(final String text, final int length, final int align,
-            final char fillChar) {
+    protected StringBuffer createSpacedLabel(final StringBuffer text, final int length,
+            final int align, final char fillChar) {
 
-        String spaceL = "";
-        String spaceR = "";
+        StringBuffer spaceL = new StringBuffer();
+        StringBuffer spaceR = new StringBuffer();
         if (align == -1) {
             // left
             spaceR = getSpaceCharacters(length - text.length(), fillChar);
         } else if (align == 1) {
-            // left
+            // right
             spaceL = getSpaceCharacters(length - text.length(), fillChar);
         } else {
+            // centered
             spaceR = getSpaceCharacters((length - text.length()) / 2, fillChar);
             spaceL = getSpaceCharacters(length - text.length() - spaceR.length(), fillChar);
         }
-        return (spaceL + text + spaceR);
+        return (spaceL.append(text.append(spaceR)));
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the space characters.
+     * Gets num space characters as a StringBuffer with a blank fill character by default.
      * 
      * @param num
      *            the num
      * @return the space characters
      */
-    protected String getSpaceCharacters(final int num) {
+    protected StringBuffer getSpaceCharacters(final int num) {
         return getSpaceCharacters(num, ' ');
     }
 
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the space characters.
+     * Gets num space characters as a StringBuffer with a defined fill character.
      * 
      * @param num
      *            the num
@@ -110,10 +114,10 @@ public abstract class SignalASCIIPlotter {
      *            the fill char
      * @return the space characters
      */
-    protected String getSpaceCharacters(final int num, final char fillChar) {
-        String returnText = "";
+    protected StringBuffer getSpaceCharacters(final int num, final char fillChar) {
+        StringBuffer returnText = new StringBuffer();
         while (returnText.length() < num) {
-            returnText = fillChar + returnText;
+            returnText = returnText.insert(0, fillChar);
         }
         return returnText;
     }
@@ -121,7 +125,8 @@ public abstract class SignalASCIIPlotter {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the tick labels.
+     * Generate tick label for a given tick. Maximal and minimal ticks must be given in order to
+     * calculate the maximal digits used for representation.
      * 
      * @param minTick
      *            the min tick
@@ -129,7 +134,7 @@ public abstract class SignalASCIIPlotter {
      *            the max tick
      * @param maxSignalNameLength
      *            the max signal name length
-     * @return the tick labels
+     * @return the resulting tick label
      */
     protected String[] getTickLabels(final long minTick, final long maxTick,
             final int maxSignalNameLength) {
@@ -141,10 +146,12 @@ public abstract class SignalASCIIPlotter {
         }
 
         for (long tick = minTick; tick <= maxTick; tick++) {
-            String tickString = tick + "";
-            tickString = getSpaceCharacters(lines - tickString.length()) + tickString;
+            StringBuffer tickStringBuffer = new StringBuffer(tick + "");
+            tickStringBuffer = getSpaceCharacters(lines - tickStringBuffer.length()).append(
+                    tickStringBuffer);
             for (int line = 0; line < ascii.length; line++) {
-                String tickStringPart = tickString.substring(line, line + 1);
+                StringBuffer tickStringPart = new StringBuffer(tickStringBuffer.toString()
+                        .substring(line, line + 1));
                 ascii[line] += tickStringPart + " ";
             }
         }
@@ -155,26 +162,30 @@ public abstract class SignalASCIIPlotter {
     // -------------------------------------------------------------------------
 
     /**
-     * Gets the ASCI signal data.
-     *
-     * @param minTick the min tick
-     * @param maxTick the max tick
-     * @param signal the signal
-     * @param maxSignalNameLength the max signal name length
-     * @return the aSCI signal data
+     * Gets the ASCII art signal data. "_" for absent signals, "-" for present signals.
+     * 
+     * @param minTick
+     *            the min tick
+     * @param maxTick
+     *            the max tick
+     * @param signal
+     *            the signal
+     * @param maxSignalNameLength
+     *            the max signal name length
+     * @return the generated ASCII art
      */
-    protected String[] getASCISignalData(final long minTick, final long maxTick,
+    protected String[] getASCIISignalData(final long minTick, final long maxTick,
             final Signal signal, final int maxSignalNameLength) {
         String[] ascii = new String[2];
 
         // build label
-        String signalLabel = signal.getName();
-        signalLabel = getSpaceCharacters(maxSignalNameLength - signalLabel.length()) + signalLabel
-                + " ";
-        String nullLabel = getSpaceCharacters(signalLabel.length());
+        StringBuffer signalLabel = new StringBuffer(signal.getName());
+        signalLabel = getSpaceCharacters(maxSignalNameLength - signalLabel.length()).append(
+                signalLabel).append(" ");
+        StringBuffer nullLabel = getSpaceCharacters(signalLabel.length());
 
-        ascii[0] = nullLabel;
-        ascii[1] = signalLabel;
+        ascii[0] = nullLabel.toString();
+        ascii[1] = signalLabel.toString();
 
         // build data
         boolean presentBefore = false;
@@ -212,8 +223,9 @@ public abstract class SignalASCIIPlotter {
 
     /**
      * Gets the max signal name length.
-     *
-     * @param signalList the signal list
+     * 
+     * @param signalList
+     *            the signal list
      * @return the max signal name length
      */
     protected int getMaxSignalNameLength(final SignalList signalList) {
@@ -227,7 +239,7 @@ public abstract class SignalASCIIPlotter {
     // -------------------------------------------------------------------------
 
     /**
-     * Plot ASCII.
+     * Plot signals as ASCII art.
      * 
      * @param signalList
      *            the signal list
@@ -245,108 +257,108 @@ public abstract class SignalASCIIPlotter {
      *
      * @param path the path
      * @param signalList the signal list
+     * @throws IOException Signals that an I/O exception has occurred.
+     * @throws CoreException the core exception
      */
-    public void plotToTextFile(final IPath path, final SignalList signalList) {
+    public void plotToTextFile(final IPath path, final SignalList signalList) throws IOException,
+            CoreException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);
 
-        try {
-            if (!file.exists()) {
-                file.create(null, IResource.NONE, null);
-            }
-            String stringPath = file.getRawLocation().toString();
-            PrintWriter out = new PrintWriter(stringPath);
-
-            // ASCII plot
-            String[] ascii = plot(signalList);
-
-            // write to file
-            for (String line : ascii) {
-                out.println(line);
-            }
-
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CoreException e) {
-            e.printStackTrace();
+        if (!file.exists()) {
+            file.create(null, IResource.NONE, null);
         }
+        String stringPath = file.getRawLocation().toString();
+        PrintWriter out = new PrintWriter(stringPath);
+
+        // ASCII plot
+        String[] ascii = plot(signalList);
+
+        // write to file
+        for (String line : ascii) {
+            out.println(line);
+        }
+
+        out.close();
     }
 
     // -------------------------------------------------------------------------
 
     /**
      * Export to ESO ASCII text file appending a new execution run if the file already exists.
-     *
-     * @param path the path
-     * @param signalList the signal list
-     * @param inputSignalList the input signal list
-     * @param outputSignalList the output signal list
+     * 
+     * @param path
+     *            the path
+     * @param signalList
+     *            the signal list
+     * @param inputSignalList
+     *            the input signal list
+     * @param outputSignalList
+     *            the output signal list
+     * @throws IOException
+     *             Signals that an I/O exception has occurred.
+     * @throws CoreException
+     *             the core exception
      */
     public void plotToEsoFile(final IPath path, final SignalList signalList,
-            final List<Signal> inputSignalList, final List<Signal> outputSignalList) {
+            final List<Signal> inputSignalList, final List<Signal> outputSignalList)
+            throws IOException, CoreException {
         IWorkspace workspace = ResourcesPlugin.getWorkspace();
         IWorkspaceRoot root = workspace.getRoot();
         IFile file = root.getFile(path);
         boolean newFile = false;
         LinkedList<String> oldFileContent = new LinkedList<String>();
 
-        try {
-            if (!file.exists()) {
-                file.create(null, IResource.NONE, null);
-                newFile = true;
-            }
-
-            String stringPath = file.getRawLocation().toString();
-
-            if (!newFile) {
-                // copy old contents
-                FileInputStream fis = new FileInputStream(stringPath);
-                BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-                String line;
-                while ((line = br.readLine()) != null) {
-                    oldFileContent.add(line);
-                }
-                br.close();
-                fis.close();
-            }
-
-            PrintWriter out = new PrintWriter(stringPath);
-
-            if (!newFile) {
-                // restore old contents
-                for (String line : oldFileContent) {
-                    out.println(line);
-                }
-            }
-
-            long maxTick = signalList.getMaxTick();
-
-            out.println("! reset;");
-            for (long tick = 1; tick <= maxTick; tick++) {
-                for (Signal inputSignal : inputSignalList) {
-                    if (inputSignal.isPresent(tick)) {
-                        out.print(inputSignal.getName() + " ");
-                    }
-                }
-                out.println("");
-                out.print("% Output: ");
-                for (Signal outputSignal : outputSignalList) {
-                    if (outputSignal.isPresent(tick)) {
-                        out.print(outputSignal.getName() + " ");
-                    }
-                }
-                out.println("");
-                out.println(";");
-            }
-
-            out.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (CoreException e) {
-            e.printStackTrace();
+        if (!file.exists()) {
+            file.create(null, IResource.NONE, null);
+            newFile = true;
         }
+
+        String stringPath = file.getRawLocation().toString();
+
+        if (!newFile) {
+            // copy old contents
+            FileInputStream fis = new FileInputStream(stringPath);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+            String line;
+            while ((line = br.readLine()) != null) {
+                oldFileContent.add(line);
+            }
+            br.close();
+            fis.close();
+        }
+
+        PrintWriter out = new PrintWriter(stringPath);
+
+        if (!newFile) {
+            // restore old contents
+            for (String line : oldFileContent) {
+                out.println(line);
+            }
+        }
+
+        long maxTick = signalList.getMaxTick();
+
+        out.println("! reset;");
+        for (long tick = 1; tick <= maxTick; tick++) {
+            for (Signal inputSignal : inputSignalList) {
+                if (inputSignal.isPresent(tick)) {
+                    out.print(inputSignal.getName() + " ");
+                }
+            }
+            out.println("");
+            out.print("% Output: ");
+            for (Signal outputSignal : outputSignalList) {
+                if (outputSignal.isPresent(tick)) {
+                    out.print(outputSignal.getName() + " ");
+                }
+            }
+            out.println("");
+            out.println(";");
+        }
+
+        out.close();
     }
 
     // -------------------------------------------------------------------------

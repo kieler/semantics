@@ -44,6 +44,18 @@ public class Signal implements Cloneable {
      * 
      * @param name
      *            the name
+     */
+    public Signal(final String name) {
+        this.name = name;
+    }
+    
+    // -------------------------------------------------------------------------
+    
+    /**
+     * Instantiates a new signal.
+     * 
+     * @param name
+     *            the name
      * @param maximalTicks
      *            the maximal ticks
      */
@@ -177,6 +189,7 @@ public class Signal implements Cloneable {
             // If an older one, replace it
             this.presentList.remove((int) (tick - getTickOffset()));
             this.presentList.add((int) (tick - getTickOffset()), isPresent);
+            // FIXME: This would be more efficient with a ListIterator (msp)
         }
     }
 
@@ -190,6 +203,7 @@ public class Signal implements Cloneable {
         for (Boolean present : this.presentList) {
             returnSignal.addPresent(present);
         }
+        returnSignal.tickOffset = tickOffset;
         return returnSignal;
     }
 
@@ -236,6 +250,11 @@ public class Signal implements Cloneable {
      *            the new maximal ticks
      */
     public void setMaximalTicks(final long maximalTicks) {
+        // possibly shorten list
+        while (this.presentList.size() > maximalTicks) {
+            this.presentList.remove(0);
+            this.tickOffset++;
+        }
         this.maximalTicks = maximalTicks;
     }
 

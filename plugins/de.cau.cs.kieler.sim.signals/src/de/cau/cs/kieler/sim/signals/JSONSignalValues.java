@@ -19,12 +19,12 @@ import org.json.JSONObject;
 
 /**
  * The Class JSONSignalValues. This is an implementation of a <B>CONVENTION</B> for representing
- * signal values in JSON format. This convention is used to explicitly denote the presents/absents
+ * signal values in JSON format. This convention is used to explicitly denote the presence/absence
  * of pure and valued signals. <BR>
  * <BR>
  * Signals in JSON format should contain not just a value but a JSONSignalValue. That is they
  * contain a JSONObject as their value, where at least one parameter is called <B>present</B> and
- * this parameter is of type boolean, indicating the presents or absents of a signal. <BR>
+ * this parameter is of type boolean, indicating the presence or absence of a signal. <BR>
  * <BR>
  * Examples:<BR>
  * Valued signal a, present, with an integer value of 10:<BR>
@@ -51,7 +51,7 @@ public final class JSONSignalValues {
     // -------------------------------------------------------------------------
 
     /**
-     * Instantiates a new jSON signal values.
+     * This utility class should never be instantiated.
      */
     private JSONSignalValues() {
 
@@ -60,7 +60,7 @@ public final class JSONSignalValues {
     // -------------------------------------------------------------------------
 
     /**
-     * Sets the presents of a signaled value. If this is not a SignalValue or at least a JSONObject
+     * Sets the presence of a signaled value. If this is not a SignalValue or at least a JSONObject
      * where the presentKey can be inserted, then an exception is thrown.
      * 
      * @param signalValue
@@ -69,7 +69,8 @@ public final class JSONSignalValues {
      *            a boolean indicating whether the signal is present
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject where the
+     *             presentKey can be inserted
      */
     public static void setPresent(final JSONObject signalValue, final boolean isPresent)
             throws JSONException {
@@ -88,7 +89,7 @@ public final class JSONSignalValues {
      * @return true, if it is a SignalValue
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject
      */
     public static boolean isSignalValue(final Object signalValue) throws JSONException {
         if (!(signalValue instanceof JSONObject)) {
@@ -109,14 +110,14 @@ public final class JSONSignalValues {
      * @return the value of the SignalValue or null
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject
      */
     public static Object getSignalValue(final Object signalValue) throws JSONException {
         // no SignalValue at all
         if (!isSignalValue(signalValue)) {
             return null;
         }
-        // if its a pure signal that there is no valueKey
+        // if its a pure signal there is no valueKey
         if (((JSONObject) signalValue).has(VALUE_KEY)) {
             return ((JSONObject) signalValue).get(VALUE_KEY);
         }
@@ -135,7 +136,7 @@ public final class JSONSignalValues {
      * @return true, if signal is present
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject
      */
     public static boolean isPresent(final Object signalValue) throws JSONException {
         // no SignalValue at all
@@ -162,7 +163,7 @@ public final class JSONSignalValues {
      * @return the SignalValue as a JSONObject
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject
      */
     public static JSONObject newValue(final Object value, final boolean present)
             throws JSONException {
@@ -186,7 +187,7 @@ public final class JSONSignalValues {
      * @return the SignalValue as a JSONObject
      * 
      * @throws JSONException
-     *             a JSONException
+     *             a JSONException if this is not a SignalValue or at least a JSONObject
      */
     public static JSONObject newValue(final boolean present) throws JSONException {
 
@@ -196,5 +197,7 @@ public final class JSONSignalValues {
 
         return returnObject;
     }
+
+    // -------------------------------------------------------------------------
 
 }
