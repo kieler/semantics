@@ -36,6 +36,8 @@ import de.cau.cs.kieler.s.s.Term
 import de.cau.cs.kieler.s.s.Trans
 import de.cau.cs.kieler.core.kexpressions.IntValue
 import de.cau.cs.kieler.core.kexpressions.FloatValue
+import java.util.LinkedList
+import java.util.HashMap
 
 /**
  * Transformation of S code into SS code that can be executed using the GCC.
@@ -43,6 +45,11 @@ import de.cau.cs.kieler.core.kexpressions.FloatValue
  * @author cmot
  */
 class S2SCALT { 
+	
+	// These static lists are used in  expand(Fork forkInstruction)
+	// to combine consecutive fork statements.
+	static var forkThreadNameList = new LinkedList<String>();
+	static var forkThreadPrioMap = new HashMap<String, Integer>();
     
     // General method to create the c simulation interface.
 	def transform (Program program, String outputFolder, String bufferSize) {
@@ -110,7 +117,7 @@ class S2SCALT {
 
 	
 	// Highest thread id in use;
-	#define _SC_ID_MAX «program.priority» 
+	#define _SC_ID_MAX «program.priority + 1» 
 
 	// Highest signal id in use;
 	#define _SC_SIG_MAX «program.getSignals().size» 
@@ -258,13 +265,21 @@ void setInputs(){
    // Generate the  tick function.
    def tickFunction(Program program) {
    	'''    int tick(){
-       TICKSTART(«program.priority»);
+   	      «// clear for the next usage
+   	       forkThreadNameList.clear()»
+   	      «// clear for the next usage
+   	       forkThreadPrioMap.clear()»
+   		
+       // Main thread has the highest priority + 1
+       «program.states.get(0).expand(program.priority + 1)»
        
-       «FOR state : program.states»
+       // All following threads/states
+       «FOR state : program.states.tail»
        «state.expand»
-       «ENDFOR»
        
-	   TICKEND;
+       «ENDFOR»
+
+       TICKEND;
     }
 	'''
    }
@@ -305,14 +320,23 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    
    // -------------------------------------------------------------------------   
    // -------------------------------------------------------------------------
-   
-   // Expand a state traversing all instructions of that state.
-   def dispatch expand(State state) {
-   		'''«state.name»: 
+
+   // Expand the main state traversing all instructions of that state.
+   def expand(State state, int priority) {
+   		'''MainThread(«priority») { 
    		«FOR instruction : state.instructions»
    		«instruction.expand»
    		«ENDFOR»
-   		'''
+}'''
+   }
+   
+   // Expand a state traversing all instructions of that state.
+   def dispatch expand(State state) {
+   		'''Thread(«state.name») { 
+   		«FOR instruction : state.instructions»
+   		«instruction.expand»
+   		«ENDFOR»
+}'''
    }
    
    // Expand an IF instruction traversing all instructions of that IF instruction.
@@ -321,7 +345,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    		«FOR instruction : ifInstruction.instructions»
    			«instruction.expand»
    		«ENDFOR»
-         }'''
+}'''
    }   
    
    // Expand a PAUSE instruction.
@@ -362,14 +386,34 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
    }
    
    // Expand a FORK instruction.
+   // Add fork instructions to forkThreadName and forkThreadPrioList
+   // if the LAST fork instruction is reached, process these lists and clear them. 
    def dispatch expand(Fork forkInstruction) {
-   	'''«IF forkInstruction.getLastFork != forkInstruction» 
-   	      FORK(«forkInstruction.thread.name»,«forkInstruction.priority»);
+   	'''«IF forkInstruction.getLastFork != forkInstruction»
+   	     «forkThreadNameList.add(forkInstruction.thread.name).suppress» 
+   	     «forkThreadPrioMap.put(forkInstruction.thread.name, forkInstruction.priority)» 
    	   «ENDIF»
    	   «IF forkInstruction.getLastFork == forkInstruction» 
-   	      FORKE(«forkInstruction.thread.name»);
+«forkThreadNameList.add(forkInstruction.thread.name).suppress» 
+«forkThreadPrioMap.put(forkInstruction.thread.name, forkInstruction.priority)»
+«/*NOW PROCESS THE FILLED LISTS*/»
+FORK«forkThreadNameList.size»(«FOR forkThreadName : forkThreadNameList SEPARATOR ", "»«forkThreadName»,«forkThreadPrioMap.get(forkThreadName)»«ENDFOR»);
+   	      «// clear for the next usage
+   	       forkThreadNameList.clear()»
+   	      «// clear for the next usage
+   	       forkThreadPrioMap.clear()»
    	   «ENDIF»
    	'''
+   }   
+   
+   def suppress(String text) {
+   	''' '''
+   }
+   def suppress(int text) {
+   	''' '''
+   }   
+   def suppress(boolean text) {
+   	''' '''
    }   
 
    // Expand a TRANS instruction.	
