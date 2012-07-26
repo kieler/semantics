@@ -324,7 +324,7 @@ cJSON_AddItemToObject(value, "value", cJSON_CreateNumber(VAL(sig_«signal.name»
          }'''
    }   
    
-   // Expand a PAUS instruction.
+   // Expand a PAUSE instruction.
    def dispatch expand(Pause pauseInstruction) {
    	'''PAUSE;'''
    }   

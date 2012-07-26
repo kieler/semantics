@@ -49,10 +49,35 @@ import de.cau.cs.kieler.sim.kiem.ui.datacomponent.JSONObjectSimulationDataCompon
 import de.cau.cs.kieler.sim.kiem.util.KiemUtil;
 import de.cau.cs.kieler.sim.signals.JSONSignalValues;
 
+// TODO: Auto-generated Javadoc
 /**
  * The SimulationDataComponent for simulating S code with and without visualization.
  * 
  * @author cmot
+ */
+/**
+ * @author delphino
+ *
+ */
+/**
+ * @author delphino
+ *
+ */
+/**
+ * @author delphino
+ *
+ */
+/**
+ * @author delphino
+ *
+ */
+/**
+ * @author delphino
+ *
+ */
+/**
+ * @author delphino
+ * 
  */
 public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponent implements
         IJSONObjectDataComponent {
@@ -69,16 +94,29 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
     /** The Constant NUMBER_OF_TASKS for model transformation and code generation. */
     private static final int NUMBER_OF_TASKS = 10;
 
-    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 3;
-
     /** The estimated maximum size used for a pure signal. */
     private static final int PURE_SIGNAL_BUFFER_CONSTANT = 21;
 
     /** The estimated maximum size used for a valued signal. */
     private static final int VALUED_SIGNAL_BUFFER_CONSTANT = 100;
-    
+
     /** The Constant MINIMAL_BUFFER_SIZE. */
     private static final double MINIMAL_BUFFER_SIZE = 2048;
+
+    /** The KIEM_PROPERTY constants. */
+    private static final String KIEM_PROPERTY_NAME_STATEMENTNAME = "Statement Name";
+    private static final String KIEM_PROPERTY_NAME_CCOMPILER = "SC-Compiler";
+    private static final String KIEM_PROPERTY_NAME_FULLDEBUGMODE = "Full Debug Mode";
+    private static final String KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX = "Alternative SC Syntax";
+    private static final String KIEM_PROPERTY_DEFAULT_STATEMENTNAME = "statement";
+    private static final String KIEM_PROPERTY_DEFAULT_CCOMPILER = "gcc";
+    private static final boolean KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE = true;
+    private static final boolean KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX = false;
+    private static final int KIEM_PROPERTY_STATEMENTNAME = 0;
+    private static final int KIEM_PROPERTY_CCOMPILER = 1;
+    private static final int KIEM_PROPERTY_FULLDEBUGMODE = 2;
+    private static final int KIEM_PROPERTY_ALTERNATIVESYNTAX = 3;
+    private static final int KIEM_PROPERTY_MAX = 4;
 
     // -------------------------------------------------------------------------
 
@@ -102,32 +140,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      * {@inheritDoc}
      */
     public void initialize() throws KiemInitializationException {
-
-        // String executable = "C:\\Users\\delphino\\AppData\\Local\\Temp\\SC.exe";
-        // Process executionProcess;
-        // try {
-        // executionProcess = Runtime.getRuntime().exec(executable);
-        //
-        // PrintWriter out = new PrintWriter(new OutputStreamWriter(
-        // executionProcess.getOutputStream()));
-        // BufferedReader in = new BufferedReader(new InputStreamReader(
-        // executionProcess.getInputStream()));
-        // BufferedReader err = new BufferedReader(new InputStreamReader(
-        // executionProcess.getErrorStream()));
-        //
-        //
-        // for (int tick = 0; tick < 10; tick++) {
-        // out.print("\n");
-        // out.flush();
-        // String line = in.readLine();
-        // System.out.println(line);
-        // }
-        //
-        // } catch (IOException e) {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
+        // Do nothing
     }
 
     // -------------------------------------------------------------------------
@@ -147,7 +160,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             throw new KiemExecutionException("No S simulation is running", true, null);
         }
         try {
-            //System.out.println(jSONObject.toString());
+            // System.out.println(jSONObject.toString());
 
             String out = jSONObject.toString();
             scExecution.getExecutionInterfaceToSC().write(out + "\n");
@@ -159,7 +172,7 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
             String receivedMessage = scExecution.getExecutionInterfaceFromSC().readLine();
 
-            //System.out.println(receivedMessage);
+            // System.out.println(receivedMessage);
 
             if (receivedMessage != null) {
                 JSONObject sSignalOutput = new JSONObject(receivedMessage);
@@ -233,7 +246,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
 
             // Finally accumulate all active Statements (activeStatements)
             // under the statementName
-            String statementName = this.getProperties()[1].getValue();
+            String statementName = this.getProperties()[KIEM_PROPERTY_STATEMENTNAME
+                    + KIEM_PROPERTY_DIFF].getValue();
             returnObj.accumulate(statementName, activeStatements);
 
         } catch (IOException e) {
@@ -272,13 +286,17 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
      */
     @Override
     public KiemProperty[] doProvideProperties() {
-        final int nProperties = 3;
+        final int nProperties = KIEM_PROPERTY_MAX;
         KiemProperty[] properties = new KiemProperty[nProperties];
         KiemPropertyTypeFile compilerFile = new KiemPropertyTypeFile();
-        properties[0] = new KiemProperty("Statement Name", "statement");
-
-        properties[1] = new KiemProperty("C-Compiler", compilerFile, "gcc");
-        properties[2] = new KiemProperty("Full Debug Mode", true);
+        properties[KIEM_PROPERTY_STATEMENTNAME] = new KiemProperty(
+                KIEM_PROPERTY_NAME_STATEMENTNAME, KIEM_PROPERTY_DEFAULT_STATEMENTNAME);
+        properties[KIEM_PROPERTY_CCOMPILER] = new KiemProperty(KIEM_PROPERTY_NAME_CCOMPILER,
+                compilerFile, KIEM_PROPERTY_DEFAULT_CCOMPILER);
+        properties[KIEM_PROPERTY_FULLDEBUGMODE] = new KiemProperty(
+                KIEM_PROPERTY_NAME_FULLDEBUGMODE, KIEM_PROPERTY_DEFAULT_FULLDEBUGMODE);
+        properties[KIEM_PROPERTY_ALTERNATIVESYNTAX] = new KiemProperty(
+                KIEM_PROPERTY_NAME_ALTERNATIVESYNTAX, KIEM_PROPERTY_DEFAULT_ALTERNATIVESYNTAX);
 
         return properties;
     }
@@ -303,7 +321,8 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             throws KiemInitializationException {
         // get active editor
         doModel2ModelTransform(monitor, (Program) this.getModelRootElement(),
-                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE].getValueAsBoolean());
+                this.getProperties()[KIEM_PROPERTY_FULLDEBUGMODE + KIEM_PROPERTY_DIFF]
+                        .getValueAsBoolean());
     }
 
     // -------------------------------------------------------------------------
@@ -398,11 +417,16 @@ public class SSCSimulationDataComponent extends JSONObjectSimulationDataComponen
             String bufferSize = bufferSizeDouble + "";
             bufferSize = bufferSize.substring(0, bufferSize.lastIndexOf('.'));
 
+            // Check whether alternative SC syntax is requested
+            boolean alternativeSyntax = this.getProperties()[KIEM_PROPERTY_ALTERNATIVESYNTAX
+                    + KIEM_PROPERTY_DIFF].getValueAsBoolean();
+
             // Generate SC code
             IPath scOutputPath = new Path(scOutput.toPlatformString(false));
             IFile scOutputFile = KiemUtil.convertIPathToIFile(scOutputPath);
             String scOutputString = KiemUtil.getAbsoluteFilePath(scOutputFile);
-            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize);
+            S2SCPlugin.generateSCCode(transformedProgram, scOutputString, outputFolder, bufferSize,
+                    alternativeSyntax);
 
             // Compile
             scExecution = new SCExecution(outputFolder);

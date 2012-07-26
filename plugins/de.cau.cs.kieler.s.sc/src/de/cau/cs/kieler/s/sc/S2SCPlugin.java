@@ -22,6 +22,7 @@ import org.osgi.framework.BundleContext;
 
 import de.cau.cs.kieler.s.s.Program;
 import de.cau.cs.kieler.s.sc.xtend.S2SC;
+import de.cau.cs.kieler.s.sc.xtend.S2SCALT;
 
 /**
  * The activator class controls the plug-in life cycle.
@@ -73,13 +74,24 @@ public class S2SCPlugin extends AbstractUIPlugin {
      * @param program the program
      * @param outputFile the output file
      * @param outputFolder the output folder
-     * @param bufferSize the buffer size
+     * @param bufferSize the buffer size, estimated for input to the running SC program
+     * @param alternativeSyntax the alternative SC syntax should be produced
      * @throws IOException Signals that an I/O exception has occurred.
      */
     public static void generateSCCode(final Program program, final String outputFile,
-            final String outputFolder, final String bufferSize) throws IOException {
-        S2SC s2SC = new S2SC();
-        String ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
+            final String outputFolder, final String bufferSize, final boolean alternativeSyntax)
+            throws IOException {
+        
+        String ccode;
+        if (alternativeSyntax) {
+            // produce alternative SC syntax on request
+            S2SCALT s2SC = new S2SCALT();
+            ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
+        } else {
+            // by default, produce the normal/old SC syntax
+            S2SC s2SC = new S2SC();
+            ccode = s2SC.transform(program, outputFolder, bufferSize).toString();
+        }
 
         // Write out c program
         FileWriter fileWriter = new FileWriter(outputFile);
