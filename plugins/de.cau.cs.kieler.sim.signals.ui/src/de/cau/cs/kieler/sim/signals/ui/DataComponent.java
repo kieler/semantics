@@ -295,11 +295,15 @@ public class DataComponent extends JSONObjectDataComponent implements IJSONObjec
         // update signal list
         SignalsView.getInstance().setSignalList(signalList);
         // asynchronous refresh
-        Display.getDefault().syncExec(new Runnable() {
-            public void run() {
-                SignalsView.getInstance().refresh(getTick());
-            }
-        });
+        try {
+            Display.getDefault().syncExec(new Runnable() {
+                public void run() {
+                    SignalsView.getInstance().refresh(getTick());
+                }
+            });
+        } catch (Exception e) {
+            // a refresh is supposed to  silently fail
+        }
 
         return null;
     }

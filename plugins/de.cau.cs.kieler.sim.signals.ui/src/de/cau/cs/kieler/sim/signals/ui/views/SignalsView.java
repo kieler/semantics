@@ -187,6 +187,7 @@ public class SignalsView extends ViewPart {
      *            the current tick
      */
     public void refresh(final long currentTick) {
+        //TODO: if View is disposed, then reopen it
         signalList.setCurrentTick(currentTick);
         this.signalList.setMaximalTicks(MAXIMALTICKS);
         this.signalsPlotter.setSignalList(signalList);
