@@ -28,6 +28,7 @@
     <module>de.cau.cs.kieler.sj.test</module>
     <!--  KIES IS CURRENTLY FAILING, responsible: cmot <module>de.cau.cs.kieler.kies.test</module> -->
     <!--  TEXT IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.synccharts.text.bridge.test</module> -->
+    <!--  KEXPRESSIONS IS CURRENTLY FAILING, responsible: chsch <module>de.cau.cs.kieler.core.kexpressions.test</module> -->
   </modules>
 
 </project>
