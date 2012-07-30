@@ -1,17 +1,16 @@
-/*
+/**
  * KIELER - Kiel Integrated Environment for Layout Eclipse RichClient
- *
+ * 
  * http://www.informatik.uni-kiel.de/rtsys/kieler/
  * 
- * Copyright 2009 by
+ * Copyright 2012 by
  * + Christian-Albrechts-University of Kiel
  *   + Department of Computer Science
  *     + Real-Time and Embedded Systems Group
  * 
  * This code is provided under the terms of the Eclipse Public License (EPL).
  * See the file epl-v10.html for the license text.
- * 
- *****************************************************************************/
+ */
 package de.cau.cs.kieler.core.kexpressions.test;
 
 import java.io.ByteArrayInputStream;
@@ -35,14 +34,12 @@ import com.google.inject.Injector;
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.Expression;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
-import de.cau.cs.kieler.core.kexpressions.test.scoping.DummyScope;
-import de.cau.cs.kieler.core.kexpressions.test.scoping.DummyScopeProvider;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its
  * serializer.
  * 
- * @author haf, chsch
+ * @author haf, chsch, cmot
  */
 public class KExpressionsParserSerializerTest {
 
@@ -506,7 +503,7 @@ public class KExpressionsParserSerializerTest {
         // FIXME: passing the parent to the scope provider in this static way is
         // veeeeery evil, someone should really fix this....
         // 
-        DummyScopeProvider.parent = new DummyScope(); //transition.eContainer();
+//        DummyScopeProvider.parent = new DummyScope(); //transition.eContainer();
 
         // now do parsing
         Map<Object, Object> loadOptions = resourceSet.getLoadOptions();
