@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.dependencies.feature"
       label="Dependencies"
-      version="0.3.0.qualifier"
+      version="0.4.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel">
 
    <description url="https://rtsys.informatik.uni-kiel.de/trac/kieler/wiki">

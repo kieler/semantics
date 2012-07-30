@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.core.feature"
       label="KIELER Core"
-      version="0.6.0.qualifier"
+      version="0.7.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.core.ui">
 
