@@ -12,7 +12,7 @@
  * See the file epl-v10.html for the license text.
  * 
  *****************************************************************************/
-package de.cau.cs.kieler.synccharts.text.expressions.bridge.test;
+package de.cau.cs.kieler.core.kexpressions.test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -34,16 +34,9 @@ import com.google.inject.Injector;
 
 import de.cau.cs.kieler.core.KielerModelException;
 import de.cau.cs.kieler.core.kexpressions.Expression;
-import de.cau.cs.kieler.core.kexpressions.KExpressionsFactory;
 import de.cau.cs.kieler.core.kexpressions.KExpressionsStandaloneSetup;
-import de.cau.cs.kieler.core.kexpressions.Signal;
-import de.cau.cs.kieler.core.kexpressions.Variable;
-import de.cau.cs.kieler.synccharts.Region;
-import de.cau.cs.kieler.synccharts.State;
-import de.cau.cs.kieler.synccharts.SyncchartsFactory;
-import de.cau.cs.kieler.synccharts.Transition;
-import de.cau.cs.kieler.synccharts.text.actions.bridge.DiagnosticException;
-import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
+import de.cau.cs.kieler.core.kexpressions.test.scoping.DummyScope;
+import de.cau.cs.kieler.core.kexpressions.test.scoping.DummyScopeProvider;
 
 /**
  * JUnit Test Case for the SyncCharts Editor Transition label parser and its
@@ -51,60 +44,9 @@ import de.cau.cs.kieler.synccharts.text.actions.scoping.ActionsScopeProvider;
  * 
  * @author haf, chsch
  */
-public class ExprParserSerializerTest {
-
-    private Region rootRegion;
-    private Transition transition;
+public class KExpressionsParserSerializerTest {
 
     private Injector injector;
-
-    private static final int A = 65;
-    private static final int Z = 90;
-
-    /**
-     * Create a simple SyncChart, one root state machine and two states
-     * connected by one transition. The transition will then be tested.
-     * 
-     * @throws java.lang.Exception
-     *             Something failed
-     */
-    @Before
-    public void setUpSyncChart() throws Exception {
-        rootRegion = SyncchartsFactory.eINSTANCE.createRegion();
-
-        State rootState = SyncchartsFactory.eINSTANCE.createState();
-        rootState.setLabel("SyncChart");
-        rootRegion.getStates().add(rootState);
-
-        Region region = SyncchartsFactory.eINSTANCE.createRegion();
-        rootState.getRegions().add(region);
-
-        // Create one signal for each letter
-        for (int i = A; i <= Z; i++) { // ASCII letters A to Z
-            Signal sig = KExpressionsFactory.eINSTANCE.createSignal();
-            char[] letters = Character.toChars(i);
-            String letter = String.copyValueOf(letters);
-            sig.setName(letter);
-            sig.setIsInput(true);
-            rootState.getSignals().add(sig);
-
-            Variable var = KExpressionsFactory.eINSTANCE.createVariable();
-            var.setName("var" + letter);
-            region.getVariables().add(var);
-        }
-
-        State s1 = SyncchartsFactory.eINSTANCE.createState();
-        s1.setLabel("S1");
-        region.getStates().add(s1);
-
-        State s2 = SyncchartsFactory.eINSTANCE.createState();
-        s2.setLabel("S2");
-        region.getStates().add(s2);
-        
-        transition = SyncchartsFactory.eINSTANCE.createTransition();
-        transition.setSourceState(s1);
-        transition.setTargetState(s2);
-    }
 
     /**
      * Initialize the parser and serializer.
@@ -117,7 +59,7 @@ public class ExprParserSerializerTest {
         injector = new KExpressionsStandaloneSetup() {
         	
         	public Injector createInjector() {
-        		return Guice.createInjector(new de.cau.cs.kieler.synccharts.text.expressions.bridge.test.ExpressionsRuntimeModule());
+        		return Guice.createInjector(new de.cau.cs.kieler.core.kexpressions.test.KExpressionsRuntimeModule());
         	}
         	
         }.createInjectorAndDoEMFRegistration();
@@ -175,7 +117,7 @@ public class ExprParserSerializerTest {
      */
     @Test
     public void testSerializerDiff2() throws Exception {
-        this.parseAndSerialize("5-5");
+        this.parseAndSerialize("5- 5");
     }
 
     /**
@@ -266,32 +208,6 @@ public class ExprParserSerializerTest {
         this.parseAndSerialize("?A = true");
     }
 
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerEmissionValue() throws Exception {
-//        this.parseAndSerialize("/ A(3)");
-//    }
-//
-//    @Test
-//    public void testSerializerEmissionComplexValue() throws Exception {
-//        this.parseAndSerialize("/ A(?B + 100)");
-//    }
-//    
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerEmissionBoolean() throws Exception {
-//        this.parseAndSerialize("/ A((3 < varA) and B)");
-//    }
 
     /**
      * A JUnit test for the Labelparser.
@@ -326,71 +242,6 @@ public class ExprParserSerializerTest {
         this.parseAndSerialize("A and \'HostCode\'(esterel) and 4 < \'Hooooost\'");
     }
 
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerAssignment() throws Exception {
-//        this.parseAndSerialize("/ varA:=5");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerAssignmentBoolean() throws Exception {
-//        this.parseAndSerialize("/ varA:=(42 = varB) or not C");
-//    }
-
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerBoolExpressionAllEffects() throws Exception {
-//        this.parseAndSerialize("A and B / C(3), varA:=5, \"host code\"(Esterel)");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerImmediate() throws Exception {
-//        this.parseAndSerialize("# A / B");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerImmediateSimple() throws Exception {
-//        this.parseAndSerialize("#");
-//    }
-//
-//    /**
-//     * A JUnit test for the Labelparser.
-//     * 
-//     * @throws Exception
-//     *             if parsing fails
-//     */
-//    @Test
-//    public void testSerializerDelayComparison() throws Exception {
-//        this.parseAndSerialize("5 < ?A / B");
-//    }
 
     /**
      * A JUnit test for the Labelparser.
@@ -650,12 +501,12 @@ public class ExprParserSerializerTest {
                 .getInstance(XtextResourceSet.class);
         XtextResource resource = (XtextResource) resourceSet
                 .createResource(URI
-                        .createURI("platform:/resource/de.cau.cs.kieler.synccharts.text/"
+                        .createURI("platform:/resource/de.cau.cs.kieler.kexpressions.test/"
                                 + "dummy.expr"));
         // FIXME: passing the parent to the scope provider in this static way is
         // veeeeery evil, someone should really fix this....
         // 
-        ActionsScopeProvider.parent = transition.eContainer();
+        DummyScopeProvider.parent = new DummyScope(); //transition.eContainer();
 
         // now do parsing
         Map<Object, Object> loadOptions = resourceSet.getLoadOptions();
@@ -685,9 +536,8 @@ public class ExprParserSerializerTest {
                     parseErrorString.append("\n");
                 }
             }
-            throw new DiagnosticException("\"" + textToParse + "\""
-                    + " Parse errors in expression String: " + parseErrorString,
-                    null, errors);
+            throw new RuntimeException("\"" + textToParse + "\""
+                    + " Parse errors in expression String: " + parseErrorString);
         }
 
         EObject parsedObject = resource.getContents().get(0);
@@ -699,7 +549,8 @@ public class ExprParserSerializerTest {
                             + "Could not parse expression string. Parser did not return an Expression object but "
                             + parsedObject, null);
         }
-        this.transition.setTrigger((Expression) parsedObject);
+        
+        //this.transition.setTrigger((Expression) parsedObject);
         
         return (Expression) parsedObject;
     }

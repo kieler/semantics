@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Test
+Bundle-SymbolicName: de.cau.cs.kieler.core.kexpressions.test
+Bundle-Version: 0.1.0.qualifier
+Bundle-Vendor: Christian-Albrechts-Univeristät zu Kiel
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Require-Bundle: de.cau.cs.kieler.core.kexpressions,
+ com.google.inject;bundle-version="3.0.0",
+ org.junit;bundle-version="4.8.2",
+ org.eclipse.xtext,
+ de.cau.cs.kieler.core,
+ de.cau.cs.kieler.core.annotations;bundle-version="0.3.0"
