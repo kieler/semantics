@@ -18,6 +18,7 @@ import java.util.List;
 
 import org.eclipse.draw2d.ArrowLocator;
 import org.eclipse.draw2d.Connection;
+import org.eclipse.draw2d.ConnectionLayer;
 import org.eclipse.draw2d.ConnectionLocator;
 import org.eclipse.draw2d.Graphics;
 import org.eclipse.draw2d.IFigure;
@@ -600,6 +601,36 @@ public class SplineConnection extends PolylineConnectionEx {
         super.setSourceDecoration(dec, new ArrowLocatorEx(this, ConnectionLocator.SOURCE));
     }
 
+    /**
+     * This method will bring the connection to the front of the ConnectionLayer.
+     */
+    //Can't help bad usage of generics in code that is not mine.
+    @SuppressWarnings("unchecked")
+    public void bringToFront() {
+        ConnectionLayer layer = this.getConnectionLayer(this);
+        if (layer != null) {
+            layer.getChildren().remove(this);
+            layer.getChildren().add(this);
+        }
+    }
+    
+    /**
+     * Method to get the ConnectionLayer the given Connection belongs to.
+     * @param c The connection whose ConnectionLayer to get.
+     * @return The ConnectionLayer of the given Connection. Might be null if connection
+     *          is not yet added to the ConnectionLayer.
+     */
+    private ConnectionLayer getConnectionLayer(final Connection c) {
+        if (c.getParent() == null) {
+            return null;
+        }
+        if (c.getParent() instanceof ConnectionLayer) {
+            return (ConnectionLayer) c.getParent();
+        } else {
+            return getConnectionLayer((Connection) c.getParent());
+        }
+    }
+    
     /**
      * An extension of the ArrowLocator that is capable of using spline points as references.
      * 

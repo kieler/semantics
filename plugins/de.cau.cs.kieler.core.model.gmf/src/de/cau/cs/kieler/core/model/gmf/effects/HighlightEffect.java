@@ -42,6 +42,7 @@ import de.cau.cs.kieler.core.kivi.AbstractEffect;
 import de.cau.cs.kieler.core.kivi.IEffect;
 import de.cau.cs.kieler.core.kivi.UndoEffect;
 import de.cau.cs.kieler.core.model.GraphicalFrameworkService;
+import de.cau.cs.kieler.core.model.gmf.figures.SplineConnection;
 
 /**
  * A simple transient highlighting effect. Can change line colors, line styles, and line widths for
@@ -264,6 +265,9 @@ public class HighlightEffect extends AbstractEffect {
             editingDomain.getCommandStack().execute(highlightCommand);
         } else {
             applyHighlight();
+        }
+        if (targetFigure instanceof SplineConnection) {
+            ((SplineConnection) targetFigure).bringToFront();
         }
     }
     
