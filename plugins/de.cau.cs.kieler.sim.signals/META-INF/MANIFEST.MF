@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Synchronous Simulation Signals
+Bundle-Name: KIELER Synchronous Simulation Signals
 Bundle-SymbolicName: de.cau.cs.kieler.sim.signals
 Bundle-Version: 0.1.0.qualifier
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel

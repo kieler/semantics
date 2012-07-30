@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: de.cau.cs.kieler.esterel.cec.macosx.x86_64
 Bundle-SymbolicName: de.cau.cs.kieler.esterel.cec.macosx.x86_64
-Bundle-Version: 0.1.0.qualifier
+Bundle-Version: 0.1.1.qualifier
 Fragment-Host: de.cau.cs.kieler.esterel.cec;bundle-version="0.1.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-Vendor: Christian-Albrechts-Universität zu Kiel
