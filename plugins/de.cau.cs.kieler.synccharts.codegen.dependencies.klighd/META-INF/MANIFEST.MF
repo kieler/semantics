@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Dependency KLighD Visualization
+Bundle-Name: KIELER Dependency Visualization
 Bundle-SymbolicName: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.synccharts.codegen.dependencies.klighd.SyncChartsCodegenDependenciesKLighDPlugin

@@ -1,6 +1,6 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: SC Simulator for S
+Bundle-Name: KIELER SC Simulator for S
 Bundle-SymbolicName: de.cau.cs.kieler.s.sim.sc;singleton:=true
 Bundle-Version: 0.2.0.qualifier
 Bundle-Activator: de.cau.cs.kieler.s.sim.sc.SSimSCPlugin
