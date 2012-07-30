@@ -2,7 +2,7 @@
 <feature
       id="de.cau.cs.kieler.uml2.feature.source"
       label="KIELER Bridge to UML2 tools"
-      version="0.4.0.qualifier"
+      version="0.5.0.qualifier"
       provider-name="Christian-Albrechts-Universität zu Kiel"
       plugin="de.cau.cs.kieler.uml2">
 
