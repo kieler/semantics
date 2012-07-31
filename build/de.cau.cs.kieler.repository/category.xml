@@ -16,10 +16,10 @@
       <feature url="features/de.cau.cs.kieler.uml2.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.uml2.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
    </feature> -->
-   <feature url="features/de.cau.cs.kieler.kaom_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature" version="0.4.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kaom_0.5.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature" version="0.4.0.qualifier">
       <category name="KIELER"/>
    </feature>
-      <feature url="features/de.cau.cs.kieler.kaom.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature.source" version="0.4.0.qualifier">
+      <feature url="features/de.cau.cs.kieler.kaom.source_0.5.0.qualifier.jar" id="de.cau.cs.kieler.kaom.feature.source" version="0.4.0.qualifier">
       <category name="KIELER Development"/>
    </feature> 
    <feature url="features/de.cau.cs.kieler.keg_0.4.0.qualifier.jar" id="de.cau.cs.kieler.keg.feature" version="0.4.0.qualifier">
