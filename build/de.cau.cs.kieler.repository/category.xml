@@ -49,7 +49,7 @@
    <feature url="features/de.cau.cs.kieler.klots_0.2.0.qualifier.jar" id="de.cau.cs.kieler.klots.feature" version="0.2.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.klots.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.klots.feature.source" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.klots.source_0.2.0.qualifier.jar" id="de.cau.cs.kieler.klots.feature.source" version="0.2.0.qualifier">
       <category name="KIELER Development"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.kwebs.client.jaxws_0.1.1.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jaxws.feature" version="0.1.1.qualifier">
@@ -61,7 +61,7 @@
    <feature url="features/de.cau.cs.kieler.kwebs.client.jeti_0.1.1.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature" version="0.1.1.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.source_0.1.0.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature.source" version="0.1.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kwebs.client.jeti.source_0.1.1.qualifier.jar" id="de.cau.cs.kieler.kwebs.client.jeti.feature.source" version="0.1.1.qualifier">
       <category name="KIELER Development"/>
    </feature>
    <feature url="features/de.cau.cs.kieler.core.annotations_0.4.0.qualifier.jar" id="de.cau.cs.kieler.core.annotations.feature" version="0.4.0.qualifier">
