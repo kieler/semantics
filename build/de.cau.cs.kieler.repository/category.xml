@@ -76,10 +76,10 @@
    <feature url="features/de.cau.cs.kieler.kiml.graphviz.source_0.7.0.qualifier.jar" id="de.cau.cs.kieler.kiml.graphviz.feature.source" version="0.7.0.qualifier">
       <category name="KIELER Development"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kiml.ogdf_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.4.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kiml.ogdf_0.5.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature" version="0.5.0.qualifier">
       <category name="KIELER"/>
    </feature>
-   <feature url="features/de.cau.cs.kieler.kiml.ogdf.source_0.4.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature.source" version="0.4.0.qualifier">
+   <feature url="features/de.cau.cs.kieler.kiml.ogdf.source_0.5.0.qualifier.jar" id="de.cau.cs.kieler.kiml.ogdf.feature.source" version="0.5.0.qualifier">
       <category name="KIELER Development"/>
    </feature>
    <category-def name="KIELER" label="KIELER">
