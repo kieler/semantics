@@ -265,24 +265,6 @@
          </command>
       </menuContribution>
             <menuContribution
-                  locationURI="menu:de.cau.cs.kieler">
-               <command
-                     commandId="de.cau.cs.kieler.synccharts.diagram.custom.hideTransitionLabels"
-                     label="Hide Transition Priority Labels"
-                     style="toggle">
-                  <visibleWhen
-                        checkEnabled="false">
-                     <with
-                           variable="activeEditor">
-                        <test
-                              forcePluginActivation="false"
-                              property="de.cau.cs.kieler.synccharts.activeSyncchartsEditor">
-                        </test>
-                     </with>
-                  </visibleWhen>
-               </command>
-            </menuContribution>
-            <menuContribution
                   locationURI="popup:de.cau.cs.kieler">
                <command
                      commandId="de.cau.cs.kieler.core.ui.expandMacroStates"
